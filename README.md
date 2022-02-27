@@ -43,7 +43,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 2. ### ![anim mod](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/aniTogIcon.png) modificador **`copiar animação`**
 ```
-    - habilita a transferência de todos os 'key frames' de transformação dos layers selecionados para o 'null' pai criado.
+    - habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
 ```
 ```
     'anchor point'
@@ -57,7 +57,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 3. ### ![expr mod](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/exprTogIcon.png) modificador **`copiar expressões`**
 ```
-    - habilita a transferência de todas as 'expressões' de transformação dos layers selecionados para o 'null' pai criado.
+    - habilita a transferência das 'expressões' de transformação dos layers selecionados para o 'null'.
 ```
 ```
     'anchor point'
