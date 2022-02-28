@@ -84,14 +84,6 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![animation icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *animação*
 ![animation tab](https://jmbillard.com.br/promo/ui/animation%20tab.png)
-- ### botão **`x`**
-```
-    - *cria `x` coisa.*
-```
-- ### modificador **`y`**
-```
-    - *modifica `x` coisa da forma.*
-```
 
 <br/><br/>
 
@@ -320,22 +312,22 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 ![preferences tab](https://jmbillard.com.br/promo/ui/preferences%20tab.png)
 1. ### texto **`usuário`**
 ```
-    - *cria `x` coisa.*
+    - define o prefixo do usuário.
 ```
 2. ### menu **`null - adjustment`**
 ```
-    - *modifica `x` coisa da forma.*
+    - define o tipo de layer criado pelo script.
 ```
 3. ### menu **`template de projeto`**
 ```
-    - *modifica `x` coisa da forma.*
+    - define o template de organização do projeto.
 ```
 4. ### modificador **`aba`**
 ```
-    - *modifica `x` coisa da forma.*
+    - define a aba a ser alterada.
 ```
 5. ### botão **`cor atual`**
 ```
-    - *modifica `x` coisa da forma.*
+    - altera a cor da aba selecionada.
 ```
 
