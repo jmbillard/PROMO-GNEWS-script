@@ -1,0 +1,2238 @@
+/* ---------------------------------------------------------------
+> script main ui
+--------------------------------------------------------------- */
+
+//  linter settings:
+//  jshint -W061
+//  jscs:disable maximumLineLength
+
+function PROMO_GNEWS_UI() {
+
+/* jshint ignore:start */
+  #include 'PROMO GNEWS src.jsxinc';
+  #include 'PROMO GNEWS exp.jsxinc';
+  #include 'PROMO GNEWS img.jsxinc';
+/* jshint ignore:end */
+
+  getAllGPrefs();
+
+  var GNEWS_RED = rgb(185, 20, 20);
+  var GNEWS_BLK = rgb(20, 20, 20);
+  var GNEWS_WTE = rgb(234, 234, 234);
+
+  var w = {};
+  var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
+
+  clearOutput();
+  write(aboutStr);
+
+  if (thisObj instanceof Panel) {
+    w = thisObj;
+
+  } else {
+    w = new Window('palette', 'PROMO GNEWS', undefined);
+  }
+
+  w.spacing = 0;
+  w.margins = 0;
+  w.orientation = 'stack';
+
+  /*
+
+  ---------------------------------------------------------------
+  > 📁 tabs and groups
+  ---------------------------------------------------------------
+
+  */
+
+  var mainGrp = w.add('group');
+  mainGrp.alignment = 'center';
+  mainGrp.orientation = 'stack';
+
+  var menuGrp = mainGrp.add('group');
+  menuGrp.alignment = 'center';
+
+  var ctrlTabGrp = mainGrp.add('group');
+  ctrlTabGrp.alignment = 'center';
+  ctrlTabGrp.visible = false;
+
+  var animTabGrp = mainGrp.add('group');
+  animTabGrp.alignment = 'center';
+  animTabGrp.visible = false;
+
+  var fxTabGrp = mainGrp.add('group');
+  fxTabGrp.alignment = 'center';
+  fxTabGrp.visible = false;
+
+  var txtTabGrp = mainGrp.add('group');
+  txtTabGrp.alignment = 'center';
+  txtTabGrp.visible = false;
+
+  var palletTabGrp = mainGrp.add('group');
+  palletTabGrp.alignment = 'center';
+  palletTabGrp.visible = false;
+
+  var layerTabGrp = mainGrp.add('group');
+  layerTabGrp.alignment = 'center';
+  layerTabGrp.visible = false;
+
+  var toolTabGrp = mainGrp.add('group');
+  toolTabGrp.alignment = 'center';
+  toolTabGrp.visible = false;
+
+  var projTabGrp = mainGrp.add('group');
+  projTabGrp.alignment = 'center';
+  projTabGrp.visible = false;
+
+  var linksTabGrp = mainGrp.add('group');
+  linksTabGrp.alignment = 'center';
+  linksTabGrp.visible = false;
+
+  var prefTabGrp = mainGrp.add('group');
+  prefTabGrp.alignment = 'center';
+  prefTabGrp.visible = false;
+
+  var imgGrp = w.add('group');
+  imgGrp.orientation = 'stack';
+
+  var errImgGrp = w.add('group');
+  errImgGrp.orientation = 'stack';
+  errImgGrp.visible = false;
+
+  var progImgGrp = w.add('group');
+  progImgGrp.orientation = 'stack';
+  progImgGrp.visible = false;
+
+  var errTabGrp = mainGrp.add('group');
+  errTabGrp.visible = false;
+
+  var progTabGrp = mainGrp.add('group');
+  progTabGrp.visible = false;
+
+  var closeGrp = w.add('group');
+  closeGrp.orientation = 'stack';
+  closeGrp.visible = false;
+
+  var prefGrp = w.add('group');
+  prefGrp.orientation = 'stack';
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🖼️ images
+  ---------------------------------------------------------------
+
+  */
+
+  var GNEWS_LOGO = imgGrp.add('image', undefined, GNEWS_LOGO_IMG);
+
+  var errImgArray = [attImg1, attImg2, attImg3, attImg4, attImg5];
+  var r = getRndInteger(0, errImgArray.length);
+
+  var errImg = errImgGrp.add('image', undefined, errImgArray[r]);
+  var progImg = progImgGrp.add('image', undefined, keepCalmIcon);
+
+  /*
+
+  ---------------------------------------------------------------
+  > 📟 main menu
+  ---------------------------------------------------------------
+
+  */
+
+  var ctrlBtn = menuGrp.add('iconbutton', undefined, ctrlIcon, {style: 'toolbutton'});
+  ctrlBtn.helpTip = 'null and controls';
+  var animBtn = menuGrp.add('iconbutton', undefined, animIcon, {style: 'toolbutton'});
+  animBtn.helpTip = 'animation';
+  var fxBtn = menuGrp.add('iconbutton', undefined, fxIcon, {style: 'toolbutton'});
+  fxBtn.helpTip = 'effects';
+  var txtBtn = menuGrp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
+  txtBtn.helpTip = 'text case and line breaking';
+  var palletBtn = menuGrp.add('iconbutton', undefined, paletteIcon, {style: 'toolbutton'});
+  palletBtn.helpTip = 'color palette';
+  var layerBtn = menuGrp.add('iconbutton', undefined, layerIcon, {style: 'toolbutton'});
+  layerBtn.helpTip = 'rename and sequence layers';
+  var toolBtn = menuGrp.add('iconbutton', undefined, toolsIcon, {style: 'toolbutton'});
+  toolBtn.helpTip = 'rigs and tools';
+  var projBtn = menuGrp.add('iconbutton', undefined, prjIcon, {style: 'toolbutton'});
+  projBtn.helpTip = 'project organization';
+
+  menuGrp.add('image', undefined, vSpacer);
+
+  var isolateBtn = menuGrp.add('iconbutton', undefined, isolateIcon, {style: 'toolbutton'});
+  isolateBtn.helpTip = 'isolate layers';
+
+  menuGrp.add('image', undefined, vSpacer);
+
+  var linksBtn = menuGrp.add('iconbutton', undefined, linksIcon, {style: 'toolbutton'});
+  linksBtn.helpTip = 'useful links';
+
+  // preferences button
+  var prefBtn = prefGrp.add('iconbutton', undefined, setIcon, {style: 'toolbutton'});
+  prefBtn.helpTip = 'script preferences';
+
+  
+  /*
+
+  ---------------------------------------------------------------
+  > 🕹️ ctrl tab
+  ---------------------------------------------------------------
+
+  */
+
+  var trmProp = 'ADBE Transform Group';
+
+  var nullShpBtn = ctrlTabGrp.add('iconbutton', undefined, shpNullIcon, {style: 'toolbutton'});
+  nullShpBtn.helpTip = 'null';
+
+  var nullGrp = ctrlTabGrp.add('group');
+  nullGrp.spacing = 2;
+  var aniTogBtn = nullGrp.add('iconbutton', undefined, aniTogIcon, {style: 'toolbutton', toggle: 1});
+  aniTogBtn.helpTip = 'copy animation';
+  var exprTogBtn = nullGrp.add('iconbutton', undefined, exprTogIcon, {style: 'toolbutton', toggle: 1});
+  exprTogBtn.helpTip = 'copy expressions';
+
+  ctrlTabGrp.add('image', undefined, vSpacer);
+
+  var nullCShpBtn = ctrlTabGrp.add('iconbutton', undefined, nullCIcon, {style: 'toolbutton'});
+  nullCShpBtn.helpTip = 'centered null';
+
+  ctrlTabGrp.add('image', undefined, vSpacer);
+
+  var hGrp = ctrlTabGrp.add('group');
+  hGrp.orientation = 'column';
+  hGrp.spacing = 0;
+  var upHBtn = hGrp.add('iconbutton', undefined, upIcon, {style: 'toolbutton'});
+  upHBtn.helpTip = 'select parent';
+  var dwnHBtn = hGrp.add('iconbutton', undefined, downIcon, {style: 'toolbutton'});
+  dwnHBtn.helpTip = 'select children';
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🚶 anim tab
+  ---------------------------------------------------------------
+
+  */
+
+  var copyInfBtn = animTabGrp.add('iconbutton', undefined, copyInfluenceIcon, {style: 'toolbutton'});
+  copyInfBtn.helpTip = 'copy keyframe influence';
+
+  var pasteInfBtn = animTabGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
+  pasteInfBtn.helpTip = 'paste keyframe influence';
+
+  
+  animTabGrp.add('image', undefined, vSpacer);
+
+  var a2Grp = animTabGrp.add('group');
+  a2Grp.spacing = 2;
+  var typeAnimBtn = a2Grp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  typeAnimBtn.helpTip = 'typewriting animation';
+
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔥 fx tab
+  ---------------------------------------------------------------
+
+  */
+
+  var fxProp = 'ADBE Effect Parade';
+
+  var shpAdjBtn = fxTabGrp.add('iconbutton', undefined, shpAdjIcon, {style: 'toolbutton'});
+  shpAdjBtn.helpTip = 'adjustment layer';
+
+  fxTabGrp.add('image', undefined, vSpacer);
+
+  var cGrp = fxTabGrp.add('group');
+  cGrp.spacing = 2;
+  var curBtn = cGrp.add('iconbutton', undefined, curIcon, {style: 'toolbutton'});
+  curBtn.helpTip = 'curves';
+  var levBtn = cGrp.add('iconbutton', undefined, levIcon, {style: 'toolbutton'});
+  levBtn.helpTip = 'levels';
+  var lumBtn = cGrp.add('iconbutton', undefined, lumIcon, {style: 'toolbutton'});
+  lumBtn.helpTip = 'lumetri color';
+
+  fxTabGrp.add('image', undefined, hSpacer);
+
+  var bGrp = fxTabGrp.add('group');
+  bGrp.spacing = 2;
+  var gaublurBtn = bGrp.add('iconbutton', undefined, gaublurIcon, {style: 'toolbutton'});
+  gaublurBtn.helpTip = 'gaussian blur';
+  var comblurBtn = bGrp.add('iconbutton', undefined, comblurIcon, {style: 'toolbutton'});
+  comblurBtn.helpTip = 'compound blur';
+  var lensblurBtn = bGrp.add('iconbutton', undefined, lensblurIcon, {style: 'toolbutton'});
+  lensblurBtn.helpTip = 'lens blur';
+
+  fxTabGrp.add('image', undefined, hSpacer);
+
+  var gGrp = fxTabGrp.add('group');
+  gGrp.spacing = 2;
+  var fillBtn = gGrp.add('iconbutton', undefined, fillIcon, {style: 'toolbutton'});
+  fillBtn.helpTip = 'fill';
+
+  fxTabGrp.add('image', undefined, hSpacer);
+
+  var dGrp = fxTabGrp.add('group');
+  dGrp.spacing = 2;
+  var glassBtn = dGrp.add('iconbutton', undefined, glassIcon, {style: 'toolbutton'});
+  glassBtn.helpTip = '3d glasses';
+
+  fxTabGrp.add('image', undefined, hSpacer);
+
+  var nGrp = fxTabGrp.add('group');
+  nGrp.spacing = 2;
+  var fracBtn = nGrp.add('iconbutton', undefined, fracIcon, {style: 'toolbutton'});
+  fracBtn.helpTip = 'fractal noise';
+  var grainBtn = nGrp.add('iconbutton', undefined, grainIcon, {style: 'toolbutton'});
+  grainBtn.helpTip = 'add grain';
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔠 txt tab
+  ---------------------------------------------------------------
+
+  */
+
+  var txtProp = 'ADBE Text Properties';
+  var txtDoc = 'ADBE Text Document';
+
+  var t1Grp = txtTabGrp.add('group');
+  t1Grp.spacing = 2;
+  var txtUpperBtn = t1Grp.add('iconbutton', undefined, txtUpperIcon, {style: 'toolbutton'});
+  txtUpperBtn.helpTip = 'set text layer to upper case';
+  var txtLowerBtn = t1Grp.add('iconbutton', undefined, txtLowerIcon, {style: 'toolbutton'});
+  txtLowerBtn.helpTip = 'set text layer to lower case';
+  var txtTitleBtn = t1Grp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
+  txtTitleBtn.helpTip = 'set text layer to title case';
+
+  txtTabGrp.add('image', undefined, vSpacer);
+
+  var limitSld = txtTabGrp.add('slider', undefined, 60, 5, 200);
+  var limitTxt2 = txtTabGrp.add('edittext', undefined, '60');
+  limitTxt2.characters = 3;
+  var limitTxt = txtTabGrp.add('statictext', undefined, '60');
+  limitTxt.characters = 3;
+  setTxtColor(limitTxt, sTxtColor);
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔴 pallet tab
+  ---------------------------------------------------------------
+
+  */
+  var redBtn = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  redBtn.size = [50, 20];
+  setBtnColor(redBtn, GNEWS_RED);
+  redBtn.onDraw = customDraw;
+  redBtn.helpTip = 'R: 185\nG: 20\nB: 20\nHEX: #B91414';
+
+  var blkBtn = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  blkBtn.size = [50, 20];
+  setBtnColor(blkBtn, GNEWS_BLK);
+  blkBtn.onDraw = customDraw;
+  blkBtn.helpTip = 'R: 20\nG: 20\nB: 20\nHEX: #141414';
+
+  var wteBtn = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  wteBtn.size = [50, 20];
+  setBtnColor(wteBtn, GNEWS_WTE);
+  wteBtn.onDraw = customDraw;
+  wteBtn.helpTip = 'R: 234\nG: 234\nB: 234\nHEX: #EAEAEA';
+
+  palletTabGrp.add('image', undefined, vSpacer);
+
+  var gryBtn1 = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  gryBtn1.size = [50, 20];
+  setBtnColor(gryBtn1, rgb(180, 180, 180));
+  gryBtn1.onDraw = customDraw;
+  gryBtn1.helpTip = 'R: 180\nG: 180\nB: 180\nHEX: #B4B4B4';
+
+  var gryBtn2 = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  gryBtn2.size = [50, 20];
+  setBtnColor(gryBtn2, rgb(110, 110, 110));
+  gryBtn2.onDraw = customDraw;
+  gryBtn2.helpTip = 'R: 110\nG: 110\nB: 110\nHEX: #6E6E6E';
+
+  var gryBtn3 = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  gryBtn3.size = [50, 20];
+  setBtnColor(gryBtn3, rgb(54, 54, 54));
+  gryBtn3.onDraw = customDraw;
+  gryBtn3.helpTip = 'R: 54\nG: 54\nB: 54\nHEX: #363636';
+
+  palletTabGrp.add('image', undefined, vSpacer);
+
+  var shpPalletBtn = palletTabGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  shpPalletBtn.helpTip = 'shape layer pallet';
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🧻 layer tab
+  ---------------------------------------------------------------
+
+  */
+
+  var lGrp = layerTabGrp.add('group');
+  lGrp.spacing = 2;
+  var ftgTogBtn = lGrp.add('iconbutton', undefined, ftgTogIcon, {style: 'toolbutton', toggle: 1});
+  ftgTogBtn.helpTip = 'footage';
+  var solTogBtn = lGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton', toggle: 1});
+  ftgTogBtn.helpTip = 'footage';
+  solTogBtn.helpTip = 'solids';
+  var shpTogBtn = lGrp.add('iconbutton', undefined, shpTogIcon, {style: 'toolbutton', toggle: 1});
+  shpTogBtn.helpTip = 'shape layers';
+  var txtTogBtn = lGrp.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
+  txtTogBtn.helpTip = 'text layers';
+  var camTogBtn = lGrp.add('iconbutton', undefined, camTogIcon, {style: 'toolbutton', toggle: 1});
+  camTogBtn.helpTip = 'camera layers';
+  var lgtTogBtn = lGrp.add('iconbutton', undefined, lgtTogIcon, {style: 'toolbutton', toggle: 1});
+  lgtTogBtn.helpTip = 'light layers';
+
+  var renameLayersBtn = layerTabGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
+  renameLayersBtn.helpTip = 'update layer names';
+
+  layerTabGrp.add('image', undefined, vSpacer);
+
+  var lockTrmBtn = layerTabGrp.add('iconbutton', undefined, lockPropIcon, {style: 'toolbutton'});
+  lockTrmBtn.helpTip = 'lock transform properties';
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔨 tools tab
+  ---------------------------------------------------------------
+
+  */
+
+  var counterBtn = toolTabGrp.add('iconbutton', undefined, counterIcon, {style: 'toolbutton'});
+  counterBtn.helpTip = 'make counter rig';
+
+  toolTabGrp.add('image', undefined, vSpacer);
+
+  var wigBtn = toolTabGrp.add('iconbutton', undefined, wigIcon, {style: 'toolbutton'});
+  wigBtn.helpTip = 'wig rig';
+
+  toolTabGrp.add('image', undefined, vSpacer);
+
+  var ikBtn = toolTabGrp.add('iconbutton', undefined, ikIcon, {style: 'toolbutton'});
+  ikBtn.helpTip = 'simple ik rig';
+
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🗃️ project tab
+  ---------------------------------------------------------------
+
+  */
+
+  var projUserTxt = projTabGrp.add('edittext', undefined, 'user');
+  projUserTxt.characters = 3;
+  projUserTxt.helpTip = 'user id';
+  var projIdTxt = projTabGrp.add('edittext', undefined, 'proj id');
+  projIdTxt.characters = 8;
+  projIdTxt.helpTip = 'project id';
+  var insertUserIdBtn = projTabGrp.add('iconbutton', undefined, addIcon, {style: 'toolbutton'});
+  insertUserIdBtn.helpTip = 'insert user with project ID';
+
+  var projNameTxt = projTabGrp.add('edittext', undefined, 'proj name');
+  projNameTxt.characters = 16;
+  projNameTxt.helpTip = 'project name';
+  var renameItemBtn = projTabGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
+  renameItemBtn.helpTip = 'quick template rename';
+
+  projTabGrp.add('image', undefined, vSpacer);
+
+  var projOrgBtn = projTabGrp.add('iconbutton', undefined, orgProjIcon, {style: 'toolbutton'});
+  projOrgBtn.helpTip = 'quick project organization';
+
+  projTabGrp.add('image', undefined, vSpacer);
+
+  var sGrp = projTabGrp.add('group');
+  sGrp.spacing = 2;
+  var collectTogBtn = sGrp.add('iconbutton', undefined, fldTogIcon, {style: 'toolbutton', toggle: 1});
+  collectTogBtn.helpTip = 'collect files';
+  var collectFontsTogBtn = sGrp.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
+  collectFontsTogBtn.helpTip = 'collect fonts';
+
+  var saveBtn = projTabGrp.add('iconbutton', undefined, quickSaveIcon, {style: 'toolbutton'});
+  saveBtn.helpTip = 'quick project save';
+
+  /*
+  
+  ---------------------------------------------------------------
+  > 🔗 links tab
+  ---------------------------------------------------------------
+  
+  */
+
+  var l1Grp = linksTabGrp.add('group');
+  l1Grp.spacing = 2;
+  var emailBtn = l1Grp.add('iconbutton', undefined, emailIcon, {style: 'toolbutton'});
+  emailBtn.helpTip = 'webmail globo';
+  var oneDriveBtn = l1Grp.add('iconbutton', undefined, oneDriveIcon, {style: 'toolbutton'});
+  oneDriveBtn.helpTip = 'OneDrive globo';
+  var sharePointBtn = l1Grp.add('iconbutton', undefined, sharePointIcon, {style: 'toolbutton'});
+  sharePointBtn.helpTip = 'SharePoint promo GNEWS';
+
+  linksTabGrp.add('image', undefined, hSpacer);
+ 
+  var l2Grp = linksTabGrp.add('group');
+  l2Grp.spacing = 2;
+  var trelloBtn = l2Grp.add('iconbutton', undefined, trelloIcon, {style: 'toolbutton'});
+  trelloBtn.helpTip = 'trello promo GNEWS';
+  var typeFormBtn = l2Grp.add('iconbutton', undefined, typeFormIcon, {style: 'toolbutton'});
+  typeFormBtn.helpTip = 'type form globo';
+  var plannerBtn = l2Grp.add('iconbutton', undefined, plannerIcon, {style: 'toolbutton'});
+  plannerBtn.helpTip = 'planner globo';
+
+  linksTabGrp.add('image', undefined, vSpacer);
+
+  var fGrp = linksTabGrp.add('group');
+  fGrp.spacing = 2;
+  var mamHardNewsBtn = fGrp.add('iconbutton', undefined, hardNewsFolderIcon, {style: 'toolbutton'});
+  mamHardNewsBtn.helpTip = 'upload MAM Hard News';
+  var mamMagBtn = fGrp.add('iconbutton', undefined, magazineFolderIcon, {style: 'toolbutton'});
+  mamMagBtn.helpTip = 'upload MAM Magazine';
+
+  var mamArteBtn = fGrp.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
+  mamArteBtn.helpTip = 'MAM Para Arte';
+
+  var nUtilsBtn = fGrp.add('iconbutton', undefined, utilsFolderIcon, {style: 'toolbutton'});
+  nUtilsBtn.helpTip = 'N: Utilidades';
+
+  /*
+
+  ---------------------------------------------------------------
+  > ⚙️ preferences tab
+  ---------------------------------------------------------------
+
+  */
+  var lForceUserPrefTxt = prefTabGrp.add('statictext', undefined, 'user');
+  lForceUserPrefTxt.helpTip = 'user prefix';
+  setTxtColor(lForceUserPrefTxt, sTxtColor);
+  var projUserPrefTxt = prefTabGrp.add('edittext', undefined, '');
+  projUserPrefTxt.characters = 3;
+  projUserPrefTxt.helpTip = 'user id';
+
+  prefTabGrp.add('image', undefined, vSpacer);
+
+  var lPrefTxt = prefTabGrp.add('statictext', undefined, 'ctrl - adj');
+  lPrefTxt.helpTip = 'ctrl and adjustment layer type';
+  setTxtColor(lPrefTxt, sTxtColor);
+  var lDropArray = ['shape', 'solid'];
+  var lDrop = prefTabGrp.add('dropdownlist', undefined, lDropArray);
+  lDrop.selection = lDropSel;
+
+  prefTabGrp.add('image', undefined, vSpacer);
+
+  var projPrefTxt = prefTabGrp.add('statictext', undefined, 'proj template');
+  projPrefTxt.helpTip = 'project structure template';
+  setTxtColor(projPrefTxt, sTxtColor);
+  var projTemplateDropArray = ['PROMO', 'custom'];
+  var projTemplateDrop = prefTabGrp.add('dropdownlist', undefined, projTemplateDropArray);
+  projTemplateDrop.selection = projMDropSel;
+
+  prefTabGrp.add('image', undefined, vSpacer);
+
+  var colorPrefTxt = prefTabGrp.add('statictext', undefined, 'colors');
+  colorPrefTxt.helpTip = 'ui colors';
+  setTxtColor(colorPrefTxt, sTxtColor);
+  var colorDropArray = [];
+  colorDropArray.push('menu');
+  colorDropArray.push('-');
+  colorDropArray.push('ctrl tab');
+  colorDropArray.push('anim tab');
+  colorDropArray.push('fx tab');
+  colorDropArray.push('text tab');
+  colorDropArray.push('pallet tab');
+  colorDropArray.push('layer tab');
+  colorDropArray.push('tool tab');
+  colorDropArray.push('project tab');
+  colorDropArray.push('links tab');
+  colorDropArray.push('prefs. tab');
+  var colorDrop = prefTabGrp.add('dropdownlist', undefined, colorDropArray);
+  colorDrop.selection = 0;
+  var tabColorBtn = prefTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  tabColorBtn.size = [20, 20];
+  setBtnColor(tabColorBtn, menuGrpColor);
+  tabColorBtn.onDraw = customDraw;
+
+  prefTabGrp.add('image', undefined, vSpacer);
+
+  var resetBtn = prefTabGrp.add('iconbutton', undefined, resetIcon, {style: 'toolbutton'});
+  resetBtn.helpTip = 'reset preferences';
+
+  prefTabGrp.add('image', undefined, vSpacer);
+
+  var aboutTxt = prefTabGrp.add('statictext', undefined, vStr);
+  aboutTxt.helpTip = aboutStr;
+  setTxtColor(aboutTxt, aboutTxtColor);
+
+  /*
+
+  ---------------------------------------------------------------
+  > ❌ error tab
+  ---------------------------------------------------------------
+
+  */
+
+  var errTxt = errTabGrp.add('statictext', undefined, '');
+  errTxt.characters = 60;
+  setTxtColor(errTxt, errTxtColor);
+
+  // close group...
+  var closeBtn = closeGrp.add('iconbutton', undefined, closeIcon, {style: 'toolbutton'});
+  closeBtn.helpTip = 'close';
+  var closeErrBtn = closeGrp.add('iconbutton', undefined, closeErrIcon, {style: 'toolbutton'});
+  closeErrBtn.helpTip = 'close';
+  closeErrBtn.visible = false;
+
+  /*
+
+  ---------------------------------------------------------------
+  >  progress tab
+  ---------------------------------------------------------------
+
+  */
+
+  var progTxt1 = progTabGrp.add('statictext', undefined, '');
+  progTxt1.characters = 16;
+  setTxtColor(progTxt1, sTxtColor);
+  var progTxt2 = progTabGrp.add('statictext', undefined, '');
+  progTxt2.characters = 16;
+  setTxtColor(progTxt2, sTxtColor);
+
+  var tabs = [];
+  // all tabs
+  tabs.push(ctrlTabGrp);
+  tabs.push(animTabGrp);
+  tabs.push(fxTabGrp);
+  tabs.push(txtTabGrp);
+  tabs.push(palletTabGrp);
+  tabs.push(layerTabGrp);
+  tabs.push(toolTabGrp);
+  tabs.push(projTabGrp);
+  tabs.push(linksTabGrp);
+  tabs.push(progTabGrp);
+  tabs.push(prefTabGrp);
+
+  var tabSubGrps = [];
+  // ctrl subgroups
+  tabSubGrps.push(nullGrp);
+  // animation subgroups
+  tabSubGrps.push(a2Grp);
+  // fx subgroups
+  tabSubGrps.push(bGrp);
+  tabSubGrps.push(gGrp);
+  tabSubGrps.push(dGrp);
+  tabSubGrps.push(nGrp);
+  // layers subgroups
+  tabSubGrps.push(lGrp);
+  // links subgroups
+  tabSubGrps.push(fGrp);
+  tabSubGrps.push(l1Grp);
+  tabSubGrps.push(l2Grp);
+  // text subgroups
+  tabSubGrps.push(t1Grp);
+  // project subgroups
+  tabSubGrps.push(sGrp);
+
+  //
+  w.layout.layout(true);
+
+  w.onShow = function() {
+
+    setLayout();
+  };
+
+  w.onResizing = w.onResize = function() {
+
+    setLayout();
+  };
+
+  var grp = menuGrp;
+  var bgColor = menuGrpColor;
+  setBgColor(bgColor);
+
+  /*
+
+  ---------------------------------------------------------------
+  > 📟 main menu events
+  ---------------------------------------------------------------
+
+  */
+
+  ctrlBtn.onClick = function() {
+
+    grp = ctrlTabGrp;
+    bgColor = ctrlTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  animBtn.onClick = function() {
+
+    grp = animTabGrp;
+    bgColor = animTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  fxBtn.onClick = function() {
+
+    grp = fxTabGrp;
+    bgColor = fxTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  txtBtn.onClick = function() {
+
+    grp = txtTabGrp;
+    bgColor = txtTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  palletBtn.onClick = function() {
+
+    grp = palletTabGrp;
+    bgColor = palletTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  layerBtn.onClick = function() {
+
+    grp = layerTabGrp;
+    bgColor = layerTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  toolBtn.onClick = function() {
+
+    grp = toolTabGrp;
+    bgColor = toolTabGrpColor;
+    openTab(grp, bgColor);
+  };
+  
+  projBtn.onClick = function() {
+    
+    projName = getXMPdata('title[1]');
+    projName = (projName == '') ? 'proj name' : projName;
+    projId = getXMPdata('identifier');
+    projId = (projId == '') ? 'proj id' : projId;
+    userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
+    
+    grp = projTabGrp;
+    bgColor = projTabGrpColor;
+    openTab(grp, bgColor);
+    projUserTxt.text = userPrefix;
+    projIdTxt.text = projId;
+    projNameTxt.text = projName;
+  };
+
+  linksBtn.onClick = function() {
+
+    grp = linksTabGrp;
+    bgColor = linksTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  prefBtn.onClick = function() {
+
+    userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
+    projUserPrefTxt.text = userPrefix;
+    grp = prefTabGrp;
+    bgColor = prefTabGrpColor;
+    openTab(grp, bgColor);
+  };
+
+  isolateBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+
+    if (aItem instanceof CompItem && selLayers.length > 0) {
+      app.beginUndoGroup('isolate layers');
+
+      for (i = 1; i <= aItem.numLayers; i++) {
+        var l = aItem.layer(i);
+
+        l.shy = true;
+      }
+      
+      for (i = 0; i < selLayers.length; i++) {
+        var sl = selLayers[i];
+
+        sl.shy = false;
+      }
+
+      aItem.hideShyLayers = !aItem.hideShyLayers;
+
+      app.endUndoGroup();
+    }
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🕹️ ctrl tab events
+  ---------------------------------------------------------------
+
+  */
+
+  upHBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var upArray = [];
+    var msg = 'comp not selected';
+
+    if (aItem instanceof CompItem) {
+      app.beginUndoGroup('select parent');
+
+      if (selLayers.length > 0) {
+
+        for (i = 0; i < selLayers.length; i++) {
+
+          if (selLayers[i].parent != null) {
+            upArray.push(selLayers[i].parent);
+          }
+        }
+        if (upArray.length > 0) {
+
+          for (i = 0; i < selLayers.length; i++) {
+            selLayers[i].selected = false;
+          }
+          for (i = 0; i < upArray.length; i++) {
+
+            if (upArray[i].shy && aItem.hideShyLayers) {
+              upArray[i].shy = false;
+            }
+            upArray[i].selected = true;
+          }
+        }
+      } else {
+
+        try {
+          aItem.layer('ctrl_comp').selected = true;
+
+        } catch (err) {}
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(ctrlTabGrp, msg);
+    }
+  };
+
+  dwnHBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var dwnArray = [];
+    var msg = 'comp not selected';
+
+    if (aItem instanceof CompItem) {
+      app.beginUndoGroup('select children');
+
+      if (selLayers.length > 0) {
+
+        for (i = 0; i < selLayers.length; i++) {
+
+          for (l = 1; l <= aItem.numLayers; l++) {
+            var lParent = aItem.layer(l).parent;
+
+            if (lParent == selLayers[i]) {
+              dwnArray.push(aItem.layer(l));
+            }
+          }
+        }
+        if (dwnArray.length > 0) {
+
+          for (i = 0; i < selLayers.length; i++) {
+            selLayers[i].selected = false;
+          }
+          for (i = 0; i < dwnArray.length; i++) {
+
+            if (dwnArray[i].shy && aItem.hideShyLayers) {
+              dwnArray[i].shy = false;
+            }
+            dwnArray[i].selected = true;
+          }
+        }
+      } else {
+
+        try {
+          aItem.layer('ctrl_comp').selected = true;
+
+        } catch (err) {}
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(ctrlTabGrp, msg);
+    }
+  };
+
+  nullShpBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var ctrlLayer;
+    var msg = 'comp not selected';
+
+    if (aItem instanceof CompItem) {
+      app.beginUndoGroup('create null');
+
+      if (selLayers.length > 0) {
+
+        for (l = 0; l < selLayers.length; l++) {
+          var selLayer = selLayers[l];
+
+          if (lDrop.selection == 0) {
+            ctrlLayer = createShp(1);
+
+          } else {
+            ctrlLayer = aItem.layers.addNull();
+          }
+          if (selLayer.hasTrackMatte) {
+            ctrlLayer.moveBefore(aItem.layer(selLayer.index - 1));
+
+          } else {
+            ctrlLayer.moveBefore(selLayer);
+          }
+          var prefixArray = getPrefixes();
+          var selName = selLayer.name;
+
+          for (p = 0; p < prefixArray.length; p++) {
+            selName = deletePrefix(selName, prefixArray[p]);
+          }
+          ctrlLayer.guideLayer = true;
+          ctrlLayer.name = nullPrefix + charPrefix;
+          ctrlLayer.name += replaceSpcChar(selName);
+
+          if (ctrlLayer.name == selLayer.name) {
+            var ctrlName = ctrlLayer.name;
+            ctrlLayer.name = nameInc(ctrlName);
+          }
+          setHierarchy(selLayer, ctrlLayer);
+          ctrlLayer.inPoint = selLayer.inPoint;
+          ctrlLayer.outPoint = selLayer.outPoint;
+
+          if (exprTogBtn.value) {
+            cloneExpressions(selLayer, ctrlLayer);
+          }
+          if (aniTogBtn.value) {
+            cloneKeys(selLayer, ctrlLayer);
+          }
+          ctrlLayer.label = 1;
+        }
+      } else {
+
+        if (lDrop.selection == 0) {
+          ctrlLayer = createShp(1);
+
+        } else {
+          ctrlLayer = aItem.layers.addNull();
+        }
+        ctrlLayer.guideLayer = true;
+        ctrlLayer.name = nullPrefix + charPrefix;
+        ctrlLayer.label = 1;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(ctrlTabGrp, msg);
+    }
+  };
+
+  nullCShpBtn.onClick = function() {
+
+    var posProp = 'ADBE Position';
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var lIndex = (aItem != null) ? aItem.numLayers : 0;
+    var ctrlLayer;
+    var msg = 'select more than one layer';
+
+    if (selLayers.length > 1) {
+
+      for (i = 0; i < selLayers.length; i++) {
+        selLayers[i].parent = null;
+
+        if (selLayers[i].index < lIndex) {
+          lIndex = i;
+        }
+      }
+      app.beginUndoGroup('create centered null');
+
+      if (lDrop.selection == 0) {
+        ctrlLayer = createShp(1);
+
+      } else {
+        ctrlLayer = aItem.layers.addNull();
+      }
+      var ctrlPos = ctrlLayer.property(trmProp).property(posProp);
+
+      ctrlLayer.guideLayer = true;
+      ctrlLayer.name = nullPrefix + charPrefix;
+      ctrlLayer.name += 'center';
+      ctrlPos.setValue(findCenter(selLayers));
+      ctrlLayer.moveBefore(selLayers[lIndex]);
+
+      for (i = 0; i < selLayers.length; i++) {
+        selLayers[i].parent = ctrlLayer;
+      }
+      ctrlLayer.label = 1;
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(ctrlTabGrp, msg);
+    }
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔥 fx tab events
+  ---------------------------------------------------------------
+
+  */
+
+  shpAdjBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayer = (aItem != null) ? aItem.selectedLayers[0] : null;
+    var adjLayer;
+    var msg = 'comp not selected';
+
+    if (aItem instanceof CompItem) {
+      app.beginUndoGroup('create adj layer');
+
+      var adjC = rgb(255, 255, 255);
+      var adjW = aItem.width;
+      var adjH = aItem.height;
+
+      if (lDrop.selection == 0) {
+        adjLayer = createShp(0);
+
+      } else {
+        adjLayer = aItem.layers.addSolid(adjC, '', adjW, adjH, 1.0);
+      }
+      if (selLayer != null) {
+        adjLayer.moveBefore(selLayer);
+        adjLayer.inPoint = selLayer.inPoint;
+        adjLayer.outPoint = selLayer.outPoint;
+      }
+      adjLayer.name = adjPrefix + charPrefix;
+      adjLayer.adjustmentLayer = true;
+      adjLayer.label = 5;
+
+      if (adjLayer instanceof AVLayer) {
+        var expStr = scaleToCompSize();
+        adjLayer.property(trmProp).property('ADBE Scale').expression = expStr;
+      }
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  curBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE CurvesCustom';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('curves');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  levBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Pro Levels2';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('levels');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  lumBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Lumetri';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('lumetri color');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  gaublurBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Gaussian Blur 2';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('gaussian blur');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  comblurBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Compound Blur';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('compound blur');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  lensblurBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Camera Lens Blur';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('lens blur');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  fillBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Fill';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('fill');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+        effect.property(3).setValue(randomColor()); // color
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  fracBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var fxName = 'ADBE Fractal Noise';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('fractal noise');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      var msg = 'layer not selected';
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  grainBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'VISINF Grain Implant';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('add grain');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  glassBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE 3D Glasses2';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('3d glasses');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var effect = selLayers[i].property(fxProp).addProperty(fxName);
+        effect.property(1).setValue(selLayers[i].index); // left view
+        effect.property(2).setValue(selLayers[i].index); // right view
+        effect.property(7).setValue(12); // 3d view
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(fxTabGrp, msg);
+    }
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔴 color tab events
+  ---------------------------------------------------------------
+
+  */
+
+  redBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Fill';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('red fill');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var palletFill = selLayers[i].property(fxProp).addProperty(fxName);
+        var expStr = '[0.725, 0.078, 0.078, 1];';
+        palletFill.name = 'GNEWS red';
+        palletFill.property('Color').setValue(GNEWS_RED);
+        palletFill.property('Color').expression = expStr;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletTabGrp, msg);
+    }
+  };
+
+  blkBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Fill';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('black fill');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var palletFill = selLayers[i].property(fxProp).addProperty(fxName);
+        var expStr = '[0.078, 0.078, 0.078, 1];';
+        palletFill.name = 'GNEWS black';
+        palletFill.property('Color').setValue(GNEWS_BLK);
+        palletFill.property('Color').expression = expStr;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletTabGrp, msg);
+    }
+  };
+
+  wteBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Fill';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('white fill');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var palletFill = selLayers[i].property(fxProp).addProperty(fxName);
+        var expStr = '[0.917, 0.917, 0.917, 1]';
+        palletFill.name = 'GNEWS white';
+        palletFill.property('Color').setValue(GNEWS_WTE);
+        palletFill.property('Color').expression = expStr;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletTabGrp, msg);
+    }
+  };
+
+  gryBtn1.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Fill';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('white fill');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var palletFill = selLayers[i].property(fxProp).addProperty(fxName);
+        var expStr = '[0.705, 0.705, 0.705, 1]';
+        palletFill.name = 'GNEWS gray 1';
+        palletFill.property('Color').setValue(rgb(180, 180, 180));
+        palletFill.property('Color').expression = expStr;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletTabGrp, msg);
+    }
+  };
+
+  gryBtn2.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Fill';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('white fill');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var palletFill = selLayers[i].property(fxProp).addProperty(fxName);
+        var expStr = '[0.431, 0.431, 0.431, 1]';
+        palletFill.name = 'GNEWS gray 2';
+        palletFill.property('Color').setValue(rgb(110, 110, 110));
+        palletFill.property('Color').expression = expStr;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletTabGrp, msg);
+    }
+  };
+
+  gryBtn3.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var fxName = 'ADBE Fill';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('white fill');
+
+      for (i = 0; i < selLayers.length; i++) {
+        var palletFill = selLayers[i].property(fxProp).addProperty(fxName);
+        var expStr = '[0.211, 0.211, 0.211, 1]';
+        palletFill.name = 'GNEWS gray 3';
+        palletFill.property('Color').setValue(rgb(54, 54, 54));
+        palletFill.property('Color').expression = expStr;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletTabGrp, msg);
+    }
+  };
+
+  shpPalletBtn.onClick = function() {
+  
+    var palletLayer = colorPallet();
+
+    palletLayer.name = 'pallet - GNEWS';
+    palletLayer.guideLayer = true;
+    palletLayer.locked = true;
+    palletLayer.property('ADBE Transform Group').position.setValue([0,0]);
+    palletLayer.property('ADBE Transform Group').position.expression('[0,0]');
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔠 text tab events
+  ---------------------------------------------------------------
+
+  */
+
+  txtUpperBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'no text layer is selected';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('text to upper case');
+
+      for (i = 0; i < selLayers.length; i++) {
+        setTxtCase(selLayers[i], 0);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(txtTabGrp, msg);
+    }
+  };
+
+  txtLowerBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'no text layer is selected';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('text to lower case');
+
+      for (i = 0; i < selLayers.length; i++) {
+        setTxtCase(selLayers[i], 1);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(txtTabGrp, msg);
+    }
+  };
+
+  txtTitleBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'no text layer is selected';
+
+    if (selLayers.length > 0) {
+
+      app.beginUndoGroup('text to title case');
+
+      for (i = 0; i < selLayers.length; i++) {
+        setTxtCase(selLayers[i], 2);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(txtTabGrp, msg);
+    }
+  };
+
+  limitSld.onChanging = function() {
+
+    limitTxt.text = parseInt(limitSld.value);
+    limitTxt2.text = parseInt(limitSld.value);
+  };
+
+  limitTxt2.onChanging = function() {
+
+    limitTxt.text = parseInt(limitTxt2.text);
+    limitSld.value = parseInt(limitTxt2.text);
+  };
+
+  limitSld.onChange = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+
+    if (aItem != null) {
+      app.beginUndoGroup('break text');
+
+      for (i = 0; i < selLayers.length; i++) {
+        lineBreak(selLayers[i], Number(limitTxt.text));
+      }
+
+      app.endUndoGroup();
+    }
+  };
+
+  limitTxt2.onChange = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+
+    if (aItem != null) {
+      app.beginUndoGroup('break text');
+
+      for (i = 0; i < selLayers.length; i++) {
+        lineBreak(selLayers[i], Number(limitTxt.text));
+      }
+
+      app.endUndoGroup();
+    }
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🧻 layer tab events
+  ---------------------------------------------------------------
+
+  */
+
+  renameLayersBtn.onClick = function() {
+
+    var iArray = getComps();
+    var assArray = iArray[0];
+    var aItem = app.project.activeItem;
+    var compArray = [aItem];
+    var msg = 'comp not selected';
+
+    if (aItem instanceof CompItem) {
+
+      for (i = 0; i < assArray.length; i++) {
+
+        if (assArray[i] == aItem) {
+          compArray = [];
+        }
+      }
+      app.beginUndoGroup('update names');
+
+      renameLayers(compArray);
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(projTabGrp, msg);
+    }
+  };
+
+  lockTrmBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('lock transform properties');
+
+      for (i = 0; i < selLayers.length; i++) {
+        lockTrmProp(selLayers[i]);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(layerTabGrp, msg);
+    }
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🔨 tools tab events
+  ---------------------------------------------------------------
+
+  */
+
+  counterBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var cntLayer;
+    var srcTxt;
+    var aniTxt;
+    var aniTxtProp;
+    var colorTxt;
+    var cnt = counter();
+    var expFx = cnt[0];
+    var expStr1 = cnt[1];
+    var expStr2 = cnt[2];
+    msg = 'comp not selected';
+
+    if (aItem != null) {
+      app.beginUndoGroup('counter rig');
+
+      if (selLayers.length > 0) {
+
+        for (i = 0; i < selLayers.length; i++) {
+
+          if (selLayers[i] instanceof TextLayer) {
+            cntLayer = selLayers[i];
+            srcTxt = cntLayer.property(txtProp).property(txtDoc);
+            aniTxt = cntLayer.property(txtProp).property('ADBE Text Animators');
+            aniTxt = aniTxt.addProperty('ADBE Text Animator');
+            aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
+            colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
+
+            aniTxt.name = 'counter color';
+            addPseudoEffect(cntLayer, 'GNEWS counter', 'counter', expFx);
+            srcTxt.expression = expStr1;
+            colorTxt.expression = expStr2;
+          }
+        }
+      } else {
+        cntLayer = aItem.layers.addText();
+        srcTxt = cntLayer.property(txtProp).property(txtDoc);
+
+        srcTxt.setValue('counter');
+        cntLayer.name = 'txt_counter';
+        aniTxt = cntLayer.property(txtProp).property('ADBE Text Animators');
+        aniTxt = aniTxt.addProperty('ADBE Text Animator');
+        aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
+        colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
+
+        aniTxt.name = 'counter color';
+        addPseudoEffect(cntLayer, 'GNEWS counter', 'counter', expFx);
+        srcTxt.expression = expStr1;
+        colorTxt.expression = expStr2;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(toolTabGrp, msg);
+    }
+  };
+
+  wigBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var wLayer;
+    var wProp;
+    var w = wig();
+    var expFx = w[0];
+    var expStr = w[1];
+    msg = 'comp not selected';
+
+    if (aItem != null) {
+      app.beginUndoGroup('wig rig');
+
+      if (selLayers.length > 0) {
+
+        for (i = 0; i < selLayers.length; i++) {
+          wLayer = selLayers[i];
+          wProp = wLayer.property(trmProp).property('ADBE Position');
+
+          addPseudoEffect(wLayer, 'WIG', 'wig', expFx);
+          wProp.expression = expStr;
+        }
+      } else {
+        msg = 'layer not selected';
+        showTabErr(toolTabGrp, msg);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(toolTabGrp, msg);
+    }
+  };
+
+  ikBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    msg = 'comp not selected';
+
+    if (aItem != null) {
+      app.beginUndoGroup('simple ik');
+
+      if (selLayers.length == 3) {
+
+        var bone1 = selLayers[0];
+        var bone2 = selLayers[1];
+        var bone3 = selLayers[2];
+
+        bone2.parent = bone1;
+        bone3.parent = bone2;
+
+        var bone1Pos = bone1.property(trmProp).property('ADBE Position').value;
+        var bone1Rot = bone1.property(trmProp).property('ADBE Rotate Z').value;
+        var bone3Pos = bone3.property(trmProp).property('ADBE Position').value;
+        var k = ik(bone1.name, bone2.name, bone3.name);
+        var expFx = k[0];
+        var expStr1 = k[1];
+        var expStr2 = k[2];
+        var expStr3 = k[3];
+        var expStr4 = k[4];
+
+        zeroLayer = aItem.layers.addShape();
+
+        if (lDrop.selection == 0) {
+          ctrlLayer = createShp(1);
+
+        } else {
+          ctrlLayer = aItem.layers.addNull();
+        }
+        zeroLayer.moveBefore(bone3);
+        zeroLayer.name = bone2.name + ' end';
+        zeroLayer.guideLayer = true;
+        zeroLayer.label = 2;
+        zeroLayer.parent = bone3.parent;
+        zeroLayer.property(trmProp).property('ADBE Position').setValue(bone3Pos);
+        zeroLayer.locked = true;
+        zeroLayer.shy = true;
+
+        ctrlLayer.moveBefore(bone3);
+        ctrlLayer.name = ctrlPrefix + charPrefix + bone3.name;
+        ctrlLayer.guideLayer = true;
+        ctrlLayer.label = 1;
+        ctrlLayer.parent = bone3.parent;
+        ctrlLayer.property(trmProp).property('ADBE Position').setValue(bone3Pos);
+        ctrlLayer.parent = bone1.parent;
+        ctrlLayer.parent = null;
+
+        bone3.parent = null;
+
+        addPseudoEffect(ctrlLayer, 'SIMPLE_IK', 'simple IK', expFx);
+        bone1.property(trmProp).property('ADBE Rotate Z').expression = expStr1;
+        bone2.property(trmProp).property('ADBE Rotate Z').expression = expStr2;
+        bone3.property(trmProp).property('ADBE Position').expression = expStr3;
+        bone3.property(trmProp).property('ADBE Rotate Z').expression = expStr4;
+
+        if (bone1.property(trmProp).property('ADBE Rotate Z').value != bone1Rot) {
+          ctrlLayer.property(fxProp).property('simple IK').property('flip orientation').setValue(true);
+        }
+      } else {
+        msg = 'select 3 layers in order';
+        showTabErr(toolTabGrp, msg);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(toolTabGrp, msg);
+    }
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > 🗃️ project tab events
+  ---------------------------------------------------------------
+
+  */
+
+  insertUserIdBtn.onClick = function() {
+
+    userPrefix = replaceSpcChar(projUserTxt.text.toUpperCase());
+    projId = replaceSpcChar(projIdTxt.text.toUpperCase());
+    projUserTxt.text = userPrefix;
+    projIdTxt.text = projId;
+
+    var msg = 'empty project';
+    var sysDate = system.callSystem('cmd.exe /c date /t');
+    var dateStr = sysDate.substring(0, sysDate.length-3);
+    var baseName = userPrefix + ' PROMO - ' + projId;
+    var itemArray = [];
+
+    if (app.project.numItems > 0) {
+      app.beginUndoGroup('quick rename ID');
+
+      for (k = 1; k <= app.project.numItems; k++) {
+        var aItem = app.project.item(k);
+
+        if (aItem.selected == true && aItem instanceof CompItem) {
+          itemArray.push(aItem);
+        }
+      }
+      for (c = 0; c < itemArray.length; c++) {
+        var qItem = itemArray[c];
+        qItem.name = qItem.name.replace(compPrefix + charPrefix, '');
+        qItem.name = qItem.name.replace(/^.*\w{3}\d{6}[\s\_]*/,'');
+        qItem.name = replaceSpcChar(qItem.name);
+        qItem.name = baseName + ' ' + qItem.name;
+
+        if (qItem.comment == '') {
+          qItem.comment = 'export: true';
+        }
+      }
+
+      app.endUndoGroup();
+    } else {
+      showTabErr(projTabGrp, msg);
+    }
+  };
+
+  renameItemBtn.onClick = function() {
+
+    userPrefix = replaceSpcChar(projUserTxt.text.toUpperCase());
+    projId = replaceSpcChar(projIdTxt.text.toUpperCase());
+    projName = replaceSpcChar(projNameTxt.text.toLowerCase());
+    projUserTxt.text = userPrefix;
+    projIdTxt.text = projId;
+    projNameTxt.text = projName;
+
+    var msg = 'empty project';
+    var sysDate = system.callSystem('cmd.exe /c date /t');
+    var dateStr = sysDate.substring(0, sysDate.length-3);
+
+    if (app.project.numItems > 0) {
+      app.beginUndoGroup('quick rename');
+
+      renameComps(projId, projName, getComps());
+      setXMPdata('creator', system.userName);
+      setXMPdata('date', dateStr);
+      setXMPdata('identifier', projId);
+      setXMPdata('title', projName);
+
+      app.endUndoGroup();
+    } else {
+      showTabErr(projTabGrp, msg);
+    }
+  };
+
+  projOrgBtn.onClick = function() {
+
+    if (app.project.numItems > 0) {
+      app.beginUndoGroup('quick project organization');
+
+      emptyFolders();
+      populateFolders();
+      deleteEmptyFolders();
+
+      app.endUndoGroup();
+    }
+  };
+
+  saveBtn.onClick = function() {
+
+    userPrefix = replaceSpcChar(projUserTxt.text.toUpperCase());
+    projId = replaceSpcChar(projIdTxt.text.toUpperCase());
+    projName = replaceSpcChar(projNameTxt.text.toLowerCase());
+    projUserTxt.text = userPrefix;
+    projIdTxt.text = projId;
+    projNameTxt.text = projName;
+
+    var msg = 'it\'s working...';
+
+    showTabProg(grp, msg);
+
+    var saveFolder = Folder.selectDialog();
+    var userStr = system.userName;
+    var sysDate = system.callSystem('cmd.exe /c date /t');
+    var dateStr = sysDate.substring(0, sysDate.length-3);
+
+    setXMPdata('creator', userStr);
+    setXMPdata('date', dateStr);
+    setXMPdata('identifier', projId);
+    setXMPdata('title', projName);
+
+    app.beginUndoGroup('quick save');
+
+    if (saveFolder != null) {
+      var savePath = saveFolder.fullName + '/';
+      var projFolder = saveFolder;
+      var projPath = savePath;
+      var projFullName = projId + ' ' + projName;
+      var projFile =  new File(projPath + projFullName);
+
+      if (collectTogBtn.value) {
+        projPath = saveFolder.fullName + '/' + projFullName + '/';
+        projFolder = new Folder(projPath);
+        projFile = new File(projPath + projFullName);
+
+        projFolder.create();
+        filesCollect(projPath);
+      }
+      if (collectFontsTogBtn.value) {
+        fontCollect(projPath);
+      }
+      app.project.save(projFile);
+      openFolder(projPath);
+    }
+    openTab(grp, bgColor);
+
+    app.endUndoGroup();
+  };
+
+  /*
+  
+  ---------------------------------------------------------------
+  > 🔗 links tab events
+  ---------------------------------------------------------------
+  
+  */
+ 
+  emailBtn.onClick = function() {
+    
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var site = 'https://outlook.office365.com/mail/';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openWebSite(site);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+ 
+  oneDriveBtn.onClick = function() {
+    
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var site = 'https://tvglobocorp-my.sharepoint.com/';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openWebSite(site);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+  
+  sharePointBtn.onClick = function() {
+    
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var site = 'https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openWebSite(site);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+  
+  trelloBtn.onClick = function() {
+
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var site = 'https://trello.com/promo126/home';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openWebSite(site);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+
+  typeFormBtn.onClick = function() {
+
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var site = 'https://tvglobo.typeform.com/to/wiqX4z0X';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openWebSite(site);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+
+  plannerBtn.onClick = function() {
+
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var site = 'https://tasks.office.com/tvglobocorp.onmicrosoft.com/en-US/Home/Planner/#/userboard';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openWebSite(site);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+
+  mamHardNewsBtn.onClick = function() {
+  
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var folderPath = '\\\\192.168.3.10\\';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openFolder(folderPath);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+
+  mamMagBtn.onClick = function() {
+  
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var folderPath = '\\\\192.168.3.10\\Share Point\\Para Ilha - Upload MAM Magazine';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openFolder(folderPath);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+
+  mamArteBtn.onClick = function() {
+  
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var folderPath = '\\\\192.168.3.10\\Share Point\\Para Arte - Download MAM Magazine';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openFolder(folderPath);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+
+  nUtilsBtn.onClick = function() {
+  
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var folderPath = '\\\\192.168.3.10\\';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+      openFolder(folderPath);
+
+    } else {
+      showTabErr(linksTabGrp, msg);
+    }
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > ⚙️ preferences tab events
+  ---------------------------------------------------------------
+
+  */
+
+  projUserPrefTxt.onChange = function() {
+
+    userPrefix = projUserPrefTxt.text.toUpperCase();
+    saveGPrefs();
+  };
+
+  lDrop.onChange = function() {
+
+    lDropSel = lDrop.selection.index;
+    saveGPrefs();
+  };
+
+  projTemplateDrop.onChange = function() {
+
+    projMDropSel = projTemplateDrop.selection.index;
+    saveGPrefs();
+  };
+
+  colorDrop.onChange = function() {
+
+    var c = getTabColors();
+    setBtnColor(tabColorBtn, c);
+    tabColorBtn.notify("onDraw");
+  };
+
+  tabColorBtn.onClick = function() {
+
+    var c = getTabColors();
+    var binColor = eval(rgbToHex(c));
+    var configColor = $.colorPicker(binColor);
+
+    if (configColor != -1) {
+      configColor = rgbStr(configColor);
+
+      switch (true) {
+        case colorDrop.selection == 0:
+          setBtnColor(tabColorBtn, eval(configColor));
+          menuGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 2:
+          setBtnColor(tabColorBtn, eval(configColor));
+          ctrlTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 3:
+          setBtnColor(tabColorBtn, eval(configColor));
+          animTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 4:
+          setBtnColor(tabColorBtn, eval(configColor));
+          fxTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 5:
+          setBtnColor(tabColorBtn, eval(configColor));
+          txtTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 6:
+          setBtnColor(tabColorBtn, eval(configColor));
+          palletTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 7:
+          setBtnColor(tabColorBtn, eval(configColor));
+          layerTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 8:
+          setBtnColor(tabColorBtn, eval(configColor));
+          toolTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 9:
+          setBtnColor(tabColorBtn, eval(configColor));
+          projTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 10:
+          setBtnColor(tabColorBtn, eval(configColor));
+          linksTabGrpColor = eval(configColor);
+          break;
+
+        case colorDrop.selection == 11:
+          setBtnColor(tabColorBtn, eval(configColor));
+          setBgColor(eval(configColor));
+          prefTabGrpColor = eval(configColor);
+          break;
+      }
+      saveGPrefs();
+    }
+  };
+
+  resetBtn.onClick = function functionName() {
+
+    forcePrefs();
+    saveGPrefs();
+
+    var c = getTabColors();
+
+    setBgColor(prefTabGrpColor);
+    setBtnColor(tabColorBtn, c);
+    tabColorBtn.notify("onDraw");
+  };
+
+  /*
+
+  ---------------------------------------------------------------
+  > close group events
+  ---------------------------------------------------------------
+
+  */
+
+  closeBtn.onClick = function() {
+
+    GNEWS_LOGO.visible = true;
+    closeBtn.visible = true;
+    prefGrp.visible = true;
+    closeErrBtn.visible = false;
+    menuGrp.visible = true;
+    grp = mainGrp;
+    bgColor = menuGrpColor;
+    errImgGrp.visible = false;
+
+    allGrpGone();
+    setBgColor(bgColor);
+  };
+
+  closeErrBtn.onClick = function() {
+
+    GNEWS_LOGO.visible = true;
+    closeBtn.visible = true;
+    closeErrBtn.visible = false;
+    errImgGrp.visible = false;
+  
+    clearOutput();
+    allGrpGone();
+    openTab(grp, bgColor);
+  };
+
+  return w;
+}

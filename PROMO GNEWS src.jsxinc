@@ -1,0 +1,2233 @@
+/*
+
+---------------------------------------------------------------
+# general functions
+---------------------------------------------------------------
+
+*/
+
+//  linter settings:
+//  jshint -W061
+//  jshint -W085
+
+function getTempFld() {
+
+  try {
+    var tempFld = new Folder(Folder.userData.toString() + '/temp');
+
+    if (!tempFld.exists) {
+      tempFld.create();
+    }
+    return tempFld.fullName;
+
+  } catch (err) {
+    alert('can\'t find temp folder');
+  }
+}
+
+function createPresetFile(tempFld, fileName, binStr) {
+
+  try {
+    var myFile = new File(tempFld + '/' + fileName);
+
+    myFile.encoding = 'BINARY';
+    myFile.open('w');
+    myFile.write(binStr);
+    myFile.close();
+
+    return myFile;
+
+  } catch (err) {}
+}
+
+function addPseudoEffect(aLayer, fxMatchName, fxName, binStr) {
+
+  var fx = {
+    matchName: fxMatchName,
+    presetName: fxName,
+    presetBinary: [binStr]
+  };
+  var tempFld = getTempFld();
+  var aPreset = createPresetFile(tempFld, fx.presetName, fx.presetBinary);
+
+  aLayer.applyPreset(File(aPreset));
+
+  return tempFld;
+}
+
+// open url...
+function openWebSite(url) {
+
+  var os = $.os;
+  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+
+  if (appOs == 'Win') {
+    system.callSystem('explorer ' + url);
+
+  } else {
+    system.callSystem('open ' + url);
+  }
+}
+
+// open system folder...
+function openFolder(folderPath) {
+
+  var os = $.os;
+  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+  
+  var folder = Folder(folderPath);
+  
+  if (appOs == 'Win') {
+  system.callSystem('explorer ' + Folder.decode(folder.fsName));
+  
+  } else {
+  system.callSystem('open "' + Folder.decode(folder.fsName) + '"');
+  }
+}
+
+// cria shape layers (shp_nulls e adj_layers)..
+function createShp(shpType) {
+
+  var aItem = app.project.activeItem;
+  var shpLayer = aItem.layers.addShape();
+  var shpGroup = shpLayer.property('ADBE Root Vectors Group');
+  var shpRect = shpGroup.addProperty('ADBE Vector Shape - Rect');
+  var expStr = '[thisComp.width, thisComp.height];';
+  var redStr = '[0.725, 0.078, 0.078, 1];';
+
+  switch (shpType) {
+
+    case(0):
+      shpRect.name = 'adjustment';
+      shpRect.property('ADBE Vector Rect Size').setValue([aItem.width, aItem.height]);
+      shpRect.property('ADBE Vector Rect Size').expression = expStr;
+
+      var shpFill = shpGroup.addProperty('ADBE Vector Graphic - Fill');
+      shpFill.property('ADBE Vector Fill Color').setValue([1, 1, 1, 1]);
+      shpFill.name = 'fill';
+      break;
+
+    case(1):
+      shpRect.name = 'null';
+      shpRect.property('ADBE Vector Rect Size').setValue([100, 100]);
+      break;
+
+    case(2):
+      shpRect.name = 'pallet';
+      shpRect.property('ADBE Vector Rect Size').setValue([50, 50]);
+
+      var palletFill = shpGroup.addProperty('ADBE Vector Graphic - Fill');
+      palletFill.property('ADBE Vector Fill Color').setValue([0.725, 0.078, 0.078, 1]);
+      palletFill.property('ADBE Vector Fill Color').expression = redStr;
+
+      palletFill.name = 'GNEWS RED';
+      break;
+  
+    }
+
+  return shpLayer;
+}
+
+function colorPallet() {
+
+  var redStr = '[0.725, 0.078, 0.078, 1];';
+  var blkStr = '[0.078, 0.078, 0.078, 1];';
+  var wteStr = '[0.8, 0.8, 0.8, 1];';
+  // var palletSize = 100;
+  // var palletGap = 20;
+
+  var aItem = app.project.activeItem;
+  var shpLayer = aItem.layers.addShape();
+  var contents = shpLayer.property('ADBE Root Vectors Group');
+
+  var redGrp = contents.addProperty('ADBE Vector Group');
+  var redShp = redGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Rect');
+  var redFill = redGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Fill');
+  redFill.property('ADBE Vector Fill Color').setValue([0.725, 0.078, 0.078, 1]);
+  redFill.property('ADBE Vector Fill Color').expression = redStr;
+  redGrp.property('ADBE Vector Transform Group').position.setValue([60,60]);
+  redGrp.name = 'RED';
+  redFill.name = 'GNEWS RED';
+
+  var blkGrp = contents.addProperty('ADBE Vector Group');
+  blkGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Rect');
+  var blkFill = blkGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Fill');
+  blkFill.property('ADBE Vector Fill Color').setValue([0.078, 0.078, 0.078, 1]);
+  blkFill.property('ADBE Vector Fill Color').expression = blkStr;
+  blkGrp.property('ADBE Vector Transform Group').position.setValue([170,60]);
+  blkGrp.name = 'BLACK';
+  blkFill.name = 'GNEWS BLACK';
+
+  var wteGrp = contents.addProperty('ADBE Vector Group');
+  wteGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Rect');
+  var wteFill = wteGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Fill');
+  wteFill.property('ADBE Vector Fill Color').setValue([0.8, 0.8, 0.8, 1]);
+  wteFill.property('ADBE Vector Fill Color').expression = wteStr;
+  wteGrp.property('ADBE Vector Transform Group').position.setValue([280,60]);
+  wteGrp.name = 'WHITE';
+  wteFill.name = 'GNEWS WHITE';
+
+  return shpLayer;
+}
+
+// reposiciona e parenteia um layer mantendo a hierarquia...
+function setHierarchy(selLayer, ctrlLayer) {
+
+  var trmProp = 'ADBE Transform Group';
+  var posProp = 'ADBE Position';
+  var selLayerTrm = selLayer.property(trmProp);
+  var selLayerPos = selLayerTrm.property(posProp);
+  var ctrlLayerTrm = ctrlLayer.property(trmProp);
+  var ctrlLayerPos = ctrlLayerTrm.property(posProp);
+
+  if (selLayer.parent != null) {
+    ctrlLayer.parent = selLayer.parent;
+  }
+  if (selLayer.threeDLayer || selLayer instanceof LightLayer) {
+    ctrlLayer.threeDLayer = true;
+  }
+  ctrlLayerPos.setValue(selLayerPos.value);
+
+  if (selLayer instanceof CameraLayer) {
+    ctrlLayer.threeDLayer = true;
+  }
+  selLayer.parent = ctrlLayer;
+
+  for (i = 1; i <= selLayerTrm.numProperties; i++) {
+
+    if (selLayerTrm.property(i).dimensionsSeparated) {
+      ctrlLayerTrm.property(i).dimensionsSeparated = true;
+    }
+  }
+}
+
+function chkArray(aArray, aElement) {
+
+  var chk = true;
+
+  for (i = 0; i < aArray.length; i++) {
+
+    if (aArray[i] == aElement) {
+      chk = false;
+      break;
+    }
+  }
+
+  return chk;
+}
+
+function chkDep() {
+
+  var itemSelection = false;
+  var layerSelection = false;
+  var projectItens = false;
+
+  if (app.project.numItems > 0) {
+    var aItem = app.project.activeItem;
+    projectItens = true;
+
+    if (aItem != undefined) {
+      var selLayers = aItem.selectedLayers;
+      itemSelection = true;
+
+      if (selLayers != false) {
+        layerSelection = true;
+      }
+    }
+  }
+  return [projectItens, itemSelection, layerSelection];
+}
+
+// lock transform properties
+function lockTrmProp(selLayer) {
+
+  var trmProp = 'ADBE Transform Group';
+  var selLayerTrm = selLayer.property(trmProp);
+  var expStr = '';
+
+  for (p = 1; p <= selLayerTrm.numProperties; p++) {
+    var prop = selLayerTrm.property(p);
+
+    if (prop.canSetExpression) {
+
+      if (prop.expression == '' && prop.numKeys == 0) {
+        var val = prop.value;
+
+        if (val.length > 0) {
+          expStr = '// locked\n[' + val.toString() + '];';
+        } else {
+          expStr = '// locked\n' + val.toString() + ';';
+        }
+        prop.expression = expStr;
+      }
+    }
+  }
+}
+
+// clone expressions...
+function cloneExpressions(selLayer, ctrlLayer) {
+
+  var trmProp = 'ADBE Transform Group';
+  var posProp = 'ADBE Position';
+  var opaProp = 'ADBE Opacity';
+  var selLayerTrm = selLayer.property(trmProp);
+  var ctrlLayerTrm = ctrlLayer.property(trmProp);
+  selLayer.parent = ctrlLayer.parent;
+
+  for (p = 1; p <= selLayerTrm.numProperties; p++) {
+    var selLayerProp = selLayerTrm.property(p);
+    var ctrlLayerProp = ctrlLayerTrm.property(p);
+
+    if (selLayerProp.expression != '' && selLayerProp.matchName != opaProp) {
+      var expStr = selLayerProp.expression;
+      selLayerProp.expression = '';
+
+      try {
+        ctrlLayerProp.setValue(selLayerProp.value);
+
+      } catch (err) {}
+      ctrlLayerTrm.property(p).expression = expStr;
+
+      if (selLayerProp.matchName == posProp) {
+        selLayerProp.setValue(ctrlLayerProp.value);
+      }
+    }
+  }
+  selLayer.parent = ctrlLayer;
+}
+
+// set keyframe properties...
+function setKeys(selLayerProp, ctrlLayerProp) {
+
+  for (k = 1; k <= selLayerProp.numKeys; k++) {
+
+    var t = selLayerProp.keyTime(k);
+    var v = selLayerProp.keyValue(k);
+    ctrlLayerProp.setValueAtTime(t, v);
+
+    var tInTArray = selLayerProp.keyInTemporalEase(k);
+    var tOutTArray = selLayerProp.keyOutTemporalEase(k);
+    ctrlLayerProp.setTemporalEaseAtKey(k, tInTArray, tOutTArray);
+
+    var kInIType = selLayerProp.keyInInterpolationType(k);
+    var kOutIType = selLayerProp.keyOutInterpolationType(k);
+    ctrlLayerProp.setInterpolationTypeAtKey(k, kInIType, kOutIType);
+
+    if (selLayerProp.isSpatial) {
+      var kInSArray = selLayerProp.keyInSpatialTangent(k);
+      var kOutSArray = selLayerProp.keyOutSpatialTangent(k);
+      ctrlLayerProp.setSpatialTangentsAtKey(k, kInSArray, kOutSArray);
+      var ct = selLayerProp.keySpatialContinuous(k);
+      ctrlLayerProp.setSpatialContinuousAtKey(k, ct);
+    }
+  }
+}
+
+// clone keyframes...
+function cloneKeys(selLayer, ctrlLayer) {
+
+  var trmProp = 'ADBE Transform Group';
+  var opaProp = 'ADBE Opacity';
+
+  var selLayerTrm = selLayer.property(trmProp);
+  var ctrlLayerTrm = ctrlLayer.property(trmProp);
+
+  selLayer.parent = ctrlLayer.parent;
+
+  for (p = 1; p <= selLayerTrm.numProperties; p++) {
+    var selLayerProp = selLayerTrm.property(p);
+    var ctrlLayerProp = ctrlLayerTrm.property(p);
+
+    if (selLayerProp.numKeys != 0 && selLayerProp.matchName != opaProp) {
+
+      if (selLayerProp.dimensionsSeparated) {
+        ctrlLayerProp.dimensionsSeparated = true;
+
+        for (d = 0; d < selLayerProp.value.length; d++) {
+          var selLayerPropD = selLayerProp.getSeparationFollower(d);
+          var ctrlLayerPropD = ctrlLayerProp.getSeparationFollower(d);
+          setKeys(selLayerPropD, ctrlLayerPropD);
+        }
+      } else {
+        setKeys(selLayerProp, ctrlLayerProp);
+      }
+      for (k = 1; k <= ctrlLayerProp.numKeys; k++) {
+        selLayerProp.removeKey(1);
+      }
+      try {
+        selLayerProp.setValue(ctrlLayerProp.value);
+
+      } catch (err) {}
+    }
+  }
+  selLayer.parent = ctrlLayer;
+}
+
+// find center point...
+function findCenter(lArray) {
+
+  var trmProp = 'ADBE Transform Group';
+  var posProp = 'ADBE Position';
+
+  var maxY = 0;
+  var minY = 0;
+  var maxX = 0;
+  var minX = 0;
+  var maxZ = 0;
+  var minZ = 0;
+
+  for (i = 0; i < lArray.length; i++) {
+    var aLayer = lArray[i];
+    var lPos = aLayer.property(trmProp).property(posProp);
+    var lPosX = lPos.value[0];
+    var lPosY = lPos.value[1];
+    var lPosZ = lPos.value[2];
+
+    if (i == 0) {
+      maxX = lPosX;
+      minX = lPosX;
+      maxY = lPosY;
+      minY = lPosY;
+      minZ = lPosZ;
+      minZ = lPosZ;
+
+    } else {
+      if (lPosX > maxX) {
+        maxX = lPosX;
+      } else if (lPosX < minX) {
+        minX = lPosX;
+      }
+      if (lPosY > maxY) {
+        maxY = lPosY;
+      } else if (lPosY < minY) {
+        minY = lPosY;
+      }
+      if (lPosZ > maxZ) {
+        maxZ = lPosZ;
+      } else if (lPosZ < minZ) {
+        minZ = lPosZ;
+      }
+    }
+  }
+  var cPos = [];
+  cPos.push(minX + (maxX - minX) / 2);
+  cPos.push(minY + (maxY - minY) / 2);
+  cPos.push(minZ + (maxZ - minZ) / 2);
+
+  return cPos;
+}
+
+// returns a random integer...
+function getRndInteger(min, max) {
+
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+/*
+
+---------------------------------------------------------------
+# string functions
+---------------------------------------------------------------
+
+*/
+
+// sets the text case (upper, lower e title)...
+function titleCase(str) {
+
+  str = str.toLowerCase().split(' ');
+
+  for (i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+  }
+  return str.join(' ');
+}
+
+function setTxtCase(selLayer, caseType) {
+
+  var txtProp = 'ADBE Text Properties';
+  var txtDoc = 'ADBE Text Document';
+
+  if (selLayer instanceof TextLayer) {
+    var srcTxt = selLayer.property(txtProp).property(txtDoc);
+    var txt = srcTxt.value;
+
+    switch (caseType) {
+
+      case(0):
+        srcTxt.setValue(txt.toString().toUpperCase());
+        break;
+
+      case(1):
+        srcTxt.setValue(txt.toString().toLowerCase());
+        break;
+
+      case(2):
+        srcTxt.setValue(titleCase(txt.toString()));
+    }
+  } else {
+
+    return false;
+  }
+}
+
+// breaks text based on a character limit...
+function lineBreak(selLayer, inputLimit) {
+
+  inputLimit = Math.floor(inputLimit);
+
+  if (selLayer instanceof TextLayer) {
+
+    var srcTxt = selLayer.property(txtProp).property(txtDoc);
+    var txt = srcTxt.value.toString().replace(/\n|\r|\t|\v/g, ' ');
+    var txt2 = '';
+    var wrdArray = txt.split(' ');
+
+    for (i = 0; i < wrdArray.length; i++) {
+      var letterCount = wrdArray[i].length;
+
+      if (letterCount >= inputLimit) {
+        inputLimit = letterCount + 1;
+      }
+    }
+    while (txt.length > inputLimit) {
+
+      for (i = inputLimit; i > 0; i--) {
+
+        if (txt[i] == ' ') {
+          txt2 += txt.substring(0, i);
+          txt = '\n' + trim(txt.substring(i + 1, txt.length));
+          break;
+        }
+      }
+    }
+    srcTxt.setValue(txt2 + txt);
+  }
+}
+
+// date shortener...
+function replaceDateTxt(str) {
+
+  str = str.replace(/SEGUNDA/, 'SEG');
+  str = str.replace(/TERÇA|TER\u00C7A|TERCA/, 'TER');
+  str = str.replace(/QUARTA/, 'QUA');
+  str = str.replace(/QUINTA/, 'QUI');
+  str = str.replace(/SEXTA/, 'SEX');
+  str = str.replace(/SÁBADO|S\u00C1BADO|SABADO/, 'SAB');
+  str = str.replace(/DOMINGO/, 'DOM');
+
+  str = str.replace(/ DE/, '');
+  str = str.replace(/JANEIRO/, 'JAN');
+  str = str.replace(/FEVEREIRO/, 'FEV');
+  str = str.replace(/MARÇO|MAR\u00C7O|MARCO/, 'MAR');
+  str = str.replace(/ABRIL/, 'ABR');
+  str = str.replace(/MAIO/, 'MAI');
+  str = str.replace(/JUNHO/, 'JUN');
+  str = str.replace(/JULHO/, 'JUL');
+  str = str.replace(/AGOSTO/, 'AGO');
+  str = str.replace(/SETEMBRO/, 'SET');
+  str = str.replace(/OUTUBRO/, 'OUT');
+  str = str.replace(/NOVEMBRO/, 'NOV');
+  str = str.replace(/DEZEMBRO/, 'DEZ');
+
+  return str;
+}
+
+function trim(str) {
+
+  return str.replace(/^\s+|\s+$/gm, '');
+}
+
+function deleteFileExt(str) {
+
+  return str.replace(/\.[0-9a-z]+$/i, '');
+}
+
+function getFileExt(str) {
+
+  return str.match(/\.[0-9a-z]+$/i).toString().toLowerCase();
+}
+
+// replaces most of the special characters...
+function replaceSpcChar(str) {
+
+  str = str.replace(/À|Á|Â|Ã|Ä|\u00C0|\u00C1|\u00C2|\u00C3|\u00C4/g, 'A');
+  str = str.replace(/à|á|â|ã|ä|\u00E0|\u00E1|\u00E2|\u00E3|\u00E4/g, 'a');
+  str = str.replace(/È|É|Ê|Ë|\u00C8|\u00C9|\u00CA|\u00CB/g, 'E');
+  str = str.replace(/è|é|ê|ë|\u00E8|\u00E9|\u00EA|\u00EB/g, 'e');
+  str = str.replace(/Ì|Í|Î|Ï|\u00CC|\u00CD|\u00CE|\u00CF/g, 'I');
+  str = str.replace(/ì|í|î|ï|\u00EC|\u00ED|\u00EE|\u00EF/g, 'i');
+  str = str.replace(/Ò|Ó|Ô|Õ|Ö|\u00D2|\u00D3|\u00D4|\u00D5|\u00D6/g, 'O');
+  str = str.replace(/ò|ó|ô|õ|ö|\u00F2|\u00F3|\u00F4|\u00F5|\u00F6/g, 'o');
+  str = str.replace(/Ù|Ú|Û|Ü|\u00D9|\u00DA|\u00DB|\u00DC/g, 'U');
+  str = str.replace(/ù|ú|û|ü|\u00F9|\u00FA|\u00FB|\u00FC/g, 'u');
+  str = str.replace(/Ç|\u00C7/g, 'C');
+  str = str.replace(/ç|\u00E7/g, 'c');
+  str = str.replace(/\n|\r/g, ' '); // replaces line breaks...
+  str = str.replace(/\_|-|\|/g, ' ');
+  str = str.replace(/[\s]{2,}/g, ' '); // replaces 2 or more spaces...
+  str = str.replace(/[^\w\s]/ig, ''); // replaces any non-word character except space...
+
+  return trim(str);
+}
+
+function deletePrefix(str, prefixStr) {
+
+  var patStr = 'new RegExp(/(' + prefixStr + '(\\' + charPrefix + '|\\s)*)+/)';
+  var pat = eval(patStr);
+
+  return str.replace(pat, '');
+}
+
+/*
+
+---------------------------------------------------------------
+# project organization and renaming
+---------------------------------------------------------------
+
+*/
+
+function emptyFolders() {
+
+  for (i = app.project.numItems; i >= 1; i--) {
+    var rFolder = app.project.rootFolder;
+    var aItem = app.project.item(i);
+
+    if (aItem instanceof FolderItem) {
+
+      while (aItem.numItems > 0) {
+        aItem.item(1).parentFolder = rFolder;
+      }
+    }
+  }
+}
+
+function getComps() {
+
+  var compArray = [];
+  var precompArray = [];
+  var assArray = [];
+  var expArray = [];
+  var GArray = [];
+  var pushChk;
+
+  for (i = 1; i <= app.project.numItems; i++) {
+    var aItem = app.project.item(i);
+    var expCheck = itemSetting(aItem, 'export');
+
+    if (aItem instanceof CompItem) {
+      var cItem = aItem;
+      pushChk = true;
+
+      for (l = 1; l <= cItem.numLayers; l++) {
+        var cLayer = cItem.layer(l);
+
+        if (cLayer.name == 'ctrl_comp') {
+
+          // get all different comp templates...
+          switch (true) {
+
+            case(cLayer.effect('servico') != undefined):
+              assArray.push(cItem);
+              pushChk = false;
+              break;
+
+            case(cLayer.effect('GNEWS logo') != undefined):
+              GArray.push(cItem);
+              pushChk = false;
+              break;
+          }
+        }
+      }
+      if (pushChk) {
+        compArray.push(cItem);
+      }
+    }
+    if (expCheck) {
+      expArray.push(aItem);
+    }
+  }
+  for (i = 0; i < compArray.length; i++) {
+    var pItem = compArray[i];
+    pushChk = false;
+
+    for (l = 1; l <= pItem.numLayers; l++) {
+      var pLayer = pItem.layer(l);
+
+      for (a = 0; a < assArray.length; a++) {
+
+        if (pLayer.source == assArray[a]) {
+          expArray.push(pItem);
+          pushChk = true;
+          break;
+        }
+      }
+    }
+    if (!pushChk) {
+      precompArray.push(pItem);
+    }
+  }
+  return [assArray, expArray, precompArray, GArray];
+}
+
+function getFootage() {
+
+  var stillArray = [];
+  var footageArray = [];
+  var sonoArray = [];
+  var solidArray = [];
+  var missingArray = [];
+
+  for (i = app.project.numItems; i >= 1; i--) {
+    var aItem = app.project.item(i);
+
+    if (aItem instanceof FootageItem) {
+
+      if (!aItem.footageMissing) {
+
+        switch (true) {
+          case (aItem.mainSource instanceof FileSource):
+
+          switch (true) {
+            case (aItem.mainSource.isStill):
+              stillArray.push(aItem);
+              break;
+
+            case (aItem.hasVideo):
+              footageArray.push(aItem);
+              break;
+
+            default:
+              sonoArray.push(aItem);
+          }
+          break;
+
+          case (aItem.mainSource instanceof SolidSource):
+            solidArray.push(aItem);
+            break;
+        }
+      } else {
+        missingArray.push(aItem.name);
+      }
+    }
+  }
+
+  return [stillArray, footageArray, sonoArray, solidArray, missingArray];
+}
+
+// creates the project folder structure...
+function projectTemplate(template) {
+
+  var rndFolder; // render folder...
+  var assFolder; // packshot comps folder...
+  var ftgFolder; // footage folder...
+  var imgFolder; // images folder...
+  var snoFolder; // sounds folder...
+  var solFolder; // solids folder...
+  var comFolder; // precomps folder...
+  var astFolder; // assets folder...
+  var GFolder; // GNEWS logo folder...
+  var fldArray = [];
+  var rFolder = app.project.rootFolder; // project root folder
+
+  switch (template) {
+
+    case (0):
+      rndFolder = rFolder;
+      astFolder = app.project.items.addFolder('_MATERIAL');
+      comFolder = app.project.items.addFolder('Comps');
+      comFolder.parentFolder = astFolder;
+      GFolder = app.project.items.addFolder('Marca GNEWS');
+      GFolder.parentFolder = astFolder;
+      assFolder = app.project.items.addFolder('Assinaturas');
+      assFolder.parentFolder = astFolder;
+      ftgFolder = app.project.items.addFolder('Videos');
+      ftgFolder.parentFolder = astFolder;
+      imgFolder = app.project.items.addFolder('Images');
+      imgFolder.parentFolder = astFolder;
+      snoFolder = app.project.items.addFolder('Sounds');
+      snoFolder.parentFolder = astFolder;
+      solFolder = app.project.items.addFolder('Solids');
+      solFolder.parentFolder = astFolder;
+      break;
+
+    case (1):
+      rndFolder = app.project.items.addFolder('---- render ----');
+      assFolder = app.project.items.addFolder('assinaturas');
+      assFolder.parentFolder = rndFolder;
+      astFolder = app.project.items.addFolder('assets');
+      GFolder = app.project.items.addFolder('marca GNEWS');
+      GFolder.parentFolder = astFolder;
+      ftgFolder = app.project.items.addFolder('footage');
+      ftgFolder.parentFolder = astFolder;
+      imgFolder = app.project.items.addFolder('images');
+      imgFolder.parentFolder = ftgFolder;
+      snoFolder = app.project.items.addFolder('sounds');
+      snoFolder.parentFolder = ftgFolder;
+      solFolder = app.project.items.addFolder('solids');
+      solFolder.parentFolder = astFolder;
+      comFolder = app.project.items.addFolder('precomps');
+      comFolder.parentFolder = astFolder;
+      break;
+  }
+  fldArray.push(rndFolder);
+  fldArray.push(assFolder);
+  fldArray.push(ftgFolder);
+  fldArray.push(imgFolder);
+  fldArray.push(snoFolder);
+  fldArray.push(solFolder);
+  fldArray.push(comFolder);
+  fldArray.push(GFolder);
+
+  return fldArray;
+}
+
+function populateFolders() {
+
+  var p = parseInt(projTemplateDrop.selection);
+
+  var comps = getComps();
+  var footage = getFootage();
+  var folders = projectTemplate(p);
+
+  var ass = comps[0];
+  var exp = comps[1];
+  var com = comps[2];
+  var G = comps[3];
+
+  var stl = footage[0];
+  var ftg = footage[1];
+  var sno = footage[2];
+  var sol = footage[3];
+  var mis = footage[4];
+
+  var rndFolder = folders[0];
+  var assFolder = folders[1];
+  var ftgFolder = folders[2];
+  var imgFolder = folders[3];
+  var snoFolder = folders[4];
+  var solFolder = folders[5];
+  var comFolder = folders[6];
+  var GFolder = folders[7];
+
+  var fileArray = [];
+  var fldArray = [];
+  var sameFileArray = [];
+  var doneArray = [];
+  var iFolder;
+  var fileStr;
+
+  // TODO: make function...
+
+  if (com.length > 0) {
+    for (c = 0; c < com.length; c++) {
+      com[c].parentFolder = comFolder;
+    }
+  }
+  if (G.length > 0) {
+    for (g = 0; g < G.length; g++) {
+      G[g].parentFolder = GFolder;
+    }
+  }
+  if (exp.length > 0) {
+    for (e = 0; e < exp.length; e++) {
+      exp[e].parentFolder = rndFolder;
+    }
+  }
+  if (ass.length > 0) {
+    for (a = 0; a < ass.length; a++) {
+      ass[a].parentFolder = assFolder;
+    }
+  }
+  if (ftg.length > 0) {
+    for (f = 0; f < ftg.length; f++) {
+      ftg[f].parentFolder = ftgFolder;
+    }
+  }
+  if (stl.length > 0) {
+
+    for (s = 0; s < stl.length; s++) {
+
+      if (chkArray(doneArray, stl[s])) {
+        stl[s].parentFolder = imgFolder;
+        sameFileArray = [stl[s]];
+
+        for (f = 0; f < stl.length; f++) {
+
+          if (f != s && stl[f].file.toString() == stl[s].file.toString()) {
+            sameFileArray.push(stl[f]);
+          }
+        }
+        if (sameFileArray.length > 1) {
+          fileStr = decodeURI(stl[s].file.name);
+          fileStr = deleteFileExt(fileStr) + ' layers';
+          iFolder = app.project.items.addFolder(fileStr);
+          iFolder.parentFolder = imgFolder;
+
+          for (c = 0; c < sameFileArray.length; c++) {
+            sameFileArray[c].parentFolder = iFolder;
+            doneArray.push(sameFileArray[c]);
+          }
+        }
+      }
+    }
+  }
+  if (sno.length > 0) {
+
+    for (s = 0; s < sno.length; s++) {
+      sno[s].parentFolder = snoFolder;
+    }
+  }
+  if (sol.length > 0) {
+
+    for (s = 0; s < sol.length; s++) {
+      sol[s].parentFolder = solFolder;
+    }
+  }
+  if (mis.length > 0) {
+    var missingStr = '';
+
+    for (m = 0; m < mis.length; m++) {
+      missingStr += '\n    ' + mis[m];
+    }
+    alert('some files are missing:' + missingStr);
+  }
+}
+
+function deleteEmptyFolders() {
+
+  for (i = app.project.numItems; i >= 1; i--) {
+    var aItem = app.project.item(i);
+
+    if (aItem instanceof FolderItem && aItem.numItems == 0) {
+      aItem.remove();
+    }
+  }
+}
+
+function fileArrayCopyAndReplace(ftgItemArray, folder) {
+
+  var ftgFile;
+  var ftgCFile;
+  var fldFilesArray;
+  var fileName;
+  var fileCName;
+  var ftgExt;
+  var sameFileArray = [];
+  var doneArray = [];
+  var layerFilesArray = [];
+
+  if (!folder.exists) {
+    folder.create();
+  }
+  for (i = 0; i < ftgItemArray.length; i++) {
+    ftgFile = ftgItemArray[i].file;
+    sameFileArray = [ftgItemArray[i]];
+
+    for (f = 0; f < ftgItemArray.length; f++) {
+      var testFile = ftgItemArray[f].file;
+
+      if (i != f && decodeURI(ftgFile) == decodeURI(testFile)) {
+        sameFileArray.push(ftgItemArray[f]);
+      }
+    }
+    if (chkArray(doneArray, ftgItemArray[i])) {
+
+      if (decodeURI(ftgFile.path) != decodeURI(folder.fullName)) {
+        fldFilesArray = folder.getFiles();
+        fileName = deleteFileExt(decodeURI(ftgFile.name));
+        fileCName = fileName;
+        ftgExt = getFileExt(decodeURI(ftgFile.name));
+        ftgCFile = new File(folder.fullName + '/' + fileCName + ftgExt);
+
+        if (ftgCFile.exists) {
+
+          for (a = 0; a < fldFilesArray.length; a++) {
+            var fName = fileName.replace(/[ copy ]+[0-9]/g, '') + ftgExt;
+            var fAName = deleteFileExt(decodeURI(fldFilesArray[a].name));
+            fAName = fAName.replace(/[ copy ]+[0-9]/g, '') + ftgExt;
+
+            if (fName == fAName) {
+              fileCName = fileName + ' copy ' + (a + 1).toString();
+            }
+          }
+          ftgCFile = new File(folder.fullName + '/' + fileCName + ftgExt);
+        }
+        ftgFile.copy(ftgCFile);
+
+        for (c = 0; c < sameFileArray.length; c++) {
+
+          if (chkArray(doneArray, sameFileArray[c])) {
+
+            if (sameFileArray.length > 1 && (ftgExt == '.ai' || ftgExt == '.psd')) {
+
+              if (chkArray(layerFilesArray, (fileName + ftgExt))) {
+                layerFilesArray.push(fileName + ftgExt);
+              }
+
+            } else {
+              sameFileArray[c].replace(ftgCFile);
+            }
+            doneArray.push(sameFileArray[c]);
+          }
+        }
+      }
+    }
+  }
+  if (layerFilesArray.length > 0) {
+    var layerFilesStr = '';
+
+    for (m = 0; m < layerFilesArray.length; m++) {
+      layerFilesStr += '\n    ' + layerFilesArray[m];
+    }
+    alert('this files were copied but not relinked:' + layerFilesStr);
+  }
+}
+
+function seqArrayCopyAndReplace(seqArray, folder) {
+
+  var seqFile;
+  var seqCFile;
+  var fldFilesArray;
+  var seqName;
+  var seqCName;
+  var seqExt;
+  var firstFrame;
+  var seqFld;
+  var sameFileArray = [];
+  var doneArray = [];
+
+  if (!folder.exists) {
+    folder.create();
+  }
+  for (i = 0; i < seqArray.length; i++) {
+    seqFile = new File(seqArray[i][1]);
+    seqCFile = seqFile;
+
+    sameFileArray = [seqArray[i][0]];
+
+    for (f = 0; f < seqArray.length; f++) {
+      var testFile = new File(seqArray[f][1]);
+
+      if (i != f && decodeURI(seqFile).toString() == decodeURI(testFile).toString()) {
+        sameFileArray.push(seqArray[f][0]);
+      }
+    }
+    if (chkArray(doneArray, seqArray[i][0])) {
+
+      if (decodeURI(seqFile.parent.parent).toString() != decodeURI(folder).toString()) {
+        frameCount = seqArray[i][2];
+        fldFilesArray = folder.getFiles();
+        seqName = deleteFileExt(decodeURI(seqFile.name));
+        seqName = seqName.replace(/\[|\]|\(|\)|\{|\}+$/, '');
+        seqName = seqName.replace(/[0-9]+$/, '');
+        seqCName = seqName;
+        seqExt = getFileExt(decodeURI(seqFile.name));
+        firstFrame = deleteFileExt(decodeURI(seqFile.name)).match(/[0-9]+$/);
+        seqFld = new Folder(folder.fullName + '/' + replaceSpcChar(seqCName));
+
+        if (seqFld.exists) {
+
+          for (a = 0; a < fldFilesArray.length; a++) {
+            var ftgA = fldFilesArray[a];
+            var fName = replaceSpcChar(seqName).replace(/[ copy ]+[0-9]/g, '');
+            var fAName = replaceSpcChar(decodeURI(ftgA.name)).replace(/[ copy ]+[0-9]/g, '');
+
+            if (fName == fAName) {
+              seqCName = seqName + ' copy ' + (a + 1).toString();
+            }
+          }
+          seqFld = new Folder(folder.fullName + '/' + replaceSpcChar(seqCName));
+        }
+        seqFld.create();
+
+        for (n = parseInt(firstFrame, 10); n < parseInt(firstFrame, 10) + frameCount; n++) {
+          var seqNum = n.toString();
+
+          while (seqNum.length < firstFrame.toString().length) {
+            seqNum = '0' + seqNum;
+          }
+          var seqFileName = seqName + seqNum + seqExt;
+
+          seqFile = new File(decodeURI(seqFile.path) + '/' + seqFileName);
+          seqCFile = new File(seqFld.fullName + '/' + seqFileName);
+
+          if (seqFile.exists) {
+            seqFile.copy(seqCFile);
+          }
+        }
+      }
+    }
+    for (c = 0; c < sameFileArray.length; c++) {
+
+      if (chkArray(doneArray, sameFileArray[c])) {
+        sameFileArray[c].replaceWithSequence(seqCFile, false);
+        doneArray.push(sameFileArray[c]);
+      }
+    }
+  }
+}
+
+// copy all footage used in the project...
+function filesCollect(savePath) {
+
+  var footage = getFootage();
+
+  var img = footage[0];
+  var vid = footage[1];
+  var sno = footage[2];
+  var imgSeq = [];
+  var mis = footage[4];
+  var ftgCount = img.length + vid.length + sno.length;
+  var ftgIndex = 0;
+
+  var assetsPath = savePath + '/assets/';
+  var videosPath = assetsPath + 'videos/';
+  var imagesPath = assetsPath + 'images/';
+  var sonoPath = assetsPath + 'sono/';
+
+  var assetsFld = new Folder(assetsPath);
+  var imagesFld = new Folder(imagesPath);
+  var videosFld = new Folder(videosPath);
+  var sonoFld = new Folder(sonoPath);
+
+  if (!assetsFld.exists) {
+    assetsFld.create();
+  }
+  if (img.length > 0) {
+    fileArrayCopyAndReplace(img, imagesFld);
+  }
+  if (vid.length > 0) {
+    var pathArray = [];
+    var frameCountArray = [];
+
+    for (v = 0; v < vid.length; v++) {
+      pathArray.push(vid[v].file.fullName);
+      frameCountArray.push(vid[v].duration * vid[v].frameRate);
+    }
+    fileArrayCopyAndReplace(vid, videosFld);
+
+    for (v = 0; v < vid.length; v++) {
+      if (vid[v].mainSource.isStill) {
+        imgSeq.push([vid[v], pathArray[v], frameCountArray[v]]);
+        vid[v].file.remove();
+      }
+    }
+  }
+  if (imgSeq.length > 0) {
+    seqArrayCopyAndReplace(imgSeq, imagesFld);
+
+    if (videosFld.getFiles().length == 0) {
+      videosFld.remove();
+    }
+  }
+  if (sno.length > 0) {
+    fileArrayCopyAndReplace(sno, sonoFld);
+  }
+  if (mis.length > 0) {
+    var missingStr = '';
+
+    for (m = 0; m < mis.length; m++) {
+      missingStr += '\n    ' + mis[m];
+    }
+    alert('some files are missing:' + missingStr);
+  }
+}
+
+// copy all fonts used in the project...
+function fontCollect(savePath) {
+
+  var fontArray = [];
+  var txtProp = 'ADBE Text Properties';
+  var txtDoc = 'ADBE Text Document';
+
+  for (f = 1; f <= app.project.numItems; f++) {
+    var aItem = app.project.item(f);
+
+    if (aItem instanceof CompItem) {
+
+      for (l = 1; l <= aItem.numLayers; l++) {
+        var aLayer = aItem.layer(l);
+
+        if (aLayer instanceof TextLayer) {
+
+          var textProp = aLayer.property(txtProp);
+          var textDoc = textProp.property(txtDoc).value;
+          var fontName = textDoc.font;
+          var fchk = chkArray(fontArray, fontName);
+
+          if (textDoc.fontLocation == '') {
+
+            alert(fontName + ' not found... >_<');
+
+
+          } else if (fchk) {
+
+            var fontFolder = new Folder(savePath + '/fonts/');
+            var fontCPath = fontFolder.absoluteURI + '/';
+            var fontPath = decodeURI(textDoc.fontLocation);
+            var ext = getFileExt(fontPath);
+            var fontFile = new File(fontPath);
+            var fontCFile = new File(fontCPath + fontName + ext);
+
+            fontArray.push(fontName);
+
+            if (!fontFolder.exists) {
+              fontFolder.create();
+            }
+            fontFile.copy(fontCFile);
+          }
+        }
+      }
+    }
+  }
+}
+
+// smart rename based on item selection...
+function smartRename(aItem, itemName) {
+
+  var selArray = app.project.selection;
+
+  switch (selArray.length > 0) {
+
+    case(false):
+      aItem.name = itemName;
+      break;
+
+    case(true):
+      if (aItem.selected) {
+        aItem.name = itemName;
+      }
+      break;
+  }
+}
+
+// rename comps (assinaturas, exports)...
+function renameComps(projId, projName, compArray) {
+
+  var txtProp = 'ADBE Text Properties';
+  var txtDoc = 'ADBE Text Document';
+  var baseName = userPrefix + ' PROMO - ' + projId;
+
+  var assArray = compArray[0];
+  var expArray = compArray[1];
+
+  for (i = 0; i < assArray.length; i++) {
+    var assComp = assArray[i];
+
+    var assDate = assComp.layer('txt_data').property(txtProp).property(txtDoc).value;
+    var assDateTxt = replaceSpcChar(replaceDateTxt(assDate.toString().toUpperCase()));
+    var assTime = assComp.layer('txt_horario').property(txtProp).property(txtDoc).value;
+    var assTimeTxt = replaceSpcChar(assTime.toString().toUpperCase());
+
+    var assSerTxt = (assTimeTxt != '') ? assDateTxt + ' ' + assTimeTxt : assDateTxt;
+    var assName = baseName + ' assinatura ' + assSerTxt;
+
+    smartRename(assComp, assName);
+  }
+  for (i = 0; i < expArray.length; i++) {
+    var expComp = expArray[i];
+    var expSerTxt = '';
+
+    for (l = 1; l <= expComp.numLayers; l++) {
+
+      for (a = 0; a < assArray.length; a++) {
+
+        if (expComp.layer(l).source == assArray[a]) {
+          var compAssComp = assArray[a];
+
+          var expDate = compAssComp.layer('txt_data').property(txtProp).property(txtDoc).value;
+          var expDateTxt = replaceSpcChar(replaceDateTxt(expDate.toString().toUpperCase()));
+          var expTime = compAssComp.layer('txt_horario').property(txtProp).property(txtDoc).value;
+          var expTimeTxt = replaceSpcChar(expTime.toString().toUpperCase());
+          expSerTxt = (expTimeTxt != '') ? expDateTxt + ' ' + expTimeTxt : expDateTxt;
+          expSerTxt = ' ' + expSerTxt;
+
+          break;
+        }
+      }
+    }
+    var compName = baseName + ' ' + projName + expSerTxt;
+    expComp.comment = 'export: true';
+    smartRename(expComp, compName);
+  }
+}
+
+function textName(aLayer) {
+
+  var txtProp = 'ADBE Text Properties';
+  var txtDoc = 'ADBE Text Document';
+  var txtVal = aLayer.property(txtProp).property(txtDoc).value;
+  var lName = txtVal.toString();
+
+  return lName;
+}
+
+function nullName(aLayer) {
+
+  var cArray = [];
+  var aItem = aLayer.containingComp;
+  var lName = aLayer.name;
+
+  for (c = 1; c <= aItem.numLayers; c++) {
+
+    if (aItem.layer(c).parent == aLayer) {
+      cArray.push(aItem.layer(c));
+    }
+  }
+  if (cArray.length == 1) {
+    lName = cArray[0].name;
+  }
+
+  return lName;
+}
+
+function adjustmentName(aLayer) {
+
+  var fxProp = 'ADBE Effect Parade';
+  var fxNum = aLayer.property(fxProp).numProperties;
+  var lName = '';
+
+  if (fxNum > 0) {
+    lName = aLayer.property(fxProp).property(1).name;
+
+    for (i = 2; i <= fxNum; i++) {
+
+      if (i < 4) {
+        lName += ' | ' + aLayer.property(fxProp).property(i).name;
+
+      } else {
+        lName += '...';
+        break;
+      }
+    }
+  }
+
+  return lName;
+}
+
+function matteName(aLayer) {
+
+  var aItem = aLayer.containingComp;
+  var matteName = aItem.layer(aLayer.index + 1).name;
+  var lName = matteName;
+
+  return lName;
+}
+
+function getPrefixes() {
+
+  var prefixArray = [];
+  prefixArray.push(compPrefix);
+  prefixArray.push(solPrefix);
+  prefixArray.push(adjPrefix);
+  prefixArray.push(nullPrefix);
+  prefixArray.push(txtPrefix);
+  prefixArray.push(shpPrefix);
+  prefixArray.push(ctrlPrefix);
+  prefixArray.push(mattePrefix);
+  prefixArray.push(camPrefix);
+  prefixArray.push(lgtPrefix);
+
+  return prefixArray;
+}
+
+// rename comp layers...
+function renameLayers(compArray) {
+
+  function defaultSet(aLabel, aPrefix) {
+
+    //lLabel = aLabel; // TODO: label system...
+    lPrefix = aPrefix;
+  }
+
+  var prefixArray = getPrefixes();
+
+  for (i = 0; i < compArray.length; i++) {
+    var defaultIncArray = [];
+    var aItem = compArray[i];
+
+    for (l = aItem.numLayers; l >= 1; l--) {
+      var aLayer = aItem.layer(l);
+      var lName = aLayer.name;
+      var lLabel = aLayer.label;
+      var shpNullChk = false;
+      var lLock = (aLayer.locked) ? true : false;
+      var lPrefix = '';
+      var rename = false;
+      aLayer.locked = false;
+
+      switch (true) {
+        case(aLayer instanceof TextLayer):
+          if (txtTogBtn.value) {
+            rename = true;
+            lName = textName(aLayer);
+            defaultSet(1, txtPrefix);
+          }
+          break;
+
+        case(aLayer instanceof ShapeLayer):
+          var vGrp = aLayer.property('ADBE Root Vectors Group');
+
+        if (vGrp.numProperties == 0 || vGrp.property(1).name == 'null') {
+          shpNullChk = true;
+        }
+        if (shpTogBtn.value) {
+          rename = true;
+          defaultIncArray.push(aLayer);
+          defaultSet(1, shpPrefix);
+
+          if (shpNullChk) {
+            aLayer.guideLayer = true;
+            lName = nullName(aLayer);
+            defaultSet(1, nullPrefix);
+          }
+          if (aLayer.adjustmentLayer) {
+            lName = adjustmentName(aLayer);
+            defaultSet(1, adjPrefix);
+          }
+          if (aLayer.isTrackMatte) {
+            lName = matteName(aLayer);
+            defaultSet(1, mattePrefix);
+          }
+        }
+        break;
+
+        case(aLayer instanceof CameraLayer):
+          if (camTogBtn.value) {
+            rename = true;
+            defaultSet(1, camPrefix);
+          }
+          break;
+
+        case(aLayer instanceof LightLayer):
+          if (lgtTogBtn.value) {
+            rename = true;
+            defaultIncArray.push(aLayer);
+            defaultSet(1, lgtPrefix);
+          }
+          break;
+
+        case(aLayer.source.mainSource instanceof SolidSource):
+          if (solTogBtn.value) {
+            rename = true;
+            defaultSet(1, solPrefix);
+
+            if (aLayer.nullLayer) {
+              aLayer.guideLayer = true;
+              lName = nullName(aLayer);
+              defaultSet(1, nullPrefix);
+            }
+            if (aLayer.adjustmentLayer) {
+              lName = adjustmentName(aLayer);
+              defaultSet(1, adjPrefix);
+            }
+            if (aLayer.isTrackMatte) {
+              lName = matteName(aLayer);
+              defaultSet(1, mattePrefix);
+            }
+          }
+          break;
+
+        case(aLayer.source.mainSource instanceof FileSource):
+          var lSource = aLayer.source;
+
+          if (ftgTogBtn.value && lSource.mainSource.isStill) {
+
+            if (aLayer.adjustmentLayer) {
+              rename = true;
+              lName = adjustmentName(aLayer);
+              defaultSet(1, adjPrefix);
+            }
+            if (aLayer.isTrackMatte) {
+              rename = true;
+              lName = matteName(aLayer);
+              defaultSet(1, mattePrefix);
+            }
+          }
+          if (ftgTogBtn.value && lSource.hasVideo) {
+
+            if (aLayer.adjustmentLayer) {
+              rename = true;
+              lName = adjustmentName(aLayer);
+              defaultSet(1, adjPrefix);
+            }
+            if (aLayer.isTrackMatte) {
+              rename = true;
+              lName = matteName(aLayer);
+              defaultSet(1, mattePrefix);
+            }
+          }
+          break;
+      }
+      if (rename) {
+
+        for (p = 0; p < prefixArray.length; p++) {
+          lName = deletePrefix(lName, prefixArray[p]);
+        }
+        if (aLayer.adjustmentLayer || aLayer.isTrackMatte) {
+          lName = lPrefix + charPrefix + lName.toLowerCase();
+
+        } else {
+          lName = lPrefix + charPrefix + replaceSpcChar(lName).toLowerCase();
+        }
+        aLayer.name = lName;
+        aLayer.label = lLabel;
+      }
+      aLayer.locked = lLock;
+    }
+    defaultNameInc(defaultIncArray);
+  }
+}
+
+// simple name increment based on the layer stack...
+function defaultNameInc(layerArray) {
+
+  for (l = 0; l < layerArray.length; l++) {
+    var abcName = layerArray[l].name.replace(/\s*[0-9]+\b/, '');
+    layerArray[l].name = abcName;
+  }
+  for (l = layerArray.length - 1; l >= 0; l--) {
+    var nameArray = [];
+
+    for (n = 0; n < layerArray.length; n++) {
+
+      if (layerArray[l].name == layerArray[n].name) {
+        nameArray.push(layerArray[l]);
+      }
+    }
+    var num = (nameArray.length > 1) ? ' ' + nameArray.length.toString() : '';
+    layerArray[l].name += num;
+  }
+}
+
+function nameInc(aName) {
+
+  var abcName = aName.replace(/\s*[0-9]+\b/, '');
+  var num = aName.match(/\s*[0-9]+\b/);
+  var numStr = (num == null) ? 2 : parseInt(num) + 1;
+
+  return abcName + ' ' + numStr.toString();
+}
+
+/*
+
+---------------------------------------------------------------
+# color and conversions
+---------------------------------------------------------------
+
+*/
+
+// converts rgb color to a simple array...
+function rgb(r, g, b) {
+
+  r = r / 255;
+  g = g / 255;
+  b = b / 255;
+
+  return [r, g, b];
+}
+
+// converts rgba color to a simple array...
+function rgba(r, g, b, a) {
+
+  r = r / 255;
+  g = g / 255;
+  b = b / 255;
+  a = a / 255;
+
+  return [r, g, b, a];
+}
+
+function componentToHex(c) {
+
+  var hexStr = c.toString(16);
+  hexStr = (hexStr.length == 1) ? "0" + hexStr : hexStr;
+
+  return hexStr;
+}
+
+function rgbToHex(rgbArray) {
+
+  r = rgbArray[0] * 255;
+  g = rgbArray[1] * 255;
+  b = rgbArray[2] * 255;
+
+  return '0x' + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+function rgbStr(val) {
+
+  if (val.length > 0) {
+    val = rgbToHex(val);
+
+  } else if (eval(val).length > 0) {
+    val = rgbToHex(eval(val));
+  }
+  var r = (val >> 16) & 0xFF;
+  var g = (val >> 8) & 0xFF;
+  var b = (val) & 0xFF;
+
+  return "rgb(" + r + ", " + g + ", " + b + ")";
+}
+
+// returns a random color from de color preferences...
+function randomColor() {
+
+  var colorArray = [];
+  colorArray.push(c01);
+  colorArray.push(c02);
+  colorArray.push(c03);
+  colorArray.push(c04);
+  colorArray.push(c05);
+  colorArray.push(c06);
+  colorArray.push(c07);
+  colorArray.push(c08);
+  colorArray.push(c09);
+  colorArray.push(c10);
+  colorArray.push(c11);
+  colorArray.push(c12);
+  colorArray.push(c13);
+  colorArray.push(c14);
+  colorArray.push(c15);
+  colorArray.push(c16);
+  var r1 = getRndInteger(0, colorArray.length);
+
+  return colorArray[r1];
+}
+
+/*
+
+---------------------------------------------------------------
+# ui and layout
+---------------------------------------------------------------
+
+*/
+
+//
+function customDraw() {
+
+  with (this) {
+
+    graphics.drawOSControl();
+    graphics.rectPath(0, 0, size[0], size[1]);
+    graphics.fillPath(fillBrush);
+  }
+}
+
+// returns a random error code ;P...
+function errCode() {
+
+  return 'ERROR code ' + getRndInteger(400, 999).toString() + '        ';
+}
+
+// changes the window background color...
+function setBgColor(color) {
+
+  var bType = w.graphics.BrushType.SOLID_COLOR;
+  w.graphics.backgroundColor = w.graphics.newBrush(bType, color);
+}
+
+function setBtnColor(btn, color) {
+
+  var bType = w.graphics.BrushType.SOLID_COLOR;
+  btn.fillBrush = btn.graphics.newBrush(bType, color);
+}
+
+// changes static text color...
+function setTxtColor(sTxt, color) {
+
+  var pType = sTxt.graphics.PenType.SOLID_COLOR;
+  sTxt.graphics.foregroundColor = sTxt.graphics.newPen(pType, color, 1);
+}
+
+function setLayout() {
+
+  wLayout = (w.size.width > w.size.height) ? 'row' : 'column';
+
+  if (wLayout == 'row') {
+
+    // horizontal layout
+    imgAlignment = 'left';
+    errImgAlignment = 'left';
+    closeAlignment = 'right';
+
+    mainGrp.margins = [100, 0, 35, 0];
+    imgGrp.margins = [20, 0, 0, 0];
+    errImgGrp.margins = [20, 0, 0, 0];
+    progImgGrp.margins = [20, 0, 0, 0];
+    closeGrp.margins = 0;
+    prefGrp.margins = 0;
+
+    mainGrp.spacing = 10;
+    menuGrp.spacing = 10;
+
+    for (i = 0; i < tabs.length; i++) {
+
+      tabs[i].spacing = 10;
+    }
+    // text tab - limit text horizontal controls
+    limitSld.visible = true;
+    limitSld.size.width = 200;
+    limitSld.size.height = 16;
+    limitTxt.visible = true;
+    limitTxt.size.width = 60;
+    limitTxt.size.height = 24;
+    // text tab - limit text vertical controls
+    limitTxt2.visible = false;
+    limitTxt2.size.width = 0;
+    limitTxt2.size.height = 0;
+    // project tab - controls
+    projIdTxt.size.width = 80;
+    projNameTxt.size.width = 140;
+    lDrop.size.width = 80;
+    projTemplateDrop.size.width = 80;
+    colorDrop.size.width = 80;
+    tabColorBtn.size.width = 20;
+    // error tab
+    errTxt.visible = true;
+    errTxt.size.width = 500;
+    progTxt1.visible = true;
+    // progress tab
+    progTxt1.size.width = 160;
+    progTxt2.visible = true;
+    progTxt2.size.width = 160;
+
+  } else {
+
+    // vertical layout
+    imgAlignment = 'bottom';
+    errImgAlignment = 'center';
+    closeAlignment = 'top';
+
+    mainGrp.margins = [0, 40, 0, 30];
+    imgGrp.margins = [0, 0, 0, 5];
+    errImgGrp.margins = [0, 0, 0, 5];
+    progImgGrp.margins = [0, 0, 0, 5];
+    closeGrp.margins = [0, 10, 0, 0];
+    prefGrp.margins = [0, 10, 0, 0];
+
+    mainGrp.spacing = 2;
+    menuGrp.spacing = 2;
+
+    for (i = 0; i < tabs.length; i++) {
+
+      tabs[i].spacing = 5;
+    }
+    // text tab - limit text horizontal controls
+    limitSld.visible = false;
+    limitSld.size.width = 0;
+    limitSld.size.height = 0;
+    limitTxt.visible = false;
+    limitTxt.size.width = 0;
+    limitTxt.size.height = 0;
+    // text tab - limit text vertical controls
+    limitTxt2.visible = true;
+    limitTxt2.size.width = 70;
+    limitTxt2.size.height = 24;
+    // project tab - controls
+    projIdTxt.size.width = 70;
+    projNameTxt.size.width = 70;
+    lDrop.size.width = 70;
+    projTemplateDrop.size.width = 70;
+    colorDrop.size.width = 70;
+    tabColorBtn.size.width = 66;
+    // error tab
+    errTxt.visible = false;
+    errTxt.size.width = 0;
+    // progress tab
+    progTxt1.visible = false;
+    progTxt1.size.width = 0;
+    progTxt2.visible = false;
+    progTxt2.size.width = 0;
+  }
+  // all tab subgroups
+  for (i = 0; i < tabSubGrps.length; i++) {
+
+    tabSubGrps[i].orientation = wLayout;
+  }
+  // all tabs
+  for (i = 0; i < tabs.length; i++) {
+
+    tabs[i].orientation = wLayout;
+  }
+  imgGrp.alignment = imgAlignment;
+  errImgGrp.alignment = errImgAlignment;
+  progImgGrp.alignment = errImgAlignment;
+  errTabGrp.alignment = imgAlignment;
+  errTabGrp.orientation = wLayout;
+  closeGrp.alignment = closeAlignment;
+  prefGrp.alignment = closeAlignment;
+
+  menuGrp.orientation = wLayout;
+
+  updateLayout();
+}
+
+function updateLayout() {
+
+  for (i = 0; i < tabSubGrps.length; i++) {
+
+    tabSubGrps[i].layout.layout(true);
+  }
+
+  for (i = 0; i < tabs.length; i++) {
+
+    tabs[i].layout.layout(true);
+  }
+  imgGrp.layout.layout(true);
+  errImgGrp.layout.layout(true);
+  progImgGrp.layout.layout(true);
+  errTabGrp.layout.layout(true);
+  closeGrp.layout.layout(true);
+  prefGrp.layout.layout(true);
+
+  menuGrp.layout.layout(true);
+  mainGrp.layout.layout(true);
+
+  w.layout.layout(true);
+  w.layout.resize();
+}
+
+// turns off all tab groups visibility...
+function allGrpGone() {
+
+  for (i = 0; i < tabs.length; i++) {
+
+    tabs[i].visible = false;
+  }
+  errTabGrp.visible = false;
+  closeGrp.visible = false;
+}
+
+// turns on the respective tab group visibility...
+function openTab(grp, color) {
+
+  grp.visible = true;
+  closeGrp.visible = true;
+  imgGrp.visible = true;
+
+  menuGrp.visible = false;
+  prefGrp.visible = false;
+  closeErrBtn.visible = false;
+
+  if (grp == menuGrp) {
+
+    closeGrp.visible = false;
+    prefGrp.visible = true;
+  }
+  errImgGrp.visible = false;
+  progImgGrp.visible = false;
+  progTabGrp.visible = false;
+
+  setBgColor(color);
+}
+
+//
+function replaceErrImage() {
+  var r = getRndInteger(0, errImgArray.length);
+
+  errImgGrp.remove(errImg);
+  errImg = errImgGrp.add('image', undefined, errImgArray[r]);
+  w.layout.layout(true);
+  w.layout.resize();
+
+  return errImg;
+}
+
+// turns on error tab group visibility in the tab level...
+function showTabErr(grp, msg) {
+
+  errTxt.text = errCode() + msg;
+  errImgGrp.visible = true;
+  closeGrp.visible = true;
+  errTabGrp.visible = true;
+  closeErrBtn.visible = true;
+
+  prefGrp.visible = false;
+  grp.visible = false;
+  menuGrp.visible = false;
+  closeBtn.visible = false;
+  imgGrp.visible = false;
+  progImgGrp.visible = false;
+  errImg.helpTip = msg;
+  errImg = replaceErrImage();
+
+  setBgColor(GNEWS_BLK);
+  clearOutput();
+  write(msg);
+}
+
+function showTabProg(grp, msg) {
+
+  progTxt1.text = 'KEEP CALM';
+  progTxt2.text = msg;
+  progTabGrp.visible = true;
+  progImgGrp.visible = true;
+  progImgGrp.helpTip = msg;
+
+  closeGrp.visible = false;
+  prefGrp.visible = false;
+  grp.visible = false;
+  menuGrp.visible = false;
+  closeBtn.visible = false;
+  closeErrBtn.visible = false;
+  imgGrp.visible = false;
+  errImgGrp.visible = false;
+
+  setBgColor(GNEWS_BLK);
+  clearOutput();
+  write(msg);
+}
+
+function getTabColors() {
+
+  switch (true) {
+    case(colorDrop.selection == 0):
+      c = menuGrpColor;
+      break;
+
+    case(colorDrop.selection == 2):
+      c = ctrlTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 3):
+      c = animTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 4):
+      c = fxTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 5):
+      c = txtTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 6):
+      c = palletTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 7):
+      c = layerTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 8):
+      c = toolTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 9):  
+      c = projTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 10):
+      c = linksTabGrpColor;
+      break;
+
+    case(colorDrop.selection == 11):
+      c = prefTabGrpColor;
+      break;
+  }
+  return c;
+}
+
+/*
+
+---------------------------------------------------------------
+# script preferences
+---------------------------------------------------------------
+
+*/
+
+function forcePrefs() {
+
+  // group colors (UI)...
+  menuGrpColor = rgb(140, 0, 51);
+  ctrlTabGrpColor = rgb(232, 29, 98);
+  animTabGrpColor = rgb(155, 38, 175);
+  fxTabGrpColor = rgb(102, 57, 182);
+  txtTabGrpColor = rgb(254, 151, 0);
+  palletTabGrpColor = rgb(157, 157, 157);
+  layerTabGrpColor = rgb(154, 166, 40);
+  toolTabGrpColor = rgb(0, 149, 135);
+  projTabGrpColor = rgb(0, 187, 211);
+  linksTabGrpColor = rgb(244, 67, 54);
+  prefTabGrpColor = rgb(35, 35, 35);
+  errTabGrpColor = rgb(20, 20, 20);
+
+  // static text colors...
+  sTxtColor = rgb(234, 234, 234);
+  errTxtColor = rgb(140, 0, 51);
+  aboutTxtColor = rgb(80, 80, 80);
+
+  // label colors...
+  c01 = rgb(244, 67, 54);
+  c02 = rgb(232, 29, 98);
+  c03 = rgb(155, 38, 175);
+  c04 = rgb(102, 57, 182);
+  c05 = rgb(62, 80, 180);
+  c06 = rgb(2, 168, 243);
+  c07 = rgb(0, 187, 211);
+  c08 = rgb(0, 149, 135);
+  c09 = rgb(138, 194, 73);
+  c10 = rgb(204, 219, 56);
+  c11 = rgb(254, 234, 58);
+  c12 = rgb(254, 151, 0);
+  c13 = rgb(255, 87, 34);
+  c14 = rgb(120, 84, 71);
+  c15 = rgb(157, 157, 157);
+  c16 = rgb(95, 124, 138);
+
+  // dropdownlists...
+  lDropSel = 0;
+  projMDropSel = 0;
+
+  // item prefixes...
+  compPrefix = 'comp';
+  adjPrefix = 'adj';
+  solPrefix = 'sol';
+  nullPrefix = 'null';
+
+  // layer prefixes...
+  txtPrefix = 'txt';
+  shpPrefix = 'shp';
+  camPrefix = 'cam';
+  lgtPrefix = 'lgt';
+  ctrlPrefix = 'ctrl';
+  userPrefix = 'user';
+  mattePrefix = 'matte';
+
+  // prefix character...
+  charPrefix = '_';
+  userPrefix = '';
+}
+
+function saveGPrefs() {
+
+  var GNEWS_SCRIPT_FOLDER = new Folder('~/Documents/GNEWS script/');
+
+  if (!GNEWS_SCRIPT_FOLDER.exists) {
+    GNEWS_SCRIPT_FOLDER.create();
+  }
+
+  var setObj = prefsObj();
+  var setStr = JSON.stringify(setObj);
+  var filePath = GNEWS_SCRIPT_FOLDER.fullName;
+  var fileName = 'preferences.json';
+
+  setStr = setStr.replace(/\{/g, '{\n\t');
+  setStr = setStr.replace(/\}\,/g, '\n\t}\,\n\n');
+  setStr = setStr.replace(/\}\}/g, '\n\t}\n}');
+  setStr = setStr.replace(/\,\"/g, ',\n\t\"');
+
+  return saveFile(setStr, filePath, fileName);
+}
+
+function itemSetting(aItem, settingName) {
+
+  var str = aItem.comment;
+  var n1 = str.search(settingName);
+  var set = 'false';
+
+  if (str != '' && n1 != -1) {
+    var n2 = n1 + settingName.length + 2;
+    set = str.substring(n2, n2 + str.length);
+  }
+  return eval(set);
+}
+
+function getAllGPrefs() {
+
+  var JSONFile = File('~/Documents/GNEWS script/preferences.json');
+
+  if (!JSONFile.exists) {
+    forcePrefs();
+    saveGPrefs();
+
+  } else {
+    setGPrefs(JSONFile);
+  }
+}
+
+function saveFile(fileContent, filePath, fileName) {
+
+  var newFile = new File(filePath + '/' + fileName);
+
+  newFile.open('w');
+  newFile.write(fileContent);
+  newFile.close();
+
+  return newFile;
+}
+
+function readFile(file) {
+
+  var fileContent;
+
+  file.open('r');
+  fileContent = file.read();
+  file.close();
+
+  return fileContent;
+}
+
+function prefsObj() {
+
+  var setObj = {
+    color: {
+      // group colors (UI)...
+      mainMenu: menuGrpColor,
+      ctrlTab: ctrlTabGrpColor,
+      animTab: animTabGrpColor,
+      fxTab: fxTabGrpColor,
+      txtTab: txtTabGrpColor,
+      palletTab: palletTabGrpColor,
+      layerTab: layerTabGrpColor,
+      toolTab: toolTabGrpColor,
+      projTab: projTabGrpColor,
+      linksTab: linksTabGrpColor,
+      prefTab: prefTabGrpColor,
+      errTab: errTabGrpColor,
+
+      // static text colors...
+      txtLabel: sTxtColor,
+      txtErr: errTxtColor,
+      txtAbout: aboutTxtColor,
+
+      // label colors...
+      c01: c01,
+      c02: c02,
+      c03: c03,
+      c04: c04,
+      c05: c05,
+      c06: c06,
+      c07: c07,
+      c08: c08,
+      c09: c09,
+      c10: c10,
+      c11: c11,
+      c12: c12,
+      c13: c13,
+      c14: c14,
+      c15: c15,
+      c16: c16,
+    },
+
+    selection: {
+        // dropdownlists...
+        layerType: lDropSel,
+        projModel: projMDropSel
+      },
+
+      prefix: {
+        // item prefixes...
+        cop: compPrefix,
+        adj: adjPrefix,
+        sol: solPrefix,
+        nul: nullPrefix,
+
+        // layer prefixes...
+        txt: txtPrefix,
+        shp: shpPrefix,
+        cam: camPrefix,
+        lgt: lgtPrefix,
+        ctr: ctrlPrefix,
+        mat: mattePrefix,
+
+        // prefix spacer...
+        spc: charPrefix,
+        usr: userPrefix.toUpperCase()
+      }
+  };
+
+  return setObj;
+}
+
+function setGPrefs(file) {
+
+  var JSONContent = readFile(file);
+  var JSONObj = JSON.parse(JSONContent);
+
+  menuGrpColor = JSONObj.color.mainMenu;
+  ctrlTabGrpColor = JSONObj.color.ctrlTab;
+  animTabGrpColor = JSONObj.color.animTab;
+  fxTabGrpColor = JSONObj.color.fxTab;
+  txtTabGrpColor = JSONObj.color.txtTab;
+  palletTabGrpColor = JSONObj.color.palletTab;
+  layerTabGrpColor = JSONObj.color.layerTab;
+  toolTabGrpColor = JSONObj.color.toolTab;
+  projTabGrpColor = JSONObj.color.projTab;
+  linksTabGrpColor = JSONObj.color.linksTab;
+  prefTabGrpColor = JSONObj.color.prefTab;
+  errTabGrpColor = JSONObj.color.errTab;
+
+  sTxtColor = JSONObj.color.txtLabel;
+  errTxtColor = JSONObj.color.txtErr;
+  aboutTxtColor = JSONObj.color.txtAbout;
+
+  c01 = JSONObj.color.c01;
+  c02 = JSONObj.color.c02;
+  c03 = JSONObj.color.c03;
+  c04 = JSONObj.color.c04;
+  c05 = JSONObj.color.c05;
+  c06 = JSONObj.color.c06;
+  c07 = JSONObj.color.c07;
+  c08 = JSONObj.color.c08;
+  c09 = JSONObj.color.c09;
+  c10 = JSONObj.color.c10;
+  c11 = JSONObj.color.c11;
+  c12 = JSONObj.color.c12;
+  c13 = JSONObj.color.c13;
+  c14 = JSONObj.color.c14;
+  c15 = JSONObj.color.c15;
+  c16 = JSONObj.color.c16;
+
+  lDropSel = JSONObj.selection.layerType;
+  projMDropSel = JSONObj.selection.projModel;
+
+  compPrefix = JSONObj.prefix.cop;
+  adjPrefix = JSONObj.prefix.adj;
+  solPrefix = JSONObj.prefix.sol;
+  nullPrefix = JSONObj.prefix.nul;
+
+  txtPrefix = JSONObj.prefix.txt;
+  shpPrefix = JSONObj.prefix.shp;
+  camPrefix = JSONObj.prefix.cam;
+  lgtPrefix = JSONObj.prefix.lgt;
+  ctrlPrefix = JSONObj.prefix.ctr;
+  mattePrefix = JSONObj.prefix.mat;
+  charPrefix = JSONObj.prefix.spc;
+  userPrefix = JSONObj.prefix.usr;
+}
+
+/*
+
+---------------------------------------------------------------
+# script metadata
+---------------------------------------------------------------
+
+*/
+
+function getXMPdata(XMPfield) {
+
+  var metaData = new XMPMeta(app.project.xmpPacket);
+  var XMPSet = XMPConst.NS_DC;
+  var XMPVal = '';
+  var XMPProp = metaData.getProperty(XMPSet, XMPfield);
+
+  if(XMPProp != undefined) {
+    XMPVal = XMPProp.value;
+  }
+
+  return XMPVal;
+}
+
+function setXMPdata(XMPfield, XMPval) {
+
+  var metaData = new XMPMeta(app.project.xmpPacket);
+  var XMPSet = XMPConst.NS_DC;
+  var XMPProp = metaData.doesPropertyExist(XMPSet, XMPfield);
+
+  metaData.deleteProperty(XMPSet, XMPfield);
+  metaData.setProperty(XMPSet, XMPfield, XMPval);
+
+  app.project.xmpPacket = metaData.serialize();
+}
