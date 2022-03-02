@@ -470,6 +470,23 @@ function setTxtCase(selLayer, caseType) {
   }
 }
 
+// cleans multiple line breaks and consecutive space characters
+function cleanText(selLayer) {
+
+  var srcTxt = selLayer.property(txtProp).property(txtDoc);
+  var txt = srcTxt.value;
+
+  if (selLayer instanceof TextLayer) {
+
+    txt = txt.toString().replace(/[\r|\n][\s]{2,}/g, '\n');
+    txt = txt.replace(/\s{2,}/g, ' ');
+    srcTxt.setValue(trim(txt));
+  } else {
+
+    return false;
+  }
+}
+
 // breaks text based on a character limit...
 function lineBreak(selLayer, inputLimit) {
 

@@ -307,6 +307,15 @@ function PROMO_GNEWS_UI() {
   txtLowerBtn.helpTip = 'set text layer to lower case';
   var txtTitleBtn = t1Grp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
   txtTitleBtn.helpTip = 'set text layer to title case';
+  
+  txtTabGrp.add('image', undefined, hSpacer);
+  
+  var t2Grp = txtTabGrp.add('group');
+  t2Grp.spacing = 2;
+  var txtCleanerBtn = t2Grp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  txtCleanerBtn.helpTip = 'deletes consecutive spaces and line breaks';
+  var txtColumnBtn = t2Grp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  txtColumnBtn.helpTip = 'divides consecutive spaces in 2 columns';
 
   txtTabGrp.add('image', undefined, vSpacer);
 
@@ -638,6 +647,7 @@ function PROMO_GNEWS_UI() {
   tabSubGrps.push(l2Grp);
   // text subgroups
   tabSubGrps.push(t1Grp);
+  tabSubGrps.push(t2Grp);
   // project subgroups
   tabSubGrps.push(sGrp);
 
@@ -1259,6 +1269,29 @@ function PROMO_GNEWS_UI() {
   };
 
   /*
+  
+  ---------------------------------------------------------------
+  > 🚶 animation tab events
+  ---------------------------------------------------------------
+  
+  */
+  
+  copyInfBtn.onClick = function() {
+  
+    alert('work in progress... Σ(っ °Д °;)っ');
+  };
+  
+  pasteInfBtn.onClick = function() {
+  
+    alert('work in progress... Σ(っ °Д °;)っ');
+  };
+  
+  typeAnimBtn.onClick = function() {
+  
+    alert('work in progress... Σ(っ °Д °;)っ');
+  };
+
+  /*
 
   ---------------------------------------------------------------
   > 🔴 color tab events
@@ -1496,6 +1529,32 @@ function PROMO_GNEWS_UI() {
     }
   };
 
+  txtCleanerBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'no text layer is selected';
+
+    if (selLayers.length > 0) {
+
+      app.beginUndoGroup('text to title case');
+
+      for (i = 0; i < selLayers.length; i++) {
+        cleanText(selLayers[i]);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(txtTabGrp, msg);
+    }
+  };
+  
+  txtColumnBtn.onClick = function() {
+
+    alert('work in progress... Σ(っ °Д °;)っ');
+  };
+  
   limitSld.onChanging = function() {
 
     limitTxt.text = parseInt(limitSld.value);
