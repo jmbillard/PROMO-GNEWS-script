@@ -38,7 +38,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-1. ### ![anim mod](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/aniTogIcon.png) modificador **`copiar animação`**
+2. ### ![anim mod](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/aniTogIcon.png) modificador **`copiar animação`**
     habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
 ```
     'anchor point'
@@ -150,19 +150,19 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
     - adiciona um 'prefixo' padrão
     - converte o nome para 'caixa baixa'
     - remove 'caracteres especiais'
-    
-    <br/>
 
-    no caso dos layers de texto o próprio conteúdo será usado como nome.
+>   no caso dos layers de texto o próprio conteúdo será usado como nome.
+
 ```
     ex: um layer de texto contendo...
         'Dia 8 às 20H' seria renomeado como 'txt_dia 8 as 20h'.
 ```
->    USE COM CAUTELA RENOMEAR LAYERS PODE FERRAR COM SUAS *'EXPRESSÕES'*!!!
+
+>   USE COM CAUTELA RENOMEAR LAYERS PODE FERRAR COM SUAS *'EXPRESSÕES'*!!!
 
 <br/>
 
-3. ### botão **`trancar`**
+1. ### botão **`trancar`**
     tranca todas as propriedades de transformação não animadas dos layers selecionados.
 ```
     'anchor point'
@@ -226,9 +226,10 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
     -------------------- | --------------
      inverter orientação |  sim ou não
 
-<br/>
+    <br/>
 
-    a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida.
+ >   a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida.
+
 ```
     ex: para o rig de uma perna a ordem de seleção seria...
         1 - coxa
@@ -276,25 +277,30 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 # ![preferences icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *preferencias*
 ![preferences tab](https://jmbillard.com.br/promo/ui/preferences%20tab.png)
 1. ### texto **`usuário`**
-    define o prefixo do usuário.
+    define o prefixo do 'usuário'.
 
 <br/>
 
 2. ### menu **`null - adjustment`**
-    define o tipo de layer criado pelo script.
+    define o tipo de 'layer' criado pelo script.
 
 <br/>
 
 3. ### menu **`template de projeto`**
-    define o template de organização do projeto.
+    define o 'template' de organização do projeto.
 
 <br/>
 
 4. ### modificador **`aba`**
-    define a aba a ser alterada.
+    define a 'aba' a ser alterada.
 
 <br/>
 
 5. ### botão **`cor atual`**
-    altera a cor da aba selecionada.
+    altera a 'cor' da aba selecionada.
+
+<br/>
+
+6. ### botão **`limpar preferences`**
+    descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
 
