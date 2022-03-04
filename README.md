@@ -40,6 +40,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 2. ### ![anim mod](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/aniTogIcon.png) modificador **`copiar animação`**
     habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
+
+    ![copyAnim ex](https://jmbillard.com.br/promo/gifs/copy-animation.gif)
+
 ```
     'anchor point'
     'posição'
@@ -69,6 +72,8 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 5. ### ![down btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/downIcon.png)![up btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/upIcon.png) botões de **`seleção de hierarquia`**
     avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
+
+    ![selectHierarchy ex](https://jmbillard.com.br/promo/gifs/select-hierarchy.gif)
 
 <br/><br/>
 
@@ -100,10 +105,24 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 1. ### botões caixa **`ALTA`**, **`baixa`** e **`Título`**
     converte todo o conteúdo dos layers de texto selecionados.
 
+    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/text-case.gif)
+
 <br/>
 
-2. ### slider **`quebra linhas`**
+2. ### ![txtCleaner btn](https://jmbillard.com.br/promo/ui/menu/text_tab/txtCleanerIcon.png) botão **`limpar texto`**
+    remove múltiplos espaços consecutivos, quebras de linha e faz o trim do layer de texto.
+
+<br/>
+
+3. ### ![txtColumns btn](https://jmbillard.com.br/promo/ui/menu/text_tab/txtColumnsIcon.png) botão **`separar colunas`**
+    separa um layer de texto em 2 ou mais colunas e cria um novo layer de texto .
+
+<br/>
+
+4. ### slider **`quebra linhas`**
     estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
+
+    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/line-breaker.gif)
 
 <br/><br/>
 
@@ -147,9 +166,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 2. ### botão **`renomear`**
     renomeia todos os layers dos tipos habilitados.
-    - adiciona um 'prefixo' padrão
-    - converte o nome para 'caixa baixa'
-    - remove 'caracteres especiais'
+    - adiciona um 'prefixo' padrão.
+    - converte o nome para 'caixa baixa'.
+    - remove 'caracteres especiais'.<br/><br/>
+
+    ![rename ex](https://jmbillard.com.br/promo/gifs/rename.gif)
 
 >   no caso dos layers de texto o próprio conteúdo será usado como nome.
 
@@ -164,6 +185,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 3. ### botão **`trancar`**
     tranca todas as propriedades de transformação não animadas dos layers selecionados.
+
+    ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
+
 ```
     'anchor point'
     'posição'
@@ -219,6 +243,8 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 3. ### ![ik btn](https://jmbillard.com.br/promo/ui/menu/tools_tab/wigIcon.png) botão **`ik`**
     cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
+
+    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/simple-ik.gif)
 
     <br/>
 
