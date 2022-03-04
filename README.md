@@ -131,6 +131,8 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 1. ### ![red btn](https://jmbillard.com.br/promo/ui/menu/pallet_tab/red%20small.png) ![black tab](https://jmbillard.com.br/promo/ui/menu/pallet_tab/black%20small.png) ![white tab](https://jmbillard.com.br/promo/ui/menu/pallet_tab/white%20small.png)  botões **`paleta GNEWS`**
     aplica um efeito 'fill' com a cor selecionada.
 
+    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/pallet.gif)
+
     <br/>
 
     cores        | rgb             | #hex
@@ -254,7 +256,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
     <br/>
 
- >   a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida.
+>   a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida...
 
 ```
     ex: para o rig de uma perna a ordem de seleção seria...
@@ -267,6 +269,82 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![project icon](https://jmbillard.com.br/promo/ui/menu/projIcon.png) *organização de projeto*
 ![project tab](https://jmbillard.com.br/promo/ui/project%20tab.png)
+
+1. ### ![add btn](https://jmbillard.com.br/promo/ui/menu/project_tab/addIcon.png) botão **`adicionar retranca`**
+    adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
+    - id do usuário > *3 primeiras letras do usuário logado na máquina.*
+    - tag 'PROMO' > *PROMO*
+    - id do projeto > *sigla de 3 letras do produto + 6 números da data*<br/><br/>
+    
+    ![lock ex](https://jmbillard.com.br/promo/gifs/add-prefix.gif)
+
+```
+    ex: usando as seguintes informações ficaria...
+
+        1 - usuário: jbillard > 'JBI'
+        2 - tag: 'PROMO'
+        3 - id do projeto: Edição das 16H - dia 20/07/22 > 'E16200722'
+
+        'comp1' seria renomeada para 'JBI PROMO - E16200722 comp1'.
+```
+>   consulte a tabela de retrancas de *'PROMO'* para ver a lista completa de siglas dos produtos...
+
+<br/>
+
+2. ### ![rename btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/shpNullIcon.png) botão **`renomear templates`**
+    renomeia as comps de templates e assinaturas de chamada seguindo o padrão de nomenclatura de promo.
+    - id do usuário > *3 primeiras letras do usuário logado na máquina.*
+    - tag 'PROMO' > *PROMO*
+    - id do projeto > *sigla de 3 letras do produto + 6 números da data*
+    - nome do projeto > *nome do projeto descrito no 'trello' de promo*
+    - serviço > *data e horário das versões em forma reduzida*
+  
+```
+    ex: usando as seguintes informações ficaria...
+
+        1 - usuário: rdenoni > 'RDE'
+        2 - tag: 'PROMO'
+        3 - id do projeto: GNEWS Internacional - dia 15/03/22 > 'INT150322'
+        4 - nome do projeto: 'institucional'
+        5 - serviço: Quinta-feira - 22:00 > 'QUI 22H'
+
+        o template seria renomeado para 'RDE PROMO - INT150322 institucional QUI 22H'.
+```
+
+<br/>
+
+3. ### ![organize btn](https://jmbillard.com.br/promo/ui/menu/project_tab/orgProjIcon.png) botão **`organizar projeto`**
+    cria e organiza a estrutura do projeto seguindo o template de projeto.
+
+<br/>
+
+4. ### ![collect mod](https://jmbillard.com.br/promo/ui/menu/project_tab/fldTogIcon.png) modificador **`coletar arquivos`**
+    habilita a coleta de todos os arquivos usados no projeto quando salvo.
+
+>   a copia dos arquivos pode demorar um pouco dependendo da quantidade e tamanho então *KEEP CALM*...
+
+<br/>
+
+5. ### ![fonts mod](https://jmbillard.com.br/promo/ui/menu/project_tab/txtTogIcon.png) modificador **`coletar fontes`**
+    habilita a coleta de todas as fontes usadas no projeto quando salvo.
+
+>   limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
+
+<br/>
+
+1. ### ![save btn](https://jmbillard.com.br/promo/ui/menu/project_tab/quickSaveIcon.png) botão **`salvar projeto`**
+    abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
+    - id do projeto > *sigla de 3 letras do produto + 6 números da data*
+    - nome do projeto > *nome do projeto descrito no 'trello' de promo*
+
+ ```
+    ex: usando as seguintes informações ficaria...
+
+        1 - id do projeto: Marketing - dia 08/11/22 > 'MKT081122'
+        2 - nome do projeto: 'video comercial'
+
+        o projeto seria renomeado para 'MKT081122 video comercial'.
+```
 
 <br/><br/>
 
