@@ -22,6 +22,7 @@ function PROMO_GNEWS_UI() {
 
   var w = {};
   var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
+  var wip = 'work in progress... Σ(っ °Д °;)っ';
 
   clearOutput();
   write(aboutStr);
@@ -312,9 +313,9 @@ function PROMO_GNEWS_UI() {
   
   var t2Grp = txtTabGrp.add('group');
   t2Grp.spacing = 2;
-  var txtCleanerBtn = t2Grp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var txtCleanerBtn = t2Grp.add('iconbutton', undefined, txtCleanerIcon, {style: 'toolbutton'});
   txtCleanerBtn.helpTip = 'deletes consecutive spaces and line breaks';
-  var txtColumnBtn = t2Grp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var txtColumnBtn = t2Grp.add('iconbutton', undefined, txtColumnsIcon, {style: 'toolbutton'});
   txtColumnBtn.helpTip = 'divides consecutive spaces in 2 columns';
 
   txtTabGrp.add('image', undefined, vSpacer);
@@ -1278,17 +1279,17 @@ function PROMO_GNEWS_UI() {
   
   copyInfBtn.onClick = function() {
   
-    alert('work in progress... Σ(っ °Д °;)っ');
+    alert(wip);
   };
   
   pasteInfBtn.onClick = function() {
   
-    alert('work in progress... Σ(っ °Д °;)っ');
+    alert(wip);
   };
   
   typeAnimBtn.onClick = function() {
   
-    alert('work in progress... Σ(っ °Д °;)っ');
+    alert(wip);
   };
 
   /*
@@ -1552,7 +1553,48 @@ function PROMO_GNEWS_UI() {
   
   txtColumnBtn.onClick = function() {
 
-    alert('work in progress... Σ(っ °Д °;)っ');
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'no text layer is selected';
+
+    if (selLayers.length > 0) {
+
+      app.beginUndoGroup('break text columns');
+
+      for (i = 0; i < selLayers.length; i++) {
+        
+        var selLayer = selLayers[i];
+        var colN = 2;
+        var colPos = selLayer.position.value;
+        var col = columnText(selLayer, colN);
+
+        // alert(col);
+
+        if (col.length >= colN) {
+          
+          selLayer.enabled = false;
+          col[0].position.setValue(colPos);
+ 
+          for (c = 1; c < col.length; c++) {
+
+            var exp = '[parent.sourceRectAtTime().width + 100, 0];';
+            
+            col[c].parent = col[c-1];
+            col[c].position.expression = exp;
+            var cPos = col[c].position.value;
+            col[c].position.expression = '';
+            col[c].position.setValue(cPos);
+            col[c].parent = null;
+          }
+         
+        }
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(txtTabGrp, msg);
+    }
   };
   
   limitSld.onChanging = function() {

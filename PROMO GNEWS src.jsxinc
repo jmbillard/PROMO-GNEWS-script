@@ -470,7 +470,7 @@ function setTxtCase(selLayer, caseType) {
   }
 }
 
-// cleans multiple line breaks and consecutive space characters
+// cleans multiple line breaks and consecutive space characters...
 function cleanText(selLayer) {
 
   var srcTxt = selLayer.property(txtProp).property(txtDoc);
@@ -481,6 +481,64 @@ function cleanText(selLayer) {
     txt = txt.toString().replace(/[\r|\n][\s]{2,}/g, '\n');
     txt = txt.replace(/\s{2,}/g, ' ');
     srcTxt.setValue(trim(txt));
+  } else {
+
+    return false;
+  }
+}
+
+// divides a text layer in multiple columns...
+function columnText(selLayer, numColumns) {
+
+  var txtProp = "ADBE Text Properties";
+  var txtDoc = "ADBE Text Document";
+
+  var srcTxt = selLayer.property(txtProp).property(txtDoc);
+  var txt = srcTxt.value.toString();
+  txt = txt.replace(/[\r|\n][\s]{2,}/g, "*|*");
+  txt = txt.replace(/[\s]{2,}/g, "*|*");
+
+  var cellArray = txt.split("*|*");
+
+  if (cellArray.length >= numColumns) {
+
+    var col1 = [];
+    var col2 = [];
+    var col3 = [];
+    var cols = [col1, col2, col3];
+    var colLayers = [];
+  
+    for (i = 0; i < cellArray.length; i++) {
+  
+      switch (numColumns - ((i + 1) % numColumns)) {
+        case 1:
+          col1.push(cellArray[i]);
+          break;
+  
+        case 2:
+          col2.push(cellArray[i]);
+          break;
+  
+        case 3:
+          col3.push(cellArray[i]);
+          break;
+      }
+    }
+    for (i = 0; i < numColumns; i++) {
+  
+      var colName = cols[i][0];
+      var colTxt = cols[i][0];
+      var colLayer;
+  
+      for (c = 1; c < cols[i].length; c++) {
+        colTxt = colTxt + "\n" + cols[i][c];
+      }
+      colLayer = app.project.activeItem.layers.addText(colTxt);
+      colLayer.name = colName;
+      colLayers.push(colLayer);
+    }
+    return colLayers;
+
   } else {
 
     return false;

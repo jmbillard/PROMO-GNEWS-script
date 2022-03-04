@@ -162,7 +162,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-1. ### botão **`trancar`**
+3. ### botão **`trancar`**
     tranca todas as propriedades de transformação não animadas dos layers selecionados.
 ```
     'anchor point'
