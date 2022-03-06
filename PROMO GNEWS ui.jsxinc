@@ -14,11 +14,22 @@ function PROMO_GNEWS_UI() {
   #include 'PROMO GNEWS img.jsxinc';
 /* jshint ignore:end */
 
-  getAllGPrefs();
-
   var GNEWS_RED = rgb(185, 20, 20);
   var GNEWS_BLK = rgb(20, 20, 20);
   var GNEWS_WTE = rgb(234, 234, 234);
+  var tabColors = [];
+  var labelColors = [];
+  var grpNames = [];
+
+  loadDefaultPrefs();
+  loadStaticPrefs();
+  try {
+
+    var JSONFile = File('~/Documents/GNEWS script/preferences.json');
+    setGPrefs(JSONFile);
+
+  } catch (error) {}  
+  pushColors();
 
   var w = {};
   var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
@@ -53,45 +64,49 @@ function PROMO_GNEWS_UI() {
   var menuGrp = mainGrp.add('group');
   menuGrp.alignment = 'center';
 
-  var ctrlTabGrp = mainGrp.add('group');
-  ctrlTabGrp.alignment = 'center';
-  ctrlTabGrp.visible = false;
+  var ctrlGrp = mainGrp.add('group');
+  ctrlGrp.alignment = 'center';
+  ctrlGrp.visible = false;
 
-  var animTabGrp = mainGrp.add('group');
-  animTabGrp.alignment = 'center';
-  animTabGrp.visible = false;
+  var animationGrp = mainGrp.add('group');
+  animationGrp.alignment = 'center';
+  animationGrp.visible = false;
 
-  var fxTabGrp = mainGrp.add('group');
-  fxTabGrp.alignment = 'center';
-  fxTabGrp.visible = false;
+  var fxGrp = mainGrp.add('group');
+  fxGrp.alignment = 'center';
+  fxGrp.visible = false;
 
-  var txtTabGrp = mainGrp.add('group');
-  txtTabGrp.alignment = 'center';
-  txtTabGrp.visible = false;
+  var textGrp = mainGrp.add('group');
+  textGrp.alignment = 'center';
+  textGrp.visible = false;
 
-  var palletTabGrp = mainGrp.add('group');
-  palletTabGrp.alignment = 'center';
-  palletTabGrp.visible = false;
+  var palletGrp = mainGrp.add('group');
+  palletGrp.alignment = 'center';
+  palletGrp.visible = false;
 
-  var layerTabGrp = mainGrp.add('group');
-  layerTabGrp.alignment = 'center';
-  layerTabGrp.visible = false;
+  var layersGrp = mainGrp.add('group');
+  layersGrp.alignment = 'center';
+  layersGrp.visible = false;
 
-  var toolTabGrp = mainGrp.add('group');
-  toolTabGrp.alignment = 'center';
-  toolTabGrp.visible = false;
+  var toolsGrp = mainGrp.add('group');
+  toolsGrp.alignment = 'center';
+  toolsGrp.visible = false;
 
-  var projTabGrp = mainGrp.add('group');
-  projTabGrp.alignment = 'center';
-  projTabGrp.visible = false;
+  var projectGrp = mainGrp.add('group');
+  projectGrp.alignment = 'center';
+  projectGrp.visible = false;
 
-  var linksTabGrp = mainGrp.add('group');
-  linksTabGrp.alignment = 'center';
-  linksTabGrp.visible = false;
+  var appGrp = mainGrp.add('group');
+  appGrp.alignment = 'center';
+  appGrp.visible = false;
 
-  var prefTabGrp = mainGrp.add('group');
-  prefTabGrp.alignment = 'center';
-  prefTabGrp.visible = false;
+  var linksGrp = mainGrp.add('group');
+  linksGrp.alignment = 'center';
+  linksGrp.visible = false;
+
+  var preferencesGrp = mainGrp.add('group');
+  preferencesGrp.alignment = 'center';
+  preferencesGrp.visible = false;
 
   var imgGrp = w.add('group');
   imgGrp.orientation = 'stack';
@@ -107,8 +122,8 @@ function PROMO_GNEWS_UI() {
   var errTabGrp = mainGrp.add('group');
   errTabGrp.visible = false;
 
-  var progTabGrp = mainGrp.add('group');
-  progTabGrp.visible = false;
+  var progressGrp = mainGrp.add('group');
+  progressGrp.visible = false;
 
   var closeGrp = w.add('group');
   closeGrp.orientation = 'stack';
@@ -158,16 +173,16 @@ function PROMO_GNEWS_UI() {
   var projBtn = menuGrp.add('iconbutton', undefined, prjIcon, {style: 'toolbutton'});
   projBtn.helpTip = 'project organization';
 
-  menuGrp.add('image', undefined, vSpacer);
+  // menuGrp.add('image', undefined, vSpacer);
 
-  var isolateBtn = menuGrp.add('iconbutton', undefined, isolateIcon, {style: 'toolbutton'});
-  isolateBtn.helpTip = 'isolate layers';
 
   menuGrp.add('image', undefined, vSpacer);
 
+  var appBtn = menuGrp.add('iconbutton', undefined, aeIcon, {style: 'toolbutton'});
+  appBtn.helpTip = 'setup AE preferences and stuff';
   var linksBtn = menuGrp.add('iconbutton', undefined, linksIcon, {style: 'toolbutton'});
   linksBtn.helpTip = 'useful links';
-
+  
   // preferences button
   var prefBtn = prefGrp.add('iconbutton', undefined, setIcon, {style: 'toolbutton'});
   prefBtn.helpTip = 'script preferences';
@@ -183,24 +198,24 @@ function PROMO_GNEWS_UI() {
 
   var trmProp = 'ADBE Transform Group';
 
-  var nullShpBtn = ctrlTabGrp.add('iconbutton', undefined, shpNullIcon, {style: 'toolbutton'});
+  var nullShpBtn = ctrlGrp.add('iconbutton', undefined, shpNullIcon, {style: 'toolbutton'});
   nullShpBtn.helpTip = 'null';
 
-  var nullGrp = ctrlTabGrp.add('group');
+  var nullGrp = ctrlGrp.add('group');
   nullGrp.spacing = 2;
   var aniTogBtn = nullGrp.add('iconbutton', undefined, aniTogIcon, {style: 'toolbutton', toggle: 1});
   aniTogBtn.helpTip = 'copy animation';
   var exprTogBtn = nullGrp.add('iconbutton', undefined, exprTogIcon, {style: 'toolbutton', toggle: 1});
   exprTogBtn.helpTip = 'copy expressions';
 
-  ctrlTabGrp.add('image', undefined, vSpacer);
+  ctrlGrp.add('image', undefined, vSpacer);
 
-  var nullCShpBtn = ctrlTabGrp.add('iconbutton', undefined, nullCIcon, {style: 'toolbutton'});
+  var nullCShpBtn = ctrlGrp.add('iconbutton', undefined, nullCIcon, {style: 'toolbutton'});
   nullCShpBtn.helpTip = 'centered null';
 
-  ctrlTabGrp.add('image', undefined, vSpacer);
+  ctrlGrp.add('image', undefined, vSpacer);
 
-  var hGrp = ctrlTabGrp.add('group');
+  var hGrp = ctrlGrp.add('group');
   hGrp.orientation = 'column';
   hGrp.spacing = 0;
   var upHBtn = hGrp.add('iconbutton', undefined, upIcon, {style: 'toolbutton'});
@@ -216,16 +231,16 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var copyInfBtn = animTabGrp.add('iconbutton', undefined, copyInfluenceIcon, {style: 'toolbutton'});
+  var copyInfBtn = animationGrp.add('iconbutton', undefined, copyInfluenceIcon, {style: 'toolbutton'});
   copyInfBtn.helpTip = 'copy keyframe influence';
 
-  var pasteInfBtn = animTabGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
+  var pasteInfBtn = animationGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
   pasteInfBtn.helpTip = 'paste keyframe influence';
 
   
-  animTabGrp.add('image', undefined, vSpacer);
+  animationGrp.add('image', undefined, vSpacer);
 
-  var a2Grp = animTabGrp.add('group');
+  var a2Grp = animationGrp.add('group');
   a2Grp.spacing = 2;
   var typeAnimBtn = a2Grp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
   typeAnimBtn.helpTip = 'typewriting animation';
@@ -241,12 +256,12 @@ function PROMO_GNEWS_UI() {
 
   var fxProp = 'ADBE Effect Parade';
 
-  var shpAdjBtn = fxTabGrp.add('iconbutton', undefined, shpAdjIcon, {style: 'toolbutton'});
+  var shpAdjBtn = fxGrp.add('iconbutton', undefined, shpAdjIcon, {style: 'toolbutton'});
   shpAdjBtn.helpTip = 'adjustment layer';
 
-  fxTabGrp.add('image', undefined, vSpacer);
+  fxGrp.add('image', undefined, vSpacer);
 
-  var cGrp = fxTabGrp.add('group');
+  var cGrp = fxGrp.add('group');
   cGrp.spacing = 2;
   var curBtn = cGrp.add('iconbutton', undefined, curIcon, {style: 'toolbutton'});
   curBtn.helpTip = 'curves';
@@ -255,9 +270,9 @@ function PROMO_GNEWS_UI() {
   var lumBtn = cGrp.add('iconbutton', undefined, lumIcon, {style: 'toolbutton'});
   lumBtn.helpTip = 'lumetri color';
 
-  fxTabGrp.add('image', undefined, hSpacer);
+  fxGrp.add('image', undefined, hSpacer);
 
-  var bGrp = fxTabGrp.add('group');
+  var bGrp = fxGrp.add('group');
   bGrp.spacing = 2;
   var gaublurBtn = bGrp.add('iconbutton', undefined, gaublurIcon, {style: 'toolbutton'});
   gaublurBtn.helpTip = 'gaussian blur';
@@ -266,23 +281,23 @@ function PROMO_GNEWS_UI() {
   var lensblurBtn = bGrp.add('iconbutton', undefined, lensblurIcon, {style: 'toolbutton'});
   lensblurBtn.helpTip = 'lens blur';
 
-  fxTabGrp.add('image', undefined, hSpacer);
+  fxGrp.add('image', undefined, hSpacer);
 
-  var gGrp = fxTabGrp.add('group');
+  var gGrp = fxGrp.add('group');
   gGrp.spacing = 2;
   var fillBtn = gGrp.add('iconbutton', undefined, fillIcon, {style: 'toolbutton'});
   fillBtn.helpTip = 'fill';
 
-  fxTabGrp.add('image', undefined, hSpacer);
+  fxGrp.add('image', undefined, hSpacer);
 
-  var dGrp = fxTabGrp.add('group');
+  var dGrp = fxGrp.add('group');
   dGrp.spacing = 2;
   var glassBtn = dGrp.add('iconbutton', undefined, glassIcon, {style: 'toolbutton'});
   glassBtn.helpTip = '3d glasses';
 
-  fxTabGrp.add('image', undefined, hSpacer);
+  fxGrp.add('image', undefined, hSpacer);
 
-  var nGrp = fxTabGrp.add('group');
+  var nGrp = fxGrp.add('group');
   nGrp.spacing = 2;
   var fracBtn = nGrp.add('iconbutton', undefined, fracIcon, {style: 'toolbutton'});
   fracBtn.helpTip = 'fractal noise';
@@ -300,7 +315,7 @@ function PROMO_GNEWS_UI() {
   var txtProp = 'ADBE Text Properties';
   var txtDoc = 'ADBE Text Document';
 
-  var t1Grp = txtTabGrp.add('group');
+  var t1Grp = textGrp.add('group');
   t1Grp.spacing = 2;
   var txtUpperBtn = t1Grp.add('iconbutton', undefined, txtUpperIcon, {style: 'toolbutton'});
   txtUpperBtn.helpTip = 'set text layer to upper case';
@@ -309,21 +324,21 @@ function PROMO_GNEWS_UI() {
   var txtTitleBtn = t1Grp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
   txtTitleBtn.helpTip = 'set text layer to title case';
   
-  txtTabGrp.add('image', undefined, hSpacer);
+  textGrp.add('image', undefined, hSpacer);
   
-  var t2Grp = txtTabGrp.add('group');
+  var t2Grp = textGrp.add('group');
   t2Grp.spacing = 2;
   var txtCleanerBtn = t2Grp.add('iconbutton', undefined, txtCleanerIcon, {style: 'toolbutton'});
   txtCleanerBtn.helpTip = 'deletes consecutive spaces and line breaks';
   var txtColumnBtn = t2Grp.add('iconbutton', undefined, txtColumnsIcon, {style: 'toolbutton'});
   txtColumnBtn.helpTip = 'divides consecutive spaces in 2 columns';
 
-  txtTabGrp.add('image', undefined, vSpacer);
+  textGrp.add('image', undefined, vSpacer);
 
-  var limitSld = txtTabGrp.add('slider', undefined, 60, 5, 200);
-  var limitTxt2 = txtTabGrp.add('edittext', undefined, '60');
+  var limitSld = textGrp.add('slider', undefined, 60, 5, 200);
+  var limitTxt2 = textGrp.add('edittext', undefined, '60');
   limitTxt2.characters = 3;
-  var limitTxt = txtTabGrp.add('statictext', undefined, '60');
+  var limitTxt = textGrp.add('statictext', undefined, '60');
   limitTxt.characters = 3;
   setTxtColor(limitTxt, sTxtColor);
 
@@ -334,47 +349,47 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
-  var redBtn = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var redBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   redBtn.size = [50, 20];
   setBtnColor(redBtn, GNEWS_RED);
   redBtn.onDraw = customDraw;
   redBtn.helpTip = 'R: 185\nG: 20\nB: 20\nHEX: #B91414';
 
-  var blkBtn = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var blkBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   blkBtn.size = [50, 20];
   setBtnColor(blkBtn, GNEWS_BLK);
   blkBtn.onDraw = customDraw;
   blkBtn.helpTip = 'R: 20\nG: 20\nB: 20\nHEX: #141414';
 
-  var wteBtn = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var wteBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   wteBtn.size = [50, 20];
   setBtnColor(wteBtn, GNEWS_WTE);
   wteBtn.onDraw = customDraw;
   wteBtn.helpTip = 'R: 234\nG: 234\nB: 234\nHEX: #EAEAEA';
 
-  palletTabGrp.add('image', undefined, vSpacer);
+  palletGrp.add('image', undefined, vSpacer);
 
-  var gryBtn1 = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var gryBtn1 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   gryBtn1.size = [50, 20];
   setBtnColor(gryBtn1, rgb(180, 180, 180));
   gryBtn1.onDraw = customDraw;
   gryBtn1.helpTip = 'R: 180\nG: 180\nB: 180\nHEX: #B4B4B4';
 
-  var gryBtn2 = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var gryBtn2 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   gryBtn2.size = [50, 20];
   setBtnColor(gryBtn2, rgb(110, 110, 110));
   gryBtn2.onDraw = customDraw;
   gryBtn2.helpTip = 'R: 110\nG: 110\nB: 110\nHEX: #6E6E6E';
 
-  var gryBtn3 = palletTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var gryBtn3 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   gryBtn3.size = [50, 20];
   setBtnColor(gryBtn3, rgb(54, 54, 54));
   gryBtn3.onDraw = customDraw;
   gryBtn3.helpTip = 'R: 54\nG: 54\nB: 54\nHEX: #363636';
 
-  palletTabGrp.add('image', undefined, vSpacer);
+  palletGrp.add('image', undefined, vSpacer);
 
-  var shpPalletBtn = palletTabGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var shpPalletBtn = palletGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
   shpPalletBtn.helpTip = 'shape layer pallet';
 
   /*
@@ -385,7 +400,7 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var lGrp = layerTabGrp.add('group');
+  var lGrp = layersGrp.add('group');
   lGrp.spacing = 2;
   var ftgTogBtn = lGrp.add('iconbutton', undefined, ftgTogIcon, {style: 'toolbutton', toggle: 1});
   ftgTogBtn.helpTip = 'footage';
@@ -401,12 +416,14 @@ function PROMO_GNEWS_UI() {
   var lgtTogBtn = lGrp.add('iconbutton', undefined, lgtTogIcon, {style: 'toolbutton', toggle: 1});
   lgtTogBtn.helpTip = 'light layers';
 
-  var renameLayersBtn = layerTabGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
+  var renameLayersBtn = layersGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
   renameLayersBtn.helpTip = 'update layer names';
 
-  layerTabGrp.add('image', undefined, vSpacer);
+  layersGrp.add('image', undefined, vSpacer);
 
-  var lockTrmBtn = layerTabGrp.add('iconbutton', undefined, lockPropIcon, {style: 'toolbutton'});
+  var isolateBtn = layersGrp.add('iconbutton', undefined, isolateIcon, {style: 'toolbutton'});
+  isolateBtn.helpTip = 'isolate layers';
+  var lockTrmBtn = layersGrp.add('iconbutton', undefined, lockPropIcon, {style: 'toolbutton'});
   lockTrmBtn.helpTip = 'lock transform properties';
 
   /*
@@ -417,17 +434,17 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var counterBtn = toolTabGrp.add('iconbutton', undefined, counterIcon, {style: 'toolbutton'});
+  var counterBtn = toolsGrp.add('iconbutton', undefined, counterIcon, {style: 'toolbutton'});
   counterBtn.helpTip = 'make counter rig';
 
-  toolTabGrp.add('image', undefined, vSpacer);
+  toolsGrp.add('image', undefined, vSpacer);
 
-  var wigBtn = toolTabGrp.add('iconbutton', undefined, wigIcon, {style: 'toolbutton'});
+  var wigBtn = toolsGrp.add('iconbutton', undefined, wigIcon, {style: 'toolbutton'});
   wigBtn.helpTip = 'wig rig';
 
-  toolTabGrp.add('image', undefined, vSpacer);
+  toolsGrp.add('image', undefined, vSpacer);
 
-  var ikBtn = toolTabGrp.add('iconbutton', undefined, ikIcon, {style: 'toolbutton'});
+  var ikBtn = toolsGrp.add('iconbutton', undefined, ikIcon, {style: 'toolbutton'});
   ikBtn.helpTip = 'simple ik rig';
 
 
@@ -439,36 +456,36 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var projUserTxt = projTabGrp.add('edittext', undefined, 'user');
+  var projUserTxt = projectGrp.add('edittext', undefined, userPrefix);
   projUserTxt.characters = 3;
   projUserTxt.helpTip = 'user id';
-  var projIdTxt = projTabGrp.add('edittext', undefined, 'proj id');
+  var projIdTxt = projectGrp.add('edittext', undefined, 'proj id');
   projIdTxt.characters = 8;
   projIdTxt.helpTip = 'project id';
-  var insertUserIdBtn = projTabGrp.add('iconbutton', undefined, addIcon, {style: 'toolbutton'});
+  var insertUserIdBtn = projectGrp.add('iconbutton', undefined, addIcon, {style: 'toolbutton'});
   insertUserIdBtn.helpTip = 'insert user with project ID';
 
-  var projNameTxt = projTabGrp.add('edittext', undefined, 'proj name');
+  var projNameTxt = projectGrp.add('edittext', undefined, 'proj name');
   projNameTxt.characters = 16;
   projNameTxt.helpTip = 'project name';
-  var renameItemBtn = projTabGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
+  var renameItemBtn = projectGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
   renameItemBtn.helpTip = 'quick template rename';
 
-  projTabGrp.add('image', undefined, vSpacer);
+  projectGrp.add('image', undefined, vSpacer);
 
-  var projOrgBtn = projTabGrp.add('iconbutton', undefined, orgProjIcon, {style: 'toolbutton'});
+  var projOrgBtn = projectGrp.add('iconbutton', undefined, orgProjIcon, {style: 'toolbutton'});
   projOrgBtn.helpTip = 'quick project organization';
 
-  projTabGrp.add('image', undefined, vSpacer);
+  projectGrp.add('image', undefined, vSpacer);
 
-  var sGrp = projTabGrp.add('group');
+  var sGrp = projectGrp.add('group');
   sGrp.spacing = 2;
   var collectTogBtn = sGrp.add('iconbutton', undefined, fldTogIcon, {style: 'toolbutton', toggle: 1});
   collectTogBtn.helpTip = 'collect files';
   var collectFontsTogBtn = sGrp.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
   collectFontsTogBtn.helpTip = 'collect fonts';
 
-  var saveBtn = projTabGrp.add('iconbutton', undefined, quickSaveIcon, {style: 'toolbutton'});
+  var saveBtn = projectGrp.add('iconbutton', undefined, quickSaveIcon, {style: 'toolbutton'});
   saveBtn.helpTip = 'quick project save';
 
   /*
@@ -479,7 +496,7 @@ function PROMO_GNEWS_UI() {
   
   */
 
-  var l1Grp = linksTabGrp.add('group');
+  var l1Grp = linksGrp.add('group');
   l1Grp.spacing = 2;
   var emailBtn = l1Grp.add('iconbutton', undefined, emailIcon, {style: 'toolbutton'});
   emailBtn.helpTip = 'webmail globo';
@@ -488,9 +505,9 @@ function PROMO_GNEWS_UI() {
   var sharePointBtn = l1Grp.add('iconbutton', undefined, sharePointIcon, {style: 'toolbutton'});
   sharePointBtn.helpTip = 'SharePoint promo GNEWS';
 
-  linksTabGrp.add('image', undefined, hSpacer);
+  linksGrp.add('image', undefined, hSpacer);
  
-  var l2Grp = linksTabGrp.add('group');
+  var l2Grp = linksGrp.add('group');
   l2Grp.spacing = 2;
   var trelloBtn = l2Grp.add('iconbutton', undefined, trelloIcon, {style: 'toolbutton'});
   trelloBtn.helpTip = 'trello promo GNEWS';
@@ -499,9 +516,9 @@ function PROMO_GNEWS_UI() {
   var plannerBtn = l2Grp.add('iconbutton', undefined, plannerIcon, {style: 'toolbutton'});
   plannerBtn.helpTip = 'planner globo';
 
-  linksTabGrp.add('image', undefined, vSpacer);
+  linksGrp.add('image', undefined, vSpacer);
 
-  var fGrp = linksTabGrp.add('group');
+  var fGrp = linksGrp.add('group');
   fGrp.spacing = 2;
   var mamHardNewsBtn = fGrp.add('iconbutton', undefined, hardNewsFolderIcon, {style: 'toolbutton'});
   mamHardNewsBtn.helpTip = 'upload MAM Hard News';
@@ -521,64 +538,51 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
-  var lForceUserPrefTxt = prefTabGrp.add('statictext', undefined, 'user');
+  var lForceUserPrefTxt = preferencesGrp.add('statictext', undefined, 'user');
   lForceUserPrefTxt.helpTip = 'user prefix';
   setTxtColor(lForceUserPrefTxt, sTxtColor);
-  var projUserPrefTxt = prefTabGrp.add('edittext', undefined, '');
+  var projUserPrefTxt = preferencesGrp.add('edittext', undefined, '');
   projUserPrefTxt.characters = 3;
   projUserPrefTxt.helpTip = 'user id';
 
-  prefTabGrp.add('image', undefined, vSpacer);
+  preferencesGrp.add('image', undefined, vSpacer);
 
-  var lPrefTxt = prefTabGrp.add('statictext', undefined, 'ctrl - adj');
+  var lPrefTxt = preferencesGrp.add('statictext', undefined, 'ctrl - adj');
   lPrefTxt.helpTip = 'ctrl and adjustment layer type';
   setTxtColor(lPrefTxt, sTxtColor);
   var lDropArray = ['shape', 'solid'];
-  var lDrop = prefTabGrp.add('dropdownlist', undefined, lDropArray);
+  var lDrop = preferencesGrp.add('dropdownlist', undefined, lDropArray);
   lDrop.selection = lDropSel;
 
-  prefTabGrp.add('image', undefined, vSpacer);
+  preferencesGrp.add('image', undefined, vSpacer);
 
-  var projPrefTxt = prefTabGrp.add('statictext', undefined, 'proj template');
+  var projPrefTxt = preferencesGrp.add('statictext', undefined, 'proj template');
   projPrefTxt.helpTip = 'project structure template';
   setTxtColor(projPrefTxt, sTxtColor);
   var projTemplateDropArray = ['PROMO', 'custom'];
-  var projTemplateDrop = prefTabGrp.add('dropdownlist', undefined, projTemplateDropArray);
+  var projTemplateDrop = preferencesGrp.add('dropdownlist', undefined, projTemplateDropArray);
   projTemplateDrop.selection = projMDropSel;
 
-  prefTabGrp.add('image', undefined, vSpacer);
+  preferencesGrp.add('image', undefined, vSpacer);
 
-  var colorPrefTxt = prefTabGrp.add('statictext', undefined, 'colors');
+  var colorPrefTxt = preferencesGrp.add('statictext', undefined, 'colors');
   colorPrefTxt.helpTip = 'ui colors';
   setTxtColor(colorPrefTxt, sTxtColor);
-  var colorDropArray = [];
-  colorDropArray.push('menu');
-  colorDropArray.push('-');
-  colorDropArray.push('ctrl tab');
-  colorDropArray.push('anim tab');
-  colorDropArray.push('fx tab');
-  colorDropArray.push('text tab');
-  colorDropArray.push('pallet tab');
-  colorDropArray.push('layer tab');
-  colorDropArray.push('tool tab');
-  colorDropArray.push('project tab');
-  colorDropArray.push('links tab');
-  colorDropArray.push('prefs. tab');
-  var colorDrop = prefTabGrp.add('dropdownlist', undefined, colorDropArray);
+  var colorDrop = preferencesGrp.add('dropdownlist', undefined, grpNames);
   colorDrop.selection = 0;
-  var tabColorBtn = prefTabGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var tabColorBtn = preferencesGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   tabColorBtn.size = [20, 20];
   setBtnColor(tabColorBtn, menuGrpColor);
   tabColorBtn.onDraw = customDraw;
 
-  prefTabGrp.add('image', undefined, vSpacer);
+  preferencesGrp.add('image', undefined, vSpacer);
 
-  var resetBtn = prefTabGrp.add('iconbutton', undefined, resetIcon, {style: 'toolbutton'});
+  var resetBtn = preferencesGrp.add('iconbutton', undefined, resetIcon, {style: 'toolbutton'});
   resetBtn.helpTip = 'reset preferences';
 
-  prefTabGrp.add('image', undefined, vSpacer);
+  preferencesGrp.add('image', undefined, vSpacer);
 
-  var aboutTxt = prefTabGrp.add('statictext', undefined, vStr);
+  var aboutTxt = preferencesGrp.add('statictext', undefined, vStr);
   aboutTxt.helpTip = aboutStr;
   setTxtColor(aboutTxt, aboutTxtColor);
 
@@ -609,27 +613,30 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var progTxt1 = progTabGrp.add('statictext', undefined, '');
+  var progTxt1 = progressGrp.add('statictext', undefined, '');
   progTxt1.characters = 16;
   setTxtColor(progTxt1, sTxtColor);
-  var progTxt2 = progTabGrp.add('statictext', undefined, '');
+  var progTxt2 = progressGrp.add('statictext', undefined, '');
   progTxt2.characters = 16;
   setTxtColor(progTxt2, sTxtColor);
 
-  var tabs = [];
   // all tabs
-  tabs.push(ctrlTabGrp);
-  tabs.push(animTabGrp);
-  tabs.push(fxTabGrp);
-  tabs.push(txtTabGrp);
-  tabs.push(palletTabGrp);
-  tabs.push(layerTabGrp);
-  tabs.push(toolTabGrp);
-  tabs.push(projTabGrp);
-  tabs.push(linksTabGrp);
-  tabs.push(progTabGrp);
-  tabs.push(prefTabGrp);
+  var tabs = [];
+  tabs.push(menuGrp);
+  tabs.push(ctrlGrp);
+  tabs.push(animationGrp);
+  tabs.push(fxGrp);
+  tabs.push(textGrp);
+  tabs.push(palletGrp);
+  tabs.push(layersGrp);
+  tabs.push(toolsGrp);
+  tabs.push(projectGrp);
+  tabs.push(appGrp);
+  tabs.push(linksGrp);
+  tabs.push(progressGrp);
+  tabs.push(preferencesGrp);
 
+  // all subgroups
   var tabSubGrps = [];
   // ctrl subgroups
   tabSubGrps.push(nullGrp);
@@ -651,7 +658,7 @@ function PROMO_GNEWS_UI() {
   tabSubGrps.push(t2Grp);
   // project subgroups
   tabSubGrps.push(sGrp);
-
+  
   //
   w.layout.layout(true);
 
@@ -666,7 +673,7 @@ function PROMO_GNEWS_UI() {
   };
 
   var grp = menuGrp;
-  var bgColor = menuGrpColor;
+  var bgColor = tabColors[tabs.indexOf(grp)];
   setBgColor(bgColor);
 
   /*
@@ -679,50 +686,50 @@ function PROMO_GNEWS_UI() {
 
   ctrlBtn.onClick = function() {
 
-    grp = ctrlTabGrp;
-    bgColor = ctrlTabGrpColor;
+    grp = ctrlGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
 
   animBtn.onClick = function() {
 
-    grp = animTabGrp;
-    bgColor = animTabGrpColor;
+    grp = animationGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
 
   fxBtn.onClick = function() {
 
-    grp = fxTabGrp;
-    bgColor = fxTabGrpColor;
+    grp = fxGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
 
   txtBtn.onClick = function() {
 
-    grp = txtTabGrp;
-    bgColor = txtTabGrpColor;
+    grp = textGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
 
   palletBtn.onClick = function() {
 
-    grp = palletTabGrp;
-    bgColor = palletTabGrpColor;
+    grp = palletGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
 
   layerBtn.onClick = function() {
 
-    grp = layerTabGrp;
-    bgColor = layerTabGrpColor;
+    grp = layersGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
 
   toolBtn.onClick = function() {
 
-    grp = toolTabGrp;
-    bgColor = toolTabGrpColor;
+    grp = toolsGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
   
@@ -732,56 +739,37 @@ function PROMO_GNEWS_UI() {
     projName = (projName == '') ? 'proj name' : projName;
     projId = getXMPdata('identifier');
     projId = (projId == '') ? 'proj id' : projId;
-    userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
+    // userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
     
-    grp = projTabGrp;
-    bgColor = projTabGrpColor;
+    grp = projectGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
     projUserTxt.text = userPrefix;
     projIdTxt.text = projId;
     projNameTxt.text = projName;
   };
 
-  linksBtn.onClick = function() {
+  appBtn.onClick = function() {
 
-    grp = linksTabGrp;
-    bgColor = linksTabGrpColor;
+    grp = appGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
     openTab(grp, bgColor);
   };
+
+  linksBtn.onClick = function() {
+
+    grp = linksGrp;
+    bgColor = tabColors[tabs.indexOf(grp)];
+    openTab(grp, bgColor);
+  };  
 
   prefBtn.onClick = function() {
 
     userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
     projUserPrefTxt.text = userPrefix;
-    grp = prefTabGrp;
-    bgColor = prefTabGrpColor;
+    grp = preferencesGrp;
+    bgColor = prefGrpColor;
     openTab(grp, bgColor);
-  };
-
-  isolateBtn.onClick = function() {
-
-    var aItem = app.project.activeItem;
-    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
-
-    if (aItem instanceof CompItem && selLayers.length > 0) {
-      app.beginUndoGroup('isolate layers');
-
-      for (i = 1; i <= aItem.numLayers; i++) {
-        var l = aItem.layer(i);
-
-        l.shy = true;
-      }
-      
-      for (i = 0; i < selLayers.length; i++) {
-        var sl = selLayers[i];
-
-        sl.shy = false;
-      }
-
-      aItem.hideShyLayers = !aItem.hideShyLayers;
-
-      app.endUndoGroup();
-    }
   };
 
   /*
@@ -834,7 +822,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlTabGrp, msg);
+      showTabErr(ctrlGrp, msg);
     }
   };
 
@@ -884,7 +872,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlTabGrp, msg);
+      showTabErr(ctrlGrp, msg);
     }
   };
 
@@ -957,7 +945,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlTabGrp, msg);
+      showTabErr(ctrlGrp, msg);
     }
   };
 
@@ -1003,7 +991,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlTabGrp, msg);
+      showTabErr(ctrlGrp, msg);
     }
   };
 
@@ -1051,7 +1039,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1072,7 +1060,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1093,7 +1081,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1114,7 +1102,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1135,7 +1123,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1156,7 +1144,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1177,7 +1165,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1199,7 +1187,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1220,7 +1208,7 @@ function PROMO_GNEWS_UI() {
 
     } else {
       var msg = 'layer not selected';
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1241,7 +1229,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1265,7 +1253,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxTabGrp, msg);
+      showTabErr(fxGrp, msg);
     }
   };
 
@@ -1321,7 +1309,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletTabGrp, msg);
+      showTabErr(palletGrp, msg);
     }
   };
 
@@ -1346,7 +1334,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletTabGrp, msg);
+      showTabErr(palletGrp, msg);
     }
   };
 
@@ -1371,7 +1359,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletTabGrp, msg);
+      showTabErr(palletGrp, msg);
     }
   };
 
@@ -1396,7 +1384,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletTabGrp, msg);
+      showTabErr(palletGrp, msg);
     }
   };
 
@@ -1421,7 +1409,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletTabGrp, msg);
+      showTabErr(palletGrp, msg);
     }
   };
 
@@ -1446,7 +1434,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletTabGrp, msg);
+      showTabErr(palletGrp, msg);
     }
   };
 
@@ -1485,7 +1473,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(txtTabGrp, msg);
+      showTabErr(textGrp, msg);
     }
   };
 
@@ -1505,7 +1493,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(txtTabGrp, msg);
+      showTabErr(textGrp, msg);
     }
   };
 
@@ -1526,7 +1514,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(txtTabGrp, msg);
+      showTabErr(textGrp, msg);
     }
   };
 
@@ -1547,7 +1535,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(txtTabGrp, msg);
+      showTabErr(textGrp, msg);
     }
   };
   
@@ -1593,7 +1581,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(txtTabGrp, msg);
+      showTabErr(textGrp, msg);
     }
   };
   
@@ -1672,7 +1660,33 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(projTabGrp, msg);
+      showTabErr(projectGrp, msg);
+    }
+  };
+
+  isolateBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+
+    if (aItem instanceof CompItem && selLayers.length > 0) {
+      app.beginUndoGroup('isolate layers');
+
+      for (i = 1; i <= aItem.numLayers; i++) {
+        var l = aItem.layer(i);
+
+        l.shy = true;
+      }
+      
+      for (i = 0; i < selLayers.length; i++) {
+        var sl = selLayers[i];
+
+        sl.shy = false;
+      }
+
+      aItem.hideShyLayers = !aItem.hideShyLayers;
+
+      app.endUndoGroup();
     }
   };
 
@@ -1692,7 +1706,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(layerTabGrp, msg);
+      showTabErr(layersGrp, msg);
     }
   };
 
@@ -1760,7 +1774,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(toolTabGrp, msg);
+      showTabErr(toolsGrp, msg);
     }
   };
 
@@ -1789,13 +1803,13 @@ function PROMO_GNEWS_UI() {
         }
       } else {
         msg = 'layer not selected';
-        showTabErr(toolTabGrp, msg);
+        showTabErr(toolsGrp, msg);
       }
 
       app.endUndoGroup();
 
     } else {
-      showTabErr(toolTabGrp, msg);
+      showTabErr(toolsGrp, msg);
     }
   };
 
@@ -1866,13 +1880,13 @@ function PROMO_GNEWS_UI() {
         }
       } else {
         msg = 'select 3 layers in order';
-        showTabErr(toolTabGrp, msg);
+        showTabErr(toolsGrp, msg);
       }
 
       app.endUndoGroup();
 
     } else {
-      showTabErr(toolTabGrp, msg);
+      showTabErr(toolsGrp, msg);
     }
   };
 
@@ -1921,7 +1935,7 @@ function PROMO_GNEWS_UI() {
 
       app.endUndoGroup();
     } else {
-      showTabErr(projTabGrp, msg);
+      showTabErr(projectGrp, msg);
     }
   };
 
@@ -1949,7 +1963,7 @@ function PROMO_GNEWS_UI() {
 
       app.endUndoGroup();
     } else {
-      showTabErr(projTabGrp, msg);
+      showTabErr(projectGrp, msg);
     }
   };
 
@@ -2037,7 +2051,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
  
@@ -2053,7 +2067,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
   
@@ -2069,7 +2083,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
   
@@ -2085,7 +2099,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
 
@@ -2101,7 +2115,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
 
@@ -2117,7 +2131,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
 
@@ -2133,7 +2147,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
 
@@ -2149,7 +2163,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
 
@@ -2165,7 +2179,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
 
@@ -2181,7 +2195,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksTabGrp, msg);
+      showTabErr(linksGrp, msg);
     }
   };
 
@@ -2213,89 +2227,34 @@ function PROMO_GNEWS_UI() {
 
   colorDrop.onChange = function() {
 
-    var c = getTabColors();
+    var c = tabColors[colorDrop.selection.index];
     setBtnColor(tabColorBtn, c);
     tabColorBtn.notify("onDraw");
   };
 
   tabColorBtn.onClick = function() {
 
-    var c = getTabColors();
+    var c = tabColors[colorDrop.selection.index];
     var binColor = eval(rgbToHex(c));
     var configColor = $.colorPicker(binColor);
 
     if (configColor != -1) {
       configColor = rgbStr(configColor);
-
-      switch (true) {
-        case colorDrop.selection == 0:
-          setBtnColor(tabColorBtn, eval(configColor));
-          menuGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 2:
-          setBtnColor(tabColorBtn, eval(configColor));
-          ctrlTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 3:
-          setBtnColor(tabColorBtn, eval(configColor));
-          animTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 4:
-          setBtnColor(tabColorBtn, eval(configColor));
-          fxTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 5:
-          setBtnColor(tabColorBtn, eval(configColor));
-          txtTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 6:
-          setBtnColor(tabColorBtn, eval(configColor));
-          palletTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 7:
-          setBtnColor(tabColorBtn, eval(configColor));
-          layerTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 8:
-          setBtnColor(tabColorBtn, eval(configColor));
-          toolTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 9:
-          setBtnColor(tabColorBtn, eval(configColor));
-          projTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 10:
-          setBtnColor(tabColorBtn, eval(configColor));
-          linksTabGrpColor = eval(configColor);
-          break;
-
-        case colorDrop.selection == 11:
-          setBtnColor(tabColorBtn, eval(configColor));
-          setBgColor(eval(configColor));
-          prefTabGrpColor = eval(configColor);
-          break;
-      }
+      setBtnColor(tabColorBtn, eval(configColor));
+      tabColors[colorDrop.selection.index] = eval(configColor);
       saveGPrefs();
     }
   };
 
   resetBtn.onClick = function functionName() {
 
-    forcePrefs();
+    loadDefaultPrefs();
+    pushColors();
     saveGPrefs();
 
-    var c = getTabColors();
+    var c = tabColors[colorDrop.selection.index];
 
-    setBgColor(prefTabGrpColor);
+    setBgColor(prefGrpColor);
     setBtnColor(tabColorBtn, c);
     tabColorBtn.notify("onDraw");
   };
@@ -2316,7 +2275,7 @@ function PROMO_GNEWS_UI() {
     closeErrBtn.visible = false;
     menuGrp.visible = true;
     grp = mainGrp;
-    bgColor = menuGrpColor;
+    bgColor = tabColors[0];
     errImgGrp.visible = false;
 
     allGrpGone();

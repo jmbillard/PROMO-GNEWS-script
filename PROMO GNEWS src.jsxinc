@@ -1648,23 +1648,7 @@ function rgbStr(val) {
 // returns a random color from de color preferences...
 function randomColor() {
 
-  var colorArray = [];
-  colorArray.push(c01);
-  colorArray.push(c02);
-  colorArray.push(c03);
-  colorArray.push(c04);
-  colorArray.push(c05);
-  colorArray.push(c06);
-  colorArray.push(c07);
-  colorArray.push(c08);
-  colorArray.push(c09);
-  colorArray.push(c10);
-  colorArray.push(c11);
-  colorArray.push(c12);
-  colorArray.push(c13);
-  colorArray.push(c14);
-  colorArray.push(c15);
-  colorArray.push(c16);
+  var colorArray = labelColors;
   var r1 = getRndInteger(0, colorArray.length);
 
   return colorArray[r1];
@@ -1736,7 +1720,7 @@ function setLayout() {
     mainGrp.spacing = 10;
     menuGrp.spacing = 10;
 
-    for (i = 0; i < tabs.length; i++) {
+    for (i = 1; i < tabs.length; i++) {
 
       tabs[i].spacing = 10;
     }
@@ -1784,7 +1768,7 @@ function setLayout() {
     mainGrp.spacing = 2;
     menuGrp.spacing = 2;
 
-    for (i = 0; i < tabs.length; i++) {
+    for (i = 1; i < tabs.length; i++) {
 
       tabs[i].spacing = 5;
     }
@@ -1821,7 +1805,7 @@ function setLayout() {
     tabSubGrps[i].orientation = wLayout;
   }
   // all tabs
-  for (i = 0; i < tabs.length; i++) {
+  for (i = 1; i < tabs.length; i++) {
 
     tabs[i].orientation = wLayout;
   }
@@ -1845,7 +1829,7 @@ function updateLayout() {
     tabSubGrps[i].layout.layout(true);
   }
 
-  for (i = 0; i < tabs.length; i++) {
+  for (i = 1; i < tabs.length; i++) {
 
     tabs[i].layout.layout(true);
   }
@@ -1866,7 +1850,7 @@ function updateLayout() {
 // turns off all tab groups visibility...
 function allGrpGone() {
 
-  for (i = 0; i < tabs.length; i++) {
+  for (i = 1; i < tabs.length; i++) {
 
     tabs[i].visible = false;
   }
@@ -1892,7 +1876,7 @@ function openTab(grp, color) {
   }
   errImgGrp.visible = false;
   progImgGrp.visible = false;
-  progTabGrp.visible = false;
+  progressGrp.visible = false;
 
   setBgColor(color);
 }
@@ -1936,7 +1920,7 @@ function showTabProg(grp, msg) {
 
   progTxt1.text = 'KEEP CALM';
   progTxt2.text = msg;
-  progTabGrp.visible = true;
+  progressGrp.visible = true;
   progImgGrp.visible = true;
   progImgGrp.helpTip = msg;
 
@@ -1954,55 +1938,6 @@ function showTabProg(grp, msg) {
   write(msg);
 }
 
-function getTabColors() {
-
-  switch (true) {
-    case(colorDrop.selection == 0):
-      c = menuGrpColor;
-      break;
-
-    case(colorDrop.selection == 2):
-      c = ctrlTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 3):
-      c = animTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 4):
-      c = fxTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 5):
-      c = txtTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 6):
-      c = palletTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 7):
-      c = layerTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 8):
-      c = toolTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 9):  
-      c = projTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 10):
-      c = linksTabGrpColor;
-      break;
-
-    case(colorDrop.selection == 11):
-      c = prefTabGrpColor;
-      break;
-  }
-  return c;
-}
 
 /*
 
@@ -2012,49 +1947,7 @@ function getTabColors() {
 
 */
 
-function forcePrefs() {
-
-  // group colors (UI)...
-  menuGrpColor = rgb(140, 0, 51);
-  ctrlTabGrpColor = rgb(232, 29, 98);
-  animTabGrpColor = rgb(155, 38, 175);
-  fxTabGrpColor = rgb(102, 57, 182);
-  txtTabGrpColor = rgb(254, 151, 0);
-  palletTabGrpColor = rgb(157, 157, 157);
-  layerTabGrpColor = rgb(154, 166, 40);
-  toolTabGrpColor = rgb(0, 149, 135);
-  projTabGrpColor = rgb(0, 187, 211);
-  linksTabGrpColor = rgb(244, 67, 54);
-  prefTabGrpColor = rgb(35, 35, 35);
-  errTabGrpColor = rgb(20, 20, 20);
-
-  // static text colors...
-  sTxtColor = rgb(234, 234, 234);
-  errTxtColor = rgb(140, 0, 51);
-  aboutTxtColor = rgb(80, 80, 80);
-
-  // label colors...
-  c01 = rgb(244, 67, 54);
-  c02 = rgb(232, 29, 98);
-  c03 = rgb(155, 38, 175);
-  c04 = rgb(102, 57, 182);
-  c05 = rgb(62, 80, 180);
-  c06 = rgb(2, 168, 243);
-  c07 = rgb(0, 187, 211);
-  c08 = rgb(0, 149, 135);
-  c09 = rgb(138, 194, 73);
-  c10 = rgb(204, 219, 56);
-  c11 = rgb(254, 234, 58);
-  c12 = rgb(254, 151, 0);
-  c13 = rgb(255, 87, 34);
-  c14 = rgb(120, 84, 71);
-  c15 = rgb(157, 157, 157);
-  c16 = rgb(95, 124, 138);
-
-  // dropdownlists...
-  lDropSel = 0;
-  projMDropSel = 0;
-
+function loadStaticPrefs() {
   // item prefixes...
   compPrefix = 'comp';
   adjPrefix = 'adj';
@@ -2070,9 +1963,98 @@ function forcePrefs() {
   userPrefix = 'user';
   mattePrefix = 'matte';
 
-  // prefix character...
+  // prefix separator...
   charPrefix = '_';
-  userPrefix = '';
+}
+
+function loadDefaultPrefs() {
+
+  grpNames = [];
+  grpNames.push('menu');
+  grpNames.push('ctrl');
+  grpNames.push('animation');
+  grpNames.push('fx');
+  grpNames.push('text');
+  grpNames.push('pallet');
+  grpNames.push('layers');
+  grpNames.push('tools');
+  grpNames.push('project');
+  grpNames.push('app');
+  grpNames.push('links');
+
+  // tab colors (UI)...
+  tabColors = [];
+  menuGrpColor = rgb(32, 19, 53);
+  ctrlGrpColor = rgb(252, 119, 83);
+  animationGrpColor = rgb(90, 200, 195);
+  fxGrpColor = rgb(64, 61, 88);
+  palletGrpColor = rgb(242, 239, 234);
+  textGrpColor = rgb(219, 213, 110);
+  layersGrpColor = rgb(122, 92, 97);
+  toolsGrpColor = rgb(104, 116, 232);
+  projectGrpColor = rgb(57, 39, 89);
+  appGrpColor = rgb(99, 52, 162);
+  linksGrpColor = rgb(79, 71, 137);
+  prefGrpColor = rgb(35, 35, 35);
+  errGrpColor = rgb(20, 20, 20);
+  
+  // static text colors (UI)...
+  sTxtColor = rgb(234, 234, 234);
+  errTxtColor = rgb(140, 0, 51);
+  aboutTxtColor = rgb(80, 80, 80);
+  
+  // label colors...
+  labelColors = [];
+  l01 = rgb(244, 67, 54);
+  l02 = rgb(232, 29, 98);
+  l03 = rgb(155, 38, 175);
+  l04 = rgb(102, 57, 182);
+  l05 = rgb(62, 80, 180);
+  l06 = rgb(2, 168, 243);
+  l07 = rgb(0, 187, 211);
+  l08 = rgb(0, 149, 135);
+  l09 = rgb(138, 194, 73);
+  l10 = rgb(204, 219, 56);
+  l11 = rgb(254, 234, 58);
+  l12 = rgb(254, 151, 0);
+  l13 = rgb(255, 87, 34);
+  l14 = rgb(120, 84, 71);
+  l15 = rgb(157, 157, 157);
+  l16 = rgb(95, 124, 138);
+
+  userPrefix = system.userName.substring(0, 3).toUpperCase();
+}
+
+function pushColors() {
+  
+  tabColors.push(menuGrpColor);
+  tabColors.push(ctrlGrpColor);
+  tabColors.push(animationGrpColor);
+  tabColors.push(fxGrpColor); 
+  tabColors.push(textGrpColor);
+  tabColors.push(palletGrpColor);
+  tabColors.push(layersGrpColor);
+  tabColors.push(toolsGrpColor);
+  tabColors.push(projectGrpColor);
+  tabColors.push(appGrpColor);
+  tabColors.push(linksGrpColor);
+
+  labelColors.push(l01);
+  labelColors.push(l02);
+  labelColors.push(l03);
+  labelColors.push(l04);
+  labelColors.push(l05);
+  labelColors.push(l06);
+  labelColors.push(l07);
+  labelColors.push(l08);
+  labelColors.push(l09);
+  labelColors.push(l10);
+  labelColors.push(l11);
+  labelColors.push(l12);
+  labelColors.push(l13);
+  labelColors.push(l14);
+  labelColors.push(l15);
+  labelColors.push(l16);
 }
 
 function saveGPrefs() {
@@ -2083,15 +2065,9 @@ function saveGPrefs() {
     GNEWS_SCRIPT_FOLDER.create();
   }
 
-  var setObj = prefsObj();
-  var setStr = JSON.stringify(setObj);
+  var setStr = prefsObj();
   var filePath = GNEWS_SCRIPT_FOLDER.fullName;
   var fileName = 'preferences.json';
-
-  setStr = setStr.replace(/\{/g, '{\n\t');
-  setStr = setStr.replace(/\}\,/g, '\n\t}\,\n\n');
-  setStr = setStr.replace(/\}\}/g, '\n\t}\n}');
-  setStr = setStr.replace(/\,\"/g, ',\n\t\"');
 
   return saveFile(setStr, filePath, fileName);
 }
@@ -2107,19 +2083,6 @@ function itemSetting(aItem, settingName) {
     set = str.substring(n2, n2 + str.length);
   }
   return eval(set);
-}
-
-function getAllGPrefs() {
-
-  var JSONFile = File('~/Documents/GNEWS script/preferences.json');
-
-  if (!JSONFile.exists) {
-    forcePrefs();
-    saveGPrefs();
-
-  } else {
-    setGPrefs(JSONFile);
-  }
 }
 
 function saveFile(fileContent, filePath, fileName) {
@@ -2146,74 +2109,31 @@ function readFile(file) {
 
 function prefsObj() {
 
-  var setObj = {
-    color: {
-      // group colors (UI)...
-      mainMenu: menuGrpColor,
-      ctrlTab: ctrlTabGrpColor,
-      animTab: animTabGrpColor,
-      fxTab: fxTabGrpColor,
-      txtTab: txtTabGrpColor,
-      palletTab: palletTabGrpColor,
-      layerTab: layerTabGrpColor,
-      toolTab: toolTabGrpColor,
-      projTab: projTabGrpColor,
-      linksTab: linksTabGrpColor,
-      prefTab: prefTabGrpColor,
-      errTab: errTabGrpColor,
+  var objStr = '';
+  objStr += '{\n';
+  objStr += '\t"color":{';
 
-      // static text colors...
-      txtLabel: sTxtColor,
-      txtErr: errTxtColor,
-      txtAbout: aboutTxtColor,
+  for (i = 0; i < grpNames.length; i++) {
 
-      // label colors...
-      c01: c01,
-      c02: c02,
-      c03: c03,
-      c04: c04,
-      c05: c05,
-      c06: c06,
-      c07: c07,
-      c08: c08,
-      c09: c09,
-      c10: c10,
-      c11: c11,
-      c12: c12,
-      c13: c13,
-      c14: c14,
-      c15: c15,
-      c16: c16,
-    },
+    var c = tabColors[i].toString();
+    objStr += '\n\t\t"' + grpNames[i] + '":[' + c + '],';
+  }
 
-    selection: {
-        // dropdownlists...
-        layerType: lDropSel,
-        projModel: projMDropSel
-      },
+  for (i = 0; i < labelColors.length; i++) {
 
-      prefix: {
-        // item prefixes...
-        cop: compPrefix,
-        adj: adjPrefix,
-        sol: solPrefix,
-        nul: nullPrefix,
+    var l = labelColors[i].toString(); 
+    objStr += '\n\t\t"l' + (i + 1) + '":[' + l + '],';
+  }
+  objStr = objStr.substring(0, objStr.length-1);
+  objStr += '\n\t},\n';
+  objStr += '\t"selection":{\n';
+  objStr += '\t\t"layerType":' +   lDropSel + ',\n';
+  objStr += '\t\t"projectModel":' +   projMDropSel + '\n';
+  objStr += '\n\t},\n';
+  objStr += '\t"user":"' +  userPrefix.toUpperCase() + '"\n';
+  objStr += '}';
 
-        // layer prefixes...
-        txt: txtPrefix,
-        shp: shpPrefix,
-        cam: camPrefix,
-        lgt: lgtPrefix,
-        ctr: ctrlPrefix,
-        mat: mattePrefix,
-
-        // prefix spacer...
-        spc: charPrefix,
-        usr: userPrefix.toUpperCase()
-      }
-  };
-
-  return setObj;
+  return objStr;
 }
 
 function setGPrefs(file) {
@@ -2221,56 +2141,23 @@ function setGPrefs(file) {
   var JSONContent = readFile(file);
   var JSONObj = JSON.parse(JSONContent);
 
-  menuGrpColor = JSONObj.color.mainMenu;
-  ctrlTabGrpColor = JSONObj.color.ctrlTab;
-  animTabGrpColor = JSONObj.color.animTab;
-  fxTabGrpColor = JSONObj.color.fxTab;
-  txtTabGrpColor = JSONObj.color.txtTab;
-  palletTabGrpColor = JSONObj.color.palletTab;
-  layerTabGrpColor = JSONObj.color.layerTab;
-  toolTabGrpColor = JSONObj.color.toolTab;
-  projTabGrpColor = JSONObj.color.projTab;
-  linksTabGrpColor = JSONObj.color.linksTab;
-  prefTabGrpColor = JSONObj.color.prefTab;
-  errTabGrpColor = JSONObj.color.errTab;
+  var objStr = '';
 
-  sTxtColor = JSONObj.color.txtLabel;
-  errTxtColor = JSONObj.color.txtErr;
-  aboutTxtColor = JSONObj.color.txtAbout;
+  for (i = 0; i < grpNames.length; i++) {
 
-  c01 = JSONObj.color.c01;
-  c02 = JSONObj.color.c02;
-  c03 = JSONObj.color.c03;
-  c04 = JSONObj.color.c04;
-  c05 = JSONObj.color.c05;
-  c06 = JSONObj.color.c06;
-  c07 = JSONObj.color.c07;
-  c08 = JSONObj.color.c08;
-  c09 = JSONObj.color.c09;
-  c10 = JSONObj.color.c10;
-  c11 = JSONObj.color.c11;
-  c12 = JSONObj.color.c12;
-  c13 = JSONObj.color.c13;
-  c14 = JSONObj.color.c14;
-  c15 = JSONObj.color.c15;
-  c16 = JSONObj.color.c16;
+    objStr += grpNames[i] + 'GrpColor = JSONObj.color.' + grpNames[i] + ';\n';
+  }
 
-  lDropSel = JSONObj.selection.layerType;
-  projMDropSel = JSONObj.selection.projModel;
+  for (i = 1; i <= labelColors.length; i++) {
 
-  compPrefix = JSONObj.prefix.cop;
-  adjPrefix = JSONObj.prefix.adj;
-  solPrefix = JSONObj.prefix.sol;
-  nullPrefix = JSONObj.prefix.nul;
+    objStr += 'l' + i + ' = JSONObj.color.l' + i + ';\n';
+  }
+  
+  objStr += 'lDropSel = JSONObj.selection.layerType;\n';
+  objStr += 'projMDropSel = JSONObj.selection.projectModel;\n';
+  objStr += 'userPrefix = JSONObj.user;';
 
-  txtPrefix = JSONObj.prefix.txt;
-  shpPrefix = JSONObj.prefix.shp;
-  camPrefix = JSONObj.prefix.cam;
-  lgtPrefix = JSONObj.prefix.lgt;
-  ctrlPrefix = JSONObj.prefix.ctr;
-  mattePrefix = JSONObj.prefix.mat;
-  charPrefix = JSONObj.prefix.spc;
-  userPrefix = JSONObj.prefix.usr;
+  eval(objStr);
 }
 
 /*

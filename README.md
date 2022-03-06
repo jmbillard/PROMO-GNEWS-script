@@ -84,7 +84,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![fx icon](https://jmbillard.com.br/promo/ui/menu/fxIcon.png) *efeitos*
 ![fx tab](https://jmbillard.com.br/promo/ui/fx%20tab.png)
-1. ### botão **`adjustment layer`**
+1. ### ![adj btn](https://jmbillard.com.br/promo/ui/menu/fx_tab/adjIcon.png) botão **`adjustment layer`**
     cria um 'adjustment layer' responsivo com as dimensões da composição.
 
 >   o tipo de layer usado como *'adjustment layer'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
