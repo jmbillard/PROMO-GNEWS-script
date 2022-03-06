@@ -21,15 +21,15 @@ function PROMO_GNEWS_UI() {
   var labelColors = [];
   var grpNames = [];
 
-  loadDefaultPrefs();
   loadStaticPrefs();
+  loadDefaultPrefs();
   try {
 
     var JSONFile = File('~/Documents/GNEWS script/preferences.json');
-    setGPrefs(JSONFile);
+    getGPrefs(JSONFile);
 
   } catch (error) {}  
-  pushColors();
+  // pushColors();
 
   var w = {};
   var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
@@ -572,7 +572,7 @@ function PROMO_GNEWS_UI() {
   colorDrop.selection = 0;
   var tabColorBtn = preferencesGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   tabColorBtn.size = [20, 20];
-  setBtnColor(tabColorBtn, menuGrpColor);
+  setBtnColor(tabColorBtn, tabColors[0]);
   tabColorBtn.onDraw = customDraw;
 
   preferencesGrp.add('image', undefined, vSpacer);
@@ -2249,7 +2249,7 @@ function PROMO_GNEWS_UI() {
   resetBtn.onClick = function functionName() {
 
     loadDefaultPrefs();
-    pushColors();
+    // pushColors();
     saveGPrefs();
 
     var c = tabColors[colorDrop.selection.index];

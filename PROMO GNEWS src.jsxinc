@@ -1645,6 +1645,17 @@ function rgbStr(val) {
   return "rgb(" + r + ", " + g + ", " + b + ")";
 }
 
+function hexToRGB(hex) {
+  
+  hex = hex.replace('#', '');
+  
+  var r = '0x' + hex[0] + hex[1] | 0;
+  var g = '0x' + hex[2] + hex[3] | 0;
+  var b = '0x' + hex[4] + hex[5] | 0;
+  
+  return [r/255, g/255, b/255];
+}
+
 // returns a random color from de color preferences...
 function randomColor() {
 
@@ -1911,7 +1922,7 @@ function showTabErr(grp, msg) {
   errImg.helpTip = msg;
   errImg = replaceErrImage();
 
-  setBgColor(GNEWS_BLK);
+  setBgColor(errGrpColor);
   clearOutput();
   write(msg);
 }
@@ -1933,7 +1944,7 @@ function showTabProg(grp, msg) {
   imgGrp.visible = false;
   errImgGrp.visible = false;
 
-  setBgColor(GNEWS_BLK);
+  setBgColor(errGrpColor);
   clearOutput();
   write(msg);
 }
@@ -1948,6 +1959,21 @@ function showTabProg(grp, msg) {
 */
 
 function loadStaticPrefs() {
+
+  // all group names
+  grpNames = [];
+  grpNames.push('menu');
+  grpNames.push('ctrl');
+  grpNames.push('animation');
+  grpNames.push('fx');
+  grpNames.push('text');
+  grpNames.push('pallet');
+  grpNames.push('layers');
+  grpNames.push('tools');
+  grpNames.push('project');
+  grpNames.push('app');
+  grpNames.push('links');
+
   // item prefixes...
   compPrefix = 'comp';
   adjPrefix = 'adj';
@@ -1965,96 +1991,74 @@ function loadStaticPrefs() {
 
   // prefix separator...
   charPrefix = '_';
-}
 
-function loadDefaultPrefs() {
-
-  grpNames = [];
-  grpNames.push('menu');
-  grpNames.push('ctrl');
-  grpNames.push('animation');
-  grpNames.push('fx');
-  grpNames.push('text');
-  grpNames.push('pallet');
-  grpNames.push('layers');
-  grpNames.push('tools');
-  grpNames.push('project');
-  grpNames.push('app');
-  grpNames.push('links');
-
-  // tab colors (UI)...
-  tabColors = [];
-  menuGrpColor = rgb(32, 19, 53);
-  ctrlGrpColor = rgb(252, 119, 83);
-  animationGrpColor = rgb(90, 200, 195);
-  fxGrpColor = rgb(64, 61, 88);
-  palletGrpColor = rgb(242, 239, 234);
-  textGrpColor = rgb(219, 213, 110);
-  layersGrpColor = rgb(122, 92, 97);
-  toolsGrpColor = rgb(104, 116, 232);
-  projectGrpColor = rgb(57, 39, 89);
-  appGrpColor = rgb(99, 52, 162);
-  linksGrpColor = rgb(79, 71, 137);
   prefGrpColor = rgb(35, 35, 35);
   errGrpColor = rgb(20, 20, 20);
-  
+
   // static text colors (UI)...
   sTxtColor = rgb(234, 234, 234);
   errTxtColor = rgb(140, 0, 51);
   aboutTxtColor = rgb(80, 80, 80);
-  
-  // label colors...
-  labelColors = [];
-  l01 = rgb(244, 67, 54);
-  l02 = rgb(232, 29, 98);
-  l03 = rgb(155, 38, 175);
-  l04 = rgb(102, 57, 182);
-  l05 = rgb(62, 80, 180);
-  l06 = rgb(2, 168, 243);
-  l07 = rgb(0, 187, 211);
-  l08 = rgb(0, 149, 135);
-  l09 = rgb(138, 194, 73);
-  l10 = rgb(204, 219, 56);
-  l11 = rgb(254, 234, 58);
-  l12 = rgb(254, 151, 0);
-  l13 = rgb(255, 87, 34);
-  l14 = rgb(120, 84, 71);
-  l15 = rgb(157, 157, 157);
-  l16 = rgb(95, 124, 138);
-
-  userPrefix = system.userName.substring(0, 3).toUpperCase();
 }
 
-function pushColors() {
-  
-  tabColors.push(menuGrpColor);
-  tabColors.push(ctrlGrpColor);
-  tabColors.push(animationGrpColor);
-  tabColors.push(fxGrpColor); 
-  tabColors.push(textGrpColor);
-  tabColors.push(palletGrpColor);
-  tabColors.push(layersGrpColor);
-  tabColors.push(toolsGrpColor);
-  tabColors.push(projectGrpColor);
-  tabColors.push(appGrpColor);
-  tabColors.push(linksGrpColor);
+function loadDefaultPrefs() {
 
-  labelColors.push(l01);
-  labelColors.push(l02);
-  labelColors.push(l03);
-  labelColors.push(l04);
-  labelColors.push(l05);
-  labelColors.push(l06);
-  labelColors.push(l07);
-  labelColors.push(l08);
-  labelColors.push(l09);
-  labelColors.push(l10);
-  labelColors.push(l11);
-  labelColors.push(l12);
-  labelColors.push(l13);
-  labelColors.push(l14);
-  labelColors.push(l15);
-  labelColors.push(l16);
+  var defPrefs = {
+    'color': {
+      'menu':'#FFFFFF',
+      'ctrl':'#FC7753',
+      'animation':'#5AC8C3',
+      'fx':'#403D58',
+      'text':'#F2EFEA',
+      'pallet':'#DBD56E',
+      'layers':'#7A5C61',
+      'tools':'#6874E8',
+      'project':'#392759',
+      'app':'#6334A2',
+      'links':'#4F4789',
+      },
+
+    "label":{
+      'l1':'#F44336',
+      'l2':'#E81D62',
+      'l3':'#9B26AF',
+      'l4':'#6639B6',
+      'l5':'#3E50B4',
+      'l6':'#02A8F3',
+      'l7':'#00BBD3',
+      'l8':'#009587',
+      'l9':'#8AC249',
+      'l10':'#CCDB38',
+      'l11':'#FEEA3A',
+      'l12':'#FE9700',
+      'l13':'#FF5722',
+      'l14':'#785447',
+      'l15':'#9D9D9D',
+      'l16':'#5F7C8A'
+    },
+
+    "selection":{
+      "layerType":0,
+      "projectModel":0
+    },
+  
+    "user":system.userName.substring(0, 3).toUpperCase()
+  };
+  tabColors = [];
+  labelColors = [];
+
+  for (i = 0; i < grpNames.length; i++) {
+
+    tabColors.push(hexToRGB(defPrefs.color[grpNames[i]]));
+  }
+
+  for (i = 1; i <= 16; i++) {
+
+    labelColors.push(hexToRGB(defPrefs.label['l' + i]));
+  }
+  lDropSel = defPrefs.selection.layerType;
+  projMDropSel = defPrefs.selection.projectModel;
+  userPrefix = defPrefs.user;
 }
 
 function saveGPrefs() {
@@ -2115,49 +2119,50 @@ function prefsObj() {
 
   for (i = 0; i < grpNames.length; i++) {
 
-    var c = tabColors[i].toString();
-    objStr += '\n\t\t"' + grpNames[i] + '":[' + c + '],';
+    var c = rgbToHex(tabColors[i]).replace('0x', '#').toUpperCase();
+    objStr += '\n\t\t"' + grpNames[i] + '":"' + c + '",';
   }
+  objStr += '\n\t},\n\n';
+  objStr += '\t"label":{';
 
   for (i = 0; i < labelColors.length; i++) {
 
-    var l = labelColors[i].toString(); 
-    objStr += '\n\t\t"l' + (i + 1) + '":[' + l + '],';
+    var l = rgbToHex(labelColors[i]).replace('0x', '#').toUpperCase(); 
+    objStr += '\n\t\t"l' + (i + 1) + '":"' + l + '",';
   }
   objStr = objStr.substring(0, objStr.length-1);
-  objStr += '\n\t},\n';
+  objStr += '\n\t},\n\n';
   objStr += '\t"selection":{\n';
   objStr += '\t\t"layerType":' +   lDropSel + ',\n';
   objStr += '\t\t"projectModel":' +   projMDropSel + '\n';
-  objStr += '\n\t},\n';
+  objStr += '\n\t},\n\n';
   objStr += '\t"user":"' +  userPrefix.toUpperCase() + '"\n';
   objStr += '}';
 
   return objStr;
 }
 
-function setGPrefs(file) {
+function getGPrefs(file) {
 
   var JSONContent = readFile(file);
   var JSONObj = JSON.parse(JSONContent);
 
-  var objStr = '';
+  tabColors = [];
+  labelColors = [];
 
   for (i = 0; i < grpNames.length; i++) {
 
-    objStr += grpNames[i] + 'GrpColor = JSONObj.color.' + grpNames[i] + ';\n';
+    // eval(grpNames[i] + 'GrpColor = JSONObj.color.' + grpNames[i] + ';');
+    tabColors.push(hexToRGB(JSONObj.color[grpNames[i]]));
   }
 
-  for (i = 1; i <= labelColors.length; i++) {
+  for (i = 1; i <= 16; i++) {
 
-    objStr += 'l' + i + ' = JSONObj.color.l' + i + ';\n';
+    labelColors.push(hexToRGB(JSONObj.label['l' + i]));
   }
-  
-  objStr += 'lDropSel = JSONObj.selection.layerType;\n';
-  objStr += 'projMDropSel = JSONObj.selection.projectModel;\n';
-  objStr += 'userPrefix = JSONObj.user;';
-
-  eval(objStr);
+  lDropSel = JSONObj.selection.layerType;
+  projMDropSel = JSONObj.selection.projectModel;
+  userPrefix = JSONObj.user;
 }
 
 /*
