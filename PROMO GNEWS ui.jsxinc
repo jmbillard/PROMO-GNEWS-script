@@ -63,46 +63,13 @@ function PROMO_GNEWS_UI() {
 
   var menuGrp = mainGrp.add('group');
   menuGrp.alignment = 'center';
-
-  var ctrlGrp = mainGrp.add('group');
-  ctrlGrp.alignment = 'center';
-  ctrlGrp.visible = false;
-
-  var animationGrp = mainGrp.add('group');
-  animationGrp.alignment = 'center';
-  animationGrp.visible = false;
-
-  var fxGrp = mainGrp.add('group');
-  fxGrp.alignment = 'center';
-  fxGrp.visible = false;
-
-  var textGrp = mainGrp.add('group');
-  textGrp.alignment = 'center';
-  textGrp.visible = false;
-
-  var palletGrp = mainGrp.add('group');
-  palletGrp.alignment = 'center';
-  palletGrp.visible = false;
-
-  var layersGrp = mainGrp.add('group');
-  layersGrp.alignment = 'center';
-  layersGrp.visible = false;
-
-  var toolsGrp = mainGrp.add('group');
-  toolsGrp.alignment = 'center';
-  toolsGrp.visible = false;
-
-  var projectGrp = mainGrp.add('group');
-  projectGrp.alignment = 'center';
-  projectGrp.visible = false;
-
-  var appGrp = mainGrp.add('group');
-  appGrp.alignment = 'center';
-  appGrp.visible = false;
-
-  var linksGrp = mainGrp.add('group');
-  linksGrp.alignment = 'center';
-  linksGrp.visible = false;
+  
+  for (i = 1; i < grpNames.length; i++) {
+    
+    eval('var ' + grpNames[i] + 'Grp = mainGrp.add(\'group\');');
+    eval(grpNames[i] + 'Grp.alignment = \'center\';');
+    eval(grpNames[i] + 'Grp.visible = false;');
+  }
 
   var preferencesGrp = mainGrp.add('group');
   preferencesGrp.alignment = 'center';
@@ -172,8 +139,6 @@ function PROMO_GNEWS_UI() {
   toolBtn.helpTip = 'rigs and tools';
   var projBtn = menuGrp.add('iconbutton', undefined, prjIcon, {style: 'toolbutton'});
   projBtn.helpTip = 'project organization';
-
-  // menuGrp.add('image', undefined, vSpacer);
 
 
   menuGrp.add('image', undefined, vSpacer);
@@ -622,19 +587,11 @@ function PROMO_GNEWS_UI() {
 
   // all tabs
   var tabs = [];
-  tabs.push(menuGrp);
-  tabs.push(ctrlGrp);
-  tabs.push(animationGrp);
-  tabs.push(fxGrp);
-  tabs.push(textGrp);
-  tabs.push(palletGrp);
-  tabs.push(layersGrp);
-  tabs.push(toolsGrp);
-  tabs.push(projectGrp);
-  tabs.push(appGrp);
-  tabs.push(linksGrp);
-  tabs.push(progressGrp);
-  tabs.push(preferencesGrp);
+
+  for (i = 0; i < grpNames.length; i++) {
+
+    eval('tabs.push(' + grpNames[i] + 'Grp);');
+  }
 
   // all subgroups
   var tabSubGrps = [];

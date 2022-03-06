@@ -1729,12 +1729,12 @@ function setLayout() {
     prefGrp.margins = 0;
 
     mainGrp.spacing = 10;
-    menuGrp.spacing = 10;
 
-    for (i = 1; i < tabs.length; i++) {
+    for (i = 0; i < tabs.length; i++) {
 
       tabs[i].spacing = 10;
     }
+    preferencesGrp.spacing = 10;
     // text tab - limit text horizontal controls
     limitSld.visible = true;
     limitSld.size.width = 200;
@@ -1783,6 +1783,7 @@ function setLayout() {
 
       tabs[i].spacing = 5;
     }
+    preferencesGrp.spacing = 5;
     // text tab - limit text horizontal controls
     limitSld.visible = false;
     limitSld.size.width = 0;
@@ -1816,10 +1817,11 @@ function setLayout() {
     tabSubGrps[i].orientation = wLayout;
   }
   // all tabs
-  for (i = 1; i < tabs.length; i++) {
+  for (i = 0; i < tabs.length; i++) {
 
     tabs[i].orientation = wLayout;
   }
+  preferencesGrp.orientation = wLayout;
   imgGrp.alignment = imgAlignment;
   errImgGrp.alignment = errImgAlignment;
   progImgGrp.alignment = errImgAlignment;
@@ -1828,7 +1830,6 @@ function setLayout() {
   closeGrp.alignment = closeAlignment;
   prefGrp.alignment = closeAlignment;
 
-  menuGrp.orientation = wLayout;
 
   updateLayout();
 }
@@ -1840,10 +1841,11 @@ function updateLayout() {
     tabSubGrps[i].layout.layout(true);
   }
 
-  for (i = 1; i < tabs.length; i++) {
+  for (i = 0; i < tabs.length; i++) {
 
     tabs[i].layout.layout(true);
   }
+  preferencesGrp.layout.layout(true);
   imgGrp.layout.layout(true);
   errImgGrp.layout.layout(true);
   progImgGrp.layout.layout(true);
@@ -1851,7 +1853,6 @@ function updateLayout() {
   closeGrp.layout.layout(true);
   prefGrp.layout.layout(true);
 
-  menuGrp.layout.layout(true);
   mainGrp.layout.layout(true);
 
   w.layout.layout(true);
@@ -1865,6 +1866,7 @@ function allGrpGone() {
 
     tabs[i].visible = false;
   }
+  preferencesGrp.visible = false;
   errTabGrp.visible = false;
   closeGrp.visible = false;
 }
