@@ -58,13 +58,26 @@ function PROMO_GNEWS_UTL(thisObj) {
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
 
       if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
-         PROMO_GNEWS_WINDOW.show();
+        PROMO_GNEWS_WINDOW.show();
       }
 
       return PROMO_GNEWS_WINDOW;
 
     } else {
-      alert('PROMO GNEWS script can\'t run');
+
+      try {
+        if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
+          PROMO_GNEWS_WINDOW.show();
+        }
+ 
+        alert('no network... Σ(っ °Д °;)っ');
+        
+        return PROMO_GNEWS_WINDOW;
+
+      } catch (error) {
+
+        alert('PROMO GNEWS script can\'t run');
+      }
     }
   } else {
     if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
