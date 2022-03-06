@@ -66,7 +66,7 @@ function PROMO_GNEWS_UI() {
   
   for (i = 1; i < grpNames.length; i++) {
     
-    eval('var ' + grpNames[i] + 'Grp = mainGrp.add(\'group\');');
+    eval(grpNames[i] + 'Grp = mainGrp.add(\'group\');');
     eval(grpNames[i] + 'Grp.alignment = \'center\';');
     eval(grpNames[i] + 'Grp.visible = false;');
   }
@@ -102,7 +102,7 @@ function PROMO_GNEWS_UI() {
   /*
 
   ---------------------------------------------------------------
-  > 🖼️ images
+  > images
   ---------------------------------------------------------------
 
   */
@@ -162,16 +162,16 @@ function PROMO_GNEWS_UI() {
   */
 
   var trmProp = 'ADBE Transform Group';
+  
+  var ctrlSubGrp1 = ctrlGrp.add('group');
+  ctrlSubGrp1.spacing = 2;
+  var aniTogBtn = ctrlSubGrp1.add('iconbutton', undefined, aniTogIcon, {style: 'toolbutton', toggle: 1});
+  aniTogBtn.helpTip = 'copy animation';
+  var exprTogBtn = ctrlSubGrp1.add('iconbutton', undefined, exprTogIcon, {style: 'toolbutton', toggle: 1});
+  exprTogBtn.helpTip = 'copy expressions';
 
   var nullShpBtn = ctrlGrp.add('iconbutton', undefined, shpNullIcon, {style: 'toolbutton'});
-  nullShpBtn.helpTip = 'null';
-
-  var nullGrp = ctrlGrp.add('group');
-  nullGrp.spacing = 2;
-  var aniTogBtn = nullGrp.add('iconbutton', undefined, aniTogIcon, {style: 'toolbutton', toggle: 1});
-  aniTogBtn.helpTip = 'copy animation';
-  var exprTogBtn = nullGrp.add('iconbutton', undefined, exprTogIcon, {style: 'toolbutton', toggle: 1});
-  exprTogBtn.helpTip = 'copy expressions';
+  nullShpBtn.helpTip = 'create parent null';
 
   ctrlGrp.add('image', undefined, vSpacer);
 
@@ -205,9 +205,9 @@ function PROMO_GNEWS_UI() {
   
   animationGrp.add('image', undefined, vSpacer);
 
-  var a2Grp = animationGrp.add('group');
-  a2Grp.spacing = 2;
-  var typeAnimBtn = a2Grp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var animationSubGrp1 = animationGrp.add('group');
+  animationSubGrp1.spacing = 2;
+  var typeAnimBtn = animationSubGrp1.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
   typeAnimBtn.helpTip = 'typewriting animation';
 
 
@@ -237,42 +237,42 @@ function PROMO_GNEWS_UI() {
 
   fxGrp.add('image', undefined, hSpacer);
 
-  var bGrp = fxGrp.add('group');
-  bGrp.spacing = 2;
-  var gaublurBtn = bGrp.add('iconbutton', undefined, gaublurIcon, {style: 'toolbutton'});
+  var fxSubGrp1 = fxGrp.add('group');
+  fxSubGrp1.spacing = 2;
+  var gaublurBtn = fxSubGrp1.add('iconbutton', undefined, gaublurIcon, {style: 'toolbutton'});
   gaublurBtn.helpTip = 'gaussian blur';
-  var comblurBtn = bGrp.add('iconbutton', undefined, comblurIcon, {style: 'toolbutton'});
+  var comblurBtn = fxSubGrp1.add('iconbutton', undefined, comblurIcon, {style: 'toolbutton'});
   comblurBtn.helpTip = 'compound blur';
-  var lensblurBtn = bGrp.add('iconbutton', undefined, lensblurIcon, {style: 'toolbutton'});
+  var lensblurBtn = fxSubGrp1.add('iconbutton', undefined, lensblurIcon, {style: 'toolbutton'});
   lensblurBtn.helpTip = 'lens blur';
 
   fxGrp.add('image', undefined, hSpacer);
 
-  var gGrp = fxGrp.add('group');
-  gGrp.spacing = 2;
-  var fillBtn = gGrp.add('iconbutton', undefined, fillIcon, {style: 'toolbutton'});
+  var fxSubGrp2 = fxGrp.add('group');
+  fxSubGrp2.spacing = 2;
+  var fillBtn = fxSubGrp2.add('iconbutton', undefined, fillIcon, {style: 'toolbutton'});
   fillBtn.helpTip = 'fill';
 
   fxGrp.add('image', undefined, hSpacer);
 
-  var dGrp = fxGrp.add('group');
-  dGrp.spacing = 2;
-  var glassBtn = dGrp.add('iconbutton', undefined, glassIcon, {style: 'toolbutton'});
+  var fxSubGrp3 = fxGrp.add('group');
+  fxSubGrp3.spacing = 2;
+  var glassBtn = fxSubGrp3.add('iconbutton', undefined, glassIcon, {style: 'toolbutton'});
   glassBtn.helpTip = '3d glasses';
 
   fxGrp.add('image', undefined, hSpacer);
 
-  var nGrp = fxGrp.add('group');
-  nGrp.spacing = 2;
-  var fracBtn = nGrp.add('iconbutton', undefined, fracIcon, {style: 'toolbutton'});
+  var fxSubGrp4 = fxGrp.add('group');
+  fxSubGrp4.spacing = 2;
+  var fracBtn = fxSubGrp4.add('iconbutton', undefined, fracIcon, {style: 'toolbutton'});
   fracBtn.helpTip = 'fractal noise';
-  var grainBtn = nGrp.add('iconbutton', undefined, grainIcon, {style: 'toolbutton'});
+  var grainBtn = fxSubGrp4.add('iconbutton', undefined, grainIcon, {style: 'toolbutton'});
   grainBtn.helpTip = 'add grain';
 
   /*
 
   ---------------------------------------------------------------
-  > 🔠 txt tab
+  > txt tab
   ---------------------------------------------------------------
 
   */
@@ -280,22 +280,22 @@ function PROMO_GNEWS_UI() {
   var txtProp = 'ADBE Text Properties';
   var txtDoc = 'ADBE Text Document';
 
-  var t1Grp = textGrp.add('group');
-  t1Grp.spacing = 2;
-  var txtUpperBtn = t1Grp.add('iconbutton', undefined, txtUpperIcon, {style: 'toolbutton'});
+  var textSubGrp1 = textGrp.add('group');
+  textSubGrp1.spacing = 2;
+  var txtUpperBtn = textSubGrp1.add('iconbutton', undefined, txtUpperIcon, {style: 'toolbutton'});
   txtUpperBtn.helpTip = 'set text layer to upper case';
-  var txtLowerBtn = t1Grp.add('iconbutton', undefined, txtLowerIcon, {style: 'toolbutton'});
+  var txtLowerBtn = textSubGrp1.add('iconbutton', undefined, txtLowerIcon, {style: 'toolbutton'});
   txtLowerBtn.helpTip = 'set text layer to lower case';
-  var txtTitleBtn = t1Grp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
+  var txtTitleBtn = textSubGrp1.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
   txtTitleBtn.helpTip = 'set text layer to title case';
   
   textGrp.add('image', undefined, hSpacer);
   
-  var t2Grp = textGrp.add('group');
-  t2Grp.spacing = 2;
-  var txtCleanerBtn = t2Grp.add('iconbutton', undefined, txtCleanerIcon, {style: 'toolbutton'});
+  var textSubGrp2 = textGrp.add('group');
+  textSubGrp2.spacing = 2;
+  var txtCleanerBtn = textSubGrp2.add('iconbutton', undefined, txtCleanerIcon, {style: 'toolbutton'});
   txtCleanerBtn.helpTip = 'deletes consecutive spaces and line breaks';
-  var txtColumnBtn = t2Grp.add('iconbutton', undefined, txtColumnsIcon, {style: 'toolbutton'});
+  var txtColumnBtn = textSubGrp2.add('iconbutton', undefined, txtColumnsIcon, {style: 'toolbutton'});
   txtColumnBtn.helpTip = 'divides consecutive spaces in 2 columns';
 
   textGrp.add('image', undefined, vSpacer);
@@ -310,7 +310,7 @@ function PROMO_GNEWS_UI() {
   /*
 
   ---------------------------------------------------------------
-  > 🔴 pallet tab
+  > pallet tab
   ---------------------------------------------------------------
 
   */
@@ -365,20 +365,20 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var lGrp = layersGrp.add('group');
-  lGrp.spacing = 2;
-  var ftgTogBtn = lGrp.add('iconbutton', undefined, ftgTogIcon, {style: 'toolbutton', toggle: 1});
+  var layersSubGrp1 = layersGrp.add('group');
+  layersSubGrp1.spacing = 2;
+  var ftgTogBtn = layersSubGrp1.add('iconbutton', undefined, ftgTogIcon, {style: 'toolbutton', toggle: 1});
   ftgTogBtn.helpTip = 'footage';
-  var solTogBtn = lGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton', toggle: 1});
+  var solTogBtn = layersSubGrp1.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton', toggle: 1});
   ftgTogBtn.helpTip = 'footage';
   solTogBtn.helpTip = 'solids';
-  var shpTogBtn = lGrp.add('iconbutton', undefined, shpTogIcon, {style: 'toolbutton', toggle: 1});
+  var shpTogBtn = layersSubGrp1.add('iconbutton', undefined, shpTogIcon, {style: 'toolbutton', toggle: 1});
   shpTogBtn.helpTip = 'shape layers';
-  var txtTogBtn = lGrp.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
+  var txtTogBtn = layersSubGrp1.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
   txtTogBtn.helpTip = 'text layers';
-  var camTogBtn = lGrp.add('iconbutton', undefined, camTogIcon, {style: 'toolbutton', toggle: 1});
+  var camTogBtn = layersSubGrp1.add('iconbutton', undefined, camTogIcon, {style: 'toolbutton', toggle: 1});
   camTogBtn.helpTip = 'camera layers';
-  var lgtTogBtn = lGrp.add('iconbutton', undefined, lgtTogIcon, {style: 'toolbutton', toggle: 1});
+  var lgtTogBtn = layersSubGrp1.add('iconbutton', undefined, lgtTogIcon, {style: 'toolbutton', toggle: 1});
   lgtTogBtn.helpTip = 'light layers';
 
   var renameLayersBtn = layersGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
@@ -443,11 +443,11 @@ function PROMO_GNEWS_UI() {
 
   projectGrp.add('image', undefined, vSpacer);
 
-  var sGrp = projectGrp.add('group');
-  sGrp.spacing = 2;
-  var collectTogBtn = sGrp.add('iconbutton', undefined, fldTogIcon, {style: 'toolbutton', toggle: 1});
+  var projectSubGrp1 = projectGrp.add('group');
+  projectSubGrp1.spacing = 2;
+  var collectTogBtn = projectSubGrp1.add('iconbutton', undefined, fldTogIcon, {style: 'toolbutton', toggle: 1});
   collectTogBtn.helpTip = 'collect files';
-  var collectFontsTogBtn = sGrp.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
+  var collectFontsTogBtn = projectSubGrp1.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
   collectFontsTogBtn.helpTip = 'collect fonts';
 
   var saveBtn = projectGrp.add('iconbutton', undefined, quickSaveIcon, {style: 'toolbutton'});
@@ -461,39 +461,39 @@ function PROMO_GNEWS_UI() {
   
   */
 
-  var l1Grp = linksGrp.add('group');
-  l1Grp.spacing = 2;
-  var emailBtn = l1Grp.add('iconbutton', undefined, emailIcon, {style: 'toolbutton'});
+  var linksSubGrp2 = linksGrp.add('group');
+  linksSubGrp2.spacing = 2;
+  var emailBtn = linksSubGrp2.add('iconbutton', undefined, emailIcon, {style: 'toolbutton'});
   emailBtn.helpTip = 'webmail globo';
-  var oneDriveBtn = l1Grp.add('iconbutton', undefined, oneDriveIcon, {style: 'toolbutton'});
+  var oneDriveBtn = linksSubGrp2.add('iconbutton', undefined, oneDriveIcon, {style: 'toolbutton'});
   oneDriveBtn.helpTip = 'OneDrive globo';
-  var sharePointBtn = l1Grp.add('iconbutton', undefined, sharePointIcon, {style: 'toolbutton'});
+  var sharePointBtn = linksSubGrp2.add('iconbutton', undefined, sharePointIcon, {style: 'toolbutton'});
   sharePointBtn.helpTip = 'SharePoint promo GNEWS';
 
   linksGrp.add('image', undefined, hSpacer);
  
-  var l2Grp = linksGrp.add('group');
-  l2Grp.spacing = 2;
-  var trelloBtn = l2Grp.add('iconbutton', undefined, trelloIcon, {style: 'toolbutton'});
+  var linksSubGrp3 = linksGrp.add('group');
+  linksSubGrp3.spacing = 2;
+  var trelloBtn = linksSubGrp3.add('iconbutton', undefined, trelloIcon, {style: 'toolbutton'});
   trelloBtn.helpTip = 'trello promo GNEWS';
-  var typeFormBtn = l2Grp.add('iconbutton', undefined, typeFormIcon, {style: 'toolbutton'});
+  var typeFormBtn = linksSubGrp3.add('iconbutton', undefined, typeFormIcon, {style: 'toolbutton'});
   typeFormBtn.helpTip = 'type form globo';
-  var plannerBtn = l2Grp.add('iconbutton', undefined, plannerIcon, {style: 'toolbutton'});
+  var plannerBtn = linksSubGrp3.add('iconbutton', undefined, plannerIcon, {style: 'toolbutton'});
   plannerBtn.helpTip = 'planner globo';
 
   linksGrp.add('image', undefined, vSpacer);
 
-  var fGrp = linksGrp.add('group');
-  fGrp.spacing = 2;
-  var mamHardNewsBtn = fGrp.add('iconbutton', undefined, hardNewsFolderIcon, {style: 'toolbutton'});
+  var linksSubGrp1 = linksGrp.add('group');
+  linksSubGrp1.spacing = 2;
+  var mamHardNewsBtn = linksSubGrp1.add('iconbutton', undefined, hardNewsFolderIcon, {style: 'toolbutton'});
   mamHardNewsBtn.helpTip = 'upload MAM Hard News';
-  var mamMagBtn = fGrp.add('iconbutton', undefined, magazineFolderIcon, {style: 'toolbutton'});
+  var mamMagBtn = linksSubGrp1.add('iconbutton', undefined, magazineFolderIcon, {style: 'toolbutton'});
   mamMagBtn.helpTip = 'upload MAM Magazine';
 
-  var mamArteBtn = fGrp.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
+  var mamArteBtn = linksSubGrp1.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
   mamArteBtn.helpTip = 'MAM Para Arte';
 
-  var nUtilsBtn = fGrp.add('iconbutton', undefined, utilsFolderIcon, {style: 'toolbutton'});
+  var nUtilsBtn = linksSubGrp1.add('iconbutton', undefined, utilsFolderIcon, {style: 'toolbutton'});
   nUtilsBtn.helpTip = 'N: Utilidades';
 
   /*
@@ -503,14 +503,14 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
-  var lForceUserPrefTxt = preferencesGrp.add('statictext', undefined, 'user');
-  lForceUserPrefTxt.helpTip = 'user prefix';
-  setTxtColor(lForceUserPrefTxt, sTxtColor);
-  var projUserPrefTxt = preferencesGrp.add('edittext', undefined, '');
-  projUserPrefTxt.characters = 3;
-  projUserPrefTxt.helpTip = 'user id';
+  // var lForceUserPrefTxt = preferencesGrp.add('statictext', undefined, 'user');
+  // lForceUserPrefTxt.helpTip = 'user prefix';
+  // setTxtColor(lForceUserPrefTxt, sTxtColor);
+  // var projUserPrefTxt = preferencesGrp.add('edittext', undefined, '');
+  // projUserPrefTxt.characters = 3;
+  // projUserPrefTxt.helpTip = 'user id';
 
-  preferencesGrp.add('image', undefined, vSpacer);
+  // preferencesGrp.add('image', undefined, vSpacer);
 
   var lPrefTxt = preferencesGrp.add('statictext', undefined, 'ctrl - adj');
   lPrefTxt.helpTip = 'ctrl and adjustment layer type';
@@ -554,7 +554,7 @@ function PROMO_GNEWS_UI() {
   /*
 
   ---------------------------------------------------------------
-  > ❌ error tab
+  > error tab
   ---------------------------------------------------------------
 
   */
@@ -596,25 +596,25 @@ function PROMO_GNEWS_UI() {
   // all subgroups
   var tabSubGrps = [];
   // ctrl subgroups
-  tabSubGrps.push(nullGrp);
+  tabSubGrps.push(ctrlSubGrp1);
   // animation subgroups
-  tabSubGrps.push(a2Grp);
+  tabSubGrps.push(animationSubGrp1);
   // fx subgroups
-  tabSubGrps.push(bGrp);
-  tabSubGrps.push(gGrp);
-  tabSubGrps.push(dGrp);
-  tabSubGrps.push(nGrp);
+  tabSubGrps.push(fxSubGrp1);
+  tabSubGrps.push(fxSubGrp2);
+  tabSubGrps.push(fxSubGrp3);
+  tabSubGrps.push(fxSubGrp4);
   // layers subgroups
-  tabSubGrps.push(lGrp);
+  tabSubGrps.push(layersSubGrp1);
   // links subgroups
-  tabSubGrps.push(fGrp);
-  tabSubGrps.push(l1Grp);
-  tabSubGrps.push(l2Grp);
+  tabSubGrps.push(linksSubGrp1);
+  tabSubGrps.push(linksSubGrp2);
+  tabSubGrps.push(linksSubGrp3);
   // text subgroups
-  tabSubGrps.push(t1Grp);
-  tabSubGrps.push(t2Grp);
+  tabSubGrps.push(textSubGrp1);
+  tabSubGrps.push(textSubGrp2);
   // project subgroups
-  tabSubGrps.push(sGrp);
+  tabSubGrps.push(projectSubGrp1);
   
   //
   w.layout.layout(true);
@@ -630,7 +630,7 @@ function PROMO_GNEWS_UI() {
   };
 
   var grp = menuGrp;
-  var bgColor = tabColors[tabs.indexOf(grp)];
+  var bgColor = tabColors[0];
   setBgColor(bgColor);
 
   /*
@@ -696,7 +696,6 @@ function PROMO_GNEWS_UI() {
     projName = (projName == '') ? 'proj name' : projName;
     projId = getXMPdata('identifier');
     projId = (projId == '') ? 'proj id' : projId;
-    // userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
     
     grp = projectGrp;
     bgColor = tabColors[tabs.indexOf(grp)];
@@ -723,7 +722,7 @@ function PROMO_GNEWS_UI() {
   prefBtn.onClick = function() {
 
     userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
-    projUserPrefTxt.text = userPrefix;
+    // projUserPrefTxt.text = userPrefix;
     grp = preferencesGrp;
     bgColor = prefGrpColor;
     openTab(grp, bgColor);
@@ -1240,7 +1239,7 @@ function PROMO_GNEWS_UI() {
   /*
 
   ---------------------------------------------------------------
-  > 🔴 color tab events
+  > color tab events
   ---------------------------------------------------------------
 
   */
@@ -1409,7 +1408,7 @@ function PROMO_GNEWS_UI() {
   /*
 
   ---------------------------------------------------------------
-  > 🔠 text tab events
+  > text tab events
   ---------------------------------------------------------------
 
   */
@@ -1855,6 +1854,12 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  projUserTxt.onChange = function() {
+
+    userPrefix = projUserTxt.text.toUpperCase();
+    saveGPrefs();
+  };
+
   insertUserIdBtn.onClick = function() {
 
     userPrefix = replaceSpcChar(projUserTxt.text.toUpperCase());
@@ -2163,12 +2168,6 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
-
-  projUserPrefTxt.onChange = function() {
-
-    userPrefix = projUserPrefTxt.text.toUpperCase();
-    saveGPrefs();
-  };
 
   lDrop.onChange = function() {
 
