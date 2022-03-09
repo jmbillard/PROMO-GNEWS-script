@@ -25,7 +25,7 @@ function PROMO_GNEWS_UI() {
   loadDefaultPrefs();
   try {
 
-    var JSONFile = File('~/Documents/GNEWS script/preferences.json');
+    var JSONFile = File('~/Documents/PROMO GNEWS script/preferences.json');
     getGPrefs(JSONFile);
 
   } catch (error) {}  
@@ -454,6 +454,17 @@ function PROMO_GNEWS_UI() {
   saveBtn.helpTip = 'quick project save';
 
   /*
+
+  ---------------------------------------------------------------
+  > ✌️ app tab
+  ---------------------------------------------------------------
+
+  */
+
+  var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  copyAMEPresetsBtn.helpTip = 'install Media Encoder presets';
+
+  /*
   
   ---------------------------------------------------------------
   > 🔗 links tab
@@ -503,14 +514,6 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
-  // var lForceUserPrefTxt = preferencesGrp.add('statictext', undefined, 'user');
-  // lForceUserPrefTxt.helpTip = 'user prefix';
-  // setTxtColor(lForceUserPrefTxt, sTxtColor);
-  // var projUserPrefTxt = preferencesGrp.add('edittext', undefined, '');
-  // projUserPrefTxt.characters = 3;
-  // projUserPrefTxt.helpTip = 'user id';
-
-  // preferencesGrp.add('image', undefined, vSpacer);
 
   var lPrefTxt = preferencesGrp.add('statictext', undefined, 'ctrl - adj');
   lPrefTxt.helpTip = 'ctrl and adjustment layer type';
@@ -1991,6 +1994,23 @@ function PROMO_GNEWS_UI() {
     openTab(grp, bgColor);
 
     app.endUndoGroup();
+  };
+
+  /*
+  
+  ---------------------------------------------------------------
+  > ✌️ app tab events
+  ---------------------------------------------------------------
+  
+  */
+  
+  copyAMEPresetsBtn.onClick = function() {
+    
+    var v = app.version.match(/[0-9]*/).toString();
+    var srcPath = '';
+    var amePresetsPath = '~/Documents/Adobe/Adobe Media Encoder/' + v + '.0/Presets';
+
+    copyFolderContent(srcPath, amePresetsPath); 
   };
 
   /*

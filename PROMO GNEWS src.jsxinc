@@ -78,10 +78,10 @@ function openFolder(folderPath) {
   var folder = Folder(folderPath);
   
   if (appOs == 'Win') {
-  system.callSystem('explorer ' + Folder.decode(folder.fsName));
+    system.callSystem('explorer ' + Folder.decode(folder.fsName));
   
   } else {
-  system.callSystem('open "' + Folder.decode(folder.fsName) + '"');
+    system.callSystem('open "' + Folder.decode(folder.fsName) + '"');
   }
 }
 
@@ -1257,6 +1257,30 @@ function fontCollect(savePath) {
   }
 }
 
+function copyFolderContent(src, dst) {
+
+
+  var srcFolder = new Folder(src);
+  var dstFolder = new Folder(dst);
+  var filesArray = [];
+  
+  if (srcFolder.exists) {
+    filesArray = srcFolder.getFiles();
+    for (i = 0; i < filesArray.length; i++) {
+    
+      var aFile = filesArray[i];
+      var aFileName = File.decode(aFile.fsName).toString();
+      aFileName = aFileName.match(/[^\\]*$/i).toString();
+      
+      if (dstFolder.exists) {
+
+        var cFile = new File(dst + '/' + aFileName);
+        aFile.copy(cFile);        
+      }
+    }
+  }
+}
+
 // smart rename based on item selection...
 function smartRename(aItem, itemName) {
 
@@ -2003,21 +2027,23 @@ function loadStaticPrefs() {
   aboutTxtColor = rgb(80, 80, 80);
 }
 
+//https://coolors.co/8c252f-bf3a48-cb6259-d68a69-c2b6a3-db9437-6ea57d-00b5c2-5f3691-6e489b
+
 function loadDefaultPrefs() {
 
   var defPrefs = {
     'color': {
-      'menu':'#FFFFFF',
-      'ctrl':'#FC7753',
-      'animation':'#5AC8C3',
-      'fx':'#403D58',
-      'text':'#F2EFEA',
-      'pallet':'#DBD56E',
-      'layers':'#7A5C61',
-      'tools':'#6874E8',
-      'project':'#392759',
-      'app':'#6334A2',
-      'links':'#4F4789',
+      'menu':'#5F3691',
+      'ctrl':'#BF3A48',
+      'animation':'#CB6259',
+      'fx':'#D68A69',
+      'text':'#C2B6A3',
+      'pallet':'#202020',
+      'layers':'#DB9437',
+      'tools':'#6EA57D',
+      'project':'#00B5C2',
+      'app':'#5F3691',
+      'links':'#6E489B',
       },
 
     "label":{
@@ -2065,7 +2091,7 @@ function loadDefaultPrefs() {
 
 function saveGPrefs() {
 
-  var GNEWS_SCRIPT_FOLDER = new Folder('~/Documents/GNEWS script/');
+  var GNEWS_SCRIPT_FOLDER = new Folder('~/Documents/PROMO GNEWS script/');
 
   if (!GNEWS_SCRIPT_FOLDER.exists) {
     GNEWS_SCRIPT_FOLDER.create();
