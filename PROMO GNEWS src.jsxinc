@@ -1270,7 +1270,7 @@ function copyFolderContent(src, dst) {
     
       var aFile = filesArray[i];
       var aFileName = File.decode(aFile.fsName).toString();
-      aFileName = aFileName.match(/[^\\]*$/i).toString();
+      aFileName = aFileName.match(/[^\\|\/]*$/i).toString();
       
       if (dstFolder.exists) {
 
@@ -1278,6 +1278,19 @@ function copyFolderContent(src, dst) {
         aFile.copy(cFile);        
       }
     }
+  }
+}
+
+function getURLContent(url, dst) {
+
+  var os = $.os;
+  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+  var fileName = decodeURI(url.match(/[^\\|\/]*$/i));
+  var cmd = 'curl ' + url + ' -OutFile \'' + dst + '/' + fileName + '\'';
+  var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
+
+  if (appOs == 'Win') {
+    system.callSystem(cmdStr);
   }
 }
 

@@ -48,6 +48,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   ---------------------------------------------------------------
 
   */
+  // alert($.fileName);
 
   var PROMO_GNEWS_WINDOW = PROMO_GNEWS_UI(thisObj);
 

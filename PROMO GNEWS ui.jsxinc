@@ -461,7 +461,7 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, eprIcon, {style: 'toolbutton'});
   copyAMEPresetsBtn.helpTip = 'install Media Encoder presets';
 
   /*
@@ -547,6 +547,9 @@ function PROMO_GNEWS_UI() {
 
   var resetBtn = preferencesGrp.add('iconbutton', undefined, resetIcon, {style: 'toolbutton'});
   resetBtn.helpTip = 'reset preferences';
+
+  var updateBtn = preferencesGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  updateBtn.helpTip = 'download the latest script version from github';
 
   preferencesGrp.add('image', undefined, vSpacer);
 
@@ -1978,15 +1981,23 @@ function PROMO_GNEWS_UI() {
       var projFile =  new File(projPath + projFullName);
 
       if (collectTogBtn.value) {
-        projPath = saveFolder.fullName + '/' + projFullName + '/';
-        projFolder = new Folder(projPath);
-        projFile = new File(projPath + projFullName);
 
-        projFolder.create();
-        filesCollect(projPath);
+        try {
+          
+          projPath = saveFolder.fullName + '/' + projFullName + '/';
+          projFolder = new Folder(projPath);
+          projFile = new File(projPath + projFullName);
+  
+          projFolder.create();
+          filesCollect(projPath);
+        } catch (error) {}
       }
       if (collectFontsTogBtn.value) {
-        fontCollect(projPath);
+
+        try {
+          
+          fontCollect(projPath);
+        } catch (error) {}
       }
       app.project.save(projFile);
       openFolder(projPath);
@@ -2005,12 +2016,23 @@ function PROMO_GNEWS_UI() {
   */
   
   copyAMEPresetsBtn.onClick = function() {
+
+    var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
+    
+    var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
+    var url2 = url + 'H264%20-%20mp4%20alta.epr';
+    var url3 = url + 'H264%20-%20mp4%20baixa.epr';
+    var url4 = url + 'WAV%20-%20audio%20GSAT.epr';
+    var url5 = url + 'XDCAM%20HD%2050%20NTSC%2060i%20-%20avid.epr';
     
     var v = app.version.match(/[0-9]*/).toString();
-    var srcPath = '';
     var amePresetsPath = '~/Documents/Adobe/Adobe Media Encoder/' + v + '.0/Presets';
 
-    copyFolderContent(srcPath, amePresetsPath); 
+    getURLContent(url1, amePresetsPath);
+    getURLContent(url2, amePresetsPath);
+    getURLContent(url3, amePresetsPath);
+    getURLContent(url4, amePresetsPath);
+    getURLContent(url5, amePresetsPath);
   };
 
   /*
@@ -2233,6 +2255,27 @@ function PROMO_GNEWS_UI() {
     setBgColor(prefGrpColor);
     setBtnColor(tabColorBtn, c);
     tabColorBtn.notify("onDraw");
+  };
+
+  updateBtn.onClick = function() {
+  
+    var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';
+    
+    var url1 = url + 'JSON%20lib.jsxinc';
+    var url2 = url + 'PROMO%20GNEWS%20exp.jsxinc';
+    var url3 = url + 'PROMO%20GNEWS%20img.jsxinc';
+    var url4 = url + 'PROMO%20GNEWS%20src.jsxinc';
+    var url5 = url + 'PROMO%20GNEWS%20ui.jsxinc';
+    var url6 = url + 'PROMO%20GNEWS.jsx';
+
+    var scriptPath = decodeURI($.fileName).match(/.*(?=[\/|\\])/);
+
+    getURLContent(url1, scriptPath);
+    getURLContent(url2, scriptPath);
+    getURLContent(url3, scriptPath);
+    getURLContent(url4, scriptPath);
+    getURLContent(url5, scriptPath);
+    getURLContent(url6, scriptPath);
   };
 
   /*
