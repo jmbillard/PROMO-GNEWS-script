@@ -32,11 +32,11 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
 
 function PROMO_GNEWS_UTL(thisObj) {
 
-  var vStr = 'v 2';
+  var vStr = 'v 1.6';
   var prefSection = 'Main Pref Section';
   var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
   var configName = '\"Allow Scripts to Write Files and Access Network\"';
-  var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script/';
+  var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script';
 
   /* jshint ignore:start */
   #include 'PROMO GNEWS ui.jsxinc';

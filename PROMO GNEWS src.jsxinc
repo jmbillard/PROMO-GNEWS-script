@@ -13,7 +13,7 @@
 function getTempFld() {
 
   try {
-    var tempFld = new Folder(Folder.userData.toString() + '/temp');
+    var tempFld = new Folder(scriptPreferencesPath + '/temp');
 
     if (!tempFld.exists) {
       tempFld.create();
