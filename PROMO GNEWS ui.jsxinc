@@ -728,7 +728,6 @@ function PROMO_GNEWS_UI() {
   prefBtn.onClick = function() {
 
     userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
-    // projUserPrefTxt.text = userPrefix;
     grp = preferencesGrp;
     bgColor = prefGrpColor;
     openTab(grp, bgColor);
@@ -2248,7 +2247,6 @@ function PROMO_GNEWS_UI() {
   resetBtn.onClick = function functionName() {
 
     loadDefaultPrefs();
-    // pushColors();
     saveGPrefs();
 
     var c = tabColors[colorDrop.selection.index];
@@ -2271,7 +2269,6 @@ function PROMO_GNEWS_UI() {
 
     var scriptPath = $.fileName.match(/[\/|\\]\w{2,}.*(?=[\/|\\])/);
     scriptPath = 'C:' + decodeURI(scriptPath).toString();
-    // var scriptPath = decodeURI('C:/Program Files/Adobe/Adobe After Effects 2022/Support Files/Scripts/ScriptUI Panels');
 
     getURLContent(url1, scriptPath);
     getURLContent(url2, scriptPath);
