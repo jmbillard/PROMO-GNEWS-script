@@ -25,7 +25,7 @@ function PROMO_GNEWS_UI() {
   loadDefaultPrefs();
   try {
 
-    var JSONFile = File('~/Documents/PROMO GNEWS script/preferences.json');
+    var JSONFile = File(scriptPreferencesPath + '/preferences.json');
     getGPrefs(JSONFile);
 
   } catch (error) {}  
@@ -2267,7 +2267,7 @@ function PROMO_GNEWS_UI() {
     var url5 = url + 'PROMO%20GNEWS%20ui.jsxinc';
     var url6 = url + 'PROMO%20GNEWS.jsx';
 
-    var downPath = '~/Documents/PROMO GNEWS script/ScriptUI Panels';
+    var downPath = scriptPreferencesPath + '/ScriptUI Panels';
     var dowFolder = new Folder(downPath);
     var scriptUIPath = $.fileName.match(/[\/|\\]\w{2,}.*(?=[\/|\\])/);
     scriptUIPath = 'C:' + decodeURI(scriptUIPath).toString();

@@ -2106,7 +2106,7 @@ function loadDefaultPrefs() {
 
 function saveGPrefs() {
 
-  var GNEWS_SCRIPT_FOLDER = new Folder('~/Documents/PROMO GNEWS script/');
+  var GNEWS_SCRIPT_FOLDER = new Folder(scriptPreferencesPath);
 
   if (!GNEWS_SCRIPT_FOLDER.exists) {
     GNEWS_SCRIPT_FOLDER.create();
