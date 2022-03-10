@@ -54,7 +54,7 @@ function PROMO_GNEWS_UTL(thisObj) {
 
   if (!app.preferences.getPrefAsLong(prefSection, prefName)) {
     alert('please check the ' + configName + ' preference');
-    app.executeCommand(2359);
+    app.executeCommand(3131);
 
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
 

@@ -1982,6 +1982,7 @@ function PROMO_GNEWS_UI() {
 
       if (collectTogBtn.value) {
 
+        // app.executeCommand(2482); // collect files...
         try {
           
           projPath = saveFolder.fullName + '/' + projFullName + '/';
@@ -2268,7 +2269,8 @@ function PROMO_GNEWS_UI() {
     var url5 = url + 'PROMO%20GNEWS%20ui.jsxinc';
     var url6 = url + 'PROMO%20GNEWS.jsx';
 
-    var scriptPath = decodeURI($.fileName).match(/.*(?=[\/|\\])/);
+    // var scriptPath = decodeURI($.fileName.match(/.*(?=[\/|\\])/));
+    var scriptPath = decodeURI('C:/Program Files/Adobe/Adobe After Effects 2022/Support Files/Scripts/ScriptUI Panels');
 
     getURLContent(url1, scriptPath);
     getURLContent(url2, scriptPath);
