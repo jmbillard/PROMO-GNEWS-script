@@ -524,7 +524,7 @@ function PROMO_GNEWS_UI() {
 
   preferencesGrp.add('image', undefined, vSpacer);
 
-  var projPrefTxt = preferencesGrp.add('statictext', undefined, 'proj template');
+  var projPrefTxt = preferencesGrp.add('statictext', undefined, 'org. template');
   projPrefTxt.helpTip = 'project structure template';
   setTxtColor(projPrefTxt, sTxtColor);
   var projTemplateDropArray = ['PROMO', 'custom'];
@@ -548,7 +548,7 @@ function PROMO_GNEWS_UI() {
   var resetBtn = preferencesGrp.add('iconbutton', undefined, resetIcon, {style: 'toolbutton'});
   resetBtn.helpTip = 'reset preferences';
 
-  var updateBtn = preferencesGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var updateBtn = preferencesGrp.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
   updateBtn.helpTip = 'download the latest script version from github';
 
   preferencesGrp.add('image', undefined, vSpacer);
@@ -2267,15 +2267,41 @@ function PROMO_GNEWS_UI() {
     var url5 = url + 'PROMO%20GNEWS%20ui.jsxinc';
     var url6 = url + 'PROMO%20GNEWS.jsx';
 
-    var scriptPath = $.fileName.match(/[\/|\\]\w{2,}.*(?=[\/|\\])/);
-    scriptPath = 'C:' + decodeURI(scriptPath).toString();
+    var downPath = '~/Documents/PROMO GNEWS script/ScriptUI Panels';
+    var dowFolder = new Folder(downPath);
+    var scriptUIPath = $.fileName.match(/[\/|\\]\w{2,}.*(?=[\/|\\])/);
+    scriptUIPath = 'C:' + decodeURI(scriptUIPath).toString();
 
-    getURLContent(url1, scriptPath);
-    getURLContent(url2, scriptPath);
-    getURLContent(url3, scriptPath);
-    getURLContent(url4, scriptPath);
-    getURLContent(url5, scriptPath);
-    getURLContent(url6, scriptPath);
+    var msg = 'downloading files...';
+
+    showTabProg(grp, msg);
+
+    if (!dowFolder.exists) {
+
+      dowFolder.create();
+    }
+    getURLContent(url1, downPath);
+    getURLContent(url2, downPath);
+    getURLContent(url3, downPath);
+    getURLContent(url4, downPath);
+    getURLContent(url5, downPath);
+    getURLContent(url6, downPath);
+
+    try {
+      
+      copyFolderContent(downPath, scriptUIPath);
+      msg = 'ヽ(✿ﾟ▽ﾟ)ノ please relaunch the script...';
+    } catch (error) {
+      
+      msg = 'you have to manually copy all files to:\n';
+      msg += '\'\\Support Files\\Scripts\\ScriptUI Panels\' folder';
+      alert(msg);
+      openFolder(downPath);
+      openFolder(scriptUIPath);
+      msg = 'relaunch the script...';
+    }
+
+    showTabProg(grp, msg);
   };
 
   /*

@@ -32,7 +32,7 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
 
 function PROMO_GNEWS_UTL(thisObj) {
 
-  var vStr = 'v 1.6';
+  var vStr = 'v 1.8';
   var prefSection = 'Main Pref Section';
   var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
   var configName = '\"Allow Scripts to Write Files and Access Network\"';
@@ -48,7 +48,6 @@ function PROMO_GNEWS_UTL(thisObj) {
   ---------------------------------------------------------------
 
   */
-  // alert($.fileName);
 
   var PROMO_GNEWS_WINDOW = PROMO_GNEWS_UI(thisObj);
 
