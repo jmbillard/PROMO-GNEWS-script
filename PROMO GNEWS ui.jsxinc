@@ -2290,7 +2290,7 @@ function PROMO_GNEWS_UI() {
     try {
       
       copyFolderContent(downPath, scriptUIPath);
-      msg = 'ヽ(✿ﾟ▽ﾟ)ノ please relaunch the script...';
+      msg = 'and run the script ヽ(✿ﾟ▽ﾟ)ノ';
     } catch (error) {
       
       msg = 'you have to manually copy all files to:\n';
@@ -2298,7 +2298,7 @@ function PROMO_GNEWS_UI() {
       alert(msg);
       openFolder(downPath);
       openFolder(scriptUIPath);
-      msg = 'relaunch the script...';
+      msg = 'and copy the files ༼ つ ◕_◕ ༽つ';
     }
 
     showTabProg(grp, msg);
