@@ -4,9 +4,10 @@
 
 <br/>
 
-# 📟 layout e interface 
+# 📟 layout e interface
 
-![main menu](https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/images/menu.png)
+
+![main menu](/images/menu.png)
 
 a barra é **`responsiva`** e pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.<br/>
 o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
@@ -424,3 +425,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 6. ### botão **`limpar preferences`**
     descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
 
+
+This is my [random value] located somewhere in my Markdown document.
+
+[random value]: variable value
