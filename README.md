@@ -424,8 +424,3 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 6. ### botão **`limpar preferences`**
     descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
-
-
-This is my [random value] located somewhere in my Markdown document.
-
-[random value]: variable value
