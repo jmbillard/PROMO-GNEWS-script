@@ -29,11 +29,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![control icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *controles e nulls*
+# ![control icon](/images/icons/ctrlIcon.png) *controles e nulls*
 <!---
 ![control tab](https://jmbillard.com.br/promo/ui/control%20tab.png)
 --->
-1. ### ![null btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/shpNullIcon.png) botão **`null`**
+1. ### ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
     cria um 'null' pai na mesma posição de cada layer selecionado.
     
 >   caso não tenha nenhum layer selecionado, o 'null' é criado no centro da tela.<br/>
@@ -41,7 +41,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![anim mod](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/aniTogIcon.png) modificador **`copiar animação`**
+2. ### ![anim mod](/images/icons/tg_aniIcon.png) modificador **`copiar animação`**
     habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
 
     ![copyAnim ex](https://jmbillard.com.br/promo/gifs/copy-animation.gif)
@@ -56,7 +56,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-3. ### ![expr mod](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/exprTogIcon.png) modificador **`copiar expressões`**
+3. ### ![expr mod](/images/icons/tg_expIcon.png) modificador **`copiar expressões`**
     habilita a transferência das 'expressões' de transformação dos layers selecionados para o 'null'.
 ```
     'anchor point'
@@ -68,36 +68,36 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-4. ### ![nullC btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/nullCBtn.png) botão **`null central`**
+4. ### ![nullC btn](/images/icons/nullCBtn.png) botão **`null central`**
     cria um único 'null' pai no 'centro geométrico' de 2 ou mais layers selecionados.
 
 <br/>
 
-5. ### ![down btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/downIcon.png)![up btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/upIcon.png) botões de **`seleção de hierarquia`**
+5. ### ![down btn](/images/icons/downIcon.png)![up btn](/images/icons/upIcon.png) botões de **`seleção de hierarquia`**
     avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
 
     ![selectHierarchy ex](https://jmbillard.com.br/promo/gifs/select-hierarchy.gif)
 
 <br/><br/>
 
-# ![animation icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *animação*
+# ![animation icon](/images/icons/ctrlIcon.png) *animação*
 <!---
 ![animation tab](https://jmbillard.com.br/promo/ui/animation%20tab.png)
 --->
 <br/><br/>
 
-# ![fx icon](https://jmbillard.com.br/promo/ui/menu/fxIcon.png) *efeitos*
+# ![fx icon](/images/icons/fxIcon.png) *efeitos*
 <!---
 ![fx tab](https://jmbillard.com.br/promo/ui/fx%20tab.png)
 --->
-1. ### ![adj btn](https://jmbillard.com.br/promo/ui/menu/fx_tab/adjIcon.png) botão **`adjustment layer`**
+1. ### ![adj btn](/images/icons/adjIcon.png) botão **`adjustment layer`**
     cria um 'adjustment layer' responsivo com as dimensões da composição.
 
 >   o tipo de layer usado como *'adjustment layer'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
 
 <br/>
 
-2. ### ![curves btn](https://jmbillard.com.br/promo/ui/menu/fx_tab/curTogIcon.png) ![levels tab](https://jmbillard.com.br/promo/ui/menu/fx_tab/levTogIcon.png) ![lumetri tab](https://jmbillard.com.br/promo/ui/menu/fx_tab/lumIcon.png)  botões **`correção de cor`**
+1. ### ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
 ```
     efeitos: 'curves'
              'levels'
@@ -106,8 +106,10 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![text icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *texto*
+# ![text icon](/images/icons/ctrlIcon.png) *texto*
+<!---
 ![text tab](https://jmbillard.com.br/promo/ui/text%20tab.png)
+--->
 1. ### botões caixa **`ALTA`**, **`baixa`** e **`Título`**
     converte todo o conteúdo dos layers de texto selecionados.
 
@@ -115,12 +117,12 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![txtCleaner btn](https://jmbillard.com.br/promo/ui/menu/text_tab/txtCleanerIcon.png) botão **`limpar texto`**
+2. ### ![txtCleaner btn](/images/icons/txtCleanerIcon.png) botão **`limpar texto`**
     remove múltiplos espaços consecutivos, quebras de linha e faz o trim do layer de texto.
 
 <br/>
 
-3. ### ![txtColumns btn](https://jmbillard.com.br/promo/ui/menu/text_tab/txtColumnsIcon.png) botão **`separar colunas`**
+3. ### ![txtColumns btn](/images/icons/txtColumnsIcon.png) botão **`separar colunas`**
     separa um layer de texto em 2 ou mais colunas e cria um novo layer de texto .
 
 <br/>
@@ -132,11 +134,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![pallet icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *paleta de cores*
+# ![pallet icon](/images/icons/ctrlIcon.png) *paleta de cores*
 <!---
 ![pallet tab](https://jmbillard.com.br/promo/ui/pallet%20tab.png)
 --->
-1. ### ![red btn](https://jmbillard.com.br/promo/ui/menu/pallet_tab/red%20small.png) ![black tab](https://jmbillard.com.br/promo/ui/menu/pallet_tab/black%20small.png) ![white tab](https://jmbillard.com.br/promo/ui/menu/pallet_tab/white%20small.png)  botões **`paleta GNEWS`**
+1. ### ![red btn](/images/colors/red.png) ![black btn](/images/colors/black.png) ![white btn](/images/colors/white.png)  botões **`paleta GNEWS`**
     aplica um efeito 'fill' com a cor selecionada.
 
     ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/pallet.gif)
@@ -151,16 +153,16 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![shapePallet btn](https://jmbillard.com.br/promo/ui/menu/pallet_tab/black%20small.png) botão **`paleta guia`**
+2. ### ![shapePallet btn](/images/icons/tg_solIcon.png) botão **`paleta guia`**
     cria um 'shape layer' com amostras da paleta no canto superior esquerdo.
 
 <br/><br/>
 
-# ![layers icon](https://jmbillard.com.br/promo/ui/menu/layerIcon.png) *renomear / sequenciar layers*
+# ![layers icon](/images/icons/layerIcon.png) *renomear / sequenciar layers*
 <!---
 ![layers tab](https://jmbillard.com.br/promo/ui/layers%20tab.png)
 --->
-1. ### ![footage mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/ftgTogIcon.png) ![solid mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/solTogIcon.png) ![shape mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/shpTogIcon.png) ![text mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/txtTogIcon.png) ![camera mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/camTogIcon.png) ![light mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/lgtTogIcon.png) modificadores **`tipos de layer`**
+1. ### ![footage mod](/images/icons/tg_ftgIcon.png) ![solid mod](/images/icons/tg_solIcon.png) ![shape mod](/images/icons/tg_shpIcon.png) ![text mod](/images/icons/tg_txtIcon.png) ![camera mod](/images/icons/tg_camIcon.png) ![light mod](/images/icons/tg_lgtIcon.png) modificadores **`tipos de layer`**
     habilita os tipos de layers que podem ser renomeados.
 
     <br/>
@@ -210,11 +212,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![tools icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *rigs e ferramentas*
+# ![tools icon](/images/icons/ctrlIcon.png) *rigs e ferramentas*
 <!---
 ![tools tab](https://jmbillard.com.br/promo/ui/tools%20tab.png)
 --->
-1. ### ![counter btn](https://jmbillard.com.br/promo/ui/menu/tools_tab/counterIcon.png) botão **`counter`**
+1. ### ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
     cria rig de contagem usando um layer de texto.
 
     <br/>
@@ -241,7 +243,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![wig btn](https://jmbillard.com.br/promo/ui/menu/tools_tab/wigIcon.png) botão **`wig`**
+2. ### ![wig btn](/images/icons/wigIcon.png) botão **`wig`**
     cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
 
     <br/>
@@ -255,7 +257,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-3. ### ![ik btn](https://jmbillard.com.br/promo/ui/menu/tools_tab/wigIcon.png) botão **`ik`**
+3. ### ![ik btn](/images/icons/wigIcon.png) botão **`ik`**
     cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
 
     ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/simple-ik.gif)
@@ -279,11 +281,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![project icon](https://jmbillard.com.br/promo/ui/menu/projIcon.png) *organização de projeto*
+# ![project icon](/images/icons/projIcon.png) *organização de projeto*
 <!---
 ![project tab](https://jmbillard.com.br/promo/ui/project%20tab.png)
 --->
-1. ### ![add btn](https://jmbillard.com.br/promo/ui/menu/project_tab/addIcon.png) botão **`adicionar retranca`**
+1. ### ![add btn](/images/icons/addIcon.png) botão **`adicionar retranca`**
     adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
     - id do usuário > *3 primeiras letras do usuário logado na máquina.*
     - tag 'PROMO' > *PROMO*
@@ -304,7 +306,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![rename btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/shpNullIcon.png) botão **`renomear templates`**
+2. ### ![rename btn](/images/icons/shpNullIcon.png) botão **`renomear templates`**
     renomeia as comps de templates e assinaturas de chamada seguindo o padrão de nomenclatura de promo.
     - id do usuário > *3 primeiras letras do usuário logado na máquina.*
     - tag 'PROMO' > *PROMO*
@@ -326,26 +328,26 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-3. ### ![organize btn](https://jmbillard.com.br/promo/ui/menu/project_tab/orgProjIcon.png) botão **`organizar projeto`**
+3. ### ![organize btn](/images/icons/orgProjIcon.png) botão **`organizar projeto`**
     cria e organiza a estrutura do projeto seguindo o template de projeto.
 
 <br/>
 
-4. ### ![collect mod](https://jmbillard.com.br/promo/ui/menu/project_tab/fldTogIcon.png) modificador **`coletar arquivos`**
+4. ### ![collect mod](/images/icons/tg_fldIcon.png) modificador **`coletar arquivos`**
     habilita a coleta de todos os arquivos usados no projeto quando salvo.
 
 >   a copia dos arquivos pode demorar um pouco dependendo da quantidade e tamanho então *KEEP CALM*...
 
 <br/>
 
-5. ### ![fonts mod](https://jmbillard.com.br/promo/ui/menu/project_tab/txtTogIcon.png) modificador **`coletar fontes`**
+5. ### ![fonts mod]/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
     habilita a coleta de todas as fontes usadas no projeto quando salvo.
 
 >   limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
 
 <br/>
 
-6. ### ![save btn](https://jmbillard.com.br/promo/ui/menu/project_tab/quickSaveIcon.png) botão **`salvar projeto`**
+6. ### ![save btn](/images/icons/quickSaveIcon.png) botão **`salvar projeto`**
     abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
     - id do projeto > *sigla de 3 letras do produto + 6 números da data*
     - nome do projeto > *nome do projeto descrito no 'trello' de promo*
@@ -361,14 +363,14 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![links icon](https://jmbillard.com.br/promo/ui/menu/linksIcon.png) *links úteis*
+# ![links icon](/images/icons/linksIcon.png) *links úteis*
 <!---
 ![links tab](https://jmbillard.com.br/promo/ui/link%20tab.png)
 --->
 1. ### botões **`office globo`**
-    [![email btn](https://jmbillard.com.br/promo/ui/menu/links_tab/emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
-    [![oneDrive btn](https://jmbillard.com.br/promo/ui/menu/links_tab/oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
-    [![sharePoint btn](https://jmbillard.com.br/promo/ui/menu/links_tab/sharePointIcon.png)**`sharePoint`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
+    [![email btn](/images/icons/link_emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
+    [![oneDrive btn](/images/icons/link_oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
+    [![sharePoint btn](/images/icons/link_sharePointIcon.png)**`sharePoint`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
 
     acessam os serviços que a 'globo' e a equipe de 'promo' usam na nuvem da 'microsoft'.
 ```
@@ -393,7 +395,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![preferences icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *preferencias*
+# ![preferences icon](/images/icons/ctrlIcon.png) *preferencias*
 <!---
 ![preferences tab](https://jmbillard.com.br/promo/ui/preferences%20tab.png)
 --->
