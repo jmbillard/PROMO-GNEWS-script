@@ -6,7 +6,7 @@
 
 # 📟 layout e interface 
 
-![main menu](https://jmbillard.com.br/promo/ui/layout%20-%20menu.png)
+![main menu](https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/images/menu.png)
 
 a barra é **`responsiva`** e pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.<br/>
 o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
