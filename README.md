@@ -32,19 +32,18 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![control icon](/images/icons/ctrlIcon.png) *controles e nulls*
 
-1. ### ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
-    cria um 'null' pai na mesma posição de cada layer selecionado.
+### ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
+cria um 'null' pai na mesma posição de cada layer selecionado.
     
 >   caso não tenha nenhum layer selecionado, o *'null'* é criado no centro da tela.<br/>
 >   o tipo de layer usado como *'null'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
 
+
 <br/>
 
-2. ### ![anim mod](/images/icons/tg_aniIcon.png) modificador **`copiar animação`**
+1. ### ![anim mod](/images/icons/tg_aniIcon.png) modificador **`copiar animação`**
     habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
-<!---
-    ![copyAnim ex](https://jmbillard.com.br/promo/gifs/copy-animation.gif)
---->
+
 ```
     'anchor point'
     'posição'
@@ -53,9 +52,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 ```
 >    os *'key frames'* de *'opacidade'* não serão transferidos...
 
+![copyAnim ex](/images/gifs/copy-animation.gif)
+
 <br/>
 
-3. ### ![expr mod](/images/icons/tg_expIcon.png) modificador **`copiar expressões`**
+2. ### ![expr mod](/images/icons/tg_expIcon.png) modificador **`copiar expressões`**
     habilita a transferência das 'expressões' de transformação dos layers selecionados para o 'null'.
 ```
     'anchor point'
@@ -67,13 +68,13 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-4. ### ![nullC btn](/images/icons/nullCBtn.png) botão **`null central`**
-    cria um único 'null' pai no 'centro geométrico' de 2 ou mais layers selecionados.
+### ![nullC btn](/images/icons/nullCBtn.png) botão **`null central`**
+cria um único 'null' pai no 'centro geométrico' de 2 ou mais layers selecionados.
 
 <br/>
 
-5. ### ![down btn](/images/icons/downIcon.png)![up btn](/images/icons/upIcon.png) botões de **`seleção de hierarquia`**
-    avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
+### ![down btn](/images/icons/downIcon.png)![up btn](/images/icons/upIcon.png) botões de **`seleção de hierarquia`**
+avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
 <!---
     ![selectHierarchy ex](https://jmbillard.com.br/promo/gifs/select-hierarchy.gif)
 --->
@@ -85,14 +86,14 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![fx icon](/images/icons/fxIcon.png) *efeitos*
 
-1. ### ![adj btn](/images/icons/adjIcon.png) botão **`adjustment layer`**
+### ![adj btn](/images/icons/adjIcon.png) botão **`adjustment layer`**
     cria um 'adjustment layer' responsivo com as dimensões da composição.
 
 >   o tipo de layer usado como *'adjustment layer'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
 
 <br/>
 
-2. ### ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
+### ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
 ```
     efeitos: 'curves'
              'levels'
@@ -103,51 +104,74 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![text icon](/images/icons/titleCaseIcon.png) *texto*
 
-1. ### ![Title icon](/images/icons/upperCaseIcon.png) ![Title icon](/images/icons/lowerCaseIcon.png) ![Title icon](/images/icons/titleCaseIcon.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
-    converte todo o conteúdo dos layers de texto selecionados.
-<!---
-    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/text-case.gif)
---->
-<br/>
+### ![Title icon](/images/icons/upperCaseIcon.png) ![Title icon](/images/icons/lowerCaseIcon.png) ![Title icon](/images/icons/titleCaseIcon.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
+converte todo o conteúdo dos layers de texto selecionados.
 
-2. ### ![txtCleaner btn](/images/icons/txtCleanerIcon.png) botão **`limpar texto`**
-    remove múltiplos espaços consecutivos, quebras de linha e faz o trim do layer de texto.
+![lineBreaker ex](/images/gifs/text-case.gif)
 
 <br/>
 
-3. ### ![txtColumns btn](/images/icons/txtColumnsIcon.png) botão **`separar colunas`**
-    separa um layer de texto em 2 ou mais colunas e cria um novo layer de texto .
+### ![txtCleaner btn](/images/icons/txtCleanerIcon.png) botão **`limpar texto`**
+remove múltiplos espaços consecutivos, quebras de linha e faz o trim do layer de texto.
 
 <br/>
 
-4. ### slider **`quebra linhas`**
-    estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
-<!---
-    [![lineBreaker ex](https://jmbillard.com.br/promo/gifs/line-breaker.gif)] #
---->
+### ![txtColumns btn](/images/icons/txtColumnsIcon.png) botão **`separar colunas`**
+separa um layer de texto em 2 ou mais colunas cada coluna gera um novo layer de texto .
+
+![columnBreaker ex](/images/gifs/column-breaker.gif)
+
+<br/>
+
+### slider **`quebra linhas`**
+estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
+
+![lineBreaker ex](/images/gifs/line-breaker.gif)
+
 <br/><br/>
 
 # ![pallet icon](/images/icons/ctrlIcon.png) *paleta de cores*
 
-1. ### ![red btn](/images/colors/red.png) ![black btn](/images/colors/black.png) ![white btn](/images/colors/white.png)  botões **`paleta GNEWS`**
-    aplica um efeito 'fill' com a cor selecionada.
-
-    <br/>
-
-    cores        | rgb             | #hex
-    ------------ | --------------- | -------
-     vermelho    |  185, 20, 20    |  #B91414
-     preto       |  20, 20, 20     |  #141414
-     branco      |  234, 234, 234  |  #EAEAEA
+### ![red btn](/images/colors/red.png) ![black btn](/images/colors/black.png) ![white btn](/images/colors/white.png)  botões **`paleta GNEWS`**
+aplica um efeito 'fill' com a cor selecionada.
 
 <br/>
 
-1. ### ![shapePallet btn](/images/icons/tg_solIcon.png) botão **`paleta guia`**
-    cria um 'shape layer' com amostras da paleta no canto superior esquerdo.
+cores       | rgb            | #hex
+----------- | -------------- | -------
+vermelho    | 185, 20, 20    | #B91414
+preto       | 20, 20, 20     | #141414
+branco      | 234, 234, 234  | #EAEAEA
+
+<br/>
+
+### ![shapePallet btn](/images/icons/tg_solIcon.png) botão **`paleta guia`**
+cria um 'shape layer' com amostras da paleta no canto superior esquerdo.
 
 <br/><br/>
 
 # ![layers icon](/images/icons/layerIcon.png) *renomear / sequenciar layers*
+
+<br/>
+
+### botão **`renomear`**
+renomeia todos os layers dos tipos habilitados.
+- adiciona um 'prefixo' padrão.
+- converte o nome para 'caixa baixa'.
+- remove 'caracteres especiais'.
+  
+<br/>
+
+>   no caso dos layers de texto o próprio conteúdo será usado como nome.
+
+```
+    ex: um layer de texto contendo...
+        'Dia 8 às 20H' seria renomeado como 'txt_dia 8 as 20h'.
+```
+
+>   USE COM CAUTELA RENOMEAR LAYERS PODE FERRAR COM SUAS *'EXPRESSÕES'*!!!
+
+<br/><br/>
 
 1. ### ![footage mod](/images/icons/tg_ftgIcon.png) ![solid mod](/images/icons/tg_solIcon.png) ![shape mod](/images/icons/tg_shpIcon.png) ![text mod](/images/icons/tg_txtIcon.png) ![camera mod](/images/icons/tg_camIcon.png) ![light mod](/images/icons/tg_lgtIcon.png) modificadores **`tipos de layer`**
     habilita os tipos de layers que podem ser renomeados.
@@ -165,32 +189,13 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### botão **`renomear`**
-    renomeia todos os layers dos tipos habilitados.
-    - adiciona um 'prefixo' padrão.
-    - converte o nome para 'caixa baixa'.
-    - remove 'caracteres especiais'.<br/><br/>
-<!---
-    ![rename ex](https://jmbillard.com.br/promo/gifs/rename.gif)
---->
->   no caso dos layers de texto o próprio conteúdo será usado como nome.
-
-```
-    ex: um layer de texto contendo...
-        'Dia 8 às 20H' seria renomeado como 'txt_dia 8 as 20h'.
-```
-
->   USE COM CAUTELA RENOMEAR LAYERS PODE FERRAR COM SUAS *'EXPRESSÕES'*!!!
+### ![isolate btn](/images/icons/isolateIcon.png) botão **`isolar`**
+habilita o 'shy' e esconde todos os layers selecionados.
 
 <br/>
 
-3. ### ![counter btn](/images/icons/isolateIcon.png) botão **`isolar`**
-    habilita o 'shy' e esconde todos os layers selecionados.
-
-<br/>
-
-1. ### botão **`trancar`**
-    tranca todas as propriedades de transformação não animadas dos layers selecionados.
+### ![lock btn](/images/icons/lockPropIcon.png) botão **`trancar`**
+tranca todas as propriedades de transformação não animadas dos layers selecionados.
 <!---
     ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
 --->
@@ -206,18 +211,17 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![tools icon](/images/icons/ctrlIcon.png) *rigs e ferramentas*
 
-1. ### ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
-    cria rig de contagem usando um layer de texto.
+### ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
+cria rig de contagem usando um layer de texto.
 
-    <br/>
+<br/>
 
-    parâmetros    | opções
-    ------------- | --------------
-    modo          |  número, ordinal, tempo
-    deslocamento  |  0% a 100%
-    valor inicial |  -999999999 a 999999999
-    valor final   |  -999999999 a 999999999
-
+parâmetros    | opções
+------------- | --------------
+modo          |  número, ordinal, tempo
+deslocamento  |  0% a 100%
+valor inicial |  -999999999 a 999999999
+valor final   |  -999999999 a 999999999
 
 ```
     ex: colocando os seguintes parâmetros...
@@ -233,32 +237,32 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![wig btn](/images/icons/wigIcon.png) botão **`wig`**
-    cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
+### ![wig btn](/images/icons/wigIcon.png) botão **`wig`**
+cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
 
-    <br/>
+<br/>
 
-    parâmetros     | opções
-    -------------- | --------------
-     frequência    |  0 a 999999999
-     amplitude     |  -999999999 a 999999999
+parâmetros    | opções
+------------- | --------------
+frequência    | 0 a 999999999
+amplitude     | -999999999 a 999999999
 
 >   possui mais configurações na janela de *'controle de efeito'*...
 
 <br/>
 
-3. ### ![ik btn](/images/icons/ikIcon.png) botão **`ik`**
-    cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
-<!---
-    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/simple-ik.gif)
---->
-    <br/>
+### ![ik btn](/images/icons/ikIcon.png) botão **`ik`**
+cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
 
-    parâmetros           | opções
-    -------------------- | --------------
-     inverter orientação |  sim ou não
+![ik ex](/images/gifs/ik.gif)
 
-    <br/>
+<br/>
+
+parâmetros          | opções
+------------------- | --------------
+inverter orientação | sim ou não
+
+<br/>
 
 >   a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida...
 
@@ -273,11 +277,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![project icon](/images/icons/projIcon.png) *organização de projeto*
 
-1. ### ![add btn](/images/icons/addIcon.png) botão **`adicionar retranca`**
-    adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
-    - id do usuário > *3 primeiras letras do usuário logado na máquina.*
-    - tag 'PROMO' > *PROMO*
-    - id do projeto > *sigla de 3 letras do produto + 6 números da data*<br/><br/>
+### ![add btn](/images/icons/addIcon.png) botão **`adicionar retranca`**
+adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
+- id do usuário > *3 primeiras letras do usuário logado na máquina.*
+- tag 'PROMO' > *PROMO*
+- id do projeto > *sigla de 3 letras do produto + 6 números da data*<br/><br/>
 <!---
     ![lock ex](https://jmbillard.com.br/promo/gifs/add-prefix.gif)
 --->
@@ -294,13 +298,13 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![rename btn](/images/icons/shpNullIcon.png) botão **`renomear templates`**
-    renomeia as comps de templates e assinaturas de chamada seguindo o padrão de nomenclatura de promo.
-    - id do usuário > *3 primeiras letras do usuário logado na máquina.*
-    - tag 'PROMO' > *PROMO*
-    - id do projeto > *sigla de 3 letras do produto + 6 números da data*
-    - nome do projeto > *nome do projeto descrito no 'trello' de promo*
-    - serviço > *data e horário das versões em forma reduzida*
+### ![rename btn](/images/icons/shpNullIcon.png) botão **`renomear templates`**
+renomeia as comps de templates e assinaturas de chamada seguindo o padrão de nomenclatura de promo.
+- id do usuário > *3 primeiras letras do usuário logado na máquina.*
+- tag 'PROMO' > *PROMO*
+- id do projeto > *sigla de 3 letras do produto + 6 números da data*
+- nome do projeto > *nome do projeto descrito no 'trello' de promo*
+- serviço > *data e horário das versões em forma reduzida*
   
 ```
     ex: usando as seguintes informações ficaria...
@@ -316,29 +320,15 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-3. ### ![organize btn](/images/icons/orgProjIcon.png) botão **`organizar projeto`**
-    cria e organiza a estrutura do projeto seguindo o template de projeto.
+### ![organize btn](/images/icons/orgProjIcon.png) botão **`organizar projeto`**
+cria e organiza a estrutura do projeto seguindo o template de projeto.
 
 <br/>
 
-4. ### ![collect mod](/images/icons/tg_fldIcon.png) modificador **`coletar arquivos`**
-    habilita a coleta de todos os arquivos usados no projeto quando salvo.
-
->   a copia dos arquivos pode demorar um pouco dependendo da quantidade e tamanho então *KEEP CALM*...
-
-<br/>
-
-5. ### ![fonts mod](/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
-    habilita a coleta de todas as fontes usadas no projeto quando salvo.
-
->   limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
-
-<br/>
-
-6. ### ![save btn](/images/icons/quickSaveIcon.png) botão **`salvar projeto`**
-    abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
-    - id do projeto > *sigla de 3 letras do produto + 6 números da data*
-    - nome do projeto > *nome do projeto descrito no 'trello' de promo*
+### ![save btn](/images/icons/quickSaveIcon.png) botão **`salvar projeto`**
+abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
+- id do projeto > *sigla de 3 letras do produto + 6 números da data*
+- nome do projeto > *nome do projeto descrito no 'trello' de promo*
 
  ```
     ex: usando as seguintes informações ficaria...
@@ -348,6 +338,20 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
         o projeto seria renomeado para 'MKT081122 video comercial'.
 ```
+
+<br/>
+
+1. ### ![collect mod](/images/icons/tg_fldIcon.png) modificador **`coletar arquivos`**
+    habilita a coleta de todos os arquivos usados no projeto quando salvo.
+
+>   a copia dos arquivos pode demorar um pouco dependendo da quantidade e tamanho então *KEEP CALM*...
+
+<br/>
+
+2. ### ![fonts mod](/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
+    habilita a coleta de todas as fontes usadas no projeto quando salvo.
+
+>   limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
 
 <br/><br/>
 
@@ -383,16 +387,15 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 # ![app icon](/images/icons/aeIcon.png) *programa*
 
-1. ### ![ameTemplate btn](/images/icons/eprIcon.png) botão **`AME presets`**
-    baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
-    - H264 - mp4 alta.epr
-    - H264 - mp4 baixa.epr
-    - WAV - audio GSAT.epr
-    - XDCAM HD 50 NTSC 60i - avid.epr
+### ![ameTemplate btn](/images/icons/eprIcon.png) botão **`AME presets`**
+baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
+- H264 - mp4 alta.epr
+- H264 - mp4 baixa.epr
+- WAV - audio GSAT.epr
+- XDCAM HD 50 NTSC 60i - avid.epr
 
 >   download: *'~\AppData\Roaming\PROMO GNEWS script\AME presets'*<br/>
 >   instalação: *'~\Documents\Adobe\Adobe Media Encoder\versão instalada\Presets'*
-
 
 <br/><br/>
 
@@ -402,21 +405,26 @@ as preferencias serão criadas e salvas sempre que uma alteração for feita.
 
 <br/>
 
-1. ### menu **`null - adjustment`**
-    define o tipo de 'layer' criado pelo script.
-   - shape layer
-   - solid
+### menu **`null - adjustment`**
+define o tipo de 'layer' criado pelo script.
+- shape layer
+- solid
 
 <br/>
 
-2. ### menu **`template de projeto`**
-    define o 'template' de organização do projeto.
-   - PROMO
-   - custom
+### menu **`template de projeto`**
+define o 'template' de organização do projeto.
+- PROMO
+- custom
 
 <br/>
 
-3. ### modificador **`aba`**
+### botão **`cor atual`**
+altera a 'cor' da aba selecionada.
+
+<br/>
+
+1. ### modificador **`aba`**
     define a 'aba' a ser alterada.
     - menu
     - controle
@@ -432,18 +440,13 @@ as preferencias serão criadas e salvas sempre que uma alteração for feita.
 
 <br/>
 
-4. ### botão **`cor atual`**
-    altera a 'cor' da aba selecionada.
+### ![reset btn](/images/icons/resetIcon.png) botão **`limpar preferences`**
+descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
 
 <br/>
 
-5. ### ![update btn](/images/icons/resetIcon.png) botão **`limpar preferences`**
-    descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
-
-<br/>
-
-6. ### ![update btn](/images/icons/downloadIcon.png) botão **`atualizar`**
-    baixa a ultima versão disponível no repositório do github
+### ![update btn](/images/icons/downloadIcon.png) botão **`atualizar`**
+baixa a ultima versão disponível no repositório do github
 
 >   download: *'~\AppData\Roaming\PROMO GNEWS script\ScriptUI Panels'*<br/>
 >   instalação: *'versão instalada do After\Support Files\Scripts\ScriptUI Panels'*

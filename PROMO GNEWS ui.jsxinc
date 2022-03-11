@@ -2017,9 +2017,7 @@ function PROMO_GNEWS_UI() {
   
   copyAMEPresetsBtn.onClick = function() {
 
-    var msg = 'black magic  ༼ つ ◕_◕ ༽つ';
-    showTabProg(grp, msg);
-    //$.sleep(1000)
+    var msg = 'black magic  (つ ◕_◕ )つ';
     var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
     var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
     var url2 = url + 'H264%20-%20mp4%20alta.epr';
@@ -2029,8 +2027,9 @@ function PROMO_GNEWS_UI() {
 
     var downPath = scriptPreferencesPath + '/AME presets';
     var dowFolder = new Folder(downPath);
-    var v = app.version.match(/[0-9]*/).toString();
-    var amePresetsPath = '~/Documents/Adobe/Adobe Media Encoder/' + v + '.0/Presets';
+    var amePath = '~/Documents/Adobe/Adobe Media Encoder';
+    var ameFolder = new Folder(amePath);
+    var vFolders = ameFolder.getFiles();
 
     if (!dowFolder.exists) {
 
@@ -2042,11 +2041,14 @@ function PROMO_GNEWS_UI() {
     getURLContent(url4, downPath);
     getURLContent(url5, downPath);
 
-    try {
+    for (i = 0; i < vFolders.length; i++) {
+
+      var presetsPath = decodeURI(vFolders[i]).toString() + '/Presets';
+      try {
       
-      copyFolderContent(downPath, amePresetsPath);
-    } catch (error) {}
-    openTab(grp, bgColor);
+        copyFolderContent(downPath, presetsPath);
+      } catch (error) {}
+    }
   };
 
   /*
@@ -2272,7 +2274,7 @@ function PROMO_GNEWS_UI() {
 
   updateBtn.onClick = function() {
   
-    var msg = 'black magic  ༼ つ ◕_◕ ༽つ';
+    var msg = 'black magic  (つ ◕_◕ )つ';
     showTabProg(grp, msg);
 
     var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';    
@@ -2310,7 +2312,7 @@ function PROMO_GNEWS_UI() {
       alert(msg);
       openFolder(downPath);
       openFolder(scriptUIPath);
-      msg = 'and copy the files  ༼ つ ◕_◕ ༽つ';
+      msg = 'and copy the files  (つ ◕_◕ )つ';
     }
 
     showTabProg(grp, msg);
