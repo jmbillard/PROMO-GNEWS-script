@@ -20,14 +20,15 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 > paleta de cores
 > renomear / sequenciar layers
 > rigs e ferramentas            // ferramentas diversas...
-> organização de projeto        // organiza as mídias em pastinhas (não faz milagre mas é uma mão na roda)
+> organização de projeto        // organiza tudo em pastinhas (não faz milagre mas é uma mão na roda)
 > programa                      // configura algumas preferencias e presets do after...
 > links úteis
 > preferencias                  // configurações do script...
 ~~~
-> a *'cor'* de cada aba pode ser configurada nas *'preferências'* do *'script'*...
+> a *'cor'* de cada aba pode ser alterada nas *'preferências'* do *'script'*...
 
 <br/><br/>
+
 
 # ![control icon](/images/icons/ctrlIcon.png) *controles e nulls*
 
@@ -41,9 +42,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 2. ### ![anim mod](/images/icons/tg_aniIcon.png) modificador **`copiar animação`**
     habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
-
+<!---
     ![copyAnim ex](https://jmbillard.com.br/promo/gifs/copy-animation.gif)
-
+--->
 ```
     'anchor point'
     'posição'
@@ -73,9 +74,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 5. ### ![down btn](/images/icons/downIcon.png)![up btn](/images/icons/upIcon.png) botões de **`seleção de hierarquia`**
     avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
-
+<!---
     ![selectHierarchy ex](https://jmbillard.com.br/promo/gifs/select-hierarchy.gif)
-
+--->
 <br/><br/>
 
 # ![animation icon](/images/icons/ctrlIcon.png) *animação*
@@ -104,9 +105,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 1. ### ![Title icon](/images/icons/upperCaseIcon.png) ![Title icon](/images/icons/lowerCaseIcon.png) ![Title icon](/images/icons/titleCaseIcon.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
     converte todo o conteúdo dos layers de texto selecionados.
-
+<!---
     ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/text-case.gif)
-
+--->
 <br/>
 
 2. ### ![txtCleaner btn](/images/icons/txtCleanerIcon.png) botão **`limpar texto`**
@@ -121,17 +122,15 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 4. ### slider **`quebra linhas`**
     estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
-
+<!---
     [![lineBreaker ex](https://jmbillard.com.br/promo/gifs/line-breaker.gif)] #
-
+--->
 <br/><br/>
 
 # ![pallet icon](/images/icons/ctrlIcon.png) *paleta de cores*
 
 1. ### ![red btn](/images/colors/red.png) ![black btn](/images/colors/black.png) ![white btn](/images/colors/white.png)  botões **`paleta GNEWS`**
     aplica um efeito 'fill' com a cor selecionada.
-
-    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/pallet.gif)
 
     <br/>
 
@@ -143,7 +142,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-2. ### ![shapePallet btn](/images/icons/tg_solIcon.png) botão **`paleta guia`**
+1. ### ![shapePallet btn](/images/icons/tg_solIcon.png) botão **`paleta guia`**
     cria um 'shape layer' com amostras da paleta no canto superior esquerdo.
 
 <br/><br/>
@@ -171,9 +170,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
     - adiciona um 'prefixo' padrão.
     - converte o nome para 'caixa baixa'.
     - remove 'caracteres especiais'.<br/><br/>
-
+<!---
     ![rename ex](https://jmbillard.com.br/promo/gifs/rename.gif)
-
+--->
 >   no caso dos layers de texto o próprio conteúdo será usado como nome.
 
 ```
@@ -192,9 +191,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 1. ### botão **`trancar`**
     tranca todas as propriedades de transformação não animadas dos layers selecionados.
-
+<!---
     ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
-
+--->
 ```
     'anchor point'
     'posição'
@@ -248,11 +247,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-3. ### ![ik btn](/images/icons/wigIcon.png) botão **`ik`**
+3. ### ![ik btn](/images/icons/ikIcon.png) botão **`ik`**
     cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
-
+<!---
     ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/simple-ik.gif)
-
+--->
     <br/>
 
     parâmetros           | opções
@@ -279,9 +278,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
     - id do usuário > *3 primeiras letras do usuário logado na máquina.*
     - tag 'PROMO' > *PROMO*
     - id do projeto > *sigla de 3 letras do produto + 6 números da data*<br/><br/>
-    
+<!---
     ![lock ex](https://jmbillard.com.br/promo/gifs/add-prefix.gif)
-
+--->
 ```
     ex: usando as seguintes informações ficaria...
 
