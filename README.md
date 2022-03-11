@@ -1,3 +1,4 @@
+
 # PROMO GNEWS *script*
 
 **pt-BR** ⚡ algumas ferramentas para melhorar o workflow da equipe de motion de PROMO no After Effects ⚡
@@ -5,7 +6,6 @@
 <br/>
 
 # 📟 layout e interface
-
 
 ![main menu](/images/menu.png)
 
@@ -21,8 +21,8 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 > renomear / sequenciar layers
 > rigs e ferramentas            // ferramentas diversas...
 > organização de projeto        // organiza as mídias em pastinhas (não faz milagre mas é uma mão na roda)
-> isolar layer                  // habilita o shy e esconde os layers não selecionados...
-> links úteis                   // links web e pastas da rede...
+> programa                      // configura algumas preferencias e presets do after...
+> links úteis
 > preferencias                  // configurações do script...
 ~~~
 > a *'cor'* de cada aba pode ser configurada nas *'preferências'* do *'script'*...
@@ -30,13 +30,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![control icon](/images/icons/ctrlIcon.png) *controles e nulls*
-<!---
-![control tab](https://jmbillard.com.br/promo/ui/control%20tab.png)
---->
+
 1. ### ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
     cria um 'null' pai na mesma posição de cada layer selecionado.
     
->   caso não tenha nenhum layer selecionado, o 'null' é criado no centro da tela.<br/>
+>   caso não tenha nenhum layer selecionado, o *'null'* é criado no centro da tela.<br/>
 >   o tipo de layer usado como *'null'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
 
 <br/>
@@ -81,15 +79,11 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![animation icon](/images/icons/ctrlIcon.png) *animação*
-<!---
-![animation tab](https://jmbillard.com.br/promo/ui/animation%20tab.png)
---->
+
 <br/><br/>
 
 # ![fx icon](/images/icons/fxIcon.png) *efeitos*
-<!---
-![fx tab](https://jmbillard.com.br/promo/ui/fx%20tab.png)
---->
+
 1. ### ![adj btn](/images/icons/adjIcon.png) botão **`adjustment layer`**
     cria um 'adjustment layer' responsivo com as dimensões da composição.
 
@@ -97,7 +91,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-1. ### ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
+2. ### ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
 ```
     efeitos: 'curves'
              'levels'
@@ -106,11 +100,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
-# ![text icon](/images/icons/ctrlIcon.png) *texto*
-<!---
-![text tab](https://jmbillard.com.br/promo/ui/text%20tab.png)
---->
-1. ### botões caixa **`ALTA`**, **`baixa`** e **`Título`**
+# ![text icon](/images/icons/titleCaseIcon.png) *texto*
+
+1. ### ![Title icon](/images/icons/upperCaseIcon.png) ![Title icon](/images/icons/lowerCaseIcon.png) ![Title icon](/images/icons/titleCaseIcon.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
     converte todo o conteúdo dos layers de texto selecionados.
 
     ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/text-case.gif)
@@ -130,14 +122,12 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 4. ### slider **`quebra linhas`**
     estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
 
-    ![lineBreaker ex](https://jmbillard.com.br/promo/gifs/line-breaker.gif)
+    [![lineBreaker ex](https://jmbillard.com.br/promo/gifs/line-breaker.gif)] #
 
 <br/><br/>
 
 # ![pallet icon](/images/icons/ctrlIcon.png) *paleta de cores*
-<!---
-![pallet tab](https://jmbillard.com.br/promo/ui/pallet%20tab.png)
---->
+
 1. ### ![red btn](/images/colors/red.png) ![black btn](/images/colors/black.png) ![white btn](/images/colors/white.png)  botões **`paleta GNEWS`**
     aplica um efeito 'fill' com a cor selecionada.
 
@@ -159,9 +149,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![layers icon](/images/icons/layerIcon.png) *renomear / sequenciar layers*
-<!---
-![layers tab](https://jmbillard.com.br/promo/ui/layers%20tab.png)
---->
+
 1. ### ![footage mod](/images/icons/tg_ftgIcon.png) ![solid mod](/images/icons/tg_solIcon.png) ![shape mod](/images/icons/tg_shpIcon.png) ![text mod](/images/icons/tg_txtIcon.png) ![camera mod](/images/icons/tg_camIcon.png) ![light mod](/images/icons/tg_lgtIcon.png) modificadores **`tipos de layer`**
     habilita os tipos de layers que podem ser renomeados.
 
@@ -197,7 +185,12 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-3. ### botão **`trancar`**
+3. ### ![counter btn](/images/icons/isolateIcon.png) botão **`isolar`**
+    habilita o 'shy' e esconde todos os layers selecionados.
+
+<br/>
+
+1. ### botão **`trancar`**
     tranca todas as propriedades de transformação não animadas dos layers selecionados.
 
     ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
@@ -213,9 +206,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![tools icon](/images/icons/ctrlIcon.png) *rigs e ferramentas*
-<!---
-![tools tab](https://jmbillard.com.br/promo/ui/tools%20tab.png)
---->
+
 1. ### ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
     cria rig de contagem usando um layer de texto.
 
@@ -282,9 +273,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![project icon](/images/icons/projIcon.png) *organização de projeto*
-<!---
-![project tab](https://jmbillard.com.br/promo/ui/project%20tab.png)
---->
+
 1. ### ![add btn](/images/icons/addIcon.png) botão **`adicionar retranca`**
     adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
     - id do usuário > *3 primeiras letras do usuário logado na máquina.*
@@ -340,7 +329,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-5. ### ![fonts mod]/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
+5. ### ![fonts mod](/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
     habilita a coleta de todas as fontes usadas no projeto quando salvo.
 
 >   limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
@@ -364,9 +353,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![links icon](/images/icons/linksIcon.png) *links úteis*
-<!---
-![links tab](https://jmbillard.com.br/promo/ui/link%20tab.png)
---->
+
 1. ### botões **`office globo`**
     [![email btn](/images/icons/link_emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
     [![oneDrive btn](/images/icons/link_oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
@@ -382,9 +369,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/>
 
 2. ### botões **`work flow`**
-    [![trello btn](https://jmbillard.com.br/promo/ui/menu/links_tab/trello.png)**`trello`**](https://trello.com/promo126/home)
-    [![typeForm btn](https://jmbillard.com.br/promo/ui/menu/links_tab/type%20form.png)**`typeForm`**](https://tvglobo.typeform.com/to/wiqX4z0X)
-    [![planner btn](https://jmbillard.com.br/promo/ui/menu/links_tab/plannerIcon.png)**`planner`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
+    [![trello btn](/images/icons/link_trelloIcon.png)**`trello`**](https://trello.com/promo126/home)
+    [![typeForm btn](/images/icons/link_typeFormIcon.png)**`typeForm`**](https://tvglobo.typeform.com/to/wiqX4z0X)
+    [![planner btn](/images/icons/link_plannerIcon.png)**`planner`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
 
     acessam as plataformas que a 'globo' e a equipe de 'promo' usam para gerenciar tarefas.
 ```
@@ -395,34 +382,69 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/><br/>
 
+# ![app icon](/images/icons/aeIcon.png) *programa*
+
+1. ### ![ameTemplate btn](/images/icons/eprIcon.png) botão **`AME presets`**
+    baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
+    - H264 - mp4 alta.epr
+    - H264 - mp4 baixa.epr
+    - WAV - audio GSAT.epr
+    - XDCAM HD 50 NTSC 60i - avid.epr
+
+>   download: *'~\AppData\Roaming\PROMO GNEWS script\AME presets'*<br/>
+>   instalação: *'~\Documents\Adobe\Adobe Media Encoder\versão instalada\Presets'*
+
+
+<br/><br/>
+
 # ![preferences icon](/images/icons/ctrlIcon.png) *preferencias*
-<!---
-![preferences tab](https://jmbillard.com.br/promo/ui/preferences%20tab.png)
---->
-1. ### texto **`usuário`**
-    define o prefixo do 'usuário'.
+as preferencias serão criadas e salvas sempre que uma alteração for feita.
+>   preferencias: *'~\AppData\Roaming\PROMO GNEWS script\preferences.json'*
 
 <br/>
 
-2. ### menu **`null - adjustment`**
+1. ### menu **`null - adjustment`**
     define o tipo de 'layer' criado pelo script.
+   - shape layer
+   - solid
 
 <br/>
 
-3. ### menu **`template de projeto`**
+2. ### menu **`template de projeto`**
     define o 'template' de organização do projeto.
+   - PROMO
+   - custom
 
 <br/>
 
-4. ### modificador **`aba`**
+3. ### modificador **`aba`**
     define a 'aba' a ser alterada.
+    - menu
+    - controle
+    - animação
+    - efeitos
+    - texto
+    - paleta
+    - layers
+    - ferramentas
+    - projeto
+    - programa
+    - links
 
 <br/>
 
-5. ### botão **`cor atual`**
+4. ### botão **`cor atual`**
     altera a 'cor' da aba selecionada.
 
 <br/>
 
-6. ### botão **`limpar preferences`**
+5. ### ![update btn](/images/icons/resetIcon.png) botão **`limpar preferences`**
     descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
+
+<br/>
+
+6. ### ![update btn](/images/icons/downloadIcon.png) botão **`atualizar`**
+    baixa a ultima versão disponível no repositório do github
+
+>   download: *'~\AppData\Roaming\PROMO GNEWS script\ScriptUI Panels'*<br/>
+>   instalação: *'versão instalada do After\Support Files\Scripts\ScriptUI Panels'*

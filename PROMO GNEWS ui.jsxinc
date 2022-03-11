@@ -515,7 +515,7 @@ function PROMO_GNEWS_UI() {
 
   */
 
-  var lPrefTxt = preferencesGrp.add('statictext', undefined, 'ctrl - adj');
+  var lPrefTxt = preferencesGrp.add('statictext', undefined, 'null - adj');
   lPrefTxt.helpTip = 'ctrl and adjustment layer type';
   setTxtColor(lPrefTxt, sTxtColor);
   var lDropArray = ['shape', 'solid'];
