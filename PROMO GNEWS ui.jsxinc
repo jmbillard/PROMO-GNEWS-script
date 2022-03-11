@@ -2019,7 +2019,7 @@ function PROMO_GNEWS_UI() {
 
     var msg = 'black magic  ༼ つ ◕_◕ ༽つ';
     showTabProg(grp, msg);
-    
+    //$.sleep(1000)
     var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
     var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
     var url2 = url + 'H264%20-%20mp4%20alta.epr';
