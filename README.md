@@ -29,7 +29,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![control icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *controles e nulls*
+<!---
 ![control tab](https://jmbillard.com.br/promo/ui/control%20tab.png)
+--->
 1. ### ![null btn](https://jmbillard.com.br/promo/ui/menu/ctrl_tab/shpNullIcon.png) botão **`null`**
     cria um 'null' pai na mesma posição de cada layer selecionado.
     
@@ -78,12 +80,15 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![animation icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *animação*
+<!---
 ![animation tab](https://jmbillard.com.br/promo/ui/animation%20tab.png)
-
+--->
 <br/><br/>
 
 # ![fx icon](https://jmbillard.com.br/promo/ui/menu/fxIcon.png) *efeitos*
+<!---
 ![fx tab](https://jmbillard.com.br/promo/ui/fx%20tab.png)
+--->
 1. ### ![adj btn](https://jmbillard.com.br/promo/ui/menu/fx_tab/adjIcon.png) botão **`adjustment layer`**
     cria um 'adjustment layer' responsivo com as dimensões da composição.
 
@@ -127,7 +132,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![pallet icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *paleta de cores*
+<!---
 ![pallet tab](https://jmbillard.com.br/promo/ui/pallet%20tab.png)
+--->
 1. ### ![red btn](https://jmbillard.com.br/promo/ui/menu/pallet_tab/red%20small.png) ![black tab](https://jmbillard.com.br/promo/ui/menu/pallet_tab/black%20small.png) ![white tab](https://jmbillard.com.br/promo/ui/menu/pallet_tab/white%20small.png)  botões **`paleta GNEWS`**
     aplica um efeito 'fill' com a cor selecionada.
 
@@ -149,7 +156,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![layers icon](https://jmbillard.com.br/promo/ui/menu/layerIcon.png) *renomear / sequenciar layers*
+<!---
 ![layers tab](https://jmbillard.com.br/promo/ui/layers%20tab.png)
+--->
 1. ### ![footage mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/ftgTogIcon.png) ![solid mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/solTogIcon.png) ![shape mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/shpTogIcon.png) ![text mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/txtTogIcon.png) ![camera mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/camTogIcon.png) ![light mod](https://jmbillard.com.br/promo/ui/menu/layers_tab/lgtTogIcon.png) modificadores **`tipos de layer`**
     habilita os tipos de layers que podem ser renomeados.
 
@@ -201,7 +210,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![tools icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *rigs e ferramentas*
+<!---
 ![tools tab](https://jmbillard.com.br/promo/ui/tools%20tab.png)
+--->
 1. ### ![counter btn](https://jmbillard.com.br/promo/ui/menu/tools_tab/counterIcon.png) botão **`counter`**
     cria rig de contagem usando um layer de texto.
 
@@ -268,8 +279,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![project icon](https://jmbillard.com.br/promo/ui/menu/projIcon.png) *organização de projeto*
+<!---
 ![project tab](https://jmbillard.com.br/promo/ui/project%20tab.png)
-
+--->
 1. ### ![add btn](https://jmbillard.com.br/promo/ui/menu/project_tab/addIcon.png) botão **`adicionar retranca`**
     adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
     - id do usuário > *3 primeiras letras do usuário logado na máquina.*
@@ -332,7 +344,7 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 
 <br/>
 
-1. ### ![save btn](https://jmbillard.com.br/promo/ui/menu/project_tab/quickSaveIcon.png) botão **`salvar projeto`**
+6. ### ![save btn](https://jmbillard.com.br/promo/ui/menu/project_tab/quickSaveIcon.png) botão **`salvar projeto`**
     abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
     - id do projeto > *sigla de 3 letras do produto + 6 números da data*
     - nome do projeto > *nome do projeto descrito no 'trello' de promo*
@@ -349,7 +361,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![links icon](https://jmbillard.com.br/promo/ui/menu/linksIcon.png) *links úteis*
+<!---
 ![links tab](https://jmbillard.com.br/promo/ui/link%20tab.png)
+--->
 1. ### botões **`office globo`**
     [![email btn](https://jmbillard.com.br/promo/ui/menu/links_tab/emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
     [![oneDrive btn](https://jmbillard.com.br/promo/ui/menu/links_tab/oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
@@ -379,7 +393,9 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 <br/><br/>
 
 # ![preferences icon](https://jmbillard.com.br/promo/ui/menu/ctrlIcon.png) *preferencias*
+<!---
 ![preferences tab](https://jmbillard.com.br/promo/ui/preferences%20tab.png)
+--->
 1. ### texto **`usuário`**
     define o prefixo do 'usuário'.
 
