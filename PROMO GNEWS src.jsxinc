@@ -490,15 +490,16 @@ function cleanText(selLayer) {
 // divides a text layer in multiple columns...
 function columnText(selLayer, numColumns) {
 
-  var txtProp = "ADBE Text Properties";
-  var txtDoc = "ADBE Text Document";
+  var txtProp = 'ADBE Text Properties';
+  var txtDoc = 'ADBE Text Document';
 
   var srcTxt = selLayer.property(txtProp).property(txtDoc);
   var txt = srcTxt.value.toString();
-  txt = txt.replace(/[\r|\n][\s]{2,}/g, "*|*");
-  txt = txt.replace(/[\s]{2,}/g, "*|*");
+  txt = txt.replace(/[\s]*[\r|\n]{1,}[\s]*/g, '*|*');
+  txt = txt.replace(/[\s]*[\-]{3,}[\s]*/g, '*|*');
+  txt = txt.replace(/[\s]{2,}/g, '*|*');
 
-  var cellArray = txt.split("*|*");
+  var cellArray = txt.split('*|*');
 
   if (cellArray.length >= numColumns) {
 
@@ -531,7 +532,7 @@ function columnText(selLayer, numColumns) {
       var colLayer;
   
       for (c = 1; c < cols[i].length; c++) {
-        colTxt = colTxt + "\n" + cols[i][c];
+        colTxt = colTxt + '\n' + cols[i][c];
       }
       colLayer = app.project.activeItem.layers.addText(colTxt);
       colLayer.name = colName;

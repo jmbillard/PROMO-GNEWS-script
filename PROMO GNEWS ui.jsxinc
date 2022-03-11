@@ -2017,22 +2017,36 @@ function PROMO_GNEWS_UI() {
   
   copyAMEPresetsBtn.onClick = function() {
 
-    var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
+    var msg = 'black magic  ༼ つ ◕_◕ ༽つ';
+    showTabProg(grp, msg);
     
+    var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
     var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
     var url2 = url + 'H264%20-%20mp4%20alta.epr';
     var url3 = url + 'H264%20-%20mp4%20baixa.epr';
     var url4 = url + 'WAV%20-%20audio%20GSAT.epr';
     var url5 = url + 'XDCAM%20HD%2050%20NTSC%2060i%20-%20avid.epr';
-    
+
+    var downPath = scriptPreferencesPath + '/AME presets';
+    var dowFolder = new Folder(downPath);
     var v = app.version.match(/[0-9]*/).toString();
     var amePresetsPath = '~/Documents/Adobe/Adobe Media Encoder/' + v + '.0/Presets';
 
-    getURLContent(url1, amePresetsPath);
-    getURLContent(url2, amePresetsPath);
-    getURLContent(url3, amePresetsPath);
-    getURLContent(url4, amePresetsPath);
-    getURLContent(url5, amePresetsPath);
+    if (!dowFolder.exists) {
+
+      dowFolder.create();
+    }
+    getURLContent(url1, downPath);
+    getURLContent(url2, downPath);
+    getURLContent(url3, downPath);
+    getURLContent(url4, downPath);
+    getURLContent(url5, downPath);
+
+    try {
+      
+      copyFolderContent(downPath, amePresetsPath);
+    } catch (error) {}
+    openTab(grp, bgColor);
   };
 
   /*
@@ -2258,8 +2272,10 @@ function PROMO_GNEWS_UI() {
 
   updateBtn.onClick = function() {
   
-    var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';
-    
+    var msg = 'black magic  ༼ つ ◕_◕ ༽つ';
+    showTabProg(grp, msg);
+
+    var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';    
     var url1 = url + 'JSON%20lib.jsxinc';
     var url2 = url + 'PROMO%20GNEWS%20exp.jsxinc';
     var url3 = url + 'PROMO%20GNEWS%20img.jsxinc';
@@ -2271,10 +2287,6 @@ function PROMO_GNEWS_UI() {
     var dowFolder = new Folder(downPath);
     var scriptUIPath = $.fileName.match(/[\/|\\]\w{2,}.*(?=[\/|\\])/);
     scriptUIPath = 'C:' + decodeURI(scriptUIPath).toString();
-
-    var msg = 'downloading files...';
-
-    showTabProg(grp, msg);
 
     if (!dowFolder.exists) {
 
@@ -2290,7 +2302,7 @@ function PROMO_GNEWS_UI() {
     try {
       
       copyFolderContent(downPath, scriptUIPath);
-      msg = 'and run the script ヽ(✿ﾟ▽ﾟ)ノ';
+      msg = 'and run the script  ヽ(✿ﾟ▽ﾟ)ノ';
     } catch (error) {
       
       msg = 'you have to manually copy all files to:\n';
@@ -2298,7 +2310,7 @@ function PROMO_GNEWS_UI() {
       alert(msg);
       openFolder(downPath);
       openFolder(scriptUIPath);
-      msg = 'and copy the files ༼ つ ◕_◕ ༽つ';
+      msg = 'and copy the files  ༼ つ ◕_◕ ༽つ';
     }
 
     showTabProg(grp, msg);
