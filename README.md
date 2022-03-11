@@ -357,12 +357,12 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
 
 # ![links icon](/images/icons/linksIcon.png) *links úteis*
 
-1. ### botões **`office globo`**
-    [![email btn](/images/icons/link_emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
-    [![oneDrive btn](/images/icons/link_oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
-    [![sharePoint btn](/images/icons/link_sharePointIcon.png)**`sharePoint`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
+### botões **`office globo`**<br/>
+[![email btn](/images/icons/link_emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
+[![oneDrive btn](/images/icons/link_oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
+[![sharePoint btn](/images/icons/link_sharePointIcon.png)**`sharePoint`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
 
-    acessam os serviços que a 'globo' e a equipe de 'promo' usam na nuvem da 'microsoft'.
+acessam os serviços que a 'globo' e a equipe de 'promo' usam na nuvem da 'microsoft'.
 ```
     urls: 'https://outlook.office365.com/mail/'
           'https://tvglobocorp-my.sharepoint.com/'
@@ -371,12 +371,12 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
 
 <br/>
 
-2. ### botões **`work flow`**
-    [![trello btn](/images/icons/link_trelloIcon.png)**`trello`**](https://trello.com/promo126/home)
-    [![typeForm btn](/images/icons/link_typeFormIcon.png)**`typeForm`**](https://tvglobo.typeform.com/to/wiqX4z0X)
-    [![planner btn](/images/icons/link_plannerIcon.png)**`planner`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
+### botões **`work flow`**<br/>
+[![trello btn](/images/icons/link_trelloIcon.png)**`trello`**](https://trello.com/promo126/home)
+[![typeForm btn](/images/icons/link_typeFormIcon.png)**`typeForm`**](https://tvglobo.typeform.com/to/wiqX4z0X)
+[![planner btn](/images/icons/link_plannerIcon.png)**`planner`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
 
-    acessam as plataformas que a 'globo' e a equipe de 'promo' usam para gerenciar tarefas.
+acessam as plataformas que a 'globo' e a equipe de 'promo' usam para gerenciar tarefas.
 ```
     urls: 'https://trello.com/promo126/home'
           'https://tvglobo.typeform.com/to/wiqX4z0X'
@@ -440,7 +440,7 @@ altera a 'cor' da aba selecionada.
 
 <br/>
 
-### ![reset btn](/images/icons/resetIcon.png) botão **`limpar preferences`**
+### ![reset btn](/images/icons/resetIcon.png) botão **`limpar preferencias`**
 descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
 
 <br/>
