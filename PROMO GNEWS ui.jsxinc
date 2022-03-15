@@ -399,6 +399,11 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  var arrowBtn = toolsGrp.add('iconbutton', undefined, arrowIcon, {style: 'toolbutton'});
+  arrowBtn.helpTip = 'simple arrow rig';
+  
+  toolsGrp.add('image', undefined, vSpacer);
+  
   var counterBtn = toolsGrp.add('iconbutton', undefined, counterIcon, {style: 'toolbutton'});
   counterBtn.helpTip = 'make counter rig';
 
@@ -1679,6 +1684,27 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  arrowBtn.onClick = function() {
+
+    var expFx = arrow();
+  
+    var bodyShape = new Shape();
+    bodyShape.vertices = [[0, 0],[80, 0],[80, -250],[160, -250]];
+    bodyShape.inTangents = [[0, 0],[0, 0],[0, 0],[0, 0]];
+    bodyShape.outTangents = [[0, 0],[0, 0],[0, 0],[0, 0]];
+    bodyShape.closed = false;
+
+    var headShape = new Shape();
+    headShape.vertices = [[-10, -10],[0, 0],[-10, 10]];
+    headShape.inTangents = [[0, 0],[0, 0],[0, 0]];
+    headShape.outTangents = [[0, 0],[0, 0],[0, 0]];
+    headShape.closed = false;
+
+    var shpLayer = shpArrow(bodyShape, headShape);
+    addPseudoEffect(shpLayer, 'ARROW', 'arrow', expFx);
+    shpLayer.name = 'arrow';
+  };
+
   counterBtn.onClick = function() {
 
     var aItem = app.project.activeItem;
@@ -1710,7 +1736,7 @@ function PROMO_GNEWS_UI() {
             colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
 
             aniTxt.name = 'counter color';
-            addPseudoEffect(cntLayer, 'GNEWS counter', 'counter', expFx);
+            addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
             srcTxt.expression = expStr1;
             colorTxt.expression = expStr2;
           }
@@ -1727,7 +1753,7 @@ function PROMO_GNEWS_UI() {
         colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
 
         aniTxt.name = 'counter color';
-        addPseudoEffect(cntLayer, 'GNEWS counter', 'counter', expFx);
+        addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
         srcTxt.expression = expStr1;
         colorTxt.expression = expStr2;
       }

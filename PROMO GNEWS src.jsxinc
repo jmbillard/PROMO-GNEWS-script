@@ -130,6 +130,10 @@ function createShp(shpType) {
 
 function colorPallet() {
 
+  var rootVGrp = 'ADBE Root Vectors Group';
+  var vGrp = 'ADBE Vector Group';
+  var vsGrp = 'ADBE Vectors Group';
+
   var redStr = '[0.725, 0.078, 0.078, 1];';
   var blkStr = '[0.078, 0.078, 0.078, 1];';
   var wteStr = '[0.8, 0.8, 0.8, 1];';
@@ -138,34 +142,102 @@ function colorPallet() {
 
   var aItem = app.project.activeItem;
   var shpLayer = aItem.layers.addShape();
-  var contents = shpLayer.property('ADBE Root Vectors Group');
+  var contents = shpLayer.property(rootVGrp);
 
-  var redGrp = contents.addProperty('ADBE Vector Group');
-  var redShp = redGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Rect');
-  var redFill = redGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Fill');
+  var redGrp = contents.addProperty(vGrp);
+  var redShp = redGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  var redFill = redGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
   redFill.property('ADBE Vector Fill Color').setValue([0.725, 0.078, 0.078, 1]);
   redFill.property('ADBE Vector Fill Color').expression = redStr;
   redGrp.property('ADBE Vector Transform Group').position.setValue([60,60]);
   redGrp.name = 'RED';
   redFill.name = 'GNEWS RED';
 
-  var blkGrp = contents.addProperty('ADBE Vector Group');
-  blkGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Rect');
-  var blkFill = blkGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Fill');
+  var blkGrp = contents.addProperty(vGrp);
+  blkGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  var blkFill = blkGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
   blkFill.property('ADBE Vector Fill Color').setValue([0.078, 0.078, 0.078, 1]);
   blkFill.property('ADBE Vector Fill Color').expression = blkStr;
   blkGrp.property('ADBE Vector Transform Group').position.setValue([170,60]);
   blkGrp.name = 'BLACK';
   blkFill.name = 'GNEWS BLACK';
 
-  var wteGrp = contents.addProperty('ADBE Vector Group');
-  wteGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Shape - Rect');
-  var wteFill = wteGrp.property('ADBE Vectors Group').addProperty('ADBE Vector Graphic - Fill');
+  var wteGrp = contents.addProperty(vGrp);
+  wteGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  var wteFill = wteGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
   wteFill.property('ADBE Vector Fill Color').setValue([0.8, 0.8, 0.8, 1]);
   wteFill.property('ADBE Vector Fill Color').expression = wteStr;
   wteGrp.property('ADBE Vector Transform Group').position.setValue([280,60]);
   wteGrp.name = 'WHITE';
   wteFill.name = 'GNEWS WHITE';
+
+  return shpLayer;
+}
+
+function shpArrow(body, head) {
+
+  var rootVGrp = 'ADBE Root Vectors Group';
+  var vGrp = 'ADBE Vector Group';
+  var vsGrp = 'ADBE Vectors Group';
+  var exp = '';
+
+  var shpLayer = app.project.activeItem.layers.addShape(); 
+  var contents = shpLayer.property(rootVGrp);
+
+  // body
+  var bodyGrp = contents.addProperty(vGrp);
+  var bodyShp = bodyGrp.property(vsGrp).addProperty('ADBE Vector Shape - Group');
+  bodyShp.property('ADBE Vector Shape').setValue(body);
+  bodyShp.name = 'body path';
+  var bodyStk = bodyGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Stroke');
+  exp = 'effect("arrow rig")("body stroke size").value;';
+  bodyStk.property('ADBE Vector Stroke Width').expression = exp;
+  bodyStk.property('ADBE Vector Stroke Line Cap').setValue(2);
+  exp = 'effect("arrow rig")("color").value;';
+  bodyStk.property('ADBE Vector Stroke Color').expression = exp;
+  exp = 'value * effect("arrow rig")("show body").value;';
+  bodyGrp.property('ADBE Vector Transform Group').opacity.expression = exp;
+  bodyGrp.name = 'body';
+
+  // round corners
+  var roundCorners = contents.addProperty('ADBE Vector Filter - RC');
+  exp = 'effect("arrow rig")("round corners").value;';
+  roundCorners.property('ADBE Vector RoundCorner Radius').expression = exp;
+
+  // trim paths
+  var trimPath = contents.addProperty('ADBE Vector Filter - Trim');
+  exp = 'effect("arrow rig")("path").value;';
+  trimPath.property('ADBE Vector Trim End').expression = exp;
+
+  // head
+  var headGrp = contents.addProperty(vGrp);
+  var headShp = headGrp.property(vsGrp).addProperty('ADBE Vector Shape - Group');
+  headShp.property('ADBE Vector Shape').setValue(head);
+  headShp.name = 'head path';
+  var headStk = headGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Stroke');
+  exp = 'var w = effect("arrow rig")("head stroke size").value;\n';
+  exp += 'var s = effect("arrow rig")("head scale").value / 100;\n\n';
+  exp += 'w / s;';
+  headStk.property('ADBE Vector Stroke Width').expression = exp;
+  headStk.property('ADBE Vector Stroke Line Cap').setValue(2);
+  exp = 'effect("arrow rig")("color").value;';
+  headStk.property('ADBE Vector Stroke Color').expression = exp;
+  exp = 'var progress = content("Trim Paths 1").end / 100;\n';
+  exp += 'var pathShp = content("body").content("body path").path;\n\n';
+  exp += 'pathShp.pointOnPath(progress);';
+  headGrp.property('ADBE Vector Transform Group').position.expression = exp;
+  exp = 'var s = effect("arrow rig")("head scale").value;\n\n';
+  exp += '[s, s];';
+  headGrp.property('ADBE Vector Transform Group').scale.expression = exp;
+  exp = 'var orientChk = effect("arrow rig")("auto orient").value;\n';
+  exp += 'var pathShp = content("body").content("body path").path;\n';
+  exp += 'var progress = content("Trim Paths 1").end / 100;\n';
+  exp += 'var pathTan = pathShp.tangentOnPath(progress);\n\n';
+  exp += 'value + (radiansToDegrees(Math.atan2(pathTan[1],pathTan[0])) * orientChk);';
+  headGrp.property('ADBE Vector Transform Group').rotation.expression = exp;
+  exp = 'value * effect("arrow rig")("show head").value;';
+  headGrp.property('ADBE Vector Transform Group').opacity.expression = exp;
+  headGrp.name = 'head';
 
   return shpLayer;
 }
