@@ -357,6 +357,9 @@ function PROMO_GNEWS_UI() {
   var shpPalletBtn = palletGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
   shpPalletBtn.helpTip = 'shape layer pallet';
 
+  var logoBtn = palletGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  logoBtn.helpTip = 'GNEWS logo as shape layer';
+
   /*
 
   ---------------------------------------------------------------
@@ -1405,14 +1408,43 @@ function PROMO_GNEWS_UI() {
   };
 
   shpPalletBtn.onClick = function() {
-  
-    var palletLayer = colorPallet();
 
-    palletLayer.name = 'pallet - GNEWS';
-    palletLayer.guideLayer = true;
-    palletLayer.locked = true;
-    palletLayer.property('ADBE Transform Group').position.setValue([0,0]);
-    palletLayer.property('ADBE Transform Group').position.expression('[0,0]');
+    var aItem = app.project.activeItem;
+    var msg = 'comp not selected';
+
+    if (aItem != null) {
+      app.beginUndoGroup('pallet');
+
+      var palletLayer = colorPallet();
+
+      palletLayer.name = 'pallet - GNEWS';
+      palletLayer.guideLayer = true;
+      palletLayer.locked = true;
+      palletLayer.property('ADBE Transform Group').position.setValue([0,0]);
+      palletLayer.property('ADBE Transform Group').position.expression('[0,0]');
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletGrp, msg);
+    }
+  };
+
+  logoBtn.onClick = function() {
+
+    var aItem = app.project.activeItem;
+    var msg = 'comp not selected';
+
+    if (aItem != null) {
+      app.beginUndoGroup('pallet');
+
+      logoShp();
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(palletGrp, msg);
+    }
   };
 
   /*
@@ -1686,23 +1718,34 @@ function PROMO_GNEWS_UI() {
 
   arrowBtn.onClick = function() {
 
-    var expFx = arrow();
-  
-    var bodyShape = new Shape();
-    bodyShape.vertices = [[0, 0],[80, 0],[80, -250],[160, -250]];
-    bodyShape.inTangents = [[0, 0],[0, 0],[0, 0],[0, 0]];
-    bodyShape.outTangents = [[0, 0],[0, 0],[0, 0],[0, 0]];
-    bodyShape.closed = false;
+    var aItem = app.project.activeItem;
+    msg = 'comp not selected';
 
-    var headShape = new Shape();
-    headShape.vertices = [[-10, -10],[0, 0],[-10, 10]];
-    headShape.inTangents = [[0, 0],[0, 0],[0, 0]];
-    headShape.outTangents = [[0, 0],[0, 0],[0, 0]];
-    headShape.closed = false;
+    if (aItem != null) {
+      app.beginUndoGroup('arrow rig');
 
-    var shpLayer = shpArrow(bodyShape, headShape);
-    addPseudoEffect(shpLayer, 'ARROW', 'arrow', expFx);
-    shpLayer.name = 'arrow';
+      var expFx = arrow();
+    
+      var bodyShape = new Shape();
+      bodyShape.vertices = [[0, 0],[80, 0],[80, -250],[160, -250]];
+      bodyShape.inTangents = [[0, 0],[0, 0],[0, 0],[0, 0]];
+      bodyShape.outTangents = [[0, 0],[0, 0],[0, 0],[0, 0]];
+      bodyShape.closed = false;
+
+      var headShape = new Shape();
+      headShape.vertices = [[-10, -10],[0, 0],[-10, 10]];
+      headShape.inTangents = [[0, 0],[0, 0],[0, 0]];
+      headShape.outTangents = [[0, 0],[0, 0],[0, 0]];
+      headShape.closed = false;
+
+      var shpLayer = shpArrow(bodyShape, headShape);
+      addPseudoEffect(shpLayer, 'ARROW', 'arrow', expFx);
+      shpLayer.name = 'arrow';
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(toolsGrp, msg);
+    }
   };
 
   counterBtn.onClick = function() {

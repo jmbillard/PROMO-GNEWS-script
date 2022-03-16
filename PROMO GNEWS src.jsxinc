@@ -242,6 +242,74 @@ function shpArrow(body, head) {
   return shpLayer;
 }
 
+function logoShp() {
+
+  var globoShape1 = new Shape();
+  globoShape1.vertices = [[-44.875,0],[0,-44.625],[44.875,0],[0,44.625]];
+  globoShape1.inTangents = [[0,24.5625],[-24.875,0],[0,-24.5625],[24.875,0]];
+  globoShape1.outTangents = [[0,-24.5625],[24.875,0],[0,24.5625],[-24.875,0]];
+  globoShape1.closed = true;
+  
+  var globoShape2 = new Shape();
+  globoShape2.vertices = [[86.75,-42.125],[75.3125,-52],[0,-55.0625],[-75.3125,-52],[-86.75,-42.125],[-88.1875,0],[-86.75,42.125],[-75.3125,52],[0,55.0625],[75.3125,52],[86.75,42.125],[88.1875,0]];
+  globoShape2.inTangents = [[1.375,13.6875],[6.9375,0.75],[24.8125,-0.0625],[23.9375,-2.5],[0.75,-7.4375],[0,-14.3125],[-1.375,-13.6875],[-6.9375,-0.75],[-24.8125,0.0625],[-23.9375,2.5],[-0.75,7.4375],[0,14.3125]];
+  globoShape2.outTangents = [[-0.75,-7.4375],[-23.9375,-2.5],[-24.8125,-0.0625],[-6.9375,0.75],[-1.375,13.6875],[0,14.3125],[0.75,7.4375],[23.9375,2.5],[24.8125,0.0625],[6.9375,-0.75],[1.375,-13.6875],[0,-14.3125]];
+  globoShape2.closed = true;
+  
+  var globoShape3 = new Shape();
+  globoShape3.vertices = [[110.5,0],[0,110.1875],[-110.5,0],[0,-110.1875]];
+  globoShape3.inTangents = [[0,-60.6875],[61,0],[0,60.6875],[-61,0]];
+  globoShape3.outTangents = [[0,60.6875],[-61,0],[0,-60.6875],[61,0]];
+  globoShape3.closed = true;
+  
+  var newsShape1 = new Shape();
+  newsShape1.vertices = [[-65.1875,50.8125],[-167.1875,50.8125],[-167.1875,28.3125],[-88.1875,28.3125],[-88.1875,-21.8125],[-167.1875,-21.8125],[-167.1875,-44.3125],[-65.1875,-44.3125]];
+  newsShape1.inTangents = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+  newsShape1.outTangents = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+  newsShape1.closed = true;
+  
+  var newsShape2 = new Shape();
+  newsShape2.vertices = [[301.5625,-18.875],[242.75,-44.4375],[257.25,-55],[273.0625,-50.875],[280.375,-38.3125],[280.375,-38.3125],[280.375,-38.3125],[350.0625,-38.3125],[249.75,-102],[177.0625,-102],[124.3125,-5.0625],[124.3125,-102],[58,-102],[-3.375,10.625],[-3.375,-102],[-235.125,-102],[-235.125,-13.125],[-283.4375,-102],[-358.375,-102],[-358.375,108.4375],[-288.625,108.4375],[-288.625,15.9375],[-236.6875,108.4375],[-2.6875,108.4375],[58.0625,1],[58.0625,108.4375],[126.0625,108.4375],[188.5625,-2.75],[243,22.125],[285.125,44.5],[265.1875,59.5625],[248.5625,46.9375],[247.125,37.75],[169.3125,37.75],[264.9375,109.4375],[358.375,39.625]];
+  newsShape2.inTangents = [[28.6875,7.9375],[1.125,14.5],[-6.625,0],[-4.0625,-2.6875],[-0.0625,-5.75],[0,0],[0,0],[0,0],[48.0625,-7.5],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[-19.875,-5.625],[0,-10.125],[6.6875,0],[3,8],[0,4.3125],[0,0],[-22.875,0],[0,52.8125]];
+  newsShape2.outTangents = [[-28.6875,-7.9375],[0.0625,-8.8125],[4.875,0],[4.1875,2.8125],[0,0],[0,0],[0,0],[-1.4375,-49.75],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[12.9375,13.6875],[33.625,9.5625],[0,9.875],[-7.625,0],[-0.75,-2],[0,0],[1.375,63.625],[45.125,0],[0,-37.1875]];
+  newsShape2.closed = true;
+  
+  var rootVGrp = 'ADBE Root Vectors Group';
+  var vGrp = 'ADBE Vector Group';
+  var vsGrp = 'ADBE Vectors Group';
+  
+  var shpLayer = app.project.activeItem.layers.addShape(); 
+  var contents = shpLayer.property(rootVGrp);
+  
+  // globo
+  var globoGrp = contents.addProperty(vGrp);
+  var globoShp1 = globoGrp.property(vsGrp).addProperty('ADBE Vector Shape - Group');
+  globoShp1.property('ADBE Vector Shape').setValue(globoShape1);
+  var globoShp2 = globoGrp.property(vsGrp).addProperty('ADBE Vector Shape - Group');
+  globoShp2.property('ADBE Vector Shape').setValue(globoShape2);
+  var globoShp3 = globoGrp.property(vsGrp).addProperty('ADBE Vector Shape - Group');
+  globoShp3.property('ADBE Vector Shape').setValue(globoShape3);
+  
+  var globoFill = globoGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
+  globoFill.property('ADBE Vector Fill Color').setValue(GNEWS_RED);
+  globoGrp.property('ADBE Vector Transform Group').position.setValue([-350,0]);
+  globoGrp.name = 'globo';
+  
+  // news
+  var newsGrp = contents.addProperty(vGrp);
+  var newsShp1 = newsGrp.property(vsGrp).addProperty('ADBE Vector Shape - Group');
+  newsShp1.property('ADBE Vector Shape').setValue(newsShape1);
+  var newsShp2 = newsGrp.property(vsGrp).addProperty('ADBE Vector Shape - Group');
+  newsShp2.property('ADBE Vector Shape').setValue(newsShape2);
+  
+  var newsFill = newsGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
+  newsFill.property('ADBE Vector Fill Color').setValue(GNEWS_RED);
+  newsGrp.property('ADBE Vector Transform Group').position.setValue([100,0]);
+  newsGrp.name = 'news';
+  
+  shpLayer.name = 'GNEWS logo';
+}
+
 // reposiciona e parenteia um layer mantendo a hierarquia...
 function setHierarchy(selLayer, ctrlLayer) {
 
