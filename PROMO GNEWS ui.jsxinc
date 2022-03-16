@@ -315,19 +315,19 @@ function PROMO_GNEWS_UI() {
 
   */
   var redBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
-  redBtn.size = [50, 20];
+  redBtn.size = [40, 15];
   setBtnColor(redBtn, GNEWS_RED);
   redBtn.onDraw = customDraw;
   redBtn.helpTip = 'R: 185\nG: 20\nB: 20\nHEX: #B91414';
 
   var blkBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
-  blkBtn.size = [50, 20];
+  blkBtn.size = [40, 15];
   setBtnColor(blkBtn, GNEWS_BLK);
   blkBtn.onDraw = customDraw;
   blkBtn.helpTip = 'R: 20\nG: 20\nB: 20\nHEX: #141414';
 
   var wteBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
-  wteBtn.size = [50, 20];
+  wteBtn.size = [40, 15];
   setBtnColor(wteBtn, GNEWS_WTE);
   wteBtn.onDraw = customDraw;
   wteBtn.helpTip = 'R: 234\nG: 234\nB: 234\nHEX: #EAEAEA';
@@ -335,19 +335,19 @@ function PROMO_GNEWS_UI() {
   palletGrp.add('image', undefined, vSpacer);
 
   var gryBtn1 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
-  gryBtn1.size = [50, 20];
+  gryBtn1.size = [40, 15];
   setBtnColor(gryBtn1, rgb(180, 180, 180));
   gryBtn1.onDraw = customDraw;
   gryBtn1.helpTip = 'R: 180\nG: 180\nB: 180\nHEX: #B4B4B4';
 
   var gryBtn2 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
-  gryBtn2.size = [50, 20];
+  gryBtn2.size = [40, 15];
   setBtnColor(gryBtn2, rgb(110, 110, 110));
   gryBtn2.onDraw = customDraw;
   gryBtn2.helpTip = 'R: 110\nG: 110\nB: 110\nHEX: #6E6E6E';
 
   var gryBtn3 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
-  gryBtn3.size = [50, 20];
+  gryBtn3.size = [40, 15];
   setBtnColor(gryBtn3, rgb(54, 54, 54));
   gryBtn3.onDraw = customDraw;
   gryBtn3.helpTip = 'R: 54\nG: 54\nB: 54\nHEX: #363636';
