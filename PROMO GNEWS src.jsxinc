@@ -137,8 +137,6 @@ function colorPallet() {
   var redStr = '[0.725, 0.078, 0.078, 1];';
   var blkStr = '[0.078, 0.078, 0.078, 1];';
   var wteStr = '[0.8, 0.8, 0.8, 1];';
-  // var palletSize = 100;
-  // var palletGap = 20;
 
   var aItem = app.project.activeItem;
   var shpLayer = aItem.layers.addShape();
@@ -146,6 +144,7 @@ function colorPallet() {
 
   var redGrp = contents.addProperty(vGrp);
   var redShp = redGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  redShp.property('ADBE Vector Rect Size').setValue([50,50]);
   var redFill = redGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
   redFill.property('ADBE Vector Fill Color').setValue([0.725, 0.078, 0.078, 1]);
   redFill.property('ADBE Vector Fill Color').expression = redStr;
@@ -154,20 +153,22 @@ function colorPallet() {
   redFill.name = 'GNEWS RED';
 
   var blkGrp = contents.addProperty(vGrp);
-  blkGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  var blkShp = blkGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  blkShp.property('ADBE Vector Rect Size').setValue([50,50]);
   var blkFill = blkGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
   blkFill.property('ADBE Vector Fill Color').setValue([0.078, 0.078, 0.078, 1]);
   blkFill.property('ADBE Vector Fill Color').expression = blkStr;
-  blkGrp.property('ADBE Vector Transform Group').position.setValue([170,60]);
+  blkGrp.property('ADBE Vector Transform Group').position.setValue([120,60]);
   blkGrp.name = 'BLACK';
   blkFill.name = 'GNEWS BLACK';
 
   var wteGrp = contents.addProperty(vGrp);
-  wteGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  var wteShp = wteGrp.property(vsGrp).addProperty('ADBE Vector Shape - Rect');
+  wteShp.property('ADBE Vector Rect Size').setValue([50,50]);
   var wteFill = wteGrp.property(vsGrp).addProperty('ADBE Vector Graphic - Fill');
   wteFill.property('ADBE Vector Fill Color').setValue([0.8, 0.8, 0.8, 1]);
   wteFill.property('ADBE Vector Fill Color').expression = wteStr;
-  wteGrp.property('ADBE Vector Transform Group').position.setValue([280,60]);
+  wteGrp.property('ADBE Vector Transform Group').position.setValue([180,60]);
   wteGrp.name = 'WHITE';
   wteFill.name = 'GNEWS WHITE';
 

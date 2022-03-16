@@ -140,11 +140,11 @@ function PROMO_GNEWS_UI() {
   var projBtn = menuGrp.add('iconbutton', undefined, prjIcon, {style: 'toolbutton'});
   projBtn.helpTip = 'project organization';
 
+  var appBtn = menuGrp.add('iconbutton', undefined, aeIcon, {style: 'toolbutton'});
+  appBtn.helpTip = 'setup AE preferences and stuff';
 
   menuGrp.add('image', undefined, vSpacer);
 
-  var appBtn = menuGrp.add('iconbutton', undefined, aeIcon, {style: 'toolbutton'});
-  appBtn.helpTip = 'setup AE preferences and stuff';
   var linksBtn = menuGrp.add('iconbutton', undefined, linksIcon, {style: 'toolbutton'});
   linksBtn.helpTip = 'useful links';
   
@@ -354,10 +354,10 @@ function PROMO_GNEWS_UI() {
 
   palletGrp.add('image', undefined, vSpacer);
 
-  var shpPalletBtn = palletGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var shpPalletBtn = palletGrp.add('iconbutton', undefined, shpPalletIcon, {style: 'toolbutton'});
   shpPalletBtn.helpTip = 'shape layer pallet';
 
-  var logoBtn = palletGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var logoBtn = palletGrp.add('iconbutton', undefined, newsIcon, {style: 'toolbutton'});
   logoBtn.helpTip = 'GNEWS logo as shape layer';
 
   /*
@@ -1252,7 +1252,7 @@ function PROMO_GNEWS_UI() {
   /*
 
   ---------------------------------------------------------------
-  > color tab events
+  > pallet tab events
   ---------------------------------------------------------------
 
   */
