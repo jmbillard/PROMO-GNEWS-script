@@ -504,14 +504,15 @@ function PROMO_GNEWS_UI() {
 
   var linksSubGrp1 = linksGrp.add('group');
   linksSubGrp1.spacing = 2;
-  var mamHardNewsBtn = linksSubGrp1.add('iconbutton', undefined, hardNewsFolderIcon, {style: 'toolbutton'});
-  mamHardNewsBtn.helpTip = 'upload MAM Hard News';
+  var mamArteBtn = linksSubGrp1.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
+  mamArteBtn.helpTip = 'MAM Para Arte';
   var mamMagBtn = linksSubGrp1.add('iconbutton', undefined, magazineFolderIcon, {style: 'toolbutton'});
   mamMagBtn.helpTip = 'upload MAM Magazine';
 
-  var mamArteBtn = linksSubGrp1.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
-  mamArteBtn.helpTip = 'MAM Para Arte';
+  linksSubGrp1.add('image', undefined, hSpacer);
 
+  var mamHardNewsBtn = linksSubGrp1.add('iconbutton', undefined, hardNewsFolderIcon, {style: 'toolbutton'});
+  mamHardNewsBtn.helpTip = 'upload MAM Hard News';
   var nUtilsBtn = linksSubGrp1.add('iconbutton', undefined, utilsFolderIcon, {style: 'toolbutton'});
   nUtilsBtn.helpTip = 'N: Utilidades';
 
@@ -540,7 +541,14 @@ function PROMO_GNEWS_UI() {
   projTemplateDrop.selection = projMDropSel;
 
   preferencesGrp.add('image', undefined, vSpacer);
+  
+  var artPathBtn = preferencesGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  artPathBtn.helpTip = 'set "para arte" folder path';
+  var magPathBtn = preferencesGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  magPathBtn.helpTip = 'set "upload MAM-magazine" folder path';
 
+  preferencesGrp.add('image', undefined, vSpacer);
+  
   var colorPrefTxt = preferencesGrp.add('statictext', undefined, 'colors');
   colorPrefTxt.helpTip = 'ui colors';
   setTxtColor(colorPrefTxt, sTxtColor);
@@ -2245,7 +2253,7 @@ function PROMO_GNEWS_UI() {
     var prefSection = 'Main Pref Section';
     var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
     var configName = '\"Allow Scripts to Write Files and Access the Network\"';
-    var folderPath = '\\\\192.168.3.10\\Share Point\\Para Ilha - Upload MAM Magazine';
+    var folderPath = magPath;
     var msg = configName + ' not checked';
 
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
@@ -2261,7 +2269,7 @@ function PROMO_GNEWS_UI() {
     var prefSection = 'Main Pref Section';
     var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
     var configName = '\"Allow Scripts to Write Files and Access the Network\"';
-    var folderPath = '\\\\192.168.3.10\\Share Point\\Para Arte - Download MAM Magazine';
+    var folderPath = artePath;
     var msg = configName + ' not checked';
 
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
@@ -2307,6 +2315,28 @@ function PROMO_GNEWS_UI() {
     projMDropSel = projTemplateDrop.selection.index;
     saveGPrefs();
   };
+
+  artPathBtn.onClick = function() {
+  
+    var saveFolder = Folder.selectDialog();
+
+    if (saveFolder != null) {
+
+      artePath = decodeURI(saveFolder).toString();
+      saveGPrefs();
+    }
+  };
+
+  magPathBtn.onClick = function() {
+  
+    var saveFolder = Folder.selectDialog();
+
+    if (saveFolder != null) {
+
+      magPath = decodeURI(saveFolder).toString();
+      saveGPrefs();
+    }
+};
 
   colorDrop.onChange = function() {
 

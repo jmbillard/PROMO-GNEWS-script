@@ -2222,12 +2222,17 @@ function loadDefaultPrefs() {
       'l16':'#5F7C8A'
     },
 
-    "selection":{
-      "layerType":0,
-      "projectModel":0
+    'folders': {
+      'arte':'//10.181.53.152/arte_ilhasjorn/PARA ARTE/PROMO GNEWS/MXF ARTE',
+      'magazine':'//10.181.53.152/arte_ilhasjorn/UPLOAD_MAM/Magazine'
+    },
+
+    'selection':{
+      'layerType':0,
+      'projectModel':0
     },
   
-    "user":system.userName.substring(0, 3).toUpperCase()
+    'user':system.userName.substring(0, 3).toUpperCase()
   };
   tabColors = [];
   labelColors = [];
@@ -2241,6 +2246,8 @@ function loadDefaultPrefs() {
 
     labelColors.push(hexToRGB(defPrefs.label['l' + i]));
   }
+  artePath = defPrefs.folders.arte;
+  magPath = defPrefs.folders.magazine;
   lDropSel = defPrefs.selection.layerType;
   projMDropSel = defPrefs.selection.projectModel;
   userPrefix = defPrefs.user;
@@ -2317,6 +2324,10 @@ function prefsObj() {
   }
   objStr = objStr.substring(0, objStr.length-1);
   objStr += '\n\t},\n\n';
+  objStr += '\t"folders":{\n';
+  objStr += '\t\t"arte":"' +   artePath + '",\n';
+  objStr += '\t\t"magazine":"' +   magPath + '"\n';
+  objStr += '\n\t},\n\n';
   objStr += '\t"selection":{\n';
   objStr += '\t\t"layerType":' +   lDropSel + ',\n';
   objStr += '\t\t"projectModel":' +   projMDropSel + '\n';
@@ -2345,6 +2356,8 @@ function getGPrefs(file) {
 
     labelColors.push(hexToRGB(JSONObj.label['l' + i]));
   }
+  artePath = JSONObj.folders.arte;
+  magPath = JSONObj.folders.magazine;
   lDropSel = JSONObj.selection.layerType;
   projMDropSel = JSONObj.selection.projectModel;
   userPrefix = JSONObj.user;
