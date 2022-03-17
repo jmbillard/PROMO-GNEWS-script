@@ -542,9 +542,9 @@ function PROMO_GNEWS_UI() {
 
   preferencesGrp.add('image', undefined, vSpacer);
   
-  var artPathBtn = preferencesGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  var artPathBtn = preferencesGrp.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
   artPathBtn.helpTip = 'set "para arte" folder path';
-  var magPathBtn = preferencesGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  var magPathBtn = preferencesGrp.add('iconbutton', undefined, magazineFolderIcon, {style: 'toolbutton'});
   magPathBtn.helpTip = 'set "upload MAM-magazine" folder path';
 
   preferencesGrp.add('image', undefined, vSpacer);
