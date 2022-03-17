@@ -1423,15 +1423,19 @@ function copyFolderContent(src, dst) {
   }
 }
 
-function getURLContent(url, dst) {
+function getURLContent(urlArray, dst) {
 
   var os = $.os;
   var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
-  var fileName = decodeURI(url.match(/[^\\|\/]*$/i));
-
+  
   if (appOs == 'Win') {
+    var cmd = '';
     
-    var cmd = 'curl ' + url + ' -OutFile \'' + dst + '/' + fileName + '\'';
+    for (i = 0; i < urlArray.length; i++) {
+      var fileName = decodeURI(urlArray[i].match(/[^\\|\/]*$/i));
+   
+      cmd += 'curl ' + urlArray[i] + ' -OutFile \'' + dst + '/' + fileName + '\';';
+    }
     var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 
     system.callSystem(cmdStr);
