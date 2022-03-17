@@ -1427,13 +1427,13 @@ function getURLContent(url, dst) {
 
   var os = $.os;
   var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
-
   var fileName = decodeURI(url.match(/[^\\|\/]*$/i));
 
-  var cmd = 'curl ' + url + ' -OutFile \'' + dst + '/' + fileName + '\'';
-  var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
-
   if (appOs == 'Win') {
+    
+    var cmd = 'curl ' + url + ' -OutFile \'' + dst + '/' + fileName + '\'';
+    var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
+
     system.callSystem(cmdStr);
   }
 }
