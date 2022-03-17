@@ -2102,6 +2102,13 @@ function PROMO_GNEWS_UI() {
     var url4 = url + 'WAV%20-%20audio%20GSAT.epr';
     var url5 = url + 'XDCAM%20HD%2050%20NTSC%2060i%20-%20avid.epr';
 
+    var urlArray = [];
+    urlArray.push(url1);
+    urlArray.push(url2);
+    urlArray.push(url3);
+    urlArray.push(url4);
+    urlArray.push(url5);
+
     var downPath = scriptPreferencesPath + '/AME presets';
     var dowFolder = new Folder(downPath);
     var amePath = '~/Documents/Adobe/Adobe Media Encoder';
@@ -2112,11 +2119,7 @@ function PROMO_GNEWS_UI() {
 
       dowFolder.create();
     }
-    getURLContent(url1, downPath);
-    getURLContent(url2, downPath);
-    getURLContent(url3, downPath);
-    getURLContent(url4, downPath);
-    getURLContent(url5, downPath);
+    getURLContent(urlArray, downPath);
 
     for (i = 0; i < vFolders.length; i++) {
 
