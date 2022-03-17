@@ -799,7 +799,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -849,7 +849,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -922,7 +922,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -968,7 +968,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(ctrlGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1016,7 +1016,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1037,7 +1037,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1058,7 +1058,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1079,7 +1079,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1100,7 +1100,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1121,7 +1121,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1142,7 +1142,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1164,7 +1164,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1185,7 +1185,7 @@ function PROMO_GNEWS_UI() {
 
     } else {
       var msg = 'layer not selected';
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1206,7 +1206,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1230,7 +1230,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(fxGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1286,7 +1286,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1311,7 +1311,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1336,7 +1336,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1361,7 +1361,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1386,7 +1386,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1411,7 +1411,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1434,7 +1434,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1451,7 +1451,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(palletGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1479,7 +1479,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(textGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1499,7 +1499,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(textGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1520,7 +1520,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(textGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1541,7 +1541,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(textGrp, msg);
+      showTabErr(msg);
     }
   };
   
@@ -1587,7 +1587,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(textGrp, msg);
+      showTabErr(msg);
     }
   };
   
@@ -1666,7 +1666,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(projectGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1712,7 +1712,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(layersGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1752,7 +1752,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(toolsGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1812,7 +1812,7 @@ function PROMO_GNEWS_UI() {
       app.endUndoGroup();
 
     } else {
-      showTabErr(toolsGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1841,13 +1841,13 @@ function PROMO_GNEWS_UI() {
         }
       } else {
         msg = 'layer not selected';
-        showTabErr(toolsGrp, msg);
+        showTabErr(msg);
       }
 
       app.endUndoGroup();
 
     } else {
-      showTabErr(toolsGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1918,13 +1918,13 @@ function PROMO_GNEWS_UI() {
         }
       } else {
         msg = 'select 3 layers in order';
-        showTabErr(toolsGrp, msg);
+        showTabErr(msg);
       }
 
       app.endUndoGroup();
 
     } else {
-      showTabErr(toolsGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -1979,7 +1979,7 @@ function PROMO_GNEWS_UI() {
 
       app.endUndoGroup();
     } else {
-      showTabErr(projectGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2007,7 +2007,7 @@ function PROMO_GNEWS_UI() {
 
       app.endUndoGroup();
     } else {
-      showTabErr(projectGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2136,7 +2136,7 @@ function PROMO_GNEWS_UI() {
         } catch (error) {}
       }
     } else {
-      showTabErr(preferencesGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2160,7 +2160,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
  
@@ -2176,7 +2176,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
   
@@ -2192,7 +2192,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
   
@@ -2208,7 +2208,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2224,7 +2224,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2240,7 +2240,7 @@ function PROMO_GNEWS_UI() {
       openWebSite(site);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2256,7 +2256,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2272,7 +2272,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2288,7 +2288,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2304,7 +2304,7 @@ function PROMO_GNEWS_UI() {
       openFolder(folderPath);
 
     } else {
-      showTabErr(linksGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2345,7 +2345,7 @@ function PROMO_GNEWS_UI() {
         saveGPrefs();
       }
     } else {
-      showTabErr(preferencesGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2366,7 +2366,7 @@ function PROMO_GNEWS_UI() {
         saveGPrefs();
       }
     } else {
-      showTabErr(preferencesGrp, msg);
+      showTabErr(msg);
     }
   };
 
@@ -2457,7 +2457,7 @@ function PROMO_GNEWS_UI() {
       }
       showTabProg(grp, msg);
     } else {
-      showTabErr(preferencesGrp, msg);
+      showTabErr(msg);
     }
   };
 

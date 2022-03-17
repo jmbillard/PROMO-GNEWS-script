@@ -2092,7 +2092,7 @@ function replaceErrImage() {
 }
 
 // turns on error tab group visibility in the tab level...
-function showTabErr(grp, msg) {
+function showTabErr(msg) {
 
   errTxt.text = errCode() + msg;
   errImgGrp.visible = true;
