@@ -2317,26 +2317,46 @@ function PROMO_GNEWS_UI() {
   };
 
   artPathBtn.onClick = function() {
+
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+
+      var saveFolder = Folder.selectDialog();
   
-    var saveFolder = Folder.selectDialog();
-
-    if (saveFolder != null) {
-
-      artePath = decodeURI(saveFolder).toString();
-      saveGPrefs();
+      if (saveFolder != null) {
+  
+        artePath = decodeURI(saveFolder).toString();
+        saveGPrefs();
+      }
+    } else {
+      showTabErr(preferencesGrp, msg);
     }
   };
 
   magPathBtn.onClick = function() {
+
+    var prefSection = 'Main Pref Section';
+    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var msg = configName + ' not checked';
+
+    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+
+      var saveFolder = Folder.selectDialog();
   
-    var saveFolder = Folder.selectDialog();
-
-    if (saveFolder != null) {
-
-      magPath = decodeURI(saveFolder).toString();
-      saveGPrefs();
+      if (saveFolder != null) {
+  
+        magPath = decodeURI(saveFolder).toString();
+        saveGPrefs();
+      }
+    } else {
+      showTabErr(preferencesGrp, msg);
     }
-};
+  };
 
   colorDrop.onChange = function() {
 
