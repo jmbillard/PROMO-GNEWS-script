@@ -1732,11 +1732,13 @@ function PROMO_GNEWS_UI() {
       app.beginUndoGroup('randomize layer times');
 
       var fDur = aItem.frameDuration;
+      alert('frame duration: ' + fDur);
 
       for (i = 0; i < selLayers.length; i++) {
 
         var r = getRndInteger(0, limit);
         var startTime = selLayers[i].startTime;
+        alert('startTime: ' + fDur);
         
         selLayers[i].startTime.setValue(startTime + (r * fDur));
       }
