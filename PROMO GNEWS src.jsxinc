@@ -2114,7 +2114,7 @@ function showTabErr(msg) {
   write(msg);
 }
 
-function showTabProg(grp, msg) {
+function showTabProg(msg) {
 
   progTxt1.text = 'KEEP CALM';
   progTxt2.text = msg;
@@ -2187,6 +2187,7 @@ function loadStaticPrefs() {
   errTxtColor = rgb(140, 0, 51);
   aboutTxtColor = rgb(80, 80, 80);
 
+  // globo folders...
   hnPath = '//10.181.53.152/arte_ilhasjorn/UPLOAD_MAM/Hardnews_MAM';
   utiPath = '//10.197.18.172/arte/UTILIDADES';
 }
@@ -2355,7 +2356,6 @@ function getGPrefs(file) {
 
   for (i = 0; i < grpNames.length; i++) {
 
-    // eval(grpNames[i] + 'GrpColor = JSONObj.color.' + grpNames[i] + ';');
     tabColors.push(hexToRGB(JSONObj.color[grpNames[i]]));
   }
 
@@ -2373,7 +2373,7 @@ function getGPrefs(file) {
 /*
 
 ---------------------------------------------------------------
-# script metadata
+> script metadata
 ---------------------------------------------------------------
 
 */

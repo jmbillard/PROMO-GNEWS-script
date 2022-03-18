@@ -2035,7 +2035,7 @@ function PROMO_GNEWS_UI() {
 
     var msg = 'it\'s working...';
 
-    showTabProg(grp, msg);
+    showTabProg(msg);
 
     var saveFolder = Folder.selectDialog();
     var userStr = system.userName;
@@ -2413,7 +2413,7 @@ function PROMO_GNEWS_UI() {
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
 
       msg = 'black magic  (つ ◕_◕ )つ';
-      showTabProg(grp, msg);
+      showTabProg(msg);
   
       var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';    
       var url1 = url + 'JSON%20lib.jsxinc';
@@ -2455,7 +2455,7 @@ function PROMO_GNEWS_UI() {
         openFolder(scriptUIPath);
         msg = 'and copy the files  (つ ◕_◕ )つ';
       }
-      showTabProg(grp, msg);
+      showTabProg(msg);
     } else {
       showTabErr(msg);
     }
