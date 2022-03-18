@@ -388,11 +388,16 @@ function PROMO_GNEWS_UI() {
   renameLayersBtn.helpTip = 'update layer names';
 
   layersGrp.add('image', undefined, vSpacer);
-
+  
   var isolateBtn = layersGrp.add('iconbutton', undefined, isolateIcon, {style: 'toolbutton'});
   isolateBtn.helpTip = 'isolate layers';
   var lockTrmBtn = layersGrp.add('iconbutton', undefined, lockPropIcon, {style: 'toolbutton'});
   lockTrmBtn.helpTip = 'lock transform properties';
+
+  layersGrp.add('image', undefined, vSpacer);
+
+  var layerRandBtn = layersGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  layerRandBtn.helpTip = 'randomize layer times';
 
   /*
 
@@ -1707,6 +1712,33 @@ function PROMO_GNEWS_UI() {
 
       for (i = 0; i < selLayers.length; i++) {
         lockTrmProp(selLayers[i]);
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(msg);
+    }
+  };
+
+  layerRandBtn.onClick = function() {
+  
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var msg = 'layer not selected';
+    var limit = 30; 
+
+    if (selLayers.length > 0) {
+      app.beginUndoGroup('randomize layer times');
+
+      let fDur = aItem.frameDuration;
+
+      for (i = 0; i < selLayers.length; i++) {
+
+        let r = getRndInteger(0, limit);
+        let startTime = selLayers[i].startTime;
+        
+        selLayers[i].startTime.setValue(startTime + (r * fDur));
       }
 
       app.endUndoGroup();
