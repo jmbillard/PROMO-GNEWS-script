@@ -564,6 +564,16 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function gaussianRnd() {
+  var r = 0;
+
+  for (var i = 0; i < 6; i += 1) {
+    r += Math.random();
+  }
+
+  return r / 6;
+}
+
 /*
 
 ---------------------------------------------------------------

@@ -1726,21 +1726,28 @@ function PROMO_GNEWS_UI() {
     var aItem = app.project.activeItem;
     var selLayers = (aItem != null) ? aItem.selectedLayers : [];
     var msg = 'layer not selected';
-    var limit = 30; 
+    var limit = 1;
 
     if (selLayers.length > 0) {
       app.beginUndoGroup('randomize layer times');
 
       var fDur = aItem.frameDuration;
-      alert('frame duration: ' + fDur);
+      var sTimeMin = selLayers[0].startTime;
+      var sTimeMax = selLayers[0].startTime;
 
+      for (i = 1; i < selLayers.length; i++) {
+
+        selTime = selLayers[i].startTime;
+        sTimeMin = (sTimeMin < selTime) ? sTimeMin : selTime;
+        sTimeMax = (sTimeMax > selTime) ? sTimeMax : selTime;
+      }
+      limit = sTimeMax - sTimeMin;
       for (i = 0; i < selLayers.length; i++) {
 
-        var r = getRndInteger(0, limit);
+        var r = gaussianRnd() * limit;
         var sTime = selLayers[i].startTime;
-        alert('startTime: ' + fDur);
         
-        selLayers[i].startTime.setValue(sTime + (r * fDur));
+        selLayers[i].startTime = (sTime + (r * fDur));
       }
 
       app.endUndoGroup();
