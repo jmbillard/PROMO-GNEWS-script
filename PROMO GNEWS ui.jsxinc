@@ -2249,7 +2249,7 @@ function PROMO_GNEWS_UI() {
     var prefSection = 'Main Pref Section';
     var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
     var configName = '\"Allow Scripts to Write Files and Access the Network\"';
-    var folderPath = '\\\\192.168.3.10\\';
+    var folderPath = hnPath;
     var msg = configName + ' not checked';
 
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
@@ -2297,7 +2297,7 @@ function PROMO_GNEWS_UI() {
     var prefSection = 'Main Pref Section';
     var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
     var configName = '\"Allow Scripts to Write Files and Access the Network\"';
-    var folderPath = '\\\\192.168.3.10\\';
+    var folderPath = utiPath;
     var msg = configName + ' not checked';
 
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {

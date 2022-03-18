@@ -2186,6 +2186,9 @@ function loadStaticPrefs() {
   sTxtColor = rgb(234, 234, 234);
   errTxtColor = rgb(140, 0, 51);
   aboutTxtColor = rgb(80, 80, 80);
+
+  hnPath = '//10.181.53.152/arte_ilhasjorn/UPLOAD_MAM/Hardnews_MAM';
+  utiPath = '//10.197.18.172/arte/UTILIDADES';
 }
 
 //https://coolors.co/8c252f-bf3a48-cb6259-d68a69-c2b6a3-db9437-6ea57d-00b5c2-5f3691-6e489b
