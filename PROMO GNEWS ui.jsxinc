@@ -2299,7 +2299,6 @@ function PROMO_GNEWS_UI() {
     var configName = '\"Allow Scripts to Write Files and Access the Network\"';
     var folderPath = utiPath;
     var msg = configName + ' not checked';
-    alert(utiPath);
 
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
       openFolder(folderPath);
