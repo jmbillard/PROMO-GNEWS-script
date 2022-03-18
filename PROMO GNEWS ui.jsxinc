@@ -1741,7 +1741,9 @@ function PROMO_GNEWS_UI() {
         sTimeMin = (sTimeMin < selTime) ? sTimeMin : selTime;
         sTimeMax = (sTimeMax > selTime) ? sTimeMax : selTime;
       }
+
       limit = (sTimeMax - sTimeMin) / fDur;
+
       for (i = 0; i < selLayers.length; i++) {
 
         var r = gaussianRnd() * limit;
