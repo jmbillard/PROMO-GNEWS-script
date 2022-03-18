@@ -1737,10 +1737,10 @@ function PROMO_GNEWS_UI() {
       for (i = 0; i < selLayers.length; i++) {
 
         var r = getRndInteger(0, limit);
-        var startTime = selLayers[i].startTime;
+        var sTime = selLayers[i].startTime;
         alert('startTime: ' + fDur);
         
-        selLayers[i].startTime.setValue(startTime + (r * fDur));
+        selLayers[i].startTime.setValue(sTime + (r * fDur));
       }
 
       app.endUndoGroup();
