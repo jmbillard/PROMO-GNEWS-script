@@ -2292,7 +2292,7 @@ function PROMO_GNEWS_UI() {
   };
 
   // right click -> configure 'MAM - magazine' path...
-  mamMagBtn.addEventListener ("click", function (c) {
+  mamMagBtn.addEventListener ('click', function (c) {
 
     var msg = netConfigName + ' not checked';
 
@@ -2326,7 +2326,7 @@ function PROMO_GNEWS_UI() {
   };
 
   // right click -> configure 'MAM - para arte' path...
-  mamArteBtn.addEventListener ("click", function (c) {
+  mamArteBtn.addEventListener ('click', function (c) {
 
     var msg = netConfigName + ' not checked';
 
@@ -2414,7 +2414,7 @@ function PROMO_GNEWS_UI() {
   };
 
   // right click -> opens the git repo...
-  updateBtn.addEventListener ("click", function (c) {
+  updateBtn.addEventListener ('click', function (c) {
 
     if (c.button == 2) {
 
