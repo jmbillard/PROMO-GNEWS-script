@@ -2,7 +2,7 @@
 
 ---------------------------- info ----------------------------
 
-  title:   GNEWS utilities script
+  title:   PROMO GNEWS utilities script
 
   notes:   a collection of tools designed to
   speedup the motion graphics team workflow
@@ -18,17 +18,12 @@
 
 */
 
-//  linter settings:
-//  jshint -W061
-
 // load the XMP library...
 if ( ExternalObject.AdobeXMPScript == undefined ) {
     ExternalObject.AdobeXMPScript = new ExternalObject( "lib:AdobeXMPScript");
 }
 
-/* jshint ignore:start */
 #include 'JSON lib.jsxinc';
-/* jshint ignore:end */
 
 function PROMO_GNEWS_UTL(thisObj) {
 
@@ -38,9 +33,8 @@ function PROMO_GNEWS_UTL(thisObj) {
   var netConfigName = '"Allow Scripts to Write Files and Access Network"';
   var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script';
 
-  /* jshint ignore:start */
+  // ui definition file...
   #include 'PROMO GNEWS ui.jsxinc';
-  /* jshint ignore:end */
 
   /*
 
@@ -52,40 +46,22 @@ function PROMO_GNEWS_UTL(thisObj) {
 
   var PROMO_GNEWS_WINDOW = PROMO_GNEWS_UI(thisObj);
 
+  // checks network access...
   if (!app.preferences.getPrefAsLong(prefSection, prefName)) {
     alert('please check the ' + netConfigName + ' preference');
+  
+    // opens the scripting preferences...
     app.executeCommand(3131);
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
-
-      if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
-        PROMO_GNEWS_WINDOW.show();
-      }
-
-      return PROMO_GNEWS_WINDOW;
-
-    } else {
-
-      try {
-        if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
-          PROMO_GNEWS_WINDOW.show();
-        }
- 
-        alert('no network...  Σ(っ °Д °;)っ');
-        
-        return PROMO_GNEWS_WINDOW;
-
-      } catch (error) {
-
-        alert('PROMO GNEWS script can\'t run');
-      }
+    // alert...
+    if (!app.preferences.getPrefAsLong(prefSection, prefName)) {
+      alert('no network...  Σ(っ °Д °;)っ');
     }
-  } else {
-    if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
-       PROMO_GNEWS_WINDOW.show();
-    }
-
-    return PROMO_GNEWS_WINDOW;
   }
+  // checks if the ui is running as floating window or as a panel...
+  if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
+    PROMO_GNEWS_WINDOW.show();
+  }
+  return PROMO_GNEWS_WINDOW;
 }
 PROMO_GNEWS_UTL(this);
