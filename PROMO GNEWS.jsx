@@ -35,7 +35,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   var vStr = 'v 1.6';
   var prefSection = 'Main Pref Section';
   var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-  var configName = '\"Allow Scripts to Write Files and Access Network\"';
+  var netConfigName = '"Allow Scripts to Write Files and Access Network"';
   var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script';
 
   /* jshint ignore:start */
@@ -53,7 +53,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   var PROMO_GNEWS_WINDOW = PROMO_GNEWS_UI(thisObj);
 
   if (!app.preferences.getPrefAsLong(prefSection, prefName)) {
-    alert('please check the ' + configName + ' preference');
+    alert('please check the ' + netConfigName + ' preference');
     app.executeCommand(3131);
 
     if (app.preferences.getPrefAsLong(prefSection, prefName)) {
@@ -71,7 +71,7 @@ function PROMO_GNEWS_UTL(thisObj) {
           PROMO_GNEWS_WINDOW.show();
         }
  
-        alert('no network... Σ(っ °Д °;)っ');
+        alert('no network...  Σ(っ °Д °;)っ');
         
         return PROMO_GNEWS_WINDOW;
 

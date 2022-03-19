@@ -2147,8 +2147,7 @@ function PROMO_GNEWS_UI() {
   
   copyAMEPresetsBtn.onClick = function() {
 
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
 
@@ -2201,9 +2200,8 @@ function PROMO_GNEWS_UI() {
  
   emailBtn.onClick = function() {
     
-    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://outlook.office365.com/mail/';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openWebSite(site);
@@ -2215,9 +2213,8 @@ function PROMO_GNEWS_UI() {
  
   oneDriveBtn.onClick = function() {
     
-    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tvglobocorp-my.sharepoint.com/';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openWebSite(site);
@@ -2229,9 +2226,8 @@ function PROMO_GNEWS_UI() {
   
   sharePointBtn.onClick = function() {
     
-    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openWebSite(site);
@@ -2243,9 +2239,8 @@ function PROMO_GNEWS_UI() {
   
   trelloBtn.onClick = function() {
 
-    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://trello.com/promo126/home';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openWebSite(site);
@@ -2257,9 +2252,8 @@ function PROMO_GNEWS_UI() {
 
   typeFormBtn.onClick = function() {
 
-    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tvglobo.typeform.com/to/wiqX4z0X';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openWebSite(site);
@@ -2271,9 +2265,8 @@ function PROMO_GNEWS_UI() {
 
   plannerBtn.onClick = function() {
 
-    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tasks.office.com/tvglobocorp.onmicrosoft.com/en-US/Home/Planner/#/userboard';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openWebSite(site);
@@ -2285,9 +2278,8 @@ function PROMO_GNEWS_UI() {
 
   mamHardNewsBtn.onClick = function() {
   
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = hnPath;
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openFolder(folderPath);
@@ -2299,9 +2291,8 @@ function PROMO_GNEWS_UI() {
 
   mamMagBtn.onClick = function() {
   
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = magPath;
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openFolder(folderPath);
@@ -2313,9 +2304,8 @@ function PROMO_GNEWS_UI() {
 
   mamArteBtn.onClick = function() {
   
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = artePath;
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openFolder(folderPath);
@@ -2327,9 +2317,8 @@ function PROMO_GNEWS_UI() {
 
   nUtilsBtn.onClick = function() {
   
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = utiPath;
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
       openFolder(folderPath);
@@ -2361,8 +2350,7 @@ function PROMO_GNEWS_UI() {
 
   artPathBtn.onClick = function() {
 
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
 
@@ -2380,8 +2368,7 @@ function PROMO_GNEWS_UI() {
 
   magPathBtn.onClick = function() {
 
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
 
@@ -2432,8 +2419,7 @@ function PROMO_GNEWS_UI() {
 
   updateBtn.onClick = function() {
 
-    var configName = '"Allow Scripts to Write Files and Access the Network"';
-    var msg = configName + ' not checked';
+    var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
 
