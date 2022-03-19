@@ -10,6 +10,14 @@
 //  jshint -W061
 //  jshint -W085
 
+function netAccess() {
+  
+  var prefSection = 'Main Pref Section';
+  var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
+
+  return app.preferences.getPrefAsLong(prefSection, prefName);
+}
+
 function getTempFld() {
 
   try {
@@ -564,14 +572,14 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function gaussianRnd() {
+function gaussRnd(samples) {
   var r = 0;
 
-  for (var i = 0; i < 6; i += 1) {
+  for (var i = 0; i < samples; i ++) {
     r += Math.random();
   }
 
-  return r / 6;
+  return r / samples;
 }
 
 /*

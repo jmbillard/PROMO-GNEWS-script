@@ -1721,12 +1721,13 @@ function PROMO_GNEWS_UI() {
     }
   };
 
+  // randomize layer start times
   layerRandBtn.onClick = function() {
   
     var aItem = app.project.activeItem;
     var selLayers = (aItem != null) ? aItem.selectedLayers : [];
     var msg = 'layer not selected';
-    var limit = 1;
+    var limit = 30;
 
     if (selLayers.length > 0) {
       app.beginUndoGroup('randomize layer times');
@@ -1735,6 +1736,7 @@ function PROMO_GNEWS_UI() {
       var sTimeMin = selLayers[0].startTime;
       var sTimeMax = selLayers[0].startTime;
 
+      // gets the min and max layer start times...
       for (i = 1; i < selLayers.length; i++) {
 
         selTime = selLayers[i].startTime;
@@ -1742,14 +1744,24 @@ function PROMO_GNEWS_UI() {
         sTimeMax = (sTimeMax > selTime) ? sTimeMax : selTime;
       }
 
-      limit = (sTimeMax - sTimeMin) / fDur;
+      // number of frames between the last and first layer start times... 
+      limit = (sTimeMax != sTimeMin) ? (sTimeMax - sTimeMin) / fDur : limit;
 
       for (i = 0; i < selLayers.length; i++) {
 
-        var r = gaussianRnd() * limit;
-        var sTime = selLayers[i].startTime;
+        // generates a random number of frames between 0 and limit...
+        var nRandFrames = Math.round(gaussRnd(3) * limit) * fDur;
         
-        selLayers[i].startTime = (sTime + (r * fDur));
+        if (sTimeMax != sTimeMin) {
+          
+          // sets each layer start time as the min + random number of frames...
+          selLayers[i].startTime = (sTimeMin + nRandFrames);
+          
+        } else {
+          
+          var halfLimit = limit / 2 * fDur;
+          selLayers[i].startTime = sTimeMin - halfLimit + nRandFrames;
+        }
       }
 
       app.endUndoGroup();
@@ -1993,8 +2005,6 @@ function PROMO_GNEWS_UI() {
     projIdTxt.text = projId;
 
     var msg = 'empty project';
-    var sysDate = system.callSystem('cmd.exe /c date /t');
-    var dateStr = sysDate.substring(0, sysDate.length-3);
     var baseName = userPrefix + ' PROMO - ' + projId;
     var itemArray = [];
 
@@ -2137,12 +2147,10 @@ function PROMO_GNEWS_UI() {
   
   copyAMEPresetsBtn.onClick = function() {
 
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
 
       var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
       var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
@@ -2193,13 +2201,11 @@ function PROMO_GNEWS_UI() {
  
   emailBtn.onClick = function() {
     
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://outlook.office365.com/mail/';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openWebSite(site);
 
     } else {
@@ -2209,13 +2215,11 @@ function PROMO_GNEWS_UI() {
  
   oneDriveBtn.onClick = function() {
     
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tvglobocorp-my.sharepoint.com/';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openWebSite(site);
 
     } else {
@@ -2225,13 +2229,11 @@ function PROMO_GNEWS_UI() {
   
   sharePointBtn.onClick = function() {
     
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openWebSite(site);
 
     } else {
@@ -2241,13 +2243,11 @@ function PROMO_GNEWS_UI() {
   
   trelloBtn.onClick = function() {
 
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://trello.com/promo126/home';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openWebSite(site);
 
     } else {
@@ -2257,13 +2257,11 @@ function PROMO_GNEWS_UI() {
 
   typeFormBtn.onClick = function() {
 
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tvglobo.typeform.com/to/wiqX4z0X';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openWebSite(site);
 
     } else {
@@ -2273,13 +2271,11 @@ function PROMO_GNEWS_UI() {
 
   plannerBtn.onClick = function() {
 
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access Network\"';
+    var configName = '"Allow Scripts to Write Files and Access Network"';
     var site = 'https://tasks.office.com/tvglobocorp.onmicrosoft.com/en-US/Home/Planner/#/userboard';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openWebSite(site);
 
     } else {
@@ -2289,13 +2285,11 @@ function PROMO_GNEWS_UI() {
 
   mamHardNewsBtn.onClick = function() {
   
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = hnPath;
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openFolder(folderPath);
 
     } else {
@@ -2305,13 +2299,11 @@ function PROMO_GNEWS_UI() {
 
   mamMagBtn.onClick = function() {
   
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = magPath;
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openFolder(folderPath);
 
     } else {
@@ -2321,13 +2313,11 @@ function PROMO_GNEWS_UI() {
 
   mamArteBtn.onClick = function() {
   
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = artePath;
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openFolder(folderPath);
 
     } else {
@@ -2337,13 +2327,11 @@ function PROMO_GNEWS_UI() {
 
   nUtilsBtn.onClick = function() {
   
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var folderPath = utiPath;
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
       openFolder(folderPath);
 
     } else {
@@ -2373,12 +2361,10 @@ function PROMO_GNEWS_UI() {
 
   artPathBtn.onClick = function() {
 
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
 
       var saveFolder = Folder.selectDialog();
   
@@ -2394,12 +2380,10 @@ function PROMO_GNEWS_UI() {
 
   magPathBtn.onClick = function() {
 
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
 
       var saveFolder = Folder.selectDialog();
   
@@ -2417,7 +2401,7 @@ function PROMO_GNEWS_UI() {
 
     var c = tabColors[colorDrop.selection.index];
     setBtnColor(tabColorBtn, c);
-    tabColorBtn.notify("onDraw");
+    tabColorBtn.notify('onDraw');
   };
 
   tabColorBtn.onClick = function() {
@@ -2448,12 +2432,10 @@ function PROMO_GNEWS_UI() {
 
   updateBtn.onClick = function() {
 
-    var prefSection = 'Main Pref Section';
-    var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-    var configName = '\"Allow Scripts to Write Files and Access the Network\"';
+    var configName = '"Allow Scripts to Write Files and Access the Network"';
     var msg = configName + ' not checked';
 
-    if (app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (netAccess()) {
 
       msg = 'black magic  (つ ◕_◕ )つ';
       showTabProg(msg);
@@ -2492,7 +2474,7 @@ function PROMO_GNEWS_UI() {
       } catch (error) {
         
         msg = 'you have to manually copy all files to:\n';
-        msg += '\'\\Support Files\\Scripts\\ScriptUI Panels\' folder';
+        msg += '"/Support Files/Scripts/ScriptUI Panels" folder';
         alert(msg);
         openFolder(downPath);
         openFolder(scriptUIPath);
