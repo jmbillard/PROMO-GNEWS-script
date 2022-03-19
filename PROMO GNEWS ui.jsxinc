@@ -2,17 +2,11 @@
 > script main ui
 --------------------------------------------------------------- */
 
-//  linter settings:
-//  jshint -W061
-//  jscs:disable maximumLineLength
-
 function PROMO_GNEWS_UI() {
 
-/* jshint ignore:start */
   #include 'PROMO GNEWS src.jsxinc';
   #include 'PROMO GNEWS exp.jsxinc';
   #include 'PROMO GNEWS img.jsxinc';
-/* jshint ignore:end */
 
   var GNEWS_RED = rgb(185, 20, 20);
   var GNEWS_BLK = rgb(20, 20, 20);
@@ -29,7 +23,6 @@ function PROMO_GNEWS_UI() {
     getGPrefs(JSONFile);
 
   } catch (error) {}  
-  // pushColors();
 
   var w = {};
   var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
@@ -123,32 +116,41 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  // control tab button...
   var ctrlBtn = menuGrp.add('iconbutton', undefined, ctrlIcon, {style: 'toolbutton'});
   ctrlBtn.helpTip = 'null and controls';
+  // animation tab button...
   var animBtn = menuGrp.add('iconbutton', undefined, animIcon, {style: 'toolbutton'});
   animBtn.helpTip = 'animation';
+  // effects tab button...
   var fxBtn = menuGrp.add('iconbutton', undefined, fxIcon, {style: 'toolbutton'});
   fxBtn.helpTip = 'effects';
+  // text tab button...
   var txtBtn = menuGrp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
   txtBtn.helpTip = 'text case and line breaking';
+  // pallet tab button...
   var palletBtn = menuGrp.add('iconbutton', undefined, paletteIcon, {style: 'toolbutton'});
   palletBtn.helpTip = 'color palette';
+  // layers tab button...
   var layerBtn = menuGrp.add('iconbutton', undefined, layerIcon, {style: 'toolbutton'});
   layerBtn.helpTip = 'rename and sequence layers';
+  // tools tab button...
   var toolBtn = menuGrp.add('iconbutton', undefined, toolsIcon, {style: 'toolbutton'});
   toolBtn.helpTip = 'rigs and tools';
+  // project tab button...
   var projBtn = menuGrp.add('iconbutton', undefined, prjIcon, {style: 'toolbutton'});
   projBtn.helpTip = 'project organization';
-
+  // application tab button...
   var appBtn = menuGrp.add('iconbutton', undefined, aeIcon, {style: 'toolbutton'});
   appBtn.helpTip = 'setup AE preferences and stuff';
 
   menuGrp.add('image', undefined, vSpacer);
 
+  // links tab button...
   var linksBtn = menuGrp.add('iconbutton', undefined, linksIcon, {style: 'toolbutton'});
   linksBtn.helpTip = 'useful links';
   
-  // preferences button
+  // preferences button...
   var prefBtn = prefGrp.add('iconbutton', undefined, setIcon, {style: 'toolbutton'});
   prefBtn.helpTip = 'script preferences';
 
@@ -161,30 +163,39 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  // adobe transform group MATCH NAME...
   var trmProp = 'ADBE Transform Group';
   
+  // sub group...
   var ctrlSubGrp1 = ctrlGrp.add('group');
   ctrlSubGrp1.spacing = 2;
+  // copy animation toggle... 
   var aniTogBtn = ctrlSubGrp1.add('iconbutton', undefined, aniTogIcon, {style: 'toolbutton', toggle: 1});
   aniTogBtn.helpTip = 'copy animation';
+  // copy expressions toggle... 
   var exprTogBtn = ctrlSubGrp1.add('iconbutton', undefined, exprTogIcon, {style: 'toolbutton', toggle: 1});
   exprTogBtn.helpTip = 'copy expressions';
 
+  // create parent null... 
   var nullShpBtn = ctrlGrp.add('iconbutton', undefined, shpNullIcon, {style: 'toolbutton'});
   nullShpBtn.helpTip = 'create parent null';
 
   ctrlGrp.add('image', undefined, vSpacer);
 
+  // create centered null
   var nullCShpBtn = ctrlGrp.add('iconbutton', undefined, nullCIcon, {style: 'toolbutton'});
   nullCShpBtn.helpTip = 'centered null';
 
   ctrlGrp.add('image', undefined, vSpacer);
 
+  // select hierarchy sub group...
   var hGrp = ctrlGrp.add('group');
   hGrp.orientation = 'column';
   hGrp.spacing = 0;
+  // select parent button...
   var upHBtn = hGrp.add('iconbutton', undefined, upIcon, {style: 'toolbutton'});
   upHBtn.helpTip = 'select parent';
+  // select children button...
   var dwnHBtn = hGrp.add('iconbutton', undefined, downIcon, {style: 'toolbutton'});
   dwnHBtn.helpTip = 'select children';
 
@@ -196,17 +207,19 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  // copy keyframe influences...
   var copyInfBtn = animationGrp.add('iconbutton', undefined, copyInfluenceIcon, {style: 'toolbutton'});
   copyInfBtn.helpTip = 'copy keyframe influence';
-
+  // paste keyframe influences...
   var pasteInfBtn = animationGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
   pasteInfBtn.helpTip = 'paste keyframe influence';
 
-  
   animationGrp.add('image', undefined, vSpacer);
 
+  // sub group...
   var animationSubGrp1 = animationGrp.add('group');
   animationSubGrp1.spacing = 2;
+  // text typing animation...
   var typeAnimBtn = animationSubGrp1.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
   typeAnimBtn.helpTip = 'typewriting animation';
 
@@ -219,6 +232,7 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  // adobe effects group MATCH NAME...
   var fxProp = 'ADBE Effect Parade';
 
   var shpAdjBtn = fxGrp.add('iconbutton', undefined, shpAdjIcon, {style: 'toolbutton'});
@@ -277,7 +291,9 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  // adobe text layer text group MATCH NAME...
   var txtProp = 'ADBE Text Properties';
+  // adobe text layer source text MATCH NAME...
   var txtDoc = 'ADBE Text Document';
 
   var textSubGrp1 = textGrp.add('group');
@@ -314,6 +330,7 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+
   var redBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   redBtn.size = [40, 15];
   setBtnColor(redBtn, GNEWS_RED);
@@ -748,7 +765,6 @@ function PROMO_GNEWS_UI() {
 
   prefBtn.onClick = function() {
 
-    userPrefix = (userPrefix == '' || userPrefix == undefined) ? system.userName.substring(0, 3).toUpperCase() : userPrefix;
     grp = preferencesGrp;
     bgColor = prefGrpColor;
     openTab(grp, bgColor);
@@ -1566,8 +1582,6 @@ function PROMO_GNEWS_UI() {
         var colN = 2;
         var colPos = selLayer.position.value;
         var col = columnText(selLayer, colN);
-
-        // alert(col);
 
         if (col.length >= colN) {
           
