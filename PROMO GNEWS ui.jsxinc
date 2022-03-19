@@ -564,16 +564,6 @@ function PROMO_GNEWS_UI() {
 
   preferencesGrp.add('image', undefined, vSpacer);
   
-  var artPathBtn = preferencesGrp.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
-  artPathBtn.helpTip = 'set "para arte" folder path';
-  var magPathBtn = preferencesGrp.add('iconbutton', undefined, magazineFolderIcon, {style: 'toolbutton'});
-  magPathBtn.helpTip = 'set "upload MAM-magazine" folder path';
-
-  preferencesGrp.add('image', undefined, vSpacer);
-  
-  var colorPrefTxt = preferencesGrp.add('statictext', undefined, 'colors');
-  colorPrefTxt.helpTip = 'ui colors';
-  setTxtColor(colorPrefTxt, sTxtColor);
   var colorDrop = preferencesGrp.add('dropdownlist', undefined, grpNames);
   colorDrop.selection = 0;
   var tabColorBtn = preferencesGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
@@ -583,8 +573,6 @@ function PROMO_GNEWS_UI() {
 
   preferencesGrp.add('image', undefined, vSpacer);
 
-  var resetBtn = preferencesGrp.add('iconbutton', undefined, resetIcon, {style: 'toolbutton'});
-  resetBtn.helpTip = 'reset preferences';
 
   var updateBtn = preferencesGrp.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
   updateBtn.helpTip = 'download the latest script version from github';
@@ -2303,6 +2291,27 @@ function PROMO_GNEWS_UI() {
     }
   };
 
+  // right click -> configure 'MAM - magazine' path...
+  mamMagBtn.addEventListener ("click", function (c) {
+
+    var msg = netConfigName + ' not checked';
+
+    if (c.button == 2) {
+
+      if (netAccess()) {
+        var saveFolder = Folder.selectDialog();
+    
+        if (saveFolder != null) {
+    
+          magPath = decodeURI(saveFolder).toString();
+          saveGPrefs();
+        }
+      } else {
+        showTabErr(msg);
+      }
+    }
+  });
+
   mamMagBtn.onClick = function() {
   
     var folderPath = magPath;
@@ -2315,6 +2324,27 @@ function PROMO_GNEWS_UI() {
       showTabErr(msg);
     }
   };
+
+  // right click -> configure 'MAM - para arte' path...
+  mamArteBtn.addEventListener ("click", function (c) {
+
+    var msg = netConfigName + ' not checked';
+
+    if (c.button == 2) {
+
+      if (netAccess()) {
+        var saveFolder = Folder.selectDialog();
+    
+        if (saveFolder != null) {
+    
+          artPath = decodeURI(saveFolder).toString();
+          saveGPrefs();
+        }
+      } else {
+        showTabErr(msg);
+      }
+    }
+  });
 
   mamArteBtn.onClick = function() {
   
@@ -2362,42 +2392,6 @@ function PROMO_GNEWS_UI() {
     saveGPrefs();
   };
 
-  artPathBtn.onClick = function() {
-
-    var msg = netConfigName + ' not checked';
-
-    if (netAccess()) {
-
-      var saveFolder = Folder.selectDialog();
-  
-      if (saveFolder != null) {
-  
-        artePath = decodeURI(saveFolder).toString();
-        saveGPrefs();
-      }
-    } else {
-      showTabErr(msg);
-    }
-  };
-
-  magPathBtn.onClick = function() {
-
-    var msg = netConfigName + ' not checked';
-
-    if (netAccess()) {
-
-      var saveFolder = Folder.selectDialog();
-  
-      if (saveFolder != null) {
-  
-        magPath = decodeURI(saveFolder).toString();
-        saveGPrefs();
-      }
-    } else {
-      showTabErr(msg);
-    }
-  };
-
   colorDrop.onChange = function() {
 
     var c = tabColors[colorDrop.selection.index];
@@ -2419,20 +2413,25 @@ function PROMO_GNEWS_UI() {
     }
   };
 
-  resetBtn.onClick = function functionName() {
+  // right click -> opens the git repo...
+  updateBtn.addEventListener ("click", function (c) {
 
-    loadDefaultPrefs();
-    saveGPrefs();
+    if (c.button == 2) {
 
-    var c = tabColors[colorDrop.selection.index];
-
-    setBgColor(prefGrpColor);
-    setBtnColor(tabColorBtn, c);
-    tabColorBtn.notify("onDraw");
-  };
+      var site = 'https://github.com/jmbillard/PROMO-GNEWS-script';
+      var msg = netConfigName + ' not checked';
+  
+      if (netAccess()) {
+        openWebSite(site);
+  
+      } else {
+        showTabErr(msg);
+      }    
+    }
+  });
 
   updateBtn.onClick = function() {
-
+  
     var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
