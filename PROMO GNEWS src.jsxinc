@@ -1450,7 +1450,10 @@ function getURLContent(urlArray, dst) {
     var cmd = '';
     
     for (i = 0; i < urlArray.length; i++) {
+      // get only the NOT '\' OR '/' at the end...
       var fileName = decodeURI(urlArray[i].match(/[^\\|\/]*$/i));
+      // removes any character after the '?' at the end...
+      var fileName = fileName.replace(/[\?].*$/, '');
    
       cmd += 'curl ' + urlArray[i] + ' -OutFile \'' + dst + '/' + fileName + '\';';
     }

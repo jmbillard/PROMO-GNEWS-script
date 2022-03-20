@@ -494,6 +494,9 @@ function PROMO_GNEWS_UI() {
   var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, eprIcon, {style: 'toolbutton'});
   copyAMEPresetsBtn.helpTip = 'install Media Encoder presets';
 
+  var getTemplateBtn1 = appGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  getTemplateBtn1.helpTip = 'get template';
+
   /*
   
   ---------------------------------------------------------------
@@ -2160,12 +2163,13 @@ function PROMO_GNEWS_UI() {
       var url4 = url + 'WAV%20-%20audio%20GSAT.epr';
       var url5 = url + 'XDCAM%20HD%2050%20NTSC%2060i%20-%20avid.epr';
   
-      var urlArray = [];
-      urlArray.push(url1);
-      urlArray.push(url2);
-      urlArray.push(url3);
-      urlArray.push(url4);
-      urlArray.push(url5);
+      var urlArray = [
+        url1,
+        url2,
+        url3,
+        url4,
+        url5
+      ];
   
       var downPath = scriptPreferencesPath + '/AME presets';
       var dowFolder = new Folder(downPath);
@@ -2187,6 +2191,38 @@ function PROMO_GNEWS_UI() {
           copyFolderContent(downPath, presetsPath);
         } catch (error) {}
       }
+    } else {
+      showTabErr(msg);
+    }
+  };
+  
+  getTemplateBtn1.onClick = function() {
+
+    var msg = netConfigName + ' not checked';
+
+    if (netAccess()) {
+
+      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates/';
+      var url1 = url + 'PROMO%20GNEWS%20projeto.aet?raw=true';
+      var url2 = url + 'GSAT%20claquete.aet?raw=true';
+      var url3 = url + 'GNEWS%20marca.aet?raw=true';
+  
+      var urlArray = [
+        url1,
+        url2,
+        url3
+      ];
+  
+      var downPath = scriptPreferencesPath + '/templates';
+      var dowFolder = new Folder(downPath);
+  
+      if (!dowFolder.exists) {
+  
+        dowFolder.create();
+      }
+      getURLContent(urlArray, downPath);
+      openFolder(downPath);
+  
     } else {
       showTabErr(msg);
     }
