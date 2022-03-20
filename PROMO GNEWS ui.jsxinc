@@ -142,7 +142,7 @@ function PROMO_GNEWS_UI() {
   projBtn.helpTip = 'project organization';
   // application tab button...
   var appBtn = menuGrp.add('iconbutton', undefined, aeIcon, {style: 'toolbutton'});
-  appBtn.helpTip = 'setup AE preferences and stuff';
+  appBtn.helpTip = 'setup AE preferences and templates';
 
   menuGrp.add('image', undefined, vSpacer);
 
