@@ -2195,33 +2195,59 @@ function PROMO_GNEWS_UI() {
       showTabErr(msg);
     }
   };
+
+  getTemplateBtn1.addEventListener ('click', function (c) {
+  
+    if (c.button == 2) {
+
+      var msg = netConfigName + ' not checked';
+
+      if (netAccess()) {
+      
+        var downPath = scriptPreferencesPath + '/templates';
+        var dowFolder = new Folder(downPath);
+        
+        if (!dowFolder.exists) {
+ 
+          dowFolder.create();
+        }
+        openFolder(downPath);
+
+      } else {
+        showTabErr(msg);
+      }  
+    }
+  });
   
   getTemplateBtn1.onClick = function() {
 
     var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
-
-      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates/';
-      var url1 = url + 'PROMO%20GNEWS%20projeto.aet?raw=true';
-      var url2 = url + 'GSAT%20claquete.aet?raw=true';
-      var url3 = url + 'GNEWS%20marca.aet?raw=true';
-  
-      var urlArray = [
-        url1,
-        url2,
-        url3
-      ];
-  
+      
       var downPath = scriptPreferencesPath + '/templates';
       var dowFolder = new Folder(downPath);
-  
+      
       if (!dowFolder.exists) {
-  
+        
         dowFolder.create();
+        
+        if (dowFolder.getFiles() != null) {
+          
+          var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates/';
+          var url1 = url + 'PROMO%20GNEWS%20projeto.aet?raw=true';
+          var url2 = url + 'GSAT%20claquete.aet?raw=true';
+          var url3 = url + 'GNEWS%20marca.aet?raw=true';
+      
+          var urlArray = [
+            url1,
+            url2,
+            url3
+          ];
+          getURLContent(urlArray, downPath);
+        }
       }
-      getURLContent(urlArray, downPath);
-      openFolder(downPath);
+      templateDialog(downPath);
   
     } else {
       showTabErr(msg);

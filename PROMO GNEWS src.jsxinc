@@ -2391,6 +2391,92 @@ function getGPrefs(file) {
   userPrefix = JSONObj.user;
 }
 
+function buildTree(folder, tree) {
+
+  tree.remove(tree.items[0]);
+  
+  var templatesArray = folder.getFiles();
+  var nodeArray = [];
+
+  var foderNode = tree.add('node', 'templates');
+  foderNode.image = fldTogIcon;
+  
+  for (i = 0; i < templatesArray.length; i++) {
+    var dName = templatesArray[i].displayName;
+    var nName = dName.match(/[A-Z|\-|\s]*/).toString();
+    
+    if (nodeArray.indexOf(nName) < 0) {
+      nodeArray.push(nName);
+      var catNode = foderNode.add('node', nName);
+      catNode.image = vSpacer;
+    }
+    var templateItem = catNode.add('item', dName);
+    templateItem.image = templateListIcon;
+  }
+}
+
+function expandNodes(nodeTree) {
+
+  nodeTree.expanded = true;
+  var branches = nodeTree.items;
+
+  for (var i = 0; i < branches.length; i++) {
+
+    if (branches[i].type == 'node') {
+      expandNodes(branches[i]);
+    }
+  }
+}
+
+function templateDialog(path) {
+
+  var treeFolder = new Folder(path);
+  
+  var w = new Window('dialog', 'template selection...');
+
+  var tree = w.add('treeview', [0, 0, 250, 400]);
+  buildTree(treeFolder, tree);
+
+  var bGroup = w.add('group');
+  var updateBtn = bGroup.add('button', undefined, 'update');
+  updateBtn.helpTip = 'update list';
+  var openBtn = bGroup.add('button', undefined, 'open');
+  openBtn.helpTip = 'open selected template';
+  openBtn.enabled = tree.selection != null;
+
+  tree.onChange = function () {
+  
+    // catNodes should not be selectable...
+    if (tree.selection != null && tree.selection.type == 'node') {
+      tree.selection = null;
+    }
+    openBtn.enabled = tree.selection != null;
+  };
+
+  w.onShow = function () {
+    expandNodes(tree);
+  };
+      
+  openBtn.onClick = function () {
+
+    var fileName = tree.selection.toString();
+    var templateFile = new File(path + '/' + fileName);
+    var newFile = new File('~/Desktop/' + fileName.replace(/aet$/, 'aep'));
+
+    app.open(templateFile);
+    app.project.save(newFile)
+    w.close();
+  }
+
+  updateBtn.onClick = function () {
+
+    buildTree(treeFolder, tree);
+    expandNodes(tree);
+  }
+  
+  w.show();
+}
+
 /*
 
 ---------------------------------------------------------------
