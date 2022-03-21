@@ -494,7 +494,9 @@ function PROMO_GNEWS_UI() {
   var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, eprIcon, {style: 'toolbutton'});
   copyAMEPresetsBtn.helpTip = 'install Media Encoder presets';
 
-  var getTemplateBtn1 = appGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  appGrp.add('image', undefined, vSpacer);
+
+  var getTemplateBtn1 = appGrp.add('iconbutton', undefined, openIcon, {style: 'toolbutton'});
   getTemplateBtn1.helpTip = 'get template';
 
   /*
