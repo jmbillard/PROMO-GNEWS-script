@@ -1,12 +1,19 @@
 /* ---------------------------------------------------------------
 > script main ui
 --------------------------------------------------------------- */
+//  linter settings:
+//  jshint -W061
+//  jscs:disable maximumLineLength
 
 function PROMO_GNEWS_UI() {
+
+  /* jshint ignore:start */
 
   #include 'PROMO GNEWS src.jsxinc';
   #include 'PROMO GNEWS exp.jsxinc';
   #include 'PROMO GNEWS img.jsxinc';
+
+  /* jshint ignore:end */
 
   var GNEWS_RED = rgb(185, 20, 20);
   var GNEWS_BLK = rgb(20, 20, 20);

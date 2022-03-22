@@ -18,12 +18,16 @@
 
 */
 
+//  linter settings:
+//  jshint -W061
+
 // load the XMP library...
 if ( ExternalObject.AdobeXMPScript == undefined ) {
     ExternalObject.AdobeXMPScript = new ExternalObject( "lib:AdobeXMPScript");
 }
-
+/* jshint ignore:start */
 #include 'JSON lib.jsxinc';
+/* jshint ignore:end */
 
 function PROMO_GNEWS_UTL(thisObj) {
 
@@ -33,8 +37,12 @@ function PROMO_GNEWS_UTL(thisObj) {
   var netConfigName = '"Allow Scripts to Write Files and Access Network"';
   var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script';
 
+  /* jshint ignore:start */
+ 
   // ui definition file...
   #include 'PROMO GNEWS ui.jsxinc';
+ 
+  /* jshint ignore:end */
 
   /*
 

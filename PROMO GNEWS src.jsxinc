@@ -1453,7 +1453,7 @@ function getURLContent(urlArray, dst) {
       // get only the NOT '\' OR '/' at the end...
       var fileName = decodeURI(urlArray[i].match(/[^\\|\/]*$/i));
       // removes any character after the '?' at the end...
-      var fileName = fileName.replace(/[\?].*$/, '');
+      fileName = fileName.replace(/[\?].*$/, '');
    
       cmd += 'curl ' + urlArray[i] + ' -OutFile \'' + dst + '/' + fileName + '\';';
     }
@@ -2391,28 +2391,41 @@ function getGPrefs(file) {
   userPrefix = JSONObj.user;
 }
 
+function createHierarchy(array, node) {
+
+  for (var n = 0; n < array.length; n++) {
+
+    var dName = array[n].displayName;
+    var subArray = [];
+
+    try {
+      subArray = new Folder(array[n]).getFiles();
+    } catch (error) {}
+      
+    if (subArray.length > 0) {
+
+      nodeItem = node.add('node', dName);
+      nodeItem.image = fldTogIcon;
+      
+      createHierarchy(subArray, nodeItem);
+    } else {
+
+      var templateItem = node.add('item', dName);
+      templateItem.image = templateListIcon;
+    }
+  }
+}
+
 function buildTree(folder, tree) {
 
   tree.remove(tree.items[0]);
   
   var templatesArray = folder.getFiles();
-  var nodeArray = [];
 
   var foderNode = tree.add('node', 'templates');
   foderNode.image = fldTogIcon;
   
-  for (i = 0; i < templatesArray.length; i++) {
-    var dName = templatesArray[i].displayName;
-    var nName = dName.match(/[A-Z|\-|\s]*/).toString();
-    
-    if (nodeArray.indexOf(nName) < 0) {
-      nodeArray.push(nName);
-      var catNode = foderNode.add('node', nName);
-      catNode.image = vSpacer;
-    }
-    var templateItem = catNode.add('item', dName);
-    templateItem.image = templateListIcon;
-  }
+  createHierarchy(templatesArray, foderNode);
 }
 
 function expandNodes(nodeTree) {
@@ -2464,15 +2477,15 @@ function templateDialog(path) {
     var newFile = new File('~/Desktop/' + fileName.replace(/aet$/, 'aep'));
 
     app.open(templateFile);
-    app.project.save(newFile)
+    app.project.save(newFile);
     w.close();
-  }
+  };
 
   updateBtn.onClick = function () {
 
     buildTree(treeFolder, tree);
     expandNodes(tree);
-  }
+  };
   
   w.show();
 }
