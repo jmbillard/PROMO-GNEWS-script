@@ -420,7 +420,7 @@ function PROMO_GNEWS_UI() {
 
   layersGrp.add('image', undefined, vSpacer);
 
-  var layerRandBtn = layersGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var layerRandBtn = layersGrp.add('iconbutton', undefined, randomizeLayerTimesIcon, {style: 'toolbutton'});
   layerRandBtn.helpTip = 'randomize layer times';
 
   /*
@@ -503,8 +503,8 @@ function PROMO_GNEWS_UI() {
 
   appGrp.add('image', undefined, vSpacer);
 
-  var getTemplateBtn1 = appGrp.add('iconbutton', undefined, openIcon, {style: 'toolbutton'});
-  getTemplateBtn1.helpTip = 'get template';
+  var importBtn = appGrp.add('iconbutton', undefined, openIcon, {style: 'toolbutton'});
+  importBtn.helpTip = 'import templates';
 
   /*
   
@@ -2205,7 +2205,7 @@ function PROMO_GNEWS_UI() {
     }
   };
 
-  getTemplateBtn1.addEventListener ('click', function (c) {
+  importBtn.addEventListener ('click', function (c) {
   
     if (c.button == 2) {
 
@@ -2228,7 +2228,7 @@ function PROMO_GNEWS_UI() {
     }
   });
   
-  getTemplateBtn1.onClick = function() {
+  importBtn.onClick = function() {
 
     var msg = netConfigName + ' not checked';
 

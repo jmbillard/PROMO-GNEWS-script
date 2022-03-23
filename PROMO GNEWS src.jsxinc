@@ -2422,7 +2422,7 @@ function buildTree(folder, tree) {
   
   var templatesArray = folder.getFiles();
 
-  var foderNode = tree.add('node', 'templates');
+  var foderNode = tree.add('node', folder.displayName);
   foderNode.image = fldTogIcon;
   
   createHierarchy(templatesArray, foderNode);
@@ -2445,17 +2445,17 @@ function templateDialog(path) {
 
   var treeFolder = new Folder(path);
   
-  var w = new Window('dialog', 'template selection...');
+  var w = new Window('dialog', 'import options...');
 
   var tree = w.add('treeview', [0, 0, 250, 400]);
   buildTree(treeFolder, tree);
 
   var bGroup = w.add('group');
-  var updateBtn = bGroup.add('button', undefined, 'update');
-  updateBtn.helpTip = 'update list';
-  var openBtn = bGroup.add('button', undefined, 'open');
-  openBtn.helpTip = 'open selected template';
-  openBtn.enabled = tree.selection != null;
+  var refreshBtn = bGroup.add('button', undefined, 'refresh');
+  refreshBtn.helpTip = 'refresh list content';
+  var importBtn = bGroup.add('button', undefined, 'import');
+  importBtn.helpTip = 'import selected template';
+  importBtn.enabled = tree.selection != null;
 
   tree.onChange = function () {
   
@@ -2463,25 +2463,32 @@ function templateDialog(path) {
     if (tree.selection != null && tree.selection.type == 'node') {
       tree.selection = null;
     }
-    openBtn.enabled = tree.selection != null;
+    importBtn.enabled = tree.selection != null;
   };
 
   w.onShow = function () {
     expandNodes(tree);
   };
       
-  openBtn.onClick = function () {
+  importBtn.onClick = function () {
 
     var fileName = tree.selection.toString();
-    var templateFile = new File(path + '/' + fileName);
-    var newFile = new File('~/Desktop/' + fileName.replace(/aet$/, 'aep'));
+    var s = tree.selection;
 
-    app.open(templateFile);
-    app.project.save(newFile);
+    // adds the parent nodes to the file name...
+    while (s.parent.toString() != treeFolder.displayName) {
+      
+      s = s.parent;
+      fileName = s.toString() + '/' + fileName;
+    }
+    var templateFile = new File(path + '/' + fileName);
+    // import options...
+    var IO = new ImportOptions(templateFile);
+    app.project.importFile(IO);
     w.close();
   };
 
-  updateBtn.onClick = function () {
+  refreshBtn.onClick = function () {
 
     buildTree(treeFolder, tree);
     expandNodes(tree);
