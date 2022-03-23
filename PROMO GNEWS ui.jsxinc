@@ -2179,18 +2179,23 @@ function PROMO_GNEWS_UI() {
         url4,
         url5
       ];
-  
+
       var downPath = scriptPreferencesPath + '/AME presets';
       var dowFolder = new Folder(downPath);
       var amePath = '~/Documents/Adobe/Adobe Media Encoder';
       var ameFolder = new Folder(amePath);
       var vFolders = ameFolder.getFiles();
-  
+      var pathArray = [];
+      
+      for (var i = 0; i < urlArray.length; i++) {
+
+        pathArray.push(downPath);
+      }
       if (!dowFolder.exists) {
   
         dowFolder.create();
       }
-      getURLContent(urlArray, downPath);
+      getURLContent(urlArray, pathArray);
   
       for (i = 0; i < vFolders.length; i++) {
   
@@ -2240,20 +2245,38 @@ function PROMO_GNEWS_UI() {
       if (!dowFolder.exists) {
         
         dowFolder.create();
+
+        var pathArray = [
+          downPath + '/ON-AIR',
+          downPath + '/ON-AIR',
+          downPath,
+          downPath + '/CANAL',
+          downPath + '/CANAL'
+        ];
+
+        for (var i = 0; i < pathArray.length; i++) {
+
+          var fld = new Folder(pathArray[i]);
+
+          if (!fld.exists) {
+        
+            fld.create();
+          }
+        }
         
         if (dowFolder.getFiles() != null) {
           
           var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates/';
-          var url1 = url + 'PROMO%20GNEWS%20projeto.aet?raw=true';
-          var url2 = url + 'GSAT%20claquete.aet?raw=true';
-          var url3 = url + 'GNEWS%20marca.aet?raw=true';
       
           var urlArray = [
-            url1,
-            url2,
-            url3
+            url + 'assinatura%20padrao.aet?raw=true',
+            url + 'posicionamento.aet?raw=true',
+            url + 'claquete.aet?raw=true',
+            url + 'animacoes%20da%20marca.aet?raw=true',
+            url + 'historia%20ao%20vivo.aet?raw=true'
           ];
-          getURLContent(urlArray, downPath);
+
+          getURLContent(urlArray, pathArray);
         }
       }
       templateDialog(downPath);
