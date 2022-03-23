@@ -2530,23 +2530,24 @@ function PROMO_GNEWS_UI() {
       msg = 'black magic  (つ ◕_◕ )つ';
       showTabProg(msg);
   
-      var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';    
-      var url1 = url + 'JSON%20lib.jsxinc';
-      var url2 = url + 'PROMO%20GNEWS%20exp.jsxinc';
-      var url3 = url + 'PROMO%20GNEWS%20img.jsxinc';
-      var url4 = url + 'PROMO%20GNEWS%20src.jsxinc';
-      var url5 = url + 'PROMO%20GNEWS%20ui.jsxinc';
-      var url6 = url + 'PROMO%20GNEWS.jsx';
-  
-      var urlArray = [];
-      urlArray.push(url1);
-      urlArray.push(url2);
-      urlArray.push(url3);
-      urlArray.push(url4);
-      urlArray.push(url5);
-      urlArray.push(url6);
-  
+      var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';
+      
+      var urlArray = [
+        url + 'JSON%20lib.jsxinc',
+        url + 'PROMO%20GNEWS%20exp.jsxinc',
+        url + 'PROMO%20GNEWS%20img.jsxinc',
+        url + 'PROMO%20GNEWS%20src.jsxinc',
+        url + 'PROMO%20GNEWS%20ui.jsxinc',
+        url + 'PROMO%20GNEWS.jsx'
+      ];
       var downPath = scriptPreferencesPath + '/ScriptUI Panels';
+      var pathArray = [];
+
+      for (var i = 0; i < urlArray.length; i++) {
+
+        pathArray.push(downPath);
+      }
+
       var dowFolder = new Folder(downPath);
       var scriptUIPath = new File($.fileName).path;
   
@@ -2555,7 +2556,7 @@ function PROMO_GNEWS_UI() {
         dowFolder.create();
       }
     
-      getURLContent(urlArray, downPath);
+      getURLContent(urlArray, pathArray);
   
       try {
         
