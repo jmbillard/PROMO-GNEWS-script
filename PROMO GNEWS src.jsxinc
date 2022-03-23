@@ -1441,7 +1441,7 @@ function copyFolderContent(src, dst) {
   }
 }
 
-function getURLContent(urlArray, dst) {
+function getURLContent(urlArray, dstArray) {
 
   var os = $.os;
   var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
@@ -1455,7 +1455,7 @@ function getURLContent(urlArray, dst) {
       // removes any character after the '?' at the end...
       fileName = fileName.replace(/[\?].*$/, '');
    
-      cmd += 'curl ' + urlArray[i] + ' -OutFile \'' + dst + '/' + fileName + '\';';
+      cmd += 'curl ' + urlArray[i] + ' -OutFile \'' + dstArray[i] + '/' + fileName + '\';';
     }
     var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 

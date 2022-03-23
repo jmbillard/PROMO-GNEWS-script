@@ -2253,7 +2253,6 @@ function PROMO_GNEWS_UI() {
           downPath + '/CANAL',
           downPath + '/CANAL'
         ];
-
         for (var i = 0; i < pathArray.length; i++) {
 
           var fld = new Folder(pathArray[i]);
@@ -2263,7 +2262,6 @@ function PROMO_GNEWS_UI() {
             fld.create();
           }
         }
-        
         if (dowFolder.getFiles() != null) {
           
           var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates/';
@@ -2275,7 +2273,6 @@ function PROMO_GNEWS_UI() {
             url + 'animacoes%20da%20marca.aet?raw=true',
             url + 'historia%20ao%20vivo.aet?raw=true'
           ];
-
           getURLContent(urlArray, pathArray);
         }
       }
