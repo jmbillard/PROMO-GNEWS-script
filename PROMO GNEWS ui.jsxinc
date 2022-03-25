@@ -1273,6 +1273,7 @@ function PROMO_GNEWS_UI() {
     alert(wip);
   };
   
+  // TODO: create pseudo effect... 1 slider, 2 checkbox...
   typeAnimBtn.onClick = function() {
   
     //alert(wip);
@@ -1310,7 +1311,7 @@ function PROMO_GNEWS_UI() {
             cntLayer = selLayers[i];
             srcTxt = cntLayer.property(txtProp).property(txtDoc);
 
-            //addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
+            //addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
             srcTxt.expression = exp;
           }
         }
@@ -1321,7 +1322,7 @@ function PROMO_GNEWS_UI() {
         srcTxt.setValue('counter');
         cntLayer.name = 'txt_typewriter';
 
-        //addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
+        //addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
         srcTxt.expression = exp;
       }
 
@@ -2306,7 +2307,8 @@ function PROMO_GNEWS_UI() {
           downPath + '/ON-AIR',
           downPath,
           downPath + '/CANAL',
-          downPath + '/CANAL'
+          downPath + '/CANAL',
+          downPath + '/PROGRAMAS'
         ];
         for (var i = 0; i < pathArray.length; i++) {
 
@@ -2326,7 +2328,8 @@ function PROMO_GNEWS_UI() {
             url + 'posicionamento.aet?raw=true',
             url + 'claquete.aet?raw=true',
             url + 'animacoes%20da%20marca.aet?raw=true',
-            url + 'historia%20ao%20vivo.aet?raw=true'
+            url + 'historia%20ao%20vivo.aet?raw=true',
+            url + 'debate.aep?raw=true'
           ];
           getURLContent(urlArray, pathArray);
         }
