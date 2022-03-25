@@ -1275,7 +1275,62 @@ function PROMO_GNEWS_UI() {
   
   typeAnimBtn.onClick = function() {
   
-    alert(wip);
+    //alert(wip);
+
+    var exp = '';
+    exp += '// variables...\n';
+    exp += 'var cursor = \'_\'; // character use as cursor...\n';
+    exp += 'var interval = 15; // blink interval in frames...\n\n';
+    exp += 'var txtSld = effect(\'Slider Control\')(\'ADBE Slider Control-0001\');\n';
+    exp += 'var cursorChk = effect(\'Checkbox Control\')(\'ADBE Checkbox Control-0001\');\n\n';
+    exp += 'var f = timeToFrames(time);\n';
+    exp += 'var blinkingCursor = (Math.floor(f / interval) % 2 == 0 && cursorChk == true) ? cursor : \'\';\n';
+    exp += 'var txtEnd = (txtSld.speed > 0) ? cursor : blinkingCursor;\n';
+    exp += 'var i = txtSld / 100 * value.length\n';
+    exp += 'var txt = value.substr(0,parseInt(i));\n\n';
+    exp += 'txt + txtEnd;';
+
+    
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var cntLayer;
+    var srcTxt;
+    //var cnt = counter();
+    //var expFx = cnt[0];
+    var msg = 'comp not selected';
+
+    if (aItem != null) {
+      app.beginUndoGroup('typewriter');
+
+      if (selLayers.length > 0) {
+
+        for (i = 0; i < selLayers.length; i++) {
+
+          if (selLayers[i] instanceof TextLayer) {
+            cntLayer = selLayers[i];
+            srcTxt = cntLayer.property(txtProp).property(txtDoc);
+
+            //addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
+            srcTxt.expression = exp;
+          }
+        }
+      } else {
+        cntLayer = aItem.layers.addText();
+        srcTxt = cntLayer.property(txtProp).property(txtDoc);
+
+        srcTxt.setValue('counter');
+        cntLayer.name = 'txt_typewriter';
+
+        //addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
+        srcTxt.expression = exp;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(msg);
+    }
+
   };
 
   /*
