@@ -2244,7 +2244,7 @@ function PROMO_GNEWS_UI() {
         var presetsPath = decodeURI(vFolders[i]).toString() + '/Presets';
         try {
         
-          copyFolderContent(downPath, presetsPath);
+          copyFolderContent(unzipPath, presetsPath);
         } catch (error) {}
       }
     } else {
@@ -2286,8 +2286,8 @@ function PROMO_GNEWS_UI() {
       var downPath = scriptPreferencesPath + '/temp';
       var dowFolder = new Folder(downPath);
       var zipPath = downPath + '/templates.zip';
-      var unzipPath = scriptPreferencesPath + '/templates';
-      var templatesFolder = new Folder(unzipPath);
+      var templatesPath = scriptPreferencesPath + '/templates';
+      var templatesFolder = new Folder(templatesPath);
       
       if (!dowFolder.exists) {
         
@@ -2296,9 +2296,9 @@ function PROMO_GNEWS_UI() {
       if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
         
         getURLContent([url], [downPath]);
-        unzipContent(zipPath, unzipPath);
+        unzipContent(zipPath, templatesPath);
       }
-      templateDialog(unzipPath);
+      templateDialog(templatesPath);
   
     } else {
       showTabErr(msg);
