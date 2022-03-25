@@ -1463,6 +1463,19 @@ function getURLContent(urlArray, dstArray) {
   }
 }
 
+function unzipContent(zipPath, dstPath) {
+
+  var os = $.os;
+  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+  
+  if (appOs == 'Win') {
+    var cmd = 'Expand-Archive -Path ' + zipPath + ' -DestinationPath \'' + dstPath + '\';';
+    var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
+
+    system.callSystem(cmdStr);
+  }
+}
+
 // smart rename based on item selection...
 function smartRename(aItem, itemName) {
 
@@ -2169,18 +2182,19 @@ function showTabProg(msg) {
 function loadStaticPrefs() {
 
   // all group names
-  grpNames = [];
-  grpNames.push('menu');
-  grpNames.push('ctrl');
-  grpNames.push('animation');
-  grpNames.push('fx');
-  grpNames.push('text');
-  grpNames.push('pallet');
-  grpNames.push('layers');
-  grpNames.push('tools');
-  grpNames.push('project');
-  grpNames.push('app');
-  grpNames.push('links');
+  grpNames = [
+    'menu',
+    'ctrl',
+    'animation',
+    'fx',
+    'text',
+    'pallet',
+    'layers',
+    'tools',
+    'project',
+    'app',
+    'links'
+  ],
 
   // item prefixes...
   compPrefix = 'comp';

@@ -2221,27 +2221,25 @@ function PROMO_GNEWS_UI() {
 
     if (netAccess()) {
 
-      var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
-      var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
-      var url2 = url + 'H264%20-%20mp4%20alta.epr';
-      var url3 = url + 'H264%20-%20mp4%20baixa.epr';
-      var url4 = url + 'WAV%20-%20audio%20GSAT.epr';
-      var url5 = url + 'XDCAM%20HD%2050%20NTSC%2060i%20-%20avid.epr';
+      //var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
+      //var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
+      //var url2 = url + 'H264%20-%20mp4%20alta.epr';
+      //var url3 = url + 'H264%20-%20mp4%20baixa.epr';
+      //var url4 = url + 'WAV%20-%20audio%20GSAT.epr';
+      //var url5 = url + 'XDCAM%20HD%2050%20NTSC%2060i%20-%20avid.epr';
   
-      var urlArray = [
-        url1,
-        url2,
-        url3,
-        url4,
-        url5
-      ];
+      var urlArray = ['https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/AME.zip?raw=true'];
 
-      var downPath = scriptPreferencesPath + '/AME presets';
+      //var downPath = scriptPreferencesPath + '/AME presets';
+      var downPath = scriptPreferencesPath + '/temp';
       var dowFolder = new Folder(downPath);
       var amePath = '~/Documents/Adobe/Adobe Media Encoder';
       var ameFolder = new Folder(amePath);
       var vFolders = ameFolder.getFiles();
       var pathArray = [];
+
+      var zipPath = downPath + '/AME.zip';
+      var unzipPath = 
       
       for (var i = 0; i < urlArray.length; i++) {
 
@@ -2252,6 +2250,8 @@ function PROMO_GNEWS_UI() {
         dowFolder.create();
       }
       getURLContent(urlArray, pathArray);
+      //$.sleep(10000);
+      unzipContent(zipPath, downPath);
   
       for (i = 0; i < vFolders.length; i++) {
   
@@ -2332,9 +2332,11 @@ function PROMO_GNEWS_UI() {
             url + 'debate.aep?raw=true'
           ];
           getURLContent(urlArray, pathArray);
+
         }
       }
       templateDialog(downPath);
+      unzipContent('~/Desktop/', dstPath)
   
     } else {
       showTabErr(msg);
