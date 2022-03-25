@@ -2220,38 +2220,24 @@ function PROMO_GNEWS_UI() {
     var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
-
-      //var url = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/AME/';
-      //var url1 = url + 'Apple%20ProRes%20444%20RGBA.epr';
-      //var url2 = url + 'H264%20-%20mp4%20alta.epr';
-      //var url3 = url + 'H264%20-%20mp4%20baixa.epr';
-      //var url4 = url + 'WAV%20-%20audio%20GSAT.epr';
-      //var url5 = url + 'XDCAM%20HD%2050%20NTSC%2060i%20-%20avid.epr';
   
-      var urlArray = ['https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/AME.zip?raw=true'];
+      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/AME.zip?raw=true';
 
-      //var downPath = scriptPreferencesPath + '/AME presets';
       var downPath = scriptPreferencesPath + '/temp';
       var dowFolder = new Folder(downPath);
       var amePath = '~/Documents/Adobe/Adobe Media Encoder';
       var ameFolder = new Folder(amePath);
       var vFolders = ameFolder.getFiles();
-      var pathArray = [];
 
       var zipPath = downPath + '/AME.zip';
-      var unzipPath = 
+      var unzipPath = scriptPreferencesPath + '/AME presets';
       
-      for (var i = 0; i < urlArray.length; i++) {
-
-        pathArray.push(downPath);
-      }
       if (!dowFolder.exists) {
   
         dowFolder.create();
       }
-      getURLContent(urlArray, pathArray);
-      //$.sleep(10000);
-      unzipContent(zipPath, downPath);
+      getURLContent([url], [downPath]);
+      unzipContent(zipPath, unzipPath);
   
       for (i = 0; i < vFolders.length; i++) {
   
@@ -2295,48 +2281,24 @@ function PROMO_GNEWS_UI() {
 
     if (netAccess()) {
       
-      var downPath = scriptPreferencesPath + '/templates';
+      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates.zip?raw=true';
+ 
+      var downPath = scriptPreferencesPath + '/temp';
       var dowFolder = new Folder(downPath);
+      var zipPath = downPath + '/templates.zip';
+      var unzipPath = scriptPreferencesPath + '/templates';
+      var templatesFolder = new Folder(unzipPath);
       
       if (!dowFolder.exists) {
         
         dowFolder.create();
-
-        var pathArray = [
-          downPath + '/ON-AIR',
-          downPath + '/ON-AIR',
-          downPath,
-          downPath + '/CANAL',
-          downPath + '/CANAL',
-          downPath + '/PROGRAMAS'
-        ];
-        for (var i = 0; i < pathArray.length; i++) {
-
-          var fld = new Folder(pathArray[i]);
-
-          if (!fld.exists) {
-        
-            fld.create();
-          }
-        }
-        if (dowFolder.getFiles() != null) {
-          
-          var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates/';
-      
-          var urlArray = [
-            url + 'assinatura%20padrao.aet?raw=true',
-            url + 'posicionamento.aet?raw=true',
-            url + 'claquete.aet?raw=true',
-            url + 'animacoes%20da%20marca.aet?raw=true',
-            url + 'historia%20ao%20vivo.aet?raw=true',
-            url + 'debate.aep?raw=true'
-          ];
-          getURLContent(urlArray, pathArray);
-
-        }
       }
-      templateDialog(downPath);
-      unzipContent('~/Desktop/', dstPath)
+      if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
+        
+        getURLContent([url], [downPath]);
+        unzipContent(zipPath, unzipPath);
+      }
+      templateDialog(unzipPath);
   
     } else {
       showTabErr(msg);
