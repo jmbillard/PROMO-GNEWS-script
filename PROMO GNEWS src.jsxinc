@@ -2424,8 +2424,11 @@ function createHierarchy(array, node) {
       createHierarchy(subArray, nodeItem);
     } else {
 
-      var templateItem = node.add('item', dName);
-      templateItem.image = templateListIcon;
+      if (getFileExt(dName) == '.aep' || getFileExt(dName) == '.aet') {
+        
+        var templateItem = node.add('item', dName);
+        templateItem.image = templateListIcon;
+      }
     }
   }
 }
@@ -2457,31 +2460,77 @@ function expandNodes(nodeTree) {
 
 function templateDialog(path) {
 
+  Image.prototype.onDraw = function () {
+    // written by Marc Autret
+    // "this" is the container; "this.image" is the graphic
+    if (!this.image) return;
+    var WH = this.size,
+      wh = this.image.size,
+      k = Math.min(WH[0] / wh[0], WH[1] / wh[1]),
+      xy;
+    // Resize proportionally:
+    wh = [k * wh[0], k * wh[1]];
+    // Center:
+    xy = [(WH[0] - wh[0]) / 2, (WH[1] - wh[1]) / 2];
+    this.graphics.drawImage(this.image, xy[0], xy[1], wh[0], wh[1]);
+    WH = wh = xy = null;
+  };
+
+  var wHeight;
+  // var templateSelectionPath;
+  var previewScale = 0.13;
+
   var treeFolder = new Folder(path);
   
   var w = new Window('dialog', 'import options...');
-
-  var tree = w.add('treeview', [0, 0, 250, 400]);
+  var tree = w.add('treeview', [0, 0, 250, 380]);
   buildTree(treeFolder, tree);
 
   var bGroup = w.add('group');
   var refreshBtn = bGroup.add('button', undefined, 'refresh');
-  refreshBtn.helpTip = 'refresh list content';
+  refreshBtn.helpTip = 'refresh list content | downloads the latest templates';
   var importBtn = bGroup.add('button', undefined, 'import');
   importBtn.helpTip = 'import selected template';
   importBtn.enabled = tree.selection != null;
 
-  tree.onChange = function () {
+  var previewImg = w.add ("image", undefined, File(path + '/ON-AIR/assinatura padrao.png'));
+  previewImg.size = [1920 * previewScale, 1080 * previewScale];
   
-    // catNodes should not be selectable...
+  tree.onChange = function () {
+    
+    // node folders should not be selectable...
     if (tree.selection != null && tree.selection.type == 'node') {
       tree.selection = null;
+    }
+    if (tree.selection == null) {
+      w.size.height = wHeight;
+    } else {
+      
+      var s = tree.selection;
+      var fileName = s.toString().replace(/\.[\w]+$/i, '.png');
+
+      while (s.parent.toString() != treeFolder.displayName) {
+        
+        s = s.parent;
+        fileName = s.toString() + '/' + fileName;
+      }
+      var previewImgFile = new File(path + '/' + fileName);
+
+      if (previewImgFile.exists) {
+
+        w.size.height = wHeight + 160;
+        previewImg.image = previewImgFile;
+      } else {
+        w.size.height = wHeight;
+      }
     }
     importBtn.enabled = tree.selection != null;
   };
 
   w.onShow = function () {
     expandNodes(tree);
+    w.size.height -= 160;
+    wHeight = w.size.height;
   };
       
   importBtn.onClick = function () {
@@ -2501,6 +2550,31 @@ function templateDialog(path) {
     app.project.importFile(IO);
     w.close();
   };
+
+  refreshBtn.addEventListener ('click', function (c) {
+  
+    if (c.button == 2) {
+  
+      if (netAccess()) {
+        
+        var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates.zip?raw=true';
+   
+        var downPath = scriptPreferencesPath + '/temp';
+        var dowFolder = new Folder(downPath);
+        var zipPath = downPath + '/templates.zip';
+        var templatesPath = scriptPreferencesPath + '/templates';
+        
+        if (!dowFolder.exists) {
+          
+          dowFolder.create();
+        }
+        getURLContent([url], [downPath]);
+        unzipContent(zipPath, templatesPath);
+      }
+      buildTree(treeFolder, tree);
+      expandNodes(tree);  
+    }
+  });
 
   refreshBtn.onClick = function () {
 
