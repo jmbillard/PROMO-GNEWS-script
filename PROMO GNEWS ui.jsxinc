@@ -227,8 +227,8 @@ function PROMO_GNEWS_UI() {
   var animationSubGrp1 = animationGrp.add('group');
   animationSubGrp1.spacing = 2;
   // text typing animation...
-  var typeAnimBtn = animationSubGrp1.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
-  typeAnimBtn.helpTip = 'typewriting animation';
+  var typeAnimBtn = animationSubGrp1.add('iconbutton', undefined, typewriterIcon, {style: 'toolbutton'});
+  typeAnimBtn.helpTip = 'typewriter animation';
 
 
   /*
@@ -504,7 +504,7 @@ function PROMO_GNEWS_UI() {
   appGrp.add('image', undefined, vSpacer);
 
   var importBtn = appGrp.add('iconbutton', undefined, openIcon, {style: 'toolbutton'});
-  importBtn.helpTip = 'import templates';
+  importBtn.helpTip = 'import templates | open templates folder';
 
   /*
   
@@ -539,9 +539,9 @@ function PROMO_GNEWS_UI() {
   var linksSubGrp1 = linksGrp.add('group');
   linksSubGrp1.spacing = 2;
   var mamArteBtn = linksSubGrp1.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
-  mamArteBtn.helpTip = 'MAM Para Arte';
+  mamArteBtn.helpTip = 'MAM Para Arte | set custom folder';
   var mamMagBtn = linksSubGrp1.add('iconbutton', undefined, magazineFolderIcon, {style: 'toolbutton'});
-  mamMagBtn.helpTip = 'upload MAM Magazine';
+  mamMagBtn.helpTip = 'upload MAM Magazine | set custom folder';
 
   linksSubGrp1.add('image', undefined, hSpacer);
 
@@ -1273,31 +1273,14 @@ function PROMO_GNEWS_UI() {
     alert(wip);
   };
   
-  // TODO: create pseudo effect... 1 slider, 2 checkbox...
   typeAnimBtn.onClick = function() {
   
-    //alert(wip);
-
-    var exp = '';
-    exp += '// variables...\n';
-    exp += 'var cursor = \'_\'; // character use as cursor...\n';
-    exp += 'var interval = 15; // blink interval in frames...\n\n';
-    exp += 'var txtSld = effect(\'Slider Control\')(\'ADBE Slider Control-0001\');\n';
-    exp += 'var cursorChk = effect(\'Checkbox Control\')(\'ADBE Checkbox Control-0001\');\n\n';
-    exp += 'var f = timeToFrames(time);\n';
-    exp += 'var blinkingCursor = (Math.floor(f / interval) % 2 == 0 && cursorChk == true) ? cursor : \'\';\n';
-    exp += 'var txtEnd = (txtSld.speed > 0) ? cursor : blinkingCursor;\n';
-    exp += 'var i = txtSld / 100 * value.length\n';
-    exp += 'var txt = value.substr(0,parseInt(i));\n\n';
-    exp += 'txt + txtEnd;';
-
-    
     var aItem = app.project.activeItem;
     var selLayers = (aItem != null) ? aItem.selectedLayers : [];
     var cntLayer;
     var srcTxt;
-    //var cnt = counter();
-    //var expFx = cnt[0];
+    var expFx = typewriter()[0];
+    var exp = typewriter()[1];
     var msg = 'comp not selected';
 
     if (aItem != null) {
@@ -1311,7 +1294,7 @@ function PROMO_GNEWS_UI() {
             cntLayer = selLayers[i];
             srcTxt = cntLayer.property(txtProp).property(txtDoc);
 
-            //addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
+            addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
             srcTxt.expression = exp;
           }
         }
@@ -1319,10 +1302,10 @@ function PROMO_GNEWS_UI() {
         cntLayer = aItem.layers.addText();
         srcTxt = cntLayer.property(txtProp).property(txtDoc);
 
-        srcTxt.setValue('counter');
+        srcTxt.setValue('typewriter');
         cntLayer.name = 'txt_typewriter';
 
-        //addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
+        addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
         srcTxt.expression = exp;
       }
 
