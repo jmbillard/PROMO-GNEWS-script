@@ -2382,27 +2382,46 @@ function prefsObj() {
 }
 
 function getGPrefs(file) {
+  try {
+    var JSONContent = readFile(file);
+  } catch (error) {}
+  try {
+    var JSONObj = JSON.parse(JSONContent);
+  } catch (error) {}
 
-  var JSONContent = readFile(file);
-  var JSONObj = JSON.parse(JSONContent);
-
-  tabColors = [];
-  labelColors = [];
+  try {
+    tabColors = [];
+  } catch (error) {}
+  try {
+    labelColors = [];
+  } catch (error) {}
 
   for (i = 0; i < grpNames.length; i++) {
-
-    tabColors.push(hexToRGB(JSONObj.color[grpNames[i]]));
+    try {
+      tabColors.push(hexToRGB(JSONObj.color[grpNames[i]]));
+    } catch (error) {}
   }
 
   for (i = 1; i <= 16; i++) {
-
-    labelColors.push(hexToRGB(JSONObj.label['l' + i]));
+    try {
+      labelColors.push(hexToRGB(JSONObj.label['l' + i]));
+    } catch (error) {}
   }
-  artePath = JSONObj.folders.arte;
-  magPath = JSONObj.folders.magazine;
-  lDropSel = JSONObj.selection.layerType;
-  projMDropSel = JSONObj.selection.projectModel;
-  userPrefix = JSONObj.user;
+  try {
+    artePath = JSONObj.folders.arte;
+  } catch (error) {}
+  try {
+    magPath = JSONObj.folders.magazine;
+  } catch (error) {}
+  try {
+    lDropSel = JSONObj.selection.layerType;
+  } catch (error) {}
+  try {
+    projMDropSel = JSONObj.selection.projectModel;
+  } catch (error) {}
+  try {
+    userPrefix = JSONObj.user;
+  } catch (error) {}
 }
 
 function createHierarchy(array, node) {
