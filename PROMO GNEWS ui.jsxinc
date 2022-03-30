@@ -24,14 +24,14 @@ function PROMO_GNEWS_UI() {
 
   loadStaticPrefs();
   loadDefaultPrefs();
+
   try {
-
     var JSONFile = new File(scriptPreferencesPath + '/preferences.json');
-    if (JSONFile.exists) {
 
+    if (JSONFile.exists) {
       getGPrefs(JSONFile);
     }
-  } catch (error) {}  
+  } catch (error) {}
 
   var w = {};
   var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
