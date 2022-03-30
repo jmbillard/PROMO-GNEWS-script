@@ -26,9 +26,11 @@ function PROMO_GNEWS_UI() {
   loadDefaultPrefs();
   try {
 
-    var JSONFile = File(scriptPreferencesPath + '/preferences.json');
-    getGPrefs(JSONFile);
+    var JSONFile = new File(scriptPreferencesPath + '/preferences.json');
+    if (JSONFile.exists) {
 
+      getGPrefs(JSONFile);
+    }
   } catch (error) {}  
 
   var w = {};

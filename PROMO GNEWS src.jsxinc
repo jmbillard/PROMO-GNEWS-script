@@ -2382,29 +2382,21 @@ function prefsObj() {
 }
 
 function getGPrefs(file) {
-  try {
-    var JSONContent = readFile(file);
-  } catch (error) {}
-  try {
-    var JSONObj = JSON.parse(JSONContent);
-  } catch (error) {}
+  
+  var JSONContent = readFile(file);
+  var JSONObj = JSON.parse(JSONContent);
+  
+  tabColors = [];
+  labelColors = [];
 
-  try {
-    tabColors = [];
-  } catch (error) {}
-  try {
-    labelColors = [];
-  } catch (error) {}
-
-  for (i = 0; i < grpNames.length; i++) {
+  for (var t = 0; t < grpNames.length; t++) {
     try {
-      tabColors.push(hexToRGB(JSONObj.color[grpNames[i]]));
+      tabColors.push(hexToRGB(JSONObj.color[grpNames[t]]));
     } catch (error) {}
   }
-
-  for (i = 1; i <= 16; i++) {
+  for (var l = 1; l <= 16; l++) {
     try {
-      labelColors.push(hexToRGB(JSONObj.label['l' + i]));
+      labelColors.push(hexToRGB(JSONObj.label['l' + l]));
     } catch (error) {}
   }
   try {
