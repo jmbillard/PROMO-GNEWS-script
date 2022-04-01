@@ -632,12 +632,24 @@ function PROMO_GNEWS_UI() {
   setTxtColor(progTxt2, sTxtColor);
 
   // all tabs
-  var tabs = [];
+  var tabs = [
+    menuGrp,
+    ctrlGrp,
+    animationGrp,
+    fxGrp,
+    textGrp,
+    palletGrp,
+    layersGrp,
+    toolsGrp,
+    projectGrp,
+    appGrp,
+    linksGrp
+  ];
 
-  for (i = 0; i < grpNames.length; i++) {
-
-    eval('tabs.push(' + grpNames[i] + 'Grp);');
-  }
+//  for (i = 0; i < grpNames.length; i++) {
+//
+//    eval('tabs.push(' + grpNames[i] + 'Grp);');
+//  }
 
   // all subgroups
   var tabSubGrps = [];
