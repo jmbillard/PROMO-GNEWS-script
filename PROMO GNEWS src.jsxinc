@@ -2194,7 +2194,7 @@ function loadStaticPrefs() {
     'project',
     'app',
     'links'
-  ],
+  ];
 
   // item prefixes...
   compPrefix = 'comp';
