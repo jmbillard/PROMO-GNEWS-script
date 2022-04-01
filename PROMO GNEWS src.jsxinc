@@ -2132,7 +2132,7 @@ function replaceErrImage() {
   return errImg;
 }
 
-// turns on error tab group visibility in the tab level...
+// show error message...
 function showTabErr(msg) {
 
   errTxt.text = errCode() + msg;
@@ -2155,6 +2155,7 @@ function showTabErr(msg) {
   write(msg);
 }
 
+// show progress blocking user interaction...
 function showTabProg(msg) {
 
   progTxt1.text = 'KEEP CALM';
