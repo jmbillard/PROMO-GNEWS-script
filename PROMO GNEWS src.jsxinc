@@ -2115,6 +2115,7 @@ function openTab(grp) {
   errImgGrp.visible = false;
   progImgGrp.visible = false;
   progressGrp.visible = false;
+  currentGrp = grp;
 
   setBgColor(bgColor);
 }
@@ -2141,7 +2142,7 @@ function showTabErr(msg) {
   closeErrBtn.visible = true;
 
   prefGrp.visible = false;
-  grp.visible = false;
+  currentGrp.visible = false;
   menuGrp.visible = false;
   closeBtn.visible = false;
   imgGrp.visible = false;
@@ -2164,7 +2165,7 @@ function showTabProg(msg) {
 
   closeGrp.visible = false;
   prefGrp.visible = false;
-  grp.visible = false;
+  currentGrp.visible = false;
   menuGrp.visible = false;
   closeBtn.visible = false;
   closeErrBtn.visible = false;

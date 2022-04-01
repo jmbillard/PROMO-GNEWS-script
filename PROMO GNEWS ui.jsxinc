@@ -673,6 +673,7 @@ function PROMO_GNEWS_UI() {
     setLayout();
   };
 
+  var currentGrp = menuGrp;
   var bgColor = tabColors[tabs.indexOf(menuGrp)];
   setBgColor(bgColor);
 
