@@ -632,24 +632,12 @@ function PROMO_GNEWS_UI() {
   setTxtColor(progTxt2, sTxtColor);
 
   // all tabs
-  var tabs = [
-    menuGrp,
-    ctrlGrp,
-    animationGrp,
-    fxGrp,
-    textGrp,
-    palletGrp,
-    layersGrp,
-    toolsGrp,
-    projectGrp,
-    appGrp,
-    linksGrp
-  ];
+  var tabs = [];
 
-//  for (i = 0; i < grpNames.length; i++) {
-//
-//    eval('tabs.push(' + grpNames[i] + 'Grp);');
-//  }
+  for (i = 0; i < grpNames.length; i++) {
+
+    eval('tabs.push(' + grpNames[i] + 'Grp);');
+  }
 
   // all subgroups
   var tabSubGrps = [];
@@ -678,17 +666,14 @@ function PROMO_GNEWS_UI() {
   w.layout.layout(true);
 
   w.onShow = function() {
-
     setLayout();
   };
 
   w.onResizing = w.onResize = function() {
-
     setLayout();
   };
 
-  var grp = menuGrp;
-  var bgColor = tabColors[0];
+  var bgColor = tabColors[tabs.indexOf(menuGrp)];
   setBgColor(bgColor);
 
   /*
@@ -700,52 +685,31 @@ function PROMO_GNEWS_UI() {
   */
 
   ctrlBtn.onClick = function() {
-
-    grp = ctrlGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(ctrlGrp);
   };
 
   animBtn.onClick = function() {
-
-    grp = animationGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(animationGrp);
   };
 
   fxBtn.onClick = function() {
-
-    grp = fxGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(fxGrp);
   };
 
   txtBtn.onClick = function() {
-
-    grp = textGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(textGrp);
   };
 
   palletBtn.onClick = function() {
-
-    grp = palletGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(palletGrp);
   };
 
   layerBtn.onClick = function() {
-
-    grp = layersGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(layersGrp);
   };
 
   toolBtn.onClick = function() {
-
-    grp = toolsGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(toolsGrp);
   };
   
   projBtn.onClick = function() {
@@ -755,33 +719,22 @@ function PROMO_GNEWS_UI() {
     projId = getXMPdata('identifier');
     projId = (projId == '') ? 'proj id' : projId;
     
-    grp = projectGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(projectGrp);
     projUserTxt.text = userPrefix;
     projIdTxt.text = projId;
     projNameTxt.text = projName;
   };
 
   appBtn.onClick = function() {
-
-    grp = appGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(appGrp);
   };
 
   linksBtn.onClick = function() {
-
-    grp = linksGrp;
-    bgColor = tabColors[tabs.indexOf(grp)];
-    openTab(grp, bgColor);
+    openTab(linksGrp);
   };  
 
   prefBtn.onClick = function() {
-
-    grp = preferencesGrp;
-    bgColor = prefGrpColor;
-    openTab(grp, bgColor);
+    openTab(preferencesGrp);
   };
 
   /*
