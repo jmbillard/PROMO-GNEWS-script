@@ -162,7 +162,6 @@ function PROMO_GNEWS_UI() {
   // preferences button...
   var prefBtn = prefGrp.add('iconbutton', undefined, setIcon, {style: 'toolbutton'});
   prefBtn.helpTip = 'script preferences';
-
   
   /*
 
@@ -505,8 +504,13 @@ function PROMO_GNEWS_UI() {
 
   appGrp.add('image', undefined, vSpacer);
 
-  var importBtn = appGrp.add('iconbutton', undefined, openIcon, {style: 'toolbutton'});
-  importBtn.helpTip = 'import templates | open templates folder';
+  var importAepBtn = appGrp.add('iconbutton', undefined, openIcon, {style: 'toolbutton'});
+  importAepBtn.helpTip = 'import templates | open templates folder';
+
+  appGrp.add('image', undefined, vSpacer);
+
+  var importFontsBtn = appGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  importFontsBtn.helpTip = 'install fonts | open fonts folder';
 
   /*
   
@@ -2203,7 +2207,7 @@ function PROMO_GNEWS_UI() {
     }
   };
 
-  importBtn.addEventListener ('click', function (c) {
+  importAepBtn.addEventListener ('click', function (c) {
   
     if (c.button == 2) {
 
@@ -2211,14 +2215,14 @@ function PROMO_GNEWS_UI() {
 
       if (netAccess()) {
       
-        var downPath = scriptPreferencesPath + '/templates';
-        var dowFolder = new Folder(downPath);
+        var templatesPath = scriptPreferencesPath + '/templates';
+        var templatesFolder = new Folder(templatesPath);
         
-        if (!dowFolder.exists) {
+        if (!templatesFolder.exists) {
  
-          dowFolder.create();
+          templatesFolder.create();
         }
-        openFolder(downPath);
+        openFolder(templatesPath);
 
       } else {
         showTabErr(msg);
@@ -2226,7 +2230,7 @@ function PROMO_GNEWS_UI() {
     }
   });
   
-  importBtn.onClick = function() {
+  importAepBtn.onClick = function() {
 
     var msg = netConfigName + ' not checked';
 
@@ -2250,6 +2254,59 @@ function PROMO_GNEWS_UI() {
         unzipContent(zipPath, templatesPath);
       }
       templateDialog(templatesPath);
+  
+    } else {
+      showTabErr(msg);
+    }
+  };
+
+  importFontsBtn.addEventListener ('click', function (c) {
+  
+    if (c.button == 2) {
+
+      var msg = netConfigName + ' not checked';
+
+      if (netAccess()) {
+      
+        var fontsPath = scriptPreferencesPath + '/fonts';
+        var fontsFolder = new Folder(fontsPath);
+        
+        if (!fontsFolder.exists) {
+ 
+          fontsFolder.create();
+        }
+        openFolder(fontsPath);
+
+      } else {
+        showTabErr(msg);
+      }  
+    }
+  });
+  
+  importFontsBtn.onClick = function() {
+
+    var msg = netConfigName + ' not checked';
+
+    if (netAccess()) {
+      
+      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/fonts.zip?raw=true';
+ 
+      var downPath = scriptPreferencesPath + '/temp';
+      var dowFolder = new Folder(downPath);
+      var zipPath = downPath + '/fonts.zip';
+      var fontsPath = scriptPreferencesPath + '/fonts';
+      var fontsFolder = new Folder(fontsPath);
+      
+      if (!dowFolder.exists) {
+        
+        dowFolder.create();
+      }
+      if (!fontsFolder.exists || fontsFolder.getFiles().length == 0) {
+        
+        getURLContent([url], [downPath]);
+        unzipContent(zipPath, fontsPath);
+      }
+      //templateDialog(fontsPath);
   
     } else {
       showTabErr(msg);
