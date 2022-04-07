@@ -509,7 +509,7 @@ function PROMO_GNEWS_UI() {
 
   appGrp.add('image', undefined, vSpacer);
 
-  var importFontsBtn = appGrp.add('iconbutton', undefined, solTogBtn, {style: 'toolbutton'});
+  var importFontsBtn = appGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
   importFontsBtn.helpTip = 'install fonts | open fonts folder';
 
   /*
