@@ -498,19 +498,19 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  
+  var importFontsBtn = appGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
+  importFontsBtn.helpTip = 'install fonts | open fonts folder';
+  
+  appGrp.add('image', undefined, vSpacer);
+  
+  var importAepBtn = appGrp.add('iconbutton', undefined, templateIcon, {style: 'toolbutton'});
+  importAepBtn.helpTip = 'import templates | open templates folder';
+  
+  appGrp.add('image', undefined, vSpacer);
 
   var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, eprIcon, {style: 'toolbutton'});
   copyAMEPresetsBtn.helpTip = 'install Media Encoder presets';
-
-  appGrp.add('image', undefined, vSpacer);
-
-  var importAepBtn = appGrp.add('iconbutton', undefined, openIcon, {style: 'toolbutton'});
-  importAepBtn.helpTip = 'import templates | open templates folder';
-
-  appGrp.add('image', undefined, vSpacer);
-
-  var importFontsBtn = appGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
-  importFontsBtn.helpTip = 'install fonts | open fonts folder';
 
   /*
   
