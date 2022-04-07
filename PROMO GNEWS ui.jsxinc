@@ -690,31 +690,38 @@ function PROMO_GNEWS_UI() {
   */
 
   ctrlBtn.onClick = function() {
-    openTab(ctrlGrp);
+    grp = ctrlGrp;
+    openTab(grp);
   };
 
   animBtn.onClick = function() {
-    openTab(animationGrp);
+    grp = animationGrp;
+    openTab(grp);
   };
 
   fxBtn.onClick = function() {
-    openTab(fxGrp);
+    grp = fxGrp;
+    openTab(grp);
   };
 
   txtBtn.onClick = function() {
-    openTab(textGrp);
+    grp = textGrp;
+    openTab(grp);
   };
 
   palletBtn.onClick = function() {
-    openTab(palletGrp);
+    grp = palletGrp;
+    openTab(grp);
   };
 
   layerBtn.onClick = function() {
-    openTab(layersGrp);
+    grp = layersGrp;
+    openTab(grp);
   };
 
   toolBtn.onClick = function() {
-    openTab(toolsGrp);
+    grp = toolsGrp;
+    openTab(grp);
   };
   
   projBtn.onClick = function() {
@@ -723,23 +730,27 @@ function PROMO_GNEWS_UI() {
     projName = (projName == '') ? 'proj name' : projName;
     projId = getXMPdata('identifier');
     projId = (projId == '') ? 'proj id' : projId;
-    
-    openTab(projectGrp);
+    grp = projectGrp;
+   
+    openTab(grp);
     projUserTxt.text = userPrefix;
     projIdTxt.text = projId;
     projNameTxt.text = projName;
   };
 
   appBtn.onClick = function() {
-    openTab(appGrp);
+    grp = appGrp;
+    openTab(grp);
   };
 
   linksBtn.onClick = function() {
-    openTab(linksGrp);
+    grp = linksGrp;
+    openTab(grp);
   };  
 
   prefBtn.onClick = function() {
-    openTab(preferencesGrp);
+    grp = preferencesGrp;
+    openTab(grp);
   };
 
   /*
@@ -2157,7 +2168,7 @@ function PROMO_GNEWS_UI() {
       app.project.save(projFile);
       openFolder(projPath);
     }
-    openTab(grp, bgColor);
+    openTab(grp);
 
     app.endUndoGroup();
   };
@@ -2639,7 +2650,7 @@ function PROMO_GNEWS_UI() {
   
     clearOutput();
     allGrpGone();
-    openTab(grp, bgColor);
+    openTab(grp);
   };
 
   return w;
