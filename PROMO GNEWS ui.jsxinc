@@ -2208,10 +2208,14 @@ function PROMO_GNEWS_UI() {
       for (i = 0; i < vFolders.length; i++) {
   
         var presetsPath = decodeURI(vFolders[i]).toString() + '/Presets';
-        try {
         
-          copyFolderContent(unzipPath, presetsPath);
-        } catch (error) {}
+        if (presetsPath.exists) {
+          
+          try {
+            copyFolderContent(unzipPath, presetsPath);
+          
+          } catch (error) {}
+        }
       }
     } else {
       showTabErr(msg);
