@@ -2190,7 +2190,7 @@ function PROMO_GNEWS_UI() {
       if (netAccess()) {
       
         var templatesAMEPath = scriptPreferencesPath + '/AME presets';
-        var templatesAMEFolder = new Folder(templatesPath);
+        var templatesAMEFolder = new Folder(templatesAMEPath);
         
         if (!templatesAMEFolder.exists) {
  
@@ -2228,7 +2228,7 @@ function PROMO_GNEWS_UI() {
       getURLContent([url], [downPath]);
       unzipContent(zipPath, unzipPath);
   
-      for (i = 0; i < vFolders.length; i++) {
+      for ( var i = 0; i < vFolders.length; i++) {
   
         var presetsAMEPath = decodeURI(vFolders[i]).toString() + '/Presets';
         var presetsAMEFolder = new Folder(presetsAMEPath);
