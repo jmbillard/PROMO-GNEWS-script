@@ -510,7 +510,7 @@ function PROMO_GNEWS_UI() {
   appGrp.add('image', undefined, vSpacer);
 
   var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, eprIcon, {style: 'toolbutton'});
-  copyAMEPresetsBtn.helpTip = 'install Media Encoder presets';
+  copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
 
   /*
   
@@ -2200,7 +2200,7 @@ function PROMO_GNEWS_UI() {
 
       } else {
         showTabErr(msg);
-      }  
+      }
     }
   });
   
@@ -2345,7 +2345,23 @@ function PROMO_GNEWS_UI() {
         getURLContent([url], [downPath]);
         unzipContent(zipPath, fontsPath);
       }
-      //templateDialog(fontsPath);
+      var os = $.os;
+      var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+      
+      if (appOs == 'Win') {
+
+        var fontsSysPath = Folder.system.parent.toString() + '/Fonts';
+        var fontsSysFolder = new Folder(fontsSysPath);
+        
+      if (fontsSysFolder.exists) {
+            
+          try {
+            // recursion inside font family folders...
+            // copy all font files (.ttf, .otf) to system fonts folder...
+          } catch (error) {}
+        }
+      }
+      openFolder(fontsPath);
   
     } else {
       showTabErr(msg);
@@ -2641,6 +2657,7 @@ function PROMO_GNEWS_UI() {
         msg = 'and copy the files  (つ ◕_◕ )つ';
       }
       showTabProg(msg);
+    
     } else {
       showTabErr(msg);
     }
