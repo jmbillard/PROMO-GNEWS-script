@@ -2181,6 +2181,29 @@ function PROMO_GNEWS_UI() {
   
   */
   
+  copyAMEPresetsBtn.addEventListener ('click', function (c) {
+  
+    if (c.button == 2) {
+
+      var msg = netConfigName + ' not checked';
+
+      if (netAccess()) {
+      
+        var templatesAMEPath = scriptPreferencesPath + '/AME presets';
+        var templatesAMEFolder = new Folder(templatesPath);
+        
+        if (!templatesAMEFolder.exists) {
+ 
+          templatesAMEFolder.create();
+        }
+        openFolder(templatesAMEPath);
+
+      } else {
+        showTabErr(msg);
+      }  
+    }
+  });
+  
   copyAMEPresetsBtn.onClick = function() {
 
     var msg = netConfigName + ' not checked';
@@ -2207,12 +2230,13 @@ function PROMO_GNEWS_UI() {
   
       for (i = 0; i < vFolders.length; i++) {
   
-        var presetsPath = decodeURI(vFolders[i]).toString() + '/Presets';
+        var presetsAMEPath = decodeURI(vFolders[i]).toString() + '/Presets';
+        var presetsAMEFolder = new Folder(presetsAMEPath);
         
-        if (presetsPath.exists) {
+        if (presetsAMEFolder.exists) {
           
           try {
-            copyFolderContent(unzipPath, presetsPath);
+            copyFolderContent(unzipPath, presetsAMEPath);
           
           } catch (error) {}
         }
