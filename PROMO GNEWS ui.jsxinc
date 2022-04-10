@@ -504,8 +504,11 @@ function PROMO_GNEWS_UI() {
   
   appGrp.add('image', undefined, vSpacer);
   
-  var importAepBtn = appGrp.add('iconbutton', undefined, templateIcon, {style: 'toolbutton'});
-  importAepBtn.helpTip = 'import templates | open templates folder';
+  var importAetBtn = appGrp.add('iconbutton', undefined, templateIcon, {style: 'toolbutton'});
+  importAetBtn.helpTip = 'import templates | open templates folder';
+  
+  var zipTemplatesBtn = appGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  zipTemplatesBtn.helpTip = 'zip the templates folder';
   
   appGrp.add('image', undefined, vSpacer);
 
@@ -2246,7 +2249,7 @@ function PROMO_GNEWS_UI() {
     }
   };
 
-  importAepBtn.addEventListener ('click', function (c) {
+  importAetBtn.addEventListener ('click', function (c) {
   
     if (c.button == 2) {
 
@@ -2269,7 +2272,7 @@ function PROMO_GNEWS_UI() {
     }
   });
   
-  importAepBtn.onClick = function() {
+  importAetBtn.onClick = function() {
 
     var msg = netConfigName + ' not checked';
 
@@ -2293,6 +2296,36 @@ function PROMO_GNEWS_UI() {
         unzipContent(zipPath, templatesPath);
       }
       templateDialog(templatesPath);
+  
+    } else {
+      showTabErr(msg);
+    }
+  };
+
+  zipTemplatesBtn.onClick = function() {
+
+    // error message...
+    var msg = netConfigName + ' not checked';
+
+    // checks if the script can access the network...
+    if (netAccess()) {
+      
+      var templatesPath = scriptPreferencesPath + '/templates';
+      var templatesFolder = new Folder(templatesPath);
+      var destPath = Folder.desktop.toString();
+      var zipPath = destPath + '/templates.zip';
+      //var destFolder = new Folder(zipPath);
+      
+      if (templatesFolder.exists) {
+        
+        var templatesStr = templatesFolder.getFiles().toString();
+        // replaces '[' at the start and ']' at the end...
+        templatesStr = templatesStr.replace(/^\[|\]$/, '');
+        templatesStr = templatesStr.replace(/\,/g, '\', \'');
+        templatesStr = decodeURI(templatesStr);
+        zipContent(templatesStr, zipPath);
+        openFolder(destPath);
+      }
   
     } else {
       showTabErr(msg);

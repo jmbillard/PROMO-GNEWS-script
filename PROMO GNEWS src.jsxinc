@@ -1484,6 +1484,19 @@ function unzipContent(zipPath, dstPath) {
   }
 }
 
+function zipContent(path, zipPath) {
+
+  var os = $.os;
+  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+  
+  if (appOs == 'Win') {
+    var cmd = 'Compress-Archive -Path \'' + path + '\' -DestinationPath \'' + zipPath + '\' -CompressionLevel Optimal -Force;';
+    var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
+
+    system.callSystem(cmdStr);
+  }
+}
+
 // smart rename based on item selection...
 function smartRename(aItem, itemName) {
 
