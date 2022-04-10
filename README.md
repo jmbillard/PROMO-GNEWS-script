@@ -17,18 +17,17 @@ o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
 > animação                      // work in progress... 
 > efeitos
 > texto                         // manipulação de texto... converte caixa alta e baixa!
-> paleta de cores
+> paleta de cores               // cores, marca e referencias de registro...
 > renomear / sequenciar layers
-> rigs e ferramentas            // ferramentas diversas...
+> rigs e ferramentas            // rigs e ferramentas diversas...
 > organização de projeto        // organiza tudo em pastinhas (não faz milagre mas é uma mão na roda)
-> programa                      // configura algumas preferencias e presets do after...
+> programa                      // configura algumas preferencias, presets e templates do after...
 > links úteis
 > preferencias                  // configurações do script...
 ~~~
 > a *'cor'* de cada aba pode ser alterada nas *'preferências'* do *'script'*...
 
 <br/><br/>
-
 
 # ![control icon](/images/icons/ctrlIcon.png) *controles e nulls*
 
@@ -81,6 +80,17 @@ avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os
 <br/><br/>
 
 # ![animation icon](/images/icons/ctrlIcon.png) *animação*
+
+### ![typewriter btn](/images/icons/typewriterIcon.png) botão **`typewriter`**
+cria um preset para animação estilo digitação.
+
+<br/>
+
+| parâmetros | opções    |
+| ---------- | --------- |
+| texto      | 0% a 100% |
+
+>   possui mais configurações na janela de *'controle de efeito'*...
 
 <br/><br/>
 
@@ -137,16 +147,21 @@ aplica um efeito 'fill' com a cor selecionada.
 
 <br/>
 
-cores       | rgb            | #hex
------------ | -------------- | -------
-vermelho    | 185, 20, 20    | #B91414
-preto       | 20, 20, 20     | #141414
-branco      | 234, 234, 234  | #EAEAEA
+| cores    | rgb           | #hex    |
+| -------- | ------------- | ------- |
+| vermelho | 185, 20, 20   | #B91414 |
+| preto    | 20, 20, 20    | #141414 |
+| branco   | 234, 234, 234 | #EAEAEA |
 
 <br/>
 
-### ![shapePallet btn](/images/icons/tg_solIcon.png) botão **`paleta guia`**
+### ![shapePallet btn](/images/icons/shpPalletIcon.png) botão **`paleta guia`**
 cria um 'shape layer' com amostras da paleta no canto superior esquerdo.
+
+<br/>
+
+### ![logo btn](/images/icons/newsIcon.png) botão **`paleta guia`**
+cria um 'shape layer' com a logo GNEWS.
 
 <br/><br/>
 
@@ -178,14 +193,14 @@ renomeia todos os layers dos tipos habilitados.
 
     <br/>
 
-    tipos de layer | prefixo padrão
-    -------------- | --------------
-     footage       |  ftg
-     solids        |  sol
-     shapes        |  shp
-     textos        |  txt
-     cameras       |  cam
-     luzes         |  lgt
+    | tipos de layer | prefixo padrão |
+    | -------------- | -------------- |
+    | footage        | ftg            |
+    | solids         | sol            |
+    | shapes         | shp            |
+    | textos         | txt            |
+    | cameras        | cam            |
+    | luzes          | lgt            |
 
 <br/>
 
@@ -216,12 +231,12 @@ cria rig de contagem usando um layer de texto.
 
 <br/>
 
-parâmetros    | opções
-------------- | --------------
-modo          |  número, ordinal, tempo
-deslocamento  |  0% a 100%
-valor inicial |  -999999999 a 999999999
-valor final   |  -999999999 a 999999999
+| parâmetros    | opções                 |
+| ------------- | ---------------------- |
+| modo          | número, ordinal, tempo |
+| deslocamento  | 0% a 100%              |
+| valor inicial | -999999999 a 999999999 |
+| valor final   | -999999999 a 999999999 |
 
 ```
     ex: colocando os seguintes parâmetros...
@@ -242,10 +257,10 @@ cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos
 
 <br/>
 
-parâmetros    | opções
-------------- | --------------
-frequência    | 0 a 999999999
-amplitude     | -999999999 a 999999999
+| parâmetros | opções                 |
+| ---------- | ---------------------- |
+| frequência | 0 a 999999999          |
+| amplitude  | -999999999 a 999999999 |
 
 >   possui mais configurações na janela de *'controle de efeito'*...
 
@@ -258,9 +273,9 @@ cria um rig simples de movimento usando cinemática inversa com 3 layers selecio
 
 <br/>
 
-parâmetros          | opções
-------------------- | --------------
-inverter orientação | sim ou não
+| parâmetros          | opções     |
+| ------------------- | ---------- |
+| inverter orientação | sim ou não |
 
 <br/>
 
@@ -383,6 +398,18 @@ acessam as plataformas que a 'globo' e a equipe de 'promo' usam para gerenciar t
           'https://tasks.office.com/tvglobocorp.onmicrosoft.com/en-US/Home/Planner/#/userboard'
 ```
 
+<br/>
+
+### botões **`rede`**<br/>
+![arte btn](/images/icons/link_arteFolderIcon.png)**`para ARTE`**
+![mag btn](/images/icons/link_magazineFolderIcon.png)**`upload MAGAZINE`**
+![hn btn](/images/icons/link_hardNewsFolderIcon.png)**`upload HARD NEWS`**
+![utils btn](/images/icons/link_utilsFolderIcon.png)**`UTILIDADES`**
+
+acessam as pastas na rede da 'globo'.
+
+>   clique direito: configura um caminho personalizado para as pastas *'para ARTE'* e *'upload MAGAZINE'*<br/>
+
 <br/><br/>
 
 # ![app icon](/images/icons/aeIcon.png) *programa*
@@ -396,6 +423,25 @@ baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
 
 >   download: *'~\AppData\Roaming\PROMO GNEWS script\AME presets'*<br/>
 >   instalação: *'~\Documents\Adobe\Adobe Media Encoder\versão instalada\Presets'*
+
+<br/>
+
+### ![template btn](/images/icons/openIcon.png) botão **`import templates`**
+baixa e exibe os principais templates dos projetos de 'PROMO'.
+
+- ![folder icon](/images/icons/tg_fldIcon.png) *CANAL*
+  - ![folder icon](/images/icons/templateListIcon.png) *animacoes da marca.aet*
+  - ![folder icon](/images/icons/templateListIcon.png) *historia ao vivo.aet*
+- ![folder icon](/images/icons/tg_fldIcon.png) *claquete.aet*
+- ![folder icon](/images/icons/tg_fldIcon.png) *ON-AIR*
+  - ![folder icon](/images/icons/templateListIcon.png) *assinatura padrao*
+  - ![folder icon](/images/icons/templateListIcon.png) *posicionamento*
+- ![folder icon](/images/icons/tg_fldIcon.png) *PROGRAMAS*
+  - ![folder icon](/images/icons/templateListIcon.png) *debate.aep*
+
+
+>   clique direito: força o download das ultimas versões dos templates disponíveis do repositório<br/>
+>   download: *'~\AppData\Roaming\PROMO GNEWS script\templates'*<br/>
 
 <br/><br/>
 
@@ -440,13 +486,9 @@ altera a 'cor' da aba selecionada.
 
 <br/>
 
-### ![reset btn](/images/icons/resetIcon.png) botão **`limpar preferencias`**
-descarta qualquer alteração feita pelo usuário e usa as 'preferencias' padrão.
-
-<br/>
-
 ### ![update btn](/images/icons/downloadIcon.png) botão **`atualizar`**
 baixa a ultima versão disponível no repositório do github
 
+>   clique direito: acessa a pagina do repositório<br/>
 >   download: *'~\AppData\Roaming\PROMO GNEWS script\ScriptUI Panels'*<br/>
 >   instalação: *'versão instalada do After\Support Files\Scripts\ScriptUI Panels'*
