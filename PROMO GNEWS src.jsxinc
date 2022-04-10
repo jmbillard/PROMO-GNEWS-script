@@ -1477,7 +1477,7 @@ function unzipContent(zipPath, dstPath) {
   var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
   
   if (appOs == 'Win') {
-    var cmd = 'Expand-Archive -Path \'' + zipPath + '\' -DestinationPath \'' + dstPath + '\';';
+    var cmd = 'Expand-Archive -Path \'' + zipPath + '\' -DestinationPath \'' + dstPath + '\'  -Force;';
     var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 
     system.callSystem(cmdStr);
