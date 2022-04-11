@@ -2312,7 +2312,7 @@ function PROMO_GNEWS_UI() {
       
       var templatesPath = scriptPreferencesPath + '/templates';
       var templatesFolder = new Folder(templatesPath);
-      // dev folder path...
+      // dev folder path '[user name]/PROMO-GNEWS-script'...
       var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
       var devFolder = new Folder(destPath);
       
@@ -2326,7 +2326,7 @@ function PROMO_GNEWS_UI() {
         
         if (!devFolder.exists) {
           
-          // alternative path 1...
+          // alternative path 1 'desktop'...
           destPath = Folder.desktop.toString();
         }
 
