@@ -2312,9 +2312,8 @@ function PROMO_GNEWS_UI() {
       
       var templatesPath = scriptPreferencesPath + '/templates';
       var templatesFolder = new Folder(templatesPath);
-      var destPath = Folder.desktop.toString();
+      var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
       var zipPath = destPath + '/templates.zip';
-      //var destFolder = new Folder(zipPath);
       
       if (templatesFolder.exists) {
         
