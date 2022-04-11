@@ -2312,8 +2312,9 @@ function PROMO_GNEWS_UI() {
       
       var templatesPath = scriptPreferencesPath + '/templates';
       var templatesFolder = new Folder(templatesPath);
+      // dev folder path...
       var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
-      var zipPath = destPath + '/templates.zip';
+      var devFolder = new Folder(destPath);
       
       if (templatesFolder.exists) {
         
@@ -2322,6 +2323,14 @@ function PROMO_GNEWS_UI() {
         templatesStr = templatesStr.replace(/^\[|\]$/, '');
         templatesStr = templatesStr.replace(/\,/g, '\', \'');
         templatesStr = decodeURI(templatesStr);
+        
+        if (!devFolder.exists) {
+          
+          // alternative path 1...
+          destPath = Folder.desktop.toString();
+        }
+
+        var zipPath = destPath + '/templates.zip';
         zipContent(templatesStr, zipPath);
         openFolder(destPath);
       }
