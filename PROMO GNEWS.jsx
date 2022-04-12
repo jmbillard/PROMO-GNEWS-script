@@ -26,24 +26,30 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
     ExternalObject.AdobeXMPScript = new ExternalObject( "lib:AdobeXMPScript");
 }
 /* jshint ignore:start */
-#include 'JSON lib.jsxinc';
+#include 'JSON lib.jsxinc'; // JSON definition file...
 /* jshint ignore:end */
 
 function PROMO_GNEWS_UTL(thisObj) {
 
+  // current script version...
   var vStr = 'v 1.6';
+  
+  // app script network access preferences...
   var prefSection = 'Main Pref Section';
   var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
   var netConfigName = '"Allow Scripts to Write Files and Access Network"';
+  
+  // preferences folder path...
   var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script';
 
   /* jshint ignore:start */
- 
-  // ui definition file...
-  #include 'PROMO GNEWS ui.jsxinc';
- 
+  #include 'PROMO GNEWS ui.jsxinc'; // UI definition file...
   /* jshint ignore:end */
 
+  function netAccess() {
+    return app.preferences.getPrefAsLong(prefSection, prefName);
+  }
+  
   /*
 
   ---------------------------------------------------------------
@@ -55,14 +61,14 @@ function PROMO_GNEWS_UTL(thisObj) {
   var PROMO_GNEWS_WINDOW = PROMO_GNEWS_UI(thisObj);
 
   // checks network access...
-  if (!app.preferences.getPrefAsLong(prefSection, prefName)) {
+  if (!netAccess()) {
     alert('please check the ' + netConfigName + ' preference');
   
     // opens the scripting preferences...
     app.executeCommand(3131);
 
     // alert...
-    if (!app.preferences.getPrefAsLong(prefSection, prefName)) {
+    if (!netAccess()) {
       alert('no network...  Σ(っ °Д °;)っ');
     }
   }

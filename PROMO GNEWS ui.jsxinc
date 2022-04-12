@@ -8,27 +8,32 @@
 function PROMO_GNEWS_UI() {
 
   /* jshint ignore:start */
-
-  #include 'PROMO GNEWS src.jsxinc';
-  #include 'PROMO GNEWS exp.jsxinc';
-  #include 'PROMO GNEWS img.jsxinc';
-
+  #include 'PROMO GNEWS src.jsxinc';  // general functions...
+  #include 'PROMO GNEWS exp.jsxinc';  // expressions and fx controls...
+  #include 'PROMO GNEWS img.jsxinc';  // images and icons encoded as binary...
   /* jshint ignore:end */
 
-  var os = $.os;
-  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+  // current OS... 'Win' or 'Mac'...
+  var appOs = ($.os.indexOf('Win') >= 0) ? 'Win' : 'Mac';
+  
+  // github main repo...
+  var repoURL = 'https://github.com/jmbillard/PROMO-GNEWS-script';
 
+  // GNEWS brand colors...
   var GNEWS_RED = rgb(185, 20, 20);
   var GNEWS_BLK = rgb(20, 20, 20);
   var GNEWS_WTE = rgb(234, 234, 234);
 
+  // ui colors, labels and group names...
   var tabColors = [];
   var labelColors = [];
   var grpNames = [];
 
+  // loads all standard preferences...
   loadStaticPrefs();
   loadDefaultPrefs();
 
+  // loads all configurable preferences...
   try {
     var JSONFile = new File(scriptPreferencesPath + '/preferences.json');
 
@@ -37,13 +42,17 @@ function PROMO_GNEWS_UI() {
     }
   } catch (error) {}
 
-  var w = {};
+  // about and 'work in progress' messages...
   var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
   var wip = 'work in progress... Σ(っ °Д °;)っ';
-
+  
+  // writes on the 'info' window panel...
   clearOutput();
   write(aboutStr);
-
+  
+  // defines the window object...
+  var w = {};
+  
   if (thisObj instanceof Panel) {
     w = thisObj;
 
@@ -2217,7 +2226,7 @@ function PROMO_GNEWS_UI() {
 
     if (netAccess()) {
   
-      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/AME.zip?raw=true';
+      var url = repoURL + '/raw/main/AME.zip';
 
       var downPath = scriptPreferencesPath + '/temp';
       var dowFolder = new Folder(downPath);
@@ -2285,7 +2294,7 @@ function PROMO_GNEWS_UI() {
     if (netAccess()) {
       
       // github main repo...
-      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates.zip?raw=true';
+      var url = repoURL + '/raw/main/templates.zip';
  
       var downPath = scriptPreferencesPath + '/temp';
       var dowFolder = new Folder(downPath);
@@ -2379,7 +2388,7 @@ function PROMO_GNEWS_UI() {
     if (netAccess()) {
       
       // github main repo...
-      var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/fonts.zip?raw=true';
+      var url = repoURL + '/raw/main/fonts.zip';
  
       var downPath = scriptPreferencesPath + '/temp';
       var dowFolder = new Folder(downPath);
@@ -2629,7 +2638,7 @@ function PROMO_GNEWS_UI() {
 
     if (c.button == 2) {
 
-      var site = 'https://github.com/jmbillard/PROMO-GNEWS-script';
+      var site = repoURL;
       var msg = netConfigName + ' not checked';
   
       if (netAccess()) {

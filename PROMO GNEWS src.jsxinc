@@ -10,13 +10,6 @@
 //  jshint -W061
 //  jshint -W085
 
-function netAccess() {
-  
-  var prefSection = 'Main Pref Section';
-  var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
-
-  return app.preferences.getPrefAsLong(prefSection, prefName);
-}
 
 function getTempFld() {
 
@@ -2648,7 +2641,7 @@ function templateDialog(templatesPath) {
   
       if (netAccess()) {
         
-        var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates.zip?raw=true';
+        var url = repoURL + '/raw/main/templates.zip';
    
         var downPath = scriptPreferencesPath + '/temp';
         var dowFolder = new Folder(downPath);
@@ -2724,7 +2717,7 @@ function fontsDialog(path) {
   
       if (netAccess()) {
         
-        var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/fonts.zip?raw=true';
+        var url = repoURL + '/raw/main/fonts.zip';
    
         var downPath = scriptPreferencesPath + '/temp';
         var dowFolder = new Folder(downPath);
