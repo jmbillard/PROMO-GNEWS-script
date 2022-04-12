@@ -46,6 +46,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   #include 'PROMO GNEWS ui.jsxinc'; // UI definition file...
   /* jshint ignore:end */
 
+  // gets the current value for the network permission preference...
   function netAccess() {
     return app.preferences.getPrefAsLong(prefSection, prefName);
   }
@@ -53,7 +54,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   /*
 
   ---------------------------------------------------------------
-   > show ui
+   > run...
   ---------------------------------------------------------------
 
   */
@@ -78,4 +79,6 @@ function PROMO_GNEWS_UTL(thisObj) {
   }
   return PROMO_GNEWS_WINDOW;
 }
+
+// finally runs everything... ヽ(✿ﾟ▽ﾟ)ノ
 PROMO_GNEWS_UTL(this);
