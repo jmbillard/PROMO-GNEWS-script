@@ -499,15 +499,15 @@ function PROMO_GNEWS_UI() {
 
   */
   
-  var importFontsBtn = appGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
-  importFontsBtn.helpTip = 'install fonts | open fonts folder';
+  var installFontsBtn = appGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
+  installFontsBtn.helpTip = 'install fonts | open fonts folder';
   
   appGrp.add('image', undefined, vSpacer);
   
-  var importAetBtn = appGrp.add('iconbutton', undefined, templateIcon, {style: 'toolbutton'});
+  var importAetBtn = appGrp.add('iconbutton', undefined, aetIcon, {style: 'toolbutton'});
   importAetBtn.helpTip = 'import templates | open templates folder';
   
-  var zipTemplatesBtn = appGrp.add('iconbutton', undefined, solTogIcon, {style: 'toolbutton'});
+  var zipTemplatesBtn = appGrp.add('iconbutton', undefined, zipIcon, {style: 'toolbutton'});
   zipTemplatesBtn.helpTip = 'zip the templates folder';
   
   appGrp.add('image', undefined, vSpacer);
@@ -2343,7 +2343,7 @@ function PROMO_GNEWS_UI() {
     }
   };
 
-  importFontsBtn.addEventListener ('click', function (c) {
+  installFontsBtn.addEventListener ('click', function (c) {
   
     if (c.button == 2) {
 
@@ -2366,12 +2366,15 @@ function PROMO_GNEWS_UI() {
     }
   });
   
-  importFontsBtn.onClick = function() {
+  installFontsBtn.onClick = function() {
 
+    // error message...
     var msg = netConfigName + ' not checked';
 
+    // checks if the script can access the network...
     if (netAccess()) {
       
+      // github main repo...
       var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/fonts.zip?raw=true';
  
       var downPath = scriptPreferencesPath + '/temp';
@@ -2389,14 +2392,8 @@ function PROMO_GNEWS_UI() {
         getURLContent([url], [downPath]);
         unzipContent(zipPath, fontsPath);
       }
-      var os = $.os;
-      var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
-      
-      if (appOs == 'Win') {
-
-        installFonts(fontsPath);
-      }
-
+      fontsDialog(fontsPath);
+  
     } else {
       showTabErr(msg);
     }

@@ -602,8 +602,8 @@ function titleCase(str) {
   str = str.join(' ');
   str = str.split(/\n|\r/);
 
-  for (var i = 0; i < str.length; i++) {
-    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+  for (var t = 0; t < str.length; t++) {
+    str[t] = str[t].charAt(0).toUpperCase() + str[t].slice(1);
   }
 
   return str.join('\n');
@@ -1446,7 +1446,7 @@ function copyFolderContent(src, dst) {
         } catch (error) {}
 
         if (subArray.length > 0) {
-          copyFolderContent(decodeURI(aFile.fullName).toString(), dst)
+          copyFolderContent(decodeURI(aFile.fullName).toString(), dst);
         
         } else {
 
@@ -1464,47 +1464,43 @@ function installFonts (fontsPath) {
 
   var srcFolder = new Folder(fontsPath);
   var filesArray = [];
+  var filter = ['.ttf', '.otf'];
   
   if (srcFolder.exists) {
     filesArray = srcFolder.getFiles();
     
     if (filesArray.length > 0) {
       var installFontsPS = '$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14);';
-      installFontsPS += '$TempFolder = \'C:/Windows/Temp/Fonts\';';
-      installFontsPS += 'New-Item $TempFolder -Type Directory -Force | Out-Null;';
       
       for (var i = 0; i < filesArray.length; i++) {
         var aFile = filesArray[i];
         var aFileName = File.decode(aFile.displayName).toString();
         var subArray = [];
-
+        
         try {
           subArray = new Folder(decodeURI(aFile.fullName).toString()).getFiles();
         } catch (error) {}
         
         if (subArray.length > 0) {
-          installFontsPS = '';
-          installFonts(decodeURI(aFile.fullName).toString())
-          
+          installFonts(decodeURI(aFile.fullName).toString());
+
+          continue;
         } else {
-          installFontsPS += '$SourceDir = \'' + decodeURI(aFile.path) + '\';';
-          installFontsPS += 'New-Item -ItemType Directory -Force -Path $SourceDir;';
-          installFontsPS += '$Font = \'C:\\Windows\\Temp\\Fonts\\' + aFileName + '\';';
-          installFontsPS += 'Copy-Item \'' + decodeURI(aFile.fullName) + '\' -Destination $TempFolder;';
-          installFontsPS += '$Destination.CopyHere($Font);';
-          installFontsPS += 'Remove-Item $Font -Force;';
+          
+          if (filter.indexOf(getFileExt(aFileName)) >= 0) {
+            var aFontPath = fontsPath.replace(/\~/, 'C:/Users/' + system.userName.toString());
+            aFontPath = aFontPath.replace(/\//g, '\\');
+            installFontsPS += '$Destination.CopyHere(\'' + aFontPath + '\\' + aFileName + '\');';
+            
+          } else {
+            continue;
+          }
         }
       }
-      if (installFontsPS != '') {
-        //installFontsPS = installFontsPS.replace(/\//g, '\\');
-        var cmdStr = 'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
-        system.callSystem(cmdStr);
-      }
+      var cmdStr = 'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
+      system.callSystem(cmdStr);
     }
   }
-
-  //var cmdStr = 'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
-
 }
 
 function getURLContent(urlArray, dstArray) {
@@ -2506,24 +2502,23 @@ function getGPrefs(file) {
 function createHierarchy(array, node) {
 
   for (var n = 0; n < array.length; n++) {
-
     var dName = array[n].displayName;
     var subArray = [];
+    var filter = ['.aep', '.aet'];
 
     try {
       subArray = new Folder(array[n]).getFiles();
     } catch (error) {}
       
     if (subArray.length > 0) {
-
       nodeItem = node.add('node', dName);
       nodeItem.image = fldTogIcon;
       
       createHierarchy(subArray, nodeItem);
+
     } else {
 
-      if (getFileExt(dName) == '.aep' || getFileExt(dName) == '.aet') {
-        
+      if (filter.indexOf(getFileExt(dName)) >= 0) {
         var templateItem = node.add('item', dName);
         templateItem.image = templateListIcon;
       }
@@ -2537,10 +2532,35 @@ function buildTree(folder, tree) {
   
   var templatesArray = folder.getFiles();
 
-  var foderNode = tree.add('node', folder.displayName);
-  foderNode.image = fldTogIcon;
+  var folderNode = tree.add('node', folder.displayName);
+  folderNode.image = fldTogIcon;
   
-  createHierarchy(templatesArray, foderNode);
+  createHierarchy(templatesArray, folderNode);
+}
+
+function buildFontTree(folder, tree) {
+
+  tree.remove(tree.items[0]);
+  
+  var fontsArray = folder.getFiles();
+
+  var folderNode = tree.add('node', folder.displayName);
+  folderNode.image = fldTogIcon;
+  
+  for (var n = 0; n < fontsArray.length; n++) {
+
+    var fName = fontsArray[n].displayName;
+    var subArray = [];
+
+    try {
+      subArray = new Folder(fontsArray[n]).getFiles();
+    } catch (error) {}
+      
+    if (subArray.length > 0) {
+      var fontFamilyItem = folderNode.add('item', fName);
+      fontFamilyItem.image = fontFamilyIcon;
+    }
+  }
 }
 
 function expandNodes(nodeTree) {
@@ -2667,6 +2687,84 @@ function templateDialog(path) {
   w.show();
 }
 
+function fontsDialog(path) {
+
+  var treeFolder = new Folder(path);
+  
+  var w = new Window('dialog', 'import options...');
+  var tree = w.add('treeview', [0, 0, 250, 380]);
+  buildFontTree(treeFolder, tree);
+
+  var bGroup = w.add('group');
+  var refreshBtn = bGroup.add('button', undefined, 'refresh');
+  refreshBtn.helpTip = 'refresh list content | downloads the latest fonts';
+  var installBtn = bGroup.add('button', undefined, 'install');
+  installBtn.helpTip = 'install selected fonts';
+  installBtn.enabled = tree.selection != null;
+  
+  tree.onChange = function () {
+    
+    // node folders should not be selectable...
+    if (tree.selection != null && tree.selection.type == 'node') {
+      tree.selection = null;
+    }
+    installBtn.enabled = tree.selection != null;
+  };
+
+  w.onShow = function () {
+    expandNodes(tree);
+  };
+      
+  installBtn.onClick = function () {
+
+    var fontFamilyName = tree.selection.toString();
+    var fontFamilyPath = path + '/' + fontFamilyName;
+    var fontFamilyFolder = new Folder(fontFamilyPath);
+
+    if (fontFamilyFolder.exists) {
+      var os = $.os;
+      var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+      
+      if (appOs == 'Win') {
+        installFonts(fontFamilyPath.toString());
+      }
+    }
+  };
+
+  refreshBtn.addEventListener ('click', function (c) {
+  
+    if (c.button == 2) {
+  
+      if (netAccess()) {
+        
+        var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/fonts.zip?raw=true';
+   
+        var downPath = scriptPreferencesPath + '/temp';
+        var dowFolder = new Folder(downPath);
+        var zipPath = downPath + '/fonts.zip';
+        var fontsPath = scriptPreferencesPath + '/fonts';
+        
+        if (!dowFolder.exists) {
+          
+          dowFolder.create();
+        }
+        getURLContent([url], [downPath]);
+        unzipContent(zipPath, fontsPath);
+      }
+      buildFontTree(treeFolder, tree);
+      expandNodes(tree);  
+    }
+  });
+
+  refreshBtn.onClick = function () {
+
+    buildFontTree(treeFolder, tree);
+    expandNodes(tree);
+  };
+  
+  w.show();
+}
+
 /*
 
 ---------------------------------------------------------------
@@ -2704,16 +2802,16 @@ function setXMPdata(XMPfield, XMPval) {
 
 // image resize to fit dimensions...
 Image.prototype.onDraw = function () {
-  // written by Marc Autret
-  // "this" is the container; "this.image" is the graphic
+  
+  // 'this' is the container and 'this.image' is the graphic
   if (!this.image) return;
   var WH = this.size,
     wh = this.image.size,
     k = Math.min(WH[0] / wh[0], WH[1] / wh[1]),
     xy;
-  // Resize proportionally:
+  // Resize proportionally...
   wh = [k * wh[0], k * wh[1]];
-  // Center:
+  // Center...
   xy = [(WH[0] - wh[0]) / 2, (WH[1] - wh[1]) / 2];
   this.graphics.drawImage(this.image, xy[0], xy[1], wh[0], wh[1]);
   WH = wh = xy = null;
