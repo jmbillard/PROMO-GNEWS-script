@@ -1427,26 +1427,84 @@ function fontCollect(savePath) {
 
 function copyFolderContent(src, dst) {
 
-
   var srcFolder = new Folder(src);
   var dstFolder = new Folder(dst);
   var filesArray = [];
   
   if (srcFolder.exists) {
     filesArray = srcFolder.getFiles();
-    for (i = 0; i < filesArray.length; i++) {
     
-      var aFile = filesArray[i];
-      var aFileName = File.decode(aFile.fsName).toString();
-      aFileName = aFileName.match(/[^\\|\/]*$/i).toString();
+    if (filesArray.length > 0) {
       
-      if (dstFolder.exists) {
+      for (var i = 0; i < filesArray.length; i++) {
+        var aFile = filesArray[i];
+        var aFileName = File.decode(aFile.displayName).toString();
+        var subArray = [];
+    
+        try {
+          subArray = new Folder(decodeURI(aFile.fullName).toString()).getFiles();
+        } catch (error) {}
 
-        var cFile = new File(dst + '/' + aFileName);
-        aFile.copy(cFile);        
+        if (subArray.length > 0) {
+          copyFolderContent(decodeURI(aFile.fullName).toString(), dst)
+        
+        } else {
+
+          if (dstFolder.exists) {
+            var cFile = new File(dst + '/' + aFileName);
+            aFile.copy(cFile);        
+          }
+        }
       }
     }
   }
+}
+
+function installFonts (fontsPath) {
+
+  var srcFolder = new Folder(fontsPath);
+  var filesArray = [];
+  
+  if (srcFolder.exists) {
+    filesArray = srcFolder.getFiles();
+    
+    if (filesArray.length > 0) {
+      var installFontsPS = '$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14);';
+      installFontsPS += '$TempFolder = \'C:/Windows/Temp/Fonts\';';
+      installFontsPS += 'New-Item $TempFolder -Type Directory -Force | Out-Null;';
+      
+      for (var i = 0; i < filesArray.length; i++) {
+        var aFile = filesArray[i];
+        var aFileName = File.decode(aFile.displayName).toString();
+        var subArray = [];
+
+        try {
+          subArray = new Folder(decodeURI(aFile.fullName).toString()).getFiles();
+        } catch (error) {}
+        
+        if (subArray.length > 0) {
+          installFontsPS = '';
+          installFonts(decodeURI(aFile.fullName).toString())
+          
+        } else {
+          installFontsPS += '$SourceDir = \'' + decodeURI(aFile.path) + '\';';
+          installFontsPS += 'New-Item -ItemType Directory -Force -Path $SourceDir;';
+          installFontsPS += '$Font = \'C:\\Windows\\Temp\\Fonts\\' + aFileName + '\';';
+          installFontsPS += 'Copy-Item \'' + decodeURI(aFile.fullName) + '\' -Destination $TempFolder;';
+          installFontsPS += '$Destination.CopyHere($Font);';
+          installFontsPS += 'Remove-Item $Font -Force;';
+        }
+      }
+      if (installFontsPS != '') {
+        //installFontsPS = installFontsPS.replace(/\//g, '\\');
+        var cmdStr = 'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
+        system.callSystem(cmdStr);
+      }
+    }
+  }
+
+  //var cmdStr = 'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
+
 }
 
 function getURLContent(urlArray, dstArray) {
@@ -1457,7 +1515,7 @@ function getURLContent(urlArray, dstArray) {
   if (appOs == 'Win') {
     var cmd = '';
     
-    for (i = 0; i < urlArray.length; i++) {
+    for (var i = 0; i < urlArray.length; i++) {
       // get only the NOT '\' OR '/' at the end...
       var fileName = decodeURI(urlArray[i].match(/[^\\|\/]*$/i));
       // removes any character after the '?' at the end...

@@ -2274,10 +2274,13 @@ function PROMO_GNEWS_UI() {
   
   importAetBtn.onClick = function() {
 
+    // error message...
     var msg = netConfigName + ' not checked';
 
+    // checks if the script can access the network...
     if (netAccess()) {
       
+      // github main repo...
       var url = 'https://github.com/jmbillard/PROMO-GNEWS-script/blob/main/templates.zip?raw=true';
  
       var downPath = scriptPreferencesPath + '/temp';
@@ -2391,19 +2394,9 @@ function PROMO_GNEWS_UI() {
       
       if (appOs == 'Win') {
 
-        var fontsSysPath = Folder.system.parent.toString() + '/Fonts';
-        var fontsSysFolder = new Folder(fontsSysPath);
-        
-      if (fontsSysFolder.exists) {
-            
-          try {
-            // recursion inside font family folders...
-            // copy all font files (.ttf, .otf) to system fonts folder...
-          } catch (error) {}
-        }
+        installFonts(fontsPath);
       }
-      openFolder(fontsPath);
-  
+
     } else {
       showTabErr(msg);
     }
