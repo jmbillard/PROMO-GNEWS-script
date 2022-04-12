@@ -15,9 +15,13 @@ function PROMO_GNEWS_UI() {
 
   /* jshint ignore:end */
 
+  var os = $.os;
+  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
+
   var GNEWS_RED = rgb(185, 20, 20);
   var GNEWS_BLK = rgb(20, 20, 20);
   var GNEWS_WTE = rgb(234, 234, 234);
+
   var tabColors = [];
   var labelColors = [];
   var grpNames = [];

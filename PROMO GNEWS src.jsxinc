@@ -66,9 +66,6 @@ function addPseudoEffect(aLayer, fxMatchName, fxName, binStr) {
 // open url...
 function openWebSite(url) {
 
-  var os = $.os;
-  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
-
   if (appOs == 'Win') {
     system.callSystem('explorer ' + url);
 
@@ -79,9 +76,6 @@ function openWebSite(url) {
 
 // open system folder...
 function openFolder(folderPath) {
-
-  var os = $.os;
-  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
   
   var folder = Folder(folderPath);
   
@@ -348,21 +342,6 @@ function setHierarchy(selLayer, ctrlLayer) {
       ctrlLayerTrm.property(i).dimensionsSeparated = true;
     }
   }
-}
-
-function chkArray(aArray, aElement) {
-
-  var chk = true;
-
-  for (i = 0; i < aArray.length; i++) {
-
-    if (aArray[i] == aElement) {
-      chk = false;
-      break;
-    }
-  }
-
-  return chk;
 }
 
 function chkDep() {
@@ -1090,7 +1069,7 @@ function populateFolders() {
 
     for (s = 0; s < stl.length; s++) {
 
-      if (chkArray(doneArray, stl[s])) {
+      if (doneArray.indexOf(stl[s]) >= 0) {
         stl[s].parentFolder = imgFolder;
         sameFileArray = [stl[s]];
 
@@ -1173,7 +1152,7 @@ function fileArrayCopyAndReplace(ftgItemArray, folder) {
         sameFileArray.push(ftgItemArray[f]);
       }
     }
-    if (chkArray(doneArray, ftgItemArray[i])) {
+    if (doneArray.indexOf(ftgItemArray[i]) >= 0) {
 
       if (decodeURI(ftgFile.path) != decodeURI(folder.fullName)) {
         fldFilesArray = folder.getFiles();
@@ -1199,11 +1178,11 @@ function fileArrayCopyAndReplace(ftgItemArray, folder) {
 
         for (c = 0; c < sameFileArray.length; c++) {
 
-          if (chkArray(doneArray, sameFileArray[c])) {
+          if (doneArray.indexOf(sameFileArray[c]) >= 0) {
 
             if (sameFileArray.length > 1 && (ftgExt == '.ai' || ftgExt == '.psd')) {
 
-              if (chkArray(layerFilesArray, (fileName + ftgExt))) {
+              if (layerFilesArray.indexOf(fileName + ftgExt) >= 0) {
                 layerFilesArray.push(fileName + ftgExt);
               }
 
@@ -1255,7 +1234,7 @@ function seqArrayCopyAndReplace(seqArray, folder) {
         sameFileArray.push(seqArray[f][0]);
       }
     }
-    if (chkArray(doneArray, seqArray[i][0])) {
+    if (doneArray.indexOf(seqArray[i][0]) >= 0) {
 
       if (decodeURI(seqFile.parent.parent).toString() != decodeURI(folder).toString()) {
         frameCount = seqArray[i][2];
@@ -1302,7 +1281,7 @@ function seqArrayCopyAndReplace(seqArray, folder) {
     }
     for (c = 0; c < sameFileArray.length; c++) {
 
-      if (chkArray(doneArray, sameFileArray[c])) {
+      if (doneArray.indexOf(sameFileArray[c]) >= 0) {
         sameFileArray[c].replaceWithSequence(seqCFile, false);
         doneArray.push(sameFileArray[c]);
       }
@@ -1392,19 +1371,14 @@ function fontCollect(savePath) {
         var aLayer = aItem.layer(l);
 
         if (aLayer instanceof TextLayer) {
-
           var textProp = aLayer.property(txtProp);
           var textDoc = textProp.property(txtDoc).value;
           var fontName = textDoc.font;
-          var fchk = chkArray(fontArray, fontName);
 
           if (textDoc.fontLocation == '') {
-
             alert(fontName + ' not found... >_<');
 
-
-          } else if (fchk) {
-
+          } else if (fontArray.indexOf(fontName) >= 0) {
             var fontFolder = new Folder(savePath + '/fonts/');
             var fontCPath = fontFolder.absoluteURI + '/';
             var fontPath = decodeURI(textDoc.fontLocation);
@@ -1504,9 +1478,6 @@ function installFonts (fontsPath) {
 }
 
 function getURLContent(urlArray, dstArray) {
-
-  var os = $.os;
-  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
   
   if (appOs == 'Win') {
     var cmd = '';
@@ -1526,9 +1497,6 @@ function getURLContent(urlArray, dstArray) {
 }
 
 function unzipContent(zipPath, dstPath) {
-
-  var os = $.os;
-  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
   
   if (appOs == 'Win') {
     var cmd = 'Expand-Archive -Path \'' + zipPath + '\' -DestinationPath \'' + dstPath + '\'  -Force;';
@@ -1539,9 +1507,6 @@ function unzipContent(zipPath, dstPath) {
 }
 
 function zipContent(path, zipPath) {
-
-  var os = $.os;
-  var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
   
   if (appOs == 'Win') {
     var cmd = 'Compress-Archive -Path \'' + path + '\' -DestinationPath \'' + zipPath + '\' -CompressionLevel Optimal -Force;';
@@ -2326,7 +2291,7 @@ function loadDefaultPrefs() {
       'tools':'#6EA57D',
       'project':'#00B5C2',
       'app':'#5F3691',
-      'links':'#6E489B',
+      'links':'#6E489B'
       },
 
     "label":{
@@ -2429,41 +2394,51 @@ function readFile(file) {
   return fileContent;
 }
 
+// creates the preferences obj in a JSON formatted string...
 function prefsObj() {
 
   var objStr = '';
   objStr += '{\n';
   objStr += '\t"color":{';
 
+  // formats all the tab colors...
   for (i = 0; i < grpNames.length; i++) {
-
     var c = rgbToHex(tabColors[i]).replace('0x', '#').toUpperCase();
     objStr += '\n\t\t"' + grpNames[i] + '":"' + c + '",';
   }
+  // removes the last ','...
+  objStr = objStr.substring(0, objStr.length-1);
   objStr += '\n\t},\n\n';
   objStr += '\t"label":{';
 
+  // formats all the label colors...
   for (i = 0; i < labelColors.length; i++) {
-
     var l = rgbToHex(labelColors[i]).replace('0x', '#').toUpperCase(); 
     objStr += '\n\t\t"l' + (i + 1) + '":"' + l + '",';
   }
   objStr = objStr.substring(0, objStr.length-1);
   objStr += '\n\t},\n\n';
+
+  // folder paths...
   objStr += '\t"folders":{\n';
   objStr += '\t\t"arte":"' +   artePath + '",\n';
   objStr += '\t\t"magazine":"' +   magPath + '"\n';
   objStr += '\n\t},\n\n';
+
+  // preferences dropdown selections...
   objStr += '\t"selection":{\n';
   objStr += '\t\t"layerType":' +   lDropSel + ',\n';
   objStr += '\t\t"projectModel":' +   projMDropSel + '\n';
   objStr += '\n\t},\n\n';
+
+  // user prefix...
   objStr += '\t"user":"' +  userPrefix.toUpperCase() + '"\n';
   objStr += '}';
 
   return objStr;
 }
 
+// loads the current saved preferences...
 function getGPrefs(file) {
   
   var JSONContent = readFile(file);
@@ -2472,70 +2447,83 @@ function getGPrefs(file) {
   tabColors = [];
   labelColors = [];
 
+  // saved tab colors...
   for (var t = 0; t < grpNames.length; t++) {
     try {
       tabColors.push(hexToRGB(JSONObj.color[grpNames[t]]));
     } catch (error) {}
   }
+
+  // saved label colors...
   for (var l = 1; l <= 16; l++) {
     try {
       labelColors.push(hexToRGB(JSONObj.label['l' + l]));
     } catch (error) {}
   }
+
+  // saved folder paths...
   try {
     artePath = JSONObj.folders.arte;
   } catch (error) {}
   try {
     magPath = JSONObj.folders.magazine;
   } catch (error) {}
+
+  // saved preferences dropdown selections...
   try {
     lDropSel = JSONObj.selection.layerType;
   } catch (error) {}
   try {
     projMDropSel = JSONObj.selection.projectModel;
   } catch (error) {}
+
+  // user prefix...
   try {
     userPrefix = JSONObj.user;
   } catch (error) {}
 }
 
-function createHierarchy(array, node) {
+// populates the 'tree view' node hierarchy...
+function createHierarchy(array, node, fileTypes) {
 
   for (var n = 0; n < array.length; n++) {
-    var dName = array[n].displayName;
+    var nodeName = array[n].displayName;
     var subArray = [];
-    var filter = ['.aep', '.aet'];
-
+  
     try {
       subArray = new Folder(array[n]).getFiles();
     } catch (error) {}
       
     if (subArray.length > 0) {
-      nodeItem = node.add('node', dName);
+      nodeItem = node.add('node', nodeName);
       nodeItem.image = fldTogIcon;
       
-      createHierarchy(subArray, nodeItem);
+      createHierarchy(subArray, nodeItem, fileTypes);
 
     } else {
 
-      if (filter.indexOf(getFileExt(dName)) >= 0) {
-        var templateItem = node.add('item', dName);
+      if (fileTypes.indexOf(getFileExt(nodeName)) >= 0) {
+        var templateItem = node.add('item', nodeName);
         templateItem.image = templateListIcon;
       }
     }
   }
 }
 
-function buildTree(folder, tree) {
+// refreshes the main 'tree view' node...
+function buildTree(folder, tree, fileTypes) {
 
+  // removes the 'root' node...
   tree.remove(tree.items[0]);
   
-  var templatesArray = folder.getFiles();
+  var folderContentArray = folder.getFiles();
 
+  // adds a new 'root' node...
   var folderNode = tree.add('node', folder.displayName);
   folderNode.image = fldTogIcon;
   
-  createHierarchy(templatesArray, folderNode);
+  // starts the recursive population...
+  createHierarchy(folderContentArray, folderNode, fileTypes);
 }
 
 function buildFontTree(folder, tree) {
@@ -2563,6 +2551,7 @@ function buildFontTree(folder, tree) {
   }
 }
 
+// expands all 'tree view' nodes...
 function expandNodes(nodeTree) {
 
   nodeTree.expanded = true;
@@ -2576,17 +2565,17 @@ function expandNodes(nodeTree) {
   }
 }
 
-function templateDialog(path) {
+// import templates UI...
+function templateDialog(templatesPath) {
 
   var wHeight;
-  // var templateSelectionPath;
   var previewScale = 0.13;
 
-  var treeFolder = new Folder(path);
+  var treeFolder = new Folder(templatesPath);
   
   var w = new Window('dialog', 'import options...');
   var tree = w.add('treeview', [0, 0, 250, 380]);
-  buildTree(treeFolder, tree);
+  buildTree(treeFolder, tree, ['.aep', '.aet']);
 
   var bGroup = w.add('group');
   var refreshBtn = bGroup.add('button', undefined, 'refresh');
@@ -2595,7 +2584,7 @@ function templateDialog(path) {
   importBtn.helpTip = 'import selected template';
   importBtn.enabled = tree.selection != null;
 
-  var previewImg = w.add ("image", undefined, File(path + '/ON-AIR/assinatura padrao.png'));
+  var previewImg = w.add ("image", undefined, undefined);
   previewImg.size = [1920 * previewScale, 1080 * previewScale];
   
   tree.onChange = function () {
@@ -2616,7 +2605,7 @@ function templateDialog(path) {
         s = s.parent;
         fileName = s.toString() + '/' + fileName;
       }
-      var previewImgFile = new File(path + '/' + fileName);
+      var previewImgFile = new File(templatesPath + '/' + fileName);
 
       if (previewImgFile.exists) {
 
@@ -2722,8 +2711,6 @@ function fontsDialog(path) {
     var fontFamilyFolder = new Folder(fontFamilyPath);
 
     if (fontFamilyFolder.exists) {
-      var os = $.os;
-      var appOs = (os.indexOf('Win') != -1) ? 'Win' : 'Mac';
       
       if (appOs == 'Win') {
         installFonts(fontFamilyPath.toString());
