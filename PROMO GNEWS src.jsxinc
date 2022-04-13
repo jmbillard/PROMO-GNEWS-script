@@ -2286,7 +2286,6 @@ function loadStaticPrefs() {
   camPrefix = 'cam';
   lgtPrefix = 'lgt';
   ctrlPrefix = 'ctrl';
-  userPrefix = 'user';
   mattePrefix = 'matte';
 
   // prefix separator...
@@ -2358,14 +2357,14 @@ function loadDefaultPrefs() {
   tabColors = [];
   labelColors = [];
 
-  for (i = 0; i < grpNames.length; i++) {
+  for (var t = 0; t < grpNames.length; t++) {
 
-    tabColors.push(hexToRGB(defPrefs.color[grpNames[i]]));
+    tabColors.push(hexToRGB(defPrefs.color[grpNames[t]]));
   }
 
-  for (i = 1; i <= 16; i++) {
+  for (var l = 1; l <= 16; l++) {
 
-    labelColors.push(hexToRGB(defPrefs.label['l' + i]));
+    labelColors.push(hexToRGB(defPrefs.label['l' + l]));
   }
   artePath = defPrefs.folders.arte;
   magPath = defPrefs.folders.magazine;
@@ -2389,6 +2388,7 @@ function saveGPrefs() {
   return saveFile(setStr, filePath, fileName);
 }
 
+// project panel comments as item settings...
 function itemSetting(aItem, settingName) {
 
   var str = aItem.comment;
