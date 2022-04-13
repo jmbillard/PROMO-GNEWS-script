@@ -2591,12 +2591,13 @@ function templateDialog(templatesPath) {
 
   var wHeight;
   var previewScale = 0.13;
+  var fileFilter = ['.aep', '.aet'];
 
   var treeFolder = new Folder(templatesPath);
   
   var w = new Window('dialog', 'import options...');
   var tree = w.add('treeview', [0, 0, 250, 380]);
-  buildTree(treeFolder, tree, ['.aep', '.aet']);
+  buildTree(treeFolder, tree, fileFilter);
 
   var bGroup = w.add('group');
   var refreshBtn = bGroup.add('button', undefined, 'refresh');
@@ -2683,14 +2684,14 @@ function templateDialog(templatesPath) {
         getURLContent([url], [downPath]);
         unzipContent(zipPath, templatesPath);
       }
-      buildTree(treeFolder, tree);
+      buildTree(treeFolder, tree, fileFilter);
       expandNodes(tree);  
     }
   });
 
   refreshBtn.onClick = function () {
 
-    buildTree(treeFolder, tree);
+    buildTree(treeFolder, tree, fileFilter);
     expandNodes(tree);
   };
 
