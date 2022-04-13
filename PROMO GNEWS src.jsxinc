@@ -2004,7 +2004,6 @@ function setLayout() {
   wLayout = (w.size.width > w.size.height) ? 'row' : 'column';
 
   if (wLayout == 'row') {
-
     // horizontal layout
     imgAlignment = 'left';
     errImgAlignment = 'left';
@@ -2019,8 +2018,7 @@ function setLayout() {
 
     mainGrp.spacing = 10;
 
-    for (i = 0; i < tabs.length; i++) {
-
+    for (var i = 0; i < tabs.length; i++) {
       tabs[i].spacing = 10;
     }
     preferencesGrp.spacing = 10;
@@ -2052,7 +2050,6 @@ function setLayout() {
     progTxt2.size.width = 160;
 
   } else {
-
     // vertical layout
     imgAlignment = 'bottom';
     errImgAlignment = 'center';
@@ -2067,11 +2064,6 @@ function setLayout() {
 
     mainGrp.spacing = 2;
     menuGrp.spacing = 2;
-
-    for (i = 1; i < tabs.length; i++) {
-
-      tabs[i].spacing = 5;
-    }
     preferencesGrp.spacing = 5;
     // text tab - limit text horizontal controls
     limitSld.visible = false;
@@ -2101,14 +2093,13 @@ function setLayout() {
     progTxt2.size.width = 0;
   }
   // all tab subgroups
-  for (i = 0; i < tabSubGrps.length; i++) {
-
-    tabSubGrps[i].orientation = wLayout;
+  for (var s = 0; s < tabSubGrps.length; s++) {
+    tabSubGrps[s].orientation = wLayout;
   }
   // all tabs
-  for (i = 0; i < tabs.length; i++) {
-
-    tabs[i].orientation = wLayout;
+  for (var t = 0; t < tabs.length; t++) {
+    tabs[t].orientation = wLayout;
+    tabs[t].spacing = 5;
   }
   preferencesGrp.orientation = wLayout;
   imgGrp.alignment = imgAlignment;
@@ -2118,7 +2109,6 @@ function setLayout() {
   errTabGrp.orientation = wLayout;
   closeGrp.alignment = closeAlignment;
   prefGrp.alignment = closeAlignment;
-
 
   updateLayout();
 }
@@ -2148,8 +2138,8 @@ function updateLayout() {
 // turns off all tab groups visibility...
 function allGrpGone() {
 
-  for (i = 1; i < tabs.length; i++) {
-    tabs[i].visible = false;
+  for (var t = 1; t < tabs.length; t++) {
+    tabs[t].visible = false;
   }
   preferencesGrp.visible = false;
   errTabGrp.visible = false;
