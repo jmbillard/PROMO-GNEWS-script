@@ -163,7 +163,7 @@ function PROMO_GNEWS_UI() {
   txtBtn.helpTip = 'text case and line breaking';
   // pallet tab button...
   var palletBtn = menuGrp.add('iconbutton', undefined, paletteIcon, {style: 'toolbutton'});
-  palletBtn.helpTip = 'color palette';
+  palletBtn.helpTip = 'color, guides and branding';
   // layers tab button...
   var layerBtn = menuGrp.add('iconbutton', undefined, layerIcon, {style: 'toolbutton'});
   layerBtn.helpTip = 'rename and sequence layers';
@@ -500,7 +500,7 @@ function PROMO_GNEWS_UI() {
 
   projectGrp.add('image', undefined, vSpacer);
 
-  var projOrgBtn = projectGrp.add('iconbutton', undefined, orgProjIcon, {style: 'toolbutton'});
+  var projOrgBtn = projectGrp.add('iconbutton', undefined, templateIcon, {style: 'toolbutton'});
   projOrgBtn.helpTip = 'quick project organization';
 
   projectGrp.add('image', undefined, vSpacer);
@@ -696,14 +696,16 @@ function PROMO_GNEWS_UI() {
   //
   w.layout.layout(true);
 
+  // layouts all the UI
   w.onShow = function() {
     setLayout();
   };
-
+  // layouts all the UI
   w.onResizing = w.onResize = function() {
     setLayout();
   };
 
+  // menu is the current selected and viewed group by default... 
   var currentGrp = menuGrp;
   var bgColor = tabColors[tabs.indexOf(menuGrp)];
   setBgColor(bgColor);
