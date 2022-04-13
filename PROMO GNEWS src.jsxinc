@@ -557,7 +557,7 @@ function gaussRnd(samples) {
 /*
 
 ---------------------------------------------------------------
-# string functions
+> string functions
 ---------------------------------------------------------------
 
 */
@@ -796,7 +796,7 @@ function deletePrefix(str, prefixStr) {
 /*
 
 ---------------------------------------------------------------
-# project organization and renaming
+> 🗃️ project organization and renaming
 ---------------------------------------------------------------
 
 */
@@ -2231,11 +2231,10 @@ function showTabProg(msg) {
   write(msg);
 }
 
-
 /*
 
 ---------------------------------------------------------------
-# ⚙️ script preferences
+> ⚙️ script preferences
 ---------------------------------------------------------------
 
 */

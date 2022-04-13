@@ -248,7 +248,7 @@ function PROMO_GNEWS_UI() {
   var pasteInfBtn = currentGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
   pasteInfBtn.helpTip = 'paste keyframe influence';
 
-  currentGrp.add('image', undefined, vSpacer);
+  // currentGrp.add('image', undefined, vSpacer);
 
   // sub group...
   var animationSubGrp1 = currentGrp.add('group');
@@ -2728,7 +2728,7 @@ function PROMO_GNEWS_UI() {
   /*
 
   ---------------------------------------------------------------
-  > close group events
+  > ❌ close group events
   ---------------------------------------------------------------
 
   */
