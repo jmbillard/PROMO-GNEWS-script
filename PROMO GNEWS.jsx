@@ -11,7 +11,7 @@
   to 'ScriptUI Panels' folder
 
   author:  Jean-Marc Billard
-  version: 1.6
+  version: 1.7
   date:    xx-xx-2022
 
 --------------------------------------------------------------
@@ -32,7 +32,7 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
 function PROMO_GNEWS_UTL(thisObj) {
 
   // current script version...
-  var vStr = 'v 22';
+  var vStr = 'v 1.7';
   
   // app script network access preferences...
   var prefSection = 'Main Pref Section';
