@@ -32,7 +32,7 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
 function PROMO_GNEWS_UTL(thisObj) {
 
   // current script version...
-  var vStr = 'v 1.6';
+  var vStr = 'v RAFA';
   
   // app script network access preferences...
   var prefSection = 'Main Pref Section';

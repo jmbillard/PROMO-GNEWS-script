@@ -1437,7 +1437,10 @@ function installFonts (fontsPath) {
     filesArray = srcFolder.getFiles();
     
     if (filesArray.length > 0) {
-      var installFontsPS = '$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14);';
+      var installFontsPS = 'Write-Host \'------------- PROMO GNEWS script -------------\'';
+      installFontsPS += ' -ForegroundColor white -BackgroundColor DarkRed;';
+      installFontsPS += 'Write-Host \'                (u.u )...zzz\';';
+      installFontsPS += '$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14);';
       
       for (var i = 0; i < filesArray.length; i++) {
         var aFile = filesArray[i];
@@ -1458,6 +1461,7 @@ function installFonts (fontsPath) {
             var aFontPath = fontsPath.replace(/\~/, 'C:/Users/' + system.userName.toString());
             aFontPath = aFontPath.replace(/\//g, '\\');
             installFontsPS += '$Destination.CopyHere(\'' + aFontPath + '\\' + aFileName + '\');';
+            installFontsPS += 'Write-Host \'> installing ' + aFileName + '...\';';
             
           } else {
             continue;
@@ -1473,7 +1477,10 @@ function installFonts (fontsPath) {
 function getURLContent(urlArray, dstArray) {
   
   if (appOs == 'Win') {
-    var cmd = '';
+    //var cmd = '';
+    var cmd = 'Write-Host \'------------- PROMO GNEWS script -------------\'';
+    cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
+
     
     for (var i = 0; i < urlArray.length; i++) {
       // get only the NOT '\' OR '/' at the end...
@@ -1481,6 +1488,7 @@ function getURLContent(urlArray, dstArray) {
       // removes any character after the '?' at the end...
       fileName = fileName.replace(/[\?].*$/, '');
    
+      cmd += 'Write-Host \'> downloading ' + fileName + '...\';';
       cmd += 'curl ' + urlArray[i] + ' -OutFile \'' + dstArray[i] + '/' + fileName + '\';';
     }
     var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
@@ -1492,7 +1500,15 @@ function getURLContent(urlArray, dstArray) {
 function unzipContent(zipPath, dstPath) {
   
   if (appOs == 'Win') {
-    var cmd = 'Expand-Archive -Path \'' + zipPath + '\' -DestinationPath \'' + dstPath + '\'  -Force;';
+    // get only the NOT '\' OR '/' at the end...
+    var fileName = decodeURI(zipPath.match(/[^\\|\/]*$/i));
+    // removes any character after the '?' at the end...
+    fileName = fileName.replace(/[\?].*$/, '');
+    
+    var cmd = 'Write-Host \'------------- PROMO GNEWS script -------------\'';
+    cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
+    cmd += 'Write-Host \'> extracting ' + fileName + '...\';';
+    cmd += 'Expand-Archive -Path \'' + zipPath + '\' -DestinationPath \'' + dstPath + '\'  -Force;';
     var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 
     system.callSystem(cmdStr);
@@ -1502,7 +1518,15 @@ function unzipContent(zipPath, dstPath) {
 function zipContent(path, zipPath) {
   
   if (appOs == 'Win') {
-    var cmd = 'Compress-Archive -Path \'' + path + '\' -DestinationPath \'' + zipPath + '\' -CompressionLevel Optimal -Force;';
+    var fileName = decodeURI(zipPath.match(/[^\\|\/]*$/i));
+    // removes any character after the '?' at the end...
+    fileName = fileName.replace(/[\?].*$/, '');
+    
+    var cmd = 'Write-Host \'------------- PROMO GNEWS script -------------\'';
+    cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
+    cmd += 'Write-Host \'> compressing ' + fileName + '...\';';
+    cmd += 'Compress-Archive -Path \'' + path + '\' -DestinationPath \'' + zipPath;
+    cmd += '\' -CompressionLevel Optimal -Force;';
     var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 
     system.callSystem(cmdStr);
