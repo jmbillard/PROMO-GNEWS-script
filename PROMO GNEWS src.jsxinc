@@ -1973,12 +1973,6 @@ function customDraw() {
   }
 }
 
-// returns a random error code ;P...
-function errCode() {
-
-  return 'ERROR code ' + getRndInteger(400, 999).toString() + '        ';
-}
-
 // changes the window background color...
 function setBgColor(color) {
 
@@ -2188,7 +2182,8 @@ function replaceErrImage() {
 // show error message...
 function showTabErr(msg) {
 
-  errTxt.text = errCode() + msg;
+  var lol = 'Σ(っ °Д °;)っ        ';
+  errTxt.text = lol + msg;
   errImgGrp.visible = true;
   closeGrp.visible = true;
   errTabGrp.visible = true;
@@ -2340,12 +2335,10 @@ function loadDefaultPrefs() {
   labelColors = [];
 
   for (var t = 0; t < grpNames.length; t++) {
-
     tabColors.push(hexToRGB(defPrefs.color[grpNames[t]]));
   }
 
   for (var l = 1; l <= 16; l++) {
-
     labelColors.push(hexToRGB(defPrefs.label['l' + l]));
   }
   artePath = defPrefs.folders.arte;
@@ -2355,19 +2348,19 @@ function loadDefaultPrefs() {
   userPrefix = defPrefs.user;
 }
 
-function saveGPrefs() {
+// saves the preferences JSON file...
+function savePreferences() {
 
-  var GNEWS_SCRIPT_FOLDER = new Folder(scriptPreferencesPath);
+  var scriptFolder = new Folder(scriptPreferencesPath);
 
-  if (!GNEWS_SCRIPT_FOLDER.exists) {
-    GNEWS_SCRIPT_FOLDER.create();
+  if (!scriptFolder.exists) {
+    scriptFolder.create();
   }
-
-  var setStr = prefsObj();
-  var filePath = GNEWS_SCRIPT_FOLDER.fullName;
+  var fileContent = prefsObj();
   var fileName = 'preferences.json';
+  var filePath = scriptPreferencesPath + '/' + fileName;
 
-  return saveFile(setStr, filePath, fileName);
+  return saveFile(fileContent, filePath);
 }
 
 // project panel comments as item settings...
@@ -2384,9 +2377,9 @@ function itemSetting(aItem, settingName) {
   return eval(set);
 }
 
-function saveFile(fileContent, filePath, fileName) {
+function saveFile(fileContent, filePath) {
 
-  var newFile = new File(filePath + '/' + fileName);
+  var newFile = new File(filePath);
 
   newFile.open('w');
   newFile.write(fileContent);

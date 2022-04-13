@@ -248,8 +248,6 @@ function PROMO_GNEWS_UI() {
   var pasteInfBtn = currentGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
   pasteInfBtn.helpTip = 'paste keyframe influence';
 
-  // currentGrp.add('image', undefined, vSpacer);
-
   // sub group...
   var animationSubGrp1 = currentGrp.add('group');
   animationSubGrp1.spacing = 2;
@@ -2071,7 +2069,7 @@ function PROMO_GNEWS_UI() {
   projUserTxt.onChange = function() {
 
     userPrefix = projUserTxt.text.toUpperCase();
-    saveGPrefs();
+    savePreferences();
   };
 
   insertUserIdBtn.onClick = function() {
@@ -2548,7 +2546,7 @@ function PROMO_GNEWS_UI() {
     
         if (saveFolder != null) {
           magPath = decodeURI(saveFolder).toString();
-          saveGPrefs();
+          savePreferences();
         }
       } else {
         showTabErr(msg);
@@ -2582,7 +2580,7 @@ function PROMO_GNEWS_UI() {
         if (saveFolder != null) {
     
           artPath = decodeURI(saveFolder).toString();
-          saveGPrefs();
+          savePreferences();
         }
       } else {
         showTabErr(msg);
@@ -2606,11 +2604,18 @@ function PROMO_GNEWS_UI() {
   nUtilsBtn.onClick = function() {
   
     var folderPath = utiPath;
+    var fld = new Folder(folderPath);
     var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
-      openFolder(folderPath);
-
+      msg = 'this folder is not currently accessible...';
+      
+      if (fld.exists) {
+        openFolder(folderPath);
+      
+      } else {
+        showTabErr(msg);
+      }
     } else {
       showTabErr(msg);
     }
@@ -2627,13 +2632,13 @@ function PROMO_GNEWS_UI() {
   lDrop.onChange = function() {
 
     lDropSel = lDrop.selection.index;
-    saveGPrefs();
+    savePreferences();
   };
 
   projTemplateDrop.onChange = function() {
 
     projMDropSel = projTemplateDrop.selection.index;
-    saveGPrefs();
+    savePreferences();
   };
 
   colorDrop.onChange = function() {
@@ -2653,7 +2658,7 @@ function PROMO_GNEWS_UI() {
       configColor = rgbStr(configColor);
       setBtnColor(tabColorBtn, eval(configColor));
       tabColors[colorDrop.selection.index] = eval(configColor);
-      saveGPrefs();
+      savePreferences();
     }
   };
 
