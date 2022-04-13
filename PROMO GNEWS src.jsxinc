@@ -2306,7 +2306,7 @@ function loadDefaultPrefs() {
       'links':'#6E489B'
       },
 
-    "label":{
+    'label':{
       'l1':'#F44336',
       'l2':'#E81D62',
       'l3':'#9B26AF',
