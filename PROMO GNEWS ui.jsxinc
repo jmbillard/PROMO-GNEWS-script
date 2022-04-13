@@ -2547,7 +2547,6 @@ function PROMO_GNEWS_UI() {
         var saveFolder = Folder.selectDialog();
     
         if (saveFolder != null) {
-    
           magPath = decodeURI(saveFolder).toString();
           saveGPrefs();
         }
@@ -2680,7 +2679,6 @@ function PROMO_GNEWS_UI() {
     var msg = netConfigName + ' not checked';
 
     if (netAccess()) {
-
       msg = 'black magic  (つ ◕_◕ )つ';
       showTabProg(msg);
   
@@ -2698,26 +2696,21 @@ function PROMO_GNEWS_UI() {
       var pathArray = [];
 
       for (var i = 0; i < urlArray.length; i++) {
-
         pathArray.push(downPath);
       }
-
       var dowFolder = new Folder(downPath);
       var scriptUIPath = new File($.fileName).path;
   
       if (!dowFolder.exists) {
-  
         dowFolder.create();
       }
-    
       getURLContent(urlArray, pathArray);
   
       try {
-        
         copyFolderContent(downPath, scriptUIPath);
         msg = 'and run the script  ヽ(✿ﾟ▽ﾟ)ノ';
+
       } catch (error) {
-        
         msg = 'you have to manually copy all files to:\n';
         msg += '"/Support Files/Scripts/ScriptUI Panels" folder';
         alert(msg);
