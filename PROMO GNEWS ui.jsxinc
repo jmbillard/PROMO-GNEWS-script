@@ -77,7 +77,7 @@ function PROMO_GNEWS_UI() {
   mainGrp.alignment = 'center';
   mainGrp.orientation = 'stack';
 
-  // tab menu group... 
+  // tab menu group...
   var menuGrp = mainGrp.add('group');
   menuGrp.alignment = 'center';
   
@@ -124,6 +124,8 @@ function PROMO_GNEWS_UI() {
   // preferences button group...
   var prefGrp = w.add('group');
   prefGrp.orientation = 'stack';
+  var prefBtn = prefGrp.add('iconbutton', undefined, setIcon, {style: 'toolbutton'});
+  prefBtn.helpTip = 'script preferences';
 
   /*
 
@@ -148,44 +150,42 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  var currentGrp = menuGrp;
 
   // control tab button...
-  var ctrlBtn = menuGrp.add('iconbutton', undefined, ctrlIcon, {style: 'toolbutton'});
+  var ctrlBtn = currentGrp.add('iconbutton', undefined, ctrlIcon, {style: 'toolbutton'});
   ctrlBtn.helpTip = 'null and controls';
   // animation tab button...
-  var animBtn = menuGrp.add('iconbutton', undefined, animIcon, {style: 'toolbutton'});
+  var animBtn = currentGrp.add('iconbutton', undefined, animIcon, {style: 'toolbutton'});
   animBtn.helpTip = 'animation';
   // effects tab button...
-  var fxBtn = menuGrp.add('iconbutton', undefined, fxIcon, {style: 'toolbutton'});
+  var fxBtn = currentGrp.add('iconbutton', undefined, fxIcon, {style: 'toolbutton'});
   fxBtn.helpTip = 'effects';
   // text tab button...
-  var txtBtn = menuGrp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
+  var txtBtn = currentGrp.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
   txtBtn.helpTip = 'text case and line breaking';
   // pallet tab button...
-  var palletBtn = menuGrp.add('iconbutton', undefined, paletteIcon, {style: 'toolbutton'});
+  var palletBtn = currentGrp.add('iconbutton', undefined, paletteIcon, {style: 'toolbutton'});
   palletBtn.helpTip = 'color, guides and branding';
   // layers tab button...
-  var layerBtn = menuGrp.add('iconbutton', undefined, layerIcon, {style: 'toolbutton'});
+  var layerBtn = currentGrp.add('iconbutton', undefined, layerIcon, {style: 'toolbutton'});
   layerBtn.helpTip = 'rename and sequence layers';
   // tools tab button...
-  var toolBtn = menuGrp.add('iconbutton', undefined, toolsIcon, {style: 'toolbutton'});
+  var toolBtn = currentGrp.add('iconbutton', undefined, toolsIcon, {style: 'toolbutton'});
   toolBtn.helpTip = 'rigs and tools';
   // project tab button...
-  var projBtn = menuGrp.add('iconbutton', undefined, prjIcon, {style: 'toolbutton'});
+  var projBtn = currentGrp.add('iconbutton', undefined, prjIcon, {style: 'toolbutton'});
   projBtn.helpTip = 'project organization';
   // application tab button...
-  var appBtn = menuGrp.add('iconbutton', undefined, aeIcon, {style: 'toolbutton'});
+  var appBtn = currentGrp.add('iconbutton', undefined, aeIcon, {style: 'toolbutton'});
   appBtn.helpTip = 'setup AE preferences and templates';
 
-  menuGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
   // links tab button...
-  var linksBtn = menuGrp.add('iconbutton', undefined, linksIcon, {style: 'toolbutton'});
+  var linksBtn = currentGrp.add('iconbutton', undefined, linksIcon, {style: 'toolbutton'});
   linksBtn.helpTip = 'useful links';
   
-  // preferences button...
-  var prefBtn = prefGrp.add('iconbutton', undefined, setIcon, {style: 'toolbutton'});
-  prefBtn.helpTip = 'script preferences';
   
   /*
 
@@ -194,12 +194,13 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = ctrlGrp;
 
   // adobe transform group MATCH NAME...
   var trmProp = 'ADBE Transform Group';
   
   // sub group...
-  var ctrlSubGrp1 = ctrlGrp.add('group');
+  var ctrlSubGrp1 = currentGrp.add('group');
   ctrlSubGrp1.spacing = 2;
   // copy animation toggle... 
   var aniTogBtn = ctrlSubGrp1.add('iconbutton', undefined, aniTogIcon, {style: 'toolbutton', toggle: 1});
@@ -209,19 +210,19 @@ function PROMO_GNEWS_UI() {
   exprTogBtn.helpTip = 'copy expressions';
 
   // create parent null... 
-  var nullShpBtn = ctrlGrp.add('iconbutton', undefined, shpNullIcon, {style: 'toolbutton'});
+  var nullShpBtn = currentGrp.add('iconbutton', undefined, shpNullIcon, {style: 'toolbutton'});
   nullShpBtn.helpTip = 'create parent null';
 
-  ctrlGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
   // create centered null
-  var nullCShpBtn = ctrlGrp.add('iconbutton', undefined, nullCIcon, {style: 'toolbutton'});
+  var nullCShpBtn = currentGrp.add('iconbutton', undefined, nullCIcon, {style: 'toolbutton'});
   nullCShpBtn.helpTip = 'centered null';
 
-  ctrlGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
   // select hierarchy sub group...
-  var hGrp = ctrlGrp.add('group');
+  var hGrp = currentGrp.add('group');
   hGrp.orientation = 'column';
   hGrp.spacing = 0;
   // select parent button...
@@ -238,23 +239,20 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = animationGrp;
 
   // copy keyframe influences...
-  var copyInfBtn = animationGrp.add('iconbutton', undefined, copyInfluenceIcon, {style: 'toolbutton'});
+  var copyInfBtn = currentGrp.add('iconbutton', undefined, copyInfluenceIcon, {style: 'toolbutton'});
   copyInfBtn.helpTip = 'copy keyframe influence';
   // paste keyframe influences...
-  var pasteInfBtn = animationGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
+  var pasteInfBtn = currentGrp.add('iconbutton', undefined, pasteInfluenceIcon, {style: 'toolbutton'});
   pasteInfBtn.helpTip = 'paste keyframe influence';
 
-  animationGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
   // sub group...
-  var animationSubGrp1 = animationGrp.add('group');
+  var animationSubGrp1 = currentGrp.add('group');
   animationSubGrp1.spacing = 2;
-  // text typing animation...
-  var typeAnimBtn = animationSubGrp1.add('iconbutton', undefined, typewriterIcon, {style: 'toolbutton'});
-  typeAnimBtn.helpTip = 'typewriter animation';
-
 
   /*
 
@@ -263,16 +261,17 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = fxGrp;
 
   // adobe effects group MATCH NAME...
   var fxProp = 'ADBE Effect Parade';
 
-  var shpAdjBtn = fxGrp.add('iconbutton', undefined, shpAdjIcon, {style: 'toolbutton'});
+  var shpAdjBtn = currentGrp.add('iconbutton', undefined, shpAdjIcon, {style: 'toolbutton'});
   shpAdjBtn.helpTip = 'adjustment layer';
 
-  fxGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var cGrp = fxGrp.add('group');
+  var cGrp = currentGrp.add('group');
   cGrp.spacing = 2;
   var curBtn = cGrp.add('iconbutton', undefined, curIcon, {style: 'toolbutton'});
   curBtn.helpTip = 'curves';
@@ -281,9 +280,9 @@ function PROMO_GNEWS_UI() {
   var lumBtn = cGrp.add('iconbutton', undefined, lumIcon, {style: 'toolbutton'});
   lumBtn.helpTip = 'lumetri color';
 
-  fxGrp.add('image', undefined, hSpacer);
+  currentGrp.add('image', undefined, hSpacer);
 
-  var fxSubGrp1 = fxGrp.add('group');
+  var fxSubGrp1 = currentGrp.add('group');
   fxSubGrp1.spacing = 2;
   var gaublurBtn = fxSubGrp1.add('iconbutton', undefined, gaublurIcon, {style: 'toolbutton'});
   gaublurBtn.helpTip = 'gaussian blur';
@@ -292,23 +291,23 @@ function PROMO_GNEWS_UI() {
   var lensblurBtn = fxSubGrp1.add('iconbutton', undefined, lensblurIcon, {style: 'toolbutton'});
   lensblurBtn.helpTip = 'lens blur';
 
-  fxGrp.add('image', undefined, hSpacer);
+  currentGrp.add('image', undefined, hSpacer);
 
-  var fxSubGrp2 = fxGrp.add('group');
+  var fxSubGrp2 = currentGrp.add('group');
   fxSubGrp2.spacing = 2;
   var fillBtn = fxSubGrp2.add('iconbutton', undefined, fillIcon, {style: 'toolbutton'});
   fillBtn.helpTip = 'fill';
 
-  fxGrp.add('image', undefined, hSpacer);
+  currentGrp.add('image', undefined, hSpacer);
 
-  var fxSubGrp3 = fxGrp.add('group');
+  var fxSubGrp3 = currentGrp.add('group');
   fxSubGrp3.spacing = 2;
   var glassBtn = fxSubGrp3.add('iconbutton', undefined, glassIcon, {style: 'toolbutton'});
   glassBtn.helpTip = '3d glasses';
 
-  fxGrp.add('image', undefined, hSpacer);
+  currentGrp.add('image', undefined, hSpacer);
 
-  var fxSubGrp4 = fxGrp.add('group');
+  var fxSubGrp4 = currentGrp.add('group');
   fxSubGrp4.spacing = 2;
   var fracBtn = fxSubGrp4.add('iconbutton', undefined, fracIcon, {style: 'toolbutton'});
   fracBtn.helpTip = 'fractal noise';
@@ -322,13 +321,14 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = textGrp;
 
   // adobe text layer text group MATCH NAME...
   var txtProp = 'ADBE Text Properties';
   // adobe text layer source text MATCH NAME...
   var txtDoc = 'ADBE Text Document';
 
-  var textSubGrp1 = textGrp.add('group');
+  var textSubGrp1 = currentGrp.add('group');
   textSubGrp1.spacing = 2;
   var txtUpperBtn = textSubGrp1.add('iconbutton', undefined, txtUpperIcon, {style: 'toolbutton'});
   txtUpperBtn.helpTip = 'set text layer to upper case';
@@ -337,76 +337,77 @@ function PROMO_GNEWS_UI() {
   var txtTitleBtn = textSubGrp1.add('iconbutton', undefined, txtTitleIcon, {style: 'toolbutton'});
   txtTitleBtn.helpTip = 'set text layer to title case';
   
-  textGrp.add('image', undefined, hSpacer);
+  currentGrp.add('image', undefined, hSpacer);
   
-  var textSubGrp2 = textGrp.add('group');
+  var textSubGrp2 = currentGrp.add('group');
   textSubGrp2.spacing = 2;
   var txtCleanerBtn = textSubGrp2.add('iconbutton', undefined, txtCleanerIcon, {style: 'toolbutton'});
   txtCleanerBtn.helpTip = 'deletes consecutive spaces and line breaks';
   var txtColumnBtn = textSubGrp2.add('iconbutton', undefined, txtColumnsIcon, {style: 'toolbutton'});
   txtColumnBtn.helpTip = 'divides consecutive spaces in 2 columns';
 
-  textGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var limitSld = textGrp.add('slider', undefined, 60, 5, 200);
-  var limitTxt2 = textGrp.add('edittext', undefined, '60');
+  var limitSld = currentGrp.add('slider', undefined, 60, 5, 200);
+  var limitTxt2 = currentGrp.add('edittext', undefined, '60');
   limitTxt2.characters = 3;
-  var limitTxt = textGrp.add('statictext', undefined, '60');
+  var limitTxt = currentGrp.add('statictext', undefined, '60');
   limitTxt.characters = 3;
   setTxtColor(limitTxt, sTxtColor);
 
   /*
 
   ---------------------------------------------------------------
-  > pallet tab
+  > color, guides and branding tab
   ---------------------------------------------------------------
 
   */
+  currentGrp = palletGrp;
 
-  var redBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var redBtn = currentGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   redBtn.size = [40, 15];
   setBtnColor(redBtn, GNEWS_RED);
   redBtn.onDraw = customDraw;
   redBtn.helpTip = 'R: 185\nG: 20\nB: 20\nHEX: #B91414';
 
-  var blkBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var blkBtn = currentGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   blkBtn.size = [40, 15];
   setBtnColor(blkBtn, GNEWS_BLK);
   blkBtn.onDraw = customDraw;
   blkBtn.helpTip = 'R: 20\nG: 20\nB: 20\nHEX: #141414';
 
-  var wteBtn = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var wteBtn = currentGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   wteBtn.size = [40, 15];
   setBtnColor(wteBtn, GNEWS_WTE);
   wteBtn.onDraw = customDraw;
   wteBtn.helpTip = 'R: 234\nG: 234\nB: 234\nHEX: #EAEAEA';
 
-  palletGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var gryBtn1 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var gryBtn1 = currentGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   gryBtn1.size = [40, 15];
   setBtnColor(gryBtn1, rgb(180, 180, 180));
   gryBtn1.onDraw = customDraw;
   gryBtn1.helpTip = 'R: 180\nG: 180\nB: 180\nHEX: #B4B4B4';
 
-  var gryBtn2 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var gryBtn2 = currentGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   gryBtn2.size = [40, 15];
   setBtnColor(gryBtn2, rgb(110, 110, 110));
   gryBtn2.onDraw = customDraw;
   gryBtn2.helpTip = 'R: 110\nG: 110\nB: 110\nHEX: #6E6E6E';
 
-  var gryBtn3 = palletGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var gryBtn3 = currentGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   gryBtn3.size = [40, 15];
   setBtnColor(gryBtn3, rgb(54, 54, 54));
   gryBtn3.onDraw = customDraw;
   gryBtn3.helpTip = 'R: 54\nG: 54\nB: 54\nHEX: #363636';
 
-  palletGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var shpPalletBtn = palletGrp.add('iconbutton', undefined, shpPalletIcon, {style: 'toolbutton'});
+  var shpPalletBtn = currentGrp.add('iconbutton', undefined, shpPalletIcon, {style: 'toolbutton'});
   shpPalletBtn.helpTip = 'shape layer pallet';
 
-  var logoBtn = palletGrp.add('iconbutton', undefined, newsIcon, {style: 'toolbutton'});
+  var logoBtn = currentGrp.add('iconbutton', undefined, newsIcon, {style: 'toolbutton'});
   logoBtn.helpTip = 'GNEWS logo as shape layer';
 
   /*
@@ -416,8 +417,9 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = layersGrp;
 
-  var layersSubGrp1 = layersGrp.add('group');
+  var layersSubGrp1 = currentGrp.add('group');
   layersSubGrp1.spacing = 2;
   var ftgTogBtn = layersSubGrp1.add('iconbutton', undefined, ftgTogIcon, {style: 'toolbutton', toggle: 1});
   ftgTogBtn.helpTip = 'footage';
@@ -433,19 +435,19 @@ function PROMO_GNEWS_UI() {
   var lgtTogBtn = layersSubGrp1.add('iconbutton', undefined, lgtTogIcon, {style: 'toolbutton', toggle: 1});
   lgtTogBtn.helpTip = 'light layers';
 
-  var renameLayersBtn = layersGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
+  var renameLayersBtn = currentGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
   renameLayersBtn.helpTip = 'update layer names';
 
-  layersGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
   
-  var isolateBtn = layersGrp.add('iconbutton', undefined, isolateIcon, {style: 'toolbutton'});
+  var isolateBtn = currentGrp.add('iconbutton', undefined, isolateIcon, {style: 'toolbutton'});
   isolateBtn.helpTip = 'isolate layers';
-  var lockTrmBtn = layersGrp.add('iconbutton', undefined, lockPropIcon, {style: 'toolbutton'});
+  var lockTrmBtn = currentGrp.add('iconbutton', undefined, lockPropIcon, {style: 'toolbutton'});
   lockTrmBtn.helpTip = 'lock transform properties';
 
-  layersGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var layerRandBtn = layersGrp.add('iconbutton', undefined, randomizeLayerTimesIcon, {style: 'toolbutton'});
+  var layerRandBtn = currentGrp.add('iconbutton', undefined, randomizeLayerTimesIcon, {style: 'toolbutton'});
   layerRandBtn.helpTip = 'randomize layer times';
 
   /*
@@ -455,24 +457,31 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = toolsGrp;
 
-  var arrowBtn = toolsGrp.add('iconbutton', undefined, arrowIcon, {style: 'toolbutton'});
+  var arrowBtn = currentGrp.add('iconbutton', undefined, arrowIcon, {style: 'toolbutton'});
   arrowBtn.helpTip = 'simple arrow rig';
   
-  toolsGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
   
-  var counterBtn = toolsGrp.add('iconbutton', undefined, counterIcon, {style: 'toolbutton'});
+  var counterBtn = currentGrp.add('iconbutton', undefined, counterIcon, {style: 'toolbutton'});
   counterBtn.helpTip = 'make counter rig';
 
-  toolsGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var wigBtn = toolsGrp.add('iconbutton', undefined, wigIcon, {style: 'toolbutton'});
+  var wigBtn = currentGrp.add('iconbutton', undefined, wigIcon, {style: 'toolbutton'});
   wigBtn.helpTip = 'wig rig';
 
-  toolsGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var ikBtn = toolsGrp.add('iconbutton', undefined, ikIcon, {style: 'toolbutton'});
+  var ikBtn = currentGrp.add('iconbutton', undefined, ikIcon, {style: 'toolbutton'});
   ikBtn.helpTip = 'simple ik rig';
+
+  currentGrp.add('image', undefined, vSpacer);
+
+  // text typing rig...
+  var typeAnimBtn = currentGrp.add('iconbutton', undefined, typewriterIcon, {style: 'toolbutton'});
+  typeAnimBtn.helpTip = 'typewriter animation';
 
 
   /*
@@ -482,37 +491,38 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = projectGrp;
 
-  var projUserTxt = projectGrp.add('edittext', undefined, userPrefix);
+  var projUserTxt = currentGrp.add('edittext', undefined, userPrefix);
   projUserTxt.characters = 3;
   projUserTxt.helpTip = 'user id';
-  var projIdTxt = projectGrp.add('edittext', undefined, 'proj id');
+  var projIdTxt = currentGrp.add('edittext', undefined, 'proj id');
   projIdTxt.characters = 8;
   projIdTxt.helpTip = 'project id';
-  var insertUserIdBtn = projectGrp.add('iconbutton', undefined, addIcon, {style: 'toolbutton'});
+  var insertUserIdBtn = currentGrp.add('iconbutton', undefined, addIcon, {style: 'toolbutton'});
   insertUserIdBtn.helpTip = 'insert user with project ID';
 
-  var projNameTxt = projectGrp.add('edittext', undefined, 'proj name');
+  var projNameTxt = currentGrp.add('edittext', undefined, 'proj name');
   projNameTxt.characters = 16;
   projNameTxt.helpTip = 'project name';
-  var renameItemBtn = projectGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
+  var renameItemBtn = currentGrp.add('iconbutton', undefined, chkIcon, {style: 'toolbutton'});
   renameItemBtn.helpTip = 'quick template rename';
 
-  projectGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var projOrgBtn = projectGrp.add('iconbutton', undefined, templateIcon, {style: 'toolbutton'});
+  var projOrgBtn = currentGrp.add('iconbutton', undefined, templateIcon, {style: 'toolbutton'});
   projOrgBtn.helpTip = 'quick project organization';
 
-  projectGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var projectSubGrp1 = projectGrp.add('group');
+  var projectSubGrp1 = currentGrp.add('group');
   projectSubGrp1.spacing = 2;
   var collectTogBtn = projectSubGrp1.add('iconbutton', undefined, fldTogIcon, {style: 'toolbutton', toggle: 1});
   collectTogBtn.helpTip = 'collect files';
   var collectFontsTogBtn = projectSubGrp1.add('iconbutton', undefined, txtTogIcon, {style: 'toolbutton', toggle: 1});
   collectFontsTogBtn.helpTip = 'collect fonts';
 
-  var saveBtn = projectGrp.add('iconbutton', undefined, quickSaveIcon, {style: 'toolbutton'});
+  var saveBtn = currentGrp.add('iconbutton', undefined, quickSaveIcon, {style: 'toolbutton'});
   saveBtn.helpTip = 'quick project save';
 
   /*
@@ -522,21 +532,22 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = appGrp;
   
-  var installFontsBtn = appGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
+  var installFontsBtn = currentGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
   installFontsBtn.helpTip = 'install fonts | open fonts folder';
   
-  appGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
   
-  var importAetBtn = appGrp.add('iconbutton', undefined, aetIcon, {style: 'toolbutton'});
+  var importAetBtn = currentGrp.add('iconbutton', undefined, aetIcon, {style: 'toolbutton'});
   importAetBtn.helpTip = 'import templates | open templates folder';
   
-  var zipTemplatesBtn = appGrp.add('iconbutton', undefined, zipIcon, {style: 'toolbutton'});
+  var zipTemplatesBtn = currentGrp.add('iconbutton', undefined, zipIcon, {style: 'toolbutton'});
   zipTemplatesBtn.helpTip = 'zip the templates folder';
   
-  appGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var copyAMEPresetsBtn = appGrp.add('iconbutton', undefined, eprIcon, {style: 'toolbutton'});
+  var copyAMEPresetsBtn = currentGrp.add('iconbutton', undefined, eprIcon, {style: 'toolbutton'});
   copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
 
   /*
@@ -546,8 +557,9 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
   
   */
+  currentGrp = linksGrp;
 
-  var linksSubGrp2 = linksGrp.add('group');
+  var linksSubGrp2 = currentGrp.add('group');
   linksSubGrp2.spacing = 2;
   var emailBtn = linksSubGrp2.add('iconbutton', undefined, emailIcon, {style: 'toolbutton'});
   emailBtn.helpTip = 'webmail globo';
@@ -556,9 +568,9 @@ function PROMO_GNEWS_UI() {
   var sharePointBtn = linksSubGrp2.add('iconbutton', undefined, sharePointIcon, {style: 'toolbutton'});
   sharePointBtn.helpTip = 'SharePoint promo GNEWS';
 
-  linksGrp.add('image', undefined, hSpacer);
+  currentGrp.add('image', undefined, hSpacer);
  
-  var linksSubGrp3 = linksGrp.add('group');
+  var linksSubGrp3 = currentGrp.add('group');
   linksSubGrp3.spacing = 2;
   var trelloBtn = linksSubGrp3.add('iconbutton', undefined, trelloIcon, {style: 'toolbutton'});
   trelloBtn.helpTip = 'trello promo GNEWS';
@@ -567,9 +579,9 @@ function PROMO_GNEWS_UI() {
   var plannerBtn = linksSubGrp3.add('iconbutton', undefined, plannerIcon, {style: 'toolbutton'});
   plannerBtn.helpTip = 'planner globo';
 
-  linksGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var linksSubGrp1 = linksGrp.add('group');
+  var linksSubGrp1 = currentGrp.add('group');
   linksSubGrp1.spacing = 2;
   var mamArteBtn = linksSubGrp1.add('iconbutton', undefined, arteFolderIcon, {style: 'toolbutton'});
   mamArteBtn.helpTip = 'MAM Para Arte | set custom folder';
@@ -590,41 +602,42 @@ function PROMO_GNEWS_UI() {
   ---------------------------------------------------------------
 
   */
+  currentGrp = preferencesGrp;
 
-  var lPrefTxt = preferencesGrp.add('statictext', undefined, 'null - adj');
+  var lPrefTxt = currentGrp.add('statictext', undefined, 'null - adj');
   lPrefTxt.helpTip = 'ctrl and adjustment layer type';
   setTxtColor(lPrefTxt, sTxtColor);
   var lDropArray = ['shape', 'solid'];
-  var lDrop = preferencesGrp.add('dropdownlist', undefined, lDropArray);
+  var lDrop = currentGrp.add('dropdownlist', undefined, lDropArray);
   lDrop.selection = lDropSel;
 
-  preferencesGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var projPrefTxt = preferencesGrp.add('statictext', undefined, 'org. template');
+  var projPrefTxt = currentGrp.add('statictext', undefined, 'org. template');
   projPrefTxt.helpTip = 'project structure template';
   setTxtColor(projPrefTxt, sTxtColor);
   var projTemplateDropArray = ['PROMO', 'custom'];
-  var projTemplateDrop = preferencesGrp.add('dropdownlist', undefined, projTemplateDropArray);
+  var projTemplateDrop = currentGrp.add('dropdownlist', undefined, projTemplateDropArray);
   projTemplateDrop.selection = projMDropSel;
 
-  preferencesGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
   
-  var colorDrop = preferencesGrp.add('dropdownlist', undefined, grpNames);
+  var colorDrop = currentGrp.add('dropdownlist', undefined, grpNames);
   colorDrop.selection = 0;
-  var tabColorBtn = preferencesGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
+  var tabColorBtn = currentGrp.add('iconbutton', undefined, undefined, {style: 'toolbutton'});
   tabColorBtn.size = [20, 20];
   setBtnColor(tabColorBtn, tabColors[0]);
   tabColorBtn.onDraw = customDraw;
 
-  preferencesGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
 
-  var updateBtn = preferencesGrp.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
+  var updateBtn = currentGrp.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
   updateBtn.helpTip = 'download the latest script version from github';
 
-  preferencesGrp.add('image', undefined, vSpacer);
+  currentGrp.add('image', undefined, vSpacer);
 
-  var aboutTxt = preferencesGrp.add('statictext', undefined, vStr);
+  var aboutTxt = currentGrp.add('statictext', undefined, vStr);
   aboutTxt.helpTip = aboutStr;
   setTxtColor(aboutTxt, aboutTxtColor);
 
@@ -706,7 +719,7 @@ function PROMO_GNEWS_UI() {
   };
 
   // menu is the current selected and viewed group by default... 
-  var currentGrp = menuGrp;
+  currentGrp = menuGrp;
   var bgColor = tabColors[tabs.indexOf(menuGrp)];
   setBgColor(bgColor);
 
@@ -719,38 +732,38 @@ function PROMO_GNEWS_UI() {
   */
 
   ctrlBtn.onClick = function() {
-    grp = ctrlGrp;
-    openTab(grp);
+    currentGrp = ctrlGrp;
+    openTab();
   };
 
   animBtn.onClick = function() {
-    grp = animationGrp;
-    openTab(grp);
+    currentGrp = animationGrp;
+    openTab();
   };
 
   fxBtn.onClick = function() {
-    grp = fxGrp;
-    openTab(grp);
+    currentGrp = fxGrp;
+    openTab();
   };
 
   txtBtn.onClick = function() {
-    grp = textGrp;
-    openTab(grp);
+    currentGrp = textGrp;
+    openTab();
   };
 
   palletBtn.onClick = function() {
-    grp = palletGrp;
-    openTab(grp);
+    currentGrp = palletGrp;
+    openTab();
   };
 
   layerBtn.onClick = function() {
-    grp = layersGrp;
-    openTab(grp);
+    currentGrp = layersGrp;
+    openTab();
   };
 
   toolBtn.onClick = function() {
-    grp = toolsGrp;
-    openTab(grp);
+    currentGrp = toolsGrp;
+    openTab();
   };
   
   projBtn.onClick = function() {
@@ -759,27 +772,27 @@ function PROMO_GNEWS_UI() {
     projName = (projName == '') ? 'proj name' : projName;
     projId = getXMPdata('identifier');
     projId = (projId == '') ? 'proj id' : projId;
-    grp = projectGrp;
+    currentGrp = projectGrp;
    
-    openTab(grp);
+    openTab();
     projUserTxt.text = userPrefix;
     projIdTxt.text = projId;
     projNameTxt.text = projName;
   };
 
   appBtn.onClick = function() {
-    grp = appGrp;
-    openTab(grp);
+    currentGrp = appGrp;
+    openTab();
   };
 
   linksBtn.onClick = function() {
-    grp = linksGrp;
-    openTab(grp);
+    currentGrp = linksGrp;
+    openTab();
   };  
 
   prefBtn.onClick = function() {
-    grp = preferencesGrp;
-    openTab(grp);
+    currentGrp = preferencesGrp;
+    openTab();
   };
 
   /*
@@ -1285,50 +1298,6 @@ function PROMO_GNEWS_UI() {
     alert(wip);
   };
   
-  typeAnimBtn.onClick = function() {
-  
-    var aItem = app.project.activeItem;
-    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
-    var cntLayer;
-    var srcTxt;
-    var expFx = typewriter()[0];
-    var exp = typewriter()[1];
-    var msg = 'comp not selected';
-
-    if (aItem != null) {
-      app.beginUndoGroup('typewriter');
-
-      if (selLayers.length > 0) {
-
-        for (i = 0; i < selLayers.length; i++) {
-
-          if (selLayers[i] instanceof TextLayer) {
-            cntLayer = selLayers[i];
-            srcTxt = cntLayer.property(txtProp).property(txtDoc);
-
-            addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
-            srcTxt.expression = exp;
-          }
-        }
-      } else {
-        cntLayer = aItem.layers.addText();
-        srcTxt = cntLayer.property(txtProp).property(txtDoc);
-
-        srcTxt.setValue('typewriter');
-        cntLayer.name = 'txt_typewriter';
-
-        addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
-        srcTxt.expression = exp;
-      }
-
-      app.endUndoGroup();
-
-    } else {
-      showTabErr(msg);
-    }
-
-  };
-
   /*
 
   ---------------------------------------------------------------
@@ -2048,6 +2017,49 @@ function PROMO_GNEWS_UI() {
     }
   };
 
+  typeAnimBtn.onClick = function() {
+  
+    var aItem = app.project.activeItem;
+    var selLayers = (aItem != null) ? aItem.selectedLayers : [];
+    var cntLayer;
+    var srcTxt;
+    var expFx = typewriter()[0];
+    var exp = typewriter()[1];
+    var msg = 'comp not selected';
+
+    if (aItem != null) {
+      app.beginUndoGroup('typewriter');
+
+      if (selLayers.length > 0) {
+
+        for (i = 0; i < selLayers.length; i++) {
+
+          if (selLayers[i] instanceof TextLayer) {
+            cntLayer = selLayers[i];
+            srcTxt = cntLayer.property(txtProp).property(txtDoc);
+
+            addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
+            srcTxt.expression = exp;
+          }
+        }
+      } else {
+        cntLayer = aItem.layers.addText();
+        srcTxt = cntLayer.property(txtProp).property(txtDoc);
+
+        srcTxt.setValue('typewriter');
+        cntLayer.name = 'txt_typewriter';
+
+        addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
+        srcTxt.expression = exp;
+      }
+
+      app.endUndoGroup();
+
+    } else {
+      showTabErr(msg);
+    }
+  };
+
   /*
 
   ---------------------------------------------------------------
@@ -2197,7 +2209,7 @@ function PROMO_GNEWS_UI() {
       app.project.save(projFile);
       openFolder(projPath);
     }
-    openTab(grp);
+    openTab();
 
     app.endUndoGroup();
   };
@@ -2735,7 +2747,6 @@ function PROMO_GNEWS_UI() {
     prefGrp.visible = true;
     closeErrBtn.visible = false;
     menuGrp.visible = true;
-    grp = mainGrp;
     bgColor = tabColors[0];
     errImgGrp.visible = false;
 
@@ -2752,7 +2763,7 @@ function PROMO_GNEWS_UI() {
   
     clearOutput();
     allGrpGone();
-    openTab(grp);
+    openTab();
   };
 
   return w;

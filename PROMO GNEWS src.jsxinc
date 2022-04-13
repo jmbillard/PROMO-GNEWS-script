@@ -2125,14 +2125,11 @@ function setLayout() {
 
 function updateLayout() {
 
-  for (i = 0; i < tabSubGrps.length; i++) {
-
-    tabSubGrps[i].layout.layout(true);
+  for (var s = 0; s < tabSubGrps.length; s++) {
+    tabSubGrps[s].layout.layout(true);
   }
-
-  for (i = 0; i < tabs.length; i++) {
-
-    tabs[i].layout.layout(true);
+  for (var t = 0; t < tabs.length; t++) {
+    tabs[t].layout.layout(true);
   }
   preferencesGrp.layout.layout(true);
   imgGrp.layout.layout(true);
@@ -2152,7 +2149,6 @@ function updateLayout() {
 function allGrpGone() {
 
   for (i = 1; i < tabs.length; i++) {
-
     tabs[i].visible = false;
   }
   preferencesGrp.visible = false;
@@ -2161,11 +2157,10 @@ function allGrpGone() {
 }
 
 // turns on the respective tab group visibility...
-function openTab(grp) {
+function openTab() {
  
-  
-  bgColor = tabColors[tabs.indexOf(grp)];
-  grp.visible = true;
+  bgColor = tabColors[tabs.indexOf(currentGrp)];
+  currentGrp.visible = true;
   closeGrp.visible = true;
   imgGrp.visible = true;
   
@@ -2173,25 +2168,23 @@ function openTab(grp) {
   prefGrp.visible = false;
   closeErrBtn.visible = false;
   
-  if (grp == menuGrp) {
-    
+  if (currentGrp == menuGrp) {
     closeGrp.visible = false;
     prefGrp.visible = true;
   }
-  if (grp == preferencesGrp) {
-
+  if (currentGrp == preferencesGrp) {
     bgColor = prefGrpColor;
   }
   errImgGrp.visible = false;
   progImgGrp.visible = false;
   progressGrp.visible = false;
-  currentGrp = grp;
 
   setBgColor(bgColor);
 }
 
 //
 function replaceErrImage() {
+  
   var r = getRndInteger(0, errImgArray.length);
 
   errImgGrp.remove(errImg);
