@@ -23,7 +23,7 @@
 
 // load the XMP library...
 if ( ExternalObject.AdobeXMPScript == undefined ) {
-    ExternalObject.AdobeXMPScript = new ExternalObject( "lib:AdobeXMPScript");
+    ExternalObject.AdobeXMPScript = new ExternalObject( 'lib:AdobeXMPScript');
 }
 /* jshint ignore:start */
 #include 'JSON lib.jsxinc'; // JSON definition file...
