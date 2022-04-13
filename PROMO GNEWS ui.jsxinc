@@ -72,13 +72,16 @@ function PROMO_GNEWS_UI() {
 
   */
 
+  // UI main 'root' centered group...
   var mainGrp = w.add('group');
   mainGrp.alignment = 'center';
   mainGrp.orientation = 'stack';
 
+  // tab menu group... 
   var menuGrp = mainGrp.add('group');
   menuGrp.alignment = 'center';
   
+  // add, center and hide every tab from the group names 'array' inside the 'root'...
   for (i = 1; i < grpNames.length; i++) {
     
     eval(grpNames[i] + 'Grp = mainGrp.add(\'group\');');
@@ -86,31 +89,39 @@ function PROMO_GNEWS_UI() {
     eval(grpNames[i] + 'Grp.visible = false;');
   }
 
+  // add, center and hide the preferences tab...
   var preferencesGrp = mainGrp.add('group');
   preferencesGrp.alignment = 'center';
   preferencesGrp.visible = false;
 
+  // logo image group...
   var imgGrp = w.add('group');
   imgGrp.orientation = 'stack';
 
+  // error image group...
   var errImgGrp = w.add('group');
   errImgGrp.orientation = 'stack';
   errImgGrp.visible = false;
 
+  // progress image group...
   var progImgGrp = w.add('group');
   progImgGrp.orientation = 'stack';
   progImgGrp.visible = false;
 
+  // error tab group...
   var errTabGrp = mainGrp.add('group');
   errTabGrp.visible = false;
 
+  // progress tab group...
   var progressGrp = mainGrp.add('group');
   progressGrp.visible = false;
 
+  // close button group...
   var closeGrp = w.add('group');
   closeGrp.orientation = 'stack';
   closeGrp.visible = false;
 
+  // preferences button group...
   var prefGrp = w.add('group');
   prefGrp.orientation = 'stack';
 

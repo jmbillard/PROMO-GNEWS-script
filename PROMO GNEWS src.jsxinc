@@ -1681,19 +1681,18 @@ function matteName(aLayer) {
 
 function getPrefixes() {
 
-  var prefixArray = [];
-  prefixArray.push(compPrefix);
-  prefixArray.push(solPrefix);
-  prefixArray.push(adjPrefix);
-  prefixArray.push(nullPrefix);
-  prefixArray.push(txtPrefix);
-  prefixArray.push(shpPrefix);
-  prefixArray.push(ctrlPrefix);
-  prefixArray.push(mattePrefix);
-  prefixArray.push(camPrefix);
-  prefixArray.push(lgtPrefix);
-
-  return prefixArray;
+  return [
+    compPrefix,
+    solPrefix,
+    adjPrefix,
+    nullPrefix,
+    txtPrefix,
+    shpPrefix,
+    ctrlPrefix,
+    mattePrefix,
+    camPrefix,
+    lgtPrefix
+  ];
 }
 
 // rename comp layers...
@@ -1877,7 +1876,7 @@ function nameInc(aName) {
 /*
 
 ---------------------------------------------------------------
-# color and conversions
+> 🖌️ color and conversions
 ---------------------------------------------------------------
 
 */
@@ -1958,7 +1957,7 @@ function randomColor() {
 /*
 
 ---------------------------------------------------------------
-# ui and layout
+> 📟 ui and layout
 ---------------------------------------------------------------
 
 */
@@ -2253,7 +2252,7 @@ function showTabProg(msg) {
 /*
 
 ---------------------------------------------------------------
-# script preferences
+# ⚙️ script preferences
 ---------------------------------------------------------------
 
 */
@@ -2514,6 +2513,14 @@ function getGPrefs(file) {
   } catch (error) {}
 }
 
+/*
+
+---------------------------------------------------------------
+> 🌳 tree view functions
+---------------------------------------------------------------
+
+*/
+
 // populates the 'tree view' node hierarchy...
 function createHierarchy(array, node, fileTypes) {
 
@@ -2596,6 +2603,14 @@ function expandNodes(nodeTree) {
   }
 }
 
+/*
+
+---------------------------------------------------------------
+> 🪟 UI dialogs
+---------------------------------------------------------------
+
+*/
+
 // import templates UI...
 function templateDialog(templatesPath) {
 
@@ -2674,20 +2689,20 @@ function templateDialog(templatesPath) {
   };
 
   refreshBtn.addEventListener ('click', function (c) {
-  
+
     if (c.button == 2) {
-  
+
       if (netAccess()) {
-        
+
         var url = repoURL + '/raw/main/templates.zip';
-   
+
         var downPath = scriptPreferencesPath + '/temp';
         var dowFolder = new Folder(downPath);
         var zipPath = downPath + '/templates.zip';
         var templatesPath = scriptPreferencesPath + '/templates';
-        
+
         if (!dowFolder.exists) {
-          
+
           dowFolder.create();
         }
         getURLContent([url], [downPath]);
@@ -2703,67 +2718,78 @@ function templateDialog(templatesPath) {
     buildTree(treeFolder, tree);
     expandNodes(tree);
   };
-  
+
   w.show();
 }
 
 function fontsDialog(path) {
 
+  // root folder...
   var treeFolder = new Folder(path);
-  
-  var w = new Window('dialog', 'import options...');
+
+  // UI definition...
+  var w = new Window('dialog', 'font options...');
+  // treeview...
   var tree = w.add('treeview', [0, 0, 250, 380]);
+
+  // creates all the 'treeview nodes'...
   buildFontTree(treeFolder, tree);
 
+  // buttons...
   var bGroup = w.add('group');
   var refreshBtn = bGroup.add('button', undefined, 'refresh');
   refreshBtn.helpTip = 'refresh list content | downloads the latest fonts';
   var installBtn = bGroup.add('button', undefined, 'install');
   installBtn.helpTip = 'install selected fonts';
   installBtn.enabled = tree.selection != null;
-  
+
   tree.onChange = function () {
-    
+
     // node folders should not be selectable...
     if (tree.selection != null && tree.selection.type == 'node') {
       tree.selection = null;
     }
+    // toggle the enabled state depending on the selection...
     installBtn.enabled = tree.selection != null;
   };
 
+  // expands every node from the start...
   w.onShow = function () {
     expandNodes(tree);
   };
-      
+
+  // font installation...
   installBtn.onClick = function () {
 
     var fontFamilyName = tree.selection.toString();
     var fontFamilyPath = path + '/' + fontFamilyName;
     var fontFamilyFolder = new Folder(fontFamilyPath);
 
+    // checks if there is a system folder correspondent to the selection...
     if (fontFamilyFolder.exists) {
-      
+
+      // install the selected font family on Windows...
       if (appOs == 'Win') {
         installFonts(fontFamilyPath.toString());
       }
     }
   };
 
+  // download and overwrite files on the preferences font folder...
   refreshBtn.addEventListener ('click', function (c) {
-  
+
     if (c.button == 2) {
-  
+
       if (netAccess()) {
-        
+
         var url = repoURL + '/raw/main/fonts.zip';
-   
+
         var downPath = scriptPreferencesPath + '/temp';
         var dowFolder = new Folder(downPath);
         var zipPath = downPath + '/fonts.zip';
         var fontsPath = scriptPreferencesPath + '/fonts';
         
         if (!dowFolder.exists) {
-          
           dowFolder.create();
         }
         getURLContent([url], [downPath]);
@@ -2786,7 +2812,7 @@ function fontsDialog(path) {
 /*
 
 ---------------------------------------------------------------
-> script metadata
+> 📃 script metadata
 ---------------------------------------------------------------
 
 */
@@ -2817,10 +2843,18 @@ function setXMPdata(XMPfield, XMPval) {
   app.project.xmpPacket = metaData.serialize();
 }
 
+/*
+
+---------------------------------------------------------------
+> 🪄 prototype functions
+---------------------------------------------------------------
+
+*/
+
 
 // image resize to fit dimensions...
 Image.prototype.onDraw = function () {
-  
+
   // 'this' is the container and 'this.image' is the graphic
   if (!this.image) return;
   var WH = this.size,
@@ -2845,14 +2879,12 @@ if (!Array.prototype.indexOf) {
     if (this == null) {
       throw new TypeError('"this" é nulo (null) ou não foi definido (undefined)');
     }
-
     var O = Object(this);
     var aSize = O.length >>> 0;
 
     if (aSize === 0) {
       return -1;
     }
-
     var n = + startPoint || 0;
 
     if (Math.abs(n) === Infinity) {
@@ -2861,7 +2893,6 @@ if (!Array.prototype.indexOf) {
     if (n >= aSize) {
       return -1;
     }
-
     k = Math.max(n >= 0 ? n : aSize - Math.abs(n), 0);
 
     while (k < aSize) {
