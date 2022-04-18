@@ -457,30 +457,30 @@ function PROMO_GNEWS_UI() {
   */
   currentGrp = toolsGrp;
 
+  // dynamic arrow rig...
   var arrowBtn = currentGrp.add('iconbutton', undefined, arrowIcon, {style: 'toolbutton'});
   arrowBtn.helpTip = 'simple arrow rig';
   
   currentGrp.add('image', undefined, vSpacer);
   
+  // simple counter rig...
   var counterBtn = currentGrp.add('iconbutton', undefined, counterIcon, {style: 'toolbutton'});
   counterBtn.helpTip = 'make counter rig';
-
+  // text typing rig...
+  var typeAnimBtn = currentGrp.add('iconbutton', undefined, typewriterIcon, {style: 'toolbutton'});
+  typeAnimBtn.helpTip = 'typewriter animation';
+  
   currentGrp.add('image', undefined, vSpacer);
 
+  // wiggle position rig...
   var wigBtn = currentGrp.add('iconbutton', undefined, wigIcon, {style: 'toolbutton'});
   wigBtn.helpTip = 'wig rig';
 
   currentGrp.add('image', undefined, vSpacer);
 
+  // simple ik rig...
   var ikBtn = currentGrp.add('iconbutton', undefined, ikIcon, {style: 'toolbutton'});
   ikBtn.helpTip = 'simple ik rig';
-
-  currentGrp.add('image', undefined, vSpacer);
-
-  // text typing rig...
-  var typeAnimBtn = currentGrp.add('iconbutton', undefined, typewriterIcon, {style: 'toolbutton'});
-  typeAnimBtn.helpTip = 'typewriter animation';
-
 
   /*
 
@@ -682,28 +682,28 @@ function PROMO_GNEWS_UI() {
   }
 
   // all subgroups
-  var tabSubGrps = [];
-  // ctrl subgroups
-  tabSubGrps.push(ctrlSubGrp1);
-  // animation subgroups
-  tabSubGrps.push(animationSubGrp1);
-  // fx subgroups
-  tabSubGrps.push(fxSubGrp1);
-  tabSubGrps.push(fxSubGrp2);
-  tabSubGrps.push(fxSubGrp3);
-  tabSubGrps.push(fxSubGrp4);
-  // layers subgroups
-  tabSubGrps.push(layersSubGrp1);
-  // links subgroups
-  tabSubGrps.push(linksSubGrp1);
-  tabSubGrps.push(linksSubGrp2);
-  tabSubGrps.push(linksSubGrp3);
-  // text subgroups
-  tabSubGrps.push(textSubGrp1);
-  tabSubGrps.push(textSubGrp2);
-  // project subgroups
-  tabSubGrps.push(projectSubGrp1);
-  
+  var tabSubGrps = [
+    // ctrl subgroups
+    ctrlSubGrp1,
+    // animation subgroups
+    animationSubGrp1,
+    // fx subgroups
+    fxSubGrp1,
+    fxSubGrp2,
+    fxSubGrp3,
+    fxSubGrp4,
+    // layers subgroups
+    layersSubGrp1,
+    // links subgroups
+    linksSubGrp1,
+    linksSubGrp2,
+    linksSubGrp3,
+    // text subgroups
+    textSubGrp1,
+    textSubGrp2,
+    // project subgroups
+    projectSubGrp1
+  ];
   //
   w.layout.layout(true);
 
