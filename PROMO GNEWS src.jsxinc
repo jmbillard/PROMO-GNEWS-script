@@ -2657,7 +2657,7 @@ function templateDialog(templatesPath) {
       s = s.parent;
       fileName = s.toString() + '/' + fileName;
     }
-    var templateFile = new File(path + '/' + fileName);
+    var templateFile = new File(templatesPath + '/' + fileName);
     // import options...
     var IO = new ImportOptions(templateFile);
     app.project.importFile(IO);
