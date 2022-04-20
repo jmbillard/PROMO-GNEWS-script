@@ -532,16 +532,19 @@ function PROMO_GNEWS_UI() {
   */
   currentGrp = appGrp;
   
-  var installFontsBtn = currentGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
-  installFontsBtn.helpTip = 'install fonts | open fonts folder';
-  
-  currentGrp.add('image', undefined, vSpacer);
-  
   var importAetBtn = currentGrp.add('iconbutton', undefined, aetIcon, {style: 'toolbutton'});
   importAetBtn.helpTip = 'import templates | open templates folder';
   
   var zipTemplatesBtn = currentGrp.add('iconbutton', undefined, zipIcon, {style: 'toolbutton'});
   zipTemplatesBtn.helpTip = 'zip the templates folder';
+  
+  currentGrp.add('image', undefined, vSpacer);
+  
+  var installFontsBtn = currentGrp.add('iconbutton', undefined, fontsIcon, {style: 'toolbutton'});
+  installFontsBtn.helpTip = 'install fonts | open fonts folder';
+
+  var zipFontsBtn = currentGrp.add('iconbutton', undefined, zipIcon, {style: 'toolbutton'});
+  zipFontsBtn.helpTip = 'zip the fonts folder';
   
   currentGrp.add('image', undefined, vSpacer);
 
@@ -2371,6 +2374,44 @@ function PROMO_GNEWS_UI() {
 
         var zipPath = destPath + '/templates.zip';
         zipContent(templatesStr, zipPath);
+        openFolder(destPath);
+      }
+  
+    } else {
+      showTabErr(msg);
+    }
+  };
+
+  zipFontsBtn.onClick = function() {
+
+    // error message...
+    var msg = netConfigName + ' not checked';
+
+    // checks if the script can access the network...
+    if (netAccess()) {
+      
+      var fontsPath = scriptPreferencesPath + '/fonts';
+      var fontsFolder = new Folder(fontsPath);
+      // dev folder path '[user name]/PROMO-GNEWS-script'...
+      var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
+      var devFolder = new Folder(destPath);
+      
+      if (fontsFolder.exists) {
+        
+        var fontsStr = fontsFolder.getFiles().toString();
+        // replaces '[' at the start and ']' at the end...
+        fontsStr = fontsStr.replace(/^\[|\]$/, '');
+        fontsStr = fontsStr.replace(/\,/g, '\', \'');
+        fontsStr = decodeURI(fontsStr);
+        
+        if (!devFolder.exists) {
+          
+          // alternative path 1 'desktop'...
+          destPath = Folder.desktop.toString();
+        }
+
+        var zipPath = destPath + '/fonts.zip';
+        zipContent(fontsStr, zipPath);
         openFolder(destPath);
       }
   
