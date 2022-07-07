@@ -420,7 +420,7 @@ function cloneExpressions(selLayer, ctrlLayer) {
 // set keyframe properties...
 function setKeys(selLayerProp, ctrlLayerProp) {
 
-  for (k = 1; k <= selLayerProp.numKeys; k++) {
+  for (var k = 1; k <= selLayerProp.numKeys; k++) {
 
     var t = selLayerProp.keyTime(k);
     var v = selLayerProp.keyValue(k);
