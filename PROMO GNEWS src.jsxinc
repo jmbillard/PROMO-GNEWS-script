@@ -904,6 +904,7 @@ function getFootage() {
 
           switch (true) {
             case (aItem.mainSource.isStill):
+              //alert(aItem.name);
               stillArray.push(aItem);
               break;
 
@@ -925,6 +926,8 @@ function getFootage() {
       }
     }
   }
+
+  //alert(stillArray);
 
   return [stillArray, footageArray, sonoArray, solidArray, missingArray];
 }
@@ -1034,56 +1037,39 @@ function populateFolders() {
   // TODO: make function...
 
   if (com.length > 0) {
+  
     for (c = 0; c < com.length; c++) {
       com[c].parentFolder = comFolder;
     }
   }
   if (G.length > 0) {
+  
     for (g = 0; g < G.length; g++) {
       G[g].parentFolder = GFolder;
     }
   }
   if (exp.length > 0) {
+  
     for (e = 0; e < exp.length; e++) {
       exp[e].parentFolder = rndFolder;
     }
   }
   if (ass.length > 0) {
+  
     for (a = 0; a < ass.length; a++) {
       ass[a].parentFolder = assFolder;
     }
   }
   if (ftg.length > 0) {
+ 
     for (f = 0; f < ftg.length; f++) {
       ftg[f].parentFolder = ftgFolder;
     }
   }
   if (stl.length > 0) {
 
-    for (s = 0; s < stl.length; s++) {
-
-      if (doneArray.indexOf(stl[s]) >= 0) {
-        stl[s].parentFolder = imgFolder;
-        sameFileArray = [stl[s]];
-
-        for (f = 0; f < stl.length; f++) {
-
-          if (f != s && stl[f].file.toString() == stl[s].file.toString()) {
-            sameFileArray.push(stl[f]);
-          }
-        }
-        if (sameFileArray.length > 1) {
-          fileStr = decodeURI(stl[s].file.name);
-          fileStr = deleteFileExt(fileStr) + ' layers';
-          iFolder = app.project.items.addFolder(fileStr);
-          iFolder.parentFolder = imgFolder;
-
-          for (c = 0; c < sameFileArray.length; c++) {
-            sameFileArray[c].parentFolder = iFolder;
-            doneArray.push(sameFileArray[c]);
-          }
-        }
-      }
+    for (var s = 0; s < stl.length; s++) {
+      stl[s].parentFolder = imgFolder;
     }
   }
   if (sno.length > 0) {
