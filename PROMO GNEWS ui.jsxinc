@@ -26,7 +26,7 @@ function PROMO_GNEWS_UI() {
 
   // GNEWS on-air 2022 colors...
   var GNEWS_WTE = rgb(255, 255, 255); // '#FFFFFF' white...
-  var GNEWS_RED = rgb(242, 51, 51); // '#F23333' pinksh red...
+  var GNEWS_RED = rgb(242, 51, 51); // '#F23333' pinkish red...
   var GNEWS_YLW = rgb(238, 255, 153); // '#EEFF99' pale yellow...
   var GNEWS_GRA = rgb(35, 30, 30); // '#231E1E' dark warm gray...
   var GNEWS_BLK = rgb(0, 0, 0); // '#000000' black...
@@ -2063,18 +2063,18 @@ function PROMO_GNEWS_UI() {
         var text = cntLayer.property('ADBE Text Properties');
         var textDoc = text.property('ADBE Text Document');
         var textDocVal = textDoc.value;
+        //textDoc.expression = exp1;
+        //textDocVal.font = 'Degular Display Gnews-Medium';
+        textDocVal.fontSize = 10;
+        //textDocVal.applyStroke = false;
+        //textDocVal.applyFill = true;
+        //textDocVal.strokeOverFill = true;
+        //textDocVal.tracking = 35;
+        //textDocVal.leading = 120;
+        textDocVal.justification = ParagraphJustification.LEFT_JUSTIFY;
         textDocVal.text = 'Tarja bla bla bla...'
-        textDocVal.font = 'Degular Display Gnews Medium';
-        textDocVal.fontSize = 120;
-        textDocVal.applyStroke = false;
-        textDocVal.applyFill = true;
-        textDocVal.strokeOverFill = true;
-        textDocVal.tracking = 35;
-        textDocVal.leading = 120;
-        textDocVal.justification = 7413;
         // text content...
 	      textDoc.setValue(textDocVal);
-        textDoc.expression = exp1;
 
         // text animator...
         var aniTxt = text.property('ADBE Text Animators');
