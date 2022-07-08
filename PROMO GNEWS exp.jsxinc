@@ -85,7 +85,7 @@ var fx = 'RIFX\x00\x00F\x0EFaFXhead\x00\x00\x00\x10\x00\x00\x00\x03\x00\x00\x00D
   exp4 += '\tvar txtL = sourceRectAtTime(time - startTime).left; // left x value...\n';
   exp4 += '\tvar txtR = txtL + sourceRectAtTime(time - startTime).width; // text width...\n';
   exp4 += '\tvar xH = txtStyle.fontSize * 0.47; // x height proportion to the font size...\n';
-  exp4 += '\tvar lH = (txtStyle.autoLeading) ? xSize * 2.4 : txtStyle.leading; // text leading...\n';
+  exp4 += '\tvar lH = (txtStyle.autoLeading) ? xH * 2.4 : txtStyle.leading; // text leading...\n';
   exp4 += '\tvar lNum = txt.replace(/^\\s+|\\s+$/gm, \'\').split(/\\r|\\n/).length - 1; // number of aditional lines written...\n';
   exp4 += '\n';
   exp4 += '\tvar borderSize = effect(\'typewriter\')(\'base - border size\').value / 10; // \'base - border size\' slider...\n';

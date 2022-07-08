@@ -2033,7 +2033,11 @@ function PROMO_GNEWS_UI() {
     var cntLayer;
     var srcTxt;
     var expFx = typewriter()[0];
-    var exp = typewriter()[1];
+    var exp1 = typewriter()[1];
+    var exp3 = typewriter()[3];
+    var exp4 = typewriter()[4];
+    var exp5 = typewriter()[5];
+    var exp6 = typewriter()[6];
     var msg = 'comp not selected';
 
     if (aItem != null) {
@@ -2052,26 +2056,58 @@ function PROMO_GNEWS_UI() {
           }
         }
       } else {
+        // text layer creation...
         cntLayer = aItem.layers.addText();
-        srcTxt = cntLayer.property(txtProp).property(txtDoc);
 
-        srcTxt.setValue('Tarja');
-        cntLayer.name = 'txt_tarja';
+        // text document...
+        var text = cntLayer.property('ADBE Text Properties');
+        var textDoc = text.property('ADBE Text Document');
+        var textDocVal = textDoc.value;
+        textDocVal.text = 'Tarja bla bla bla...'
+        textDocVal.font = 'Degular Display Gnews Medium';
+        textDocVal.fontSize = 120;
+        textDocVal.applyStroke = false;
+        textDocVal.applyFill = true;
+        textDocVal.strokeOverFill = true;
+        textDocVal.tracking = 35;
+        textDocVal.leading = 120;
+        textDocVal.justification = 7413;
+        // text content...
+	      textDoc.setValue(textDocVal);
+        textDoc.expression = exp1;
 
-        srcTxt = cntLayer.property(txtProp).property(txtDoc);
-        aniTxt = cntLayer.property(txtProp).property('ADBE Text Animators');
+        // text animator...
+        var aniTxt = text.property('ADBE Text Animators');
         aniTxt = aniTxt.addProperty('ADBE Text Animator');
-        aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
-        colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
+        var aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
+        var colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
+        colorTxt.expression = exp3;
+        aniTxt.name = 'Text Color';
 
-        aniTxt.name = 'counter color';
-        addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
-        srcTxt.expression = expStr1;
-        colorTxt.expression = expStr2;
+        // masks...
+        var masks = cntLayer.property('ADBE Mask Parade');
+        var mask1 = masks.addProperty('ADBE Mask Atom');
+        mask1.property('ADBE Mask Shape').expression = exp4;
+        // fx...
+        var effects = cntLayer.property('ADBE Effect Parade');
+        var base = effects.addProperty('ADBE Solid Composite');
+        base.property('ADBE Solid Composite-0002').expression = exp5;
+        var compOp = base.property('ADBE Effect Built In Params');
+        var masksCompOp = compOp.property('ADBE Effect Mask Parade');
+        masksCompOp = masksCompOp.addProperty('ADBE Effect Mask');
+        masksCompOp.property('ADBE Effect Path Stream Ref').setValue(1);
+        masksCompOp.name = 'Mask Reference 1';
+        //compOp.property('ADBE Effect Mask Opacity').setValue(100);
+        compOp.property('ADBE Effect Mask Opacity').expression = exp6;
 
 
+        // pseudo effect control...
         addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
-        srcTxt.expression = exp;
+
+        // expressions...
+        
+        // layer name...
+        cntLayer.name = 'txt_tarja';
       }
 
       app.endUndoGroup();
