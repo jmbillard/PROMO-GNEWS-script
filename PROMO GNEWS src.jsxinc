@@ -1074,13 +1074,13 @@ function populateFolders() {
   }
   if (sno.length > 0) {
 
-    for (s = 0; s < sno.length; s++) {
+    for (var s = 0; s < sno.length; s++) {
       sno[s].parentFolder = snoFolder;
     }
   }
   if (sol.length > 0) {
 
-    for (s = 0; s < sol.length; s++) {
+    for (var s = 0; s < sol.length; s++) {
       sol[s].parentFolder = solFolder;
     }
   }
