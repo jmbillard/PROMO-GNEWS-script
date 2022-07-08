@@ -24,6 +24,14 @@ function PROMO_GNEWS_UI() {
   var GNEWS_BLK = rgb(20, 20, 20);
   var GNEWS_WTE = rgb(234, 234, 234);
 
+  // GNEWS on-air 2022 colors...
+  var GNEWS_WTE = rgb(255, 255, 255); // '#FFFFFF' white...
+  var GNEWS_RED = rgb(242, 51, 51); // '#F23333' pinksh red...
+  var GNEWS_YLW = rgb(238, 255, 153); // '#EEFF99' pale yellow...
+  var GNEWS_GRA = rgb(35, 30, 30); // '#231E1E' dark warm gray...
+  var GNEWS_BLK = rgb(0, 0, 0); // '#000000' black...
+
+
   // ui colors, labels and group names...
   var tabColors = [];
   var labelColors = [];
@@ -2047,8 +2055,20 @@ function PROMO_GNEWS_UI() {
         cntLayer = aItem.layers.addText();
         srcTxt = cntLayer.property(txtProp).property(txtDoc);
 
-        srcTxt.setValue('typewriter');
-        cntLayer.name = 'txt_typewriter';
+        srcTxt.setValue('Tarja');
+        cntLayer.name = 'txt_tarja';
+
+        srcTxt = cntLayer.property(txtProp).property(txtDoc);
+        aniTxt = cntLayer.property(txtProp).property('ADBE Text Animators');
+        aniTxt = aniTxt.addProperty('ADBE Text Animator');
+        aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
+        colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
+
+        aniTxt.name = 'counter color';
+        addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
+        srcTxt.expression = expStr1;
+        colorTxt.expression = expStr2;
+
 
         addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
         srcTxt.expression = exp;
