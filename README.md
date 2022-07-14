@@ -155,7 +155,7 @@ aplica um efeito 'fill' com a cor selecionada.
 
 <br/>
 
-### ![shapePallet btn](/images/icons/shpPalletIcon.png) botão **`paleta guia`**
+### ![shapePallet btn](/images/icons/gides2Icon.png) botão **`paleta guia`**
 cria um 'shape layer' com amostras da paleta no canto superior esquerdo.
 
 <br/>
