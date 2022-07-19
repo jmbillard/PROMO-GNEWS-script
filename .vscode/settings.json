@@ -2,5 +2,6 @@
     "cSpell.words": [
         "Degular",
         "Gnews"
-    ]
+    ],
+    "jshint.nodePath": "/config/extensions/"
 }
