@@ -33,7 +33,7 @@ function PROMO_GNEWS_UTL(thisObj) {
 
   // current script version...
   var vStr = 'v 1.8';
-  
+
   // app script network access preferences...
   var prefSection = 'Main Pref Section';
   var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
@@ -50,7 +50,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   function netAccess() {
     return app.preferences.getPrefAsLong(prefSection, prefName);
   }
-  
+
   /*
 
   ---------------------------------------------------------------
