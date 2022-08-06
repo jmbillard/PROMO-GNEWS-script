@@ -1,0 +1,280 @@
+
+/*
+
+---------------------------------------------------------------
+> 🪟 UI dialogs
+---------------------------------------------------------------
+
+*/
+
+// import templates UI...
+function templateDialog(templatesPath) {
+
+    var wWidth;
+    var oWidth;
+    var previewScale = 0.25;
+    var fileFilter = ['.aep', '.aet'];
+  
+    var treeFolder = new Folder(templatesPath);
+    
+    var w = new Window('dialog', 'import options...');
+    var mainGrp = w.add('group');
+    var vGrp1 =  mainGrp.add('group');
+    vGrp1.orientation = 'column';
+    var vGrp2 =  mainGrp.add('group');
+    vGrp2.orientation = 'column';
+    vGrp2.alignChildren = 'left';
+    vGrp2.visible = false;
+    var tree = vGrp1.add('treeview', [0, 0, 250, 340]);
+    buildTree(treeFolder, tree, fileFilter);
+  
+    var bGrp = vGrp1.add('group');
+    bGrp.orientation = 'stack';
+    bGrp.alignment = 'fill';
+    var bGrp1 = bGrp.add('group');
+    bGrp1.alignment = 'left';
+    bGrp1.spacing = '2';
+    var bGrp2 = bGrp.add('group');
+    bGrp2.alignment = 'right';
+    var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
+    downloadBtn.helpTip = 'downloads the latest templates';
+    var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
+    refreshBtn.helpTip = 'refresh list content';
+    var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
+    openFldBtn.helpTip = 'open template folder';
+    var importBtn = bGrp2.add('button', undefined, 'import');
+    importBtn.helpTip = 'import selected template';
+    importBtn.enabled = tree.selection != null;
+  
+    var pathTxt = vGrp2.add ('statictext', undefined, '...');
+    pathTxt.characters = 40;
+    setTxtColor(pathTxt, GNEWS_GRA3);
+    var previewImg = vGrp2.add ('image', undefined, undefined);
+    previewImg.size = [1920 * previewScale, 1080 * previewScale];
+    var updateTxt = vGrp2.add('statictext', undefined, '...');
+    updateTxt.characters = 40;
+    setTxtColor(updateTxt, GNEWS_SEC11);
+    var infoGrp = vGrp2.add('group');
+    infoGrp.orientation = 'column';
+    infoGrp.spacing = 3;
+    var info1Txt = infoGrp.add('statictext', undefined, '...');
+    info1Txt.characters = 40;
+    setTxtColor(info1Txt, GNEWS_SEC9);
+    var info2Txt = infoGrp.add('statictext', undefined, '...');
+    info2Txt.characters = 40;
+    setTxtColor(info2Txt, GNEWS_SEC9);
+  
+    tree.onChange = function () {
+      
+      // node folders should not be selectable...
+      if (tree.selection != null && tree.selection.type == 'node') {
+        tree.selection = null;
+        vGrp2.visible = false;
+      }
+      if (tree.selection == null) {
+        w.size.width = wWidth;
+        vGrp2.visible = false;
+      } else {
+        
+        var s = tree.selection;
+        var templateName = s.toString();
+        var imgName = s.toString().replace(/\.[\w]+$/i, ' preview.png');
+        var infoName = s.toString().replace(/\.[\w]+$/i, ' info.txt');
+        
+        while (s.parent.toString() != treeFolder.displayName) {
+          
+          s = s.parent;
+          templateName = s.toString() + '/' + templateName;
+          imgName = s.toString() + '/' + imgName;
+          infoName = s.toString() + '/' + infoName;
+        }
+        var templateFile = new File(templatesPath + '/' + templateName);
+        var previewImgFile = new File(templatesPath + '/' + imgName);
+        var infoFile = new File(templatesPath + '/' + infoName);
+        var fWidth = wWidth;
+        var infoContent = ['...', '...'];
+        
+        if (infoFile.exists) {
+          infoFile.open('r');
+          infoFile.encoding = 'UTF-8';
+          infoContent = infoFile.read().toString().split(/\n|\r/);
+        }
+        if (previewImgFile.exists) {
+          fWidth = oWidth;
+          vGrp2.visible = true;
+          previewImg.image = previewImgFile;
+        }
+        w.size.width = fWidth;
+        pathTxt.text = 'templates/'+ templateName;
+        updateTxt.text = 'updated on: ' + templateFile.created.toString();
+        info1Txt.text = '>> ' + infoContent[0];
+        info2Txt.text = '>> ' + infoContent[1];
+      }
+      importBtn.enabled = tree.selection != null;
+    };
+  
+    w.onShow = function () {
+      expandNodes(tree);
+      oWidth = w.size.width;
+      vGrp2.visible = false;
+      wWidth = oWidth - 490;
+      w.size.width = wWidth;
+    };
+        
+    importBtn.onClick = function () {
+  
+      var fileName = tree.selection.toString();
+      var s = tree.selection;
+  
+      // adds the parent nodes to the file name...
+      while (s.parent.toString() != treeFolder.displayName) {
+        
+        s = s.parent;
+        fileName = s.toString() + '/' + fileName;
+      }
+      var templateFile = new File(templatesPath + '/' + fileName);
+      // import options...
+      var IO = new ImportOptions(templateFile);
+      app.project.importFile(IO);
+      w.close();
+    };
+  
+    downloadBtn.onClick = function () {
+  
+      if (netAccess()) {
+  
+        var url = repoURL + '/raw/main/templates.zip';
+  
+        var downPath = scriptPreferencesPath + '/temp';
+        var dowFolder = new Folder(downPath);
+        var zipPath = downPath + '/templates.zip';
+        var templatesPath = scriptPreferencesPath + '/templates';
+  
+        if (!dowFolder.exists) {
+  
+          dowFolder.create();
+        }
+        getURLContent([url], [downPath]);
+        unzipContent(zipPath, templatesPath);
+      }
+      buildTree(treeFolder, tree, fileFilter);
+      expandNodes(tree);  
+    };
+  
+    refreshBtn.onClick = function () {
+  
+      buildTree(treeFolder, tree, fileFilter);
+      expandNodes(tree);
+    };
+  
+    openFldBtn.onClick = function () {
+  
+      var msg = netConfigName + ' not checked';
+  
+      if (netAccess()) {
+      
+        var templatesPath = scriptPreferencesPath + '/templates';
+        var templatesFolder = new Folder(templatesPath);
+        
+        if (!templatesFolder.exists) {
+  
+          templatesFolder.create();
+        }
+        openFolder(templatesPath);
+  
+      } else {
+        showTabErr(msg);
+      }  
+    };
+  
+    w.show();
+  }
+  
+  
+  function fontsDialog(path) {
+  
+    // root folder...
+    var treeFolder = new Folder(path);
+  
+    // UI definition...
+    var w = new Window('dialog', 'font options...');
+    // treeview...
+    var tree = w.add('treeview', [0, 0, 250, 380]);
+  
+    // creates all the 'treeview nodes'...
+    buildFontTree(treeFolder, tree);
+  
+    // buttons...
+    var bGroup = w.add('group');
+    var refreshBtn = bGroup.add('button', undefined, 'refresh');
+    refreshBtn.helpTip = 'refresh list content | downloads the latest fonts';
+    var installBtn = bGroup.add('button', undefined, 'install');
+    installBtn.helpTip = 'install selected fonts';
+    installBtn.enabled = tree.selection != null;
+  
+    tree.onChange = function () {
+  
+      // node folders should not be selectable...
+      if (tree.selection != null && tree.selection.type == 'node') {
+        tree.selection = null;
+      }
+      // toggle the enabled state depending on the selection...
+      installBtn.enabled = tree.selection != null;
+    };
+  
+    // expands every node from the start...
+    w.onShow = function () {
+      expandNodes(tree);
+    };
+  
+    // font installation...
+    installBtn.onClick = function () {
+  
+      var fontFamilyName = tree.selection.toString();
+      var fontFamilyPath = path + '/' + fontFamilyName;
+      var fontFamilyFolder = new Folder(fontFamilyPath);
+  
+      // checks if there is a system folder correspondent to the selection...
+      if (fontFamilyFolder.exists) {
+  
+        // install the selected font family on Windows...
+        if (appOs == 'Win') {
+          installFonts(fontFamilyPath.toString());
+        }
+      }
+    };
+  
+    // download and overwrite files on the preferences font folder...
+    refreshBtn.addEventListener ('click', function (c) {
+  
+      if (c.button == 2) {
+  
+        if (netAccess()) {
+  
+          var url = repoURL + '/raw/main/fonts.zip';
+  
+          var downPath = scriptPreferencesPath + '/temp';
+          var dowFolder = new Folder(downPath);
+          var zipPath = downPath + '/fonts.zip';
+          var fontsPath = scriptPreferencesPath + '/fonts';
+          
+          if (!dowFolder.exists) {
+            dowFolder.create();
+          }
+          getURLContent([url], [downPath]);
+          unzipContent(zipPath, fontsPath);
+        }
+        buildFontTree(treeFolder, tree);
+        expandNodes(tree);  
+      }
+    });
+  
+    refreshBtn.onClick = function () {
+  
+      buildFontTree(treeFolder, tree);
+      expandNodes(tree);
+    };
+    
+    w.show();
+  }
+  
