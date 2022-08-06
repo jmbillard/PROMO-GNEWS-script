@@ -28,11 +28,25 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
 /* jshint ignore:start */
 #include 'JSON lib.jsxinc'; // JSON definition file...
 /* jshint ignore:end */
+  
+// github main repo...
+var repoURL = 'https://github.com/jmbillard/PROMO-GNEWS-script';
+var codeURL = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';
+
+var codeURLArray = [
+  codeURL + 'JSON%20lib.jsxinc',
+  codeURL + 'PROMO%20GNEWS%20exp.jsxinc',
+  codeURL + 'PROMO%20GNEWS%20img.jsxinc',
+  codeURL + 'PROMO%20GNEWS%20src.jsxinc',
+  codeURL + 'PROMO%20GNEWS%20ui2.jsxinc',
+  codeURL + 'PROMO%20GNEWS%20ui.jsxinc',
+  codeURL + 'PROMO%20GNEWS.jsx'
+];
 
 function PROMO_GNEWS_UTL(thisObj) {
 
   // current script version...
-  var vStr = 'v 1.8';
+  var vStr = 'v 1.9';
 
   // app script network access preferences...
   var prefSection = 'Main Pref Section';
