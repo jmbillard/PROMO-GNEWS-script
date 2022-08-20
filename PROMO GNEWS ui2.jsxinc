@@ -8,14 +8,15 @@
 */
 
 // import templates UI...
-function templateDialog(templatesPath) {
+function templateDialog() {
+
+    var templatesPath = scriptPreferencesPath + '/templates';
+    var templatesFolder = new Folder(templatesPath);
 
     var wWidth;
     var oWidth;
     var previewScale = 0.25;
     var fileFilter = ['.aep', '.aet'];
-  
-    var treeFolder = new Folder(templatesPath);
     
     var w = new Window('dialog', 'import options...');
     var mainGrp = w.add('group');
@@ -26,7 +27,7 @@ function templateDialog(templatesPath) {
     vGrp2.alignChildren = 'left';
     vGrp2.visible = false;
     var tree = vGrp1.add('treeview', [0, 0, 250, 340]);
-    buildTree(treeFolder, tree, fileFilter);
+    buildTree(templatesFolder, tree, fileFilter);
   
     var bGrp = vGrp1.add('group');
     bGrp.orientation = 'stack';
@@ -81,7 +82,7 @@ function templateDialog(templatesPath) {
         var imgName = s.toString().replace(/\.[\w]+$/i, ' preview.png');
         var infoName = s.toString().replace(/\.[\w]+$/i, ' info.txt');
         
-        while (s.parent.toString() != treeFolder.displayName) {
+        while (s.parent.toString() != templatesFolder.displayName) {
           
           s = s.parent;
           templateName = s.toString() + '/' + templateName;
@@ -127,7 +128,7 @@ function templateDialog(templatesPath) {
       var s = tree.selection;
   
       // adds the parent nodes to the file name...
-      while (s.parent.toString() != treeFolder.displayName) {
+      while (s.parent.toString() != templatesFolder.displayName) {
         
         s = s.parent;
         fileName = s.toString() + '/' + fileName;
@@ -140,61 +141,60 @@ function templateDialog(templatesPath) {
     };
   
     downloadBtn.onClick = function () {
-  
-      if (netAccess()) {
-  
-        var url = repoURL + '/raw/main/templates.zip';
-  
-        var downPath = scriptPreferencesPath + '/temp';
-        var dowFolder = new Folder(downPath);
-        var zipPath = downPath + '/templates.zip';
-        var templatesPath = scriptPreferencesPath + '/templates';
-  
-        if (!dowFolder.exists) {
-  
-          dowFolder.create();
-        }
-        getURLContent([url], [downPath]);
-        unzipContent(zipPath, templatesPath);
+      // alert...
+      if (!netAccess()) {
+        alert('no network...  Σ(っ °Д °;)っ');
+        return;
       }
-      buildTree(treeFolder, tree, fileFilter);
+      var url = repoURL + '/raw/main/templates.zip';
+
+      var downPath = scriptPreferencesPath + '/temp';
+      var dowFolder = new Folder(downPath);
+      var zipPath = downPath + '/templates.zip';
+      var templatesPath = scriptPreferencesPath + '/templates';
+
+      if (!dowFolder.exists) {
+        dowFolder.create();
+      }
+      getURLContent([url], [downPath]);
+      unzipContent(zipPath, templatesPath);
+      buildTree(templatesFolder, tree, fileFilter);
       expandNodes(tree);  
     };
   
     refreshBtn.onClick = function () {
-  
-      buildTree(treeFolder, tree, fileFilter);
+      // alert...
+      if (!netAccess()) {
+        alert('no access...  Σ(っ °Д °;)っ');
+        return;
+      }
+      buildTree(templatesFolder, tree, fileFilter);
       expandNodes(tree);
     };
   
     openFldBtn.onClick = function () {
-  
-      var msg = netConfigName + ' not checked';
-  
-      if (netAccess()) {
-      
-        var templatesPath = scriptPreferencesPath + '/templates';
-        var templatesFolder = new Folder(templatesPath);
-        
-        if (!templatesFolder.exists) {
-  
-          templatesFolder.create();
-        }
-        openFolder(templatesPath);
-  
-      } else {
-        showTabErr(msg);
-      }  
+      // alert...
+      if (!netAccess()) {
+        alert('no access...  Σ(っ °Д °;)っ');
+        return;
+      }      
+      if (!templatesFolder.exists) {
+        templatesFolder.create();
+      }
+      openFolder(templatesPath);
     };
   
     w.show();
   }
   
   
-  function fontsDialog(path) {
+  function fontsDialog() {
   
-    // root folder...
-    var treeFolder = new Folder(path);
+    var fontsPath = scriptPreferencesPath + '/fonts';
+    var fontsFolder = new Folder(fontsPath);
+
+    var downPath = scriptPreferencesPath + '/temp';
+    var dowFolder = new Folder(downPath);
   
     // UI definition...
     var w = new Window('dialog', 'font options...');
@@ -202,13 +202,24 @@ function templateDialog(templatesPath) {
     var tree = w.add('treeview', [0, 0, 250, 380]);
   
     // creates all the 'treeview nodes'...
-    buildFontTree(treeFolder, tree);
+    buildFontTree(fontsFolder, tree);
   
     // buttons...
-    var bGroup = w.add('group');
-    var refreshBtn = bGroup.add('button', undefined, 'refresh');
-    refreshBtn.helpTip = 'refresh list content | downloads the latest fonts';
-    var installBtn = bGroup.add('button', undefined, 'install');
+    var bGrp = w.add('group');
+    bGrp.orientation = 'stack';
+    bGrp.alignment = 'fill';
+    var bGrp1 = bGrp.add('group');
+    bGrp1.alignment = 'left';
+    bGrp1.spacing = '2';
+    var bGrp2 = bGrp.add('group');
+    bGrp2.alignment = 'right';
+    var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
+    downloadBtn.helpTip = 'downloads the latest templates';
+    var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
+    refreshBtn.helpTip = 'refresh list content';
+    var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
+    openFldBtn.helpTip = 'open fonts folder';
+    var installBtn = bGrp2.add('button', undefined, 'install');
     installBtn.helpTip = 'install selected fonts';
     installBtn.enabled = tree.selection != null;
   
@@ -231,12 +242,11 @@ function templateDialog(templatesPath) {
     installBtn.onClick = function () {
   
       var fontFamilyName = tree.selection.toString();
-      var fontFamilyPath = path + '/' + fontFamilyName;
+      var fontFamilyPath = fontsPath + '/' + fontFamilyName;
       var fontFamilyFolder = new Folder(fontFamilyPath);
   
       // checks if there is a system folder correspondent to the selection...
       if (fontFamilyFolder.exists) {
-  
         // install the selected font family on Windows...
         if (appOs == 'Win') {
           installFonts(fontFamilyPath.toString());
@@ -244,35 +254,45 @@ function templateDialog(templatesPath) {
       }
     };
   
-    // download and overwrite files on the preferences font folder...
-    refreshBtn.addEventListener ('click', function (c) {
-  
-      if (c.button == 2) {
-  
-        if (netAccess()) {
-  
-          var url = repoURL + '/raw/main/fonts.zip';
-  
-          var downPath = scriptPreferencesPath + '/temp';
-          var dowFolder = new Folder(downPath);
-          var zipPath = downPath + '/fonts.zip';
-          var fontsPath = scriptPreferencesPath + '/fonts';
-          
-          if (!dowFolder.exists) {
-            dowFolder.create();
-          }
-          getURLContent([url], [downPath]);
-          unzipContent(zipPath, fontsPath);
-        }
-        buildFontTree(treeFolder, tree);
-        expandNodes(tree);  
+    // download and merge/overwrite files on the preferences font folder...
+    downloadBtn.onClick = function () {
+      // alert...
+      if (!netAccess()) {
+        alert('no network...  Σ(っ °Д °;)っ');
+        return;
       }
-    });
+      var url = repoURL + '/raw/main/fonts.zip';
+      var zipPath = downPath + '/fonts.zip';
+      
+      if (!dowFolder.exists) {
+        dowFolder.create();
+      }
+      getURLContent([url], [downPath]);
+      unzipContent(zipPath, fontsPath);
+      buildFontTree(fontsFolder, tree);
+      expandNodes(tree);  
+    };
   
     refreshBtn.onClick = function () {
-  
-      buildFontTree(treeFolder, tree);
+      // alert...
+      if (!netAccess()) {
+        alert('no access...  Σ(っ °Д °;)っ');
+        return;
+      }
+      buildFontTree(fontsFolder, tree);
       expandNodes(tree);
+    };
+
+    openFldBtn.onClick = function () {
+      // alert...
+      if (!netAccess()) {
+        alert('no access...  Σ(っ °Д °;)っ');
+        return;
+      }      
+      if (!fontsFolder.exists) {
+        fontsFolder.create();
+      }
+      openFolder(fontsPath);
     };
     
     w.show();
