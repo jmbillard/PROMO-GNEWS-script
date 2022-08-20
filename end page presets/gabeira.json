@@ -1,0 +1,30 @@
+{
+	"layout":{
+		"modelo":1,
+		"logo":true,
+		"titulo":true,
+		"subtitulo":false,
+		"data e horario":true,
+		"foto":true,
+		"footage":false,
+		"pattern":true
+	},
+
+	"servico":{
+		"titulo":"Fernando Gabeira",
+		"hora":16,
+		"min":0
+	},
+
+	"aparencia":{
+		"logo":[0,0,0,255],
+		"titulo":[0,0,0,255],
+		"subtitulo":[0,0,0,255],
+		"apoio":[0,0,0,255],
+		"horario":[0,0,0,255],
+		"horario base":[0,0,0,255],
+		"footage":[0,0,0,255],
+		"pattern":[0,0,0,255],
+		"fundo":[0,0,0,255]
+	}
+}
