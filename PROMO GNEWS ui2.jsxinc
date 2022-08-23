@@ -194,20 +194,27 @@ function templateDialog() {
   // organization tags UI...
   function tagDialog() {
 
+    // comments just for comp itens...
     var compCommentTags = [
       'export',
       'edit',
       'ignore'
     ];
+    // comments for footage itens ou template names for comp itens...
     var multiTags = [
       'foto',
       'logo',
       'pattern',
       'tile',
-      'texture'
+      'texture',
+      'lettering',
+      'music',
+      'loc'
     ];
+    // template names for comp itens...
     var compTemplateTags = [
-      'end page'
+      'end page',
+      'opening'
     ];
 
     // window...
