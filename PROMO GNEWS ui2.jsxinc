@@ -7,6 +7,10 @@
 
 */
 
+//  linter settings:
+//  jshint -W061
+//  jshint -W043
+
 // import templates UI...
 function templateDialog() {
 
@@ -149,12 +153,12 @@ function templateDialog() {
       var url = repoURL + '/raw/main/templates.zip';
 
       var downPath = scriptPreferencesPath + '/temp';
-      var dowFolder = new Folder(downPath);
+      var downFolder = new Folder(downPath);
       var zipPath = downPath + '/templates.zip';
       var templatesPath = scriptPreferencesPath + '/templates';
 
-      if (!dowFolder.exists) {
-        dowFolder.create();
+      if (!downFolder.exists) {
+        downFolder.create();
       }
       getURLContent([url], [downPath]);
       unzipContent(zipPath, templatesPath);
@@ -187,14 +191,98 @@ function templateDialog() {
     w.show();
   }
   
+  // organization tags UI...
+  function tagDialog() {
+
+    var compCommentTags = [
+      'export',
+      'edit',
+      'ignore'
+    ];
+    var multiTags = [
+      'foto',
+      'logo',
+      'pattern',
+      'tile',
+      'texture'
+    ];
+    var compTemplateTags = [
+      'end page'
+    ];
+
+    // window...
+    var tagWindow = 'var w = new Window(\'palette\', \'org. tags...\');\
+w.alignChildren = \'left\'\n';
+
+    // comp comment buttons...
+    for (var c = 0; c < compCommentTags.length; c++) {
+      tagWindow += 'var compComTagGrp'+ c +' = w.add(\'group\');\
+var compComTagBtn'+ c +' = compComTagGrp'+ c +'.add(\'iconbutton\', undefined, solTogIcon, {style: \'toolbutton\'});\
+compComTagBtn'+ c +'.helpTip = \'' + compCommentTags[c] + ' comp comment tag\';\
+var compComTag'+ c +'Txt = compComTagGrp'+ c +'.add(\'statictext\', undefined, \'' + compCommentTags[c] + '\');\
+setTxtColor(compComTag'+ c +'Txt, GNEWS_SEC11);\n';
+    }
+    // template buttons...
+    for (var b = 0; b < multiTags.length; b++) {
+      tagWindow += 'var multiTagGrp'+ b +' = w.add(\'group\');\
+var multiTagBtn'+ b +' = multiTagGrp'+ b +'.add(\'iconbutton\', undefined, solTogIcon, {style: \'toolbutton\'});\
+multiTagBtn'+ b +'.helpTip = \'' + multiTags[b] + ' tag\';\
+var multiTag'+ b +'Txt = multiTagGrp'+ b +'.add(\'statictext\', undefined, \'' + multiTags[b] + '\');\
+setTxtColor(multiTag'+ b +'Txt, GNEWS_SEC10);\n';
+    }
+    // template buttons...
+    for (var p = 0; p < compTemplateTags.length; p++) {
+      tagWindow += 'var temTagGrp'+ p +' = w.add(\'group\');\
+var temTagBtn'+ p +' = temTagGrp'+ p +'.add(\'iconbutton\', undefined, solTogIcon, {style: \'toolbutton\'});\
+temTagBtn'+ p +'.helpTip = \'' + compTemplateTags[p] + ' template tag\';\
+var temTag'+ p +'Txt = temTagGrp'+ p +'.add(\'statictext\', undefined, \'' + compTemplateTags[p] + '\');\
+setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n';
+    }
+    // click events...
+    for (var t = 0; t < compCommentTags.length; t++) {
+      tagWindow += 'compComTagBtn'+ t +'.onClick = function () {\
+  if (app.project.selection.length == 0) {return;}\
+  for (var i = 0; i < app.project.selection.length; i++) {\
+    if (!(app.project.selection[i] instanceof CompItem)) {continue;}\
+    app.project.selection[i].comment = \'' + compCommentTags[t] + ': true\';\
+  }\n};\n';
+    }
+
+    for (var m = 0; m < multiTags.length; m++) {
+      tagWindow += 'multiTagBtn'+ m +'.onClick = function () {\
+  if (app.project.selection.length == 0) {return;}\
+  for (var i = 0; i < app.project.selection.length; i++) {\
+    if (app.project.selection[i] instanceof CompItem) {\
+      app.project.selection[i].motionGraphicsTemplateName = \'' + multiTags[m] + '\';\
+    }\
+    if (app.project.selection[i] instanceof FootageItem) {\
+      app.project.selection[i].comment = \'' + multiTags[m] + ': true\';\
+    }\
+  }\n};\n';
+    }
+
+    for (var k = 0; k < compTemplateTags.length; k++) {
+      tagWindow += 'temTagBtn'+ k +'.onClick = function () {\
+  if (app.project.selection.length == 0) {return;}\
+  for (var i = 0; i < app.project.selection.length; i++) {\
+    if (!(app.project.selection[i] instanceof CompItem)) {continue;}\
+    app.project.selection[i].motionGraphicsTemplateName = \'' + compTemplateTags[k] + '\';\
+  }\n};\n';
+    }
+
+    tagWindow += 'w.show();';
+
+    eval(tagWindow);
+  }
   
+  // install fonts UI...
   function fontsDialog() {
   
     var fontsPath = scriptPreferencesPath + '/fonts';
     var fontsFolder = new Folder(fontsPath);
 
     var downPath = scriptPreferencesPath + '/temp';
-    var dowFolder = new Folder(downPath);
+    var downFolder = new Folder(downPath);
   
     // UI definition...
     var w = new Window('dialog', 'font options...');
@@ -264,8 +352,8 @@ function templateDialog() {
       var url = repoURL + '/raw/main/fonts.zip';
       var zipPath = downPath + '/fonts.zip';
       
-      if (!dowFolder.exists) {
-        dowFolder.create();
+      if (!downFolder.exists) {
+        downFolder.create();
       }
       getURLContent([url], [downPath]);
       unzipContent(zipPath, fontsPath);
