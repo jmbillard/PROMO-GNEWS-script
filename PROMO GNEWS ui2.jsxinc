@@ -14,18 +14,21 @@
 // import templates UI...
 function templateDialog() {
 
-    var templatesPath = scriptPreferencesPath + '/templates';
-    var templatesFolder = new Folder(templatesPath);
+    var templatesPath = scriptPreferencesPath + '/templates'; // → ~AppData\Roaming\PROMO GNEWS script\templates
+    var templatesFolder = new Folder(templatesPath); // → templates folder object
 
     var wWidth;
     var oWidth;
-    var previewScale = 0.25;
-    var fileFilter = ['.aep', '.aet'];
+    var previewScale = 0.25; // preview image scale factor...
+    var fileFilter = ['.aep', '.aet']; // template files extensions...
     
     var w = new Window('dialog', 'import options...');
+    // main group...
     var mainGrp = w.add('group');
+    // left vertical group...
     var vGrp1 =  mainGrp.add('group');
     vGrp1.orientation = 'column';
+    // preview vertical group...
     var vGrp2 =  mainGrp.add('group');
     vGrp2.orientation = 'column';
     vGrp2.alignChildren = 'left';
@@ -33,24 +36,30 @@ function templateDialog() {
     var tree = vGrp1.add('treeview', [0, 0, 250, 340]);
     buildTree(templatesFolder, tree, fileFilter);
   
+    // buttons group...
     var bGrp = vGrp1.add('group');
     bGrp.orientation = 'stack';
     bGrp.alignment = 'fill';
+    // left buttons group...
     var bGrp1 = bGrp.add('group');
     bGrp1.alignment = 'left';
     bGrp1.spacing = '2';
+    // right buttons group...
     var bGrp2 = bGrp.add('group');
     bGrp2.alignment = 'right';
+    // left buttons...
     var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
     downloadBtn.helpTip = 'downloads the latest templates';
     var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
     refreshBtn.helpTip = 'refresh list content';
     var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
     openFldBtn.helpTip = 'open template folder';
+    // right buttons...
     var importBtn = bGrp2.add('button', undefined, 'import');
     importBtn.helpTip = 'import selected template';
     importBtn.enabled = tree.selection != null;
   
+    // preview...
     var pathTxt = vGrp2.add ('statictext', undefined, '...');
     pathTxt.characters = 40;
     setTxtColor(pathTxt, GNEWS_GRA3);
@@ -59,6 +68,7 @@ function templateDialog() {
     var updateTxt = vGrp2.add('statictext', undefined, '...');
     updateTxt.characters = 40;
     setTxtColor(updateTxt, GNEWS_SEC11);
+    // preview info...
     var infoGrp = vGrp2.add('group');
     infoGrp.orientation = 'column';
     infoGrp.spacing = 3;
@@ -73,19 +83,21 @@ function templateDialog() {
       
       // node folders should not be selectable...
       if (tree.selection != null && tree.selection.type == 'node') {
-        tree.selection = null;
-        vGrp2.visible = false;
+        tree.selection = null; // → clear selection
+        vGrp2.visible = false; // → hide preview
       }
+      // nothing selected...
       if (tree.selection == null) {
-        w.size.width = wWidth;
-        vGrp2.visible = false;
+        w.size.width = wWidth; // → resize window
+        vGrp2.visible = false; // → hide preview
       } else {
         
-        var s = tree.selection;
+        var s = tree.selection; // → selected template
         var templateName = s.toString();
-        var imgName = s.toString().replace(/\.[\w]+$/i, ' preview.png');
-        var infoName = s.toString().replace(/\.[\w]+$/i, ' info.txt');
+        var imgName = s.toString().replace(/\.[\w]+$/i, ' preview.png'); // → template preview.png
+        var infoName = s.toString().replace(/\.[\w]+$/i, ' info.txt'); // → template info.png
         
+        // selected template path...
         while (s.parent.toString() != templatesFolder.displayName) {
           
           s = s.parent;
