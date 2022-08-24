@@ -83,7 +83,6 @@ function PROMO_GNEWS_UTL(thisObj) {
     // opens AE preferences...
     app.executeCommand(3131); // → scripting preferences
 
-    // alert...
     if (!netAccess()) {
       // no network access...
       alert('no network...  Σ(っ °Д °;)っ\nlimited functionality mode');
@@ -91,7 +90,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   }
   // checks if the ui is running as floating window or as a panel...
   if (PROMO_GNEWS_WINDOW.toString() != '[object Panel]') {
-    PROMO_GNEWS_WINDOW.show();
+    PROMO_GNEWS_WINDOW.show(); // → show UI
   }
   return PROMO_GNEWS_WINDOW;
 }
