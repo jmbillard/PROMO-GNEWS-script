@@ -59,7 +59,7 @@ function templateDialog() {
     // right buttons...
     var importBtn = bGrp2.add('button', undefined, 'import');
     importBtn.helpTip = 'import selected template';
-    importBtn.enabled = tree.selection != null;
+    importBtn.enabled = false;
   
     // preview...
     var pathTxt = vGrp2.add ('statictext', undefined, '...');
@@ -87,6 +87,7 @@ function templateDialog() {
       if (tree.selection != null && tree.selection.type == 'node') {
         tree.selection = null; // → clear selection
       }
+      importBtn.enabled = tree.selection != null; // → enable | disable import button
       if (tree.selection == null) {
         // nothing selected...
         w.size.width = wWidth; // → resize window
@@ -131,8 +132,6 @@ function templateDialog() {
       updateTxt.text = 'updated on: ' + templateFile.created.toString(); // → 'updated on: date and time'
       info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
       info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
-
-      importBtn.enabled = tree.selection != null; // → enable | disable import button
     };
   
     w.onShow = function () {
@@ -232,6 +231,7 @@ function templateDialog() {
       'opening'
     ];
 
+    // Ui definition...
     // window...
     var tagWindow = 'var w = new Window(\'palette\', \'org. tags...\');\
 w.alignChildren = \'left\'\n';
@@ -294,7 +294,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n';
 
     tagWindow += 'w.show();';
 
-    eval(tagWindow);
+    eval(tagWindow); // → eval Ui definition
   }
   
   // install fonts UI...
@@ -314,33 +314,36 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n';
     // creates all the 'treeview nodes'...
     buildFontTree(fontsFolder, tree);
   
-    // buttons...
+    // buttons group...
     var bGrp = w.add('group');
     bGrp.orientation = 'stack';
     bGrp.alignment = 'fill';
+    // left buttons group...
     var bGrp1 = bGrp.add('group');
     bGrp1.alignment = 'left';
     bGrp1.spacing = '2';
+    // right buttons group...
     var bGrp2 = bGrp.add('group');
     bGrp2.alignment = 'right';
+    // left buttons...
     var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
     downloadBtn.helpTip = 'downloads the latest templates';
     var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
     refreshBtn.helpTip = 'refresh list content';
     var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
     openFldBtn.helpTip = 'open fonts folder';
+    // right buttons...
     var installBtn = bGrp2.add('button', undefined, 'install');
     installBtn.helpTip = 'install selected fonts';
-    installBtn.enabled = tree.selection != null;
+    installBtn.enabled = false; // → disable install button
   
     tree.onChange = function () {
   
       // node folders should not be selectable...
       if (tree.selection != null && tree.selection.type == 'node') {
-        tree.selection = null;
+        tree.selection = null; // → clear selection
       }
-      // toggle the enabled state depending on the selection...
-      installBtn.enabled = tree.selection != null;
+      installBtn.enabled = tree.selection != null; // → enable | disable install button
     };
   
     // expands every node from the start...
@@ -357,10 +360,11 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n';
   
       // checks if there is a system folder correspondent to the selection...
       if (fontFamilyFolder.exists) {
-        // install the selected font family on Windows...
-        if (appOs == 'Win') {
-          installFonts(fontFamilyPath.toString());
-        }
+        return;
+      }
+      // install the selected font family on Windows...
+      if (appOs == 'Win') {
+        installFonts(fontFamilyPath.toString());
       }
     };
   
