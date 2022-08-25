@@ -276,7 +276,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n\n\n';
     for (var t = 0; t < compCommentTags.length; t++) {
       tagWindow += 'compComTagBtn'+ t +'.onClick = function () {\
 \tif (app.project.selection.length == 0) {return;}\
-\tfor (var i = 0; i < app.project.selection.length; i++) {' + fldLoop + '\
+\tfor (var i = 0; i < app.project.selection.length; i++) {\
 \t\tif (!(app.project.selection[i] instanceof CompItem)) {continue;}\
 \t\tapp.project.selection[i].comment = \'' + compCommentTags[t][0] + ': true\';\
 \t}\n};\n';
@@ -285,7 +285,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n\n\n';
     for (var m = 0; m < multiTags.length; m++) {
       tagWindow += 'multiTagBtn'+ m +'.onClick = function () {\
 \tif (app.project.selection.length == 0) {return;}\
-\tfor (var i = 0; i < app.project.selection.length; i++) {' + fldLoop + '\
+\tfor (var i = 0; i < app.project.selection.length; i++) {\
 \t\tif (app.project.selection[i] instanceof CompItem) {\
 \t\t\tapp.project.selection[i].motionGraphicsTemplateName = \'' + multiTags[m][0] + '\';\
 \t\t}\
@@ -298,7 +298,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n\n\n';
     for (var k = 0; k < compTemplateTags.length; k++) {
       tagWindow += 'temTagBtn'+ k +'.onClick = function () {\
 \tif (app.project.selection.length == 0) {return;}\
-\tfor (var i = 0; i < app.project.selection.length; i++) {' + fldLoop + '\
+\tfor (var i = 0; i < app.project.selection.length; i++) {\
 \t\tif (!(app.project.selection[i] instanceof CompItem)) {continue;}\
 \t\tapp.project.selection[i].motionGraphicsTemplateName = \'' + compTemplateTags[k][0] + '\';\
 \t}\n};\n';
