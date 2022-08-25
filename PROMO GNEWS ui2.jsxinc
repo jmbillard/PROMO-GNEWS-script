@@ -97,24 +97,27 @@ function templateDialog() {
         var imgName = s.toString().replace(/\.[\w]+$/i, ' preview.png'); // → template preview.png
         var infoName = s.toString().replace(/\.[\w]+$/i, ' info.txt'); // → template info.png
         
-        // selected template path...
+        // iterate selection parent + parent + parent... to form selected template file path...
         while (s.parent.toString() != templatesFolder.displayName) {
           
-          s = s.parent;
+          s = s.parent; // current parent...
           templateName = s.toString() + '/' + templateName;
           imgName = s.toString() + '/' + imgName;
           infoName = s.toString() + '/' + infoName;
         }
-        var templateFile = new File(templatesPath + '/' + templateName);
-        var previewImgFile = new File(templatesPath + '/' + imgName);
-        var infoFile = new File(templatesPath + '/' + infoName);
+        var templateFile = new File(templatesPath + '/' + templateName); // → template file object
+        var previewImgFile = new File(templatesPath + '/' + imgName); // → preview image object
+        var infoFile = new File(templatesPath + '/' + infoName); // → info file object
         var fWidth = wWidth;
         var infoContent = ['...', '...'];
         
         if (infoFile.exists) {
-          infoFile.open('r');
-          infoFile.encoding = 'UTF-8';
-          infoContent = infoFile.read().toString().split(/\n|\r/);
+          infoFile.open('r'); // → open file
+          infoFile.encoding = 'UTF-8'; // → file encoding
+          infoContent = infoFile
+            .read()
+            .toString()
+            .split(/[\n|\r]+/); // info file text content as array → [line1, line2]
         }
         if (previewImgFile.exists) {
           fWidth = oWidth;
