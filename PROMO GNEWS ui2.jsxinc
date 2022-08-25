@@ -14,11 +14,13 @@
 // import templates UI...
 function templateDialog() {
 
-    var templatesPath = scriptPreferencesPath + '/templates'; // → ~AppData\Roaming\PROMO GNEWS script\templates
+    var templatesPath = scriptPreferencesPath + '/templates'; // → '~/AppData/Roaming/PROMO GNEWS script/templates'
+    var downPath = scriptPreferencesPath + '/temp'; // → '~/AppData/Roaming/PROMO GNEWS script/temp'
     var templatesFolder = new Folder(templatesPath); // → templates folder object
+    var downFolder = new Folder(downPath); // → download folder object
 
-    var wWidth;
-    var oWidth;
+    var wWidth; // window width without image preview...
+    var oWidth; // window width with image preview...
     var previewScale = 0.25; // preview image scale factor...
     var fileFilter = ['.aep', '.aet']; // template files extensions...
     
@@ -50,9 +52,9 @@ function templateDialog() {
     // left buttons...
     var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
     downloadBtn.helpTip = 'downloads the latest templates';
-    var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
+    var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});
     refreshBtn.helpTip = 'refresh list content';
-    var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});//bGroup.add('button', undefined, 'refresh');
+    var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});
     openFldBtn.helpTip = 'open template folder';
     // right buttons...
     var importBtn = bGrp2.add('button', undefined, 'import');
@@ -84,79 +86,78 @@ function templateDialog() {
       // node folders should not be selectable...
       if (tree.selection != null && tree.selection.type == 'node') {
         tree.selection = null; // → clear selection
-        vGrp2.visible = false; // → hide preview
       }
-      // nothing selected...
       if (tree.selection == null) {
+        // nothing selected...
         w.size.width = wWidth; // → resize window
         vGrp2.visible = false; // → hide preview
-      } else {
-        
-        var s = tree.selection; // → selected template
-        var templateName = s.toString();
-        var imgName = s.toString().replace(/\.[\w]+$/i, ' preview.png'); // → template preview.png
-        var infoName = s.toString().replace(/\.[\w]+$/i, ' info.txt'); // → template info.png
-        
-        // iterate selection parent + parent + parent... to form selected template file path...
-        while (s.parent.toString() != templatesFolder.displayName) {
-          
-          s = s.parent; // current parent...
-          templateName = s.toString() + '/' + templateName;
-          imgName = s.toString() + '/' + imgName;
-          infoName = s.toString() + '/' + infoName;
-        }
-        var templateFile = new File(templatesPath + '/' + templateName); // → template file object
-        var previewImgFile = new File(templatesPath + '/' + imgName); // → preview image object
-        var infoFile = new File(templatesPath + '/' + infoName); // → info file object
-        var fWidth = wWidth;
-        var infoContent = ['...', '...'];
-        
-        if (infoFile.exists) {
-          infoFile.open('r'); // → open file
-          infoFile.encoding = 'UTF-8'; // → file encoding
-          infoContent = infoFile
-            .read()
-            .toString()
-            .split(/[\n|\r]+/); // info file text content as array → [line1, line2]
-        }
-        if (previewImgFile.exists) {
-          fWidth = oWidth;
-          vGrp2.visible = true;
-          previewImg.image = previewImgFile;
-        }
-        w.size.width = fWidth;
-        pathTxt.text = 'templates/'+ templateName;
-        updateTxt.text = 'updated on: ' + templateFile.created.toString();
-        info1Txt.text = '>> ' + infoContent[0];
-        info2Txt.text = '>> ' + infoContent[1];
+        return;
       }
-      importBtn.enabled = tree.selection != null;
+      // template selected...
+      var s = tree.selection; // → selected template
+      var templateName = s.toString();
+
+      // iterate selection parent + parent + parent... to form selected template file path...
+      while (s.parent.toString() != templatesFolder.displayName) {
+        s = s.parent; // current parent...
+        templateName = s.toString() + '/' + templateName; // → 'current parent/.../template name'
+      }
+      var imgName = templateName
+        .replace(/\.[\w]+$/i, ' preview.png'); // → template preview.png
+      var infoName = templateName
+        .replace(/\.[\w]+$/i, ' info.txt'); // → template info.png
+
+      var templateFile = new File(templatesPath + '/' + templateName); // → template file object
+      var previewImgFile = new File(templatesPath + '/' + imgName); // → preview image object
+      var infoFile = new File(templatesPath + '/' + infoName); // → info file object
+
+      var fWidth = wWidth; 
+      var infoContent = ['...', '...']; // info placeholder text...
+      
+      if (infoFile.exists) {
+        infoFile.open('r'); // → open file
+        infoFile.encoding = 'UTF-8'; // → file encoding
+        infoContent = infoFile
+          .read()
+          .toString()
+          .split(/[\n|\r]+/); // text content as array → ['line1', 'line2']
+      }
+      if (previewImgFile.exists) {
+        vGrp2.visible = true; // → show preview
+        previewImg.image = previewImgFile; // → set preview image file
+      }
+      w.size.width = oWidth; // → resize window
+      pathTxt.text = 'templates/'+ templateName; // → 'templates/.../template name'
+      updateTxt.text = 'updated on: ' + templateFile.created.toString(); // → 'updated on: date and time'
+      info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
+      info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
+
+      importBtn.enabled = tree.selection != null; // → enable | disable import button
     };
   
     w.onShow = function () {
-      expandNodes(tree);
-      oWidth = w.size.width;
-      vGrp2.visible = false;
-      wWidth = oWidth - 490;
-      w.size.width = wWidth;
+      expandNodes(tree); // expand all tree folder nodes...
+      oWidth = w.size.width; // window width with image preview...
+      wWidth = oWidth - 490; // window width without image preview...
+      vGrp2.visible = false; // → hide preview
+      w.size.width = wWidth; // → resize window
     };
         
     importBtn.onClick = function () {
   
-      var fileName = tree.selection.toString();
-      var s = tree.selection;
-  
-      // adds the parent nodes to the file name...
+      var s = tree.selection; // → current selection
+      var fileName = s.toString();
+
+      // iterate selection parent + parent + parent... to form selected template file path...
       while (s.parent.toString() != templatesFolder.displayName) {
-        
-        s = s.parent;
-        fileName = s.toString() + '/' + fileName;
+        s = s.parent; // current parent...
+        fileName = s.toString() + '/' + fileName; // → current parent/.../template name
       }
-      var templateFile = new File(templatesPath + '/' + fileName);
-      // import options...
-      var IO = new ImportOptions(templateFile);
-      app.project.importFile(IO);
-      w.close();
+      var templateFile = new File(templatesPath + '/' + fileName); // → template file object
+
+      var IO = new ImportOptions(templateFile); // import options...
+      app.project.importFile(IO); // → import template project
+      w.close(); // → close window
     };
   
     downloadBtn.onClick = function () {
@@ -167,18 +168,16 @@ function templateDialog() {
       }
       var url = repoURL + '/raw/main/templates.zip';
 
-      var downPath = scriptPreferencesPath + '/temp';
-      var downFolder = new Folder(downPath);
-      var zipPath = downPath + '/templates.zip';
-      var templatesPath = scriptPreferencesPath + '/templates';
+      var zipPath = downPath + '/templates.zip'; // → ~AppData\Roaming\PROMO GNEWS script\temp\templates.zip
 
       if (!downFolder.exists) {
-        downFolder.create();
+        // downloads folder does not exist...
+        downFolder.create(); // → create downloads folder
       }
-      getURLContent([url], [downPath]);
-      unzipContent(zipPath, templatesPath);
-      buildTree(templatesFolder, tree, fileFilter);
-      expandNodes(tree);  
+      getURLContent([url], [downPath]); // → downloads content
+      unzipContent(zipPath, templatesPath); // → unzip file
+      buildTree(templatesFolder, tree, fileFilter); // → update tree
+      expandNodes(tree); // expand all tree folder nodes...
     };
   
     refreshBtn.onClick = function () {
@@ -187,8 +186,8 @@ function templateDialog() {
         alert('no access...  Σ(っ °Д °;)っ');
         return;
       }
-      buildTree(templatesFolder, tree, fileFilter);
-      expandNodes(tree);
+      buildTree(templatesFolder, tree, fileFilter); // → update tree
+      expandNodes(tree); // expand all tree folder nodes...
     };
   
     openFldBtn.onClick = function () {
@@ -196,11 +195,12 @@ function templateDialog() {
       if (!netAccess()) {
         alert('no access...  Σ(っ °Д °;)っ');
         return;
-      }      
-      if (!templatesFolder.exists) {
-        templatesFolder.create();
       }
-      openFolder(templatesPath);
+      if (!templatesFolder.exists) {
+        // template folder does not exist...
+        templatesFolder.create(); // → create template folder
+      }
+      openFolder(templatesPath); // → open template folder
     };
   
     w.show();
