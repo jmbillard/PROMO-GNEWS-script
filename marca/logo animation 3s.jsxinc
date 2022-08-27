@@ -1,0 +1,1566 @@
+// GNEWS logo animation 3s...
+function logoShp() {
+
+	// expressions variable...
+	var exp;
+
+	// keyframe ease objects variable...
+	var easeIn1;
+	var easeIn2;
+	var easeIn3;
+	var easeOut1;
+	var easeOut2;
+	var easeOut3;
+
+	// shape object variable...
+	var shp;
+
+	// shape layer creation...
+	var layer = app.project.activeItem.layers.addShape();
+
+	// vector content...
+	var contents = layer.property('ADBE Root Vectors Group');
+	
+  logoAnimation_contents1 = contents.addProperty('ADBE Vector Group');
+	contents_logoAnimation2 = logoAnimation_contents1.addProperty('ADBE Vectors Group');
+	square_contents3 = contents_logoAnimation2.addProperty('ADBE Vector Group');
+	contents_square4 = square_contents3.addProperty('ADBE Vectors Group');
+	rectanglePath1_contents5 = contents_square4.addProperty('ADBE Vector Shape - Rect');
+
+	// rectangle path 1 size animation...
+	// key 1...
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setTemporalEaseAtKey(1, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(1, 6614, 6614);
+	// key 2...
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setValueAtTime(0.06673340006673, [171.615857771216,171.615857771215]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setTemporalEaseAtKey(2, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(2, 6614, 6614);
+	// key 3...
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setValueAtTime(0.1001001001001, [176.715857771215,176.715857771215]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setTemporalEaseAtKey(3, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(3, 6614, 6614);
+	// key 4...
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setValueAtTime(0.16683350016683, [191.289738138165,191.289738138165]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setTemporalEaseAtKey(4, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(4, 6614, 6614);
+	// key 5...
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setValueAtTime(0.23356690023357, [215.5,215.5]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setTemporalEaseAtKey(5, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(5, 6614, 6614);
+	// key 6...
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setValueAtTime(0.26693360026693, [257,257]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setTemporalEaseAtKey(6, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(6, 6614, 6614);
+	// key 7...
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setValueAtTime(0.3003003003003, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setTemporalEaseAtKey(7, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(7, 6614, 6614);
+
+	// rectangle path 1 position animation...
+	// key 1...
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setValueAtTime(0.06673340006673, [70,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setValueAtTime(0.1001001001001, [69,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(3, true);
+	// key 4...
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setValueAtTime(0.26693360026693, [60,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setTemporalEaseAtKey(4, [easeIn1], [easeOut1]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(4, 6614, 6614);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(4, [0,0], [0,0]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(4, true);
+	// key 5...
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setValueAtTime(0.3003003003003, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setTemporalEaseAtKey(5, [easeIn1], [easeOut1]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(5, 6614, 6614);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(5, [0,0], [0,0]);
+	rectanglePath1_contents5.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(5, true);
+	rectanglePath1_contents5.name = 'Rectangle Path 1';
+	transform_square4 = square_contents3.addProperty('ADBE Vector Transform Group');
+	materialOptions_square4 = square_contents3.addProperty('ADBE Vector Materials Group');
+	materialOptions_square4.parentProperty.name = 'square';
+	lens_contents3 = contents_logoAnimation2.addProperty('ADBE Vector Group');
+	contents_lens4 = lens_contents3.addProperty('ADBE Vectors Group');
+	logo_contents5 = contents_lens4.addProperty('ADBE Vector Group');
+	contents_logo6 = logo_contents5.addProperty('ADBE Vectors Group');
+	globo_contents7 = contents_logo6.addProperty('ADBE Vector Group');
+	contents_globo8 = globo_contents7.addProperty('ADBE Vectors Group');
+	path1_contents9 = contents_globo8.addProperty('ADBE Vector Shape - Group');
+	path1_contents9.property('ADBE Vector Shape Direction').setValue(3);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[61.75,0.00],[0.00,-61.75],[-61.75,0.00],[0.00,61.75]];
+	shp.outTangents= [[-61.75,0.00],[0.00,61.75],[61.75,0.00],[0.00,-61.75]];
+	shp.vertices= [[0.00,-112.00],[-112.00,0.00],[0.00,112.00],[112.00,0.00]];
+
+	path1_contents9.property('ADBE Vector Shape').setValue(shp);
+	path1_contents9.name = 'Path 1';
+	path2_contents9 = contents_globo8.addProperty('ADBE Vector Shape - Group');
+	path2_contents9.property('ADBE Vector Shape Direction').setValue(2);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[7.19,-0.67],[25.60,0.00],[24.70,2.70],[0.90,7.41],[0.00,14.60],[-1.35,14.15],[-6.96,0.67],[-25.60,0.00],[-24.48,-2.70],[-0.90,-7.41],[0.00,-14.37],[1.12,-14.15]];
+	shp.outTangents= [[-24.48,2.70],[-25.60,0.00],[-6.96,-0.67],[-1.35,-14.15],[0.00,-14.37],[0.90,-7.41],[24.70,-2.70],[25.60,0.00],[7.19,0.67],[1.12,14.15],[0.00,14.60],[-0.90,7.41]];
+	shp.vertices= [[76.62,53.00],[0.05,56.44],[-76.74,53.07],[-88.20,43.19],[-89.54,0.08],[-88.20,-42.81],[-76.74,-52.69],[0.05,-56.05],[76.62,-52.69],[88.30,-42.81],[89.42,0.08],[88.30,43.20]];
+
+	path2_contents9.property('ADBE Vector Shape').setValue(shp);
+	path2_contents9.name = 'Path 2';
+	path3_contents9 = contents_globo8.addProperty('ADBE Vector Shape - Group');
+	path3_contents9.property('ADBE Vector Shape Direction').setValue(3);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,25.00],[-25.00,0.00],[0.00,-25.00],[25.00,0.00]];
+	shp.outTangents= [[0.00,-25.00],[25.00,0.00],[0.00,25.00],[-25.00,0.00]];
+	shp.vertices= [[-45.25,0.00],[0.00,-45.25],[45.25,0.00],[0.00,45.25]];
+
+	path3_contents9.property('ADBE Vector Shape').setValue(shp);
+	path3_contents9.name = 'Path 3';
+	transform_globo8 = globo_contents7.addProperty('ADBE Vector Transform Group');
+	materialOptions_globo8 = globo_contents7.addProperty('ADBE Vector Materials Group');
+	materialOptions_globo8.parentProperty.name = 'globo';
+	news_contents7 = contents_logo6.addProperty('ADBE Vector Group');
+	contents_news8 = news_contents7.addProperty('ADBE Vectors Group');
+	n_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_n10 = n_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_n10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,-44.13],[0.00,0.00],[5.38,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[19.37,0.00],[0.00,-23.32],[0.00,0.00],[5.38,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-5.38],[0.00,0.00],[-20.09,0.00]];
+	shp.outTangents= [[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-23.68],[-20.09,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-5.38],[0.00,0.00],[5.38,0.00],[0.00,0.00],[10.05,-11.84],[37.31,0.00]];
+	shp.vertices= [[279.02,-15.63],[279.02,74.78],[270.41,83.39],[243.86,83.39],[235.25,74.78],[235.25,-8.46],[206.90,-44.33],[175.69,-7.02],[175.69,74.78],[167.08,83.39],[140.53,83.39],[131.92,74.78],[131.92,-74.47],[140.53,-83.08],[164.57,-83.08],[173.18,-74.47],[173.18,-65.14],[219.46,-85.95]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	transform_n10 = n_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_n10 = n_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_n10.parentProperty.name = 'n';
+	e_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_e10 = e_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_e10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[4.66,-16.86],[0.00,0.00],[16.50,0.00]];
+	shp.outTangents= [[0.00,0.00],[-4.66,-18.66],[-20.09,0.00]];
+	shp.vertices= [[340.99,-19.94],[415.61,-19.94],[380.09,-49.00]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	path2_contents11 = contents_e10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,-50.23],[0.00,0.00],[5.38,0.00],[0.00,0.00],[-21.88,0.00],[-6.82,8.97],[-4.66,0.00],[0.00,0.00],[1.79,-5.38],[38.39,0.00],[0.00,49.87],[-45.21,0.00]];
+	shp.outTangents= [[0.00,0.00],[0.00,5.38],[0.00,0.00],[4.31,21.17],[13.99,0.00],[2.87,-3.95],[0.00,0.00],[6.10,0.00],[-10.05,30.50],[-47.72,0.00],[0.00,-48.79],[52.02,0.00]];
+	shp.vertices= [[462.26,4.10],[462.26,4.46],[453.64,13.07],[340.63,13.07],[383.32,48.23],[414.18,35.31],[424.58,29.57],[451.85,29.57],[458.67,38.90],[381.53,86.26],[296.50,0.15],[379.02,-85.95]];
+
+	path2_contents11.property('ADBE Vector Shape').setValue(shp);
+	path2_contents11.name = 'Path 2';
+	transform_e10 = e_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_e10 = e_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_e10.parentProperty.name = 'e';
+	w_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_w10 = w_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_w10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,0.00],[1.79,-5.74],[0.00,0.00],[5.02,0.00],[0.00,0.00],[1.44,4.66],[0.00,0.00],[0.00,0.00],[5.02,0.00],[0.00,0.00],[1.44,4.66],[0.00,0.00],[-6.10,0.00],[0.00,0.00],[-1.08,-5.02],[0.00,0.00],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[-1.43,-5.02],[0.00,0.00],[0.00,0.00],[-5.02,0.00]];
+	shp.outTangents= [[6.10,0.00],[0.00,0.00],[-1.44,4.66],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[0.00,0.00],[-1.44,4.66],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[-1.79,-5.74],[0.00,0.00],[5.02,0.00],[0.00,0.00],[0.00,0.00],[1.44,-4.66],[0.00,0.00],[5.02,0.00],[0.00,0.00],[0.00,0.00],[1.08,-5.02],[0.00,0.00]];
+	shp.vertices= [[694.86,-83.08],[702.04,-73.40],[654.68,76.21],[644.63,83.39],[618.80,83.39],[609.11,76.21],[581.85,-22.81],[555.30,76.21],[545.61,83.39],[519.78,83.39],[509.73,76.21],[461.66,-73.40],[468.83,-83.08],[501.12,-83.08],[510.45,-75.55],[533.05,19.53],[559.24,-75.55],[568.57,-83.08],[597.27,-83.08],[606.60,-75.55],[632.79,20.24],[655.04,-75.55],[664.36,-83.08]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	transform_w10 = w_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_w10 = w_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_w10.parentProperty.name = 'w';
+	s_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_s10 = s_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_s10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[7.89,24.76],[-6.10,0.00],[0.00,0.00],[-2.51,-3.95],[-17.22,0.00],[0.00,7.89],[21.53,3.95],[0.00,38.39],[-41.62,0.00],[-8.25,-28.34],[6.10,0.00],[0.00,0.00],[2.87,4.67],[16.86,0.00],[0.00,-6.46],[-23.32,-4.66],[0.00,-35.16],[39.83,0.00]];
+	shp.outTangents= [[-1.79,-5.74],[0.00,0.00],[4.30,0.00],[4.30,6.82],[13.99,0.00],[0.00,-13.63],[-26.19,-5.02],[0.00,-30.14],[37.67,0.00],[1.79,6.10],[0.00,0.00],[-4.31,0.00],[-4.66,-7.18],[-13.63,0.00],[0.00,12.92],[25.11,5.02],[0.00,32.65],[-42.69,0.00]];
+	shp.vertices= [[711.29,38.90],[718.83,29.57],[746.81,29.57],[756.14,35.31],[783.77,47.51],[807.45,35.67],[766.54,16.30],[710.93,-35.37],[778.74,-85.95],[847.63,-38.95],[840.10,-29.27],[811.75,-29.27],[802.78,-35.37],[774.44,-47.21],[753.63,-35.01],[799.55,-17.07],[850.86,32.44],[781.61,86.26]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	transform_s10 = s_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_s10 = s_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_s10.parentProperty.name = 's';
+	transform_news8 = news_contents7.addProperty('ADBE Vector Transform Group');
+	materialOptions_news8 = news_contents7.addProperty('ADBE Vector Materials Group');
+	materialOptions_news8.parentProperty.name = 'news';
+	bg_contents7 = contents_logo6.addProperty('ADBE Vector Shape - Rect');
+	bg_contents7.property('ADBE Vector Shape Direction').setValue(3);
+
+	// bg size animation...
+	// key 1...
+	bg_contents7.property('ADBE Vector Rect Size').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	bg_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(1, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	bg_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(1, 6614, 6614);
+	// key 2...
+	bg_contents7.property('ADBE Vector Rect Size').setValueAtTime(0.3003003003003, [1100,260]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	bg_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(2, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	bg_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(2, 6614, 6614);
+	// key 3...
+	bg_contents7.property('ADBE Vector Rect Size').setValueAtTime(1.56823490156823, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	bg_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(3, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	bg_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(3, 6614, 6614);
+
+	// bg position animation...
+	// key 1...
+	bg_contents7.property('ADBE Vector Rect Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	bg_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	bg_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	bg_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	bg_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	bg_contents7.property('ADBE Vector Rect Position').setValueAtTime(0.3003003003003, [370,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	bg_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	bg_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	bg_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	bg_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	bg_contents7.property('ADBE Vector Rect Position').setValueAtTime(1.56823490156823, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	bg_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	bg_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	bg_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	bg_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(3, true);
+	bg_contents7.name = 'bg';
+	merge_contents7 = contents_logo6.addProperty('ADBE Vector Filter - Merge');
+	merge_contents7.name = 'merge';
+	transform_logo6 = logo_contents5.addProperty('ADBE Vector Transform Group');
+
+	// transform position animation...
+	// key 1...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.3003003003003, [-864.500000000007,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.36703370036703, [-788.100000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(3, true);
+	// key 4...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.4004004004004, [-715.900000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(4, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(4, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(4, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(4, true);
+	// key 5...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.46713380046713, [-650.500000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(5, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(5, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(5, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(5, true);
+	// key 6...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.53386720053387, [-592.000000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(6, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(6, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(6, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(6, true);
+	// key 7...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.56723390056723, [-538.900000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(7, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(7, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(7, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(7, true);
+	// key 8...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.63396730063397, [-490.300000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(8, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(8, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(8, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(8, true);
+	// key 9...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.7007007007007, [-448.800000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(9, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(9, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(9, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(9, true);
+	// key 10...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.73406740073407, [-406.400000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(10, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(10, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(10, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(10, true);
+	// key 11...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.8008008008008, [-372.400000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(11, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(11, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(11, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(11, true);
+	// key 12...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.86753420086753, [-343.500000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(12, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(12, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(12, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(12, true);
+	// key 13...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.9009009009009, [-316.600000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(13, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(13, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(13, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(13, true);
+	// key 14...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.96763430096763, [-294.700000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(14, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(14, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(14, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(14, true);
+	// key 15...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.03436770103437, [-273.700000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(15, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(15, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(15, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(15, true);
+	// key 16...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.06773440106773, [-258.500000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(16, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(16, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(16, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(16, true);
+	// key 17...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.13446780113447, [-245.700000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(17, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(17, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(17, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(17, true);
+	// key 18...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.2012012012012, [-236.400000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(18, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(18, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(18, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(18, true);
+	// key 19...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.23456790123457, [-230.800000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(19, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(19, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(19, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(19, true);
+	// key 20...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.3013013013013, [-226.800000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(20, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(20, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(20, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(20, true);
+	// key 21...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.36803470136803, [-224.200000000008,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(21, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(21, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(21, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(21, true);
+	// key 22...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.56823490156823, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(22, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(22, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(22, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(22, true);
+
+	// transform scale animation...
+	// key 1...
+	transform_logo6.property('ADBE Vector Scale').setValueAtTime(0, [100,100]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Scale').setTemporalEaseAtKey(1, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	transform_logo6.property('ADBE Vector Scale').setInterpolationTypeAtKey(1, 6614, 6614);
+	// key 2...
+	transform_logo6.property('ADBE Vector Scale').setValueAtTime(0.3003003003003, [335,335]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Scale').setTemporalEaseAtKey(2, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	transform_logo6.property('ADBE Vector Scale').setInterpolationTypeAtKey(2, 6614, 6614);
+	// key 3...
+	transform_logo6.property('ADBE Vector Scale').setValueAtTime(1.56823490156823, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Scale').setTemporalEaseAtKey(3, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	transform_logo6.property('ADBE Vector Scale').setInterpolationTypeAtKey(3, 6614, 6614);
+	materialOptions_logo6 = logo_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_logo6.parentProperty.name = 'logo';
+	square_contents5 = contents_lens4.addProperty('ADBE Vector Group');
+	contents_square6 = square_contents5.addProperty('ADBE Vectors Group');
+	rectanglePath1_contents7 = contents_square6.addProperty('ADBE Vector Shape - Rect');
+	rectanglePath1_contents7.property('ADBE Vector Shape Direction').setValue(2);
+
+	// rectangle path 1 size animation...
+	// key 1...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(1, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(1, 6614, 6614);
+	// key 2...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(0.3003003003003, [405,405]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(2, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(2, 6614, 6614);
+	// key 3...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(0.63396730063397, [405,405]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(3, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(3, 6614, 6614);
+	// key 4...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(0.7007007007007, [378.8,405]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(4, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(4, 6614, 6614);
+	// key 5...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(0.73406740073407, [405,405]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(5, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(5, 6614, 6614);
+	// key 6...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(1.36803470136803, [405,405]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(6, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(6, 6614, 6614);
+	// key 7...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(1.4014014014014, [322,322]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(7, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(7, 6614, 6614);
+	// key 8...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(1.46813480146813, [212,212]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(8, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(8, 6614, 6614);
+	// key 9...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(1.53486820153487, [96.9999999999999,96.9999999999998]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(9, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(9, 6614, 6614);
+	// key 10...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(1.56823490156823, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(10, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(10, 6614, 6614);
+
+	// rectangle path 1 position animation...
+	// key 1...
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setValueAtTime(0.63396730063397, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setValueAtTime(0.7007007007007, [-12.2,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(3, true);
+	// key 4...
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setValueAtTime(0.73406740073407, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(4, [easeIn1], [easeOut1]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(4, 6614, 6614);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(4, [0,0], [0,0]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(4, true);
+	rectanglePath1_contents7.name = 'Rectangle Path 1';
+	transform_square6 = square_contents5.addProperty('ADBE Vector Transform Group');
+
+	// transform position animation...
+	// key 1...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.3003003003003, [-74.3000000000002,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.36703370036703, [-105.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(3, true);
+	// key 4...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.4004004004004, [-138.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(4, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(4, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(4, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(4, true);
+	// key 5...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.46713380046713, [-173.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(5, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(5, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(5, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(5, true);
+	// key 6...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.53386720053387, [-211.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(6, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(6, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(6, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(6, true);
+	// key 7...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.56723390056723, [-248.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(7, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(7, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(7, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(7, true);
+	// key 8...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.63396730063397, [-285.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(8, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(8, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(8, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(8, true);
+	// key 9...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.7007007007007, [-319.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(9, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(9, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(9, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(9, true);
+	// key 10...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.73406740073407, [-350.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(10, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(10, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(10, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(10, true);
+	// key 11...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.8008008008008, [-378.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(11, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(11, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(11, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(11, true);
+	// key 12...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.86753420086753, [-402.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(12, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(12, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(12, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(12, true);
+	// key 13...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.9009009009009, [-422.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(13, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(13, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(13, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(13, true);
+	// key 14...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.96763430096763, [-441.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(14, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(14, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(14, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(14, true);
+	// key 15...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.03436770103437, [-456.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(15, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(15, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(15, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(15, true);
+	// key 16...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.06773440106773, [-467.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(16, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(16, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(16, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(16, true);
+	// key 17...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.13446780113447, [-478.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(17, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(17, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(17, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(17, true);
+	// key 18...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.2012012012012, [-484.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(18, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(18, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(18, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(18, true);
+	// key 19...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.23456790123457, [-488.8,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(19, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(19, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(19, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(19, true);
+	// key 20...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.3013013013013, [-491.7,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(20, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(20, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(20, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(20, true);
+	// key 21...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.33466800133467, [-491.900000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(21, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(21, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(21, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(21, true);
+	// key 22...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.36803470136803, [-493.200000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(22, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(22, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(22, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(22, true);
+	// key 23...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.4014014014014, [-486.200000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(23, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(23, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(23, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(23, true);
+	// key 24...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.46813480146813, [-476.200000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(24, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(24, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(24, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(24, true);
+	// key 25...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.53486820153487, [-464.200000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(25, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(25, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(25, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(25, true);
+	// key 26...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.56823490156823, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(26, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(26, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(26, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(26, true);
+	materialOptions_square6 = square_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_square6.parentProperty.name = 'square';
+	intersect_contents5 = contents_lens4.addProperty('ADBE Vector Filter - Merge');
+	intersect_contents5.property('ADBE Vector Merge Type').setValue(4);
+	intersect_contents5.name = 'intersect';
+	transform_lens4 = lens_contents3.addProperty('ADBE Vector Transform Group');
+	materialOptions_lens4 = lens_contents3.addProperty('ADBE Vector Materials Group');
+	materialOptions_lens4.parentProperty.name = 'lens';
+	wipe_contents3 = contents_logoAnimation2.addProperty('ADBE Vector Group');
+	contents_wipe4 = wipe_contents3.addProperty('ADBE Vectors Group');
+	logo_contents5 = contents_wipe4.addProperty('ADBE Vector Group');
+	contents_logo6 = logo_contents5.addProperty('ADBE Vectors Group');
+	globo_contents7 = contents_logo6.addProperty('ADBE Vector Group');
+	contents_globo8 = globo_contents7.addProperty('ADBE Vectors Group');
+	path1_contents9 = contents_globo8.addProperty('ADBE Vector Shape - Group');
+	path1_contents9.property('ADBE Vector Shape Direction').setValue(2);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[61.75,0.00],[0.00,-61.75],[-61.75,0.00],[0.00,61.75]];
+	shp.outTangents= [[-61.75,0.00],[0.00,61.75],[61.75,0.00],[0.00,-61.75]];
+	shp.vertices= [[0.00,-112.00],[-112.00,0.00],[0.00,112.00],[112.00,0.00]];
+
+	path1_contents9.property('ADBE Vector Shape').setValue(shp);
+	path1_contents9.name = 'Path 1';
+	path2_contents9 = contents_globo8.addProperty('ADBE Vector Shape - Group');
+	path2_contents9.property('ADBE Vector Shape Direction').setValue(2);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[7.19,-0.67],[25.60,0.00],[24.70,2.70],[0.90,7.41],[0.00,14.60],[-1.35,14.15],[-6.96,0.67],[-25.60,0.00],[-24.48,-2.70],[-0.90,-7.41],[0.00,-14.37],[1.12,-14.15]];
+	shp.outTangents= [[-24.48,2.70],[-25.60,0.00],[-6.96,-0.67],[-1.35,-14.15],[0.00,-14.37],[0.90,-7.41],[24.70,-2.70],[25.60,0.00],[7.19,0.67],[1.12,14.15],[0.00,14.60],[-0.90,7.41]];
+	shp.vertices= [[76.62,53.00],[0.05,56.44],[-76.74,53.07],[-88.20,43.19],[-89.54,0.08],[-88.20,-42.81],[-76.74,-52.69],[0.05,-56.05],[76.62,-52.69],[88.30,-42.81],[89.42,0.08],[88.30,43.20]];
+
+	path2_contents9.property('ADBE Vector Shape').setValue(shp);
+	path2_contents9.name = 'Path 2';
+	path3_contents9 = contents_globo8.addProperty('ADBE Vector Shape - Group');
+	path3_contents9.property('ADBE Vector Shape Direction').setValue(2);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,25.00],[-25.00,0.00],[0.00,-25.00],[25.00,0.00]];
+	shp.outTangents= [[0.00,-25.00],[25.00,0.00],[0.00,25.00],[-25.00,0.00]];
+	shp.vertices= [[-45.25,0.00],[0.00,-45.25],[45.25,0.00],[0.00,45.25]];
+
+	path3_contents9.property('ADBE Vector Shape').setValue(shp);
+	path3_contents9.name = 'Path 3';
+	transform_globo8 = globo_contents7.addProperty('ADBE Vector Transform Group');
+	materialOptions_globo8 = globo_contents7.addProperty('ADBE Vector Materials Group');
+	materialOptions_globo8.parentProperty.name = 'globo';
+	news_contents7 = contents_logo6.addProperty('ADBE Vector Group');
+	contents_news8 = news_contents7.addProperty('ADBE Vectors Group');
+	n_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_n10 = n_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_n10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,-44.13],[0.00,0.00],[5.38,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[19.37,0.00],[0.00,-23.32],[0.00,0.00],[5.38,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-5.38],[0.00,0.00],[-20.09,0.00]];
+	shp.outTangents= [[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-23.68],[-20.09,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-5.38],[0.00,0.00],[5.38,0.00],[0.00,0.00],[10.05,-11.84],[37.31,0.00]];
+	shp.vertices= [[279.02,-15.63],[279.02,74.78],[270.41,83.39],[243.86,83.39],[235.25,74.78],[235.25,-8.46],[206.90,-44.33],[175.69,-7.02],[175.69,74.78],[167.08,83.39],[140.53,83.39],[131.92,74.78],[131.92,-74.47],[140.53,-83.08],[164.57,-83.08],[173.18,-74.47],[173.18,-65.14],[219.46,-85.95]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	transform_n10 = n_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_n10 = n_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_n10.parentProperty.name = 'n';
+	e_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_e10 = e_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_e10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[4.66,-16.86],[0.00,0.00],[16.50,0.00]];
+	shp.outTangents= [[0.00,0.00],[-4.66,-18.66],[-20.09,0.00]];
+	shp.vertices= [[340.99,-19.94],[415.61,-19.94],[380.09,-49.00]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	path2_contents11 = contents_e10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,-50.23],[0.00,0.00],[5.38,0.00],[0.00,0.00],[-21.88,0.00],[-6.82,8.97],[-4.66,0.00],[0.00,0.00],[1.79,-5.38],[38.39,0.00],[0.00,49.87],[-45.21,0.00]];
+	shp.outTangents= [[0.00,0.00],[0.00,5.38],[0.00,0.00],[4.31,21.17],[13.99,0.00],[2.87,-3.95],[0.00,0.00],[6.10,0.00],[-10.05,30.50],[-47.72,0.00],[0.00,-48.79],[52.02,0.00]];
+	shp.vertices= [[462.26,4.10],[462.26,4.46],[453.64,13.07],[340.63,13.07],[383.32,48.23],[414.18,35.31],[424.58,29.57],[451.85,29.57],[458.67,38.90],[381.53,86.26],[296.50,0.15],[379.02,-85.95]];
+
+	path2_contents11.property('ADBE Vector Shape').setValue(shp);
+	path2_contents11.name = 'Path 2';
+	transform_e10 = e_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_e10 = e_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_e10.parentProperty.name = 'e';
+	w_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_w10 = w_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_w10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,0.00],[1.79,-5.74],[0.00,0.00],[5.02,0.00],[0.00,0.00],[1.44,4.66],[0.00,0.00],[0.00,0.00],[5.02,0.00],[0.00,0.00],[1.44,4.66],[0.00,0.00],[-6.10,0.00],[0.00,0.00],[-1.08,-5.02],[0.00,0.00],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[-1.43,-5.02],[0.00,0.00],[0.00,0.00],[-5.02,0.00]];
+	shp.outTangents= [[6.10,0.00],[0.00,0.00],[-1.44,4.66],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[0.00,0.00],[-1.44,4.66],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[-1.79,-5.74],[0.00,0.00],[5.02,0.00],[0.00,0.00],[0.00,0.00],[1.44,-4.66],[0.00,0.00],[5.02,0.00],[0.00,0.00],[0.00,0.00],[1.08,-5.02],[0.00,0.00]];
+	shp.vertices= [[694.86,-83.08],[702.04,-73.40],[654.68,76.21],[644.63,83.39],[618.80,83.39],[609.11,76.21],[581.85,-22.81],[555.30,76.21],[545.61,83.39],[519.78,83.39],[509.73,76.21],[461.66,-73.40],[468.83,-83.08],[501.12,-83.08],[510.45,-75.55],[533.05,19.53],[559.24,-75.55],[568.57,-83.08],[597.27,-83.08],[606.60,-75.55],[632.79,20.24],[655.04,-75.55],[664.36,-83.08]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	transform_w10 = w_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_w10 = w_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_w10.parentProperty.name = 'w';
+	s_contents9 = contents_news8.addProperty('ADBE Vector Group');
+	contents_s10 = s_contents9.addProperty('ADBE Vectors Group');
+	path1_contents11 = contents_s10.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[7.89,24.76],[-6.10,0.00],[0.00,0.00],[-2.51,-3.95],[-17.22,0.00],[0.00,7.89],[21.53,3.95],[0.00,38.39],[-41.62,0.00],[-8.25,-28.34],[6.10,0.00],[0.00,0.00],[2.87,4.67],[16.86,0.00],[0.00,-6.46],[-23.32,-4.66],[0.00,-35.16],[39.83,0.00]];
+	shp.outTangents= [[-1.79,-5.74],[0.00,0.00],[4.30,0.00],[4.30,6.82],[13.99,0.00],[0.00,-13.63],[-26.19,-5.02],[0.00,-30.14],[37.67,0.00],[1.79,6.10],[0.00,0.00],[-4.31,0.00],[-4.66,-7.18],[-13.63,0.00],[0.00,12.92],[25.11,5.02],[0.00,32.65],[-42.69,0.00]];
+	shp.vertices= [[711.29,38.90],[718.83,29.57],[746.81,29.57],[756.14,35.31],[783.77,47.51],[807.45,35.67],[766.54,16.30],[710.93,-35.37],[778.74,-85.95],[847.63,-38.95],[840.10,-29.27],[811.75,-29.27],[802.78,-35.37],[774.44,-47.21],[753.63,-35.01],[799.55,-17.07],[850.86,32.44],[781.61,86.26]];
+
+	path1_contents11.property('ADBE Vector Shape').setValue(shp);
+	path1_contents11.name = 'Path 1';
+	transform_s10 = s_contents9.addProperty('ADBE Vector Transform Group');
+	materialOptions_s10 = s_contents9.addProperty('ADBE Vector Materials Group');
+	materialOptions_s10.parentProperty.name = 's';
+	transform_news8 = news_contents7.addProperty('ADBE Vector Transform Group');
+	materialOptions_news8 = news_contents7.addProperty('ADBE Vector Materials Group');
+	materialOptions_news8.parentProperty.name = 'news';
+	merge_contents7 = contents_logo6.addProperty('ADBE Vector Filter - Merge');
+	merge_contents7.name = 'merge';
+	transform_logo6 = logo_contents5.addProperty('ADBE Vector Transform Group');
+
+	// transform position animation...
+	// key 1...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.3003003003003, [-388.999999999999,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.36703370036703, [-373.099999999999,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(3, true);
+	// key 4...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.4004004004004, [-359.199999999999,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(4, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(4, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(4, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(4, true);
+	// key 5...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.46713380046713, [-347.699999999999,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(5, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(5, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(5, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(5, true);
+	// key 6...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.53386720053387, [-337.899999999999,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(6, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(6, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(6, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(6, true);
+	// key 7...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.56723390056723, [-329.399999999999,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(7, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(7, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(7, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(7, true);
+	// key 8...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.63396730063397, [-321.999999999999,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(8, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(8, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(8, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(8, true);
+	// key 9...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.7007007007007, [-315.999999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(9, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(9, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(9, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(9, true);
+	// key 10...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.73406740073407, [-310.399999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(10, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(10, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(10, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(10, true);
+	// key 11...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.8008008008008, [-305.699999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(11, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(11, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(11, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(11, true);
+	// key 12...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.86753420086753, [-301.999999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(12, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(12, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(12, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(12, true);
+	// key 13...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.9009009009009, [-297.999999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(13, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(13, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(13, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(13, true);
+	// key 14...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(0.96763430096763, [-295.199999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(14, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(14, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(14, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(14, true);
+	// key 15...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.03436770103437, [-292.599999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(15, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(15, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(15, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(15, true);
+	// key 16...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.06773440106773, [-291.299999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(16, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(16, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(16, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(16, true);
+	// key 17...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.13446780113447, [-289.799999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(17, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(17, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(17, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(17, true);
+	// key 18...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.2012012012012, [-288.899999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(18, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(18, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(18, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(18, true);
+	// key 19...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.23456790123457, [-287.799999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(19, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(19, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(19, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(19, true);
+	// key 20...
+	transform_logo6.property('ADBE Vector Position').setValueAtTime(1.3013013013013, [-287.199999999998,13.1]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Position').setTemporalEaseAtKey(20, [easeIn1], [easeOut1]);
+	transform_logo6.property('ADBE Vector Position').setInterpolationTypeAtKey(20, 6614, 6614);
+	transform_logo6.property('ADBE Vector Position').setSpatialTangentsAtKey(20, [0,0], [0,0]);
+	transform_logo6.property('ADBE Vector Position').setSpatialContinuousAtKey(20, true);
+
+	// transform scale animation...
+	// key 1...
+	transform_logo6.property('ADBE Vector Scale').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Scale').setTemporalEaseAtKey(1, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	transform_logo6.property('ADBE Vector Scale').setInterpolationTypeAtKey(1, 6614, 6614);
+	// key 2...
+	transform_logo6.property('ADBE Vector Scale').setValueAtTime(0.3003003003003, [72,72.0000000000001]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	transform_logo6.property('ADBE Vector Scale').setTemporalEaseAtKey(2, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	transform_logo6.property('ADBE Vector Scale').setInterpolationTypeAtKey(2, 6614, 6614);
+	materialOptions_logo6 = logo_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_logo6.parentProperty.name = 'logo';
+	square_contents5 = contents_wipe4.addProperty('ADBE Vector Group');
+	contents_square6 = square_contents5.addProperty('ADBE Vectors Group');
+	rectanglePath1_contents7 = contents_square6.addProperty('ADBE Vector Shape - Rect');
+	rectanglePath1_contents7.property('ADBE Vector Shape Direction').setValue(2);
+
+	// rectangle path 1 size animation...
+	// key 1...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(1, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(1, 6614, 6614);
+	// key 2...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(0.3003003003003, [743,210]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(2, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(2, 6614, 6614);
+	// key 3...
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setValueAtTime(1.46813480146813, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	easeIn2 = new KeyframeEase(0.00, 16.67);
+	easeOut2 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setTemporalEaseAtKey(3, [easeIn1, easeIn2], [easeOut1, easeOut2]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Size').setInterpolationTypeAtKey(3, 6614, 6614);
+
+	// rectangle path 1 position animation...
+	// key 1...
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setValueAtTime(0.3003003003003, [-169.5,15]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setValueAtTime(1.46813480146813, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	rectanglePath1_contents7.property('ADBE Vector Rect Position').setSpatialContinuousAtKey(3, true);
+	rectanglePath1_contents7.name = 'Rectangle Path 1';
+	transform_square6 = square_contents5.addProperty('ADBE Vector Transform Group');
+
+	// transform position animation...
+	// key 1...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(1, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(1, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(1, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(1, true);
+	// key 2...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.3003003003003, [-74.3000000000002,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(2, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(2, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(2, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(2, true);
+	// key 3...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.36703370036703, [-105.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(3, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(3, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(3, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(3, true);
+	// key 4...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.4004004004004, [-138.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(4, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(4, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(4, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(4, true);
+	// key 5...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.46713380046713, [-173.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(5, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(5, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(5, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(5, true);
+	// key 6...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.53386720053387, [-211.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(6, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(6, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(6, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(6, true);
+	// key 7...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.56723390056723, [-248.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(7, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(7, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(7, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(7, true);
+	// key 8...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.63396730063397, [-285.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(8, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(8, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(8, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(8, true);
+	// key 9...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.7007007007007, [-315.4,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(9, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(9, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(9, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(9, true);
+	// key 10...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.73406740073407, [-350.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(10, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(10, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(10, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(10, true);
+	// key 11...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.8008008008008, [-378.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(11, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(11, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(11, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(11, true);
+	// key 12...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.86753420086753, [-402.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(12, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(12, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(12, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(12, true);
+	// key 13...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.9009009009009, [-422.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(13, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(13, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(13, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(13, true);
+	// key 14...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(0.96763430096763, [-441.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(14, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(14, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(14, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(14, true);
+	// key 15...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.03436770103437, [-456.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(15, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(15, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(15, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(15, true);
+	// key 16...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.06773440106773, [-467.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(16, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(16, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(16, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(16, true);
+	// key 17...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.13446780113447, [-478.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(17, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(17, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(17, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(17, true);
+	// key 18...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.2012012012012, [-484.3,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(18, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(18, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(18, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(18, true);
+	// key 19...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.23456790123457, [-488.8,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(19, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(19, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(19, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(19, true);
+	// key 20...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.3013013013013, [-491.7,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(20, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(20, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(20, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(20, true);
+	// key 21...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.33466800133467, [-491.900000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(21, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(21, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(21, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(21, true);
+	// key 22...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.36803470136803, [-493.200000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(22, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(22, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(22, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(22, true);
+	// key 23...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.4014014014014, [-527.200000000001,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(23, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(23, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(23, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(23, true);
+	// key 24...
+	transform_square6.property('ADBE Vector Position').setValueAtTime(1.46813480146813, [0,0]);
+
+	easeIn1 = new KeyframeEase(0.00, 16.67);
+	easeOut1 = new KeyframeEase(0.00, 16.67);
+	transform_square6.property('ADBE Vector Position').setTemporalEaseAtKey(24, [easeIn1], [easeOut1]);
+	transform_square6.property('ADBE Vector Position').setInterpolationTypeAtKey(24, 6614, 6614);
+	transform_square6.property('ADBE Vector Position').setSpatialTangentsAtKey(24, [0,0], [0,0]);
+	transform_square6.property('ADBE Vector Position').setSpatialContinuousAtKey(24, true);
+	materialOptions_square6 = square_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_square6.parentProperty.name = 'square';
+	subtract_contents5 = contents_wipe4.addProperty('ADBE Vector Filter - Merge');
+	subtract_contents5.property('ADBE Vector Merge Type').setValue(3);
+	subtract_contents5.name = 'subtract';
+	transform_wipe4 = wipe_contents3.addProperty('ADBE Vector Transform Group');
+	materialOptions_wipe4 = wipe_contents3.addProperty('ADBE Vector Materials Group');
+	materialOptions_wipe4.parentProperty.name = 'wipe';
+	transform_logoAnimation2 = logoAnimation_contents1.addProperty('ADBE Vector Transform Group');
+	materialOptions_logoAnimation2 = logoAnimation_contents1.addProperty('ADBE Vector Materials Group');
+	materialOptions_logoAnimation2.parentProperty.name = 'logo animation';
+	color_contents1 = contents.addProperty('ADBE Vector Graphic - Fill');
+	color_contents1.property('ADBE Vector Fill Color').setValue([0.07843137532473,0.07843137532473,0.07843137532473,1]);
+	color_contents1.name = 'color';
+
+	// transformations...
+	var transform = layer.property('ADBE Transform Group');
+
+	// layer attributes...
+	layer.inPoint = 0;
+	layer.name = 'marca_gnews 3s';
+
+	return layer;
+}
