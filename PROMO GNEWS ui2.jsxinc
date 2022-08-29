@@ -12,13 +12,13 @@
 //  jshint -W043
 
 // import templates UI...
-function templateDialog() {
-
+  function templateDialog() {
+    
     var templatesPath = scriptPreferencesPath + '/templates'; // → '~/AppData/Roaming/PROMO GNEWS script/templates'
     var downPath = scriptPreferencesPath + '/temp'; // → '~/AppData/Roaming/PROMO GNEWS script/temp'
     var templatesFolder = new Folder(templatesPath); // → templates folder object
     var downFolder = new Folder(downPath); // → download folder object
-
+    
     var wWidth; // window width without image preview...
     var oWidth; // window width with image preview...
     var previewScale = 0.25; // preview image scale factor...
@@ -37,7 +37,7 @@ function templateDialog() {
     vGrp2.visible = false;
     var tree = vGrp1.add('treeview', [0, 0, 250, 340]);
     buildTree(templatesFolder, tree, fileFilter);
-  
+    
     // buttons group...
     var bGrp = vGrp1.add('group');
     bGrp.orientation = 'stack';
@@ -60,27 +60,27 @@ function templateDialog() {
     var importBtn = bGrp2.add('button', undefined, 'import');
     importBtn.helpTip = 'import selected template';
     importBtn.enabled = false;
-  
+    
     // preview...
     var pathTxt = vGrp2.add ('statictext', undefined, '...');
     pathTxt.characters = 40;
-    setTxtColor(pathTxt, GNEWS_GRA3);
+    setTxtColor(pathTxt, GNEWS_mainColors[6]);
     var previewImg = vGrp2.add ('image', undefined, undefined);
     previewImg.size = [1920 * previewScale, 1080 * previewScale];
     var updateTxt = vGrp2.add('statictext', undefined, '...');
     updateTxt.characters = 40;
-    setTxtColor(updateTxt, GNEWS_SEC11);
+    setTxtColor(updateTxt, GNEWS_secColors[10]);
     // preview info...
     var infoGrp = vGrp2.add('group');
     infoGrp.orientation = 'column';
     infoGrp.spacing = 3;
     var info1Txt = infoGrp.add('statictext', undefined, '...');
     info1Txt.characters = 40;
-    setTxtColor(info1Txt, GNEWS_SEC9);
+    setTxtColor(info1Txt, GNEWS_secColors[8]);
     var info2Txt = infoGrp.add('statictext', undefined, '...');
     info2Txt.characters = 40;
-    setTxtColor(info2Txt, GNEWS_SEC9);
-  
+    setTxtColor(info2Txt, GNEWS_secColors[8]);
+    
     tree.onChange = function () {
       
       // node folders should not be selectable...
@@ -254,7 +254,7 @@ mainGrp.alignChildren = \'left\';\n\n';
 var compComTagBtn'+ c +' = compComTagGrp'+ c +'.add(\'iconbutton\', undefined, ' + compCommentTags[c][1] + ', {style: \'toolbutton\'});\
 compComTagBtn'+ c +'.helpTip = \'' + compCommentTags[c][0] + ' comp comment tag\';\
 var compComTag'+ c +'Txt = compComTagGrp'+ c +'.add(\'statictext\', undefined, \'' + compCommentTags[c][0] + '\');\
-setTxtColor(compComTag'+ c +'Txt, GNEWS_SEC11);\n\n';
+setTxtColor(compComTag'+ c +'Txt, GNEWS_secColors[10]);\n\n';
     }
     // template buttons...
     for (var b = 0; b < multiTags.length; b++) {
@@ -262,7 +262,7 @@ setTxtColor(compComTag'+ c +'Txt, GNEWS_SEC11);\n\n';
 var multiTagBtn'+ b +' = multiTagGrp'+ b +'.add(\'iconbutton\', undefined, ' + multiTags[b][1] + ', {style: \'toolbutton\'});\
 multiTagBtn'+ b +'.helpTip = \'' + multiTags[b][0] + ' tag\';\
 var multiTag'+ b +'Txt = multiTagGrp'+ b +'.add(\'statictext\', undefined, \'' + multiTags[b][0] + '\');\
-setTxtColor(multiTag'+ b +'Txt, GNEWS_SEC10);\n\n';
+setTxtColor(multiTag'+ b +'Txt, GNEWS_secColors[9]);\n\n';
     }
     // template buttons...
     for (var p = 0; p < compTemplateTags.length; p++) {
@@ -270,7 +270,7 @@ setTxtColor(multiTag'+ b +'Txt, GNEWS_SEC10);\n\n';
 var temTagBtn'+ p +' = temTagGrp'+ p +'.add(\'iconbutton\', undefined, ' + compTemplateTags[p][1] + ', {style: \'toolbutton\'});\
 temTagBtn'+ p +'.helpTip = \'' + compTemplateTags[p][0] + ' template tag\';\
 var temTag'+ p +'Txt = temTagGrp'+ p +'.add(\'statictext\', undefined, \'' + compTemplateTags[p][0] + '\');\
-setTxtColor(temTag'+ p +'Txt, GNEWS_SEC9);\n\n\n';
+setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     }
     // click events...
     for (var t = 0; t < compCommentTags.length; t++) {
