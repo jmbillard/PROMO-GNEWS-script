@@ -219,6 +219,7 @@
     var multiTags = [
       ['bg', 'imgTogIcon'],
       ['photo', 'imgTogIcon'],
+      ['ref', 'imgTogIcon'],
       ['logo', 'shpTogIcon'],
       ['icon', 'shpTogIcon'],
       ['texture', 'matteTogIcon'],
@@ -234,12 +235,8 @@
       ['opening', 'compTogIcon']
     ];
 
-    var fldLoop = '';
-//     var fldLoop = '\n\t\tif (app.project.selection[i] instanceof FolderItem) {\
-// \t\t\tfor (var f = 1; f <= app.project.selection[i].numItens; f++) {\
-// \t\t\t\talert(app.project.selection[i].item(f).name);\
-// \t\t\t}\
-// \t\t}\n';
+    // TODO: loop folder item contents...
+
     // Ui definition...
     // window...
     var tagWindow = 'var w = new Window(\'palette\', \'org. tags...\');\
