@@ -353,6 +353,9 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     function updateColors() {
 
+      obj.aparencia_end_page = buildFxObj().aparencia_end_page;
+      var aparencia = obj.aparencia_end_page;
+  
       setTxtColor(logo_aparencia, hexToRGB(aparencia.logo));
       logo_aparencia.text = aparencia.logo;
       setTxtColor(titulo_aparencia, hexToRGB(aparencia.titulo));
@@ -576,7 +579,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .property('modelo')
           .setValue(i);
         
-        layout.subtitulo = i;
+        layout.modelo = i;
 
       } catch (error) {
         modelo_layoutDdl.selection = layout.modelo - 1;
@@ -692,9 +695,6 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .property('aparencia end page')
           .property('tema')
           .setValue(i);
-
-        obj.aparencia_end_page = buildFxObj().aparencia_end_page;
-        aparencia = obj.aparencia_end_page;
         
         updateColors();
 
@@ -777,7 +777,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     refreshBtn.onClick = function() {
     
-      getPresetNames();
+      presetDdl.selection = 0;
       updateUi();
 
       try {
