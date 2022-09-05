@@ -307,27 +307,48 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
   }
   
   // organization tags UI...
-  function previewDialog(obj) {
+  function endPagePresetDialog(obj) {
 
-    var presetPath = scriptPreferencesPath + '/end page presets';
+    var presetPath = scriptPreferencesPath + '/templates/ON-AIR/end page/end page presets';
     var presetFolder = new Folder(presetPath);
-
+    
     var layout = obj.layout_end_page;
     var servico = obj.servico_end_page;
     var aparencia = obj.aparencia_end_page;
     // Ui definition...
     // window...
-    var filesArray = presetFolder.getFiles();
+    
+    function getPresetNames() {
+      
+      presetDdl.removeAll();
+      presetDdl.add('item', 'new end page preset');
 
-    function getPresetNames () {
-
+      var filesArray = presetFolder.getFiles();
       var presetArray = ['new end page preset'];
-
+      
       for (var f = 0; f < filesArray.length; f++) {
         var fileName = deleteFileExt(filesArray[f].displayName);
+        presetDdl.add('item', fileName);
         presetArray.push(fileName);
       }
+      presetDdl.selection = 0;
       return presetArray;
+    }
+
+    function updateUi() {
+      
+      modelo_layoutDdl.selection = layout.modelo - 1;
+      subtitulo_layout.value = layout.subtitulo;
+      foto_layout.value = layout.foto;
+      footage_layout.value = layout.footage;
+      pattern_layout.value = layout.pattern;
+
+      titulo_servico.text = servico.titulo;
+      hora_servico.text = servico.hora;
+      min_servico.text = servico.min;
+
+      tema_aparenciaDdl.selection = aparencia.tema - 1;
+      updateColors();
     }
 
     function updateColors() {
@@ -354,15 +375,14 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     var w = new Window('palette', 'end page preset...');
     w.alignChildren = 'left';
-    var presetDdl = w.add('dropdownlist', [0,0,170,10], presetArray);
-    presetDdl.selection = 0;
+    var presetDdl = w.add('dropdownlist', [0,0,170,10], []);
     var layoutTxt = w.add('statictext', undefined, 'layout:');
     setTxtColor(layoutTxt, GNEWS_secColors[8]);
-    
+
     var layout_modeloGrp = w.add('group');
     layout_modeloGrp.alignChildren = 'left';
-    var layout_modeloDdl = layout_modeloGrp.add('dropdownlist', [0,0,170,10], ['livre','programa','jornal']);
-    layout_modeloDdl.selection = layout.modelo - 1;
+    var modelo_layoutDdl = layout_modeloGrp.add('dropdownlist', [0,0,170,10], ['livre','programa','jornal']);
+    modelo_layoutDdl.selection = layout.modelo - 1;
     var layoutGrp = w.add('group');
     layoutGrp.orientation = 'column';
     layoutGrp.spacing = 2;
@@ -397,7 +417,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     var tituloGrp = w.add('group');
     tituloGrp.alignChildren = 'left';
 
-    var titulo_servicoTxt = tituloGrp.add('edittext', [0,0,170,40], servico.titulo, {multiline: true});
+    var titulo_servico = tituloGrp.add('edittext', [0,0,170,40], servico.titulo, {multiline: true});
 
     var servicoGrp = w.add('group');
     servicoGrp.orientation = 'column';
@@ -413,10 +433,10 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     var aparenciaTxt = w.add('statictext', undefined, 'aparencia:');
     setTxtColor(aparenciaTxt, GNEWS_secColors[8]);
-    var aparencia_temaGrp = w.add('group');
-    aparencia_temaGrp.alignChildren = 'left';
-    var aparencia_temaDdl = aparencia_temaGrp.add('dropdownlist', [0,0,170,10], ['claro','cinza','escuro','vermelho','- cores livres -']);
-    aparencia_temaDdl.selection = aparencia.tema - 1;
+    var tema_aparenciaGrp = w.add('group');
+    tema_aparenciaGrp.alignChildren = 'left';
+    var tema_aparenciaDdl = tema_aparenciaGrp.add('dropdownlist', [0,0,170,10], ['claro','cinza','escuro','vermelho','- cores livres -']);
+    tema_aparenciaDdl.selection = aparencia.tema - 1;
 
     var aparenciaGrp = w.add('group');
     aparenciaGrp.orientation = 'column';
@@ -428,7 +448,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     logo_aparencia.characters = 6;
     var logo_aparenciaTxt = logo_aparenciaGrp.add('statictext', undefined, 'logo');
     setTxtColor(logo_aparenciaTxt, GNEWS_mainColors[7]);
-//*
+
     var titulo_aparenciaGrp = aparenciaGrp.add('group');
     var titulo_aparencia = titulo_aparenciaGrp.add('statictext', undefined, '');
     titulo_aparencia.characters = 6;
@@ -476,7 +496,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     fundo_aparencia.characters = 6;
     var fundo_aparenciaTxt = fundo_aparenciaGrp.add('statictext', undefined, 'fundo');
     setTxtColor(fundo_aparenciaTxt, GNEWS_mainColors[7]);
-//*/
+
     var bGrp = w.add('group');
     bGrp.orientation = 'stack';
     bGrp.alignment = 'fill';
@@ -489,9 +509,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     bGrp2.alignment = 'right';
   
     var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});
-    refreshBtn.helpTip = 'refresh end page presets list';
-    //var saveBtn = bGrp1.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
-    //saveBtn.helpTip = 'save new end page preset JSON file';
+    refreshBtn.helpTip = 'pull comp changes';
     var openBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});
     openBtn.helpTip = 'open end page presets folder';
     var saveBtn = bGrp2.add('button', undefined, 'save');
@@ -500,13 +518,58 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     w.onShow = function () {
 
       updateColors();
+      getPresetNames();
     };
 
-    layout_modeloDdl.onChange = function() {
+    presetDdl.onChange = function() {
+
+      var fileName = presetDdl.selection.toString();
+      var presetFile = new File(presetPath + '/' + fileName + '.json');
+
+      if (!presetFile.exists) {return;}
+
+      var presetStr = readFile(presetFile);
+      obj = JSON.parse(presetStr);
+
+      layout = obj.layout_end_page;
+      servico = obj.servico_end_page;
+      aparencia = obj.aparencia_end_page;
+
+      updateUi();
 
       try {
         var aItem = app.project.activeItem;
-        var i = layout_modeloDdl.selection.index + 1;
+        var titulo = titulo_servico.text;
+        aItem.layer('txt_titulo')
+          .property('ADBE Text Properties')
+          .property('ADBE Text Document')
+          .setValue(titulo);
+        var hora = hora_servico.text
+          .replace(/\D/g, '');
+        hora = parseInt(hora);
+        hora = (hora < 23) ? hora : 23;
+        aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[hora]')
+          .setValue(hora);
+        var min = min_servico.text
+          .replace(/\D/g, '');
+        min = parseInt(min);
+        min = (min < 59) ? min : 59;
+        aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[min]')
+          .setValue(min);  
+      } catch (error) {}
+    };
+
+    modelo_layoutDdl.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var i = modelo_layoutDdl.selection.index + 1;
         var modeloFx = aItem.layer('ctrl_comp')
           .property('ADBE Effect Parade')
           .property('layout end page')
@@ -516,27 +579,27 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         layout.subtitulo = i;
 
       } catch (error) {
-        layout_modeloDdl.selection = layout.modelo - 1;
+        modelo_layoutDdl.selection = layout.modelo - 1;
       }
     };
 
-    titulo_servicoTxt.onChanging = function() {
+    titulo_servico.onChanging = function() {
 
       try {
         var aItem = app.project.activeItem;
-        var val = titulo_servicoTxt.text;
-        var titulo = aItem.layer('txt_titulo')
+        var titulo = titulo_servico.text;
+        aItem.layer('txt_titulo')
           .property('ADBE Text Properties')
           .property('ADBE Text Document')
-          .setValue(val);
+          .setValue(titulo);
         
       } catch (error) {
-        titulo_servicoTxt.text = servico.titulo;
+        titulo_servico.text = servico.titulo;
       }
        
     };
-//*
-    titulo_servicoTxt.onChange = function() {
+
+    titulo_servico.onChange = function() {
 
       try {
         var aItem = app.project.activeItem;
@@ -544,27 +607,26 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .property('ADBE Text Properties')
           .property('ADBE Text Document');
         servico.titulo = titulo.value;
-        titulo_servicoTxt.text = servico.titulo;
+        titulo_servico.text = servico.titulo;
 
       } catch (error) {}
     };
-//*/
+
     hora_servico.onChanging = function() {
 
       try {
         var aItem = app.project.activeItem;
-        var val = hora_servico.text
+        var hora = hora_servico.text
           .replace(/\D/g, '');
-        //alert(val);
-        val = parseInt(val);
-        val = (val < 23) ? val : 23;
-        var hora = aItem.layer('ctrl_comp')
+        hora = parseInt(hora);
+        hora = (hora < 23) ? hora : 23;
+        aItem.layer('ctrl_comp')
           .property('ADBE Effect Parade')
           .property('servico end page')
           .property('[hora]')
-          .setValue(val);
+          .setValue(hora);
 
-        servico.hora = val;
+        servico.hora = hora;
 
       } catch (error) {
         hora_servico.text = servico.hora;
@@ -589,17 +651,17 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
       try {
         var aItem = app.project.activeItem;
-        var val = min_servico.text
+        var min = min_servico.text
           .replace(/\D/g, '');
-        val = parseInt(val);
-        val = (val < 59) ? val : 59;
-        var min = aItem.layer('ctrl_comp')
+        min = parseInt(min);
+        min = (min < 59) ? min : 59;
+        aItem.layer('ctrl_comp')
           .property('ADBE Effect Parade')
           .property('servico end page')
           .property('[min]')
-          .setValue(val);
+          .setValue(min);
 
-        servico.min = val;
+        servico.min = min;
 
       } catch (error) {
         min_servico.text = servico.min;
@@ -620,25 +682,24 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       } catch (error) {}  
     };
 
-    aparencia_temaDdl.onChange = function() {
+    tema_aparenciaDdl.onChange = function() {
 
       try {
         var aItem = app.project.activeItem;
-        var i = aparencia_temaDdl.selection.index + 1;
+        var i = tema_aparenciaDdl.selection.index + 1;
         var temaFx = aItem.layer('ctrl_comp')
           .property('ADBE Effect Parade')
           .property('aparencia end page')
           .property('tema')
           .setValue(i);
 
-        var presetStr = endPageObjToString(buildFxObj());
-        var previewObj = JSON.parse(presetStr);
-        aparencia = previewObj.aparencia_end_page;
+        obj.aparencia_end_page = buildFxObj().aparencia_end_page;
+        aparencia = obj.aparencia_end_page;
         
         updateColors();
 
       } catch (error) {
-        aparencia_temaDdl.selection = aparencia.tema - 1;
+        tema_aparenciaDdl.selection = aparencia.tema - 1;
       }
     };
 
@@ -713,10 +774,37 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         pattern_layout.value = layout.pattern;
       }
     };
+
+    refreshBtn.onClick = function() {
+    
+      getPresetNames();
+      updateUi();
+
+      try {
+        var aItem = app.project.activeItem;
+        var titulo = aItem.layer('txt_titulo')
+          .property('ADBE Text Properties')
+          .property('ADBE Text Document')
+          .value;
+        titulo_servico.text = titulo;
+        var hora = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[hora]')
+          .value;
+        hora_servico.text = hora;
+        var min = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[min]')
+          .value;
+        min_servico.text = min;
+      } catch (error) {}
+    };
   
     saveBtn.onClick = function() {
     
-      var fileName = titulo_servicoTxt.text
+      var fileName = titulo_servico.text
         .replace(/\s+/g, ' ')
         .toLowerCase()
         .trim();
@@ -724,12 +812,9 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       var presetStr = endPageObjToString(obj);
       saveFile(presetStr, filePath);
 
-      presetDdl.removeAll();
-
-      if (presetArray.indexOf(fileName) >= 0) {
-        presetArray.push(fileName);
-        presetDdl.add(fileName);
-      }
+      var presetArray = getPresetNames();
+      
+      if (presetArray.indexOf(fileName) < 0) {return;}
 
       presetDdl.selection = presetArray.indexOf(fileName);
     };
