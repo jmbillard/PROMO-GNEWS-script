@@ -45,7 +45,7 @@
     // left buttons group...
     var bGrp1 = bGrp.add('group');
     bGrp1.alignment = 'left';
-    bGrp1.spacing = '2';
+    bGrp1.spacing = 2;
     // right buttons group...
     var bGrp2 = bGrp.add('group');
     bGrp2.alignment = 'right';
@@ -240,7 +240,7 @@
     // Ui definition...
     // window...
     var tagWindow = 'var w = new Window(\'palette\', \'org. tags...\');\
-mainGrp = w.add(\'group\');\
+var mainGrp = w.add(\'group\');\
 mainGrp.orientation = \'column\';\
 mainGrp.spacing = 2;\
 mainGrp.alignChildren = \'left\';\n\n';
@@ -304,7 +304,442 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     tagWindow += 'w.show();';
 
     eval(tagWindow); // → eval Ui definition
-    // alert(tagWindow);
+  }
+  
+  // organization tags UI...
+  function previewDialog(obj) {
+
+    var presetPath = scriptPreferencesPath + '/end page presets';
+    var presetFolder = new Folder(presetPath);
+
+    var layout = obj.layout_end_page;
+    var servico = obj.servico_end_page;
+    var aparencia = obj.aparencia_end_page;
+    // Ui definition...
+    // window...
+    var filesArray = presetFolder.getFiles();
+
+    function getPresetNames () {
+
+      var presetArray = ['new end page preset'];
+
+      for (var f = 0; f < filesArray.length; f++) {
+        var fileName = deleteFileExt(filesArray[f].displayName);
+        presetArray.push(fileName);
+      }
+      return presetArray;
+    }
+
+    function updateColors() {
+
+      setTxtColor(logo_aparencia, hexToRGB(aparencia.logo));
+      logo_aparencia.text = aparencia.logo;
+      setTxtColor(titulo_aparencia, hexToRGB(aparencia.titulo));
+      titulo_aparencia.text = aparencia.titulo;
+      setTxtColor(subtitulo_aparencia, hexToRGB(aparencia.subtitulo));
+      subtitulo_aparencia.text = aparencia.subtitulo;
+      setTxtColor(apoio_aparencia, hexToRGB(aparencia.apoio));
+      apoio_aparencia.text = aparencia.apoio;
+      setTxtColor(horario_aparencia, hexToRGB(aparencia.horario));
+      horario_aparencia.text = aparencia.horario;
+      setTxtColor(horario_base_aparencia, hexToRGB(aparencia.horario_base));
+      horario_base_aparencia.text = aparencia.horario_base;
+      setTxtColor(footage_aparencia, hexToRGB(aparencia.footage));
+      footage_aparencia.text = aparencia.footage;
+      setTxtColor(pattern_aparencia, hexToRGB(aparencia.pattern));
+      pattern_aparencia.text = aparencia.pattern;
+      setTxtColor(fundo_aparencia, hexToRGB(aparencia.fundo));
+      fundo_aparencia.text = aparencia.fundo;
+    }
+
+    var w = new Window('palette', 'end page preset...');
+    w.alignChildren = 'left';
+    var presetDdl = w.add('dropdownlist', [0,0,170,10], presetArray);
+    presetDdl.selection = 0;
+    var layoutTxt = w.add('statictext', undefined, 'layout:');
+    setTxtColor(layoutTxt, GNEWS_secColors[8]);
+    
+    var layout_modeloGrp = w.add('group');
+    layout_modeloGrp.alignChildren = 'left';
+    var layout_modeloDdl = layout_modeloGrp.add('dropdownlist', [0,0,170,10], ['livre','programa','jornal']);
+    layout_modeloDdl.selection = layout.modelo - 1;
+    var layoutGrp = w.add('group');
+    layoutGrp.orientation = 'column';
+    layoutGrp.spacing = 2;
+    layoutGrp.alignChildren = 'left';
+
+    var subtitulo_layoutGrp = layoutGrp.add('group');
+    var subtitulo_layout = subtitulo_layoutGrp.add('checkbox', undefined, '');
+    subtitulo_layout.value = layout.subtitulo;
+    var subtitulo_layoutTxt = subtitulo_layoutGrp.add('statictext', undefined, 'subtitulo');
+    setTxtColor(subtitulo_layoutTxt, GNEWS_mainColors[7]);
+
+    var foto_layoutGrp = layoutGrp.add('group');
+    var foto_layout = foto_layoutGrp.add('checkbox', undefined, '');
+    foto_layout.value = layout.foto;
+    var foto_layoutTxt = foto_layoutGrp.add('statictext', undefined, 'foto');
+    setTxtColor(foto_layoutTxt, GNEWS_mainColors[7]);
+
+    var footage_layoutGrp = layoutGrp.add('group');
+    var footage_layout = footage_layoutGrp.add('checkbox', undefined, '');
+    footage_layout.value = layout.footage;
+    var footage_layoutTxt = footage_layoutGrp.add('statictext', undefined, 'footage');
+    setTxtColor(footage_layoutTxt, GNEWS_mainColors[7]);
+
+    var pattern_layoutGrp = layoutGrp.add('group');
+    var pattern_layout = pattern_layoutGrp.add('checkbox', undefined, '');
+    pattern_layout.value = layout.pattern;
+    var pattern_layoutTxt = pattern_layoutGrp.add('statictext', undefined, 'pattern');
+    setTxtColor(pattern_layoutTxt, GNEWS_mainColors[7]);
+    
+    var servicoTxt = w.add('statictext', undefined, 'servico:');
+    setTxtColor(servicoTxt, GNEWS_secColors[8]);
+    var tituloGrp = w.add('group');
+    tituloGrp.alignChildren = 'left';
+
+    var titulo_servicoTxt = tituloGrp.add('edittext', [0,0,170,40], servico.titulo, {multiline: true});
+
+    var servicoGrp = w.add('group');
+    servicoGrp.orientation = 'column';
+    servicoGrp.spacing = 2;
+    servicoGrp.alignChildren = 'left';
+    var horario_servicoGrp = servicoGrp.add('group');
+    var hora_servico = horario_servicoGrp.add('edittext', [0,0,35,20], servico.hora);
+    var hora_servicoTxt = horario_servicoGrp.add('statictext', undefined, '[hora]');
+    setTxtColor(hora_servicoTxt, GNEWS_mainColors[7]);
+    var min_servico = horario_servicoGrp.add('edittext', [0,0,35,20], servico.min);
+    var min_servicoTxt = horario_servicoGrp.add('statictext', undefined, '[min]');
+    setTxtColor(min_servicoTxt, GNEWS_mainColors[7]);
+
+    var aparenciaTxt = w.add('statictext', undefined, 'aparencia:');
+    setTxtColor(aparenciaTxt, GNEWS_secColors[8]);
+    var aparencia_temaGrp = w.add('group');
+    aparencia_temaGrp.alignChildren = 'left';
+    var aparencia_temaDdl = aparencia_temaGrp.add('dropdownlist', [0,0,170,10], ['claro','cinza','escuro','vermelho','- cores livres -']);
+    aparencia_temaDdl.selection = aparencia.tema - 1;
+
+    var aparenciaGrp = w.add('group');
+    aparenciaGrp.orientation = 'column';
+    aparenciaGrp.spacing = 2;
+    aparenciaGrp.alignChildren = 'left';
+    
+    var logo_aparenciaGrp = aparenciaGrp.add('group');
+    var logo_aparencia = logo_aparenciaGrp.add('statictext', undefined, '');
+    logo_aparencia.characters = 6;
+    var logo_aparenciaTxt = logo_aparenciaGrp.add('statictext', undefined, 'logo');
+    setTxtColor(logo_aparenciaTxt, GNEWS_mainColors[7]);
+//*
+    var titulo_aparenciaGrp = aparenciaGrp.add('group');
+    var titulo_aparencia = titulo_aparenciaGrp.add('statictext', undefined, '');
+    titulo_aparencia.characters = 6;
+    var titulo_aparenciaTxt = titulo_aparenciaGrp.add('statictext', undefined, 'titulo');
+    setTxtColor(titulo_aparenciaTxt, GNEWS_mainColors[7]);
+
+    var subtitulo_aparenciaGrp = aparenciaGrp.add('group');
+    var subtitulo_aparencia = subtitulo_aparenciaGrp.add('statictext', undefined, '');
+    subtitulo_aparencia.characters = 6;
+    var subtitulo_aparenciaTxt = subtitulo_aparenciaGrp.add('statictext', undefined, 'subtitulo');
+    setTxtColor(subtitulo_aparenciaTxt, GNEWS_mainColors[7]);
+
+    var apoio_aparenciaGrp = aparenciaGrp.add('group');
+    var apoio_aparencia = apoio_aparenciaGrp.add('statictext', undefined, '');
+    apoio_aparencia.characters = 6;
+    var apoio_aparenciaTxt = apoio_aparenciaGrp.add('statictext', undefined, 'apoio');
+    setTxtColor(apoio_aparenciaTxt, GNEWS_mainColors[7]);
+
+    var horario_aparenciaGrp = aparenciaGrp.add('group');
+    var horario_aparencia = horario_aparenciaGrp.add('statictext', undefined, '');
+    horario_aparencia.characters = 6;
+    var horario_aparenciaTxt = horario_aparenciaGrp.add('statictext', undefined, 'horario');
+    setTxtColor(horario_aparenciaTxt, GNEWS_mainColors[7]);
+
+    var horario_base_aparenciaGrp = aparenciaGrp.add('group');
+    var horario_base_aparencia = horario_base_aparenciaGrp.add('statictext', undefined, '');
+    horario_base_aparencia.characters = 6;
+    var horario_base_aparenciaTxt = horario_base_aparenciaGrp.add('statictext', undefined, 'horario base');
+    setTxtColor(horario_base_aparenciaTxt, GNEWS_mainColors[7]);
+
+    var footage_aparenciaGrp = aparenciaGrp.add('group');
+    var footage_aparencia = footage_aparenciaGrp.add('statictext', undefined, '');
+    footage_aparencia.characters = 6;
+    var footage_aparenciaTxt = footage_aparenciaGrp.add('statictext', undefined, 'footage');
+    setTxtColor(footage_aparenciaTxt, GNEWS_mainColors[7]);
+
+    var pattern_aparenciaGrp = aparenciaGrp.add('group');
+    var pattern_aparencia = pattern_aparenciaGrp.add('statictext', undefined, '');
+    pattern_aparencia.characters = 6;
+    var pattern_aparenciaTxt = pattern_aparenciaGrp.add('statictext', undefined, 'pattern');
+    setTxtColor(pattern_aparenciaTxt, GNEWS_mainColors[7]);
+
+    var fundo_aparenciaGrp = aparenciaGrp.add('group');
+    var fundo_aparencia = fundo_aparenciaGrp.add('statictext', undefined, '');
+    fundo_aparencia.characters = 6;
+    var fundo_aparenciaTxt = fundo_aparenciaGrp.add('statictext', undefined, 'fundo');
+    setTxtColor(fundo_aparenciaTxt, GNEWS_mainColors[7]);
+//*/
+    var bGrp = w.add('group');
+    bGrp.orientation = 'stack';
+    bGrp.alignment = 'fill';
+  
+    var bGrp1 = bGrp.add('group');
+    bGrp1.alignment = 'left';
+    bGrp1.spacing = 2;
+  
+    var bGrp2 = bGrp.add('group');
+    bGrp2.alignment = 'right';
+  
+    var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, {style: 'toolbutton'});
+    refreshBtn.helpTip = 'refresh end page presets list';
+    //var saveBtn = bGrp1.add('iconbutton', undefined, downloadIcon, {style: 'toolbutton'});
+    //saveBtn.helpTip = 'save new end page preset JSON file';
+    var openBtn = bGrp1.add('iconbutton', undefined, folderIcon, {style: 'toolbutton'});
+    openBtn.helpTip = 'open end page presets folder';
+    var saveBtn = bGrp2.add('button', undefined, 'save');
+    saveBtn.helpTip = 'save new end page preset JSON file';
+
+    w.onShow = function () {
+
+      updateColors();
+    };
+
+    layout_modeloDdl.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var i = layout_modeloDdl.selection.index + 1;
+        var modeloFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('layout end page')
+          .property('modelo')
+          .setValue(i);
+        
+        layout.subtitulo = i;
+
+      } catch (error) {
+        layout_modeloDdl.selection = layout.modelo - 1;
+      }
+    };
+
+    titulo_servicoTxt.onChanging = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var val = titulo_servicoTxt.text;
+        var titulo = aItem.layer('txt_titulo')
+          .property('ADBE Text Properties')
+          .property('ADBE Text Document')
+          .setValue(val);
+        
+      } catch (error) {
+        titulo_servicoTxt.text = servico.titulo;
+      }
+       
+    };
+//*
+    titulo_servicoTxt.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var titulo = aItem.layer('txt_titulo')
+          .property('ADBE Text Properties')
+          .property('ADBE Text Document');
+        servico.titulo = titulo.value;
+        titulo_servicoTxt.text = servico.titulo;
+
+      } catch (error) {}
+    };
+//*/
+    hora_servico.onChanging = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var val = hora_servico.text
+          .replace(/\D/g, '');
+        //alert(val);
+        val = parseInt(val);
+        val = (val < 23) ? val : 23;
+        var hora = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[hora]')
+          .setValue(val);
+
+        servico.hora = val;
+
+      } catch (error) {
+        hora_servico.text = servico.hora;
+      }  
+    };
+
+    hora_servico.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var hora = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[hora]');
+
+        hora_servico.text = hora.value;
+
+      } catch (error) {}  
+    };
+
+    min_servico.onChanging = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var val = min_servico.text
+          .replace(/\D/g, '');
+        val = parseInt(val);
+        val = (val < 59) ? val : 59;
+        var min = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[min]')
+          .setValue(val);
+
+        servico.min = val;
+
+      } catch (error) {
+        min_servico.text = servico.min;
+      }  
+    };
+
+    min_servico.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var min = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[min]');
+
+        min_servico.text = min.value;
+
+      } catch (error) {}  
+    };
+
+    aparencia_temaDdl.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var i = aparencia_temaDdl.selection.index + 1;
+        var temaFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('aparencia end page')
+          .property('tema')
+          .setValue(i);
+
+        var presetStr = endPageObjToString(buildFxObj());
+        var previewObj = JSON.parse(presetStr);
+        aparencia = previewObj.aparencia_end_page;
+        
+        updateColors();
+
+      } catch (error) {
+        aparencia_temaDdl.selection = aparencia.tema - 1;
+      }
+    };
+
+    subtitulo_layout.onClick = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var val = subtitulo_layout.value;
+        var subtituloFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('layout end page')
+          .property('subtitulo')
+          .setValue(val);
+
+        layout.subtitulo = val;
+
+      } catch (error) {
+        subtitulo_layout.value = layout.subtitulo;
+      }
+    };
+
+    foto_layout.onClick = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var val = foto_layout.value;
+        var fotoFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('layout end page')
+          .property('foto')
+          .setValue(val);
+
+        layout.foto = val;
+
+      } catch (error) {
+        foto_layout.value = layout.foto;
+      }
+    };
+
+    footage_layout.onClick = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var val = footage_layout.value;
+        var footageFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('layout end page')
+          .property('footage')
+          .setValue(val);
+
+        layout.footage = val;
+
+      } catch (error) {
+        footage_layout.value = layout.footage;
+      }
+    };
+
+    pattern_layout.onClick = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var val = pattern_layout.value;
+        var patternFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('layout end page')
+          .property('pattern')
+          .setValue(val);
+
+        layout.pattern = val;
+
+      } catch (error) {
+        pattern_layout.value = layout.pattern;
+      }
+    };
+  
+    saveBtn.onClick = function() {
+    
+      var fileName = titulo_servicoTxt.text
+        .replace(/\s+/g, ' ')
+        .toLowerCase()
+        .trim();
+      var filePath = presetPath + '/' + fileName + '.json';
+      var presetStr = endPageObjToString(obj);
+      saveFile(presetStr, filePath);
+
+      presetDdl.removeAll();
+
+      if (presetArray.indexOf(fileName) >= 0) {
+        presetArray.push(fileName);
+        presetDdl.add(fileName);
+      }
+
+      presetDdl.selection = presetArray.indexOf(fileName);
+    };
+
+    openBtn.onClick = function() {
+    
+      openFolder(presetPath);
+    };
+
+    w.show();
   }
   
   // install fonts UI...
@@ -331,7 +766,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     // left buttons group...
     var bGrp1 = bGrp.add('group');
     bGrp1.alignment = 'left';
-    bGrp1.spacing = '2';
+    bGrp1.spacing = 2;
     // right buttons group...
     var bGrp2 = bGrp.add('group');
     bGrp2.alignment = 'right';
