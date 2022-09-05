@@ -348,14 +348,55 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       min_servico.text = servico.min;
 
       tema_aparenciaDdl.selection = aparencia.tema - 1;
+
+      obj.aparencia_end_page = buildFxObj().aparencia_end_page;
+      aparencia = obj.aparencia_end_page;
+      
       updateColors();
+    }
+
+    function updateCompColors() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var aparenciaFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('aparencia end page');
+        aparenciaFx
+          .property('logo')
+          .setValue(hexToRGB(aparencia.logo));
+        aparenciaFx
+          .property('titulo')
+          .setValue(hexToRGB(aparencia.titulo));
+        aparenciaFx
+          .property('titulo')
+          .setValue(hexToRGB(aparencia.titulo));
+        aparenciaFx
+          .property('subtitulo')
+          .setValue(hexToRGB(aparencia.subtitulo));
+        aparenciaFx
+          .property('apoio')
+          .setValue(hexToRGB(aparencia.apoio));
+        aparenciaFx
+          .property('horario')
+          .setValue(hexToRGB(aparencia.horario));
+        aparenciaFx
+          .property('horario base')
+          .setValue(hexToRGB(aparencia.horario_base));
+        aparenciaFx
+          .property('footage')
+          .setValue(hexToRGB(aparencia.footage));
+        aparenciaFx
+          .property('pattern')
+          .setValue(hexToRGB(aparencia.pattern));
+        aparenciaFx
+          .property('fundo')
+          .setValue(hexToRGB(aparencia.fundo));
+      } catch (error) {}
     }
 
     function updateColors() {
 
-      obj.aparencia_end_page = buildFxObj().aparencia_end_page;
-      var aparencia = obj.aparencia_end_page;
-  
       setTxtColor(logo_aparencia, hexToRGB(aparencia.logo));
       logo_aparencia.text = aparencia.logo;
       setTxtColor(titulo_aparencia, hexToRGB(aparencia.titulo));
@@ -538,6 +579,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       servico = obj.servico_end_page;
       aparencia = obj.aparencia_end_page;
 
+      updateCompColors();
       updateUi();
 
       try {
@@ -778,7 +820,6 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     refreshBtn.onClick = function() {
     
       presetDdl.selection = 0;
-      updateUi();
 
       try {
         var aItem = app.project.activeItem;
@@ -800,6 +841,8 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .value;
         min_servico.text = min;
       } catch (error) {}
+
+      updateUi();
     };
   
     saveBtn.onClick = function() {
