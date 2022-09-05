@@ -355,6 +355,27 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       updateColors();
     }
 
+    function updateCompFx() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var layoutFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('layout end page');
+        layoutFx
+          .property('subtitulo')
+          .setValue(layout.subtitulo);
+        layoutFx
+          .property('foto')
+          .setValue(layout.foto);
+        layoutFx
+          .property('footage')
+          .setValue(layout.footage);
+        layoutFx
+          .property('pattern')
+          .setValue(layout.pattern);
+      } catch (error) {}
+    }
     function updateCompColors() {
 
       try {
@@ -365,9 +386,6 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         aparenciaFx
           .property('logo')
           .setValue(hexToRGB(aparencia.logo));
-        aparenciaFx
-          .property('titulo')
-          .setValue(hexToRGB(aparencia.titulo));
         aparenciaFx
           .property('titulo')
           .setValue(hexToRGB(aparencia.titulo));
@@ -581,6 +599,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
       updateCompColors();
       updateUi();
+      updateCompFx();
 
       try {
         var aItem = app.project.activeItem;
