@@ -307,16 +307,59 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
   }
   
   // organization tags UI...
-  function endPagePresetDialog(obj) {
+  function endPagePresetDialog() {
 
     var presetPath = scriptPreferencesPath + '/templates/ON-AIR/end page/end page presets';
     var presetFolder = new Folder(presetPath);
-    
-    var layout = obj.layout_end_page;
-    var servico = obj.servico_end_page;
-    var aparencia = obj.aparencia_end_page;
-    // Ui definition...
-    // window...
+
+    var servico;
+    var layout;
+    var aparencia;
+
+    function defaultObj() {
+
+      var obj = buildFxObj();
+      defaultEndPageObj(obj);
+
+      servico = obj.servico_end_page;
+      layout = obj.layout_end_page;
+      aparencia = obj.aparencia_end_page;
+      
+      return obj;
+    }
+    var obj = defaultObj();
+
+    try {
+      var aItem = app.project.activeItem;
+
+      servico.titulo = textContent(aItem.layer('txt_titulo'));
+      servico.subtitulo = textContent(aItem.layer('txt_subtitulo'));
+      
+      try {
+        var patComp = aItem.layer('comp_pattern').source;
+  
+        for (var l = 1; l <= patComp.numLayers; l++) {
+  
+          if (patComp.layer(l).enabled) {
+            layout.pattern_layer = patComp.layer(l).name;
+            break;
+          }
+        }
+      } catch (error) {}
+      try {
+        var fotoComp = aItem.layer('comp_img apresentador').source;
+  
+        for (var f = 1; f <= fotoComp.numLayers; f++) {
+  
+          if (fotoComp.layer(f).name == 'adj_') continue;
+  
+          if (fotoComp.layer(f).enabled) {
+            layout.foto_layer = fotoComp.layer(f).name;
+            break;
+          }
+        }
+      } catch (error) {}
+    } catch (error) {}
     
     function getPresetNames() {
       
@@ -332,6 +375,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         presetArray.push(fileName);
       }
       presetDdl.selection = 0;
+      
       return presetArray;
     }
 
@@ -358,6 +402,23 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       return layersArray;
     }
 
+    function getLayerIndex(compName, layerName) {
+
+      var i;
+      try {
+        var aItem = app.project.activeItem;
+        var comp = aItem.layer(compName).source;
+  
+        for (var l = 1; l <= patComp.numLayers; l++) {
+
+          i = l - 1;
+          if (layerName == patComp.layer(l).name) break;
+        }
+      } catch (error) {}
+
+      return i;
+    }
+
     function showLayer(compName, dropdown) {
 
       var selectedName = dropdown.selection;
@@ -382,23 +443,32 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     }
 
     function updateUi() {
-      
+  
       modelo_layoutDdl.selection = layout.modelo - 1;
       subtitulo_layout.value = layout.subtitulo;
-      foto_layout.value = layout.foto;
       footage_layout.value = layout.footage;
+      foto_layout.value = layout.foto;
+      foto_layoutDdl.selection = layout.foto_layer;
+      foto_layoutDdl.enabled = layout.foto;
       pattern_layout.value = layout.pattern;
+      pattern_layoutDdl.selection = layout.pattern_layer;
+      pattern_layoutDdl.enabled = layout.pattern;
 
       titulo_servico.text = servico.titulo;
+      subtitulo_servico.text = servico.subtitulo;
+      subtitulo_servico.visible = layout.subtitulo;
       hora_servico.text = servico.hora;
       min_servico.text = servico.min;
+      dia_servico.text = servico.dia;
+      formato_servicoDdl.selection = servico.formato - 1;
+      mes_servicoDdl.selection = servico.mes - 1;
+      semana_servicoDdl.selection = servico.semana - 1;
 
       tema_aparenciaDdl.selection = aparencia.tema - 1;
-
-      obj.aparencia_end_page = buildFxObj().aparencia_end_page;
-      aparencia = obj.aparencia_end_page;
       
       updateColors();
+      updateServico();
+      // getPresetNames();
     }
 
     function updateCompFx() {
@@ -421,6 +491,48 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .property('pattern')
           .setValue(layout.pattern);
       } catch (error) {}
+    }
+
+    function updateServico() {
+
+      var i = formato_servicoDdl.selection.index;
+
+      data_servicoGrp.visible = false;
+      dia_servicoGrp.visible = false;
+      semana_servicoDdl.visible = false;
+      mes_servicoDdl.visible = false;
+      hora_servicoGrp.visible = false;
+      min_servicoGrp.visible = false;
+
+      if (i == 1) {
+        data_servicoGrp.visible = true;
+        dia_servicoGrp.visible = true;
+        semana_servicoDdl.visible = false;
+        mes_servicoDdl.visible = true;
+        hora_servicoGrp.visible = true;
+        min_servicoGrp.visible = true;
+      }
+      if (i == 2) {
+        data_servicoGrp.visible = true;
+        dia_servicoGrp.visible = true;
+        semana_servicoDdl.visible = false;
+        hora_servicoGrp.visible = true;
+        min_servicoGrp.visible = true;
+      }
+      if (i == 3 || i == 5) {
+        data_servicoGrp.visible = true;
+        dia_servicoGrp.visible = false;
+        semana_servicoDdl.visible = true;
+        hora_servicoGrp.visible = true;
+        min_servicoGrp.visible = true;
+      }
+      if (i == 4) {
+        hora_servicoGrp.visible = true;
+        min_servicoGrp.visible = true;
+      }
+      if (i == 6) {
+        mes_servicoDdl.visible = true;
+      }
     }
 
     function updateCompColors() {
@@ -489,11 +601,10 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     var layout_mainGrp = w.add('group');
     layout_mainGrp.orientation = 'column';
-    layout_mainGrp.spacing = 10;
+    layout_mainGrp.spacing = 8;
     var layoutTxt = layout_mainGrp.add('statictext', undefined, '- LAYOUT -');
     setTxtColor(layoutTxt, GNEWS_secColors[8]);
     var modelo_layoutDdl = layout_mainGrp.add('dropdownlist', [0,0,180,10], ['livre','programa','jornal']);
-    modelo_layoutDdl.selection = layout.modelo - 1;
 
     var layoutGrp = layout_mainGrp.add('group');
     layoutGrp.orientation = 'stack';
@@ -510,69 +621,82 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     var subtitulo_layoutGrp = layoutGrp1.add('group');
     var subtitulo_layout = subtitulo_layoutGrp.add('checkbox', undefined, '');
-    subtitulo_layout.value = layout.subtitulo;
     var subtitulo_layoutTxt = subtitulo_layoutGrp.add('statictext', undefined, 'subtitulo');
     subtitulo_layoutTxt.characters = 6;
     setTxtColor(subtitulo_layoutTxt, GNEWS_mainColors[7]);
 
     var foto_layoutGrp = layoutGrp1.add('group');
     var foto_layout = foto_layoutGrp.add('checkbox', undefined, '');
-    foto_layout.value = layout.foto;
     var foto_layoutTxt = foto_layoutGrp.add('statictext', undefined, 'foto');
     foto_layoutTxt.characters = 6;
     setTxtColor(foto_layoutTxt, GNEWS_mainColors[7]);
 
     var footage_layoutGrp = layoutGrp2.add('group');
     var footage_layout = footage_layoutGrp.add('checkbox', undefined, '');
-    footage_layout.value = layout.footage;
     var footage_layoutTxt = footage_layoutGrp.add('statictext', undefined, 'footage');
     footage_layoutTxt.characters = 6;
     setTxtColor(footage_layoutTxt, GNEWS_mainColors[7]);
 
     var pattern_layoutGrp = layoutGrp2.add('group');
     var pattern_layout = pattern_layoutGrp.add('checkbox', undefined, '');
-    pattern_layout.value = layout.pattern;
     var pattern_layoutTxt = pattern_layoutGrp.add('statictext', undefined, 'pattern');
     pattern_layoutTxt.characters = 6;
     setTxtColor(pattern_layoutTxt, GNEWS_mainColors[7]);
     
     var foto_layoutDdl = layoutGrp1.add('dropdownlist', [0,0,85,10], []);
-    foto_layoutDdl.selection = 0;
-    foto_layoutDdl.enabled = foto_layout.value;
     var pattern_layoutDdl = layoutGrp2.add('dropdownlist', [0,0,85,10], []);
-    pattern_layoutDdl.selection = 0;
-    pattern_layoutDdl.enabled = pattern_layout.value;
 
     var servico_mainGrp = w.add('group');
     servico_mainGrp.orientation = 'column';
-    servico_mainGrp.spacing = 6;
+    servico_mainGrp.spacing = 8;
 
     var servicoTxt = servico_mainGrp.add('statictext', undefined, '- SERVICO -');
     setTxtColor(servicoTxt, GNEWS_secColors[8]);
 
-    var titulo_servico = servico_mainGrp.add('edittext', [0,0,180,40], servico.titulo, {multiline: true});
+    var titulo_servico = servico_mainGrp.add('edittext', [0,0,180,40], '', {multiline: true});
+    var subtitulo_servico = servico_mainGrp.add('edittext', [0,0,180,20], '');
+    subtitulo_servico.visible = subtitulo_layout.value;
+    var formato_servicoDdl = servico_mainGrp.add('dropdownlist', [0,0,180,10], ['- formato livre -','[dia]  [mes]  —  [hora]  [min]','DIA  [dia]  —  [hora]  [min]','[semana]  —  [hora]  [min]','MAIS  TARDE  —  [hora]  [min]','TODA  [semana]  —  [hora]  [min]','EM  [mes]']);
 
     var servicoGrp = servico_mainGrp.add('group');
-    servicoGrp.orientation = 'column';
-    servicoGrp.spacing = 2;
-    var horario_servicoGrp = servicoGrp.add('group');
-    var hora_servico = horario_servicoGrp.add('edittext', [0,0,40,20], servico.hora);
-    var hora_servicoTxt = horario_servicoGrp.add('statictext', undefined, '[hora]');
+    servicoGrp.orientation = 'stack';
+    servicoGrp.alignment = 'fill';
+
+    var servicoGrp1 = servicoGrp.add('group');
+    servicoGrp1.orientation = 'column';
+    servicoGrp1.alignment = 'left';
+    var servicoGrp2 = servicoGrp.add('group');
+    servicoGrp2.orientation = 'column';
+    servicoGrp2.alignment = 'right';
+
+    var data_servicoGrp = servicoGrp1.add('group');
+    data_servicoGrp.orientation = 'stack';
+    var dia_servicoGrp = data_servicoGrp.add('group');
+    var dia_servico = dia_servicoGrp.add('edittext', [0,0,40,20], servico.dia);
+    var dia_servicoTxt = dia_servicoGrp.add('statictext', undefined, '[dia]');
+    setTxtColor(dia_servicoTxt, GNEWS_mainColors[7]);
+    var semana_servicoDdl = data_servicoGrp.add('dropdownlist', [0,0,85,10], ['DOM','SEG','TER','QUA','QUI','SEX','SÁB','HOJE']);
+    semana_servicoDdl.selection = servico.semana - 1;
+    var hora_servicoGrp = servicoGrp1.add('group');
+    var hora_servico = hora_servicoGrp.add('edittext', [0,0,40,20], servico.hora);
+    var hora_servicoTxt = hora_servicoGrp.add('statictext', undefined, '[hora]');
     setTxtColor(hora_servicoTxt, GNEWS_mainColors[7]);
-    var min_servico = horario_servicoGrp.add('edittext', [0,0,40,20], servico.min);
-    var min_servicoTxt = horario_servicoGrp.add('statictext', undefined, '[min]');
+    var mes_servicoDdl = servicoGrp2.add('dropdownlist', [0,0,85,10], ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ']);
+    mes_servicoDdl.selection = servico.mes - 1;
+    var min_servicoGrp = servicoGrp2.add('group');
+    var min_servico = min_servicoGrp.add('edittext', [0,0,40,20], servico.min);
+    var min_servicoTxt = min_servicoGrp.add('statictext', undefined, '[min]');
     setTxtColor(min_servicoTxt, GNEWS_mainColors[7]);
 
     var aparencia_mainGrp = w.add('group');
     aparencia_mainGrp.orientation = 'column';
-    aparencia_mainGrp.spacing = 10;
+    aparencia_mainGrp.spacing = 8;
 
     var aparenciaTxt = aparencia_mainGrp.add('statictext', undefined, '- APARENCIA -');
     setTxtColor(aparenciaTxt, GNEWS_secColors[8]);
     var tema_aparenciaGrp = aparencia_mainGrp.add('group');
     tema_aparenciaGrp.alignChildren = 'left';
     var tema_aparenciaDdl = tema_aparenciaGrp.add('dropdownlist', [0,0,180,10], ['claro','cinza','escuro','vermelho','- cores livres -']);
-    tema_aparenciaDdl.selection = aparencia.tema - 1;
 
     var aparenciaGrp = aparencia_mainGrp.add('group');
     aparenciaGrp.orientation = 'stack';
@@ -638,22 +762,24 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     w.onShow = function () {
 
-      updateColors();
-      
       getPresetNames();
+      updateUi();
+
+      var pattern = layout.pattern_layer;
+      var foto = layout.foto_layer;
+
       var patternArray = getLayers('comp_pattern', pattern_layoutDdl);
-      var p = patternArray.indexOf(layout.pattern_layer);
-      
+      var p = patternArray.indexOf(pattern);
       if (p >= 0) {
         pattern_layoutDdl.selection = p;
       }
 
       var fotoArray = getLayers('comp_img apresentador', foto_layoutDdl);
-      var f = fotoArray.indexOf(layout.foto_layer);
-      
+      var f = fotoArray.indexOf(foto);
       if (f >= 0) {
         foto_layoutDdl.selection = f;
       }
+
     };
 
     foto_layoutDdl.onChange = function() {
@@ -676,14 +802,29 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       if (!presetFile.exists) {return;}
 
       var presetStr = readFile(presetFile);
-      obj = JSON.parse(presetStr);
+      obj = defaultEndPageObj(JSON.parse(presetStr));
 
       layout = obj.layout_end_page;
       servico = obj.servico_end_page;
       aparencia = obj.aparencia_end_page;
 
+      var pattern = layout.pattern_layer;
+      var foto = layout.foto_layer;
+
       updateCompColors();
       updateUi();
+      var patternArray = getLayers('comp_pattern', pattern_layoutDdl);
+      var p = patternArray.indexOf(pattern);
+      if (p >= 0) {
+        pattern_layoutDdl.selection = p;
+      }
+
+      var fotoArray = getLayers('comp_img apresentador', foto_layoutDdl);
+      var f = fotoArray.indexOf(foto);
+      
+      if (f >= 0) {
+        foto_layoutDdl.selection = f;
+      }
       updateCompFx();
 
       try {
@@ -693,6 +834,11 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .property('ADBE Text Properties')
           .property('ADBE Text Document')
           .setValue(titulo);
+        var subtitulo = subtitulo_servico.text;
+        aItem.layer('txt_subtitulo')
+          .property('ADBE Text Properties')
+          .property('ADBE Text Document')
+          .setValue(subtitulo);
         var hora = hora_servico.text
           .replace(/\D/g, '');
         hora = parseInt(hora);
@@ -732,6 +878,61 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       }
     };
 
+    formato_servicoDdl.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var i = formato_servicoDdl.selection.index + 1;
+        var formatoFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('formato')
+          .setValue(i);
+        updateServico();
+        servico.formato = i;
+
+      } catch (error) {
+        formato_servicoDdl.selection = servico.formato - 1;
+        updateServico();
+      }
+    };
+
+    mes_servicoDdl.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var i = mes_servicoDdl.selection.index + 1;
+        var mesFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('mes')
+          .setValue(i);
+        updateServico();
+        servico.mes = i;
+
+      } catch (error) {
+        mes_servicoDdl.selection = servico.mes - 1;
+      }
+    };
+
+    semana_servicoDdl.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var i = semana_servicoDdl.selection.index + 1;
+        var semanaFx = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('semana')
+          .setValue(i);
+        updateServico();
+        servico.semana = i;
+
+      } catch (error) {
+        semana_servicoDdl.selection = servico.semana - 1;
+      }
+    };
+
     titulo_servico.onChanging = function() {
 
       try {
@@ -759,6 +960,56 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         titulo_servico.text = servico.titulo;
 
       } catch (error) {}
+    };
+
+    subtitulo_servico.onChanging = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var subtitulo = subtitulo_servico.text;
+        aItem.layer('txt_subtitulo')
+          .property('ADBE Text Properties')
+          .property('ADBE Text Document')
+          .setValue(subtitulo);
+        
+      } catch (error) {
+        subtitulo_servico.text = servico.subtitulo;
+      }
+       
+    };
+
+    subtitulo_servico.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var subtitulo = aItem.layer('txt_subtitulo')
+          .property('ADBE Text Properties')
+          .property('ADBE Text Document');
+        servico.subtitulo = subtitulo.value;
+        subtitulo_servico.text = servico.subtitulo;
+
+      } catch (error) {}
+    };
+
+    dia_servico.onChanging = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var dia = dia_servico.text
+          .replace(/\D/g, '');
+        dia = parseInt(dia);
+        dia = (dia < 31) ? dia : 31;
+        aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[dia]')
+          .setValue(dia);
+
+        servico.dia = dia;
+
+      } catch (error) {
+        dia_servico.text = servico.dia;
+      }  
     };
 
     hora_servico.onChanging = function() {
@@ -792,6 +1043,20 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .property('[hora]');
 
         hora_servico.text = hora.value;
+
+      } catch (error) {}  
+    };
+
+    dia_servico.onChange = function() {
+
+      try {
+        var aItem = app.project.activeItem;
+        var dia = aItem.layer('ctrl_comp')
+          .property('ADBE Effect Parade')
+          .property('servico end page')
+          .property('[dia]');
+
+        dia_servico.text = dia.value;
 
       } catch (error) {}  
     };
@@ -843,6 +1108,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .setValue(i);
         
         updateColors();
+        aparencia.tema = i;
 
       } catch (error) {
         tema_aparenciaDdl.selection = aparencia.tema - 1;
@@ -861,6 +1127,13 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           .setValue(val);
 
         layout.subtitulo = val;
+        subtitulo_servico.visible = val;
+                
+        if (!val) {
+          servico.subtitulo = 'SUBTÍTULO';
+          return;
+        }
+        servico.subtitulo = subtitulo_servico.text;
 
       } catch (error) {
         subtitulo_layout.value = layout.subtitulo;
@@ -881,7 +1154,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         layout.foto = val;
         foto_layoutDdl.enabled = val;
         
-        if (!foto_layout.value) {
+        if (!val) {
           layout.foto_layer = '-------';
           return;
         }
