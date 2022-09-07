@@ -966,6 +966,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         var aItem = app.project.activeItem;
         var dia = dia_servico.text
           .replace(/\D/g, '');
+        dia = (dia != '') ? dia : '1';
         dia = parseInt(dia);
         dia = (dia < 31) ? dia : 31;
         aItem.layer('ctrl_comp')
@@ -987,6 +988,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         var aItem = app.project.activeItem;
         var hora = hora_servico.text
           .replace(/\D/g, '');
+        hora = (hora != '') ? hora : '0';
         hora = parseInt(hora);
         hora = (hora < 23) ? hora : 23;
         aItem.layer('ctrl_comp')
@@ -1036,6 +1038,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         var aItem = app.project.activeItem;
         var min = min_servico.text
           .replace(/\D/g, '');
+        min = (min != '') ? min : '0';
         min = parseInt(min);
         min = (min < 59) ? min : 59;
         aItem.layer('ctrl_comp')
