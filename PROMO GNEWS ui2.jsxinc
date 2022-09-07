@@ -355,14 +355,6 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       } catch (error) {}
     } catch (error) {}
 
-    // populate dropdownlists...
-    function populateDropdownList(array, dropdown) {
-
-      for (var i = 0; i < array.length; i++) {
-        dropdown.add('item', array[i]);
-      }
-    }
-    
     // get preset file names..
     function getPresetNames() {
       
