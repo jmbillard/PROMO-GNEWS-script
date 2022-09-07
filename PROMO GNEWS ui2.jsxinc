@@ -377,7 +377,6 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     function getLayers(compName, dropdown) {
 
       dropdown.removeAll();
-      dropdown.add('item', '-------');
 
       var layersArray = ['-------'];
 
@@ -388,7 +387,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         for (var l = 1; l <= comp.numLayers; l++) {
           var layerName = comp.layer(l).name;
 
-          if (layerName == 'adj_') continue;
+          if (layerName.match(/adj_/)) continue;
           layersArray.push(layerName);
         }
         populateDropdownList(layersArray, dropdown);
