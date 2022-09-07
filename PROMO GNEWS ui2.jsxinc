@@ -359,7 +359,6 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     function getPresetNames() {
       
       presetDdl.removeAll();
-      presetDdl.add('item', 'new end page preset');
 
       var filesArray = presetFolder.getFiles();
       var presetArray = ['new end page preset'];
