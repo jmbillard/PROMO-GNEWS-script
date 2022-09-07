@@ -306,28 +306,20 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     eval(tagWindow); // → eval Ui definition
   }
   
-  // organization tags UI...
+  // end page presets UI...
   function endPagePresetDialog() {
 
+     // → '~/AppData/Roaming/PROMO GNEWS script/templates'
     var presetPath = scriptPreferencesPath + '/templates/ON-AIR/end page/end page presets';
     var presetFolder = new Folder(presetPath);
 
-    var servico;
-    var layout;
-    var aparencia;
+    // all control effects as object...
+    var obj = buildFxObj();
+    defaultEndPageObj(obj); // adds a default value if needed...
 
-    function defaultObj() {
-
-      var obj = buildFxObj();
-      defaultEndPageObj(obj);
-
-      servico = obj.servico_end_page;
-      layout = obj.layout_end_page;
-      aparencia = obj.aparencia_end_page;
-      
-      return obj;
-    }
-    var obj = defaultObj();
+    var servico = obj.servico_end_page;
+    var layout = obj.layout_end_page;
+    var aparencia = obj.aparencia_end_page;
 
     try {
       var aItem = app.project.activeItem;
@@ -402,27 +394,11 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       return layersArray;
     }
 
-    function getLayerIndex(compName, layerName) {
-
-      var i;
-      try {
-        var aItem = app.project.activeItem;
-        var comp = aItem.layer(compName).source;
-  
-        for (var l = 1; l <= patComp.numLayers; l++) {
-
-          i = l - 1;
-          if (layerName == patComp.layer(l).name) break;
-        }
-      } catch (error) {}
-
-      return i;
-    }
-
     function showLayer(compName, dropdown) {
 
       var selectedName = dropdown.selection;
       var selectedLayerName = '-------';
+
       try {
         var aItem = app.project.activeItem;
         var patComp = aItem.layer(compName).source;
@@ -432,6 +408,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
           if (layerName == 'adj_') continue;
           patComp.layer(l).enabled = false;
+
           if (layerName.match(selectedName)) {
             patComp.layer(l).enabled = true;
             selectedLayerName = selectedName;
@@ -440,6 +417,23 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       } catch (error) {}
 
       return selectedLayerName;
+    }
+
+    function updateLayers() {
+
+      var pattern = layout.pattern_layer;
+      var foto = layout.foto_layer;
+      var patternArray = getLayers('comp_pattern', pattern_layoutDdl);
+      var p = patternArray.indexOf(pattern);
+      
+      if (p >= 0) {
+        pattern_layoutDdl.selection = p;
+      }
+      var fotoArray = getLayers('comp_img apresentador', foto_layoutDdl);
+      var f = fotoArray.indexOf(foto);
+      if (f >= 0) {
+        foto_layoutDdl.selection = f;
+      }
     }
 
     function updateUi() {
@@ -468,7 +462,8 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       
       updateColors();
       updateServico();
-      // getPresetNames();
+      updateLayers();
+      getPresetNames();
     }
 
     function updateCompFx() {
@@ -592,6 +587,34 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       pattern_aparencia.text = aparencia.pattern;
       setTxtColor(fundo_aparencia, hexToRGB(aparencia.fundo));
       fundo_aparencia.text = aparencia.fundo;
+    }
+
+    function setVal(thisObj, property) {
+
+      var aItem = app.project.activeItem;
+      var val = thisObj.value;
+      var subtituloFx = aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('layout end page')
+        .property(property)
+        .setValue(val);
+      layout[property] = val;
+
+      return val;
+    }
+
+    function setIndex(thisObj, obj, property) {
+
+      var aItem = app.project.activeItem;
+      var i = thisObj.selection.index + 1;
+      var modeloFx = aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property(obj + ' end page')
+        .property(property)
+        .setValue(i);
+      eval(obj + '.' + property + ' =' + i);
+
+      return i;
     }
 
     var w = new Window('palette', 'end page preset...');
@@ -762,24 +785,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     w.onShow = function () {
 
-      getPresetNames();
       updateUi();
-
-      var pattern = layout.pattern_layer;
-      var foto = layout.foto_layer;
-
-      var patternArray = getLayers('comp_pattern', pattern_layoutDdl);
-      var p = patternArray.indexOf(pattern);
-      if (p >= 0) {
-        pattern_layoutDdl.selection = p;
-      }
-
-      var fotoArray = getLayers('comp_img apresentador', foto_layoutDdl);
-      var f = fotoArray.indexOf(foto);
-      if (f >= 0) {
-        foto_layoutDdl.selection = f;
-      }
-
     };
 
     foto_layoutDdl.onChange = function() {
@@ -808,23 +814,8 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       servico = obj.servico_end_page;
       aparencia = obj.aparencia_end_page;
 
-      var pattern = layout.pattern_layer;
-      var foto = layout.foto_layer;
-
       updateCompColors();
       updateUi();
-      var patternArray = getLayers('comp_pattern', pattern_layoutDdl);
-      var p = patternArray.indexOf(pattern);
-      if (p >= 0) {
-        pattern_layoutDdl.selection = p;
-      }
-
-      var fotoArray = getLayers('comp_img apresentador', foto_layoutDdl);
-      var f = fotoArray.indexOf(foto);
-      
-      if (f >= 0) {
-        foto_layoutDdl.selection = f;
-      }
       updateCompFx();
 
       try {
@@ -863,15 +854,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     modelo_layoutDdl.onChange = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var i = modelo_layoutDdl.selection.index + 1;
-        var modeloFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('layout end page')
-          .property('modelo')
-          .setValue(i);
-        
-        layout.modelo = i;
+        setIndex(this, 'layout', 'modelo');
 
       } catch (error) {
         modelo_layoutDdl.selection = layout.modelo - 1;
@@ -881,16 +864,9 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     formato_servicoDdl.onChange = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var i = formato_servicoDdl.selection.index + 1;
-        var formatoFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('servico end page')
-          .property('formato')
-          .setValue(i);
+        setIndex(this, 'servico', 'formato');
         updateServico();
-        servico.formato = i;
-
+          
       } catch (error) {
         formato_servicoDdl.selection = servico.formato - 1;
         updateServico();
@@ -900,15 +876,8 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     mes_servicoDdl.onChange = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var i = mes_servicoDdl.selection.index + 1;
-        var mesFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('servico end page')
-          .property('mes')
-          .setValue(i);
+        setIndex(this, 'servico', 'mes');
         updateServico();
-        servico.mes = i;
 
       } catch (error) {
         mes_servicoDdl.selection = servico.mes - 1;
@@ -918,15 +887,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     semana_servicoDdl.onChange = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var i = semana_servicoDdl.selection.index + 1;
-        var semanaFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('servico end page')
-          .property('semana')
-          .setValue(i);
-        updateServico();
-        servico.semana = i;
+        setIndex(this, 'servico', 'semana');
 
       } catch (error) {
         semana_servicoDdl.selection = servico.semana - 1;
@@ -1099,16 +1060,8 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     tema_aparenciaDdl.onChange = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var i = tema_aparenciaDdl.selection.index + 1;
-        var temaFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('aparencia end page')
-          .property('tema')
-          .setValue(i);
-        
+        setIndex(this, 'aparencia', 'tema');
         updateColors();
-        aparencia.tema = i;
 
       } catch (error) {
         tema_aparenciaDdl.selection = aparencia.tema - 1;
@@ -1118,15 +1071,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     subtitulo_layout.onClick = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var val = subtitulo_layout.value;
-        var subtituloFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('layout end page')
-          .property('subtitulo')
-          .setValue(val);
-
-        layout.subtitulo = val;
+        var val = setVal(this, 'subtitulo');
         subtitulo_servico.visible = val;
                 
         if (!val) {
@@ -1143,15 +1088,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     foto_layout.onClick = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var val = foto_layout.value;
-        var fotoFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('layout end page')
-          .property('foto')
-          .setValue(val);
-
-        layout.foto = val;
+        var val = setVal(this, 'foto');
         foto_layoutDdl.enabled = val;
         
         if (!val) {
@@ -1159,6 +1096,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
           return;
         }
         layout.foto_layer = foto_layoutDdl.selection;
+
       } catch (error) {
         foto_layout.value = layout.foto;
       }
@@ -1167,15 +1105,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     footage_layout.onClick = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var val = footage_layout.value;
-        var footageFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('layout end page')
-          .property('footage')
-          .setValue(val);
-
-        layout.footage = val;
+        var val = setVal(this, 'footage');
 
       } catch (error) {
         footage_layout.value = layout.footage;
@@ -1185,15 +1115,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     pattern_layout.onClick = function() {
 
       try {
-        var aItem = app.project.activeItem;
-        var val = pattern_layout.value;
-        var patternFx = aItem.layer('ctrl_comp')
-          .property('ADBE Effect Parade')
-          .property('layout end page')
-          .property('pattern')
-          .setValue(val);
-
-        layout.pattern = val;
+        var val = setVal(this, 'pattern');
         pattern_layoutDdl.enabled = val;
         
         if (!pattern_layout.value) {
