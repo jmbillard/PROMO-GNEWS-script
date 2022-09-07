@@ -315,44 +315,55 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
     // all control effects as object...
     var obj = buildFxObj();
-    defaultEndPageObj(obj); // adds a default value if needed...
+    defaultEndPageObj(obj); // adds a default data value if needed...
 
-    var servico = obj.servico_end_page;
-    var layout = obj.layout_end_page;
-    var aparencia = obj.aparencia_end_page;
+    var servico = obj.servico_end_page; // service data object...
+    var layout = obj.layout_end_page; // layout data object...
+    var aparencia = obj.aparencia_end_page; // color theme data object...
 
     try {
-      var aItem = app.project.activeItem;
+      var aItem = app.project.activeItem; // current selected project item...
 
-      servico.titulo = textContent(aItem.layer('txt_titulo'));
-      servico.subtitulo = textContent(aItem.layer('txt_subtitulo'));
+      servico.titulo = textContent(aItem.layer('txt_titulo')); // layer 'txt_titulo' text content...
+      servico.subtitulo = textContent(aItem.layer('txt_subtitulo')); // layer 'txt_subtitulo' text content...
       
       try {
-        var patComp = aItem.layer('comp_pattern').source;
+        var patComp = aItem.layer('comp_pattern').source; // pattern precomp layer...
   
+        // get the first enabled layer...
         for (var l = 1; l <= patComp.numLayers; l++) {
   
           if (patComp.layer(l).enabled) {
-            layout.pattern_layer = patComp.layer(l).name;
+            layout.pattern_layer = patComp.layer(l).name; // first enabled layer → pattern layer name...
             break;
           }
         }
       } catch (error) {}
       try {
-        var fotoComp = aItem.layer('comp_img apresentador').source;
-  
+        var fotoComp = aItem.layer('comp_img apresentador').source; // host image precomp layer...
+        
+        // get the first enabled layer...
         for (var f = 1; f <= fotoComp.numLayers; f++) {
   
-          if (fotoComp.layer(f).name == 'adj_') continue;
+          if (fotoComp.layer(f).name.match(/adj_/)) continue; // ignore adjustment layers...
   
           if (fotoComp.layer(f).enabled) {
-            layout.foto_layer = fotoComp.layer(f).name;
+            layout.foto_layer = fotoComp.layer(f).name; // first enabled layer → photo layer name...
             break;
           }
         }
       } catch (error) {}
     } catch (error) {}
+
+    // populate dropdownlists...
+    function populateDropdownList(array, dropdown) {
+
+      for (var i = 0; i < array.length; i++) {
+        dropdown.add('item', array[i]);
+      }
+    }
     
+    // get preset file names..
     function getPresetNames() {
       
       presetDdl.removeAll();
@@ -363,9 +374,9 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       
       for (var f = 0; f < filesArray.length; f++) {
         var fileName = deleteFileExt(filesArray[f].displayName);
-        presetDdl.add('item', fileName);
         presetArray.push(fileName);
       }
+      populateDropdownList(presetArray, presetDdl);
       presetDdl.selection = 0;
       
       return presetArray;
@@ -380,20 +391,21 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
 
       try {
         var aItem = app.project.activeItem;
-        var patComp = aItem.layer(compName).source;
+        var comp = aItem.layer(compName).source;
   
-        for (var l = 1; l <= patComp.numLayers; l++) {
-          var layerName = patComp.layer(l).name;
+        for (var l = 1; l <= comp.numLayers; l++) {
+          var layerName = comp.layer(l).name;
 
           if (layerName == 'adj_') continue;
           layersArray.push(layerName);
-          dropdown.add('item', layerName);
         }
+        populateDropdownList(layersArray, dropdown);
       } catch (error) {}
 
       return layersArray;
     }
 
+    // enable selected layer...
     function showLayer(compName, dropdown) {
 
       var selectedName = dropdown.selection;
@@ -406,19 +418,19 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
         for (var l = 1; l <= patComp.numLayers; l++) {
           var layerName = patComp.layer(l).name;
 
-          if (layerName == 'adj_') continue;
+          if (layerName.match(/adj_/)) continue; // → ignore adjustment layers...
           patComp.layer(l).enabled = false;
 
           if (layerName.match(selectedName)) {
-            patComp.layer(l).enabled = true;
+            patComp.layer(l).enabled = true; // → enabled layer...
             selectedLayerName = selectedName;
           }
         }
       } catch (error) {}
-
       return selectedLayerName;
     }
 
+    // update current first enabled layer as index... 
     function updateLayers() {
 
       var pattern = layout.pattern_layer;
@@ -427,15 +439,16 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       var p = patternArray.indexOf(pattern);
       
       if (p >= 0) {
-        pattern_layoutDdl.selection = p;
+        pattern_layoutDdl.selection = p; // → pattern index
       }
       var fotoArray = getLayers('comp_img apresentador', foto_layoutDdl);
       var f = fotoArray.indexOf(foto);
       if (f >= 0) {
-        foto_layoutDdl.selection = f;
+        foto_layoutDdl.selection = f; // → photo index
       }
     }
 
+    // update window ui controls..
     function updateUi() {
   
       modelo_layoutDdl.selection = layout.modelo - 1;
@@ -589,7 +602,8 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       fundo_aparencia.text = aparencia.fundo;
     }
 
-    function setVal(thisObj, property) {
+    // set layout property value...
+    function setLayoutValue(thisObj, property) {
 
       var aItem = app.project.activeItem;
       var val = thisObj.value;
@@ -603,6 +617,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       return val;
     }
 
+    // set dropdown property index...
     function setIndex(thisObj, obj, property) {
 
       var aItem = app.project.activeItem;
@@ -1071,7 +1086,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     subtitulo_layout.onClick = function() {
 
       try {
-        var val = setVal(this, 'subtitulo');
+        var val = setLayoutValue(this, 'subtitulo');
         subtitulo_servico.visible = val;
                 
         if (!val) {
@@ -1088,7 +1103,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     foto_layout.onClick = function() {
 
       try {
-        var val = setVal(this, 'foto');
+        var val = setLayoutValue(this, 'foto');
         foto_layoutDdl.enabled = val;
         
         if (!val) {
@@ -1105,7 +1120,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     footage_layout.onClick = function() {
 
       try {
-        var val = setVal(this, 'footage');
+        var val = setLayoutValue(this, 'footage');
 
       } catch (error) {
         footage_layout.value = layout.footage;
@@ -1115,7 +1130,7 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
     pattern_layout.onClick = function() {
 
       try {
-        var val = setVal(this, 'pattern');
+        var val = setLayoutValue(this, 'pattern');
         pattern_layoutDdl.enabled = val;
         
         if (!pattern_layout.value) {
