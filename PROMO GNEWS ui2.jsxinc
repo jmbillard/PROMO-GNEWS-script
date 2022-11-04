@@ -1241,9 +1241,8 @@ setTxtColor(temTag'+ p +'Txt, GNEWS_secColors[8]);\n\n\n';
       var fontFamilyName = tree.selection.toString();
       var fontFamilyPath = fontsPath + '/' + fontFamilyName;
       var fontFamilyFolder = new Folder(fontFamilyPath);
-  
       // checks if there is a system folder correspondent to the selection...
-      if (fontFamilyFolder.exists) {
+      if (!(fontFamilyFolder.exists)) {
         return;
       }
       // install the selected font family on Windows...
