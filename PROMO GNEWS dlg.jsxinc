@@ -1,0 +1,15 @@
+
+/*
+
+---------------------------------------------------------------
+> 🪟 UI dialogs
+---------------------------------------------------------------
+
+*/
+
+
+/* jshint ignore:start */
+#include 'ui dialogs/templateDialog.jsxinc'; // JSON definition file...
+#include 'ui dialogs/tagDialog.jsxinc'; // JSON definition file...
+#include 'ui dialogs/endPagePresetDialog.jsxinc'; // JSON definition file...
+/* jshint ignore:end */

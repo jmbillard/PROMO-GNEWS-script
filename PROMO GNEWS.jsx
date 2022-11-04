@@ -34,14 +34,7 @@ var repoURL = 'https://github.com/jmbillard/PROMO-GNEWS-script';
 var codeURL = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';
 
 var codeURLArray = [
-  codeURL + 'release/PROMO%20GNEWS.jsxbin'//,
-  // codeURL + 'JSON%20lib.jsxinc',
-  // codeURL + 'PROMO%20GNEWS%20exp.jsxinc',
-  // codeURL + 'PROMO%20GNEWS%20img.jsxinc',
-  // codeURL + 'PROMO%20GNEWS%20src.jsxinc',
-  // codeURL + 'PROMO%20GNEWS%20ui2.jsxinc',
-  // codeURL + 'PROMO%20GNEWS%20ui.jsxinc',
-  // codeURL + 'PROMO%20GNEWS.jsx'
+  codeURL + 'release/PROMO%20GNEWS.jsxbin'//, // → .jsxbin binary encoded release...
 ];
 
 function PROMO_GNEWS_UTL(thisObj) {
