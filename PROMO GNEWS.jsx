@@ -47,7 +47,7 @@ var codeURLArray = [
 function PROMO_GNEWS_UTL(thisObj) {
 
   // current script version...
-  var vStr = 'v 1.9 beta';
+  var vStr = 'v 1.9 beta 1';
 
   // app script network access preferences...
   var prefSection = 'Main Pref Section';
