@@ -26,7 +26,8 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
     ExternalObject.AdobeXMPScript = new ExternalObject( 'lib:AdobeXMPScript');
 }
 /* jshint ignore:start */
-#include 'JSON lib.jsxinc'; // JSON definition file...
+#include 'source/libraries/JSON lib.jsxinc'; // JSON definition file...
+#include 'source/libraries/PROT lib.jsxinc'; // prototype functions definition file...
 /* jshint ignore:end */
   
 // github main repo...
@@ -51,7 +52,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script'; // → ~\AppData\Roaming\PROMO GNEWS script
 
   /* jshint ignore:start */
-  #include 'PROMO GNEWS ui.jsxinc'; // → UI definition file
+  #include 'source/PROMO GNEWS ui.jsxinc'; // → UI definition file
   /* jshint ignore:end */
 
   // gets the current value for the network permission preference...
