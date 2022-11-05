@@ -84,7 +84,7 @@ function fontsDialog() {
       alert('no network...  Σ(っ °Д °;)っ');
       return;
     }
-    var url = repoURL + '/raw/main/fonts.zip';
+    var url = repoURL + '/raw/main/downloads/fonts.zip';
     var zipPath = downPath + '/fonts.zip';
 
     if (!downFolder.exists) {

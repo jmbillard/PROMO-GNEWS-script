@@ -162,7 +162,7 @@ function templateDialog() {
       alert('no network...  Σ(っ °Д °;)っ');
       return;
     }
-    var url = repoURL + '/raw/main/templates.zip';
+    var url = repoURL + '/raw/main/downloads/downloads/templates.zip';
 
     var zipPath = downPath + '/templates.zip'; // → ~AppData\Roaming\PROMO GNEWS script\temp\templates.zip
 
