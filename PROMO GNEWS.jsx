@@ -11,7 +11,7 @@
   to 'ScriptUI Panels' folder
 
   author:  Jean-Marc Billard
-  version: 1.9 beta 2
+  version: 1.9 beta 3
   date:    xx-xx-2022
 
 --------------------------------------------------------------
@@ -41,7 +41,7 @@ var codeURLArray = [
 function PROMO_GNEWS_UTL(thisObj) {
 
   // current script version...
-  var vStr = 'v 1.9 beta 2';
+  var vStr = 'v 1.9 beta 3';
 
   // app script network access preferences...
   var prefSection = 'Main Pref Section';
