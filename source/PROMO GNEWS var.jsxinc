@@ -1,0 +1,59 @@
+/*
+
+---------------------------------------------------------------
+# main variables
+---------------------------------------------------------------
+
+*/
+
+//  linter settings:
+//  jshint -W061
+//  jshint -W085
+//  jshint -W043
+
+// current OS... 'Win' or 'Mac'...
+var appOs = $.os.indexOf('Win') >= 0 ? 'Win' : 'Mac';
+
+// GNEWS on-air 2022 colors...
+var GNEWS_mainColors = [
+  rgb(229, 49, 49), // '#e52f2e' red...
+  rgb(238, 255, 140), // '#ecff8c' yellow...
+  rgb(242, 242, 242), // '#f2f2f2' white...
+  rgb(20, 20, 20), // '#141414' black...
+  rgb(35, 30, 30), // '#221e1d' dark gray...
+  rgb(51, 51, 51), // '#333333' dark gray...
+  rgb(74, 74, 74), // '#4a4a4a' medium gray...
+  rgb(178, 178, 178), // '#b2b2b2' light gray...
+];
+var GNEWS_secColors = [
+  rgb(242, 51, 51), // '#f13333'
+  rgb(255, 77, 77), // '#ff4d4d'
+  rgb(255, 103, 77), // '#fe674c'
+  rgb(255, 143, 77), // '#ff8f4d'
+  rgb(255, 196, 78), // '#ffc44e'
+  rgb(255, 90, 103), // '#ff5a68'
+  rgb(255, 115, 154), // '#ff739a'
+  rgb(255, 140, 205), // '#ff8ccd'
+  rgb(181, 173, 255), // '#b5adff'
+  rgb(128, 192, 255), // '#80c0fe'
+  rgb(92, 230, 161), // '#5de6a2'
+];
+
+// ui colors, labels and group names...
+var tabColors = [];
+var labelColors = [];
+var grpNames = [];
+
+// about and 'work in progress' messages...
+var aboutStr = 'PROMO GNEWS script ' + vStr + ' | Jean-Marc Billard';
+var wip = 'work in progress... Σ(っ °Д °;)っ';
+
+// keyframe influence data...
+var keyData = {
+  value: false,
+  spatial: false,
+  inEase: {},
+  inType: {},
+  outEase: {},
+  outType: {},
+};
