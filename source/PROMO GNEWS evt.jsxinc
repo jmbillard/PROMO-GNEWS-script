@@ -1376,8 +1376,19 @@ saveBtn.onClick = function () {
       app.executeCommand(2482);
     }
   }
+};
 
-  app.endUndoGroup();
+pngPreviewBtn.onClick = function () {
+  var saveFolder = Folder.selectDialog();
+
+  if (saveFolder == null) {return;}
+
+  var aItem = app.project.activeItem;
+  var savePath = saveFolder.fullName + '/';
+  var previewPath = savePath + aItem.name + ' preview.png';
+  var previewFile = new File(previewPath);
+
+  aItem.saveFrameToPng(aItem.time, previewFile);
 };
 
 /*
