@@ -1564,3 +1564,5 @@ function logoShp() {
 
 	return layer;
 }
+
+logoShp();

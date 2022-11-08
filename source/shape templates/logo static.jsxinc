@@ -1,0 +1,164 @@
+function marca_gnews() {
+
+	// expressions variable...
+	var exp;
+
+	// keyframe ease objects variable...
+	var easeIn1;
+	var easeIn2;
+	var easeIn3;
+	var easeOut1;
+	var easeOut2;
+	var easeOut3;
+
+	// shape object variable...
+	var shp;
+
+	// shape layer creation...
+	var layer = app.project.activeItem.layers.addShape();
+
+	// vector content...
+	var contents = layer.property('ADBE Root Vectors Group');
+	logo_contents1 = contents.addProperty('ADBE Vector Group');
+	contents_logo2 = logo_contents1.addProperty('ADBE Vectors Group');
+	globo_contents3 = contents_logo2.addProperty('ADBE Vector Group');
+	contents_globo4 = globo_contents3.addProperty('ADBE Vectors Group');
+	path1_contents5 = contents_globo4.addProperty('ADBE Vector Shape - Group');
+	path1_contents5.property('ADBE Vector Shape Direction').setValue(2);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[61.75,0.00],[0.00,-61.75],[-61.75,0.00],[0.00,61.75]];
+	shp.outTangents= [[-61.75,0.00],[0.00,61.75],[61.75,0.00],[0.00,-61.75]];
+	shp.vertices= [[0.00,-112.00],[-112.00,0.00],[0.00,112.00],[112.00,0.00]];
+
+	path1_contents5.property('ADBE Vector Shape').setValue(shp);
+	path1_contents5.name = 'Path 1';
+	path2_contents5 = contents_globo4.addProperty('ADBE Vector Shape - Group');
+	path2_contents5.property('ADBE Vector Shape Direction').setValue(2);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[7.19,-0.67],[25.60,0.00],[24.70,2.70],[0.90,7.41],[0.00,14.60],[-1.35,14.15],[-6.96,0.67],[-25.60,0.00],[-24.48,-2.70],[-0.90,-7.41],[0.00,-14.37],[1.12,-14.15]];
+	shp.outTangents= [[-24.48,2.70],[-25.60,0.00],[-6.96,-0.67],[-1.35,-14.15],[0.00,-14.37],[0.90,-7.41],[24.70,-2.70],[25.60,0.00],[7.19,0.67],[1.12,14.15],[0.00,14.60],[-0.90,7.41]];
+	shp.vertices= [[76.62,53.00],[0.05,56.44],[-76.74,53.07],[-88.20,43.19],[-89.54,0.08],[-88.20,-42.81],[-76.74,-52.69],[0.05,-56.05],[76.62,-52.69],[88.30,-42.81],[89.42,0.08],[88.30,43.20]];
+
+	path2_contents5.property('ADBE Vector Shape').setValue(shp);
+	path2_contents5.name = 'Path 2';
+	path3_contents5 = contents_globo4.addProperty('ADBE Vector Shape - Group');
+	path3_contents5.property('ADBE Vector Shape Direction').setValue(2);
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,25.00],[-25.00,0.00],[0.00,-25.00],[25.00,0.00]];
+	shp.outTangents= [[0.00,-25.00],[25.00,0.00],[0.00,25.00],[-25.00,0.00]];
+	shp.vertices= [[-45.25,0.00],[0.00,-45.25],[45.25,0.00],[0.00,45.25]];
+
+	path3_contents5.property('ADBE Vector Shape').setValue(shp);
+	path3_contents5.name = 'Path 3';
+	transform_globo4 = globo_contents3.addProperty('ADBE Vector Transform Group');
+	materialOptions_globo4 = globo_contents3.addProperty('ADBE Vector Materials Group');
+	materialOptions_globo4.parentProperty.name = 'globo';
+	news_contents3 = contents_logo2.addProperty('ADBE Vector Group');
+	contents_news4 = news_contents3.addProperty('ADBE Vectors Group');
+	n_contents5 = contents_news4.addProperty('ADBE Vector Group');
+	contents_n6 = n_contents5.addProperty('ADBE Vectors Group');
+	path1_contents7 = contents_n6.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,-44.13],[0.00,0.00],[5.38,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[19.37,0.00],[0.00,-23.32],[0.00,0.00],[5.38,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-5.38],[0.00,0.00],[-20.09,0.00]];
+	shp.outTangents= [[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-23.68],[-20.09,0.00],[0.00,0.00],[0.00,5.38],[0.00,0.00],[-5.38,0.00],[0.00,0.00],[0.00,-5.38],[0.00,0.00],[5.38,0.00],[0.00,0.00],[10.05,-11.84],[37.31,0.00]];
+	shp.vertices= [[279.02,-15.63],[279.02,74.78],[270.41,83.39],[243.86,83.39],[235.25,74.78],[235.25,-8.46],[206.90,-44.33],[175.69,-7.02],[175.69,74.78],[167.08,83.39],[140.53,83.39],[131.92,74.78],[131.92,-74.47],[140.53,-83.08],[164.57,-83.08],[173.18,-74.47],[173.18,-65.14],[219.46,-85.95]];
+
+	path1_contents7.property('ADBE Vector Shape').setValue(shp);
+	path1_contents7.name = 'Path 1';
+	transform_n6 = n_contents5.addProperty('ADBE Vector Transform Group');
+	materialOptions_n6 = n_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_n6.parentProperty.name = 'n';
+	e_contents5 = contents_news4.addProperty('ADBE Vector Group');
+	contents_e6 = e_contents5.addProperty('ADBE Vectors Group');
+	path1_contents7 = contents_e6.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[4.66,-16.86],[0.00,0.00],[16.50,0.00]];
+	shp.outTangents= [[0.00,0.00],[-4.66,-18.66],[-20.09,0.00]];
+	shp.vertices= [[340.99,-19.94],[415.61,-19.94],[380.09,-49.00]];
+
+	path1_contents7.property('ADBE Vector Shape').setValue(shp);
+	path1_contents7.name = 'Path 1';
+	path2_contents7 = contents_e6.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,-50.23],[0.00,0.00],[5.38,0.00],[0.00,0.00],[-21.88,0.00],[-6.82,8.97],[-4.66,0.00],[0.00,0.00],[1.79,-5.38],[38.39,0.00],[0.00,49.87],[-45.21,0.00]];
+	shp.outTangents= [[0.00,0.00],[0.00,5.38],[0.00,0.00],[4.31,21.17],[13.99,0.00],[2.87,-3.95],[0.00,0.00],[6.10,0.00],[-10.05,30.50],[-47.72,0.00],[0.00,-48.79],[52.02,0.00]];
+	shp.vertices= [[462.26,4.10],[462.26,4.46],[453.64,13.07],[340.63,13.07],[383.32,48.23],[414.18,35.31],[424.58,29.57],[451.85,29.57],[458.67,38.90],[381.53,86.26],[296.50,0.15],[379.02,-85.95]];
+
+	path2_contents7.property('ADBE Vector Shape').setValue(shp);
+	path2_contents7.name = 'Path 2';
+	transform_e6 = e_contents5.addProperty('ADBE Vector Transform Group');
+	materialOptions_e6 = e_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_e6.parentProperty.name = 'e';
+	w_contents5 = contents_news4.addProperty('ADBE Vector Group');
+	contents_w6 = w_contents5.addProperty('ADBE Vectors Group');
+	path1_contents7 = contents_w6.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[0.00,0.00],[1.79,-5.74],[0.00,0.00],[5.02,0.00],[0.00,0.00],[1.44,4.66],[0.00,0.00],[0.00,0.00],[5.02,0.00],[0.00,0.00],[1.44,4.66],[0.00,0.00],[-6.10,0.00],[0.00,0.00],[-1.08,-5.02],[0.00,0.00],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[-1.43,-5.02],[0.00,0.00],[0.00,0.00],[-5.02,0.00]];
+	shp.outTangents= [[6.10,0.00],[0.00,0.00],[-1.44,4.66],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[0.00,0.00],[-1.44,4.66],[0.00,0.00],[-5.02,0.00],[0.00,0.00],[-1.79,-5.74],[0.00,0.00],[5.02,0.00],[0.00,0.00],[0.00,0.00],[1.44,-4.66],[0.00,0.00],[5.02,0.00],[0.00,0.00],[0.00,0.00],[1.08,-5.02],[0.00,0.00]];
+	shp.vertices= [[694.86,-83.08],[702.04,-73.40],[654.68,76.21],[644.63,83.39],[618.80,83.39],[609.11,76.21],[581.85,-22.81],[555.30,76.21],[545.61,83.39],[519.78,83.39],[509.73,76.21],[461.66,-73.40],[468.83,-83.08],[501.12,-83.08],[510.45,-75.55],[533.05,19.53],[559.24,-75.55],[568.57,-83.08],[597.27,-83.08],[606.60,-75.55],[632.79,20.24],[655.04,-75.55],[664.36,-83.08]];
+
+	path1_contents7.property('ADBE Vector Shape').setValue(shp);
+	path1_contents7.name = 'Path 1';
+	transform_w6 = w_contents5.addProperty('ADBE Vector Transform Group');
+	materialOptions_w6 = w_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_w6.parentProperty.name = 'w';
+	s_contents5 = contents_news4.addProperty('ADBE Vector Group');
+	contents_s6 = s_contents5.addProperty('ADBE Vectors Group');
+	path1_contents7 = contents_s6.addProperty('ADBE Vector Shape - Group');
+
+	shp = new Shape();
+	shp.closed= true;
+	shp.inTangents= [[7.89,24.76],[-6.10,0.00],[0.00,0.00],[-2.51,-3.95],[-17.22,0.00],[0.00,7.89],[21.53,3.95],[0.00,38.39],[-41.62,0.00],[-8.25,-28.34],[6.10,0.00],[0.00,0.00],[2.87,4.67],[16.86,0.00],[0.00,-6.46],[-23.32,-4.66],[0.00,-35.16],[39.83,0.00]];
+	shp.outTangents= [[-1.79,-5.74],[0.00,0.00],[4.30,0.00],[4.30,6.82],[13.99,0.00],[0.00,-13.63],[-26.19,-5.02],[0.00,-30.14],[37.67,0.00],[1.79,6.10],[0.00,0.00],[-4.31,0.00],[-4.66,-7.18],[-13.63,0.00],[0.00,12.92],[25.11,5.02],[0.00,32.65],[-42.69,0.00]];
+	shp.vertices= [[711.29,38.90],[718.83,29.57],[746.81,29.57],[756.14,35.31],[783.77,47.51],[807.45,35.67],[766.54,16.30],[710.93,-35.37],[778.74,-85.95],[847.63,-38.95],[840.10,-29.27],[811.75,-29.27],[802.78,-35.37],[774.44,-47.21],[753.63,-35.01],[799.55,-17.07],[850.86,32.44],[781.61,86.26]];
+
+	path1_contents7.property('ADBE Vector Shape').setValue(shp);
+	path1_contents7.name = 'Path 1';
+	transform_s6 = s_contents5.addProperty('ADBE Vector Transform Group');
+	materialOptions_s6 = s_contents5.addProperty('ADBE Vector Materials Group');
+	materialOptions_s6.parentProperty.name = 's';
+	transform_news4 = news_contents3.addProperty('ADBE Vector Transform Group');
+	materialOptions_news4 = news_contents3.addProperty('ADBE Vector Materials Group');
+	materialOptions_news4.parentProperty.name = 'news';
+	merge_contents3 = contents_logo2.addProperty('ADBE Vector Filter - Merge');
+	merge_contents3.name = 'merge';
+	transform_logo2 = logo_contents1.addProperty('ADBE Vector Transform Group');
+	transform_logo2.property('ADBE Vector Position').setValue([-287.200012207031,13.1000003814697]);
+	transform_logo2.property('ADBE Vector Scale').setValue([72,72]);
+	materialOptions_logo2 = logo_contents1.addProperty('ADBE Vector Materials Group');
+	materialOptions_logo2.parentProperty.name = 'logo';
+	color_contents1 = contents.addProperty('ADBE Vector Graphic - Fill');
+	color_contents1.property('ADBE Vector Fill Color').setValue([0.07843137532473,0.07843137532473,0.07843137532473,1]);
+	color_contents1.name = 'color';
+
+	// transformations...
+	var transform = layer.property('ADBE Transform Group');
+
+	// layer attributes...
+	layer.autoOrient = 4212;
+	layer.inPoint = 0;
+	layer.outPoint = 15.015015015015;
+	layer.comment = '';
+	layer.name = 'marca_gnews';
+	layer.label = 8;
+	layer.locked = false;
+	layer.guideLayer = false;
+
+	return layer;
+}
+
+marca_gnews();

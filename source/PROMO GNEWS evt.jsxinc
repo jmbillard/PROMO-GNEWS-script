@@ -653,7 +653,7 @@ shpPalletBtn.onClick = function () {
   app.endUndoGroup();
 };
 
-logoBtn.onClick = function () {
+arrowOnAirBtn.onClick = function () {
   var aItem = app.project.activeItem;
   // error...
   if (!(aItem instanceof CompItem)) {
@@ -661,13 +661,27 @@ logoBtn.onClick = function () {
     return;
   }
   app.beginUndoGroup('logo GNEWS');
-
-  logoShp();
-
+  /* jshint ignore:start */
+  #include 'shape templates/arrow on-air.jsxinc'; // → UI definition file
+  /* jshint ignore:end */
   app.endUndoGroup();
 };
 
-logoBtn2022.onClick = function () {
+logoStaticBtn.onClick = function () {
+  var aItem = app.project.activeItem;
+  // error...
+  if (!(aItem instanceof CompItem)) {
+    showTabErr('comp not selected');
+    return;
+  }
+  app.beginUndoGroup('logo GNEWS');
+  /* jshint ignore:start */
+  #include 'shape templates/logo static.jsxinc'; // → UI definition file
+  /* jshint ignore:end */
+  app.endUndoGroup();
+};
+
+logoAnim3sBtn.onClick = function () {
   var aItem = app.project.activeItem;
 
   // error...
@@ -675,10 +689,10 @@ logoBtn2022.onClick = function () {
     showTabErr('comp not selected');
     return;
   }
-  app.beginUndoGroup('logo GNEWS 2022');
-
-  logoShp2022();
-
+  app.beginUndoGroup('logo GNEWS 3s');
+  /* jshint ignore:start */
+  #include 'shape templates/logo animation 3s.jsxinc'; // → UI definition file
+  /* jshint ignore:end */
   app.endUndoGroup();
 };
 
