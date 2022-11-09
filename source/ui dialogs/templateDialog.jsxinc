@@ -120,7 +120,6 @@ function templateDialog() {
     }
     if (previewImgFile.exists) {
       previewImg.image = previewImgFile; // → set preview image file
-      // alert('existe!');
     } else {
       previewImg.image = no_preview; // → set image 'no preview available'
     }
