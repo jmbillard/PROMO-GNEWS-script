@@ -1389,6 +1389,9 @@ pngPreviewBtn.onClick = function () {
   var previewFile = new File(previewPath);
 
   aItem.saveFrameToPng(aItem.time, previewFile);
+  // var setClipboard = 'Get-Content \'' + previewPath + '\' | Set-Clipboard';
+  // var cmdStr = 'cmd.exe /c powershell.exe -c "' + setClipboard + '"';
+  // system.callSystem(cmdStr);
   openFolder(savePath);
 };
 
