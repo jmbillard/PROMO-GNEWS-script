@@ -1389,6 +1389,7 @@ pngPreviewBtn.onClick = function () {
   var previewFile = new File(previewPath);
 
   aItem.saveFrameToPng(aItem.time, previewFile);
+  openFolder(savePath);
 };
 
 /*
