@@ -63,6 +63,11 @@ appBtn.onClick = function () {
   openTab();
 };
 
+devBtn.onClick = function () {
+  currentGrp = devGrp;
+  openTab();
+};
+
 linksBtn.onClick = function () {
   currentGrp = linksGrp;
   openTab();
@@ -1732,11 +1737,23 @@ nUtilsBtn.onClick = function () {
 
 /*
 
-  ---------------------------------------------------------------
-  > ⚙️ preferences tab events
-  ---------------------------------------------------------------
+---------------------------------------------------------------
+> ⚙️ dev tab events
+---------------------------------------------------------------
 
-  */
+*/
+
+binBtn.onClick = function () {
+  bin();
+};
+
+/*
+
+---------------------------------------------------------------
+> ⚙️ preferences tab events
+---------------------------------------------------------------
+
+*/
 
 lDrop.onChange = function () {
   lDropSel = lDrop.selection.index;
