@@ -1804,21 +1804,22 @@ updateBtn.onClick = function () {
   }
   var downFolder = new Folder(downPath);
   var scriptUIPath = new File($.fileName).path;
+  var destPathArray = [
+    scriptUIPath, // → Scripts/Script UiPanels
+    promoArcPath + '/scripts', // → /arquivamento/GLOBONEWS/On Air 2022/Promo/scripts
+    promoInsPath + '/BARRA UTILIDADES PROMO PARA SCRIPT' // → UTILIDADES//FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR
+  ];
 
   if (!downFolder.exists) {
     downFolder.create();
   }
   getURLContent(codeURLArray, pathArray);
 
-  try {
-    copyFolderContent(downPath, scriptUIPath);
-  } catch (error) {}
-  try {
-    copyFolderContent(downPath,'N:/arquivamento/GLOBONEWS/On Air 2022/Promo/scripts');
-  } catch (error) {}
-  try {
-    copyFolderContent(downPath,'N:/UTILIDADES/FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR/BARRA UTILIDADES PROMO PARA SCRIPT');
-  } catch (error) {}
+  for (var p = 0; p < destPathArray.length; p++) {
+    try {
+      copyFolderContent(downPath, destPathArray[p]);
+    } catch (error) {}
+  }
 
   showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
 };

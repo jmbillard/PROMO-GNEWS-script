@@ -39,6 +39,58 @@ var GNEWS_secColors = [
   rgb(92, 230, 161), // '#5de6a2'
 ];
 
+function loadStaticPrefs() {
+
+  // all group names
+  grpNames = [
+    'menu',
+    'ctrl',
+    'animation',
+    'tools',
+    'fx',
+    'text',
+    'guide',
+    'layers',
+    'project',
+    'links',
+    'app',
+    'dev'
+  ];
+
+  // item prefixes...
+  compPrefix = 'comp';
+  solPrefix = 'sol';
+  
+  // layer prefixes...
+  nullPrefix = 'null';
+  adjPrefix = 'adj';
+  txtPrefix = 'txt';
+  shpPrefix = 'shp';
+  camPrefix = 'cam';
+  lgtPrefix = 'lgt';
+  ctrlPrefix = 'ctrl';
+  mattePrefix = 'matte';
+
+  // prefix separator...
+  charPrefix = '_';
+
+  prefGrpColor = rgb(35, 35, 35);
+  errGrpColor = rgb(20, 20, 20);
+
+  // static text colors (UI)...
+  sTxtColor = rgb(234, 234, 234);
+  errTxtColor = rgb(140, 0, 51);
+  aboutTxtColor = rgb(80, 80, 80);
+
+  // globo adds
+  mamAdd = '//10.181.53.152';
+  nAdd = '//10.197.18.172/arte';
+  // globo folders...
+  hnPath = mamAdd + '/arte_ilhasjorn/UPLOAD_MAM/Hardnews_MAM'; // MAM hard news
+  utiPath = nAdd + '/UTILIDADES'; // art utilities and assets...
+  promoArcPath = nAdd + '/arquivamento/GLOBONEWS/On Air 2022/Promo'; // promo archive path...
+  promoInsPath = utiPath + '/FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR'; // promo toolbar install path...
+}
 // ui colors, labels and group names...
 var tabColors = [];
 var labelColors = [];
