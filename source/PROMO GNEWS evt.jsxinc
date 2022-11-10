@@ -1803,7 +1803,7 @@ updateBtn.onClick = function () {
     pathArray.push(downPath);
   }
   var downFolder = new Folder(downPath);
-  var scriptUIPath = new File($.fileName).path;
+  var scriptUIPath = new File($.fileName).path.toString();
   var destPathArray = [
     scriptUIPath, // → Scripts/Script UiPanels
     promoArcPath + '/scripts', // → /arquivamento/GLOBONEWS/On Air 2022/Promo/scripts
