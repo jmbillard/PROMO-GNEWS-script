@@ -1577,12 +1577,6 @@ endPagePresetBtn.onClick = function () {
     showTabErr(netConfigName + ' not checked');
     return;
   }
-  var presetPath = scriptPreferencesPath + '/templates/ON-AIR/end page/end page presets';
-  var presetFolder = new Folder(presetPath);
-
-  if (!presetFolder.exists) {
-    presetFolder.create();
-  }
   endPagePresetDialog();
 };
 

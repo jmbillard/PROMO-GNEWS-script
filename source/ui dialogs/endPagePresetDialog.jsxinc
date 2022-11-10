@@ -15,14 +15,17 @@ function endPagePresetDialog() {
   var presetPath = scriptPreferencesPath + '/templates/ON-AIR/end page/end page presets';// → '~/AppData/Roaming/PROMO GNEWS script/templates'
   var presetFolder = new Folder(presetPath);
 
+  if (!presetFolder.exists) {
+    presetFolder.create();
+  }
   // all control effects as object...
   var obj = buildFxObj();
+  // alert(obj);
   defaultEndPageObj(obj); // adds a default data value if needed...
 
   var servico = obj.servico_end_page; // service data object...
   var layout = obj.layout_end_page; // layout data object...
   var aparencia = obj.aparencia_end_page; // color theme data object...
-
   function updateObjLayers() {
     try {
       var aItem = app.project.activeItem; // current selected project item...
@@ -449,8 +452,17 @@ function endPagePresetDialog() {
   var bGrp2 = bGrp.add('group');
   bGrp2.alignment = 'right';
 
-  var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, { style: 'toolbutton' });
+  // sub group...
+  var oGrp = bGrp1.add('group');
+  oGrp.orientation = 'column';
+  oGrp.spacing = 0;
+  // refresh button...
+  var refreshBtn = oGrp.add('iconbutton', undefined, upIcon, {style: 'toolbutton'});
   refreshBtn.helpTip = 'pull comp changes';
+  // apply button...
+  var applyBtn = oGrp.add('iconbutton', undefined, downIcon, {style: 'toolbutton'});
+  applyBtn.helpTip = 'apply current changes';
+  
   var openBtn = bGrp1.add('iconbutton', undefined, folderIcon, { style: 'toolbutton' });
   openBtn.helpTip = 'open end page presets folder';
   var saveBtn = bGrp2.add('button', undefined, 'save');
