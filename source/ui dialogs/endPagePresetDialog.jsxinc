@@ -284,10 +284,18 @@ function endPagePresetDialog() {
   var w = new Window('palette', 'end page preset...');
   w.spacing = 30;
   var preset_mainGrp = w.add('group');
+  preset_mainGrp.orientation = 'column';
   var presetDdl = preset_mainGrp.add('dropdownlist', [0, 0, 180, 10], []);
+  var radGrp = preset_mainGrp.add('group');
+  var expRad01 = radGrp.add('radiobutton', undefined, 'simple ui');
+  expRad01.value = true;
+  expRad01.helpTip = 'only presets';
+  var expRad02 = radGrp.add('radiobutton', undefined, 'extended ui');
+  expRad02.helpTip = 'full editor';
 
   var layout_mainGrp = w.add('group');
   layout_mainGrp.orientation = 'column';
+  layout_mainGrp.visible = false;
   layout_mainGrp.spacing = 8;
   var layoutTxt = layout_mainGrp.add('statictext', undefined, '- LAYOUT -');
   setTxtColor(layoutTxt, GNEWS_secColors[8]);
@@ -336,7 +344,7 @@ function endPagePresetDialog() {
   var servico_mainGrp = w.add('group');
   servico_mainGrp.orientation = 'column';
   servico_mainGrp.spacing = 8;
-
+  servico_mainGrp.visible = false;
   var servicoTxt = servico_mainGrp.add('statictext', undefined, '- SERVICO -');
   setTxtColor(servicoTxt, GNEWS_secColors[8]);
 
@@ -390,7 +398,7 @@ function endPagePresetDialog() {
   var aparencia_mainGrp = w.add('group');
   aparencia_mainGrp.orientation = 'column';
   aparencia_mainGrp.spacing = 8;
-
+  aparencia_mainGrp.visible = false;
   var aparenciaTxt = aparencia_mainGrp.add('statictext', undefined, '- APARENCIA -');
   setTxtColor(aparenciaTxt, GNEWS_secColors[8]);
   var tema_aparenciaGrp = aparencia_mainGrp.add('group');
@@ -468,10 +476,30 @@ function endPagePresetDialog() {
   var saveBtn = bGrp2.add('button', undefined, 'save');
   saveBtn.helpTip = 'save new end page preset JSON file';
 
+  // value subtracted from the window height -> simple ui
+  // var sHeight = 510;
+
   w.onShow = function () {
+    w.size.height = 130;
+    bGrp.location[1] = 80;
     updateObjLayers();
     updateUi();
     getPresetNames();
+  };
+
+  expRad01.onClick = function () {
+    w.size.height = 130;
+    bGrp.location[1] = 80;
+    layout_mainGrp.visible = false;
+    aparencia_mainGrp.visible = false;
+    servico_mainGrp.visible = false;
+  };
+
+  expRad02.onClick = function () {
+    w.layout.layout(true);
+    layout_mainGrp.visible = true;
+    aparencia_mainGrp.visible = true;
+    servico_mainGrp.visible = true;
   };
 
   foto_layoutDdl.onChange = function () {
