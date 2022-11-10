@@ -1814,14 +1814,15 @@ updateBtn.onClick = function () {
     downFolder.create();
   }
   getURLContent(codeURLArray, pathArray);
-  copyFolderContent(downPath, scriptUIPath);
- /*
+
   for (var p = 0; p < destPathArray.length; p++) {
+
     try {
       copyFolderContent(downPath, destPathArray[p]);
+
     } catch (error) {}
   }
-  */
+
   showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
 };
 
