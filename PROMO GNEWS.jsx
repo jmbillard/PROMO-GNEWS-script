@@ -49,7 +49,7 @@ function PROMO_GNEWS_UTL(thisObj) {
   var netConfigName = '"Allow Scripts to Write Files and Access Network"';
   
   // preferences folder path...
-  var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script'; // → ~\AppData\Roaming\PROMO GNEWS script
+  var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script'; // → ~/AppData/Roaming/PROMO GNEWS script
 
   /* jshint ignore:start */
   #include 'source/PROMO GNEWS ui.jsxinc'; // → UI definition file
