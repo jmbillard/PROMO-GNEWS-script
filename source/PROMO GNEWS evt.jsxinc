@@ -1813,6 +1813,12 @@ updateBtn.onClick = function () {
   try {
     copyFolderContent(downPath, scriptUIPath);
   } catch (error) {}
+  try {
+    copyFolderContent(downPath,'N:/arquivamento/GLOBONEWS/On Air 2022/Promo/scripts');
+  } catch (error) {}
+  try {
+    copyFolderContent(downPath,'N:/UTILIDADES/FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR/BARRA UTILIDADES PROMO PARA SCRIPT');
+  } catch (error) {}
 
   showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
 };
