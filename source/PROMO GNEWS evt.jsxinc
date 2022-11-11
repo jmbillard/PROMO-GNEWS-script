@@ -1717,7 +1717,7 @@ mamArteBtn.addEventListener('click', function (c) {
     var saveFolder = Folder.selectDialog();
 
     if (saveFolder != null) {
-      artPath = decodeURI(saveFolder).toString();
+      artePath = decodeURI(saveFolder).toString();
       savePreferences();
     }
   }
