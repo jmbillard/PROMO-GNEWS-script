@@ -1674,7 +1674,7 @@ mamMagBtn.addEventListener('click', function (c) {
     var saveFolder = Folder.selectDialog();
 
     if (saveFolder != null) {
-      magPath = decodeURI(saveFolder).toString();
+      magazinePath = decodeURI(saveFolder).toString();
       savePreferences();
     }
   }
@@ -1686,7 +1686,7 @@ mamMagBtn.onClick = function () {
     showTabErr(netConfigName + ' not checked');
     return;
   }
-  openFolder(magPath);
+  openFolder(magazinePath);
 };
 
 // right click -> configure 'MAM - para arte' path...
@@ -1750,12 +1750,12 @@ binBtn.onClick = function () {
 */
 
 lDrop.onChange = function () {
-  lDropSel = lDrop.selection.index;
+  layerType = lDrop.selection.index;
   savePreferences();
 };
 
 projTemplateDrop.onChange = function () {
-  projMDropSel = projTemplateDrop.selection.index;
+  projectModel = projTemplateDrop.selection.index;
   savePreferences();
 };
 

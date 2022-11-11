@@ -40,23 +40,6 @@ var GNEWS_secColors = [
 ];
 
 function loadStaticPrefs() {
-
-  // all group names
-  grpNames = [
-    'menu',
-    'ctrl',
-    'animation',
-    'tools',
-    'fx',
-    'text',
-    'guide',
-    'layers',
-    'project',
-    'links',
-    'app',
-    'dev'
-  ];
-
   // item prefixes...
   compPrefix = 'comp';
   solPrefix = 'sol';
