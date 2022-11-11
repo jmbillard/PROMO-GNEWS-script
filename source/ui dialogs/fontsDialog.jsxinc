@@ -84,6 +84,8 @@ function fontsDialog() {
       alert('no network...  Σ(っ °Д °;)っ');
       return;
     }
+    removeFolder(fontsFolder); // → delete previous fonts folder
+
     var url = repoURL + '/raw/main/downloads/fonts.zip';
     var zipPath = downPath + '/fonts.zip';
 
@@ -94,6 +96,7 @@ function fontsDialog() {
     unzipContent(zipPath, fontsPath);
     buildFontTree(fontsFolder, tree);
     expandNodes(tree);
+    removeFolder(downFolder); // → delete temp folder
   };
 
   refreshBtn.onClick = function () {

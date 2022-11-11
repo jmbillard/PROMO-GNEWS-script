@@ -156,25 +156,26 @@ function templateDialog() {
   };
 
   downloadBtn.onClick = function () {
-    // alert...
-    // if (!netAccess()) {
-    //   alert('no network...  Σ(っ °Д °;)っ');
-    //   return;
-    // }
-    // var url = repoURL + '/raw/main/downloads/templates.zip';
+    //alert...
+    if (!netAccess()) {
+      alert('no network...  Σ(っ °Д °;)っ');
+      return;
+    }
+    removeFolder(templatesFolder); // → delete previous templates folder
 
-    // var zipPath = downPath + '/templates.zip'; // → ~AppData\Roaming\PROMO GNEWS script\temp\templates.zip
+    var url = repoURL + '/raw/main/downloads/templates.zip';
+    var zipPath = downPath + '/templates.zip'; // → ~AppData\Roaming\PROMO GNEWS script\temp\templates.zip
 
-    // if (!downFolder.exists) {
-    //   // downloads folder does not exist...
-    //   downFolder.create(); // → create downloads folder
-    // }
-    // getURLContent([url], [downPath]); // → downloads content
-    deleteFolder(templatesPath);
-    templatesFolder.create();
-    // unzipContent(zipPath, templatesPath); // → unzip file
-    // buildTree(templatesFolder, tree, fileFilter); // → update tree
-    // expandNodes(tree); // expand all tree folder nodes...
+    if (!downFolder.exists) {
+      // downloads folder does not exist...
+      downFolder.create(); // → create temp folder
+    }
+    templatesFolder.create(); // → create new templates folder
+    getURLContent([url], [downPath]); // → download content
+    unzipContent(zipPath, templatesPath); // → unzip file
+    buildTree(templatesFolder, tree, fileFilter); // → update tree...
+    expandNodes(tree); // expand all tree folder nodes...
+    removeFolder(downFolder); // → delete temp folder
   };
 
   refreshBtn.onClick = function () {

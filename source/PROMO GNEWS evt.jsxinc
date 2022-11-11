@@ -1529,6 +1529,7 @@ copyAMEPresetsBtn.onClick = function () {
       } catch (error) {}
     }
   }
+  removeFolder(downFolder); // → delete temp folder
 };
 
 zipFontsBtn.onClick = function () {
