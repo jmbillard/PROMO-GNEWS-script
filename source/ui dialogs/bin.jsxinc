@@ -645,34 +645,3 @@ function bin(thisObj) {
     binWindow.show();
   }
 }
-
-/*
-
----------------------------------------------------------------
-> prototype functions
----------------------------------------------------------------
-
-*/
-
-String.prototype.toCamelCase = function () {
-  return this.toLowerCase()
-    .replace(/\s(.)/g, function ($1) {return $1.toUpperCase();})
-    .replace(/\s/g, '')
-    .replace(/\./g, 'dot')
-    .replace(/\#/g, 'rash')
-    .replace(/^(.)/, function ($1) {return $1.toLowerCase();});
-};
-
-String.prototype.trim = function () {
-  return this.replace(/^[\s|\t]+|[\s|\t]+$/, '');
-};
-
-String.prototype.popLastCharacter = function () {
-  return this.replace(/.$/, '');
-};
-
-if (typeof Array.isArray === 'undefined') {
-  Array.isArray = function(obj) {
-    return Object.prototype.toString.call(obj) === '[object Array]';
-  };
-}

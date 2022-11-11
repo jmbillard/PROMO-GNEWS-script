@@ -7,6 +7,10 @@
 
 */
 
+String.prototype.popLastCharacter = function () {
+  return this.replace(/.$/, '');
+};
+
 // string to camel case...
 String.prototype.toCamelCase = function () {
   return this.toLowerCase()
