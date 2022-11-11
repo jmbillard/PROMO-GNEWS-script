@@ -138,7 +138,7 @@ function loadDefaultPrefs() {
     var grpName = t.toString();
     var colorVal = hexToRGB(defPrefs.color[t]);
     
-    if (JSONObj.color.hasOwnProperty(t)) {
+    if (JSONObj.color != undefined && JSONObj.color.hasOwnProperty(t)) {
       colorVal = hexToRGB(JSONObj.color[t]);
     }
     grpNames.push(grpName);
@@ -147,15 +147,15 @@ function loadDefaultPrefs() {
   for (var l in defPrefs.label) {
     var labelVal = hexToRGB(defPrefs.label[l]);
 
-    if (JSONObj.label.hasOwnProperty(l)) {
+    if (JSONObj.label != undefined && JSONObj.label.hasOwnProperty(l)) {
       labelVal = hexToRGB(JSONObj.label[l]);
     }
     labelColors.push(labelVal);
   }
-  artePath = (JSONObj.folders.artePath != undefined) ? JSONObj.folders.artePath: defPrefs.folders.artePath;
-  magazinePath = (JSONObj.folders.magazinePath != undefined) ? JSONObj.folders.magazinePath: defPrefs.folders.magazinePath;
-  layerType = (JSONObj.selection.layerType != undefined) ? JSONObj.selection.layerType: defPrefs.selection.layerType;
-  projectModel = (JSONObj.selection.projectModel != undefined) ? JSONObj.selection.projectModel: defPrefs.selection.projectModel;
+  artePath = (JSONObj.folders != undefined && JSONObj.folders.artePath != undefined) ? JSONObj.folders.artePath: defPrefs.folders.artePath;
+  magazinePath = (JSONObj.folders != undefined && JSONObj.folders.magazinePath != undefined) ? JSONObj.folders.magazinePath: defPrefs.folders.magazinePath;
+  layerType = (JSONObj.selection != undefined && JSONObj.selection.layerType != undefined) ? JSONObj.selection.layerType: defPrefs.selection.layerType;
+  projectModel = (JSONObj.selection != undefined && JSONObj.selection.projectModel != undefined) ? JSONObj.selection.projectModel: defPrefs.selection.projectModel;
   userPrefix = (JSONObj.userPrefix != undefined) ? JSONObj.userPrefix : defPrefs.userPrefix;
 }
 
