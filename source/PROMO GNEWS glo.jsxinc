@@ -74,6 +74,91 @@ function loadStaticPrefs() {
   promoArcPath = nAdd + '/arquivamento/GLOBONEWS/On Air 2022/Promo'; // promo archive path...
   promoInsPath = utiPath + '/FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR'; // promo toolbar install path...
 }
+
+//https://coolors.co/8c252f-bf3a48-cb6259-d68a69-c2b6a3-db9437-6ea57d-00b5c2-5f3691-6e489b
+function loadDefaultPrefs() {
+
+  var defPrefs = {
+    'color': {
+      'menu':'#3E50B4',
+      'ctrl':'#BF3A48',
+      'animation':'#CB6259',
+      'tools':'#6EA57D',
+      'fx':'#D68A69',
+      'text':'#C2B6A3',
+      'guide':'#202020',
+      'project':'#00B5C2',
+      'links':'#DB9437',
+      'app':'#5F3691',
+      'dev':'#202020',
+      },
+
+    'label':{
+      'l1':'#F44336',
+      'l2':'#E81D62',
+      'l3':'#9B26AF',
+      'l4':'#6639B6',
+      'l5':'#3E50B4',
+      'l6':'#02A8F3',
+      'l7':'#00BBD3',
+      'l8':'#009587',
+      'l9':'#8AC249',
+      'l10':'#CCDB38',
+      'l11':'#FEEA3A',
+      'l12':'#FE9700',
+      'l13':'#FF5722',
+      'l14':'#785447',
+      'l15':'#9D9D9D',
+      'l16':'#5F7C8A'
+    },
+
+    'folders': {
+      'artePath':'//10.181.53.152/arte_ilhasjorn/PARA ARTE/PROMO GNEWS/MXF ARTE',
+      'magazinePath':'//10.181.53.152/arte_ilhasjorn/UPLOAD_MAM/Magazine'
+    },
+
+    'selection':{
+      'layerType':0,
+      'projectModel':0
+    },
+  
+    'userPrefix':system.userName.substring(0, 3).toUpperCase()
+  };
+
+  // loads all configurable preferences...
+  var JSONObj = {};
+  var JSONFile = new File(scriptPreferencesPath + '/preferences.json');
+  
+  // loads the current saved preferences...
+  if (JSONFile.exists) {
+    var JSONContent = readFile(JSONFile);
+    JSONObj = JSON.parse(JSONContent);    
+  }
+  for (var t in defPrefs.color) {
+    var grpName = t.toString();
+    var colorVal = hexToRGB(defPrefs.color[t]);
+    
+    if (JSONObj.color.hasOwnProperty(t)) {
+      colorVal = hexToRGB(JSONObj.color[t]);
+    }
+    grpNames.push(grpName);
+    tabColors.push(colorVal);
+  }
+  for (var l in defPrefs.label) {
+    var labelVal = hexToRGB(defPrefs.label[l]);
+
+    if (JSONObj.label.hasOwnProperty(l)) {
+      labelVal = hexToRGB(JSONObj.label[l]);
+    }
+    labelColors.push(labelVal);
+  }
+  artePath = (JSONObj.folders.artePath != undefined) ? JSONObj.folders.artePath: defPrefs.folders.artePath;
+  magazinePath = (JSONObj.folders.magazinePath != undefined) ? JSONObj.folders.magazinePath: defPrefs.folders.magazinePath;
+  layerType = (JSONObj.selection.layerType != undefined) ? JSONObj.selection.layerType: defPrefs.selection.layerType;
+  projectModel = (JSONObj.selection.projectModel != undefined) ? JSONObj.selection.projectModel: defPrefs.selection.projectModel;
+  userPrefix = (JSONObj.userPrefix != undefined) ? JSONObj.userPrefix : defPrefs.userPrefix;
+}
+
 // ui colors, labels and group names...
 var tabColors = [];
 var labelColors = [];

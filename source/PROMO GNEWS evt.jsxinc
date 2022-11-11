@@ -11,36 +11,42 @@
 //  jscs:disable maximumLineLength
 
 ctrlBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = ctrlGrp;
   openTab();
 };
 
 animBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = animationGrp;
   openTab();
 };
 
 fxBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = fxGrp;
   openTab();
 };
 
 txtBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = textGrp;
   openTab();
 };
 
 guideBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = guideGrp;
   openTab();
 };
 
-layerBtn.onClick = function () {
-  currentGrp = layersGrp;
-  openTab();
-};
+// layerBtn.onClick = function () {
+//   currentGrp = layersGrp;
+//   openTab();
+// };
 
 toolBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = toolsGrp;
   openTab();
 };
@@ -50,6 +56,8 @@ projBtn.onClick = function () {
   projName = projName == '' ? 'proj name' : projName;
   projId = getXMPdata('identifier');
   projId = projId == '' ? 'proj id' : projId;
+
+  currentGrp.visible = false;
   currentGrp = projectGrp;
 
   openTab();
@@ -59,21 +67,25 @@ projBtn.onClick = function () {
 };
 
 appBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = appGrp;
   openTab();
 };
 
 devBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = devGrp;
   openTab();
 };
 
 linksBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = linksGrp;
   openTab();
 };
 
 prefBtn.onClick = function () {
+  currentGrp.visible = false;
   currentGrp = preferencesGrp;
   openTab();
 };
@@ -852,53 +864,54 @@ limitTxt2.onChange = function () {
   > 🧻 layer tab events
   ---------------------------------------------------------------
 
-  */
-
-renameLayersBtn.onClick = function () {
-  var iArray = getComps();
-  var assArray = iArray[0];
-  var aItem = app.project.activeItem;
-  var compArray = [aItem];
-  // error...
-  if (!(aItem instanceof CompItem)) {
-    showTabErr('comp not selected');
-    return;
-  }
-  for (i = 0; i < assArray.length; i++) {
-    if (assArray[i] == aItem) {
-      compArray = [];
+  
+  renameLayersBtn.onClick = function () {
+    var iArray = getComps();
+    var assArray = iArray[0];
+    var aItem = app.project.activeItem;
+    var compArray = [aItem];
+    // error...
+    if (!(aItem instanceof CompItem)) {
+      showTabErr('comp not selected');
+      return;
     }
-  }
-  app.beginUndoGroup('update names');
-
-  renameLayers(compArray);
-
-  app.endUndoGroup();
+    for (i = 0; i < assArray.length; i++) {
+      if (assArray[i] == aItem) {
+        compArray = [];
+      }
+    }
+    app.beginUndoGroup('update names');
+    
+    renameLayers(compArray);
+    
+    app.endUndoGroup();
 };
 
 isolateBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
-
+  
   if (aItem instanceof CompItem && selLayers.length > 0) {
     app.beginUndoGroup('isolate layers');
-
+    
     for (i = 1; i <= aItem.numLayers; i++) {
       var l = aItem.layer(i);
-
+      
       l.shy = true;
     }
-
+    
     for (i = 0; i < selLayers.length; i++) {
       var sl = selLayers[i];
-
+      
       sl.shy = false;
     }
     aItem.hideShyLayers = !aItem.hideShyLayers;
-
+    
     app.endUndoGroup();
   }
 };
+
+*/
 
 lockTrmBtn.onClick = function () {
   var aItem = app.project.activeItem;
@@ -1384,11 +1397,14 @@ saveBtn.onClick = function () {
 };
 
 pngPreviewBtn.onClick = function () {
+  var aItem = app.project.activeItem;
+
+  if (aItem == null) {return;}
+
   var saveFolder = Folder.selectDialog();
 
   if (saveFolder == null) {return;}
 
-  var aItem = app.project.activeItem;
   var savePath = saveFolder.fullName + '/';
   var previewPath = savePath + aItem.name + ' preview.png';
   var previewFile = new File(previewPath);
