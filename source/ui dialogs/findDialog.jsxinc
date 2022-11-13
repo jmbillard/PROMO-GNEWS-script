@@ -1,0 +1,130 @@
+
+/*
+Code for Import https://scriptui.joonas.me — (Triple click to select): 
+{"activeId":34,"items":{"item-0":{"id":0,"type":"Dialog","parentId":false,"style":{"enabled":true,"varName":"w","windowType":"Palette","creationProps":{"su1PanelCoordinates":false,"maximizeButton":false,"minimizeButton":false,"independent":false,"closeButton":true,"borderless":false,"resizeable":false},"text":"text layer seach...","preferredSize":[0,0],"margins":16,"orientation":"column","spacing":10,"alignChildren":["center","top"]}},"item-1":{"id":1,"type":"Group","parentId":0,"style":{"enabled":true,"varName":"searchMainGrp","preferredSize":[0,0],"margins":0,"orientation":"row","spacing":10,"alignChildren":["center","center"],"alignment":null}},"item-2":{"id":2,"type":"StaticText","parentId":5,"style":{"enabled":true,"varName":"optTxt1","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"RegEx","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-3":{"id":3,"type":"EditText","parentId":11,"style":{"enabled":true,"varName":"findEdTxt","creationProps":{"noecho":false,"readonly":false,"multiline":false,"scrollable":false,"borderless":false,"enterKeySignalsOnChange":false},"softWrap":false,"text":"","justify":"left","preferredSize":[215,30],"alignment":null,"helpTip":null}},"item-4":{"id":4,"type":"IconButton","parentId":1,"style":{"enabled":true,"varName":"findBtn","text":"","preferredSize":[80,60],"creationProps":{"style":"toolbutton","toggle":false},"iconButtonStroke":false,"image":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsSAAALEgHS3X78AAABOElEQVRIibVWy00DQQx9IArIwQXQAdy4IAQVZNPB0ghKasgRpIQKQgfkkjt0wN3vQAeLHHnJCGY/M5q1tFqt7XlvbD9Le9Y0Daa080nRAVzkHCJZAVgCuArcn+YTkbcwN7kCkga8A/AFYAHgwd/2vfP4yWwGYx9VrVS1UdU6dsb8Hq9aX9KQSX7YTUWk6smxFl2KyHVOi6zn24GcbTibHBV9p8RzCGYp8VQCk2I9kFN7XhaBSXBO8ikWJGngc887WuqiteWvSN4AePaez/zmBr4Kl20UAcl7kx6AjbvWAO584Vqztiz+bvIggZe9CVyPIjIk1V/rXbQI+EFEbseCo2/IEXCzlxTwToIO8KTWdBKUBP9HUBoc4ZBdiu8lwRFWICJ7AK8lwRGTKUkD3ZcAjxKUtmn/KgD8ADWxvCe6bNP6AAAAAElFTkSuQmCC"],"alignment":null,"helpTip":"find"}},"item-5":{"id":5,"type":"Group","parentId":7,"style":{"enabled":true,"varName":"optGrp1","preferredSize":[0,0],"margins":0,"orientation":"row","spacing":4,"alignChildren":["left","center"],"alignment":null}},"item-6":{"id":6,"type":"Checkbox","parentId":5,"style":{"enabled":true,"varName":"optCkb1","text":"","preferredSize":[0,0],"alignment":null,"helpTip":"use regular expressions"}},"item-7":{"id":7,"type":"Group","parentId":11,"style":{"enabled":true,"varName":"optMainGrp","preferredSize":[0,0],"margins":0,"orientation":"row","spacing":16,"alignChildren":["center","center"],"alignment":null}},"item-8":{"id":8,"type":"Group","parentId":7,"style":{"enabled":true,"varName":"optGrp1","preferredSize":[0,0],"margins":0,"orientation":"row","spacing":4,"alignChildren":["left","center"],"alignment":null}},"item-9":{"id":9,"type":"StaticText","parentId":8,"style":{"enabled":true,"varName":"optTxt1","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"full proj","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":"search all project compositions..."}},"item-10":{"id":10,"type":"Checkbox","parentId":8,"style":{"enabled":true,"varName":"optCkb2","text":"","preferredSize":[0,0],"alignment":null,"helpTip":"starting with..."}},"item-11":{"id":11,"type":"Group","parentId":1,"style":{"enabled":true,"varName":"imputGrp","preferredSize":[0,0],"margins":0,"orientation":"column","spacing":8,"alignChildren":["right","center"],"alignment":null}},"item-16":{"id":16,"type":"Divider","parentId":0,"style":{"enabled":true,"varName":null}},"item-17":{"id":17,"type":"Group","parentId":7,"style":{"enabled":true,"varName":"optGrp1","preferredSize":[0,0],"margins":0,"orientation":"row","spacing":4,"alignChildren":["left","center"],"alignment":null}},"item-18":{"id":18,"type":"StaticText","parentId":17,"style":{"enabled":true,"varName":"optTxt1","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"Aa","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-19":{"id":19,"type":"Checkbox","parentId":17,"style":{"enabled":true,"varName":"optCkb2","text":"","preferredSize":[0,0],"alignment":null,"helpTip":"case independent","checked":false}},"item-26":{"id":26,"type":"Progressbar","parentId":28,"style":{"enabled":true,"varName":"findPb","preferredSize":[290,5],"alignment":null,"helpTip":null}},"item-27":{"id":27,"type":"StaticText","parentId":28,"style":{"enabled":true,"varName":"resultTxt","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"searching...","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-28":{"id":28,"type":"Group","parentId":0,"style":{"enabled":true,"varName":"resultGrp","preferredSize":[0,0],"margins":0,"orientation":"column","spacing":10,"alignChildren":["center","center"],"alignment":"fill"}},"item-30":{"id":30,"type":"TreeView","parentId":0,"style":{"enabled":true,"varName":"resultTree","preferredSize":[0,150],"alignment":"fill"}},"item-31":{"id":31,"type":"TreeItem","parentId":33,"style":{"enabled":true,"varName":null,"text":"txt_layer 1"}},"item-33":{"id":33,"type":"TreeItem","parentId":30,"style":{"enabled":true,"varName":null,"text":"comp_blablabla"},"expanded":true},"item-34":{"id":34,"type":"TreeItem","parentId":33,"style":{"enabled":true,"varName":null,"text":"txt_layer 2"}}},"order":[0,1,11,3,7,8,9,10,5,2,6,17,18,19,4,16,28,27,26,30,33,31,34],"settings":{"importJSON":true,"indentSize":false,"cepExport":false,"includeCSSJS":true,"showDialog":true,"functionWrapper":false,"afterEffectsDockable":false,"itemReferenceList":"None"}}
+*/ 
+
+// W
+// =
+var w = new Window("palette"); 
+    w.text = "text layer seach..."; 
+    w.orientation = "column"; 
+    w.alignChildren = ["center","top"]; 
+    w.spacing = 10; 
+    w.margins = 16; 
+
+// SEARCHMAINGRP
+// =============
+var searchMainGrp = w.add("group", undefined, {name: "searchMainGrp"}); 
+    searchMainGrp.orientation = "row"; 
+    searchMainGrp.alignChildren = ["center","center"]; 
+    searchMainGrp.spacing = 10; 
+    searchMainGrp.margins = 0; 
+
+// IMPUTGRP
+// ========
+var imputGrp = searchMainGrp.add("group", undefined, {name: "imputGrp"}); 
+    imputGrp.orientation = "column"; 
+    imputGrp.alignChildren = ["right","center"]; 
+    imputGrp.spacing = 8; 
+    imputGrp.margins = 0; 
+
+var findEdTxt = imputGrp.add('edittext {properties: {name: "findEdTxt"}}'); 
+    findEdTxt.preferredSize.width = 215; 
+    findEdTxt.preferredSize.height = 30; 
+
+// OPTMAINGRP
+// ==========
+var optMainGrp = imputGrp.add("group", undefined, {name: "optMainGrp"}); 
+    optMainGrp.orientation = "row"; 
+    optMainGrp.alignChildren = ["center","center"]; 
+    optMainGrp.spacing = 16; 
+    optMainGrp.margins = 0; 
+
+// OPTGRP1
+// =======
+var optGrp1 = optMainGrp.add("group", undefined, {name: "optGrp1"}); 
+    optGrp1.orientation = "row"; 
+    optGrp1.alignChildren = ["left","center"]; 
+    optGrp1.spacing = 4; 
+    optGrp1.margins = 0; 
+
+var optTxt1 = optGrp1.add("statictext", undefined, undefined, {name: "optTxt1"}); 
+    optTxt1.helpTip = "search all project compositions..."; 
+    optTxt1.text = "full proj"; 
+
+var optCkb2 = optGrp1.add("checkbox", undefined, undefined, {name: "optCkb2"}); 
+    optCkb2.helpTip = "starting with..."; 
+
+// OPTGRP2
+// =======
+var optGrp2 = optMainGrp.add("group", undefined, {name: "optGrp2"}); 
+    optGrp2.orientation = "row"; 
+    optGrp2.alignChildren = ["left","center"]; 
+    optGrp2.spacing = 4; 
+    optGrp2.margins = 0; 
+
+var optTxt2 = optGrp2.add("statictext", undefined, undefined, {name: "optTxt2"}); 
+    optTxt2.text = "RegEx"; 
+
+var optCkb1 = optGrp2.add("checkbox", undefined, undefined, {name: "optCkb1"}); 
+    optCkb1.helpTip = "use regular expressions"; 
+
+// OPTGRP3
+// =======
+var optGrp3 = optMainGrp.add("group", undefined, {name: "optGrp3"}); 
+    optGrp3.orientation = "row"; 
+    optGrp3.alignChildren = ["left","center"]; 
+    optGrp3.spacing = 4; 
+    optGrp3.margins = 0; 
+
+var optTxt3 = optGrp3.add("statictext", undefined, undefined, {name: "optTxt3"}); 
+    optTxt3.text = "Aa"; 
+
+var optCkb3 = optGrp3.add("checkbox", undefined, undefined, {name: "optCkb3"}); 
+    optCkb3.helpTip = "case independent"; 
+
+// SEARCHMAINGRP
+// =============
+var findBtn_imgString = "%C2%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%18%00%00%00%18%08%06%00%00%00%C3%A0w%3D%C3%B8%00%00%00%09pHYs%00%00%0B%12%00%00%0B%12%01%C3%92%C3%9D~%C3%BC%00%00%018IDATH%C2%89%C2%B5V%C3%8BM%03A%0C%7D%20%0A%C3%88%C3%81%05%C3%90%01%C3%9C%C2%B8%20%04%15d%C3%93%C3%81%C3%92%08Jj%C3%88%11%C2%A4%C2%84%0AB%07%C3%A4%C2%92%3Bt%C3%80%C3%9D%C3%AF%40%07%C2%8B%1Cy%C3%89%08f%3F3%C2%9A%C2%B5%C2%B4Z%C2%AD%C3%ADyol%3FK%7B%C3%964%0D%C2%A6%C2%B4%C3%B3I%C3%91%01%5C%C3%A4%1C%22Y%01X%02%C2%B8%0A%C3%9C%C2%9F%C3%A6%13%C2%91%C2%B707%C2%B9%02%C2%92%06%C2%BC%03%C3%B0%05%60%01%C3%A0%C3%81%C3%9F%C3%B6%C2%BD%C3%B3%C3%B8%C3%89l%06c%1FU%C2%ADT%C2%B5Q%C3%95%3Av%C3%86%C3%BC%1E%C2%AFZ_%C3%92%C2%90I~%C3%98ME%C2%A4%C3%AA%C3%89%C2%B1%16%5D%C2%8A%C3%88uN%C2%8B%C2%AC%C3%A7%C3%9B%C2%81%C2%9Cm8%C2%9B%1C%15%7D%C2%A7%C3%84s%08f)%C3%B1T%02%C2%93b%3D%C2%90S%7B%5E%16%C2%81IpN%C3%B2)%16%24i%C3%A0s%C3%8F%3BZ%C3%AA%C2%A2%C2%B5%C3%A5%C2%AFH%C3%9E%00x%C3%B6%C2%9E%C3%8F%C3%BC%C3%A6%06%C2%BE%0A%C2%97m%14%01%C3%89%7B%C2%93%1E%C2%80%C2%8D%C2%BB%C3%96%00%C3%AE%7C%C3%A1Z%C2%B3%C2%B6%2C%C3%BEn%C3%B2%20%C2%81%C2%97%C2%BD%09%5C%C2%8F%222%24%C3%95_%C3%AB%5D%C2%B4%08%C3%B8ADn%C3%87%C2%82%C2%A3o%C3%88%11p%C2%B3%C2%97%14%C3%B0N%C2%82%0E%C3%B0%C2%A4%C3%96t%12%C2%94%04%C3%BFGP%1A%1C%C3%A1%C2%90%5D%C2%8A%C3%AF%25%C3%81%11V%20%22%7B%00%C2%AF%25%C3%81%11%C2%93)I%03%C3%9D%C2%97%00%C2%8F%12%C2%94%C2%B6i%C3%BF*%00%C3%BC%005%C2%B1%C2%BC'%C2%BAl%C3%93%C3%BA%00%00%00%00IEND%C2%AEB%60%C2%82"; 
+var findBtn = searchMainGrp.add("iconbutton", undefined, File.decode(findBtn_imgString), {name: "findBtn", style: "toolbutton"}); 
+    findBtn.helpTip = "find"; 
+    findBtn.preferredSize.width = 80; 
+    findBtn.preferredSize.height = 60; 
+
+// W
+// =
+var divider1 = w.add("panel", undefined, undefined, {name: "divider1"}); 
+    divider1.alignment = "fill"; 
+
+// RESULTGRP
+// =========
+var resultGrp = w.add("group", undefined, {name: "resultGrp"}); 
+    resultGrp.orientation = "column"; 
+    resultGrp.alignChildren = ["center","center"]; 
+    resultGrp.spacing = 10; 
+    resultGrp.margins = 0; 
+    resultGrp.alignment = ["fill","top"]; 
+
+var resultTxt = resultGrp.add("statictext", undefined, undefined, {name: "resultTxt"}); 
+    resultTxt.text = "searching..."; 
+
+var findPb = resultGrp.add("progressbar", undefined, undefined, {name: "findPb"}); 
+    findPb.maxvalue = 100; 
+    findPb.value = 50; 
+    findPb.preferredSize.width = 290; 
+    findPb.preferredSize.height = 5; 
+
+// RESULTTREE
+// ==========
+var resultTree = w.add("treeview", [0,0,317,150], undefined, {name: "resultTree"}); 
+    resultTree.alignment = ["fill","top"]; 
+
+var treeitem1 = resultTree.add("node", "comp_blablabla"); 
+var treeitem2 = treeitem1.add("item", "txt_layer 1"); 
+var treeitem3 = treeitem1.add("item", "txt_layer 2"); 
+
+    treeitem1.expanded = true; 
+
+w.show();
+
