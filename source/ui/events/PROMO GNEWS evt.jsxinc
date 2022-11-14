@@ -1443,6 +1443,7 @@ saveBtn.onClick = function () {
   var userStr = system.userName;
   var sysDate = system.callSystem('cmd.exe /c date /t');
   var dateStr = sysDate.substring(0, sysDate.length - 3);
+  var appV = parseInt(app.buildName.substring(0,2));
 
   setXMPdata('creator', userStr);
   setXMPdata('date', dateStr);
@@ -1463,6 +1464,11 @@ saveBtn.onClick = function () {
       // collect files...
       app.executeCommand(2482);
     }
+  }
+
+  if (appV > 22) {
+    executeCommandID('Save a Copy As 22.x...');
+    return;
   }
 };
 
