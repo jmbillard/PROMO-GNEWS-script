@@ -1267,6 +1267,41 @@ typeAnimBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+simpleBoxBtn.onClick = function() {
+
+  var aItem = app.project.activeItem;
+  // error...
+  if (!(aItem instanceof CompItem)) {
+    showTabErr('comp not selected');
+    return;
+  }
+  var selLayers = aItem != null ? aItem.selectedLayers : [];
+  // error...
+  if (selLayers.length == 0) return;
+
+  for (var l = 0; l < selLayers.length; l++) {
+    var layer = selLayers[l];
+    // fx...
+    var effects = layer.property('ADBE Effect Parade');
+    // base effect...
+    base_effects1 = effects.addProperty('ADBE Simple Choker');
+    base_effects1.name = 'base';
+    base_effects1.property('ADBE Simple Choker-0001').setValue(2);
+    compositingOptions_base2 = base_effects1.property('ADBE Effect Built In Params');
+    // margin effect...
+    margin_effects1 = effects.addProperty('ADBE Minimax');
+    margin_effects1.name = 'margin';
+    margin_effects1.property('ADBE Minimax-0002').setValue(20);
+    margin_effects1.property('ADBE Minimax-0003').setValue(6);
+    compositingOptions_margin2 = margin_effects1.property('ADBE Effect Built In Params');
+    // colors effect...
+    colors_effects1 = effects.addProperty('ADBE Tint');
+    colors_effects1.name = 'colors';
+    colors_effects1.property('ADBE Tint-0001').setValue([35/255,30/255,30/255,1]);
+    colors_effects1.property('ADBE Tint-0002').setValue([238/255,1,140/255,1]);
+  }
+};
+
 /*
 
 ---------------------------------------------------------------
