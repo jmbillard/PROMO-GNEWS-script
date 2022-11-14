@@ -210,8 +210,7 @@ nullShpBtn.onClick = function () {
         selName = deletePrefix(selName, prefixArray[p]);
       }
       ctrlLayer.guideLayer = true;
-      ctrlLayer.name = nullPrefix + charPrefix;
-      ctrlLayer.name += selName.replaceSpecialCharacters();
+      ctrlLayer.name = nullPrefix + selName.replaceSpecialCharacters();
 
       if (ctrlLayer.name == selLayer.name) {
         var ctrlName = ctrlLayer.name;
@@ -236,7 +235,7 @@ nullShpBtn.onClick = function () {
       ctrlLayer = aItem.layers.addNull();
     }
     ctrlLayer.guideLayer = true;
-    ctrlLayer.name = nullPrefix + charPrefix;
+    ctrlLayer.name = nullPrefix;
     ctrlLayer.label = 1;
   }
   app.endUndoGroup();
@@ -271,8 +270,7 @@ nullCShpBtn.onClick = function () {
   var ctrlPos = ctrlLayer.property(trmProp).property(posProp);
 
   ctrlLayer.guideLayer = true;
-  ctrlLayer.name = nullPrefix + charPrefix;
-  ctrlLayer.name += 'center';
+  ctrlLayer.name = nullPrefix + 'center';
   ctrlPos.setValue(findCenter(selLayers));
   ctrlLayer.moveBefore(selLayers[lIndex]);
 
@@ -318,7 +316,7 @@ shpAdjBtn.onClick = function () {
     adjLayer.inPoint = selLayer.inPoint;
     adjLayer.outPoint = selLayer.outPoint;
   }
-  adjLayer.name = adjPrefix + charPrefix;
+  adjLayer.name = adjPrefix;
   adjLayer.adjustmentLayer = true;
   adjLayer.label = 5;
 
@@ -1035,7 +1033,7 @@ arrowBtn.onClick = function () {
   headShape.closed = false;
 
   var shpLayer = shpArrow(bodyShape, headShape);
-  addPseudoEffect(shpLayer, 'ARROW', 'arrow', expFx);
+  addPseudoEffect('arrow', expFx);
   shpLayer.name = 'arrow';
   app.endUndoGroup();
 };
@@ -1048,49 +1046,59 @@ counterBtn.onClick = function () {
     return;
   }
   var selLayers = aItem != null ? aItem.selectedLayers : [];
-  var cntLayer;
-  var srcTxt;
-  var aniTxt;
-  var aniTxtProp;
-  var colorTxt;
-  var cnt = counter();
-  var expFx = cnt[0];
-  var expStr1 = cnt[1];
-  var expStr2 = cnt[2];
+  
+  app.beginUndoGroup('counter');
+  
+  /* jshint ignore:start */
+  #include 'tools/counter.jsxinc'; // → UI definition file
+  /* jshint ignore:end */
+  var valArray = [];
 
-  app.beginUndoGroup('counter rig');
+  if (selLayers.length == 0) {
+    var cLayer = aItem.layers.addText();
+    // text document...
+    var text1 = cLayer.property('ADBE Text Properties');
+    var textDoc1 = text1.property('ADBE Text Document');
+    var textDocVal1 = textDoc1.value;
+    textDocVal1.justification = ParagraphJustification.LEFT_JUSTIFY;
+    textDocVal1.text = '0';
+    // text content...
+    textDoc1.setValue(textDocVal1);
+    selLayers.push(cLayer);
+  }
 
-  if (selLayers.length > 0) {
-    for (i = 0; i < selLayers.length; i++) {
-      if (selLayers[i] instanceof TextLayer) {
-        cntLayer = selLayers[i];
-        srcTxt = cntLayer.property(txtProp).property(txtDoc);
-        aniTxt = cntLayer.property(txtProp).property('ADBE Text Animators');
-        aniTxt = aniTxt.addProperty('ADBE Text Animator');
-        aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
-        colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
+  for (var l = 0; l < selLayers.length; l++) {
+    // layer...
+    var aLayer = selLayers[l];
 
-        aniTxt.name = 'counter color';
-        addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
-        srcTxt.expression = expStr1;
-        colorTxt.expression = expStr2;
-      }
-    }
-  } else {
-    cntLayer = aItem.layers.addText();
-    srcTxt = cntLayer.property(txtProp).property(txtDoc);
+    if (!(aLayer instanceof TextLayer)) continue;
+    // text document...
+    var text = aLayer.property('ADBE Text Properties');
+    var textDoc = text.property('ADBE Text Document');
+    var textDocVal = textDoc.value;
 
-    srcTxt.setValue('counter');
-    cntLayer.name = 'txt_counter';
-    aniTxt = cntLayer.property(txtProp).property('ADBE Text Animators');
-    aniTxt = aniTxt.addProperty('ADBE Text Animator');
-    aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
-    colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
+    valArray.push(textDocVal);
+  }
+  // the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
+  addPseudoEffect('counter',counter);
 
-    aniTxt.name = 'counter color';
-    addPseudoEffect(cntLayer, 'COUNTER', 'counter', expFx);
-    srcTxt.expression = expStr1;
-    colorTxt.expression = expStr2;
+  // textArray index... the textArray length may not match selLayers length... 
+  var t = 0;
+  for (var n = 0; n < selLayers.length; n++) {
+    // layer...
+    var nLayer = selLayers[n];
+
+    if (!(nLayer instanceof TextLayer)) continue;
+    // text document...
+    var text2 = nLayer.property('ADBE Text Properties');
+    var textDoc2 = text2.property('ADBE Text Document');
+    var textDocVal2 = textDoc2.value;
+
+    textDoc2.setValue(valArray[t]);
+
+    selLayers[n].name = txtPrefix + 'counter ' + (valArray.length - t); // → txt_counter 1 ... txtArray.length
+    // textArray index increment...
+    t += 1;
   }
   app.endUndoGroup();
 };
@@ -1120,7 +1128,7 @@ wigBtn.onClick = function () {
     wLayer = selLayers[i];
     wProp = wLayer.property(trmProp).property('ADBE Position');
 
-    addPseudoEffect(wLayer, 'WIG', 'wig', expFx);
+    addPseudoEffect('wig', expFx);
     wProp.expression = expStr;
   }
   app.endUndoGroup();
@@ -1175,7 +1183,7 @@ ikBtn.onClick = function () {
   zeroLayer.shy = true;
 
   ctrlLayer.moveBefore(bone3);
-  ctrlLayer.name = ctrlPrefix + charPrefix + bone3.name;
+  ctrlLayer.name = ctrlPrefix + bone3.name;
   ctrlLayer.guideLayer = true;
   ctrlLayer.label = 1;
   ctrlLayer.parent = bone3.parent;
@@ -1185,7 +1193,7 @@ ikBtn.onClick = function () {
 
   bone3.parent = null;
 
-  addPseudoEffect(ctrlLayer, 'SIMPLE_IK', 'simple IK', expFx);
+  addPseudoEffect('simple IK', expFx);
   bone1.property(trmProp).property('ADBE Rotate Z').expression = expStr1;
   bone2.property(trmProp).property('ADBE Rotate Z').expression = expStr2;
   bone3.property(trmProp).property('ADBE Position').expression = expStr3;
@@ -1205,65 +1213,63 @@ typeAnimBtn.onClick = function () {
     showTabErr('comp not selected');
     return;
   }
-  var cntLayer;
-  var expFx = typewriter()[0];
-  var exp1 = typewriter()[1];
-  var exp2 = typewriter()[2];
-  var exp3 = typewriter()[3];
-  var exp4 = typewriter()[4];
-  var exp5 = typewriter()[5];
-
+  var selLayers = aItem != null ? aItem.selectedLayers : [];
+  
   app.beginUndoGroup('typewriter');
-  // text layer creation...
-  cntLayer = aItem.layers.addText();
-  // transformations...
-  var transform = cntLayer.property('ADBE Transform Group');
-  transform.property('ADBE Position').setValue([200, 560, 0]);
-  // text document...
-  var text = cntLayer.property('ADBE Text Properties');
-  var textDoc = text.property('ADBE Text Document');
-  var textDocVal = textDoc.value;
-  //textDocVal.font = 'Degular Display Gnews-Medium';
-  //textDocVal.fontSize = 120;
-  //textDocVal.applyStroke = false;
-  //textDocVal.applyFill = true;
-  //textDocVal.strokeOverFill = true;
-  //textDocVal.tracking = 35;
-  //textDocVal.leading = 120;
-  textDocVal.justification = ParagraphJustification.LEFT_JUSTIFY;
-  textDocVal.text = 'Tarja bla bla bla...';
-  // text content...
-  textDoc.setValue(textDocVal);
-  textDoc.expression = exp1;
+  
+  /* jshint ignore:start */
+  #include 'tools/typewriter.jsxinc'; // → UI definition file
+  /* jshint ignore:end */
+  var txtArray = [];
 
-  // text animator...
-  var aniTxt = text.property('ADBE Text Animators');
-  aniTxt = aniTxt.addProperty('ADBE Text Animator');
-  var aniTxtProp = aniTxt.property('ADBE Text Animator Properties');
-  var colorTxt = aniTxtProp.addProperty('ADBE Text Fill Color');
-  colorTxt.expression = exp2;
-  aniTxt.name = 'Text Color';
+  if (selLayers.length == 0) {
+    var cLayer = aItem.layers.addText();
+    // text document...
+    var text1 = cLayer.property('ADBE Text Properties');
+    var textDoc1 = text1.property('ADBE Text Document');
+    var textDocVal1 = textDoc1.value;
+    textDocVal1.justification = ParagraphJustification.LEFT_JUSTIFY;
+    textDocVal1.text = 'Lettering automático...';
+    // text content...
+    textDoc1.setValue(textDocVal1);
+    selLayers.push(cLayer);
+  }
 
-  // masks...
-  var masks = cntLayer.property('ADBE Mask Parade');
-  var mask1 = masks.addProperty('ADBE Mask Atom');
-  mask1.property('ADBE Mask Shape').expression = exp3;
-  mask1.name = 'base';
-  // fx...
-  var effects = cntLayer.property('ADBE Effect Parade');
-  var base = effects.addProperty('ADBE Solid Composite');
-  base.property('ADBE Solid Composite-0002').expression = exp4;
-  var compOp = base.property('ADBE Effect Built In Params');
-  var masksCompOp = compOp.property('ADBE Effect Mask Parade');
-  masksCompOp = masksCompOp.addProperty('ADBE Effect Mask');
-  masksCompOp.property('ADBE Effect Path Stream Ref').setValue(1);
-  compOp.property('ADBE Effect Mask Opacity').expression = exp5;
-  base.name = 'base';
-  // pseudo effect control...
-  addPseudoEffect(cntLayer, 'TYPEWRITER', 'typewriter', expFx);
-  // layer name...
-  cntLayer.name = 'txt_tarja';
+  for (var l = 0; l < selLayers.length; l++) {
+    // layer...
+    var aLayer = selLayers[l];
 
+    if (!(aLayer instanceof TextLayer)) continue;
+    // text document...
+    var text = aLayer.property('ADBE Text Properties');
+    var textDoc = text.property('ADBE Text Document');
+    var textDocTxt = textDoc.value.toString();
+
+    txtArray.push(textDocTxt);
+  }
+  // the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
+  addPseudoEffect('typewriter',typewriter);
+
+  // textArray index... the textArray length may not match selLayers length... 
+  var t = 0;
+  for (var n = 0; n < selLayers.length; n++) {
+    // layer...
+    var nLayer = selLayers[n];
+
+    if (!(nLayer instanceof TextLayer)) continue;
+    // text document...
+    var text2 = nLayer.property('ADBE Text Properties');
+    var textDoc2 = text2.property('ADBE Text Document');
+    var textDocVal2 = textDoc2.value;
+
+    textDocVal2.justification = ParagraphJustification.LEFT_JUSTIFY;
+    textDocVal2.text = txtArray[t];
+    textDoc2.setValue(textDocVal2);
+
+    selLayers[n].name = txtPrefix + 'lettering ' + (txtArray.length - t); // → txt_lettering 1 ... txtArray.length
+    // textArray index increment...
+    t += 1;
+  }
   app.endUndoGroup();
 };
 
@@ -1340,7 +1346,7 @@ insertUserIdBtn.onClick = function () {
   }
   for (c = 0; c < itemArray.length; c++) {
     var qItem = itemArray[c];
-    qItem.name = qItem.name.replace(compPrefix + charPrefix, '');
+    qItem.name = qItem.name.replace(compPrefix, '');
     qItem.name = qItem.name.replace(/^.*\w{3}\d{6}[\s\_]*/, '');
     qItem.name = qItem.name.replaceSpecialCharacters();
     qItem.name = baseName + ' ' + qItem.name;
