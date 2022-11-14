@@ -33,5 +33,3 @@ function shp_arrow() {
 
 	return layer;
 }
-
-shp_arrow();

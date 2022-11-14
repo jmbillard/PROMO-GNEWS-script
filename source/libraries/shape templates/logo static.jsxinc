@@ -1,4 +1,4 @@
-function marca_gnews() {
+function shpMarcaGnewsStatic() {
 
 	// expressions variable...
 	var exp;
@@ -160,5 +160,3 @@ function marca_gnews() {
 
 	return layer;
 }
-
-marca_gnews();

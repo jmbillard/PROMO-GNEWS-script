@@ -1,5 +1,5 @@
 // GNEWS logo animation 3s...
-function logoShp() {
+function shpMarcaGnewsAnimation3() {
 
 	// expressions variable...
 	var exp;
@@ -1564,5 +1564,3 @@ function logoShp() {
 
 	return layer;
 }
-
-logoShp();

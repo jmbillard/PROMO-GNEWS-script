@@ -40,11 +40,6 @@ guideBtn.onClick = function () {
   openTab();
 };
 
-// layerBtn.onClick = function () {
-//   currentGrp = layersGrp;
-//   openTab();
-// };
-
 toolBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = toolsGrp;
@@ -340,7 +335,7 @@ curBtn.onClick = function () {
   app.beginUndoGroup('curves');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -358,7 +353,7 @@ levBtn.onClick = function () {
   app.beginUndoGroup('levels');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -376,7 +371,7 @@ lumBtn.onClick = function () {
   app.beginUndoGroup('lumetri color');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -394,7 +389,7 @@ gaublurBtn.onClick = function () {
   app.beginUndoGroup('gaussian blur');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -412,7 +407,7 @@ comblurBtn.onClick = function () {
   app.beginUndoGroup('compound blur');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -430,7 +425,7 @@ lensblurBtn.onClick = function () {
   app.beginUndoGroup('lens blur');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -448,7 +443,7 @@ fillBtn.onClick = function () {
   app.beginUndoGroup('fill');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
     effect.property(3).setValue(randomColor()); // color
   }
   app.endUndoGroup();
@@ -467,7 +462,7 @@ fracBtn.onClick = function () {
   app.beginUndoGroup('fractal noise');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -485,7 +480,7 @@ grainBtn.onClick = function () {
   app.beginUndoGroup('add grain');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
   }
   app.endUndoGroup();
 };
@@ -503,7 +498,7 @@ glassBtn.onClick = function () {
   app.beginUndoGroup('3d glasses');
 
   for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property(fxProp).addProperty(fxName);
+    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
     effect.property(1).setValue(selLayers[i].index); // left view
     effect.property(2).setValue(selLayers[i].index); // right view
     effect.property(7).setValue(12); // 3d view
@@ -680,9 +675,9 @@ arrowOnAirBtn.onClick = function () {
     return;
   }
   app.beginUndoGroup('logo GNEWS');
-  /* jshint ignore:start */
-  #include 'shape templates/arrow on-air.jsxinc'; // → UI definition file
-  /* jshint ignore:end */
+
+  shp_arrow();
+
   app.endUndoGroup();
 };
 
@@ -694,9 +689,9 @@ logoStaticBtn.onClick = function () {
     return;
   }
   app.beginUndoGroup('logo GNEWS');
-  /* jshint ignore:start */
-  #include 'shape templates/logo static.jsxinc'; // → UI definition file
-  /* jshint ignore:end */
+
+  shpMarcaGnewsStatic();
+
   app.endUndoGroup();
 };
 
@@ -709,9 +704,12 @@ logoAnim3sBtn.onClick = function () {
     return;
   }
   app.beginUndoGroup('logo GNEWS 3s');
-  /* jshint ignore:start */
-  #include 'shape templates/logo animation 3s.jsxinc'; // → UI definition file
-  /* jshint ignore:end */
+
+  var layer = app.project.activeItem.layers.addShape();
+  layer.startTime = aItem.time;
+  layer.name = 'marca_gnews 3s';
+  
+  addPseudoEffect('marca_3s',toolMarca3s);
   app.endUndoGroup();
 };
 
@@ -1046,13 +1044,9 @@ counterBtn.onClick = function () {
     return;
   }
   var selLayers = aItem != null ? aItem.selectedLayers : [];
+  var valArray = [];
   
   app.beginUndoGroup('counter');
-  
-  /* jshint ignore:start */
-  #include 'tools/counter.jsxinc'; // → UI definition file
-  /* jshint ignore:end */
-  var valArray = [];
 
   if (selLayers.length == 0) {
     var cLayer = aItem.layers.addText();
@@ -1080,7 +1074,7 @@ counterBtn.onClick = function () {
     valArray.push(textDocVal);
   }
   // the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
-  addPseudoEffect('counter',counter);
+  addPseudoEffect('counter',toolCounter);
 
   // textArray index... the textArray length may not match selLayers length... 
   var t = 0;
@@ -1200,7 +1194,7 @@ ikBtn.onClick = function () {
   bone3.property(trmProp).property('ADBE Rotate Z').expression = expStr4;
 
   if (bone1.property(trmProp).property('ADBE Rotate Z').value != bone1Rot) {
-    ctrlLayer.property(fxProp).property('simple IK').property('flip orientation').setValue(true);
+    ctrlLayer.property('ADBE Effect Parade').property('simple IK').property('flip orientation').setValue(true);
   }
 
   app.endUndoGroup();
@@ -1214,41 +1208,23 @@ typeAnimBtn.onClick = function () {
     return;
   }
   var selLayers = aItem != null ? aItem.selectedLayers : [];
+  var txtArray = [];
   
   app.beginUndoGroup('typewriter');
-  
-  /* jshint ignore:start */
-  #include 'tools/typewriter.jsxinc'; // → UI definition file
-  /* jshint ignore:end */
-  var txtArray = [];
 
   if (selLayers.length == 0) {
-    var cLayer = aItem.layers.addText();
-    // text document...
-    var text1 = cLayer.property('ADBE Text Properties');
-    var textDoc1 = text1.property('ADBE Text Document');
-    var textDocVal1 = textDoc1.value;
-    textDocVal1.justification = ParagraphJustification.LEFT_JUSTIFY;
-    textDocVal1.text = 'Lettering automático...';
-    // text content...
-    textDoc1.setValue(textDocVal1);
+    var cLayer = aItem.layers.addText('Lettering automático...');
     selLayers.push(cLayer);
   }
 
   for (var l = 0; l < selLayers.length; l++) {
-    // layer...
-    var aLayer = selLayers[l];
-
-    if (!(aLayer instanceof TextLayer)) continue;
-    // text document...
-    var text = aLayer.property('ADBE Text Properties');
-    var textDoc = text.property('ADBE Text Document');
-    var textDocTxt = textDoc.value.toString();
-
-    txtArray.push(textDocTxt);
+    var content = textContent(selLayers[l]);
+    
+    if (content == '') continue;
+    txtArray.push(content);
   }
   // the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
-  addPseudoEffect('typewriter',typewriter);
+  addPseudoEffect('typewriter',toolTypewriter);
 
   // textArray index... the textArray length may not match selLayers length... 
   var t = 0;
@@ -1273,6 +1249,54 @@ typeAnimBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+wordsBtn.onClick = function () {
+  var aItem = app.project.activeItem;
+  // error...
+  if (!(aItem instanceof CompItem)) {
+    showTabErr('comp not selected');
+    return;
+  }
+  var selLayers = aItem != null ? aItem.selectedLayers : [];
+  var txtArray = [];
+  
+  app.beginUndoGroup('words');
+
+  if (selLayers.length == 0) {
+    var cLayer = aItem.layers.addText('Lettering automático...');
+    selLayers.push(cLayer);
+  }
+
+  for (var l = 0; l < selLayers.length; l++) {
+    var content = textContent(selLayers[l]);
+    
+    if (content == '') continue;
+    txtArray.push(content);
+  }
+  // the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
+  addPseudoEffect('words',toolWords);
+
+  // textArray index... the textArray length may not match selLayers length... 
+  var t = 0;
+  for (var n = 0; n < selLayers.length; n++) {
+    // layer...
+    var nLayer = selLayers[n];
+
+    if (!(nLayer instanceof TextLayer)) continue;
+    // text document...
+    var text2 = nLayer.property('ADBE Text Properties');
+    var textDoc2 = text2.property('ADBE Text Document');
+    var textDocVal2 = textDoc2.value;
+
+    textDocVal2.text = txtArray[t];
+    textDoc2.setValue(textDocVal2);
+
+    selLayers[n].name = txtPrefix + 'lettering ' + (txtArray.length - t); // → txt_lettering 1 ... txtArray.length
+    // textArray index increment...
+    t += 1;
+  }
+  app.endUndoGroup();
+};
+
 simpleBoxBtn.onClick = function() {
 
   var aItem = app.project.activeItem;
@@ -1282,8 +1306,11 @@ simpleBoxBtn.onClick = function() {
     return;
   }
   var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) return;
+
+  if (selLayers.length == 0) {
+    var cLayer = aItem.layers.addText('Tarja simples...');
+    selLayers.push(cLayer);
+  }
 
   for (var l = 0; l < selLayers.length; l++) {
     var layer = selLayers[l];
@@ -1293,13 +1320,11 @@ simpleBoxBtn.onClick = function() {
     base_effects1 = effects.addProperty('ADBE Simple Choker');
     base_effects1.name = 'base';
     base_effects1.property('ADBE Simple Choker-0001').setValue(2);
-    compositingOptions_base2 = base_effects1.property('ADBE Effect Built In Params');
     // margin effect...
     margin_effects1 = effects.addProperty('ADBE Minimax');
     margin_effects1.name = 'margin';
     margin_effects1.property('ADBE Minimax-0002').setValue(20);
     margin_effects1.property('ADBE Minimax-0003').setValue(6);
-    compositingOptions_margin2 = margin_effects1.property('ADBE Effect Built In Params');
     // colors effect...
     colors_effects1 = effects.addProperty('ADBE Tint');
     colors_effects1.name = 'colors';

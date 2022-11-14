@@ -26,34 +26,17 @@ if ( ExternalObject.AdobeXMPScript == undefined ) {
     ExternalObject.AdobeXMPScript = new ExternalObject( 'lib:AdobeXMPScript');
 }
 /* jshint ignore:start */
-#include 'source/libraries/JSON lib.jsxinc'; // JSON definition file...
-#include 'source/libraries/PROT lib.jsxinc'; // prototype functions definition file...
-#include 'source/libraries/ICON lib.jsxinc'; // images encoded as binary...
+#include 'source/PROMO GNEWS globals.jsxinc'; // global variables...
 /* jshint ignore:end */
 
-// github main repo...
-var repoURL = 'https://github.com/jmbillard/PROMO-GNEWS-script';
-var codeURL = 'https://raw.githubusercontent.com/jmbillard/PROMO-GNEWS-script/main/';
-
-var codeURLArray = [
-  codeURL + 'release/PROMO%20GNEWS.jsxbin'//, // → .jsxbin binary encoded release...
-];
-
 function PROMO_GNEWS_UTL(thisObj) {
-
-  // current script version...
-  var vStr = 'v 1.9 beta 4';
-
   // app script network access preferences...
   var prefSection = 'Main Pref Section';
   var prefName = 'Pref_SCRIPTING_FILE_NETWORK_SECURITY';
   var netConfigName = '"Allow Scripts to Write Files and Access Network"';
-  
-  // preferences folder path...
-  var scriptPreferencesPath = Folder.userData.toString() + '/PROMO GNEWS script'; // → ~/AppData/Roaming/PROMO GNEWS script
 
   /* jshint ignore:start */
-  #include 'source/PROMO GNEWS ui.jsxinc'; // → UI definition file
+  #include 'source/ui/PROMO GNEWS main ui.jsxinc'; // → UI definition file
   /* jshint ignore:end */
 
   // gets the current value for the network permission preference...
