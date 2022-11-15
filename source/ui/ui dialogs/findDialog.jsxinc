@@ -36,6 +36,8 @@ function findDialog() {
 
   var optCkb1 = optGrp1.add('checkbox');
   optCkb1.helpTip = optTxt1.helpTip;
+  optCkb1.value = true;
+  optCkb1.enabled = false;
 
   // =======
   var optGrp2 = optMainGrp.add('group');
@@ -47,6 +49,8 @@ function findDialog() {
 
   var optCkb2 = optGrp2.add('checkbox');
   optCkb2.helpTip = optTxt2.helpTip;
+  optCkb2.value = false;
+  optCkb2.enabled = false;
 
   // =============
   var findBtn = searchMainGrp.add('iconbutton', [0, 0, 80, 60], findIcon, { style: 'toolbutton' });
@@ -59,17 +63,52 @@ function findDialog() {
   var resultGrp = w.add('group');
   resultGrp.orientation = 'column';
 
-  var resultTxt = resultGrp.add('statictext', undefined, 'searching...');
+  var resultTxt = resultGrp.add('statictext', undefined, undefined);
+  resultTxt.characters = 10;
 
   var findPb = resultGrp.add('progressbar', [0, 0, 315, 5], undefined);
   findPb.value = 100;
 
   // ==========
   var resultTree = w.add('treeview', [0, 0, 320, 150]);
+  var compArray = [];
 
   findBtn.onClick = function () {
-    // alert(wip);
-    buildFindTree(resultTree);
+    resultTxt.text = 'searching...';
+    compArray = buildFindTree(resultTree,findEdTxt.text,findPb);
+    expandNodes(resultTree);
+    resultTxt.text = 'complete...';
+  };
+
+  resultTree.onChange = function () {
+
+    var comp;
+    var t;
+    if (resultTree.selection.type == 'node') {
+      comp = compArray[resultTree.selection.index];
+      t = comp.time;
+    }
+    if (resultTree.selection.type == 'item') {
+      comp = compArray[resultTree.selection.parent.index];
+      var i = resultTree.selection
+        .toString()
+        .split(' | ')[0];
+      
+      for (var l = 1; l <= comp.numLayers; l++) {
+        var aLayer = comp.layer(l);
+
+        if (l == parseInt(i)) {
+          t = (aLayer.outPoint - aLayer.inPoint) / 2 + aLayer.inPoint;
+          aLayer.shy = false;
+
+        } else {
+          aLayer.shy = true;
+        }
+      }
+      comp.hideShyLayers = true;
+    }
+    comp.openInViewer();
+    comp.time = t;
   };
 
   w.show();
