@@ -1454,18 +1454,18 @@ saveBtn.onClick = function () {
 
   if (saveFolder != null) {
     var savePath = saveFolder.fullName + '/';
-    var projFolder = saveFolder;
-    var projPath = savePath;
     var projFullName = projId + ' ' + projName;
-    var projFile = new File(projPath + projFullName);
+    var projFile = new File(savePath + projFullName);
     app.project.save(projFile);
 
     if (collectTogBtn.value) {
       // collect files...
       app.executeCommand(2482);
+
+    } else {
+      openFolder(saveFolder);
     }
   }
-
   if (appV > 22) {
     executeCommandID('Save a Copy As 22.x...');
     return;
