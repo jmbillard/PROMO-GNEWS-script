@@ -1,0 +1,180 @@
+/*
+
+---------------------------------------------------------------
+> ✌️ app tab events
+---------------------------------------------------------------
+
+*/
+
+importAetBtn.onClick = function () {
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  // github main repo...
+  var url = repoURL + '/raw/main/downloads/templates.zip';
+
+  var downPath = scriptPreferencesPath + '/temp';
+  var downFolder = new Folder(downPath);
+  var zipPath = downPath + '/templates.zip';
+  var templatesPath = scriptPreferencesPath + '/templates';
+  var templatesFolder = new Folder(templatesPath);
+
+  if (!downFolder.exists) {
+    downFolder.create();
+  }
+  if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
+    getURLContent([url], [downPath]);
+    unzipContent(zipPath, templatesPath);
+  }
+  templateDialog(templatesPath);
+};
+
+zipTemplatesBtn.onClick = function () {
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  var templatesPath = scriptPreferencesPath + '/templates';
+  var templatesFolder = new Folder(templatesPath);
+  // dev folder path '[user name]/PROMO-GNEWS-script'...
+  var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
+  var devFolder = new Folder(destPath);
+
+  if (templatesFolder.exists) {
+    var templatesStr = templatesFolder.getFiles().toString();
+    // replaces '[' at the start and ']' at the end...
+    templatesStr = templatesStr.replace(/^\[|\]$/, '');
+    templatesStr = templatesStr.replace(/\,/g, "', '");
+    templatesStr = decodeURI(templatesStr);
+
+    if (!devFolder.exists) {
+      // alternative path 1 'desktop'...
+      destPath = Folder.desktop.toString();
+    }
+
+    var zipPath = destPath + '/templates.zip';
+    zipContent(templatesStr, zipPath);
+    openFolder(destPath);
+  }
+};
+
+copyAMEPresetsBtn.addEventListener('click', function (c) {
+  if (c.button == 2) {
+    // error...
+    if (!netAccess()) {
+      showTabErr(netConfigName + ' not checked');
+      return;
+    }
+    var templatesAMEPath = scriptPreferencesPath + '/AME presets';
+    var templatesAMEFolder = new Folder(templatesAMEPath);
+
+    if (!templatesAMEFolder.exists) {
+      templatesAMEFolder.create();
+    }
+    openFolder(templatesAMEPath);
+  }
+});
+
+copyAMEPresetsBtn.onClick = function () {
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  var url = repoURL + '/raw/main/downloads/AME.zip';
+
+  var downPath = scriptPreferencesPath + '/temp';
+  var downFolder = new Folder(downPath);
+  var amePath = '~/Documents/Adobe/Adobe Media Encoder';
+  var ameFolder = new Folder(amePath);
+  var vFolders = ameFolder.getFiles();
+
+  var zipPath = downPath + '/AME.zip';
+  var unzipPath = scriptPreferencesPath + '/AME presets';
+
+  if (!downFolder.exists) {
+    downFolder.create();
+  }
+  getURLContent([url], [downPath]);
+  unzipContent(zipPath, unzipPath);
+
+  for (var i = 0; i < vFolders.length; i++) {
+    var presetsAMEPath = decodeURI(vFolders[i]).toString() + '/Presets';
+    var presetsAMEFolder = new Folder(presetsAMEPath);
+
+    if (presetsAMEFolder.exists) {
+      try {
+        copyFolderContent(unzipPath, presetsAMEPath);
+      } catch (error) {}
+    }
+  }
+  removeFolder(downFolder); // → delete temp folder
+};
+
+zipFontsBtn.onClick = function () {
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  var fontsPath = scriptPreferencesPath + '/fonts';
+  var fontsFolder = new Folder(fontsPath);
+  // dev folder path '[user name]/PROMO-GNEWS-script'...
+  var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
+  var devFolder = new Folder(destPath);
+
+  if (fontsFolder.exists) {
+    var fontsStr = fontsFolder.getFiles().toString();
+    // replaces '[' at the start and ']' at the end...
+    fontsStr = fontsStr.replace(/^\[|\]$/, '');
+    fontsStr = fontsStr.replace(/\,/g, "', '");
+    fontsStr = decodeURI(fontsStr);
+
+    if (!devFolder.exists) {
+      // alternative path 1 'desktop'...
+      destPath = Folder.desktop.toString();
+    }
+
+    var zipPath = destPath + '/fonts.zip';
+    zipContent(fontsStr, zipPath);
+    openFolder(destPath);
+  }
+};
+
+installFontsBtn.onClick = function () {
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  // github main repo...
+  var url = repoURL + '/raw/main/downloads/fonts.zip';
+
+  var downPath = scriptPreferencesPath + '/temp';
+  var downFolder = new Folder(downPath);
+  var zipPath = downPath + '/fonts.zip';
+  var fontsPath = scriptPreferencesPath + '/fonts';
+  var fontsFolder = new Folder(fontsPath);
+
+  if (!downFolder.exists) {
+    downFolder.create();
+  }
+  if (!fontsFolder.exists || fontsFolder.getFiles().length == 0) {
+    getURLContent([url], [downPath]);
+    unzipContent(zipPath, fontsPath);
+  }
+  fontsDialog();
+};
+
+endPagePresetBtn.onClick = function () {
+  currentGrp = menuGrp;
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  endPagePresetDialog();
+};
