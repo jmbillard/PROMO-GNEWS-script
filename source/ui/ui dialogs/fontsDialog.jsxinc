@@ -12,12 +12,6 @@
 
 // install fonts UI...
 function fontsDialog() {
-  var fontsPath = scriptPreferencesPath + '/fonts';
-  var fontsFolder = new Folder(fontsPath);
-
-  var downPath = scriptPreferencesPath + '/temp';
-  var downFolder = new Folder(downPath);
-
   // UI definition...
   var w = new Window('dialog', 'font options...');
   // treeview...
@@ -83,20 +77,34 @@ function fontsDialog() {
     if (!netAccess()) {
       alert('no network...  Σ(っ °Д °;)っ');
       return;
-    }
-    removeFolder(fontsFolder); // → delete previous fonts folder
-
+    }    
     var url = repoURL + '/raw/main/downloads/fonts.zip';
     var zipPath = downPath + '/fonts.zip';
+    var fontsLocalFolder = new Folder(fontsLocalPath);
+    
+    removeFolder(fontsLocalFolder); // → delete previous fonts folder
+    fontsLocalFolder.create(); // → delete previous templates folder
 
     if (!downFolder.exists) {
       downFolder.create();
     }
     getURLContent([url], [downPath]);
-    unzipContent(zipPath, fontsPath);
+    
+    unzipContent(zipPath, fontsLocalPath);
+    removeFolder(downFolder); // → delete temp folder
+
+    if (gNet) {
+      removeFolder(fontsFolder); // → delete previous templates folder
+      fontsFolder.create(); // → delete previous templates folder
+
+      alert('copy the fonts to the empty folder\nand press the refresh button!');
+      // wait 3 seconds...
+      $.sleep(3000);
+      openFolder(fontsLocalPath);
+      openFolder(fontsPath);
+    }
     buildFontTree(fontsFolder, tree);
     expandNodes(tree);
-    removeFolder(downFolder); // → delete temp folder
   };
 
   refreshBtn.onClick = function () {

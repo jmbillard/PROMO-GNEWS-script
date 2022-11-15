@@ -12,11 +12,6 @@
 
 // import templates UI...
 function templateDialog() {
-  var templatesPath = scriptPreferencesPath + '/templates'; // → '~/AppData/Roaming/PROMO GNEWS script/templates'
-  var downPath = scriptPreferencesPath + '/temp'; // → '~/AppData/Roaming/PROMO GNEWS script/temp'
-  var templatesFolder = new Folder(templatesPath); // → templates folder object
-  var downFolder = new Folder(downPath); // → download folder object
-
   var wWidth; // window width without image preview...
   var oWidth; // window width with image preview...
   var previewScale = 0.25; // preview image scale factor...
@@ -161,21 +156,35 @@ function templateDialog() {
       alert('no network...  Σ(っ °Д °;)っ');
       return;
     }
-    removeFolder(templatesFolder); // → delete previous templates folder
-
     var url = repoURL + '/raw/main/downloads/templates.zip';
     var zipPath = downPath + '/templates.zip'; // → ~AppData\Roaming\PROMO GNEWS script\temp\templates.zip
+    var templatesLocalFolder = new Folder(templatesLocalPath);
+    
+    removeFolder(templatesLocalFolder); // → delete previous templates folder
+    templatesLocalFolder.create(); // → delete previous templates folder
 
     if (!downFolder.exists) {
       // downloads folder does not exist...
       downFolder.create(); // → create temp folder
     }
-    templatesFolder.create(); // → create new templates folder
     getURLContent([url], [downPath]); // → download content
-    unzipContent(zipPath, templatesPath); // → unzip file
+  
+    unzipContent(zipPath, templatesLocalPath); // → unzip file    
+    removeFolder(downFolder); // → delete temp folder
+  
+    if (gNet) {
+      removeFolder(templatesFolder); // → delete previous templates folder
+      templatesFolder.create(); // → delete previous templates folder
+
+      alert('copy the templates to the empty folder\nand press the refresh button!');
+      
+      // wait 3 seconds...
+      $.sleep(3000);
+      openFolder(templatesLocalPath);
+      openFolder(templatesPath);
+    }
     buildTree(templatesFolder, tree, fileFilter); // → update tree...
     expandNodes(tree); // expand all tree folder nodes...
-    removeFolder(downFolder); // → delete temp folder
   };
 
   refreshBtn.onClick = function () {

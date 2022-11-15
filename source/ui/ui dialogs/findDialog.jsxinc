@@ -10,66 +10,67 @@
 //  jshint -W061
 //  jshint -W043
 function findDialog() {
-    var w = new Window('palette','find...'); 
+  var w = new Window('palette', 'find...');
 
-    // =============
-    var searchMainGrp = w.add('group'); 
+  // =============
+  var searchMainGrp = w.add('group');
 
-    // ========
-    var inputGrp = searchMainGrp.add('group'); 
-        inputGrp.orientation = 'column'; 
-        inputGrp.alignChildren = ['center','center']; 
+  // ========
+  var inputGrp = searchMainGrp.add('group');
+  inputGrp.orientation = 'column';
+  inputGrp.alignChildren = ['center', 'center'];
 
-    var findEdTxt = inputGrp.add('edittext', [0,0,220,30]); 
+  var findEdTxt = inputGrp.add('edittext', [0, 0, 220, 30]);
 
-    // ==========
-    var optMainGrp = inputGrp.add('group'); 
-        optMainGrp.spacing = 20; 
+  // ==========
+  var optMainGrp = inputGrp.add('group');
+  optMainGrp.spacing = 20;
 
-    // =======
-    var optGrp1 = optMainGrp.add('group'); 
-        optGrp1.alignChildren = ['center','top']; 
-        optGrp1.spacing = 4; 
+  // =======
+  var optGrp1 = optMainGrp.add('group');
+  optGrp1.alignChildren = ['center', 'top'];
+  optGrp1.spacing = 4;
 
-    var optTxt1 = optGrp1.add('statictext', undefined, 'full project'); 
-        optTxt1.helpTip = 'search all project compositions...'; 
+  var optTxt1 = optGrp1.add('statictext', undefined, 'full project');
+  optTxt1.helpTip = 'search all project compositions...';
 
-    var optCkb1 = optGrp1.add('checkbox'); 
-        optCkb1.helpTip = optTxt1.helpTip; 
+  var optCkb1 = optGrp1.add('checkbox');
+  optCkb1.helpTip = optTxt1.helpTip;
 
-    // =======
-    var optGrp2 = optMainGrp.add('group'); 
-        optGrp2.alignChildren = ['center','top']; 
-        optGrp2.spacing = 4;
+  // =======
+  var optGrp2 = optMainGrp.add('group');
+  optGrp2.alignChildren = ['center', 'top'];
+  optGrp2.spacing = 4;
 
-    var optTxt2 = optGrp2.add('statictext',undefined,'layer name'); 
-        optTxt2.helpTip = 'search layer names';
+  var optTxt2 = optGrp2.add('statictext', undefined, 'layer name');
+  optTxt2.helpTip = 'search layer names';
 
-    var optCkb2 = optGrp2.add('checkbox'); 
-        optCkb2.helpTip = optTxt2.helpTip; 
+  var optCkb2 = optGrp2.add('checkbox');
+  optCkb2.helpTip = optTxt2.helpTip;
 
-    // =============
-    var findBtn = searchMainGrp.add('iconbutton', [0,0,80,60], findIcon, {style: 'toolbutton'}); 
-        findBtn.helpTip = 'find';
+  // =============
+  var findBtn = searchMainGrp.add('iconbutton', [0, 0, 80, 60], findIcon, { style: 'toolbutton' });
+  findBtn.helpTip = 'find';
 
-    var divider = w.add('panel', undefined, undefined); 
-        divider.alignment = 'fill'; 
+  var divider = w.add('panel', undefined, undefined);
+  divider.alignment = 'fill';
 
-    // =========
-    var resultGrp = w.add('group'); 
-        resultGrp.orientation = 'column'; 
+  // =========
+  var resultGrp = w.add('group');
+  resultGrp.orientation = 'column';
 
-    var resultTxt = resultGrp.add('statictext', undefined, 'searching...');
+  var resultTxt = resultGrp.add('statictext', undefined, 'searching...');
 
-    var findPb = resultGrp.add('progressbar', [0,0,315,5], undefined); 
-        findPb.value = 100; 
+  var findPb = resultGrp.add('progressbar', [0, 0, 315, 5], undefined);
+  findPb.value = 100;
 
-    // ==========
-    var resultTree = w.add('treeview', [0,0,320,150]);
+  // ==========
+  var resultTree = w.add('treeview', [0, 0, 320, 150]);
 
-    findBtn.onClick = function () {
-        alert(wip);
-    };
+  findBtn.onClick = function () {
+    // alert(wip);
+    buildFindTree(resultTree);
+  };
 
-    w.show();
+  w.show();
 }

@@ -86,6 +86,57 @@ linksBtn.onClick = function () {
   openTab();
 };
 
+/*
+
+---------------------------------------------------------------
+> import templates...
+---------------------------------------------------------------
+
+*/
+
+importAetBtn.onClick = function () {
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  // github main repo...
+  var url = repoURL + '/raw/main/downloads/templates.zip';
+  var zipPath = downPath + '/templates.zip';
+
+  if (!downFolder.exists) {
+    downFolder.create();
+  }
+  if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
+    removeFolder(templatesLocalFolder); // → delete previous templates folder
+    templatesLocalFolder.create(); // → delete previous templates folder
+    
+    getURLContent([url], [downPath]);
+    unzipContent(zipPath, templatesLocalPath);
+
+    if (gNet) {
+      removeFolder(templatesFolder); // → delete previous templates folder
+      templatesFolder.create(); // → delete previous templates folder
+
+      alert('copy the templates to the empty folder\nand press the refresh button!');
+      
+      // wait 3 seconds...
+      $.sleep(3000);
+      openFolder(templatesLocalPath);
+      openFolder(templatesPath);
+    }
+  }
+  templateDialog(templatesPath);
+};
+
+/*
+
+---------------------------------------------------------------
+> find dialog...
+---------------------------------------------------------------
+
+*/
+
 findBtn.onClick = function() {
   findDialog();
 };

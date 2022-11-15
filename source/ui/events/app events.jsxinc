@@ -6,31 +6,6 @@
 
 */
 
-importAetBtn.onClick = function () {
-  // error...
-  if (!netAccess()) {
-    showTabErr(netConfigName + ' not checked');
-    return;
-  }
-  // github main repo...
-  var url = repoURL + '/raw/main/downloads/templates.zip';
-
-  var downPath = scriptPreferencesPath + '/temp';
-  var downFolder = new Folder(downPath);
-  var zipPath = downPath + '/templates.zip';
-  var templatesPath = scriptPreferencesPath + '/templates';
-  var templatesFolder = new Folder(templatesPath);
-
-  if (!downFolder.exists) {
-    downFolder.create();
-  }
-  if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
-    getURLContent([url], [downPath]);
-    unzipContent(zipPath, templatesPath);
-  }
-  templateDialog(templatesPath);
-};
-
 copyAMEPresetsBtn.addEventListener('click', function (c) {
   if (c.button == 2) {
     // error...
@@ -92,19 +67,28 @@ installFontsBtn.onClick = function () {
   }
   // github main repo...
   var url = repoURL + '/raw/main/downloads/fonts.zip';
-
-  var downPath = scriptPreferencesPath + '/temp';
-  var downFolder = new Folder(downPath);
   var zipPath = downPath + '/fonts.zip';
-  var fontsPath = scriptPreferencesPath + '/fonts';
-  var fontsFolder = new Folder(fontsPath);
 
   if (!downFolder.exists) {
     downFolder.create();
   }
   if (!fontsFolder.exists || fontsFolder.getFiles().length == 0) {
+    removeFolder(fontsLocalFolder); // → delete previous fonts folder
+    fontsLocalFolder.create(); // → delete previous fonts folder
+
     getURLContent([url], [downPath]);
     unzipContent(zipPath, fontsPath);
+
+    if (gNet) {
+      removeFolder(fontsFolder); // → delete previous templates folder
+      fontsFolder.create(); // → delete previous templates folder
+
+      alert('copy the fonts to the empty folder\nand press the refresh button!');
+      // wait 3 seconds...
+      $.sleep(3000);
+      openFolder(fontsLocalPath);
+      openFolder(fontsPath);
+    }
   }
   fontsDialog();
 };
