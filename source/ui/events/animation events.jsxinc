@@ -431,8 +431,7 @@ typeAnimBtn.onClick = function () {
   app.beginUndoGroup('typewriter');
 
   if (selLayers.length == 0) {
-    var cLayer = aItem.layers.addText('Lettering automático...');
-    selLayers.push(cLayer);
+    selLayers.push(aItem.layers.addText('Lettering automático...'));
   }
 
   for (var l = 0; l < selLayers.length; l++) {
@@ -480,8 +479,7 @@ wordsBtn.onClick = function () {
   app.beginUndoGroup('words');
 
   if (selLayers.length == 0) {
-    var cLayer = aItem.layers.addText('Lettering automático...');
-    selLayers.push(cLayer);
+    selLayers.push(aItem.layers.addText('Lettering automático...'));
   }
 
   for (var l = 0; l < selLayers.length; l++) {
@@ -525,8 +523,7 @@ simpleBoxBtn.onClick = function () {
   var selLayers = aItem != null ? aItem.selectedLayers : [];
 
   if (selLayers.length == 0) {
-    var cLayer = aItem.layers.addText('Tarja simples...');
-    selLayers.push(cLayer);
+    selLayers.push(aItem.layers.addText('Tarja simples...'));
   }
 
   for (var l = 0; l < selLayers.length; l++) {

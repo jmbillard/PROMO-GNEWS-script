@@ -159,3 +159,14 @@ pngPreviewBtn.onClick = function () {
   // system.callSystem(cmdStr);
   openFolder(savePath);
 };
+
+endPagePresetBtn.onClick = function () {
+  currentGrp = menuGrp;
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  endPagePresetDialog();
+};
+

@@ -10,6 +10,16 @@
 //  jshint -W061
 //  jscs:disable maximumLineLength
 
+
+// layouts all the UI
+w.onShow = function() {
+  setLayout();
+};
+// layouts all the UI
+w.onResizing = w.onResize = function() {
+  setLayout();
+};
+
 ctrlBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = ctrlGrp;
@@ -47,14 +57,11 @@ toolBtn.onClick = function () {
 };
 
 projBtn.onClick = function () {
-  projName = getXMPdata('title[1]');
-  projName = projName == '' ? 'proj name' : projName;
-  projId = getXMPdata('identifier');
-  projId = projId == '' ? 'proj id' : projId;
+  projName = getXMPdata('title[1]') == '' ? 'proj name' : getXMPdata('title[1]');
+  projId = getXMPdata('identifier') == '' ? 'proj id' : getXMPdata('identifier');
 
   currentGrp.visible = false;
   currentGrp = projectGrp;
-
   openTab();
   projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
@@ -90,16 +97,16 @@ prefBtn.onClick = function () {
 };
 
 /* jshint ignore:start */
-#include 'animation events.jsxinc'; // global variables...
-#include 'app events.jsxinc'; // global variables...
-#include 'color events.jsxinc'; // global variables...
-#include 'ctrl events.jsxinc'; // global variables...
-#include 'dev events.jsxinc'; // global variables...
-#include 'fx events.jsxinc'; // global variables...
-#include 'links events.jsxinc'; // global variables...
-#include 'preferences events.jsxinc'; // global variables...
-#include 'project events.jsxinc'; // global variables...
-#include 'text events.jsxinc'; // global variables...
+#include 'events/animation events.jsxinc';
+#include 'events/app events.jsxinc';
+#include 'events/color events.jsxinc';
+#include 'events/ctrl events.jsxinc';
+#include 'events/dev events.jsxinc';
+#include 'events/fx events.jsxinc';
+#include 'events/links events.jsxinc';
+#include 'events/preferences events.jsxinc';
+#include 'events/project events.jsxinc';
+#include 'events/text events.jsxinc';
 /* jshint ignore:end */
 
 /*
