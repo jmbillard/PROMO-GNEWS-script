@@ -32,12 +32,11 @@ function findDialog() {
   optGrp1.spacing = 4;
   
   var optCkb1 = optGrp1.add('checkbox');
-  optCkb1.helpTip = optTxt1.helpTip;
   optCkb1.value = false;
   optCkb1.enabled = false;
-
+  
   var optTxt1 = optGrp1.add('statictext', undefined, 'Tt');
-  optTxt1.helpTip = 'match text case';
+  optCkb1.helpTip = optTxt1.helpTip = 'match case';
 
   // =======
   var optGrp2 = optMainGrp.add('group');
@@ -45,12 +44,11 @@ function findDialog() {
   optGrp2.spacing = 4;
 
   var optCkb2 = optGrp2.add('checkbox');
-  optCkb2.helpTip = optTxt2.helpTip;
   optCkb2.value = false;
   optCkb2.enabled = false;
   
-  var optTxt2 = optGrp2.add('statictext', undefined, 'á → a');
-  optTxt2.helpTip = 'ignore accentuation';
+  var optTxt2 = optGrp2.add('statictext', undefined, 'àê');
+  optCkb2.helpTip = optTxt2.helpTip = 'match accentuation';
 
   // =======
   var optGrp3 = optMainGrp.add('group');
@@ -58,12 +56,11 @@ function findDialog() {
   optGrp3.spacing = 4;
   
   var optCkb3 = optGrp3.add('checkbox');
-  optCkb3.helpTip = optTxt3.helpTip;
   optCkb3.value = false;
   optCkb3.enabled = false;
-
+  
   var optTxt3 = optGrp3.add('statictext', undefined, 'RegEx');
-  optTxt3.helpTip = 'use regular expression';
+  optCkb3.helpTip = optTxt3.helpTip = 'use regular expression';
 
   // =============
   var findBtn = searchMainGrp.add('iconbutton', [0, 0, 80, 60], findIcon, { style: 'toolbutton' });
@@ -96,10 +93,16 @@ function findDialog() {
       return;
     }
 
+    var optObj = {
+      'sKey': sKey,
+      'matchCase': optCkb1.value,
+      'matchAccent': optCkb2.value
+    };
+
     var selArray = app.project.selection;
     selArray = selArray.length > 0 ? selArray : getComps(); // → [selected items] : [all comps]
 
-    resultArray = buildFindTree(resultTree, sKey, selArray, findPb); // → [filtered comps]
+    resultArray = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
     
     expandNodes(resultTree);
     resultTxt.text = 'complete...';
@@ -140,3 +143,5 @@ function findDialog() {
 
   w.show();
 }
+
+//findDialog();
