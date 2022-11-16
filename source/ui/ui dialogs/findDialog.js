@@ -74,13 +74,14 @@ function findDialog() {
   resultGrp.orientation = 'column';
 
   var resultTxt = resultGrp.add('statictext', undefined, undefined);
-  resultTxt.characters = 10;
+  resultTxt.characters = 16;
 
   var findPb = resultGrp.add('progressbar', [0, 0, 315, 5], undefined);
   findPb.value = 100;
 
   // ==========
-  var resultTree = w.add('treeview', [0, 0, 320, 150]);
+  var resultTree = w.add('treeview', [0, 0, 320, 0]);
+  resultTree.visible = false;
   var resultArray = [];
 
   // find event...
@@ -90,6 +91,9 @@ function findDialog() {
     var sKey = findEdTxt.text;
     if (sKey == '' || app.project.numItems == 0) {
       resultTxt.text = '';
+      resultTree.visible = false;
+      resultTree.size.height = 0;
+      w.layout.layout(true);
       return;
     }
 
@@ -104,8 +108,18 @@ function findDialog() {
 
     resultArray = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
     
+    if (resultArray.length == 0) {
+      resultTxt.text = 'no matches  (っ °Д °;)っ';
+      resultTree.visible = false;
+      resultTree.size.height = 0;
+      w.layout.layout(true);
+      return;
+    }
     expandNodes(resultTree);
-    resultTxt.text = 'complete...';
+    resultTree.visible = true;
+    resultTree.size.height = 160;
+    resultTxt.text = 'complete  ヽ(✿ﾟ▽ﾟ)ノ';
+    w.layout.layout(true);
   };
 
   resultTree.onChange = function () {
