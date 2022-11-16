@@ -88,7 +88,7 @@ function findDialog() {
     resultTxt.text = 'searching...';
 
     var sKey = findEdTxt.text;
-    if (sKey == '') {
+    if (sKey == '' || app.project.numItems == 0) {
       resultTxt.text = '';
       return;
     }
