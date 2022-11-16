@@ -79,7 +79,7 @@ installFontsBtn.onClick = function () {
     getURLContent([url], [downPath]);
     unzipContent(zipPath, fontsPath);
 
-    if (gNet) {
+    if (GLOBO_ACCESS) {
       removeFolder(fontsFolder); // → delete previous templates folder
       fontsFolder.create(); // → delete previous templates folder
 

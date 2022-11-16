@@ -108,7 +108,7 @@ saveBtn.onClick = function () {
   var userStr = system.userName;
   var sysDate = system.callSystem('cmd.exe /c date /t');
   var dateStr = sysDate.substring(0, sysDate.length - 3);
-  var appV = parseInt(app.buildName.substring(0, 2));
+
 
   setXMPdata('creator', userStr);
   setXMPdata('date', dateStr);

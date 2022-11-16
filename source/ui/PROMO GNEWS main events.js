@@ -114,7 +114,7 @@ importAetBtn.onClick = function () {
     getURLContent([url], [downPath]);
     unzipContent(zipPath, templatesLocalPath);
 
-    if (gNet) {
+    if (GLOBO_ACCESS) {
       removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
 

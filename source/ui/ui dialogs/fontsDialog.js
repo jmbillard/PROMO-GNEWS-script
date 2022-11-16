@@ -93,7 +93,7 @@ function fontsDialog() {
     unzipContent(zipPath, fontsLocalPath);
     removeFolder(downFolder); // → delete temp folder
 
-    if (gNet) {
+    if (GLOBO_ACCESS) {
       removeFolder(fontsFolder); // → delete previous templates folder
       fontsFolder.create(); // → delete previous templates folder
 

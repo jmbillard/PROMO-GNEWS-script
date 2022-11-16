@@ -172,7 +172,7 @@ function templateDialog() {
     unzipContent(zipPath, templatesLocalPath); // → unzip file    
     removeFolder(downFolder); // → delete temp folder
   
-    if (gNet) {
+    if (GLOBO_ACCESS) {
       removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
 
