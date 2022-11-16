@@ -36,49 +36,6 @@ function bin(thisObj) {
   var spacer = '\u0089PNG\r\n\x1A\n\x00\x00\x00\rIHDR\x00\x00\x00\x0E\x00\x00\x00-\b\x06\x00\x00\x00\u009EpZI\x00\x00\x00\tpHYs\x00\x00\x0B\x12\x00\x00\x0B\x12\x01\u00D2\u00DD~\u00FC\x00\x00\x003IDATH\u0089\u00ED\u00D6\u00B1\r\x000\f\x02A\u00F0\u00FE;\x13y\x05\u00E4.\u008FDy\r\x15N\u00A2&S)`\tmg\u00CB\u00AA@ \x10\b\u00BC\u0082|\u0080\u009F\u00A1\u00A4\x07\u0081u\bW\u00C1$\u0089E\x00\x00\x00\x00IEND\u00AEB`\u0082';
   /* cSpell:enable */
 
-  function convertFile(inFile) {
-
-    inFile.open('r');
-    inFile.encoding = 'binary';
-
-    var bin = inFile.read();
-    var binStr = bin.toSource().toString();
-
-    binStr = binStr.substring(12, binStr.length - 2);
-    inFile.close();
-
-    return binStr.replace(/\'/g, '\\\'')
-      .replace(/^\"/, '\'')
-      .replace(/[\"]+$/, '\'');
-  }
-
-  function exportFile(outFile, strCode) {
-
-    outFile.open('w');
-    outFile.write(strCode);
-    outFile.close();
-  }
-
-  function replaceSpcChar(str) {
-
-    str = str.replace(/À|Á|Â|Ã|Ä/g, 'A');
-    str = str.replace(/à|á|â|ã|ä/g, 'a');
-    str = str.replace(/È|É|Ê|Ë/g, 'E');
-    str = str.replace(/è|é|ê|ë/g, 'e');
-    str = str.replace(/Ì|Í|Î|Ï/g, 'I');
-    str = str.replace(/ì|í|î|ï/g, 'i');
-    str = str.replace(/Ò|Ó|Ô|Õ|Ö/g, 'O');
-    str = str.replace(/ò|ó|ô|õ|ö/g, 'o');
-    str = str.replace(/Ù|Ú|Û|Ü/g, 'U');
-    str = str.replace(/ù|ú|û|ü/g, 'u');
-    str = str.replace(/Ç/g, 'C');
-    str = str.replace(/ç/g, 'c');
-    str = str.replace(/[^\w\s]/ig, ''); // replaces any non-word character except space...
-    str = str.replace(/[\s]{1,}|-/g, '_'); // replaces 1 or more spaces...
-
-    return str.trim();
-  }
-
   // formats the expression value from a property...
   function expCode(exp) {
 
@@ -353,9 +310,11 @@ function bin(thisObj) {
     var masks = layer.property('ADBE Mask Parade');
     var marker = layer.property('ADBE Marker');
 
-    layerStr += 'function ' + replaceSpcChar(layer.name.toCamelCase()
+    layerStr += 'function ' + layer.name
+      .replaceSpecialCharacters()
+      .toCamelCase()
       .replace(/\-/, '_')
-      .replace(/\W/g, '')) + '() {\n\n';
+      .replace(/\W/g, '') + '() {\n\n';
     layerStr += '\t// expressions variable...\
 \tvar exp;\
 \n\t// keyframe ease objects variable...\
@@ -439,7 +398,11 @@ function bin(thisObj) {
 \tlayer.guideLayer = ' + layer.guideLayer + ';\
 \n\treturn layer;\
 }\n\n';
-    layerStr += replaceSpcChar(layer.name.toCamelCase().replace(/\-/, '_').replace(/\W/g, '')) + '();';
+    layerStr += layer.name
+      .replaceSpecialCharacters()
+      .toCamelCase()
+      .replace(/\-/, '_')
+      .replace(/\W/g, '') + '();';
 
     return layerStr;
   }
@@ -540,10 +503,10 @@ function bin(thisObj) {
 
               nameTxt += fileName + ' | ';
               fileName = File.decode(fileName.substring(0, fileName.length - 4));
-              fileName = replaceSpcChar(fileName);
-              codeTxt += '\nvar ' + fileName + ' = ' + convertFile(fileObj) + ';\n';
+              fileName = fileName.replaceSpecialCharacters();
+              codeTxt += '\nvar ' + fileName + ' = ' + convertToBinary(fileObj) + ';\n';
 
-              codeArray.push(convertFile(fileObj));
+              codeArray.push(convertToBinary(fileObj));
               prgBar.value = (i + 1) / fileArray.length * 100;
             }
             nameTxt = File.decode(nameTxt.substring(0, nameTxt.length - 2));

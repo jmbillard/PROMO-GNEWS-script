@@ -30,27 +30,40 @@ function findDialog() {
   var optGrp1 = optMainGrp.add('group');
   optGrp1.alignChildren = ['center', 'top'];
   optGrp1.spacing = 4;
-
-  var optTxt1 = optGrp1.add('statictext', undefined, 'full project');
-  optTxt1.helpTip = 'search all project compositions...';
-
+  
   var optCkb1 = optGrp1.add('checkbox');
   optCkb1.helpTip = optTxt1.helpTip;
-  optCkb1.value = true;
+  optCkb1.value = false;
   optCkb1.enabled = false;
+
+  var optTxt1 = optGrp1.add('statictext', undefined, 'Tt');
+  optTxt1.helpTip = 'match text case';
 
   // =======
   var optGrp2 = optMainGrp.add('group');
   optGrp2.alignChildren = ['center', 'top'];
   optGrp2.spacing = 4;
 
-  var optTxt2 = optGrp2.add('statictext', undefined, 'layer name');
-  optTxt2.helpTip = 'search layer names';
-
   var optCkb2 = optGrp2.add('checkbox');
   optCkb2.helpTip = optTxt2.helpTip;
   optCkb2.value = false;
   optCkb2.enabled = false;
+  
+  var optTxt2 = optGrp2.add('statictext', undefined, 'á → a');
+  optTxt2.helpTip = 'ignore accentuation';
+
+  // =======
+  var optGrp3 = optMainGrp.add('group');
+  optGrp3.alignChildren = ['center', 'top'];
+  optGrp3.spacing = 4;
+  
+  var optCkb3 = optGrp3.add('checkbox');
+  optCkb3.helpTip = optTxt3.helpTip;
+  optCkb3.value = false;
+  optCkb3.enabled = false;
+
+  var optTxt3 = optGrp3.add('statictext', undefined, 'RegEx');
+  optTxt3.helpTip = 'use regular expression';
 
   // =============
   var findBtn = searchMainGrp.add('iconbutton', [0, 0, 80, 60], findIcon, { style: 'toolbutton' });
@@ -71,11 +84,23 @@ function findDialog() {
 
   // ==========
   var resultTree = w.add('treeview', [0, 0, 320, 150]);
-  var compArray = [];
+  var resultArray = [];
 
+  // find event...
   findBtn.onClick = function () {
     resultTxt.text = 'searching...';
-    compArray = buildFindTree(resultTree,findEdTxt.text,findPb);
+
+    var sKey = findEdTxt.text;
+    if (sKey == '') {
+      resultTxt.text = '';
+      return;
+    }
+
+    var selArray = app.project.selection;
+    selArray = selArray.length > 0 ? selArray : getComps(); // → [selected items] : [all comps]
+
+    resultArray = buildFindTree(resultTree, sKey, selArray, findPb); // → [filtered comps]
+    
     expandNodes(resultTree);
     resultTxt.text = 'complete...';
   };
@@ -84,15 +109,17 @@ function findDialog() {
 
     var comp;
     var t;
+
     if (resultTree.selection.type == 'node') {
-      comp = compArray[resultTree.selection.index];
+      comp = resultArray[resultTree.selection.index];
       t = comp.time;
     }
     if (resultTree.selection.type == 'item') {
-      comp = compArray[resultTree.selection.parent.index];
+      comp = resultArray[resultTree.selection.parent.index];
       var i = resultTree.selection
-        .toString()
-        .split(' | ')[0];
+        .toString()         // → '# 1   layer name'
+        .split('   ')[0]    // → '# 1'
+        .replace('# ', ''); // → '1'
       
       for (var l = 1; l <= comp.numLayers; l++) {
         var aLayer = comp.layer(l);
