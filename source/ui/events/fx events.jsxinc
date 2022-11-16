@@ -38,7 +38,8 @@ shpAdjBtn.onClick = function () {
 
   if (adjLayer instanceof AVLayer) {
     var expStr = scaleToCompSize();
-    adjLayer.property(trmProp).property('ADBE Scale').expression = expStr;
+    adjLayer.property('ADBE Transform Group')
+      .property('ADBE Scale').expression = expStr;
   }
   app.endUndoGroup();
 };

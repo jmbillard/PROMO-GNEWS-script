@@ -146,7 +146,6 @@ nullShpBtn.onClick = function () {
 };
 
 nullCShpBtn.onClick = function () {
-  var posProp = 'ADBE Position';
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
   // error...
@@ -171,7 +170,8 @@ nullCShpBtn.onClick = function () {
   } else {
     ctrlLayer = aItem.layers.addNull();
   }
-  var ctrlPos = ctrlLayer.property(trmProp).property(posProp);
+  var ctrlPos = ctrlLayer.property('ADBE Transform Group')
+    .property('ADBE Position');
 
   ctrlLayer.guideLayer = true;
   ctrlLayer.name = nullPrefix + 'center';
