@@ -148,16 +148,16 @@ prefBtn.onClick = function () {
 };
 
 /* jshint ignore:start */
-#include 'events/animation events.jsxinc';
-#include 'events/app events.jsxinc';
-#include 'events/color events.jsxinc';
-#include 'events/ctrl events.jsxinc';
-#include 'events/dev events.jsxinc';
-#include 'events/fx events.jsxinc';
-#include 'events/links events.jsxinc';
-#include 'events/preferences events.jsxinc';
-#include 'events/project events.jsxinc';
-#include 'events/text events.jsxinc';
+#include 'events/animation events.js';
+#include 'events/app events.js';
+#include 'events/color events.js';
+#include 'events/ctrl events.js';
+#include 'events/dev events.js';
+#include 'events/fx events.js';
+#include 'events/links events.js';
+#include 'events/preferences events.js';
+#include 'events/project events.js';
+#include 'events/text events.js';
 /* jshint ignore:end */
 
 /*
