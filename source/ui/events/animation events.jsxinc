@@ -338,7 +338,8 @@ wigBtn.onClick = function () {
 
   for (i = 0; i < selLayers.length; i++) {
     wLayer = selLayers[i];
-    wProp = wLayer.property(trmProp).property('ADBE Position');
+    wProp = wLayer.property('ADBE Transform Group')
+      .property('ADBE Position');
 
     addPseudoEffect('wig', expFx);
     wProp.expression = expStr;
@@ -368,9 +369,12 @@ ikBtn.onClick = function () {
   bone2.parent = bone1;
   bone3.parent = bone2;
 
-  var bone1Pos = bone1.property(trmProp).property('ADBE Position').value;
-  var bone1Rot = bone1.property(trmProp).property('ADBE Rotate Z').value;
-  var bone3Pos = bone3.property(trmProp).property('ADBE Position').value;
+  var bone1Pos = bone1.property('ADBE Transform Group')
+    .property('ADBE Position').value;
+  var bone1Rot = bone1.property('ADBE Transform Group')
+    .property('ADBE Rotate Z').value;
+  var bone3Pos = bone3.property('ADBE Transform Group')
+    .property('ADBE Position').value;
   var k = ik(bone1.name, bone2.name, bone3.name);
   var expFx = k[0];
   var expStr1 = k[1];
@@ -390,7 +394,8 @@ ikBtn.onClick = function () {
   zeroLayer.guideLayer = true;
   zeroLayer.label = 2;
   zeroLayer.parent = bone3.parent;
-  zeroLayer.property(trmProp).property('ADBE Position').setValue(bone3Pos);
+  zeroLayer.property('ADBE Transform Group')
+    .property('ADBE Position').setValue(bone3Pos);
   zeroLayer.locked = true;
   zeroLayer.shy = true;
 
@@ -399,20 +404,27 @@ ikBtn.onClick = function () {
   ctrlLayer.guideLayer = true;
   ctrlLayer.label = 1;
   ctrlLayer.parent = bone3.parent;
-  ctrlLayer.property(trmProp).property('ADBE Position').setValue(bone3Pos);
+  ctrlLayer.property('ADBE Transform Group')
+    .property('ADBE Position').setValue(bone3Pos);
   ctrlLayer.parent = bone1.parent;
   ctrlLayer.parent = null;
 
   bone3.parent = null;
 
   addPseudoEffect('simple IK', expFx);
-  bone1.property(trmProp).property('ADBE Rotate Z').expression = expStr1;
-  bone2.property(trmProp).property('ADBE Rotate Z').expression = expStr2;
-  bone3.property(trmProp).property('ADBE Position').expression = expStr3;
-  bone3.property(trmProp).property('ADBE Rotate Z').expression = expStr4;
+  bone1.property('ADBE Transform Group')
+    .property('ADBE Rotate Z').expression = expStr1;
+  bone2.property('ADBE Transform Group')
+    .property('ADBE Rotate Z').expression = expStr2;
+  bone3.property('ADBE Transform Group')
+    .property('ADBE Position').expression = expStr3;
+  bone3.property('ADBE Transform Group')
+    .property('ADBE Rotate Z').expression = expStr4;
 
-  if (bone1.property(trmProp).property('ADBE Rotate Z').value != bone1Rot) {
-    ctrlLayer.property('ADBE Effect Parade').property('simple IK').property('flip orientation').setValue(true);
+  if (bone1.property('ADBE Transform Group').property('ADBE Rotate Z').value != bone1Rot) {
+    ctrlLayer.property('ADBE Effect Parade')
+      .property('simple IK').property('flip orientation')
+      .setValue(true);
   }
 
   app.endUndoGroup();
