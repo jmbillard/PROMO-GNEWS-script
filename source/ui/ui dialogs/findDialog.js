@@ -33,7 +33,7 @@ function findDialog() {
   
   var optCkb1 = optGrp1.add('checkbox');
   optCkb1.value = false;
-  optCkb1.enabled = false;
+  //optCkb1.enabled = false;
   
   var optTxt1 = optGrp1.add('statictext', undefined, 'Tt');
   optCkb1.helpTip = optTxt1.helpTip = 'match case';
@@ -45,7 +45,7 @@ function findDialog() {
 
   var optCkb2 = optGrp2.add('checkbox');
   optCkb2.value = false;
-  optCkb2.enabled = false;
+  //optCkb2.enabled = false;
   
   var optTxt2 = optGrp2.add('statictext', undefined, 'àê');
   optCkb2.helpTip = optTxt2.helpTip = 'match accentuation';
