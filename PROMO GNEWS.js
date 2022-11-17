@@ -27,19 +27,6 @@ function PROMO_GNEWS_UTL(thisObj) {
   #include 'source/layout/main ui.js'; // → UI definition file
   /* jshint ignore:end */
 
-  // gets the current value for the network permission preference...
-  function netAccess() {
-    return app.preferences.getPrefAsLong(prefSection, prefName);
-  }
-
-  /*
-
-  ---------------------------------------------------------------
-   > run...
-  ---------------------------------------------------------------
-
-  */
-
   var PROMO_GNEWS_WINDOW = PROMO_GNEWS_UI(thisObj);
 
   // checks network access...
