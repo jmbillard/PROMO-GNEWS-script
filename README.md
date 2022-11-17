@@ -1,4 +1,3 @@
-
 # PROMO GNEWS *script*
 
 **pt-BR** ⚡ algumas ferramentas para melhorar o workflow da equipe de motion de PROMO no After Effects ⚡
@@ -7,11 +6,12 @@
 
 # 📟 layout e interface
 
+<!-- [ ] update print-->
 ![main menu](/images/menu.png)
 
 a barra é **`responsiva`** e pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.<br/>
 o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
-
+<!-- [ ] update sections and description -->
 ~~~javascript
 > controles e nulls             // hierarquias e afins...
 > animação 
