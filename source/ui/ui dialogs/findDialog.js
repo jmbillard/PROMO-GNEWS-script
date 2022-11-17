@@ -74,7 +74,7 @@ function findDialog() {
   resultGrp.orientation = 'column';
 
   var resultTxt = resultGrp.add('statictext', undefined, undefined);
-  resultTxt.characters = 16;
+  resultTxt.characters = 20;
 
   var findPb = resultGrp.add('progressbar', [0, 0, 315, 5], undefined);
   findPb.value = 100;
@@ -86,6 +86,8 @@ function findDialog() {
 
   // find event...
   findBtn.onClick = function () {
+    // starting timer...
+    timer();
     resultTxt.text = 'searching...';
 
     var sKey = findEdTxt.text;
@@ -96,7 +98,7 @@ function findDialog() {
       w.layout.layout(true);
       return;
     }
-
+    
     var optObj = {
       'sKey': sKey,
       'matchCase': optCkb1.value,
@@ -105,11 +107,10 @@ function findDialog() {
 
     var selArray = app.project.selection;
     selArray = selArray.length > 0 ? selArray : getComps(); // → [selected items] : [all comps]
-
     resultArray = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
     
     if (resultArray.length == 0) {
-      resultTxt.text = 'no matches  (っ °Д °;)っ';
+      resultTxt.text = 'no matches - '+ timer() + 's  (っ °Д °;)っ';
       resultTree.visible = false;
       resultTree.size.height = 0;
       w.layout.layout(true);
@@ -118,7 +119,7 @@ function findDialog() {
     expandNodes(resultTree);
     resultTree.visible = true;
     resultTree.size.height = 160;
-    resultTxt.text = 'complete  ヽ(✿ﾟ▽ﾟ)ノ';
+    resultTxt.text = 'complete - '+ timer() + 's  (o °▽ °)o☆';
     w.layout.layout(true);
   };
 
