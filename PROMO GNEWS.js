@@ -23,8 +23,8 @@
 
 function PROMO_GNEWS_UTL(thisObj) {
   /* jshint ignore:start */
-  #include 'source/PROMO GNEWS globals.js'; // global variables...
-  #include 'source/layout/PROMO GNEWS main ui.js'; // → UI definition file
+  #include 'source/globals.js'; // global variables...
+  #include 'source/layout/main ui.js'; // → UI definition file
   /* jshint ignore:end */
 
   // gets the current value for the network permission preference...
