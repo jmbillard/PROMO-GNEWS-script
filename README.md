@@ -81,6 +81,12 @@ avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os
 
 # ![animation icon](/images/icons/ctrlIcon.png) *animação*
 
+<!-- [ ] include copy keyframe influences -->
+<!-- [ ] move lock transform properties -->
+<!-- [ ] include randomize layer times -->
+<!-- [ ] include tools tab -->
+<!-- [ ] update info and tab -->
+
 ### ![typewriter btn](/images/icons/typewriterIcon.png) botão **`typewriter`**
 cria um preset para animação estilo digitação.
 
@@ -139,6 +145,9 @@ estabelece um limite de caracteres por linha e quebra o texto assim que esse lim
 ![lineBreaker ex](/images/gifs/line-breaker.gif)
 
 <br/><br/>
+
+
+<!-- [ ] update tab info -->
 
 # ![pallet icon](/images/icons/ctrlIcon.png) *paleta de cores*
 
