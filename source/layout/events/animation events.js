@@ -267,15 +267,7 @@ counterBtn.onClick = function () {
   app.beginUndoGroup('counter');
 
   if (selLayers.length == 0) {
-    var cLayer = aItem.layers.addText();
-    // text document...
-    var text1 = cLayer.property('ADBE Text Properties');
-    var textDoc1 = text1.property('ADBE Text Document');
-    var textDocVal1 = textDoc1.value;
-    textDocVal1.justification = ParagraphJustification.LEFT_JUSTIFY;
-    textDocVal1.text = '0';
-    // text content...
-    textDoc1.setValue(textDocVal1);
+    var cLayer = aItem.layers.addText('0');
     selLayers.push(cLayer);
   }
 
