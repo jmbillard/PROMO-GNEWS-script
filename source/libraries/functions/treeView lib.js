@@ -104,10 +104,10 @@ function buildFontTree(folder, tree) {
 }
 
 // [ ] find - loop folder item contents...
-// [ ] find - include source text keyframes...
+// [x] find - include source text keyframes...
 // [x] find - compensate the ALL CAPS toggle...
 // [x] find - RegEx search...
-// [ ] find - limit play head movement to expressions and keyframes...
+// [x] find - limit play head movement to expressions and keyframes...
 
 function buildFindTree(tree, obj, compArray, progBar) {
   
@@ -141,44 +141,48 @@ function buildFindTree(tree, obj, compArray, progBar) {
       if (!(compArray[i].layer(l) instanceof TextLayer)) continue;
 
       var compItem;
-      var txtArray = [];
       var txtLayer = compArray[i].layer(l);
-      
-      compArray[i].time = txtLayer.outPoint - 1;
-      
-      var txt = textContent(txtLayer).trim();
       var doc = txtLayer
         .property('ADBE Text Properties')
         .property('ADBE Text Document');
-
-      if (doc.value.allCaps) txt = txt.toUpperCase();
-
-      if (!regExp) {
-        txt = matchCase ? txt : txt.toLowerCase();
-        sKey = matchCase ? sKey : sKey.toLowerCase();
-        txt = matchAccent ? txt : txt.replaceSpecialCharacters();
-        sKey = matchAccent ? sKey : sKey.replaceSpecialCharacters();
-      }
+      var txtArray = [];
 
       if (doc.numKeys > 0) {
-        
-        for (var k = 1; k >= doc.numKeys; k++) {
-          txtArray.push(doc.key(k).value.toString());
-        }
-        alert(txtArray);
-      }
-      if (txt.match(sKey) == null) continue;
 
-      if (resultArray.indexOf(compArray[i]) < 0) {
-        var compName = limitNameSize(compArray[i].name, 45);
-        compItem = tree.add('node', compName);
-        compItem.image = compTogIcon;
-        
-        resultArray.push(compArray[i]);
+        for (var k = 1; k <= doc.numKeys; k++) {
+          txtArray.push(doc.keyValue(k).toString().trim());
+        }
+      } else {
+
+        if (doc.expression != '') compArray[i].time = txtLayer.outPoint - 1;
+        txtArray.push(textContent(txtLayer).trim());
       }
-      var layerName = limitNameSize(txtLayer.name, 40);
-      var txtItem = compItem.add('item', '# ' + txtLayer.index + '   ' + layerName);
-      txtItem.image = keyStat5Icon;
+      if (!regExp) {
+        
+        for (var m = 0; m < txtArray.length; m++) {
+          if (doc.value.allCaps) txtArray[m] = txtArray[m].toUpperCase();
+          if (!matchCase) txtArray[m] = txtArray[m].toLowerCase();
+          if (!matchAccent) txtArray[m] = txtArray[m].replaceSpecialCharacters();
+        }
+        sKey = matchCase ? sKey : sKey.toLowerCase();
+        sKey = matchAccent ? sKey : sKey.replaceSpecialCharacters();
+      }
+      
+      for (var f = 0; f < txtArray.length; f++) {
+        
+        if (txtArray[f].match(sKey) == null) continue;
+
+        if (resultArray.indexOf(compArray[i]) < 0) {
+          var compName = limitNameSize(compArray[i].name, 45);
+          compItem = tree.add('node', compName);
+          compItem.image = compTogIcon;
+          
+          resultArray.push(compArray[i]);
+        }
+        var layerName = limitNameSize(txtLayer.name, 35);
+        var txtItem = compItem.add('item', '(' + (f + 1) + ')   #' + txtLayer.index + '   ' + layerName);
+        txtItem.image = keyStat5Icon;
+      }
     }
     progBar.value += progInc;
   }

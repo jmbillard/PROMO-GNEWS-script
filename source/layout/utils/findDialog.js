@@ -138,18 +138,28 @@ function findDialog() {
     }
     if (resultTree.selection.type == 'item') {
       comp = resultArray[resultTree.selection.parent.index];
-      var i = resultTree.selection
-        .toString()         // → '# 1   layer name'
-        .split('   ')[0]    // → '# 1'
-        .replace('# ', ''); // → '1'
+      var lArray = resultTree.selection
+        .toString()
+        .split('   ');
+      var k = lArray[0]            // → '(1)'
+        .replace(/[\(|\)]/g, '');  // → '1'
+      var i = lArray[1]            // → '# 3'
+        .replace('#', '');         // → '3'
       
       for (var l = 1; l <= comp.numLayers; l++) {
         var aLayer = comp.layer(l);
 
         if (l == parseInt(i)) {
+          var doc = aLayer
+            .property('ADBE Text Properties')
+            .property('ADBE Text Document');
+  
           t = (aLayer.outPoint - aLayer.inPoint) / 2 + aLayer.inPoint;
           aLayer.shy = false;
 
+          if (doc.numKeys > 0) {
+            t = doc.keyTime(parseInt(k));
+          }
         } else {
           aLayer.shy = true;
         }
