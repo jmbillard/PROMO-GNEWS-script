@@ -28,17 +28,11 @@ copyInfBtn.onClick = function () {
   keyData.outType = aProp.keyOutInterpolationType(k);
   keyData.inEase = aProp.keyInTemporalEase(k);
   keyData.outEase = aProp.keyOutTemporalEase(k);
-  // keyframe images...
-  keyStats0Img.visible = false;
-  keyStats1Img.visible = false;
-  keyStats2Img.visible = false;
-  keyStats3Img.visible = false;
-  keyStats4Img.visible = false;
-  keyStats5Img.visible = false;
-  keyStats6Img.visible = false;
-  keyStats7Img.visible = false;
-  keyStats8Img.visible = false;
-  keyStats9Img.visible = false;
+  
+  // hide all keyframe images...
+  for (var kf = 0; kf < keyStatsGrp.children.length; kf++) {
+    keyStatsGrp.children[kf].visible = false;
+  }
 
   // 6614 - hold
   // 6613 - ease
@@ -47,56 +41,56 @@ copyInfBtn.onClick = function () {
   switch (true) {
     // ease - linear
     case keyData.inType == 6613 && keyData.outType == 6612:
-      keyStats1Img.visible = true;
-      keyStats1Img.helpTip = kHelp;
+      keyStatsGrp.keyImg1.visible = true;
+      keyStatsGrp.keyImg1.helpTip = kHelp;
       break;
 
     // linear - ease
     case keyData.inType == 6612 && keyData.outType == 6613:
-      keyStats2Img.visible = true;
-      keyStats2Img.helpTip = kHelp;
+      keyStatsGrp.keyImg2.visible = true;
+      keyStatsGrp.keyImg2.helpTip = kHelp;
       break;
 
     // ease - ease
     case keyData.inType == 6613 && keyData.outType == 6613:
-      keyStats3Img.visible = true;
-      keyStats3Img.helpTip = kHelp;
+      keyStatsGrp.keyImg3.visible = true;
+      keyStatsGrp.keyImg3.helpTip = kHelp;
       break;
 
     // hold - linear
     case keyData.inType == 6614 && keyData.outType == 6612:
-      keyStats6Img.visible = true;
-      keyStats6Img.helpTip = kHelp;
+      keyStatsGrp.keyImg6.visible = true;
+      keyStatsGrp.keyImg6.helpTip = kHelp;
       break;
 
     // hold - ease
     case keyData.inType == 6614 && keyData.outType == 6613:
-      keyStats9Img.visible = true;
-      keyStats9Img.helpTip = kHelp;
+      keyStatsGrp.keyImg9.visible = true;
+      keyStatsGrp.keyImg9.helpTip = kHelp;
       break;
 
     // linear - hold
     case keyData.inType == 6612 && keyData.outType == 6614:
-      keyStats7Img.visible = true;
-      keyStats7Img.helpTip = kHelp;
+      keyStatsGrp.keyImg7.visible = true;
+      keyStatsGrp.keyImg7.helpTip = kHelp;
       break;
 
     // ease - hold
     case keyData.inType == 6613 && keyData.outType == 6614:
-      keyStats8Img.visible = true;
-      keyStats8Img.helpTip = kHelp;
+      keyStatsGrp.keyImg8.visible = true;
+      keyStatsGrp.keyImg8.helpTip = kHelp;
       break;
 
     // hold - hold
     case keyData.inType == 6614 && keyData.outType == 6614:
-      keyStats5Img.visible = true;
-      keyStats5Img.helpTip = kHelp;
+      keyStatsGrp.keyImg5.visible = true;
+      keyStatsGrp.keyImg5.helpTip = kHelp;
       break;
 
     // linear - linear
     default:
-      keyStats4Img.visible = true;
-      keyStats4Img.helpTip = kHelp;
+      keyStatsGrp.keyImg4.visible = true;
+      keyStatsGrp.keyImg4.helpTip = kHelp;
       break;
   }
 };
@@ -422,6 +416,7 @@ ikBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//[ ] typewriter - add support to legacy extended script...
 typeAnimBtn.onClick = function () {
   var aItem = app.project.activeItem;
   // error...
@@ -470,6 +465,7 @@ typeAnimBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//[ ] words - add support to legacy extended script...
 wordsBtn.onClick = function () {
   var aItem = app.project.activeItem;
   // error...
