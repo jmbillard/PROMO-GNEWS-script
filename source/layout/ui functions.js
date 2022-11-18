@@ -66,7 +66,7 @@ function setLayout() {
     for (var i = 0; i < tabs.length; i++) {
       tabs[i].spacing = 10;
     }
-    preferencesGrp.spacing = 10;
+    preferences.spacing = 10;
     // text tab - limit text horizontal controls
     limitSld.visible = true;
     limitSld.size.width = 200;
@@ -109,7 +109,7 @@ function setLayout() {
 
     mainGrp.spacing = 2;
     tabsGrp.children[0].spacing = 2;
-    preferencesGrp.spacing = 5;
+    preferences.spacing = 5;
     // text tab - limit text horizontal controls
     limitSld.visible = false;
     limitSld.size.width = 0;
@@ -146,7 +146,7 @@ function setLayout() {
     tabs[t].orientation = wLayout;
     tabs[t].spacing = 5;
   }
-  preferencesGrp.orientation = wLayout;
+  preferences.orientation = wLayout;
   imgGrp.alignment = imgAlignment;
   errImgGrp.alignment = errImgAlignment;
   progImgGrp.alignment = errImgAlignment;
@@ -166,7 +166,7 @@ function updateLayout() {
   for (var t = 0; t < tabs.length; t++) {
     tabs[t].layout.layout(true);
   }
-  preferencesGrp.layout.layout(true);
+  preferences.layout.layout(true);
   imgGrp.layout.layout(true);
   errImgGrp.layout.layout(true);
   progImgGrp.layout.layout(true);
@@ -187,7 +187,7 @@ function hideTabs() {
   for (var t = 1; t < tabs.length; t++) {
     tabs[t].visible = false;
   }
-  preferencesGrp.visible = false;
+  preferences.visible = false;
   errTabGrp.visible = false;
   closeGrp.visible = false;
 }
@@ -209,7 +209,7 @@ function openTab() {
     tabsGrp.children[0].visible = true;
     prefGrp.visible = true;
   }
-  if (currentGrp == preferencesGrp) {
+  if (currentGrp == preferences) {
     bgColor = prefGrpColor;
   }
   errImgGrp.visible = false;
@@ -277,4 +277,35 @@ function showTabProg(msg) {
   setBgColor(w, errGrpColor);
   clearOutput();
   write(msg);
+}
+
+// all tabs except preferences...
+function getTabGroups() {
+
+  var tabsGroups = [];
+  
+  for (var t = 0; t < tabsGrp.children.length - 1; t++) {
+    tabsGroups.push(tabsGrp.children[t]);
+  }
+
+  return tabsGroups;
+}
+
+// all tab subgroups except keyStatsGrp...
+function getTabSubGroups() {
+    
+  var tabSubGrps = [];
+
+  for (var st = 0; st < tabs.length; st++) {
+
+    for (var g = 0; g < tabs[st].children.length; g++) {
+      var subGrp = tabs[st].children[g];
+
+      if (subGrp.toString() != '[object Group]') continue;
+      if (subGrp.properties != undefined) continue;
+      
+      tabSubGrps.push(tabs[st].children[g]);
+    }
+  }
+  return tabSubGrps;
 }

@@ -28,7 +28,7 @@ function findDialog() {
 
   // =======
   var optGrp1 = optMainGrp.add('group');
-  optGrp1.alignChildren = ['center', 'top'];
+  //optGrp1.alignChildren = ['center', 'top'];
   optGrp1.spacing = 4;
   
   var optCkb1 = optGrp1.add('checkbox');

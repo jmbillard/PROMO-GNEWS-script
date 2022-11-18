@@ -143,7 +143,7 @@ findBtn.onClick = function() {
 
 prefBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = preferencesGrp;
+  currentGrp = preferences;
   openTab();
 };
 
