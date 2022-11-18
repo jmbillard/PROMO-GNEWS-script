@@ -504,7 +504,7 @@ function bin(thisObj) {
               nameTxt += fileName + ' | ';
               fileName = File.decode(fileName.substring(0, fileName.length - 4));
               fileName = fileName.replaceSpecialCharacters();
-              codeTxt += '\nvar ' + fileName + ' = ' + convertToBinary(fileObj) + ';\n';
+              codeTxt += '\nvar ' + fileName.toCamelCase() + ' = ' + convertToBinary(fileObj) + ';\n';
 
               codeArray.push(convertToBinary(fileObj));
               prgBar.value = (i + 1) / fileArray.length * 100;
@@ -568,7 +568,7 @@ function bin(thisObj) {
       prgBar.value = 0;
 
       if (edtText.text != '') {
-        var fileTypesArray = ['Script:*.jsx','Text:*.txt'];
+        var fileTypesArray = ['Script:*.jsx','Script include:*.jsxinc','Text:*.txt'];
         fileExpObj = File.saveDialog('export...', fileTypesArray);
 
         if (fileExpObj != null) {
