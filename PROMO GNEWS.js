@@ -24,7 +24,7 @@
 function PROMO_GNEWS_UTL(thisObj) {
   /* jshint ignore:start */
   #include 'source/globals.js'; // global variables...
-  #include 'source/layout/main ui.js'; // → UI definition file
+  #include 'source/layout/main ui ctrls.js'; // → UI definition file
   /* jshint ignore:end */
 
   // loads all preferences...

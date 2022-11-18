@@ -45,7 +45,6 @@ function findDialog() {
 
   var optCkb2 = optGrp2.add('checkbox');
   optCkb2.value = false;
-  //optCkb2.enabled = false;
   
   var optTxt2 = optGrp2.add('statictext', undefined, 'àê');
   optCkb2.helpTip = optTxt2.helpTip = 'match accentuation';
@@ -57,9 +56,9 @@ function findDialog() {
   
   var optCkb3 = optGrp3.add('checkbox');
   optCkb3.value = false;
-  optCkb3.enabled = false;
+  //optCkb3.enabled = false;
   
-  var optTxt3 = optGrp3.add('statictext', undefined, 'RegEx');
+  var optTxt3 = optGrp3.add('statictext', undefined, 'RegExp');
   optCkb3.helpTip = optTxt3.helpTip = 'use regular expression';
 
   // =============
@@ -102,7 +101,8 @@ function findDialog() {
     var optObj = {
       'sKey': sKey,
       'matchCase': optCkb1.value,
-      'matchAccent': optCkb2.value
+      'matchAccent': optCkb2.value,
+      'regExp': optCkb3.value
     };
 
     var selArray = app.project.selection;
@@ -121,6 +121,10 @@ function findDialog() {
     resultTree.size.height = 160;
     resultTxt.text = 'complete - '+ timer() + 's  (o °▽ °)o☆';
     w.layout.layout(true);
+  };
+
+  optCkb3.onClick = function () {
+    optCkb1.enabled = optCkb2.enabled = !optCkb3.value;
   };
 
   resultTree.onChange = function () {
