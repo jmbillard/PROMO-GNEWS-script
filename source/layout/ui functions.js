@@ -108,7 +108,7 @@ function setLayout() {
     prefGrp.margins = [0, 10, 0, 0];
 
     mainGrp.spacing = 2;
-    menuGrp.spacing = 2;
+    tabsGrp.children[0].spacing = 2;
     preferencesGrp.spacing = 5;
     // text tab - limit text horizontal controls
     limitSld.visible = false;
@@ -183,7 +183,7 @@ function updateLayout() {
 // turns off all tab groups visibility...
 function hideTabs() {
 
-  // tabs[0] → menuGrp
+  // tabs[0] → tabsGrp.children[0]
   for (var t = 1; t < tabs.length; t++) {
     tabs[t].visible = false;
   }
@@ -200,13 +200,13 @@ function openTab() {
   closeGrp.visible = true;
   imgGrp.visible = true;
   
-  menuGrp.visible = false;
+  tabsGrp.children[0].visible = false;
   prefGrp.visible = false;
   closeErrBtn.visible = false;
   
-  if (currentGrp == menuGrp) {
+  if (currentGrp == tabsGrp.children[0]) {
     closeGrp.visible = false;
-    menuGrp.visible = true;
+    tabsGrp.children[0].visible = true;
     prefGrp.visible = true;
   }
   if (currentGrp == preferencesGrp) {
@@ -244,7 +244,7 @@ function showTabErr(msg) {
 
   prefGrp.visible = false;
   currentGrp.visible = false;
-  menuGrp.visible = false;
+  tabsGrp.children[0].visible = false;
   closeBtn.visible = false;
   imgGrp.visible = false;
   progImgGrp.visible = false;
@@ -268,7 +268,7 @@ function showTabProg(msg) {
   closeGrp.visible = false;
   prefGrp.visible = false;
   currentGrp.visible = false;
-  menuGrp.visible = false;
+  tabsGrp.children[0].visible = false;
   closeBtn.visible = false;
   closeErrBtn.visible = false;
   imgGrp.visible = false;

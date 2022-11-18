@@ -22,37 +22,37 @@ w.onResizing = w.onResize = function() {
 
 ctrlBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = ctrlGrp;
+  currentGrp = tabsGrp.children[1];
   openTab();
 };
 
 animBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = animationGrp;
+  currentGrp = tabsGrp.children[2];
   openTab();
 };
 
 fxBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = fxGrp;
+  currentGrp = tabsGrp.children[4];
   openTab();
 };
 
 txtBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = textGrp;
+  currentGrp = tabsGrp.children[5];
   openTab();
 };
 
 guideBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = guideGrp;
+  currentGrp = tabsGrp.children[6];
   openTab();
 };
 
 toolBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = toolsGrp;
+  currentGrp = tabsGrp.children[3];
   openTab();
 };
 
@@ -61,7 +61,7 @@ projBtn.onClick = function () {
   projId = getXMPdata('identifier') == '' ? 'proj id' : getXMPdata('identifier');
 
   currentGrp.visible = false;
-  currentGrp = projectGrp;
+  currentGrp = tabsGrp.children[7];
   openTab();
   projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
@@ -70,19 +70,19 @@ projBtn.onClick = function () {
 
 appBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = appGrp;
+  currentGrp = tabsGrp.children[9];
   openTab();
 };
 
 devBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = devGrp;
+  currentGrp = tabsGrp.children[10];
   openTab();
 };
 
 linksBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = linksGrp;
+  currentGrp = tabsGrp.children[8];
   openTab();
 };
 
@@ -228,7 +228,7 @@ closeBtn.onClick = function () {
   closeBtn.visible = true;
   prefGrp.visible = true;
   closeErrBtn.visible = false;
-  menuGrp.visible = true;
+  tabsGrp.children[0].visible = true;
   bgColor = tabColors[0];
   errImgGrp.visible = false;
 
