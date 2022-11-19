@@ -1,35 +1,33 @@
 {
-	"layout_end_page":{
-		"modelo":1,
-		"subtitulo":false,
-		"footage":false,
-		"foto":true,
-		"foto_layer":"gabeira.png",
-		"pattern":true,
-		"pattern_layer":"comp_pattern gabeira"
+	"layout_end_page": {
+		"modelo": 1,
+		"subtitulo": false,
+		"footage": false,
+		"foto": true,
+		"foto_layer": "gabeira.png",
+		"pattern": true,
+		"pattern_layer": "comp_pattern gabeira"
 	},
-
-	"servico_end_page":{
-		"titulo":"Fernando\nGabeira",
-		"subtitulo":"SUBTÍTULO",
-		"formato":4,
-		"semana":1,
-		"dia":10,
-		"mes":9,
-		"hora":21,
-		"min":30
+	"servico_end_page": {
+		"titulo": "Fernando\nGabeira",
+		"subtitulo": "SUBTÍTULO",
+		"formato": 4,
+		"semana": 1,
+		"dia": 10,
+		"mes": 9,
+		"hora": 21,
+		"min": 30
 	},
-
-	"aparencia_end_page":{
-		"tema":5,
-		"logo":"#F2F2F2",
-		"titulo":"#FF8F4D",
-		"subtitulo":"#FF8F4D",
-		"apoio":"#FF8F4D",
-		"horario":"#141414",
-		"horario_base":"#ECFF8C",
-		"footage":"#4A4A4A",
-		"pattern":"#231E1E",
-		"fundo":"#4A4A4A"
+	"aparencia_end_page": {
+		"tema": 5,
+		"logo": "#F2F2F2",
+		"titulo": "#FF8F4D",
+		"subtitulo": "#F2F2F2",
+		"apoio": "#FF8F4D",
+		"horario": "#141414",
+		"horario_base": "#ECFF8C",
+		"footage": "#4A4A4A",
+		"pattern": "#231E1E",
+		"fundo": "#4A4A4A"
 	}
 }

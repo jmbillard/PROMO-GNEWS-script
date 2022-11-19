@@ -1,7 +1,7 @@
 {
 	"layout_end_page":{
-		"modelo":2,
-		"subtitulo":false,
+		"modelo":1,
+		"subtitulo":true,
 		"footage":true,
 		"foto":false,
 		"foto_layer":"-------",
@@ -24,7 +24,7 @@
 		"tema":5,
 		"logo":"#F2F2F2",
 		"titulo":"#E53131",
-		"subtitulo":"#E53131",
+		"subtitulo":"#F2F2F2",
 		"apoio":"#E53131",
 		"horario":"#141414",
 		"horario_base":"#ECFF8C",

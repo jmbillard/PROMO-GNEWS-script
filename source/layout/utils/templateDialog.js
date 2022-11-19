@@ -159,7 +159,7 @@ function templateDialog() {
     var url = repoURL + '/raw/main/downloads/templates.zip';
     var zipPath = downPath + '/templates.zip'; // → ~AppData\Roaming\PROMO GNEWS script\temp\templates.zip
     var templatesLocalFolder = new Folder(templatesLocalPath);
-    
+
     removeFolder(templatesLocalFolder); // → delete previous templates folder
     templatesLocalFolder.create(); // → delete previous templates folder
 
@@ -168,16 +168,16 @@ function templateDialog() {
       downFolder.create(); // → create temp folder
     }
     getURLContent([url], [downPath]); // → download content
-  
+
     unzipContent(zipPath, templatesLocalPath); // → unzip file    
     removeFolder(downFolder); // → delete temp folder
-  
+
     if (GLOBO_ACCESS) {
       removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
 
       alert('copy the templates to the empty folder\nand press the refresh button!');
-      
+
       // wait 3 seconds...
       $.sleep(3000);
       openFolder(templatesLocalPath);

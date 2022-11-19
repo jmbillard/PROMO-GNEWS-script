@@ -43,7 +43,7 @@ function endPagePresetDialog() {
             break;
           }
         }
-      } catch (error) {}
+      } catch (error) { }
       try {
         var fotoComp = aItem.layer('comp_img apresentador').source; // host image precomp layer...
 
@@ -56,8 +56,8 @@ function endPagePresetDialog() {
             break;
           }
         }
-      } catch (error) {}
-    } catch (error) {}
+      } catch (error) { }
+    } catch (error) { }
   }
 
   // get preset file names..
@@ -93,7 +93,7 @@ function endPagePresetDialog() {
         layersArray.push(layerName);
       }
       populateDropdownList(layersArray, dropdown);
-    } catch (error) {}
+    } catch (error) { }
 
     return layersArray;
   }
@@ -118,7 +118,7 @@ function endPagePresetDialog() {
           selectedLayerName = selectedName;
         }
       }
-    } catch (error) {}
+    } catch (error) { }
     return selectedLayerName;
   }
 
@@ -175,7 +175,7 @@ function endPagePresetDialog() {
       layoutFx.property('foto').setValue(layout.foto);
       layoutFx.property('footage').setValue(layout.footage);
       layoutFx.property('pattern').setValue(layout.pattern);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   function servicoUiVis() {
@@ -232,7 +232,7 @@ function endPagePresetDialog() {
       aparenciaFx.property('footage').setValue(hexToRGB(aparencia.footage));
       aparenciaFx.property('pattern').setValue(hexToRGB(aparencia.pattern));
       aparenciaFx.property('fundo').setValue(hexToRGB(aparencia.fundo));
-    } catch (error) {}
+    } catch (error) { }
   }
 
   function updateUiColors() {
@@ -465,12 +465,12 @@ function endPagePresetDialog() {
   oGrp.orientation = 'column';
   oGrp.spacing = 0;
   // refresh button...
-  var refreshBtn = oGrp.add('iconbutton', undefined, upIcon, {style: 'toolbutton'});
+  var refreshBtn = oGrp.add('iconbutton', undefined, upIcon, { style: 'toolbutton' });
   refreshBtn.helpTip = 'pull comp changes';
   // apply button...
-  var applyBtn = oGrp.add('iconbutton', undefined, downIcon, {style: 'toolbutton'});
+  var applyBtn = oGrp.add('iconbutton', undefined, downIcon, { style: 'toolbutton' });
   applyBtn.helpTip = 'apply current changes';
-  
+
   var openBtn = bGrp1.add('iconbutton', undefined, folderIcon, { style: 'toolbutton' });
   openBtn.helpTip = 'open end page presets folder';
   var saveBtn = bGrp2.add('button', undefined, 'save');
@@ -545,7 +545,7 @@ function endPagePresetDialog() {
       min = parseInt(min);
       min = min < 59 ? min : 59;
       aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[min]').setValue(min);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   applyBtn.onClick = function () {
@@ -571,7 +571,7 @@ function endPagePresetDialog() {
       min = parseInt(min);
       min = min < 59 ? min : 59;
       aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[min]').setValue(min);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   modelo_layoutDdl.onChange = function () {
@@ -625,7 +625,7 @@ function endPagePresetDialog() {
       var titulo = aItem.layer('txt_titulo').property('ADBE Text Properties').property('ADBE Text Document');
       servico.titulo = titulo.value;
       titulo_servico.text = servico.titulo;
-    } catch (error) {}
+    } catch (error) { }
   };
 
   subtitulo_servico.onChanging = function () {
@@ -644,7 +644,7 @@ function endPagePresetDialog() {
       var subtitulo = aItem.layer('txt_subtitulo').property('ADBE Text Properties').property('ADBE Text Document');
       servico.subtitulo = subtitulo.value;
       subtitulo_servico.text = servico.subtitulo;
-    } catch (error) {}
+    } catch (error) { }
   };
 
   dia_servico.onChanging = function () {
@@ -683,7 +683,7 @@ function endPagePresetDialog() {
       var hora = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[hora]');
 
       hora_servico.text = hora.value;
-    } catch (error) {}
+    } catch (error) { }
   };
 
   dia_servico.onChange = function () {
@@ -692,7 +692,7 @@ function endPagePresetDialog() {
       var dia = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[dia]');
 
       dia_servico.text = dia.value;
-    } catch (error) {}
+    } catch (error) { }
   };
 
   min_servico.onChanging = function () {
@@ -716,7 +716,7 @@ function endPagePresetDialog() {
       var min = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[min]');
 
       min_servico.text = min.value;
-    } catch (error) {}
+    } catch (error) { }
   };
 
   tema_aparenciaDdl.onChange = function () {
@@ -799,7 +799,7 @@ function endPagePresetDialog() {
   saveBtn.onClick = function () {
     var fileName = titulo_servico.text.replace(/\s+/g, ' ').toLowerCase().trim();
     var filePath = presetPath + '/' + fileName + '.json';
-    var presetStr = endPageObjToString(obj);
+    var presetStr = JSON.stringify(obj, null, '\t');
     saveFile(presetStr, filePath);
 
     var presetArray = getPresetNames();

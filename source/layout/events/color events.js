@@ -68,7 +68,7 @@ logoAnim3sBtn.onClick = function () {
   var layer = app.project.activeItem.layers.addShape();
   layer.startTime = aItem.time;
   layer.name = 'marca_gnews 3s';
-  
-  addPseudoEffect('marca_3s',toolMarca3s);
+
+  addPseudoEffect('marca_3s', toolMarca3s);
   app.endUndoGroup();
 };

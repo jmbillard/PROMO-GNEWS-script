@@ -1,35 +1,33 @@
 {
-	"layout_end_page":{
-		"modelo":2,
-		"subtitulo":false,
-		"footage":false,
-		"foto":true,
-		"foto_layer":"miriam.png",
-		"pattern":true,
-		"pattern_layer":"comp_pattern miriam"
+	"layout_end_page": {
+		"modelo": 2,
+		"subtitulo": false,
+		"footage": false,
+		"foto": true,
+		"foto_layer": "miriam.png",
+		"pattern": true,
+		"pattern_layer": "comp_pattern miriam"
 	},
-
-	"servico_end_page":{
-		"titulo":"Miriam\nLeitão",
-		"subtitulo":"SUBTÍTULO",
-		"formato":4,
-		"semana":8,
-		"dia":10,
-		"mes":9,
-		"hora":23,
-		"min":0
+	"servico_end_page": {
+		"titulo": "Miriam\nLeitão",
+		"subtitulo": "SUBTÍTULO",
+		"formato": 4,
+		"semana": 8,
+		"dia": 10,
+		"mes": 9,
+		"hora": 23,
+		"min": 0
 	},
-
-	"aparencia_end_page":{
-		"tema":5,
-		"logo":"#F2F2F3",
-		"titulo":"#E52E2E",
-		"subtitulo":"#F2F2F3",
-		"apoio":"#F2F2F3",
-		"horario":"#141414",
-		"horario_base":"#ECFF8C",
-		"footage":"#E32323",
-		"pattern":"#333333",
-		"fundo":"#231E1E"
+	"aparencia_end_page": {
+		"tema": 5,
+		"logo": "#F2F2F2",
+		"titulo": "#E52E2E",
+		"subtitulo": "#F2F2F2",
+		"apoio": "#F2F2F2",
+		"horario": "#141414",
+		"horario_base": "#ECFF8C",
+		"footage": "#E32323",
+		"pattern": "#333333",
+		"fundo": "#231E1E"
 	}
 }

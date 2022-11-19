@@ -1,4 +1,3 @@
-
 /*
 
 ---------------------------------------------------------------
@@ -13,17 +12,17 @@
 //  jshint -W043
 
 function deleteFileExt(str) {
-
   return str.replace(/\.[0-9a-z]+$/i, '');
 }
 
 function getFileExt(str) {
-
-  return str.match(/\.[0-9a-z]+$/i).toString().toLowerCase();
+  return str
+    .match(/\.[0-9a-z]+$/i)
+    .toString()
+    .toLowerCase();
 }
 
 function deletePrefix(str, prefixStr) {
-
   var patStr = 'new RegExp(/(' + prefixStr + '(\\s)*)+/)';
   var pat = eval(patStr);
 
@@ -32,7 +31,6 @@ function deletePrefix(str, prefixStr) {
 
 // sets the text case (upper, lower e title)...
 function titleCase(str) {
-
   str = str.toLowerCase().split(' ');
 
   for (var i = 0; i < str.length; i++) {
@@ -51,7 +49,8 @@ function titleCase(str) {
 
 // format short date and time → SHORT DATE TIME
 function formatShortDateAndTime(str) {
-  return  str.toString()
+  return str
+    .toString()
     .trim()
     .toUpperCase()
     .toShortDate()
@@ -60,9 +59,8 @@ function formatShortDateAndTime(str) {
 }
 
 function limitNameSize(name, limit) {
-
-  var limit1 = (limit / 2) - 5;
-  var limit2 = name.length - (limit / 2);
+  var limit1 = limit / 2 - 5;
+  var limit2 = name.length - limit / 2;
 
   var name1 = name.substring(0, limit1);
   var name2 = name.substring(limit2, name.length);

@@ -77,11 +77,11 @@ function fontsDialog() {
     if (!netAccess()) {
       alert('no network...  Σ(っ °Д °;)っ');
       return;
-    }    
+    }
     var url = repoURL + '/raw/main/downloads/fonts.zip';
     var zipPath = downPath + '/fonts.zip';
     var fontsLocalFolder = new Folder(fontsLocalPath);
-    
+
     removeFolder(fontsLocalFolder); // → delete previous fonts folder
     fontsLocalFolder.create(); // → delete previous templates folder
 
@@ -89,7 +89,7 @@ function fontsDialog() {
       downFolder.create();
     }
     getURLContent([url], [downPath]);
-    
+
     unzipContent(zipPath, fontsLocalPath);
     removeFolder(downFolder); // → delete temp folder
 

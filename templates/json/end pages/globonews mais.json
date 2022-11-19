@@ -1,35 +1,33 @@
 {
-	"layout_end_page":{
-		"modelo":3,
-		"subtitulo":true,
-		"footage":false,
-		"foto":false,
-		"foto_layer":"-------",
-		"pattern":false,
-		"pattern_layer":"-------"
+	"layout_end_page": {
+		"modelo": 3,
+		"subtitulo": true,
+		"footage": false,
+		"foto": false,
+		"foto_layer": "-------",
+		"pattern": false,
+		"pattern_layer": "-------"
 	},
-
-	"servico_end_page":{
-		"titulo":"GloboNews\nMais",
-		"subtitulo":"COM JULIA DUAILIBI E TIAGO ELTZ",
-		"formato":6,
-		"semana":8,
-		"dia":10,
-		"mes":9,
-		"hora":16,
-		"min":0
+	"servico_end_page": {
+		"titulo": "GloboNews\nMais",
+		"subtitulo": "COM JULIA DUAILIBI E TIAGO ELTZ",
+		"formato": 6,
+		"semana": 8,
+		"dia": 10,
+		"mes": 9,
+		"hora": 16,
+		"min": 0
 	},
-
-	"aparencia_end_page":{
-		"tema":4,
-		"logo":"#141414",
-		"titulo":"#F2F2F2",
-		"subtitulo":"#F2F2F2",
-		"apoio":"#F2F2F2",
-		"horario":"#141414",
-		"horario_base":"#ECFF8C",
-		"footage":"#141414",
-		"pattern":"#141414",
-		"fundo":"#E53131"
+	"aparencia_end_page": {
+		"tema": 4,
+		"logo": "#141414",
+		"titulo": "#F2F2F2",
+		"subtitulo": "#F2F2F2",
+		"apoio": "#F2F2F2",
+		"horario": "#141414",
+		"horario_base": "#ECFF8C",
+		"footage": "#141414",
+		"pattern": "#141414",
+		"fundo": "#E53131"
 	}
 }

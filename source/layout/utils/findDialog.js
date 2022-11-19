@@ -30,11 +30,11 @@ function findDialog() {
   var optGrp1 = optMainGrp.add('group');
   //optGrp1.alignChildren = ['center', 'top'];
   optGrp1.spacing = 4;
-  
+
   var optCkb1 = optGrp1.add('checkbox');
   optCkb1.value = false;
   //optCkb1.enabled = false;
-  
+
   var optTxt1 = optGrp1.add('statictext', undefined, 'Tt');
   optCkb1.helpTip = optTxt1.helpTip = 'match case';
 
@@ -45,7 +45,7 @@ function findDialog() {
 
   var optCkb2 = optGrp2.add('checkbox');
   optCkb2.value = false;
-  
+
   var optTxt2 = optGrp2.add('statictext', undefined, 'àê');
   optCkb2.helpTip = optTxt2.helpTip = 'match accentuation';
 
@@ -53,11 +53,11 @@ function findDialog() {
   var optGrp3 = optMainGrp.add('group');
   optGrp3.alignChildren = ['center', 'top'];
   optGrp3.spacing = 4;
-  
+
   var optCkb3 = optGrp3.add('checkbox');
   optCkb3.value = false;
   //optCkb3.enabled = false;
-  
+
   var optTxt3 = optGrp3.add('statictext', undefined, 'RegExp');
   optCkb3.helpTip = optTxt3.helpTip = 'use regular expression';
 
@@ -98,20 +98,20 @@ function findDialog() {
       w.layout.layout(true);
       return;
     }
-    
+
     var optObj = {
-      'sKey': sKey,
-      'matchCase': optCkb1.value,
-      'matchAccent': optCkb2.value,
-      'regExp': optCkb3.value
+      sKey: sKey,
+      matchCase: optCkb1.value,
+      matchAccent: optCkb2.value,
+      regExp: optCkb3.value,
     };
 
     var selArray = app.project.selection;
     selArray = selArray.length > 0 ? selArray : getComps(); // → [selected items] : [all comps]
     resultArray = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
-    
+
     if (resultArray.length == 0) {
-      resultTxt.text = 'no matches - '+ timer() + 's  (っ °Д °;)っ';
+      resultTxt.text = 'no matches - ' + timer() + 's  (っ °Д °;)っ';
       resultTree.visible = false;
       resultTree.size.height = 0;
       w.layout.layout(true);
@@ -120,7 +120,7 @@ function findDialog() {
     expandNodes(resultTree);
     resultTree.visible = true;
     resultTree.size.height = 160;
-    resultTxt.text = 'complete - '+ timer() + 's  (o °▽ °)o☆';
+    resultTxt.text = 'complete - ' + timer() + 's  (o °▽ °)o☆';
     w.layout.layout(true);
   };
 
@@ -130,7 +130,6 @@ function findDialog() {
 
   // [ ] comment - resultTree
   resultTree.onChange = function () {
-
     var comp;
     var t;
 
@@ -140,22 +139,18 @@ function findDialog() {
     }
     if (resultTree.selection.type == 'item') {
       comp = resultArray[resultTree.selection.parent.index];
-      var lArray = resultTree.selection
-        .toString()
-        .split('   ');
-      var k = lArray[0]            // → '(1)'
-        .replace(/[\(|\)]/g, '');  // → '1'
-      var i = lArray[1]            // → '# 3'
-        .replace('#', '');         // → '3'
-      
+      var lArray = resultTree.selection.toString().split('   ');
+      var k = lArray[0] // → '(1)'
+        .replace(/[\(|\)]/g, ''); // → '1'
+      var i = lArray[1] // → '# 3'
+        .replace('#', ''); // → '3'
+
       for (var l = 1; l <= comp.numLayers; l++) {
         var aLayer = comp.layer(l);
 
         if (l == parseInt(i)) {
-          var doc = aLayer
-            .property('ADBE Text Properties')
-            .property('ADBE Text Document');
-  
+          var doc = aLayer.property('ADBE Text Properties').property('ADBE Text Document');
+
           t = (aLayer.outPoint - aLayer.inPoint) / 2 + aLayer.inPoint;
           aLayer.shy = false;
 

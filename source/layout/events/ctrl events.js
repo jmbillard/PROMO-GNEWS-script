@@ -37,7 +37,7 @@ upHBtn.onClick = function () {
   } else {
     try {
       aItem.layer('ctrl_comp').selected = true;
-    } catch (error) {}
+    } catch (error) { }
   }
   app.endUndoGroup();
 };
@@ -77,7 +77,7 @@ dwnHBtn.onClick = function () {
   } else {
     try {
       aItem.layer('ctrl_comp').selected = true;
-    } catch (error) {}
+    } catch (error) { }
   }
   app.endUndoGroup();
 };

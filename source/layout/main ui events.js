@@ -12,11 +12,11 @@
 
 
 // layouts all the UI
-w.onShow = function() {
+w.onShow = function () {
   setLayout();
 };
 // layouts all the UI
-w.onResizing = w.onResize = function() {
+w.onResizing = w.onResize = function () {
   setLayout();
 };
 
@@ -110,7 +110,7 @@ importAetBtn.onClick = function () {
   if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
     removeFolder(templatesLocalFolder); // → delete previous templates folder
     templatesLocalFolder.create(); // → delete previous templates folder
-    
+
     getURLContent([url], [downPath]);
     unzipContent(zipPath, templatesLocalPath);
 
@@ -119,7 +119,7 @@ importAetBtn.onClick = function () {
       templatesFolder.create(); // → delete previous templates folder
 
       alert('copy the templates to the empty folder\nand press the refresh button!');
-      
+
       // wait 3 seconds...
       $.sleep(3000);
       openFolder(templatesLocalPath);
@@ -137,7 +137,7 @@ importAetBtn.onClick = function () {
 
 */
 
-findBtn.onClick = function() {
+findBtn.onClick = function () {
   findDialog();
 };
 

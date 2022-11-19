@@ -93,6 +93,7 @@ mamMagBtn.addEventListener('click', function (c) {
 
     if (saveFolder != null) {
       magazinePath = decodeURI(saveFolder).toString();
+      JSONObj.folders.magazinePath = magazinePath;
       savePreferences();
     }
   }
@@ -119,6 +120,7 @@ mamArteBtn.addEventListener('click', function (c) {
 
     if (saveFolder != null) {
       artePath = decodeURI(saveFolder).toString();
+      JSONObj.folders.artePath = artePath;
       savePreferences();
     }
   }

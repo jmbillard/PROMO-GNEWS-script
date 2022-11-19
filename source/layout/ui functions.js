@@ -1,4 +1,3 @@
-
 /*
 
 ---------------------------------------------------------------
@@ -12,12 +11,9 @@
 //  jshint -W085
 //  jshint -W043
 
-
 //
 function customDraw() {
-
-  with(this) {
-
+  with (this) {
     graphics.drawOSControl();
     graphics.rectPath(0, 0, size[0], size[1]);
     graphics.fillPath(fillBrush);
@@ -26,27 +22,23 @@ function customDraw() {
 
 // changes the window background color...
 function setBgColor(w, color) {
-
   var bType = w.graphics.BrushType.SOLID_COLOR;
   w.graphics.backgroundColor = w.graphics.newBrush(bType, color);
 }
 
 function setBtnColor(btn, color) {
-
   var bType = w.graphics.BrushType.SOLID_COLOR;
   btn.fillBrush = btn.graphics.newBrush(bType, color);
 }
 
 // changes static text color...
 function setTxtColor(sTxt, color) {
-
   var pType = sTxt.graphics.PenType.SOLID_COLOR;
   sTxt.graphics.foregroundColor = sTxt.graphics.newPen(pType, color, 1);
 }
 
 function setLayout() {
-
-  wLayout = (w.size.width > w.size.height) ? 'row' : 'column';
+  wLayout = w.size.width > w.size.height ? 'row' : 'column';
 
   if (wLayout == 'row') {
     // horizontal layout
@@ -93,7 +85,6 @@ function setLayout() {
     progTxt1.size.width = 160;
     progTxt2.visible = true;
     progTxt2.size.width = 160;
-
   } else {
     // vertical layout
     imgAlignment = 'bottom';
@@ -159,7 +150,6 @@ function setLayout() {
 }
 
 function updateLayout() {
-
   for (var s = 0; s < tabSubGrps.length; s++) {
     tabSubGrps[s].layout.layout(true);
   }
@@ -182,7 +172,6 @@ function updateLayout() {
 
 // turns off all tab groups visibility...
 function hideTabs() {
-
   // tabs[0] → tabsGrp.children[0]
   for (var t = 1; t < tabs.length; t++) {
     tabs[t].visible = false;
@@ -194,16 +183,15 @@ function hideTabs() {
 
 // turns on the respective tab group visibility...
 function openTab() {
- 
   bgColor = tabColors[tabs.indexOf(currentGrp)];
   currentGrp.visible = true;
   closeGrp.visible = true;
   imgGrp.visible = true;
-  
+
   tabsGrp.children[0].visible = false;
   prefGrp.visible = false;
   closeErrBtn.visible = false;
-  
+
   if (currentGrp == tabsGrp.children[0]) {
     closeGrp.visible = false;
     tabsGrp.children[0].visible = true;
@@ -221,7 +209,6 @@ function openTab() {
 
 //
 function replaceErrImage() {
-  
   var r = getRndInteger(0, errImgArray.length);
 
   errImgGrp.remove(errImg);
@@ -234,7 +221,6 @@ function replaceErrImage() {
 
 // show error message...
 function showTabErr(msg) {
-
   var lol = 'Σ(っ °Д °;)っ        ';
   errTxt.text = lol + msg;
   errImgGrp.visible = true;
@@ -258,7 +244,6 @@ function showTabErr(msg) {
 
 // show progress blocking user interaction...
 function showTabProg(msg) {
-
   progTxt1.text = 'KEEP CALM';
   progTxt2.text = msg;
   progressGrp.visible = true;
@@ -281,9 +266,8 @@ function showTabProg(msg) {
 
 // all tabs except preferences...
 function getTabGroups() {
-
   var tabsGroups = [];
-  
+
   for (var t = 0; t < tabsGrp.children.length - 1; t++) {
     tabsGroups.push(tabsGrp.children[t]);
   }
@@ -293,17 +277,15 @@ function getTabGroups() {
 
 // all tab subgroups except keyStatsGrp...
 function getTabSubGroups() {
-    
   var tabSubGrps = [];
 
   for (var st = 0; st < tabs.length; st++) {
-
     for (var g = 0; g < tabs[st].children.length; g++) {
       var subGrp = tabs[st].children[g];
 
       if (subGrp.toString() != '[object Group]') continue;
       if (subGrp.properties != undefined) continue;
-      
+
       tabSubGrps.push(tabs[st].children[g]);
     }
   }

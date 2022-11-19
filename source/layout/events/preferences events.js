@@ -12,11 +12,13 @@
 
 lDrop.onChange = function () {
   layerType = lDrop.selection.index;
+  JSONObj.selection.layerType = layerType;
   savePreferences();
 };
 
 projTemplateDrop.onChange = function () {
   projectModel = projTemplateDrop.selection.index;
+  JSONObj.selection.projectModel = projectModel;
   savePreferences();
 };
 
@@ -32,9 +34,11 @@ tabColorBtn.onClick = function () {
   var configColor = $.colorPicker(binColor);
 
   if (configColor != -1) {
-    configColor = rgbStr(configColor);
-    setBtnColor(tabColorBtn, eval(configColor));
-    tabColors[colorDrop.selection.index] = eval(configColor);
+    configColor = eval(rgbStr(configColor));
+    tabColors[colorDrop.selection.index] = configColor;
+    JSONObj.color[colorDrop.selection] = rgbToHEX(configColor);
+    
+    setBtnColor(tabColorBtn, configColor);
     savePreferences();
   }
 };
@@ -79,7 +83,7 @@ updateBtn.onClick = function () {
   for (var p = 0; p < destPathArray.length; p++) {
     try {
       copyFolderContent(downPath, destPathArray[p]);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');

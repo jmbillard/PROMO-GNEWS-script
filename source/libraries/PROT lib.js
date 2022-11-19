@@ -14,9 +14,9 @@ String.prototype.popLastCharacter = function () {
 // string to camel case...
 String.prototype.toCamelCase = function () {
   return this.toLowerCase()
-    .replace(/\s(.)/g, function ($1) {return $1.toUpperCase();})
+    .replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
     .replace(/\s/g, '')
-    .replace(/^(.)/, function ($1) {return $1.toLowerCase();});
+    .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
 };
 
 // trim...
@@ -93,14 +93,14 @@ Image.prototype.onDraw = function () {
 
 // Array.isArray(obj) definition...
 if (typeof Array.isArray === 'undefined') {
-  Array.isArray = function(obj) {
+  Array.isArray = function (obj) {
     return Object.prototype.toString.call(obj) === '[object Array]';
   };
 }
 
 // indexOf() definition...
 if (!Array.prototype.indexOf) {
-  Array.prototype.indexOf = function(element, startPoint) {
+  Array.prototype.indexOf = function (element, startPoint) {
 
     var k;
 

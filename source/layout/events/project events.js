@@ -8,6 +8,7 @@
 
 projUserTxt.onChange = function () {
   userPrefix = projUserTxt.text.toUpperCase();
+  JSONObj.userPrefix = userPrefix;
   savePreferences();
 };
 
