@@ -97,7 +97,7 @@ nullShpBtn.onClick = function () {
     for (var l = 0; l < selLayers.length; l++) {
       var selLayer = selLayers[l];
 
-      if (lDrop.selection == 0) {
+      if (layerTypeDrop.selection == 0) {
         ctrlLayer = shpNull();
       } else {
         ctrlLayer = aItem.layers.addNull();
@@ -133,7 +133,7 @@ nullShpBtn.onClick = function () {
       ctrlLayer.label = 1;
     }
   } else {
-    if (lDrop.selection == 0) {
+    if (layerTypeDrop.selection == 0) {
       ctrlLayer = shpNull();
     } else {
       ctrlLayer = aItem.layers.addNull();
@@ -165,7 +165,7 @@ nullCShpBtn.onClick = function () {
   }
   app.beginUndoGroup('create centered null');
 
-  if (lDrop.selection == 0) {
+  if (layerTypeDrop.selection == 0) {
     ctrlLayer = shpNull();
   } else {
     ctrlLayer = aItem.layers.addNull();

@@ -392,7 +392,7 @@ ikBtn.onClick = function () {
 
 	zeroLayer = aItem.layers.addShape();
 
-	if (lDrop.selection == 0) {
+	if (layerTypeDrop.selection == 0) {
 		ctrlLayer = shpNull();
 	} else {
 		ctrlLayer = aItem.layers.addNull();

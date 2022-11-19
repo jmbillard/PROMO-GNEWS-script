@@ -10,36 +10,36 @@
 //  jshint -W061
 //  jscs:disable maximumLineLength
 
-lDrop.onChange = function () {
-  layerType = lDrop.selection.index;
-  JSONObj.selection.layerType = layerType;
-  savePreferences();
+layerTypeDrop.onChange = function () {
+  layerType = layerTypeDrop.selection.index; // selected layer type...
+  JSONObj.selection.layerType = layerType; // update preferences object...
+  savePreferences(); // → save preferences.json
 };
 
-projTemplateDrop.onChange = function () {
-  projectModel = projTemplateDrop.selection.index;
-  JSONObj.selection.projectModel = projectModel;
-  savePreferences();
+projectModeDrop.onChange = function () {
+  projectMode = projectModeDrop.selection.index; // selected project model...
+  JSONObj.selection.projectMode = projectMode; // update preferences object...
+  savePreferences(); // → save preferences.json
 };
 
 colorDrop.onChange = function () {
-  var c = tabColors[colorDrop.selection.index];
-  setBtnColor(tabColorBtn, c);
-  tabColorBtn.notify('onDraw');
+  var c = tabColors[colorDrop.selection.index]; // selected tab color...
+  setBtnColor(tabColorBtn, c); // update color preview swatch...
+  tabColorBtn.notify('onDraw'); // force ui update...
 };
 
 tabColorBtn.onClick = function () {
-  var c = tabColors[colorDrop.selection.index];
-  var binColor = eval(rgbToHex(c));
-  var configColor = $.colorPicker(binColor);
+  var c = tabColors[colorDrop.selection.index]; // selected tab color...
+  var binColor = eval(rgbToHex(c)); // color converted HEX...
+  var configColor = $.colorPicker(binColor); // → system color picker
 
   if (configColor != -1) {
-    configColor = eval(rgbStr(configColor));
-    tabColors[colorDrop.selection.index] = configColor;
-    JSONObj.color[colorDrop.selection] = rgbToHEX(configColor);
+    configColor = eval(rgbStr(configColor)); // → [1,1,1]
+    tabColors[colorDrop.selection.index] = configColor; // update color array...
+    JSONObj.color[colorDrop.selection] = rgbToHEX(configColor); // update preferences object...
     
-    setBtnColor(tabColorBtn, configColor);
-    savePreferences();
+    setBtnColor(tabColorBtn, configColor); // update color preview swatch...
+    savePreferences(); // → save preferences.json
   }
 };
 

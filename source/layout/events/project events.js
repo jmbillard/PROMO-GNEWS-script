@@ -91,7 +91,7 @@ projOrgBtn.onClick = function () {
 
   removeProjFolders();
   deleteEmptyFolders();
-  populateFolders(projectModel);
+  populateFolders(projectMode);
   deleteEmptyFolders();
 
   app.endUndoGroup();

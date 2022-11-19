@@ -73,8 +73,8 @@ function setLayout() {
     // project tab - controls
     projIdTxt.size.width = 80;
     projNameTxt.size.width = 140;
-    lDrop.size.width = 80;
-    projTemplateDrop.size.width = 80;
+    layerTypeDrop.size.width = 80;
+    projectModeDrop.size.width = 80;
     colorDrop.size.width = 80;
     tabColorBtn.size.width = 20;
     // error tab
@@ -115,8 +115,8 @@ function setLayout() {
     // project tab - controls
     projIdTxt.size.width = 70;
     projNameTxt.size.width = 70;
-    lDrop.size.width = 70;
-    projTemplateDrop.size.width = 70;
+    layerTypeDrop.size.width = 70;
+    projectModeDrop.size.width = 70;
     colorDrop.size.width = 70;
     tabColorBtn.size.width = 66;
     // error tab
