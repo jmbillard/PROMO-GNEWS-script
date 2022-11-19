@@ -12,7 +12,7 @@
 //  jshint -W085
 //  jshint -W043
 
-
+// [ ] comment - cleanHierarchy
 function cleanHierarchy(nodeTree) {
 
   var branches = nodeTree.items;
@@ -32,7 +32,7 @@ function cleanHierarchy(nodeTree) {
     }
   }
 }
-
+// [ ] comment - createHierarchy
 // populates the 'tree view' node hierarchy...
 function createHierarchy(array, node, fileTypes) {
 
@@ -76,7 +76,7 @@ function buildTree(folder, tree, fileTypes) {
   createHierarchy(folderContentArray, folderNode, fileTypes);
   cleanHierarchy(tree);
 }
-
+// [ ] comment - buildFontTree
 function buildFontTree(folder, tree) {
 
   tree.remove(tree.items[0]);
@@ -103,12 +103,11 @@ function buildFontTree(folder, tree) {
   cleanHierarchy(tree);
 }
 
-// [ ] find - loop folder item contents...
 // [x] find - include source text keyframes...
 // [x] find - compensate the ALL CAPS toggle...
 // [x] find - RegEx search...
 // [x] find - limit play head movement to expressions and keyframes...
-
+// [ ] comment - buildFindTree
 function buildFindTree(tree, obj, compArray, progBar) {
   
   var sKey = obj.sKey;
