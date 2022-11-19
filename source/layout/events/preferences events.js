@@ -51,10 +51,11 @@ updateBtn.addEventListener('click', function (c) {
       showTabErr(netConfigName + ' not checked');
       return;
     }
-    openWebSite(repoURL);
+    openWebSite(repoURL); // → launch internet browser
   }
 });
 
+// [ ] comment - updateBtn
 updateBtn.onClick = function () {
   // error...
   if (!netAccess()) {

@@ -13,9 +13,10 @@
 
 // returns a random integer...
 function getRndInteger(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
+	return Math.floor(Math.random() * (max - min)) + min; // → 17
 }
 
+// returns a random gauss number...
 function gaussRnd(samples) {
 	var r = 0;
 
@@ -23,10 +24,10 @@ function gaussRnd(samples) {
 		r += Math.random();
 	}
 
-	return r / samples;
+	return r / samples; // → 0 - 1
 }
 
-// [x] timer - create...
+// simple timer...
 function timer() {
-	return ($.hiresTimer / 1000000).toFixed(2);
+	return ($.hiresTimer / 1000000).toFixed(2); // → 1.27 (in seconds)
 }
