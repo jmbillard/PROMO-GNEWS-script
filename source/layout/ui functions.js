@@ -45,8 +45,8 @@ function setLayout() {
     imgAlignment = 'left';
     closeAlignment = 'right';
 
-    mainGrp.margins = [90, 0, 40, 0];
-    tabsGrp.menu.margins = [90, 0, 40, 0];
+    mainGrp.margins = [90, 0, 0, 0];
+    tabsGrp.menu.margins = [80, 0, 80, 0];
     leftGrp.margins = [15, 0, 0, 0];
 
     tabsGrp.menu.spacing = 10;

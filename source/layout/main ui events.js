@@ -20,39 +20,44 @@ w.onResizing = w.onResize = function () {
   setLayout();
 };
 
+infoBtn.onClick = function() {
+  openWebSite(docsURL + readme);
+};
+
 ctrlBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[1];
+  currentGrp = tabsGrp.ctrl;
+  readme = '/ctrl_tab.md';
   openTab();
 };
 
 animBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[2];
+  currentGrp = tabsGrp.animation;
   openTab();
 };
 
 fxBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[4];
+  currentGrp = tabsGrp.fx;
   openTab();
 };
 
 txtBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[5];
+  currentGrp = tabsGrp.text;
   openTab();
 };
 
 guideBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[6];
+  currentGrp = tabsGrp.guide;
   openTab();
 };
 
 toolBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[3];
+  currentGrp = tabsGrp.tools;
   openTab();
 };
 
@@ -61,7 +66,7 @@ projBtn.onClick = function () {
   projId = getXMPdata('identifier') == '' ? 'proj id' : getXMPdata('identifier');
 
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[7];
+  currentGrp = tabsGrp.project;
   openTab();
   projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
@@ -70,19 +75,19 @@ projBtn.onClick = function () {
 
 appBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[9];
+  currentGrp = tabsGrp.app;
   openTab();
 };
 
 devBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[10];
+  currentGrp = tabsGrp.dev;
   openTab();
 };
 
 linksBtn.onClick = function () {
   currentGrp.visible = false;
-  currentGrp = tabsGrp.children[8];
+  currentGrp = tabsGrp.links;
   openTab();
 };
 
