@@ -100,6 +100,7 @@ function buildFindTree(tree, obj, compArray, progBar) {
   var sKey = obj.sKey;
   var matchCase = obj.matchCase;
   var matchAccent = obj.matchAccent;
+  var invert = !obj.invert;
   var regExp = obj.regExp;
   var resultArray = [];
 
@@ -114,6 +115,7 @@ function buildFindTree(tree, obj, compArray, progBar) {
     tree.remove(tree.items[0]);
   }
   progBar.value = 0;
+  count = 0;
 
   var progInc = 100 / compArray.length;
 
@@ -147,24 +149,28 @@ function buildFindTree(tree, obj, compArray, progBar) {
       }
 
       for (var f = 0; f < txtArray.length; f++) {
-        if (txtArray[f].match(sKey) == null) continue;
+        var r = txtArray[f].match(sKey) == null ? false : true;
+        
+        if (r != invert) continue;
 
         if (resultArray.indexOf(compArray[i]) < 0) {
           var compName = limitNameSize(compArray[i].name, 45);
           compItem = tree.add('node', compName);
           compItem.image = compTogIcon;
+          count += 1;
 
           resultArray.push(compArray[i]);
         }
         var layerName = limitNameSize(txtLayer.name, 35);
         var txtItem = compItem.add('item', '(' + (f + 1) + ')   #' + txtLayer.index + '   ' + layerName);
         txtItem.image = keyStat5Icon;
+        count += 1;
       }
     }
     progBar.value += progInc;
   }
   progBar.value = 100;
-  return resultArray;
+  return {'resultArray': resultArray, 'count': count};
 }
 
 // expands all 'tree view' nodes...

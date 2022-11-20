@@ -11,29 +11,35 @@
 //  jshint -W043
 function findDialog() {
   var w = new Window('palette', 'find...');
+  w.spacing = 5;
+  w.margins = 0;
 
   // =============
   var searchMainGrp = w.add('group');
+  searchMainGrp.orientation = 'column';
+  searchMainGrp.alignChildren = ['center', 'top'];
 
   // ========
   var inputGrp = searchMainGrp.add('group');
-  inputGrp.orientation = 'column';
-  inputGrp.alignChildren = ['center', 'center'];
+  inputGrp.spacing = 0;
+  inputGrp.margins = 8;
 
-  var findEdTxt = inputGrp.add('edittext', [0, 0, 220, 30]);
+  var findEdTxt = inputGrp.add('edittext', [0, 0, 260, 38]);
+
+  var findBtn = inputGrp.add('iconbutton', undefined, findIcon, { style: 'toolbutton' });
+  findBtn.helpTip = 'find';
 
   // ==========
-  var optMainGrp = inputGrp.add('group');
+  var optMainGrp = searchMainGrp.add('group');
   optMainGrp.spacing = 20;
 
   // =======
   var optGrp1 = optMainGrp.add('group');
-  //optGrp1.alignChildren = ['center', 'top'];
+  optGrp1.alignChildren = ['center', 'top'];
   optGrp1.spacing = 4;
 
   var optCkb1 = optGrp1.add('checkbox');
   optCkb1.value = false;
-  //optCkb1.enabled = false;
 
   var optTxt1 = optGrp1.add('statictext', undefined, 'Tt');
   optCkb1.helpTip = optTxt1.helpTip = 'match case';
@@ -50,32 +56,31 @@ function findDialog() {
   optCkb2.helpTip = optTxt2.helpTip = 'match accentuation';
 
   // =======
+  var optGrp4 = optMainGrp.add('group');
+  optGrp4.alignChildren = ['center', 'top'];
+  optGrp4.spacing = 4;
+
+  var optCkb4 = optGrp4.add('checkbox');
+  optCkb4.value = false;
+
+  var optTxt4 = optGrp4.add('statictext', undefined, '!=');
+  optCkb4.helpTip = optTxt4.helpTip = 'results will not include the search keyword';
+
+  // =======
   var optGrp3 = optMainGrp.add('group');
   optGrp3.alignChildren = ['center', 'top'];
   optGrp3.spacing = 4;
 
   var optCkb3 = optGrp3.add('checkbox');
   optCkb3.value = false;
-  //optCkb3.enabled = false;
 
   var optTxt3 = optGrp3.add('statictext', undefined, 'RegExp');
   optCkb3.helpTip = optTxt3.helpTip = 'use regular expression';
 
-  // =============
-  var findBtn = searchMainGrp.add('iconbutton', [0, 0, 80, 60], findIcon, { style: 'toolbutton' });
-  findBtn.helpTip = 'find';
-
-  var divider = w.add('panel', undefined, undefined);
-  divider.alignment = 'fill';
-
   // =========
   var resultGrp = w.add('group');
-  resultGrp.orientation = 'column';
 
-  var resultTxt = resultGrp.add('statictext', undefined, undefined);
-  resultTxt.characters = 20;
-
-  var findPb = resultGrp.add('progressbar', [0, 0, 315, 5], undefined);
+  var findPb = w.add('progressbar', [0, 0, 305, 5], undefined);
   findPb.value = 100;
 
   // ==========
@@ -83,19 +88,17 @@ function findDialog() {
   resultTree.visible = false;
   var resultArray = [];
 
-  // [ ] comment - findBtn
-  // find event...
-  findBtn.onClick = function () {
+  findEdTxt.onEnterKey = findBtn.onClick = function () {
     // starting timer...
     timer();
-    resultTxt.text = 'searching...';
+    w.text = 'searching...';
+    resultTree.visible = false;
+    resultTree.size.height = 0;
+    w.layout.layout(true);
 
     var sKey = findEdTxt.text;
     if (sKey == '' || app.project.numItems == 0) {
-      resultTxt.text = '';
-      resultTree.visible = false;
-      resultTree.size.height = 0;
-      w.layout.layout(true);
+      w.text = 'find...';
       return;
     }
 
@@ -104,23 +107,23 @@ function findDialog() {
       matchCase: optCkb1.value,
       matchAccent: optCkb2.value,
       regExp: optCkb3.value,
+      invert: optCkb4.value,
     };
 
     var selArray = app.project.selection;
     selArray = selArray.length > 0 ? selArray : getComps(); // → [selected items] : [all comps]
-    resultArray = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
+    findTree = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
+    resultArray = findTree.resultArray; // → [filtered comps]
+    count = findTree.count; // → [filtered comps]
 
     if (resultArray.length == 0) {
-      resultTxt.text = 'no matches - ' + timer() + 's  (っ °Д °;)っ';
-      resultTree.visible = false;
-      resultTree.size.height = 0;
-      w.layout.layout(true);
+      w.text = 'no matches - ' + timer() + 's  (っ °Д °;)っ';
       return;
     }
     expandNodes(resultTree);
     resultTree.visible = true;
-    resultTree.size.height = 160;
-    resultTxt.text = 'complete - ' + timer() + 's  (o °▽ °)o☆';
+    resultTree.size.height = count >= 16 ? 320 : (count * 21) + 5;
+    w.text = 'complete - ' + timer() + 's  (o °▽ °)o☆';
     w.layout.layout(true);
   };
 
@@ -170,4 +173,4 @@ function findDialog() {
   w.show();
 }
 
-//findDialog();
+// findDialog();
