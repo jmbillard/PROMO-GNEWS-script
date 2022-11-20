@@ -225,12 +225,14 @@ isolateBtn.onClick = function () {
 
 closeBtn.onClick = function () {
   GNEWS_LOGO.visible = true;
+  aboutTxt.visible = true;
+
   closeBtn.visible = true;
   prefGrp.visible = true;
   closeErrBtn.visible = false;
-  tabsGrp.children[0].visible = true;
+  tabsGrp.menu.visible = true;
+
   bgColor = tabColors[0];
-  errImgGrp.visible = false;
 
   hideTabs();
   setBgColor(w, bgColor);
@@ -240,7 +242,6 @@ closeErrBtn.onClick = function () {
   GNEWS_LOGO.visible = true;
   closeBtn.visible = true;
   closeErrBtn.visible = false;
-  errImgGrp.visible = false;
 
   clearOutput();
   hideTabs();

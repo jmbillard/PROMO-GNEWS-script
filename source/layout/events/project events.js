@@ -162,7 +162,7 @@ pngPreviewBtn.onClick = function () {
 };
 
 endPagePresetBtn.onClick = function () {
-  currentGrp = tabsGrp.children[0];
+  currentGrp = tabsGrp.menu;
   // error...
   if (!netAccess()) {
     showTabErr(netConfigName + ' not checked');
