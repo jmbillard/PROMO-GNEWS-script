@@ -93,13 +93,14 @@ function fontsDialog() {
     unzipContent(zipPath, fontsLocalPath);
     removeFolder(downFolder); // → delete temp folder
 
-    if (GLOBO_ACCESS) {
-      removeFolder(fontsFolder); // → delete previous templates folder
-      fontsFolder.create(); // → delete previous templates folder
+    // [ ] fonts - copy files to network folder XD
+    if (!homeOffice) {
+      // removeFolder(fontsFolder); // → delete previous templates folder
+      // fontsFolder.create(); // → delete previous templates folder
 
-      alert('copy the fonts to the empty folder\nand press the refresh button!');
-      // wait 3 seconds...
-      $.sleep(3000);
+      // alert('copy the fonts to the empty folder\nand press the refresh button!');
+      // // wait 3 seconds...
+      // $.sleep(3000);
       openFolder(fontsLocalPath);
       openFolder(fontsPath);
     }

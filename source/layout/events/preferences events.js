@@ -37,7 +37,7 @@ tabColorBtn.onClick = function () {
     configColor = eval(rgbStr(configColor)); // → [1,1,1]
     tabColors[colorDrop.selection.index] = configColor; // update color array...
     JSONObj.color[colorDrop.selection] = rgbToHEX(configColor); // update preferences object...
-    
+
     setBtnColor(tabColorBtn, configColor); // update color preview swatch...
     savePreferences(); // → save preferences.json
   }
@@ -76,16 +76,26 @@ updateBtn.onClick = function () {
     promoInsPath + '/BARRA UTILIDADES PROMO PARA SCRIPT', // → UTILIDADES//FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR
   ];
 
-  if (!downFolder.exists) {
-    downFolder.create();
-  }
-  getURLContent(codeURLArray, pathArray);
+  if (downFolder.exists) removeFolder(downFolder); // → delete previous download folder
+  downFolder.create(); // → create new download folder
 
+  getURLContent(codeURLArray, pathArray); // → download files on codeURLArray
+
+  // copy downloaded files...
   for (var p = 0; p < destPathArray.length; p++) {
+
+    if (homeOffice && p > 0) break; // only updates local folders
     try {
       copyFolderContent(downPath, destPathArray[p]);
     } catch (error) { }
   }
 
   showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
+};
+
+hoCkb.onClick = function () {
+
+  homeOffice = hoCkb.value;
+  JSONObj.homeOffice = homeOffice;
+  savePreferences(); // → save preferences.json
 };

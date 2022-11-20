@@ -22,7 +22,7 @@
 //  jshint -W061
 
 function PROMO_GNEWS_UTL(thisObj) {
-  
+
   // current script version...
   var vStr = 'v 1.9 b5';
 
@@ -34,18 +34,18 @@ function PROMO_GNEWS_UTL(thisObj) {
   // loads all preferences...
   loadStaticPrefs();
   loadDefaultPrefs();
-  
+
   // writes on the 'info' window panel...
   clearOutput();
   write(aboutStr);
-  
+
   var PROMO_GNEWS_WINDOW = PROMO_GNEWS_UI(thisObj);
 
   // checks network access...
   if (!netAccess()) {
     // no network access...
     alert('please check the ' + netConfigName + ' preference');
-  
+
     // opens AE preferences...
     app.executeCommand(3131); // → scripting preferences
 

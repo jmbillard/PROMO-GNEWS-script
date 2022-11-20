@@ -114,14 +114,15 @@ importAetBtn.onClick = function () {
     getURLContent([url], [downPath]);
     unzipContent(zipPath, templatesLocalPath);
 
-    if (GLOBO_ACCESS) {
-      removeFolder(templatesFolder); // → delete previous templates folder
-      templatesFolder.create(); // → delete previous templates folder
+    // [ ] templates - copy files to network folder XD
+    if (!homeOffice) {
+    //   removeFolder(templatesFolder); // → delete previous templates folder
+    //   templatesFolder.create(); // → delete previous templates folder
 
-      alert('copy the templates to the empty folder\nand press the refresh button!');
+    //   alert('copy the templates to the empty folder\nand press the refresh button!');
 
-      // wait 3 seconds...
-      $.sleep(3000);
+    //   // wait 3 seconds...
+    //   $.sleep(3000);
       openFolder(templatesLocalPath);
       openFolder(templatesPath);
     }
