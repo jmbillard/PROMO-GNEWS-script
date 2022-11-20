@@ -45,8 +45,8 @@ function setLayout() {
     imgAlignment = 'left';
     closeAlignment = 'right';
 
-    mainGrp.margins = [80, 0, 30, 0];
-    tabsGrp.menu.margins = [80, 0, 30, 0];
+    mainGrp.margins = [90, 0, 40, 0];
+    tabsGrp.menu.margins = [90, 0, 40, 0];
     leftGrp.margins = [15, 0, 0, 0];
 
     tabsGrp.menu.spacing = 10;
@@ -158,6 +158,7 @@ function hideTabs() {
 
 // turns on the respective tab group visibility...
 function openTab() {
+  infoBtn.visible = true;
   aboutTxt.visible = false;
   bgColor = tabColors[tabs.indexOf(currentGrp)];
   currentGrp.visible = true;

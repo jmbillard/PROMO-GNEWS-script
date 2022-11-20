@@ -227,6 +227,7 @@ isolateBtn.onClick = function () {
 closeBtn.onClick = function () {
   GNEWS_LOGO.visible = true;
   aboutTxt.visible = true;
+  infoBtn.visible = false;
 
   closeBtn.visible = true;
   prefGrp.visible = true;
