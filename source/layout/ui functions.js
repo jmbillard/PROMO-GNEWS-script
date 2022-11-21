@@ -10,8 +10,6 @@
 //  jshint -W061
 //  jshint -W085
 //  jshint -W043
-
-//  linter settings:
 //  jshint -W083
 
 //

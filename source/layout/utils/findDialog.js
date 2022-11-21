@@ -34,6 +34,18 @@ function findDialog() {
   optMainGrp.spacing = 20;
 
   // =======
+  var optGrp5 = optMainGrp.add('group');
+  optGrp5.alignChildren = ['center', 'top'];
+  optGrp5.spacing = 4;
+
+  var optCkb5 = optGrp5.add('checkbox');
+  optCkb5.value = false;
+  optCkb5.enabled = false;
+
+  var optTxt5 = optGrp5.add('statictext', undefined, '>_<');
+  optCkb5.helpTip = optTxt5.helpTip = 'include hidden layers';
+
+  // =======
   var optGrp1 = optMainGrp.add('group');
   optGrp1.alignChildren = ['center', 'top'];
   optGrp1.spacing = 4;
