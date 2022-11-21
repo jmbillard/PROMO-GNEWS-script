@@ -10,8 +10,22 @@
 //  linter settings:
 //  jshint -W083
 
-for (var i = 0; i < colorsGrp.children.length; i++) {
-  colorsGrp.children[i].onClick = function () { 
+for (var i = 1; i < colors1Grp.children.length; i++) {
+  colors1Grp.children[i].onClick = function () { 
+    var hex = this.properties.name;
+
+    batchFill(hex, hexToRGB(hex));
+  };
+}
+for (var i = 1; i < colors2Grp.children.length; i++) {
+  colors2Grp.children[i].onClick = function () { 
+    var hex = this.properties.name;
+
+    batchFill(hex, hexToRGB(hex));
+  };
+}
+for (var i = 1; i < colors3Grp.children.length; i++) {
+  colors3Grp.children[i].onClick = function () { 
     var hex = this.properties.name;
 
     batchFill(hex, hexToRGB(hex));

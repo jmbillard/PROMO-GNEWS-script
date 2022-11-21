@@ -90,7 +90,7 @@ function colorPallet() {
 	var layer = app.project.activeItem.layers.addShape();
 
 	// main pallet vector group...
-	var pallet1 = shpPallet(layer, GNEWS_mainColors);
+	var pallet1 = shpPallet(layer, GNEWS_mainColors1);
 	pallet1
 		.property('ADBE Vector Transform Group')
 		.property('ADBE Vector Position')

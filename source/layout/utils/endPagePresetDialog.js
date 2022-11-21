@@ -318,25 +318,25 @@ function endPagePresetDialog() {
   var subtitulo_layout = subtitulo_layoutGrp.add('checkbox', undefined, '');
   var subtitulo_layoutTxt = subtitulo_layoutGrp.add('statictext', undefined, 'subtitulo');
   subtitulo_layoutTxt.characters = 6;
-  setTxtColor(subtitulo_layoutTxt, GNEWS_mainColors[7]);
+  setTxtColor(subtitulo_layoutTxt, GNEWS_mainColors2[3]);
 
   var foto_layoutGrp = layoutGrp1.add('group');
   var foto_layout = foto_layoutGrp.add('checkbox', undefined, '');
   var foto_layoutTxt = foto_layoutGrp.add('statictext', undefined, 'foto');
   foto_layoutTxt.characters = 6;
-  setTxtColor(foto_layoutTxt, GNEWS_mainColors[7]);
+  setTxtColor(foto_layoutTxt, GNEWS_mainColors2[3]);
 
   var footage_layoutGrp = layoutGrp2.add('group');
   var footage_layout = footage_layoutGrp.add('checkbox', undefined, '');
   var footage_layoutTxt = footage_layoutGrp.add('statictext', undefined, 'footage');
   footage_layoutTxt.characters = 6;
-  setTxtColor(footage_layoutTxt, GNEWS_mainColors[7]);
+  setTxtColor(footage_layoutTxt, GNEWS_mainColors2[3]);
 
   var pattern_layoutGrp = layoutGrp2.add('group');
   var pattern_layout = pattern_layoutGrp.add('checkbox', undefined, '');
   var pattern_layoutTxt = pattern_layoutGrp.add('statictext', undefined, 'pattern');
   pattern_layoutTxt.characters = 6;
-  setTxtColor(pattern_layoutTxt, GNEWS_mainColors[7]);
+  setTxtColor(pattern_layoutTxt, GNEWS_mainColors2[3]);
 
   var foto_layoutDdl = layoutGrp1.add('dropdownlist', [0, 0, 85, 10], []);
   var pattern_layoutDdl = layoutGrp2.add('dropdownlist', [0, 0, 85, 10], []);
@@ -381,19 +381,19 @@ function endPagePresetDialog() {
   var dia_servicoGrp = data_servicoGrp.add('group');
   var dia_servico = dia_servicoGrp.add('edittext', [0, 0, 40, 20], servico.dia);
   var dia_servicoTxt = dia_servicoGrp.add('statictext', undefined, '[dia]');
-  setTxtColor(dia_servicoTxt, GNEWS_mainColors[7]);
+  setTxtColor(dia_servicoTxt, GNEWS_mainColors2[3]);
   var semana_servicoDdl = data_servicoGrp.add('dropdownlist', [0, 0, 85, 10], ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB', 'HOJE']);
   semana_servicoDdl.selection = servico.semana - 1;
   var hora_servicoGrp = servicoGrp1.add('group');
   var hora_servico = hora_servicoGrp.add('edittext', [0, 0, 40, 20], servico.hora);
   var hora_servicoTxt = hora_servicoGrp.add('statictext', undefined, '[hora]');
-  setTxtColor(hora_servicoTxt, GNEWS_mainColors[7]);
+  setTxtColor(hora_servicoTxt, GNEWS_mainColors2[3]);
   var mes_servicoDdl = servicoGrp2.add('dropdownlist', [0, 0, 85, 10], ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']);
   mes_servicoDdl.selection = servico.mes - 1;
   var min_servicoGrp = servicoGrp2.add('group');
   var min_servico = min_servicoGrp.add('edittext', [0, 0, 40, 20], servico.min);
   var min_servicoTxt = min_servicoGrp.add('statictext', undefined, '[min]');
-  setTxtColor(min_servicoTxt, GNEWS_mainColors[7]);
+  setTxtColor(min_servicoTxt, GNEWS_mainColors2[3]);
 
   var aparencia_mainGrp = w.add('group');
   aparencia_mainGrp.orientation = 'column';

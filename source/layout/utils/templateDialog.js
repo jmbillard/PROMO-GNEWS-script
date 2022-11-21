@@ -57,7 +57,7 @@ function templateDialog() {
   // preview...
   var pathTxt = vGrp2.add('statictext', undefined, '...');
   pathTxt.characters = 40;
-  setTxtColor(pathTxt, GNEWS_mainColors[6]);
+  setTxtColor(pathTxt, GNEWS_mainColors2[3]);
   var previewImg = vGrp2.add('image', undefined, no_preview);
   previewImg.size = [1920 * previewScale, 1080 * previewScale];
   var updateTxt = vGrp2.add('statictext', undefined, '...');
