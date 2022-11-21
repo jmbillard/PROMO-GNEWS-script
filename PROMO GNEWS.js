@@ -31,10 +31,6 @@ function PROMO_GNEWS_UTL(thisObj) {
   #include 'source/layout/main ui ctrls.js'; // → UI definition file
   /* jshint ignore:end */
 
-  // loads all preferences...
-  loadStaticPrefs();
-  loadDefaultPrefs();
-
   // writes on the 'info' window panel...
   clearOutput();
   write(aboutStr);

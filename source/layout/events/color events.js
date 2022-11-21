@@ -7,6 +7,17 @@
 
 */
 
+//  linter settings:
+//  jshint -W083
+
+for (var i = 0; i < colorsGrp.children.length; i++) {
+  colorsGrp.children[i].onClick = function () { 
+    var hex = this.properties.name;
+
+    batchFill(hex, hexToRGB(hex));
+  };
+}
+
 shpPalletBtn.onClick = function () {
   var aItem = app.project.activeItem;
   // error...

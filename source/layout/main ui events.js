@@ -20,14 +20,14 @@ w.onResizing = w.onResize = function () {
   setLayout();
 };
 
-infoBtn.onClick = function() {
-  openWebSite(docsURL + readme);
+infoBtn.onClick = function () {
+  openWebSite(repoURL + readme);
 };
 
 ctrlBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.ctrl;
-  readme = '/ctrl_tab.md';
+  readme = '#-controles-e-nulls';
   openTab();
 };
 
@@ -121,13 +121,13 @@ importAetBtn.onClick = function () {
 
     // [ ] templates - copy files to network folder XD
     if (!homeOffice) {
-    //   removeFolder(templatesFolder); // → delete previous templates folder
-    //   templatesFolder.create(); // → delete previous templates folder
+      //   removeFolder(templatesFolder); // → delete previous templates folder
+      //   templatesFolder.create(); // → delete previous templates folder
 
-    //   alert('copy the templates to the empty folder\nand press the refresh button!');
+      //   alert('copy the templates to the empty folder\nand press the refresh button!');
 
-    //   // wait 3 seconds...
-    //   $.sleep(3000);
+      //   // wait 3 seconds...
+      //   $.sleep(3000);
       openFolder(templatesLocalPath);
       openFolder(templatesPath);
     }

@@ -11,7 +11,23 @@
 //  jshint -W085
 //  jshint -W043
 
+//  linter settings:
+//  jshint -W083
+
 //
+function createColorButtons(colorArray, colorGrp) {
+  for (var c = 0; c < colorArray.length; c++) {
+    var hex = rgbToHEX(colorArray[c]); // -> '#FFFFFF'
+    var rgb = colorArray[c] * 255; // -> [255,255,255,255]
+    var colorBtn = colorGrp.add('iconbutton', undefined, undefined, { name: hex, style: 'toolbutton' });
+
+    colorBtn.size = [10, 20];
+    setBtnColor(colorBtn, colorArray[c]);
+    colorBtn.onDraw = customDraw;
+    colorBtn.helpTip = 'R: ' + rgb[0] + '\nG: ' + rgb[1] + '\nB: ' + rgb[2] + '\nHEX: ' + hex;
+  }
+}
+
 function customDraw() {
   with (this) {
     graphics.drawOSControl();
@@ -40,6 +56,10 @@ function setTxtColor(sTxt, color) {
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
 
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].spacing = 10;
+  }
+
   // horizontal layout
   if (wLayout == 'row') {
     imgAlignment = 'left';
@@ -50,11 +70,11 @@ function setLayout() {
     leftGrp.margins = [15, 0, 0, 0];
 
     tabsGrp.menu.spacing = 10;
-
-    for (var i = 0; i < tabs.length; i++) {
-      tabs[i].spacing = 10;
-    }
     preferences.spacing = 10;
+    // color buttons
+    for (var c = 0; c < colorsGrp.children.length; c++) {
+      colorsGrp.children[c].size = [10, 20];
+    }
     // text tab - limit text horizontal controls
     limitSld.visible = true;
     limitSld.size.width = 200;
@@ -82,7 +102,7 @@ function setLayout() {
     progTxt1.size.width = 160;
     progTxt2.visible = true;
     progTxt2.size.width = 160;
-  
+
   } else {
     // vertical layout
     imgAlignment = 'bottom';
@@ -94,6 +114,10 @@ function setLayout() {
 
     tabsGrp.menu.spacing = 2;
     preferences.spacing = 5;
+    // color buttons
+    for (var b = 0; b < colorsGrp.children.length; b++) {
+      colorsGrp.children[b].size = [66, 15];
+    }
     // text tab - limit text horizontal controls
     limitSld.visible = false;
     limitSld.size.width = 0;
