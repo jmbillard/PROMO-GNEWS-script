@@ -9,6 +9,7 @@
 //  linter settings:
 //  jshint -W061
 //  jshint -W043
+
 function findDialog() {
   var w = new Window('palette', 'find...');
   w.spacing = 5;
@@ -44,7 +45,7 @@ function findDialog() {
 
   var optIco5 = optGrp5.add('image', undefined, eyeOpenLabelIcon);
   //var optTxt5 = optGrp5.add('statictext', undefined, '>_<');
-  optCkb5.helpTip = optIco5.helpTip = 'include hidden layers';
+  optCkb5.helpTip = optIco5.helpTip = 'only visible layers';
 
   // =======
   var optGrp1 = optMainGrp.add('group');
@@ -186,5 +187,3 @@ function findDialog() {
 
   w.show();
 }
-
-findDialog();

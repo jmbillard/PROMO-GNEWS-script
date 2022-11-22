@@ -11,20 +11,20 @@
 //  jshint -W085
 //  jshint -W043
 
-// [ ] comment - cleanHierarchy
+// remove empty tree folders...
 function cleanHierarchy(nodeTree) {
-  var branches = nodeTree.items;
+  var branches = nodeTree.items; // all current tree item subitems...
 
   for (var i = branches.length - 1; i >= 0; i--) {
-    if (branches[i].type != 'node') continue;
+    if (branches[i].type != 'node') continue; // ignore item...
 
     if (branches[i].items.length > 0) {
-      cleanHierarchy(branches[i]);
+      cleanHierarchy(branches[i]); // current item is folder item...
     } else {
-      nodeTree.remove(branches[i]);
+      nodeTree.remove(branches[i]); // remove current folder item...
     }
-    if (nodeTree.items.length == 0) {
-      nodeTree.parent.remove(nodeTree);
+    if (nodeTree.items.length == 0) { // empty folder item...
+      nodeTree.parent.remove(nodeTree); // remove current folder item...
     }
   }
 }
@@ -95,52 +95,61 @@ function buildFontTree(folder, tree) {
   cleanHierarchy(tree);
 }
 
-// [ ] comment - buildFindTree
 function buildFindTree(tree, obj, compArray, progBar) {
-  var sKey = obj.sKey;
-  var vis = obj.vis;
-  var matchCase = obj.matchCase;
-  var matchAccent = obj.matchAccent;
-  var invert = !obj.invert;
-  var regExp = obj.regExp;
-  var resultArray = [];
+  var sKey = obj.sKey; // keyword...
+  var vis = obj.vis; // include hidden layers...
+  var matchCase = obj.matchCase; // match text case...
+  var matchAccent = obj.matchAccent; // match accentuation...
+  var invert = !obj.invert; // search wont include keyword...
+  var regExp = obj.regExp; // use regular expressions...
+  var resultArray = []; // matched comps array...
 
-  if (sKey == '') return resultArray;
+  if (sKey == '') return resultArray; // -> empty search
 
   if (regExp) {
-    var pattern = 'new RegExp(/' + sKey + '/);';
-    sKey = eval(pattern);
+    var pattern = 'new RegExp(/' + sKey + '/);'; // -> pattern string
+    sKey = eval(pattern); // -> regExp pattern
   }
 
+  // delete all tree items...
   while (tree.items.length > 0) {
     tree.remove(tree.items[0]);
   }
-  progBar.value = 0;
-  count = 0;
+  progBar.value = 0; // current search progress...
+  count = 0; // current tree items count (nodes + items)...
 
-  var progInc = 100 / compArray.length;
+  var progInc = 100 / compArray.length; // serch progress increment step...
 
   for (i = 0; i < compArray.length; i++) {
     if (!(compArray[i] instanceof CompItem)) continue; // is not comp...
 
     for (var l = 1; l <= compArray[i].numLayers; l++) {
-      if (!(compArray[i].layer(l) instanceof TextLayer)) continue;
+      if (!(compArray[i].layer(l) instanceof TextLayer)) continue; // is not text layer...
 
-      var compItem;
-      var txtLayer = compArray[i].layer(l);
-      var doc = txtLayer.property('ADBE Text Properties').property('ADBE Text Document');
-      var txtArray = [];
+      var compItem; // current comp tree item...
+      var txtLayer = compArray[i].layer(l); // current text layer
+      var doc = txtLayer
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document'); // layer source text property...
+      var txtArray = []; // matched text content array...
 
       if (doc.numKeys > 0) {
+        // source text has keyframes...
         for (var k = 1; k <= doc.numKeys; k++) {
+           // includes source text keyframes content...
           txtArray.push(doc.keyValue(k).toString().trim());
         }
       } else {
+        // source text property has expression...
+        // move comp playhead to 1 second before the current text layer out point...
         if (doc.expression != '') compArray[i].time = txtLayer.outPoint - 1;
+        // includes source text with expressions...
         txtArray.push(textContent(txtLayer).trim());
       }
       if (!regExp) {
+        // regular expressions unchecked...
         for (var m = 0; m < txtArray.length; m++) {
+          // respect ALL CAPS layer toggle...
           if (doc.value.allCaps) txtArray[m] = txtArray[m].toUpperCase();
           if (!matchCase) txtArray[m] = txtArray[m].toLowerCase();
           if (!matchAccent) txtArray[m] = txtArray[m].replaceSpecialCharacters();
@@ -149,31 +158,35 @@ function buildFindTree(tree, obj, compArray, progBar) {
         sKey = matchAccent ? sKey : sKey.replaceSpecialCharacters();
       }
 
-      if (vis && txtLayer.enabled == false) continue;  
+      if (vis && txtLayer.enabled == false) continue; // ignore hidden layers...
 
       for (var f = 0; f < txtArray.length; f++) {
-        var r = txtArray[f].match(sKey) == null ? false : true;
+        var r = txtArray[f].match(sKey) == null ? false : true; // current match result...
         
-        if (r != invert) continue;
+        if (r != invert) continue; // ignore match if invert is checked...
 
-        if (resultArray.indexOf(compArray[i]) < 0) {
+        if (resultArray.indexOf(compArray[i]) < 0) { // check for duplicate entrys...
+          // character length limited comp name...
           var compName = limitNameSize(compArray[i].name, 45);
+           // add comp tree item... -> comp_comp...name
           compItem = tree.add('node', compName);
-          compItem.image = compTogIcon;
-          count += 1;
+          compItem.image = compTogIcon; // add com icon...
+          count += 1; // incremente tree items count...
 
-          resultArray.push(compArray[i]);
+          resultArray.push(compArray[i]); // push current comp to resltArray...
         }
         var layerName = limitNameSize(txtLayer.name, 35);
+        // add text layer tree item... -> (1)  # 5  txt_layer...name
         var txtItem = compItem.add('item', '(' + (f + 1) + ')   #' + txtLayer.index + '   ' + layerName);
+        // add layer visibility icon...
         txtItem.image = txtLayer.enabled ? eyeOpenIcon : eyeClosedIcon;
-        count += 1;
+        count += 1; // incremente tree items count...
       }
     }
-    progBar.value += progInc;
+    progBar.value += progInc; // increment current progress...
   }
-  progBar.value = 100;
-  return {'resultArray': resultArray, 'count': count};
+  progBar.value = 100; // end progress...
+  return {'resultArray': resultArray, 'count': count}; 
 }
 
 // expands all 'tree view' nodes...

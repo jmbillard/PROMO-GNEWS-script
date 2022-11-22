@@ -224,6 +224,49 @@ function getTempFld() {
 	}
 }
 
+function copyFolder(src, dst) {
+	try {
+		var f = new Folder(src).getFiles();
+
+		for (var i = 0; i < f.length; i++) if (!copyFile(f[i], dst)) return false;
+
+		return true;
+	} catch (error) { }
+}
+
+function createFilePath(path) {
+	var folder = new Folder(path);
+
+	if (!folder.exists) {
+		var f = new Folder(folder.path);
+		if (!f.exists) if (!createFilePath(folder.path)) return false;
+
+		if (!folder.create()) return false;
+	}
+
+	return true;
+}
+
+function copyFile(fullFilePath, newFilePath) {
+	try {
+		var file = new File(fullFilePath);
+
+		var folder = new File(newFilePath);
+
+		if (file.length < 0) {
+			if (!createFilePath(newFilePath + '/' + file.name)) return false;
+			if (!copyFolder(fullFilePath, newFilePath + '/' + file.name)) return false;
+
+			return true;
+		} else {
+			if (!createFilePath(newFilePath)) return false;
+			if (!file.copy(newFilePath + '/' + file.name)) return false;
+
+			return true;
+		}
+	} catch (error) { }
+}
+
 function copyFolderContent(src, dst) {
 	var srcFolder = new Folder(src);
 	var dstFolder = new Folder(dst);

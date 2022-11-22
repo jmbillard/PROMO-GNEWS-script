@@ -172,17 +172,11 @@ function templateDialog() {
     unzipContent(zipPath, templatesLocalPath); // → unzip file    
     removeFolder(downFolder); // → delete temp folder
 
-    // [ ] templates - copy files to network folder XD
+     // HO preference
     if (!homeOffice) {
-      // removeFolder(templatesFolder); // → delete previous templates folder
-      // templatesFolder.create(); // → delete previous templates folder
-
-      // alert('copy the templates to the empty folder\nand press the refresh button!');
-
-      // // wait 3 seconds...
-      // $.sleep(3000);
-      openFolder(templatesLocalPath);
-      openFolder(templatesPath);
+      removeFolder(templatesFolder); // → delete previous templates folder
+      templatesFolder.create(); // → delete previous templates folder
+      copyFolder(templatesLocalPath, templatesPath);
     }
     buildTree(templatesFolder, tree, fileFilter); // → update tree...
     expandNodes(tree); // expand all tree folder nodes...
