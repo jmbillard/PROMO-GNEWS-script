@@ -10,26 +10,27 @@
 ![main menu](/images/menu.png)
 
 a barra é **`responsiva`** e pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.<br/>
-o menu principal é dividido em *`abas`* e possui os seguintes botões... 👇
-<!-- [ ] update sections and description -->
-~~~javascript
-> controles e nulls             // hierarquias e afins...
-> animação 
-> efeitos
-> texto                         // manipulação de texto... converte caixa alta e baixa!
-> cores e guias
-> layers                        // manipulação de layers...
-> organização de projeto        // organiza tudo em pastinhas (não faz milagre mas é uma mão na roda)
-> links úteis
-> templates                     // templates do after...
-> programa                      // configura algumas preferencias do after e media encoder...
-> preferencias                  // preferencias do script...
-~~~
-> a *'cor'* de cada aba pode ser alterada nas *'preferências'* do *'script'*...
+a tela inicial é dividida por temas e possui as seguintes **seções** e **ferramentas**...
+
+- **controles** → *hierarquias, nulls e afins...*
+- **animação** 
+- **efeitos**
+- **texto** → *manipulação de layers de texto...*
+- **guias**
+- **projeto** → *organiza tudo em pastinhas...*
+- **links**
+- **templates**
+- **busca**
+- **preview**
+- **programa** → configurações do after e media encoder...
+- **dev** → ferramentas de desenvolvimento...
+- **preferencias** → preferencias do script...
+
+> a *'cor'* da tela inicial e suas seções podem ser alteradas nas *'preferências'* do *'script'*...
 
 <br/><br/>
 
-# ![control icon](/images/icons/ctrlIcon.png) *controles e nulls*
+# ![control icon](/images/icons/ctrlIcon.png) *controles*
 
 ### ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
 cria um 'null' pai na mesma posição de cada layer selecionado.
