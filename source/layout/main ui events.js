@@ -113,20 +113,21 @@ importAetBtn.onClick = function () {
     downFolder.create();
   }
   if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
-    removeFolder(templatesLocalFolder); // → delete previous templates folder
-    templatesLocalFolder.create(); // → delete previous templates folder
+    // → delete previous local templates folder
+    if (templatesLocalFolder.exists) removeFolder(templatesLocalFolder);
+    templatesLocalFolder.create(); // → new local templates folder
 
-    getURLContent([url], [downPath]);
-    unzipContent(zipPath, templatesLocalPath);
+    getURLContent([url], [downPath]); // → download templates.zip
+    unzipContent(zipPath, templatesLocalPath); // → unzip templates
 
     // HO preference
     if (!homeOffice) {
-      removeFolder(templatesFolder); // → delete previous templates folder
+      if (templatesFolder.exists) removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
-      copyFolder(templatesLocalPath, templatesPath);
+      copyFolder(templatesLocalPath, templatesPath); // copy every file and folder
     }
   }
-  templateDialog(templatesPath);
+  templateDialog(templatesPath); // → templates ui
 };
 
 /*

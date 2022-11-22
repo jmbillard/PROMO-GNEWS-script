@@ -98,4 +98,5 @@ hoCkb.onClick = function () {
   homeOffice = hoCkb.value;
   JSONObj.homeOffice = homeOffice;
   savePreferences(); // → save preferences.json
+  updateFolderPaths(); // → update templates and fonts folder
 };
