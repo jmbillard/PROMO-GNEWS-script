@@ -1,13 +1,13 @@
 # PROMO GNEWS *script*
 
-**pt-BR** ⚡ algumas ferramentas para melhorar o workflow da equipe de motion de PROMO no After Effects ⚡
+**pt-BR** ⚡ algumas ferramentas para melhorar o workflow da equipe de motion em PROMO na ![](/images/GNEWS_LOGO_IMG.png)
 
 <br/>
 
 # 📟 layout e interface
 
 <!-- [ ] update print-->
-![main menu](/images/menu.png)
+![](/images/menu.png)
 
 a barra é **`responsiva`** e pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.<br/>
 a tela inicial é dividida por temas e possui as seguintes **seções** e **ferramentas**...
@@ -30,9 +30,9 @@ a tela inicial é dividida por temas e possui as seguintes **seções** e **ferr
 
 <br/><br/>
 
-# ![control icon](/images/icons/ctrlIcon.png) *controles*
+# ![](/images/icons/ctrlIcon.png) *controles*
 
-### ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
+### ![](/images/icons/shpNullIcon.png) botão **`null`**
 cria um 'null' pai na mesma posição de cada layer selecionado.
     
 >   caso não tenha nenhum layer selecionado, o *'null'* é criado no centro da tela.<br/>
@@ -41,7 +41,7 @@ cria um 'null' pai na mesma posição de cada layer selecionado.
 
 <br/>
 
-1. ### ![anim mod](/images/icons/tg_aniIcon.png) modificador **`copiar animação`**
+1. ### ![](/images/icons/tg_aniIcon.png) modificador **`copiar animação`**
     habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
 
 ```
@@ -52,11 +52,11 @@ cria um 'null' pai na mesma posição de cada layer selecionado.
 ```
 >    os *'key frames'* de *'opacidade'* não serão transferidos...
 
-![copyAnim ex](/images/gifs/copy-animation.gif)
+![](/images/gifs/copy-animation.gif)
 
 <br/>
 
-2. ### ![expr mod](/images/icons/tg_expIcon.png) modificador **`copiar expressões`**
+1. ### ![](/images/icons/tg_expIcon.png) modificador **`copiar expressões`**
     habilita a transferência das 'expressões' de transformação dos layers selecionados para o 'null'.
 ```
     'anchor point'
@@ -68,19 +68,19 @@ cria um 'null' pai na mesma posição de cada layer selecionado.
 
 <br/>
 
-### ![nullC btn](/images/icons/nullCBtn.png) botão **`null central`**
+### ![](/images/icons/nullCBtn.png) botão **`null central`**
 cria um único 'null' pai no 'centro geométrico' de 2 ou mais layers selecionados.
 
 <br/>
 
-### ![down btn](/images/icons/downIcon.png)![up btn](/images/icons/upIcon.png) botões de **`seleção de hierarquia`**
+### ![](/images/icons/downIcon.png)![up btn](/images/icons/upIcon.png) botões de **`seleção de hierarquia`**
 avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
 <!---
     ![selectHierarchy ex](https://jmbillard.com.br/promo/gifs/select-hierarchy.gif)
 --->
 <br/><br/>
 
-# ![animation icon](/images/icons/ctrlIcon.png) *animação*
+# ![](/images/icons/animationIcon.png) *animação*
 
 <!-- [ ] include copy keyframe influences -->
 <!-- [ ] move lock transform properties -->
