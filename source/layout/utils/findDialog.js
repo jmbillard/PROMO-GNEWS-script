@@ -39,11 +39,12 @@ function findDialog() {
   optGrp5.spacing = 4;
 
   var optCkb5 = optGrp5.add('checkbox');
-  optCkb5.value = false;
-  optCkb5.enabled = false;
+  optCkb5.value = true;
+  //optCkb5.enabled = false;
 
-  var optTxt5 = optGrp5.add('statictext', undefined, '>_<');
-  optCkb5.helpTip = optTxt5.helpTip = 'include hidden layers';
+  var optIco5 = optGrp5.add('image', undefined, eyeOpenLabelIcon);
+  //var optTxt5 = optGrp5.add('statictext', undefined, '>_<');
+  optCkb5.helpTip = optIco5.helpTip = 'include hidden layers';
 
   // =======
   var optGrp1 = optMainGrp.add('group');
@@ -116,6 +117,7 @@ function findDialog() {
 
     var optObj = {
       sKey: sKey,
+      vis: optCkb5.value,
       matchCase: optCkb1.value,
       matchAccent: optCkb2.value,
       regExp: optCkb3.value,
@@ -185,4 +187,4 @@ function findDialog() {
   w.show();
 }
 
-// findDialog();
+findDialog();

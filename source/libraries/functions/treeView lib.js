@@ -98,6 +98,7 @@ function buildFontTree(folder, tree) {
 // [ ] comment - buildFindTree
 function buildFindTree(tree, obj, compArray, progBar) {
   var sKey = obj.sKey;
+  var vis = obj.vis;
   var matchCase = obj.matchCase;
   var matchAccent = obj.matchAccent;
   var invert = !obj.invert;
@@ -148,6 +149,8 @@ function buildFindTree(tree, obj, compArray, progBar) {
         sKey = matchAccent ? sKey : sKey.replaceSpecialCharacters();
       }
 
+      if (vis && txtLayer.enabled == false) continue;  
+
       for (var f = 0; f < txtArray.length; f++) {
         var r = txtArray[f].match(sKey) == null ? false : true;
         
@@ -163,7 +166,7 @@ function buildFindTree(tree, obj, compArray, progBar) {
         }
         var layerName = limitNameSize(txtLayer.name, 35);
         var txtItem = compItem.add('item', '(' + (f + 1) + ')   #' + txtLayer.index + '   ' + layerName);
-        txtItem.image = keyStat5Icon;
+        txtItem.image = txtLayer.enabled ? eyeOpenIcon : eyeClosedIcon;
         count += 1;
       }
     }
