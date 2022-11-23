@@ -249,33 +249,33 @@ estabelece um limite de caracteres por linha e quebra o texto assim que esse lim
 ### botões **`paleta GNEWS`**
 aplica um efeito 'fill' com a cor selecionada.
   
-| main         | rgb           | #hex    |
-| ------------ | ------------- | ------- |
-| vermelho     | 229, 49, 49   | #E52F2E |
-| amarelo      | 238, 255, 140 | #ECFF8C |
-| cinza escuro | 35, 30, 30    | #221E1D |
+| main                                | rgb           | #hex    |
+| ----------------------------------- | ------------- | ------- |
+| ![color](/images/colors/E52F2E.png) | 229, 49, 49   | #E52F2E |
+| ![color](/images/colors/ECFF8C.png) | 238, 255, 140 | #ECFF8C |
+| ![color](/images/colors/221E1D.png) | 35, 30, 30    | #221E1D |
 
-| mono         | rgb           | #hex    |
-| ------------ | ------------- | ------- |
-| preto        | 20, 20, 20    | #141414 |
-| cinza escuro | 51, 51, 51    | #333333 |
-| cinza médio  | 74, 74, 74    | #4A4A4A |
-| cinza claro  | 178, 178, 178 | #B2B2B2 |
-| branco       | 242, 242, 242 | #F2F2F2 |
+| mono                                | rgb           | #hex    |
+| ----------------------------------- | ------------- | ------- |
+| ![color](/images/colors/141414.png) | 20, 20, 20    | #141414 |
+| ![color](/images/colors/333333.png) | 51, 51, 51    | #333333 |
+| ![color](/images/colors/4A4A4A.png) | 74, 74, 74    | #4A4A4A |
+| ![color](/images/colors/B2B2B2.png) | 178, 178, 178 | #B2B2B2 |
+| ![color](/images/colors/F2F2F2.png) | 242, 242, 242 | #F2F2F2 |
 
-| sec          | rgb           | #hex    |
-| ------------ | ------------- | ------- |
-| ------------ | 242, 51, 51   | #F13333 |
-| ------------ | 255, 77, 77   | #FF4D4D |
-| ------------ | 255, 103, 77  | #FE674C |
-| ------------ | 255, 143, 77  | #FF8F4D |
-| ------------ | 255, 196, 78  | #FFC44E |
-| ------------ | 255, 90, 103  | #FF5A68 |
-| ------------ | 255, 115, 154 | #FF739A |
-| ------------ | 255, 140, 205 | #FF8CCD |
-| ------------ | 181, 173, 255 | #B5ADFF |
-| ------------ | 128, 192, 255 | #80C0FE |
-| ------------ | 92, 230, 161  | #5DE6A2 |
+| sec                                 | rgb           | #hex    |
+| ----------------------------------- | ------------- | ------- |
+| ![color](/images/colors/F13333.png) | 242, 51, 51   | #F13333 |
+| ![color](/images/colors/FF4D4D.png) | 255, 77, 77   | #FF4D4D |
+| ![color](/images/colors/FE674C.png) | 255, 103, 77  | #FE674C |
+| ![color](/images/colors/FF8F4D.png) | 255, 143, 77  | #FF8F4D |
+| ![color](/images/colors/FFC44E.png) | 255, 196, 78  | #FFC44E |
+| ![color](/images/colors/FF5A68.png) | 255, 90, 103  | #FF5A68 |
+| ![color](/images/colors/FF739A.png) | 255, 115, 154 | #FF739A |
+| ![color](/images/colors/FF8CCD.png) | 255, 140, 205 | #FF8CCD |
+| ![color](/images/colors/B5ADFF.png) | 181, 173, 255 | #B5ADFF |
+| ![color](/images/colors/80C0FE.png) | 128, 192, 255 | #80C0FE |
+| ![color](/images/colors/5DE6A2.png) | 92, 230, 161  | #5DE6A2 |
 
 ### ![shapePallet btn](/images/icons/paleta.png) botão **`paleta`**
 cria um 'shape layer' com amostras da paleta.
