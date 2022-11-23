@@ -108,6 +108,7 @@ importAetBtn.onClick = function () {
   // github main repo...
   var url = repoURL + '/raw/main/downloads/templates.zip';
   var zipPath = downPath + '/templates.zip';
+  var templatesLocalFolder = new Folder(fontsLocalPath);
 
   if (!downFolder.exists) {
     downFolder.create();
@@ -127,7 +128,7 @@ importAetBtn.onClick = function () {
       copyFolder(templatesLocalPath, templatesPath); // copy every file and folder
     }
   }
-  templateDialog(templatesPath); // → templates ui
+  templateDialog(); // → templates ui
 };
 
 /*

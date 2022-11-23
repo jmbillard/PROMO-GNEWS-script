@@ -1,3 +1,4 @@
+
 /*
 
 ---------------------------------------------------------------
@@ -28,8 +29,8 @@ function templateDialog() {
   vGrp2.orientation = 'column';
   vGrp2.alignChildren = 'left';
   vGrp2.visible = false;
-  var tree = vGrp1.add('treeview', [0, 0, 250, 340]);
-  buildTree(templatesFolder, tree, fileFilter);
+  var templateTree = vGrp1.add('treeview', [0, 0, 250, 340]);
+  buildTree(templatesFolder, templateTree, fileFilter);
 
   // buttons group...
   var bGrp = vGrp1.add('group');
@@ -74,20 +75,21 @@ function templateDialog() {
   info2Txt.characters = 40;
   setTxtColor(info2Txt, GNEWS_secColors[8]);
 
-  tree.onChange = function () {
+  //*     
+  templateTree.onChange = function () {
     // node folders should not be selectable...
-    if (tree.selection != null && tree.selection.type == 'node') {
-      tree.selection = null; // → clear selection
+    if (templateTree.selection != null && templateTree.selection.type == 'node') {
+      templateTree.selection = null; // → clear selection
     }
-    importBtn.enabled = tree.selection != null; // → enable | disable import button
-    if (tree.selection == null) {
+    importBtn.enabled = templateTree.selection != null; // → enable | disable import button
+    if (templateTree.selection == null) {
       // nothing selected...
       w.size.width = wWidth; // → resize window
       vGrp2.visible = false; // → hide preview
       return;
     }
     // template selected...
-    var s = tree.selection; // → selected template
+    var s = templateTree.selection; // → selected template
     var templateName = s.toString();
 
     // iterate selection parent + parent + parent... to form selected template file path...
@@ -125,9 +127,10 @@ function templateDialog() {
     info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
     info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
   };
+  //*/  
 
   w.onShow = function () {
-    expandNodes(tree); // expand all tree folder nodes...
+    expandNodes(templateTree); // expand all tree folder nodes...
     oWidth = w.size.width; // window width with image preview...
     wWidth = oWidth - 490; // window width without image preview...
     vGrp2.visible = false; // → hide preview
@@ -135,7 +138,7 @@ function templateDialog() {
   };
 
   importBtn.onClick = function () {
-    var s = tree.selection; // → current selection
+    var s = templateTree.selection; // → current selection
     var fileName = s.toString();
 
     // iterate selection parent + parent + parent... to form selected template file path...
@@ -172,14 +175,14 @@ function templateDialog() {
     unzipContent(zipPath, templatesLocalPath); // → unzip file    
     removeFolder(downFolder); // → delete temp folder
 
-     // HO preference
+    // HO preference
     if (!homeOffice) {
       removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
       copyFolder(templatesLocalPath, templatesPath);
     }
-    buildTree(templatesFolder, tree, fileFilter); // → update tree...
-    expandNodes(tree); // expand all tree folder nodes...
+    buildTree(templatesFolder, templateTree, fileFilter); // → update tree...
+    expandNodes(templateTree); // expand all tree folder nodes...
   };
 
   refreshBtn.onClick = function () {
@@ -188,8 +191,8 @@ function templateDialog() {
       alert('no access...  Σ(っ °Д °;)っ');
       return;
     }
-    buildTree(templatesFolder, tree, fileFilter); // → update tree
-    expandNodes(tree); // expand all tree folder nodes...
+    buildTree(templatesFolder, templateTree, fileFilter); // → update tree
+    expandNodes(templateTree); // expand all tree folder nodes...
   };
 
   openFldBtn.onClick = function () {
@@ -207,3 +210,5 @@ function templateDialog() {
 
   w.show();
 }
+
+// templateDialog();

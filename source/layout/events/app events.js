@@ -68,12 +68,13 @@ installFontsBtn.onClick = function () {
   // github main repo...
   var url = repoURL + '/raw/main/downloads/fonts.zip';
   var zipPath = downPath + '/fonts.zip';
+  var fontsLocalFolder = new Folder(fontsLocalPath);
 
   if (!downFolder.exists) {
     downFolder.create();
   }
   if (!fontsFolder.exists || fontsFolder.getFiles().length == 0) {
-    removeFolder(fontsLocalFolder); // → delete previous fonts folder
+    if (fontsLocalFolder.exists) removeFolder(fontsLocalFolder); // → delete previous fonts folder
     fontsLocalFolder.create(); // → delete previous fonts folder
 
     getURLContent([url], [downPath]);

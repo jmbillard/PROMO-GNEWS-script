@@ -202,6 +202,7 @@ function removeFolder(folder) {
 	var files = folder.getFiles();
 
 	for (var n = 0; n < files.length; n++) {
+		
 		if (files[n] instanceof File) {
 			files[n].remove();
 		} else {
