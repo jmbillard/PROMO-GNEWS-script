@@ -87,21 +87,106 @@ avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os
 ## ![animation icon](/images/icons/animationIcon.png) *animação*
 
 <br />
+
+
+### ![copy inf btn](/images/icons/copyInfluenceIcon.png) botão **`copiar influência`**
+copia as seguintes propriedades do keyframe selecionado:
+```markdown
+    ↑ influência de entrada
+    ↑ influência de saída
+    ↑ velocidade de entrada
+    ↑ velocidade de saída
+```
+> BETA
+
+1) ### ![key stat 1](/images/icons/keyStat1Icon.png) ![key stat 2](/images/icons/keyStat2Icon.png) ![key stat 3](/images/icons/keyStat3Icon.png) ![key stat 4](/images/icons/keyStat4Icon.png) ![key stat 5](/images/icons/keyStat5Icon.png) ![key stat 6](/images/icons/keyStat6Icon.png) ![key stat 7](/images/icons/keyStat7Icon.png) ![key stat 8](/images/icons/keyStat8Icon.png) ![key stat 9](/images/icons/keyStat9Icon.png) keyframe stats...
+info sobre as propriedades copiadas do keyframe selecionado
+> BETA
+
+### ![paste inf btn](/images/icons/pasteInfluenceIcon.png) botão **`colar influência`**
+substitui as seguintes propriedades do keyframe selecionado:
+```markdown
+    ↓ influência de entrada
+    ↓ influência de saída
+    ↓ velocidade de entrada
+    ↓ velocidade de saída
+```
+> BETA
+
+### ![randomize layers btn](/images/icons/randomizeLayerTimesIcon.png) botão **`randomizar layers`**
+avança e atrasa os tempos de entrada e saída de cada layer selecionado entre o primeiro e último tempos de entrada.
+> caso os layers selecionados tenham o mesmo tempo de entrada todos serão deslocados entre 0 e 1 segundo.
+
+### ![lock btn](/images/icons/lockPropIcon.png) botão **`trancar`**
+tranca todas as propriedades de transformação não animadas dos layers selecionados.
+<!---
+    ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
+--->
+```markdown
+    'anchor point'
+    'posição'
+    'escala'
+    'rotação'
+    'opacidade'
+```
+
+
 <!-- [ ] include copy keyframe influences -->
 <!-- [ ] move lock transform properties -->
 <!-- [ ] include randomize layer times -->
 <!-- [ ] include tools tab -->
 <!-- [ ] update info and tab -->
 
-### ![typewriter btn](/images/icons/typewriterIcon.png) botão **`typewriter`**
+---
+<br />
 
-cria um preset para animação estilo digitação.
+### ![tools btn](/images/icons/rigToolsIcon.png) botão **`ferramentas`**
+<br />
 
-| parâmetros | opções    |
-| ---------- | --------- |
-| texto      | 0% a 100% |
+### ![arrow btn](/images/icons/arrowIcon.png) botão **`seta`**
+preset de seta com controles diversos.
+> configurações da janela de *'controle de efeito'*...
 
-> possui mais configurações na janela de *'controle de efeito'*...
+### ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
+cria rig de contagem usando um layer de texto.
+```markdown
+    ex: colocando os seguintes parâmetros...
+
+        'modo' = número
+        'deslocamento' = 0% >>> 100% [animado]
+        'valor inicial' = -10
+        'valor final' = 10
+
+        o layer de texto será animado indo de '-10' a '10'.
+```
+> cada modo possui configurações na janela de *'controle de efeito'*...
+
+### ![typewriter btn](/images/icons/typewriterIcon_1.png) botão **`digitação`**
+lettering com animação padrão estilo digitação.
+> configurações da janela de *'controle de efeito'*...
+
+### ![words btn](/images/icons/wordsIcon.png) botão **`palavras`**
+lettering com animação padrão palavra por palavra.
+> configurações da janela de *'controle de efeito'*...
+
+### ![box btn](/images/icons/boxIcon.png) botão **`tarja simples`**
+cria uma tarja simples no layer selecionado.
+
+### ![wig btn](/images/icons/wigIcon.png) botão **`wig`**
+cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
+> configurações na janela de *'controle de efeito'*...
+
+### ![ik btn](/images/icons/ikIcon.png) botão **`ik`**
+cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
+![ik ex](/images/gifs/ik.gif)
+> a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida...
+
+```markdown
+    ex: para o rig de uma perna a ordem de seleção seria...
+        1 - coxa
+        2 - canela
+        3 - pé
+```
 
 ---
 <br /><br />
@@ -157,56 +242,72 @@ estabelece um limite de caracteres por linha e quebra o texto assim que esse lim
 ---
 <br /><br />
 
-## ![pallet icon](/images/icons/ctrlIcon.png) *paleta de cores*
+## ![guides icon](/images/icons/guidesIcon.png) *guias*
 
 <br />
 
-### ![red btn](/images/colors/red.png) ![black btn](/images/colors/black.png) ![white btn](/images/colors/white.png)  botões **`paleta GNEWS`**
-
+### botões **`paleta GNEWS`**
 aplica um efeito 'fill' com a cor selecionada.
+  
+| main         | rgb           | #hex    |
+| ------------ | ------------- | ------- |
+| vermelho     | 229, 49, 49   | #E52F2E |
+| amarelo      | 238, 255, 140 | #ECFF8C |
+| cinza escuro | 35, 30, 30    | #221E1D |
 
-| cores    | rgb           | #hex    |
-| -------- | ------------- | ------- |
-| vermelho | 185, 20, 20   | #B91414 |
-| preto    | 20, 20, 20    | #141414 |
-| branco   | 234, 234, 234 | #EAEAEA |
+| mono         | rgb           | #hex    |
+| ------------ | ------------- | ------- |
+| preto        | 20, 20, 20    | #141414 |
+| cinza escuro | 51, 51, 51    | #333333 |
+| cinza médio  | 74, 74, 74    | #4A4A4A |
+| cinza claro  | 178, 178, 178 | #B2B2B2 |
+| branco       | 242, 242, 242 | #F2F2F2 |
 
-### ![shapePallet btn](/images/icons/guides2Icon.png) botão **`paleta guia`**
+| sec          | rgb           | #hex    |
+| ------------ | ------------- | ------- |
+| ------------ | 242, 51, 51   | #F13333 |
+| ------------ | 255, 77, 77   | #FF4D4D |
+| ------------ | 255, 103, 77  | #FE674C |
+| ------------ | 255, 143, 77  | #FF8F4D |
+| ------------ | 255, 196, 78  | #FFC44E |
+| ------------ | 255, 90, 103  | #FF5A68 |
+| ------------ | 255, 115, 154 | #FF739A |
+| ------------ | 255, 140, 205 | #FF8CCD |
+| ------------ | 181, 173, 255 | #B5ADFF |
+| ------------ | 128, 192, 255 | #80C0FE |
+| ------------ | 92, 230, 161  | #5DE6A2 |
 
-cria um 'shape layer' com amostras da paleta no canto superior esquerdo.
+### ![shapePallet btn](/images/icons/paleta.png) botão **`paleta`**
+cria um 'shape layer' com amostras da paleta.
+> guide layer e bloqueado.
 
-### ![logo btn](/images/icons/newsIcon.png) botão **`paleta guia`**
+### ![arrow on-air btn](/images/icons/arrowOnairIcon.png) botão **`seta on-air`**
+cria um 'shape layer' com a seta usada no on-air.
 
-cria um 'shape layer' com a logo GNEWS.
+### ![logo btn](/images/icons/newsIcon.png) botão **`logo estático`**
+cria um 'shape layer' com a logo GNEWS estática.
 
+### ![logo btn](/images/icons/newsAnimIcon.png) botão **`logo animado`**
+cria um 'shape layer' com a logo GNEWS animada.
+> animação padrão de 3 segundos.\
+> a animação iniciará no tempo atual da comp selecionada.
 ---
 <br /><br />
-
+<!-- 
 ## ![layers icon](/images/icons/layerIcon.png) *renomear / sequenciar layers*
-
-<br />
-
 ### botão **`renomear`**
-
 renomeia todos os layers dos tipos habilitados.
-
 - adiciona um 'prefixo' padrão.
 - converte o nome para 'caixa baixa'.
 - remove 'caracteres especiais'.
-
 > no caso dos layers de texto o próprio conteúdo será usado como nome.
-
 ```markdown
     ex: um layer de texto contendo
         'Dia 8 às 20H' seria renomeado como 'txt_dia 8 as 20h'.
 ```
-
 > USE COM CAUTELA RENOMEAR LAYERS PODE FERRAR COM SUAS *'EXPRESSÕES'*!!!
-
 1. ### ![footage mod](/images/icons/tg_ftgIcon.png) ![solid mod](/images/icons/tg_solIcon.png) ![shape mod](/images/icons/tg_shpIcon.png) ![text mod](/images/icons/tg_txtIcon.png) ![camera mod](/images/icons/tg_camIcon.png) ![light mod](/images/icons/tg_lgtIcon.png) modificadores **`tipos de layer`**
-
     habilita os tipos de layers que podem ser renomeados.
-
     | tipos de layer | prefixo padrão |
     | -------------- | -------------- |
     | footage        | ftg            |
@@ -215,88 +316,12 @@ renomeia todos os layers dos tipos habilitados.
     | textos         | txt            |
     | cameras        | cam            |
     | luzes          | lgt            |
-
 ### ![isolate btn](/images/icons/isolateIcon.png) botão **`isolar`**
-
 habilita o 'shy' e esconde todos os layers selecionados.
-
-### ![lock btn](/images/icons/lockPropIcon.png) botão **`trancar`**
-
-tranca todas as propriedades de transformação não animadas dos layers selecionados.
-<!---
-    ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
---->
-```markdown
-    'anchor point'
-    'posição'
-    'escala'
-    'rotação'
-    'opacidade'
-```
-
 ---
----
+ -->
 
-## ![tools icon](/images/icons/ctrlIcon.png) *rigs e ferramentas*
-
-### ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
-
-cria rig de contagem usando um layer de texto.
-
-| parâmetros    | opções                 |
-| ------------- | ---------------------- |
-| modo          | número, ordinal, tempo |
-| deslocamento  | 0% a 100%              |
-| valor inicial | -999999999 a 999999999 |
-| valor final   | -999999999 a 999999999 |
-
-```markdown
-    ex: colocando os seguintes parâmetros...
-
-        'modo' = número
-        'deslocamento' = 0% >>> 100% [animado]
-        'valor inicial' = -10
-        'valor final' = 10
-
-        o layer de texto será animado indo de '-10' a '10'.
-```
-
-> cada modo possui várias configurações possíveis na janela de *'controle de efeito'*...
-
-### ![wig btn](/images/icons/wigIcon.png) botão **`wig`**
-
-cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
-
-| parâmetros | opções                 |
-| ---------- | ---------------------- |
-| frequência | 0 a 999999999          |
-| amplitude  | -999999999 a 999999999 |
-
-> possui mais configurações na janela de *'controle de efeito'*...
-
-### ![ik btn](/images/icons/ikIcon.png) botão **`ik`**
-
-cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
-
-![ik ex](/images/gifs/ik.gif)
-
-| parâmetros          | opções     |
-| ------------------- | ---------- |
-| inverter orientação | sim ou não |
-
-> a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida...
-
-```markdown
-    ex: para o rig de uma perna a ordem de seleção seria...
-        1 - coxa
-        2 - canela
-        3 - pé
-```
-
----
----
-
-## ![project icon](/images/icons/projIcon.png) *organização de projeto*
+## ![project icon](/images/icons/toolsIcon.png) *organização de projeto*
 
 ### ![add btn](/images/icons/addIcon.png) botão **`adicionar retranca`**
 
@@ -311,9 +336,9 @@ adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada 
 ```markdown
     ex: usando as seguintes informações ficaria...
 
-        1 - usuário: jbillard > 'JBI'
+        1 - usuário: jbillard → 'JBI'
         2 - tag: 'PROMO'
-        3 - id do projeto: Edição das 16H - dia 20/07/22 > 'E16200722'
+        3 - id do projeto: Edição das 16H - dia 20/07/22 → 'E16200722'
 
         'comp1' seria renomeada para 'JBI PROMO - E16200722 comp1'.
 ```
@@ -333,17 +358,38 @@ renomeia as comps de templates e assinaturas de chamada seguindo o padrão de no
 ```markdown
     ex: usando as seguintes informações ficaria...
 
-        1 - usuário: rdenoni > 'RDE'
+        1 - usuário: rdenoni → 'RDE'
         2 - tag: 'PROMO'
         3 - id do projeto: GNEWS Internacional - dia 15/03/22 > 'INT150322'
         4 - nome do projeto: 'institucional'
-        5 - serviço: Quinta-feira - 22:00 > 'QUI 22H'
+        5 - serviço: Quinta-feira - 22:00 → 'QUI 22H'
 
         o template seria renomeado para 'RDE PROMO - INT150322 institucional QUI 22H'.
 ```
 
-### ![organize btn](/images/icons/orgProjIcon.png) botão **`organizar projeto`**
+### ![tag btn](/images/icons/tagIcon.png) botão **`tags de projeto`**
+aplica tags de organização nos itens selecionados da janela de projeto.
+- ![exportar btn](/images/icons/tg_ftgIcon.png) exportar
+- ![editar btn](/images/icons/tg_compIcon.png) editar
+- ![ignorar btn](/images/icons/tg_solIcon.png) ignorar
+- ![fundo btn](/images/icons/tg_imgIcon.png) fundo
+- ![foto btn](/images/icons/tg_imgIcon.png) foto
+- ![ref btn](/images/icons/tg_imgIcon.png) ref
+- ![logo btn](/images/icons/tg_shpIcon.png) logo
+- ![ícone btn](/images/icons/tg_shpIcon.png) ícone
+- ![textura btn](/images/icons/tg_matteIcon.png) textura
+- ![padrão btn](/images/icons/tg_matteIcon.png) padrão
+- ![módulo btn](/images/icons/tg_matteIcon.png) módulo
+- ![tarja btn](/images/icons/tg_txtIcon.png) tarja
+- ![música btn](/images/icons/tg_sonoIcon.png) música
+- ![locução btn](/images/icons/tg_sonoIcon.png) locução
+- ![assinatura btn](/images/icons/tg_compIcon.png) assinatura *'end page'*
+- ![abertura btn](/images/icons/tg_compIcon.png) abertura
 
+### ![end page btn](/images/icons/endpagePresetIcon.png) botão **`modelos de assinatura`**
+seleciona, modifica, aplica e salva modelos do template de assinatura *'end page'*.
+
+### ![organize btn](/images/icons/openIcon.png) botão **`organizar projeto`**
 cria e organiza a estrutura do projeto seguindo o template de projeto.
 
 ### ![save btn](/images/icons/quickSaveIcon.png) botão **`salvar projeto`**
@@ -356,7 +402,7 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
  ```markdown
     ex: usando as seguintes informações ficaria...
 
-        1 - id do projeto: Marketing - dia 08/11/22 > 'MKT081122'
+        1 - id do projeto: Marketing - dia 08/11/22 → 'MKT081122'
         2 - nome do projeto: 'video comercial'
 
         o projeto seria renomeado para 'MKT081122 video comercial'.
