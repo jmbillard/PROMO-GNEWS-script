@@ -90,7 +90,7 @@ function colorPallet() {
 	var layer = app.project.activeItem.layers.addShape();
 
 	// main pallet vector group...
-	var pallet1 = shpPallet(layer, GNEWS_mainColors1);
+	var pallet1 = shpPallet(layer, GNEWS_mainColors1.concat(GNEWS_mainColors2));
 	pallet1
 		.property('ADBE Vector Transform Group')
 		.property('ADBE Vector Position')
@@ -273,55 +273,44 @@ function cleanText(sLayer) {
 	srcTxt.setValue(txt.trim());
 }
 
+// [ ] get column number from first line...
 // divides a text layer in multiple columns...
-function columnText(sLayer, columnsNum) {
-	var srcTxt = sLayer
-		.property('ADBE Text Properties')
-		.property('ADBE Text Document');
-	var txt = srcTxt.value
-		.toString()
-		.replace(/[\s]*[\r|\n]{1,}[\s]*/g, '*|*')
-		.replace(/[\s]*[\-]{3,}[\s]*/g, '*|*')
-		.replace(/[\s]{2,}/g, '*|*');
-
+function columnText(sLayer) {
+	var srcTxt = textContent(sLayer);
+	var txt = srcTxt.replace(/\s*[\r\n]{1,}\s*/g, '*|*')
+		.replace(/\s*\-{3,}\s*/g, '*|*')
+		.replace(/\s{2,}/g, '*|*');
+	var columnsNum = srcTxt.split(/[\r\n]+/g)[0]
+		.replace(/\s*\-{3,}\s*/g, '*|*')
+		.replace(/\s{2,}/g, '*|*')
+		.split('*|*')
+		.length;
 	var cellArray = txt.split('*|*');
 
-	if (cellArray.length >= columnsNum) {
-		var col1 = [];
-		var col2 = [];
-		var col3 = [];
-		var cols = [col1, col2, col3];
-		var colLayers = [];
+	if (cellArray.length < 2) return [];
 
-		for (i = 0; i < cellArray.length; i++) {
-			switch (columnsNum - ((i + 1) % columnsNum)) {
-				case 1:
-					col1.push(cellArray[i]);
-					break;
+	var cols = [];
+	var colLayers = [];
 
-				case 2:
-					col2.push(cellArray[i]);
-					break;
-
-				case 3:
-					col3.push(cellArray[i]);
-					break;
-			}
-		}
-		for (i = 0; i < columnsNum; i++) {
-			var colName = cols[i][0];
-			var colTxt = cols[i][0];
-			var colLayer;
-
-			for (c = 1; c < cols[i].length; c++) {
-				colTxt = colTxt + '\n' + cols[i][c];
-			}
-			colLayer = app.project.activeItem.layers.addText(colTxt);
-			colLayer.name = colName;
-			colLayers.push(colLayer);
-		}
-		return colLayers;
-	} else {
-		return false;
+	for (var c = 0; c < columnsNum; c++) {
+		cols.push([]);
 	}
+	for (var i = 0; i < cellArray.length; i++) {
+		var cI = (columnsNum - ((i + 1) % columnsNum)) - 1;
+		cols[cI].push(cellArray[i]);
+	}
+	for (i = 0; i < columnsNum; i++) {
+		var colName = cols[i][0];
+		var colTxt = cols[i][0];
+		var colLayer;
+
+		for (c = 1; c < cols[i].length; c++) {
+			colTxt = colTxt + '\n' + cols[i][c];
+		}
+		colLayer = app.project.activeItem.layers.addText(colTxt);
+		colLayer.name = colName;
+		colLayers.push(colLayer);
+	}
+
+	return colLayers;
 }

@@ -10,33 +10,37 @@
 ![menu](/images/menu.png)
 
 a barra é **`responsiva`** e pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.
-a tela inicial é dividida por temas e possui as seguintes **seções** e **ferramentas**...
+a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **‣ ferramentas**...
 
 ```markdown
-    - controles         →   hierarquias, nulls e afins...
-    - animação
-    - efeitos
-    - texto             →   manipulação de layers de texto...
-    - guias
-    - projeto           →   organiza tudo em pastinhas...
-    - links
+    - [controles]         →   hierarquias, nulls e afins...
+    - [animação]
+    - [efeitos]
+    - [texto]             →   manipulação de layers de texto...
+    - [guias]
+    - [projeto]           →   organiza tudo em pastinhas...
+    - [links]
     - templates
     - busca
     - preview
-    - programa          →   configurações do after e media encoder...
-    - dev               →   ferramentas de desenvolvimento...
-    - preferencias      →   preferencias do script...
+    - [programa]          →   configurações do after e media encoder...
+    - [dev]               →   ferramentas de desenvolvimento...
+    - [preferencias]      →   preferencias do script...
 ```
 
 > a *'cor'* da tela inicial e suas seções podem ser alteradas nas *'preferências'* do *'script'*...
 ---
+
 <br /><br />
 
-## ![ctrl icon](/images/icons/ctrlIcon.png) *controles*
+# ![ctrl icon](/images/icons/ctrlIcon.png) [ seção *controles* ]
 
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
 <br />
 
-### ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
+## ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
 
 cria um 'null' pai na mesma posição de cada layer selecionado.
 
@@ -45,79 +49,94 @@ cria um 'null' pai na mesma posição de cada layer selecionado.
 
 1. ### ![copy animation tg](/images/icons/tg_aniIcon.png) modificador **`copiar animação`**
 
-habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
+    habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
 
-```markdown
-    'anchor point'
-    'posição'
-    'escala'
-    'rotação'
-```
+    ```markdown
+        'anchor point'
+        'posição'
+        'escala'
+        'rotação'
+    ```
 
-> os *'key frames'* de *'opacidade'* não serão transferidos...
+    > os *'key frames'* de *'opacidade'* não serão transferidos...
 
-![copy animation ex](/images/gifs/copy-animation.gif)
+    ![copy animation ex](/images/gifs/copy-animation.gif)
 
-1. ### ![expression](/images/icons/tg_expIcon.png) modificador **`copiar expressões`**
+2. ### ![expression](/images/icons/tg_expIcon.png) modificador **`copiar expressões`**
 
-habilita a transferência das 'expressões' de transformação dos layers selecionados para o 'null'.
+    habilita a transferência das 'expressões' de transformação dos layers selecionados para o 'null'.
 
-```markdown
-    'anchor point'
-    'posição'
-    'escala'
-    'rotação'
-```
+    ```markdown
+        'anchor point'
+        'posição'
+        'escala'
+        'rotação'
+    ```
 
-> as *'expressões'* de *'opacidade'* não serão transferidas...
+    > as *'expressões'* de *'opacidade'* não serão transferidas...
+<!-- [ ] ex: copiar expressões -->
+---
+<br />
 
 ### ![central null btn](/images/icons/nullCBtn.png) botão **`null central`**
 
 cria um único 'null' pai no 'centro geométrico' de 2 ou mais layers selecionados.
 
+---
+<br />
+
 ### ![down btn](/images/icons/downIcon.png)![up btn](/images/icons/upIcon.png) botões de **`seleção de hierarquia`**
 
 avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
-<!---
-    ![selectHierarchy ex](https://jmbillard.com.br/promo/gifs/select-hierarchy.gif)
---->
+
+<!-- [ ] ex: seleção de hierarquia -->
 ---
+
 <br /><br />
 
-## ![animation icon](/images/icons/animationIcon.png) *animação*
+# ![animation icon](/images/icons/animationIcon.png) [ seção *animação* ]
 
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
 <br />
 
+## ![copy inf btn](/images/icons/copyInfluenceIcon.png) botão **`copiar influência`**
 
-### ![copy inf btn](/images/icons/copyInfluenceIcon.png) botão **`copiar influência`**
 copia as seguintes propriedades do keyframe selecionado:
+
 ```markdown
     ↑ influência de entrada
     ↑ influência de saída
     ↑ velocidade de entrada
     ↑ velocidade de saída
 ```
+
 > BETA
 
-1) ### ![key stat 1](/images/icons/keyStat1Icon.png) ![key stat 2](/images/icons/keyStat2Icon.png) ![key stat 3](/images/icons/keyStat3Icon.png) ![key stat 4](/images/icons/keyStat4Icon.png) ![key stat 5](/images/icons/keyStat5Icon.png) ![key stat 6](/images/icons/keyStat6Icon.png) ![key stat 7](/images/icons/keyStat7Icon.png) ![key stat 8](/images/icons/keyStat8Icon.png) ![key stat 9](/images/icons/keyStat9Icon.png) keyframe stats...
-info sobre as propriedades copiadas do keyframe selecionado
-> BETA
+1) ### ![key stat 1](/images/icons/keyStat1Icon.png) ![key stat 2](/images/icons/keyStat2Icon.png) ![key stat 3](/images/icons/keyStat3Icon.png) ![key stat 4](/images/icons/keyStat4Icon.png) ![key stat 5](/images/icons/keyStat5Icon.png) ![key stat 6](/images/icons/keyStat6Icon.png) ![key stat 7](/images/icons/keyStat7Icon.png) ![key stat 8](/images/icons/keyStat8Icon.png) ![key stat 9](/images/icons/keyStat9Icon.png) keyframe stats
 
-### ![paste inf btn](/images/icons/pasteInfluenceIcon.png) botão **`colar influência`**
+    info sobre as propriedades copiadas do keyframe selecionado
+    > BETA
+
+## ![paste inf btn](/images/icons/pasteInfluenceIcon.png) botão **`colar influência`**
+
 substitui as seguintes propriedades do keyframe selecionado:
+
 ```markdown
     ↓ influência de entrada
     ↓ influência de saída
     ↓ velocidade de entrada
     ↓ velocidade de saída
 ```
+
 > BETA
+<!-- [ ] ex: copiar e colar influencias -->
+---
+<br />
 
-### ![randomize layers btn](/images/icons/randomizeLayerTimesIcon.png) botão **`randomizar layers`**
-avança e atrasa os tempos de entrada e saída de cada layer selecionado entre o primeiro e último tempos de entrada.
-> caso os layers selecionados tenham o mesmo tempo de entrada todos serão deslocados entre 0 e 1 segundo.
+## ![lock btn](/images/icons/lockPropIcon.png) botão **`trancar`**
 
-### ![lock btn](/images/icons/lockPropIcon.png) botão **`trancar`**
 tranca todas as propriedades de transformação não animadas dos layers selecionados.
 <!---
     ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
@@ -129,26 +148,38 @@ tranca todas as propriedades de transformação não animadas dos layers selecio
     'rotação'
     'opacidade'
 ```
+<!-- [ ] ex: bloquear propriedades de transformação -->
+---
+<br />
 
+## ![randomize layers btn](/images/icons/randomizeLayerTimesIcon.png) botão **`randomizar layers`**
 
-<!-- [ ] include copy keyframe influences -->
-<!-- [ ] move lock transform properties -->
-<!-- [ ] include randomize layer times -->
-<!-- [ ] include tools tab -->
-<!-- [ ] update info and tab -->
+avança e atrasa os tempos de entrada e saída de cada layer selecionado entre o primeiro e último tempos de entrada.
+> caso os layers selecionados tenham o mesmo tempo de entrada todos serão deslocados entre 0 e 1 segundo.
+<!-- [ ] ex: randomizar layers -->
+---
+<br /><br />
+
+# ![tools btn](/images/icons/rigToolsIcon.png) [ subseção **`ferramentas`** ]
+
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
 
-### ![tools btn](/images/icons/rigToolsIcon.png) botão **`ferramentas`**
+## ![arrow btn](/images/icons/arrowIcon.png) botão **`seta`**
+
+preset de seta com controles diversos.
+> configurações da janela de *'controle de efeito'*...\
+> [documentação completa](/docs/doc.md)
+<!-- [ ] ex: seleção de hierarquia -->
+---
 <br />
 
-### ![arrow btn](/images/icons/arrowIcon.png) botão **`seta`**
-preset de seta com controles diversos.
-> configurações da janela de *'controle de efeito'*...
+## ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
 
-### ![counter btn](/images/icons/counterIcon.png) botão **`counter`**
 cria rig de contagem usando um layer de texto.
+
 ```markdown
     ex: colocando os seguintes parâmetros...
 
@@ -159,24 +190,43 @@ cria rig de contagem usando um layer de texto.
 
         o layer de texto será animado indo de '-10' a '10'.
 ```
-> cada modo possui configurações na janela de *'controle de efeito'*...
 
-### ![typewriter btn](/images/icons/typewriterIcon_1.png) botão **`digitação`**
+> cada modo possui configurações na janela de *'controle de efeito'*...\
+> [documentação completa](/docs/doc.md)
+
+## ![typewriter btn](/images/icons/typewriterIcon_1.png) botão **`digitação`**
+
 lettering com animação padrão estilo digitação.
-> configurações da janela de *'controle de efeito'*...
+> configurações da janela de *'controle de efeito'*...\
+> [documentação completa](/docs/doc.md)
+<!-- [ ] ex: typewriter -->
 
-### ![words btn](/images/icons/wordsIcon.png) botão **`palavras`**
+## ![words btn](/images/icons/wordsIcon.png) botão **`palavras`**
+
 lettering com animação padrão palavra por palavra.
-> configurações da janela de *'controle de efeito'*...
+> configurações da janela de *'controle de efeito'*...\
+> [documentação completa](/docs/doc.md)
+<!-- [ ] ex: words -->
 
-### ![box btn](/images/icons/boxIcon.png) botão **`tarja simples`**
+## ![box btn](/images/icons/boxIcon.png) botão **`tarja simples`**
+
 cria uma tarja simples no layer selecionado.
 
-### ![wig btn](/images/icons/wigIcon.png) botão **`wig`**
-cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
-> configurações na janela de *'controle de efeito'*...
+---
+<br />
 
-### ![ik btn](/images/icons/ikIcon.png) botão **`ik`**
+## ![wig btn](/images/icons/wigIcon.png) botão **`wig`**
+
+cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
+> configurações na janela de *'controle de efeito'*...\
+> [documentação completa](/docs/doc.md)
+<!-- [ ] ex: wig -->
+
+---
+<br />
+
+## ![ik btn](/images/icons/ikIcon.png) botão **`ik`**
+
 cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
 ![ik ex](/images/gifs/ik.gif)
 > a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida...
@@ -189,19 +239,23 @@ cria um rig simples de movimento usando cinemática inversa com 3 layers selecio
 ```
 
 ---
+
 <br /><br />
 
-## ![fx icon](/images/icons/fxIcon.png) *efeitos*
+# ![fx icon](/images/icons/fxIcon.png) [ seção *efeitos* ]
 
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
 <br />
 
-### ![adj btn](/images/icons/adjIcon.png) botão **`adjustment layer`**
+## ![adj btn](/images/icons/adjIcon.png) botão **`adjustment layer`**
 
 cria um 'adjustment layer' responsivo com as dimensões da composição.
 
 > o tipo de layer usado como *'adjustment layer'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
 
-### ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
+## ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
 
 ```markdown
     efeitos: 'curves'
@@ -210,43 +264,55 @@ cria um 'adjustment layer' responsivo com as dimensões da composição.
 ```
 
 ---
+
 <br /><br />
 
-## ![text icon](/images/icons/titleCaseIcon.png) *texto*
+# ![text icon](/images/icons/titleCaseIcon.png) [ seção *texto* ]
 
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
 <br />
 
-### ![Title icon](/images/icons/upperCaseIcon.png) ![Title icon](/images/icons/lowerCaseIcon.png) ![Title icon](/images/icons/titleCaseIcon.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
+## ![Title icon](/images/icons/upperCaseIcon.png) ![Title icon](/images/icons/lowerCaseIcon.png) ![Title icon](/images/icons/titleCaseIcon.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
 
 converte todo o conteúdo dos layers de texto selecionados.
 
 ![lineBreaker ex](/images/gifs/text-case.gif)
 
-### ![txtCleaner btn](/images/icons/txtCleanerIcon.png) botão **`limpar texto`**
+## ![txtCleaner btn](/images/icons/cleanerIcon.png) botão **`limpar texto`**
 
 remove múltiplos espaços consecutivos, quebras de linha e faz o trim do layer de texto.
+<!-- [ ] ex: limpador de texto -->
 
-### ![txtColumns btn](/images/icons/txtColumnsIcon.png) botão **`separar colunas`**
+## ![txtColumns btn](/images/icons/txtColumnsIcon.png) botão **`separar colunas`**
 
 separa um layer de texto em 2 ou mais colunas cada coluna gera um novo layer de texto .
 
 ![columnBreaker ex](/images/gifs/column-breaker.gif)
 
-### slider **`quebra linhas`**
+---
+<br />
+
+## ![slider](/images/icons/sliderIcon.png) **`quebra linhas`**
 
 estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
 
 ![lineBreaker ex](/images/gifs/line-breaker.gif)
 
-<!-- [ ] update tab info -->
 ---
+
 <br /><br />
 
-## ![guides icon](/images/icons/guidesIcon.png) *guias*
+# ![guides icon](/images/icons/guidesIcon.png) [ seção *guias* ]
 
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
 <br />
 
-### botões **`paleta GNEWS`**
+## botões **`paleta GNEWS`**
+
 aplica um efeito 'fill' com a cor selecionada.
   
 | cor                                | rgb           | #hex    |
@@ -277,21 +343,32 @@ aplica um efeito 'fill' com a cor selecionada.
 | ![color](/images/colors/80C0FE.png) | 128, 192, 255 | #80C0FE |
 | ![color](/images/colors/5DE6A2.png) | 92, 230, 161  | #5DE6A2 |
 
-### ![shapePallet btn](/images/icons/paleta.png) botão **`paleta`**
+## ![shapePallet btn](/images/icons/paleta.png) botão **`paleta`**
+
 cria um 'shape layer' com amostras da paleta.
 > guide layer e bloqueado.
+<!-- [ ] ex: paleta shape layer -->
 
-### ![arrow on-air btn](/images/icons/arrowOnairIcon.png) botão **`seta on-air`**
+---
+<br />
+
+## ![arrow on-air btn](/images/icons/arrowOnairIcon.png) botão **`seta on-air`**
+
 cria um 'shape layer' com a seta usada no on-air.
 
-### ![logo btn](/images/icons/newsIcon.png) botão **`logo estático`**
+## ![logo btn](/images/icons/newsIcon.png) botão **`logo estático`**
+
 cria um 'shape layer' com a logo GNEWS estática.
 
-### ![logo btn](/images/icons/newsAnimIcon.png) botão **`logo animado`**
+## ![logo btn](/images/icons/newsAnimIcon.png) botão **`logo animado`**
+
 cria um 'shape layer' com a logo GNEWS animada.
 > animação padrão de 3 segundos.\
 > a animação iniciará no tempo atual da comp selecionada.
+<!-- [ ] ex: logo animado -->
+
 ---
+
 <br /><br />
 <!-- 
 ## ![layers icon](/images/icons/layerIcon.png) *renomear / sequenciar layers*
@@ -319,20 +396,24 @@ renomeia todos os layers dos tipos habilitados.
 ### ![isolate btn](/images/icons/isolateIcon.png) botão **`isolar`**
 habilita o 'shy' e esconde todos os layers selecionados.
 ---
- -->
+<br /> -->
 
-## ![project icon](/images/icons/toolsIcon.png) *organização de projeto*
+# ![project icon](/images/icons/toolsIcon.png) [ seção *projeto* ]
 
-### ![add btn](/images/icons/addIcon.png) botão **`adicionar retranca`**
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
+<br />
+
+## ![add btn](/images/icons/addIcon.png) botão **`adicionar retranca`**
 
 adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
 
 - id do usuário > *3 primeiras letras do usuário logado na máquina.*
 - tag 'PROMO' > *PROMO*
 - id do projeto > *sigla de 3 letras do produto + 6 números da data*
-<!---
-    ![lock ex](https://jmbillard.com.br/promo/gifs/add-prefix.gif)
---->
+<!-- [ ] ex: adicionar retranca -->
+
 ```markdown
     ex: usando as seguintes informações ficaria...
 
@@ -345,7 +426,7 @@ adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada 
 
 > consulte a tabela de retrancas de *'PROMO'* para ver a lista completa de siglas dos produtos...
 
-### ![rename btn](/images/icons/shpNullIcon.png) botão **`renomear templates`**
+## ![rename btn](/images/icons/shpNullIcon.png) botão **`renomear templates`**
 
 renomeia as comps de templates e assinaturas de chamada seguindo o padrão de nomenclatura de promo.
 
@@ -366,9 +447,15 @@ renomeia as comps de templates e assinaturas de chamada seguindo o padrão de no
 
         o template seria renomeado para 'RDE PROMO - INT150322 institucional QUI 22H'.
 ```
+<!-- [ ] ex: renomear template -->
 
-### ![tag btn](/images/icons/tagIcon.png) botão **`tags de projeto`**
+---
+<br />
+
+## ![tag btn](/images/icons/tagIcon.png) botão **`tags de projeto`**
+
 aplica tags de organização nos itens selecionados da janela de projeto.
+
 - ![exportar btn](/images/icons/tg_ftgIcon.png) exportar
 - ![editar btn](/images/icons/tg_compIcon.png) editar
 - ![ignorar btn](/images/icons/tg_solIcon.png) ignorar
@@ -386,13 +473,24 @@ aplica tags de organização nos itens selecionados da janela de projeto.
 - ![assinatura btn](/images/icons/tg_compIcon.png) assinatura *'end page'*
 - ![abertura btn](/images/icons/tg_compIcon.png) abertura
 
-### ![end page btn](/images/icons/endpagePresetIcon.png) botão **`modelos de assinatura`**
-seleciona, modifica, aplica e salva modelos do template de assinatura *'end page'*.
+## ![organize btn](/images/icons/openIcon.png) botão **`organizar projeto`**
 
-### ![organize btn](/images/icons/openIcon.png) botão **`organizar projeto`**
 cria e organiza a estrutura do projeto seguindo o template de projeto.
+<!-- [ ] ex: organizar projeto -->
 
-### ![save btn](/images/icons/quickSaveIcon.png) botão **`salvar projeto`**
+---
+<br />
+
+## ![end page btn](/images/icons/endpagePresetIcon.png) botão **`modelos de assinatura`**
+
+seleciona, modifica, aplica e salva modelos do template de assinatura *'end page'*.
+> [documentação completa](/docs/doc.md)
+<!-- [ ] ex: modelos de assinatura -->
+
+---
+<br />
+
+## ![save btn](/images/icons/quickSaveIcon.png) botão **`salvar projeto`**
 
 abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
 
@@ -411,37 +509,39 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
 1. ### ![collect mod](/images/icons/tg_fldIcon.png) modificador **`coletar arquivos`**
 
     habilita a coleta de todos os arquivos usados no projeto quando salvo.
+    > 'collect files'...
 
-> a copia dos arquivos pode demorar um pouco dependendo da quantidade e tamanho então *KEEP CALM*...
-
+<!-- 
 1. ### ![fonts mod](/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
 
     habilita a coleta de todas as fontes usadas no projeto quando salvo.
 
-> limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
+> limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas... -->
 
 ---
+
 <br /><br />
 
-## ![links icon](/images/icons/linksIcon.png) *links úteis*
+# ![links icon](/images/icons/linksIcon.png) [ seção *links* ]
 
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
 <br />
 
-### botões **`office globo`**
+## botões **`office globo`**
 
 [![email btn](/images/icons/link_emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
 [![oneDrive btn](/images/icons/link_oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
-[![sharePoint btn](/images/icons/link_sharePointIcon.png)**`sharePoint`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
 
 acessam os serviços que a 'globo' e a equipe de 'promo' usam na nuvem da 'microsoft'.
 
 ```markdown
     urls: 'https://outlook.office365.com/mail/'
           'https://tvglobocorp-my.sharepoint.com/'
-          'https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados'
 ```
 
-### botões **`work flow`**
+## botões **`work flow`**
 
 [![trello btn](/images/icons/link_trelloIcon.png)**`trello`**](https://trello.com/promo126/home)
 [![typeForm btn](/images/icons/link_typeFormIcon.png)**`typeForm`**](https://tvglobo.typeform.com/to/wiqX4z0X)
@@ -455,25 +555,79 @@ acessam as plataformas que a 'globo' e a equipe de 'promo' usam para gerenciar t
           'https://tasks.office.com/tvglobocorp.onmicrosoft.com/en-US/Home/Planner/#/userboard'
 ```
 
-### botões **`rede`**
+---
+<br />
 
-![arte btn](/images/icons/link_arteFolderIcon.png)**`para ARTE`**
-![mag btn](/images/icons/link_magazineFolderIcon.png)**`upload MAGAZINE`**
-![hn btn](/images/icons/link_hardNewsFolderIcon.png)**`upload HARD NEWS`**
-![utils btn](/images/icons/link_utilsFolderIcon.png)**`UTILIDADES`**
+## botões **`rede`**
+
+![arte btn](/images/icons/link_arteFolderIcon.png)**`para ARTE`**\
+![mag btn](/images/icons/link_magazineFolderIcon.png)**`upload MAGAZINE`**\
+![hn btn](/images/icons/link_hardNewsFolderIcon.png)**`upload HARD NEWS`**\
+![utils btn](/images/icons/link_utilsFolderIcon.png)**`N:\UTILIDADES`**\
+![base btn](/images/icons/baseFolderIcon.png)**`_Bases Jornais`**\
+![day btn](/images/icons/dayFolderIcon.png)**`PRODUCAO DIA-A-DIA\...\[Hoje]`**
 
 acessam as pastas na rede da 'globo'.
 
 > clique direito: configura um caminho personalizado para as pastas *'para ARTE'* e *'upload MAGAZINE'*
 
 ---
+
 <br /><br />
 
-## ![app icon](/images/icons/aeIcon.png) *programa*
+# ![template btn](/images/icons/aeIcon.png) janela **`templates`**
 
+baixa e exibe os principais templates dos projetos de 'PROMO'.
+
+> download: *'~\AppData\Roaming\PROMO GNEWS script\templates'*\
+> [documentação completa](/docs/doc.md)
+
+---
+
+<br /><br />
+
+# ![find btn](/images/icons/findIcon.png) janela **`busca`**
+
+executa uma busca pelo termo pesquisado no conteúdo dos *'text layers'*.
+
+> caso nenhuma composição esteja selecionada na *'janela de projeto'*, a busca englobará todas as composições.\
+> [documentação completa](/docs/doc.md)
+
+---
+
+<br /><br />
+
+# ![snap btn](/images/icons/previewIcon.png) botão **`preview`**
+
+exporta o frame atual da comp selecionada em *'.png'*.
+
+> por padrão o arquivo será nomeado como *'**nome da comp** preview.png'*.
+
+---
+
+<br /><br />
+
+# ![app icon](/images/icons/aeIcon.png) [ seção *programa* ]
+
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+
+---
 <br />
 
-### ![ameTemplate btn](/images/icons/eprIcon.png) botão **`AME presets`**
+## ![fonts btn](/images/icons/fontsIcon.png) botão **`fontes`**
+
+baixa e instala as fontes do *'ON-AIR'* entre outras.
+
+- Degular
+- Suisse
+
+> download: *'~\AppData\Roaming\PROMO GNEWS script\fonts'*\
+> [documentação completa](/docs/doc.md)
+
+---
+<br />
+
+## ![ameTemplate btn](/images/icons/eprIcon.png) botão **`AME presets`**
 
 baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
 
@@ -485,42 +639,42 @@ baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
 > download: *'~\AppData\Roaming\PROMO GNEWS script\AME presets'*\
 > instalação: *'~\Documents\Adobe\Adobe Media Encoder\versão instalada\Presets'*
 
-### ![template btn](/images/icons/openIcon.png) botão **`import templates`**
-
-baixa e exibe os principais templates dos projetos de 'PROMO'.
-
-> clique direito: força o download das ultimas versões dos templates disponíveis do repositório\
-> download: *'~\AppData\Roaming\PROMO GNEWS script\templates'*
-
 ---
+
 <br /><br />
 
-## ![preferences icon](/images/icons/ctrlIcon.png) *preferencias*
+# ![preferences icon](/images/icons/prefsIcon.png) [ seção *preferencias* ]
 
-as preferencias serão criadas e salvas sempre que uma alteração for feita.
-> preferencias: *'~\AppData\Roaming\PROMO GNEWS script\preferences.json'*
+![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
 
+---
 <br />
 
-### menu **`null - adjustment`**
+## ![menu icon](/images/icons/menuIcon.png) **`null - adjustment`**
 
 define o tipo de 'layer' criado pelo script.
 
 - shape layer
 - solid
 
-### menu **`template de projeto`**
+---
+<br />
+
+## ![menu icon](/images/icons/menuIcon.png) **`template de projeto`**
 
 define o 'template' de organização do projeto.
 
 - PROMO
 - custom
 
-### botão **`cor atual`**
+---
+<br />
+
+## ![color](/images/colors/FE674C.png) botão **`cor atual`**
 
 altera a 'cor' da aba selecionada.
 
-1. ### modificador **`aba`**
+1. ### ![menu icon](/images/icons/menuIcon.png) modificador **`aba`**
 
     define a 'aba' a ser alterada.
     - menu
@@ -528,17 +682,34 @@ altera a 'cor' da aba selecionada.
     - animação
     - efeitos
     - texto
-    - paleta
-    - layers
-    - ferramentas
+    - guias
     - projeto
-    - programa
     - links
+    - programa
+    - dev
 
-### ![update btn](/images/icons/downloadIcon.png) botão **`atualizar`**
+---
+<br />
+
+## ![HO btn](/images/icons/checkBoxIcon.png) **`HO`**
+
+habilita e desabilita o *'modo home office'*
+> verdadeiro -> utiliza pastas da maquina local.\
+> falso -> habilita e utiliza as pastas da rede.
+
+---
+<br />
+
+## ![update btn](/images/icons/downloadIcon.png) botão **`atualizar`**
 
 baixa a ultima versão disponível no repositório do github
 
 > clique direito: acessa a pagina do repositório\
 > download: *'~\AppData\Roaming\PROMO GNEWS script\ScriptUI Panels'*\
 > instalação: *'versão instalada do After\Support Files\Scripts\ScriptUI Panels'*
+
+---
+<br />
+
+as preferencias serão criadas e salvas sempre que uma alteração for feita.
+> preferencias: *'~\AppData\Roaming\PROMO GNEWS script\preferences.json'*

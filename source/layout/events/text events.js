@@ -80,26 +80,25 @@ txtColumnBtn.onClick = function () {
   }
   app.beginUndoGroup('break text columns');
 
-  for (i = 0; i < selLayers.length; i++) {
+  for (var i = 0; i < selLayers.length; i++) {
     var selLayer = selLayers[i];
     var colN = 2;
     var colPos = selLayer.position.value;
-    var col = columnText(selLayer, colN);
+    var col = columnText(selLayer);
 
-    if (col.length >= colN) {
-      selLayer.enabled = false;
-      col[0].position.setValue(colPos);
+    if (col.length < 2) return;
+    selLayer.enabled = false;
+    col[0].position.setValue(colPos);
 
-      for (c = 1; c < col.length; c++) {
-        var exp = '[parent.sourceRectAtTime().width + 100, 0];';
+    for (c = 1; c < col.length; c++) {
+      var exp = '[parent.sourceRectAtTime().width / 2 + 50 + sourceRectAtTime().width / 2, 0];';
 
-        col[c].parent = col[c - 1];
-        col[c].position.expression = exp;
-        var cPos = col[c].position.value;
-        col[c].position.expression = '';
-        col[c].position.setValue(cPos);
-        col[c].parent = null;
-      }
+      col[c].parent = col[c - 1];
+      col[c].position.expression = exp;
+      var cPos = col[c].position.value;
+      col[c].position.expression = '';
+      col[c].position.setValue(cPos);
+      col[c].parent = null;
     }
   }
   app.endUndoGroup();

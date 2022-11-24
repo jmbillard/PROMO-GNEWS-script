@@ -99,6 +99,8 @@ hoCkb.onClick = function () {
   JSONObj.homeOffice = homeOffice;
   nUtilsBtn.enabled = !homeOffice;
   mamHardNewsBtn.enabled = !homeOffice;
+  dayBtn.enabled = !homeOffice;
+  baseJorBtn.enabled = !homeOffice;
   savePreferences(); // → save preferences.json
   updateFolderPaths(); // → update templates and fonts folder
 };

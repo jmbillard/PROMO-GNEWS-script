@@ -161,11 +161,12 @@ function setLayout() {
     tabs[t].spacing = 2;
   }
 
-  colorsGrp.spacing = 10;
+  colorsGrp.spacing = 8;
   colors1Grp.spacing = 2;
   colors2Grp.spacing = 2;
   colors3Grp.spacing = 2;
   tabsGrp.menu.spacing = 8;
+  tabsGrp.links.spacing = 8;
   
   colors1Grp.orientation = wLayout;
   colors2Grp.orientation = wLayout;
