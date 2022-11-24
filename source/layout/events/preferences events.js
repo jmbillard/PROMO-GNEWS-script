@@ -97,6 +97,8 @@ hoCkb.onClick = function () {
 
   homeOffice = hoCkb.value;
   JSONObj.homeOffice = homeOffice;
+  nUtilsBtn.enabled = !homeOffice;
+  mamHardNewsBtn.enabled = !homeOffice;
   savePreferences(); // → save preferences.json
   updateFolderPaths(); // → update templates and fonts folder
 };

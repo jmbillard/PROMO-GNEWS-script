@@ -78,6 +78,11 @@ mamHardNewsBtn.onClick = function () {
     showTabErr(netConfigName + ' not checked');
     return;
   }
+  var fld = new Folder(hnPath);
+  if (!fld.exists) {
+    showTabErr('this folder is not accessible...');
+    return;
+  }
   openFolder(hnPath);
 };
 
@@ -146,5 +151,5 @@ nUtilsBtn.onClick = function () {
     showTabErr('this folder is not accessible...');
     return;
   }
-  openFolder(folderPath);
+  openFolder(utiPath);
 };
