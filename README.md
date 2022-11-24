@@ -352,7 +352,7 @@ cria um 'shape layer' com amostras da paleta.
 ---
 <br />
 
-## ![arrow on-air btn](/images/icons/arrowOnairIcon.png) botão **`seta on-air`**
+## ![arrow on-air btn](/images/icons/arrowOnAirIcon.png) botão **`seta on-air`**
 
 cria um 'shape layer' com a seta usada no on-air.
 
