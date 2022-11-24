@@ -27,37 +27,42 @@ infoBtn.onClick = function () {
 ctrlBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.ctrl;
-  readme = '#-controles-e-nulls';
+  readme = '#--seção-controles-';
   openTab();
 };
 
 animBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.animation;
+  readme = '#--seção-animação-';
   openTab();
 };
 
 fxBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.fx;
+  readme = '#--seção-efeitos-';
   openTab();
 };
 
 txtBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.text;
+  readme = '#--seção-texto-';
   openTab();
 };
 
 guideBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.guide;
+  readme = '#--seção-guias-';
   openTab();
 };
 
 toolBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.tools;
+  readme = '#--subseção-ferramentas-';
   openTab();
 };
 
@@ -67,6 +72,7 @@ projBtn.onClick = function () {
 
   currentGrp.visible = false;
   currentGrp = tabsGrp.project;
+  readme = '#--seção-projeto-';
   openTab();
   projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
@@ -76,6 +82,7 @@ projBtn.onClick = function () {
 appBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.app;
+  readme = '#--seção-programa-';
   openTab();
 };
 
@@ -88,6 +95,7 @@ devBtn.onClick = function () {
 linksBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.links;
+  readme = '#--seção-links-';
   openTab();
 };
 
@@ -146,6 +154,7 @@ findBtn.onClick = function () {
 prefBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = preferences;
+  readme = '#--seção-preferencias-';
   openTab();
 };
 
