@@ -28,7 +28,7 @@ a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **
     - [preferencias]      →   preferencias do script...
 ```
 
-> a *'cor'* da tela inicial e suas seções podem ser alteradas nas *'preferências'* do *'script'*...
+> a *'cor'* da tela inicial e suas seções podem ser alteradas nas *'preferências do script'*...
 ---
 
 <br /><br />
@@ -454,7 +454,7 @@ renomeia as comps de templates e assinaturas de chamada seguindo o padrão de no
 
 ## ![tag btn](/images/icons/tagIcon.png) botão **`tags de projeto`**
 
-aplica tags de organização nos itens selecionados da janela de projeto.
+aplica tags de organização nos itens selecionados da *'janela de projeto'*.
 
 - ![exportar btn](/images/icons/tg_ftgIcon.png) exportar
 - ![editar btn](/images/icons/tg_compIcon.png) editar
@@ -475,7 +475,8 @@ aplica tags de organização nos itens selecionados da janela de projeto.
 
 ## ![organize btn](/images/icons/openIcon.png) botão **`organizar projeto`**
 
-cria e organiza a estrutura do projeto seguindo o template de projeto.
+cria e organiza a estrutura do projeto seguindo o modelo de projeto.
+> modelo de projeto pode ser alterado nas *'preferências do script'*...
 <!-- [ ] ex: organizar projeto -->
 
 ---
