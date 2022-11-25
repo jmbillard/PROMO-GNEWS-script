@@ -74,7 +74,6 @@ if (!String.prototype.trim) {
   };
 }
 
-// [ ] comment - buildFindTree
 function buildFindTree(tree, obj, compArray, progBar) {
   var sKey = obj.sKey; // keyword...
   var vis = obj.vis; // include hidden layers...
@@ -160,7 +159,7 @@ function buildFindTree(tree, obj, compArray, progBar) {
         var txtItem = compItem.add('item', '(' + (f + 1) + ')   #' + txtLayer.index + '   ' + layerName);
         // add layer visibility icon...
         txtItem.image = txtLayer.enabled ? eyeOpenIcon : eyeClosedIcon;
-        count += 1; // incremente tree items count...
+        count += 1; // increment tree items count...
       }
     }
     progBar.value += progInc; // increment current progress...
@@ -311,9 +310,9 @@ function findDialog() {
 
     var selArray = app.project.selection;
     selArray = selArray.length > 0 ? selArray : getComps(); // → [selected items] : [all comps]
-    findTree = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
+    findTree = buildFindTree(resultTree, optObj, selArray, findPb); // → {'resultArray': resultArray, 'count': count};
     resultArray = findTree.resultArray; // → [filtered comps]
-    count = findTree.count; // → [filtered comps]
+    count = findTree.count; // → items count
 
     if (resultArray.length == 0) {
       w.text = 'nenhum resultado - ' + timer() + 's  (っ °Д °;)っ';
