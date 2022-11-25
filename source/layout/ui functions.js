@@ -165,8 +165,9 @@ function setLayout() {
   colors1Grp.spacing = 2;
   colors2Grp.spacing = 2;
   colors3Grp.spacing = 2;
-  tabsGrp.menu.spacing = 8;
+  tabsGrp.menu.spacing = 6;
   tabsGrp.links.spacing = 8;
+  tabsGrp.preferences.spacing = 8;
   
   colors1Grp.orientation = wLayout;
   colors2Grp.orientation = wLayout;
