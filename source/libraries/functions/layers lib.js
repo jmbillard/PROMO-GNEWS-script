@@ -273,7 +273,6 @@ function cleanText(sLayer) {
 	srcTxt.setValue(txt.trim());
 }
 
-// [ ] get column number from first line...
 // divides a text layer in multiple columns...
 function columnText(sLayer) {
 	var srcTxt = textContent(sLayer);
