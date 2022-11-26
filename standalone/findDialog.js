@@ -55,6 +55,30 @@ String.prototype.replaceSpecialCharacters = function () {
     .trim();
 };
 
+// indexOf() definition...
+if (!Array.prototype.indexOf) {
+  Array.prototype.indexOf = function (element, startPoint) {
+
+    var k;
+    var O = Object(this);
+    var aSize = O.length >>> 0;
+
+    if (aSize === 0) return -1;
+    var n = + startPoint || 0;
+
+    if (Math.abs(n) === Infinity) n = 0;
+    if (n >= aSize)  return -1;
+
+    k = Math.max(n >= 0 ? n : aSize - Math.abs(n), 0);
+
+    while (k < aSize) {
+      if (k in O && O[k] === element) return k;
+      k++;
+    }
+    return -1;
+  };
+}
+
 // returns text layer content...
 function textContent(aLayer) {
 	if (aLayer == null) return '';
@@ -354,6 +378,7 @@ function findDialog() {
 
           t = (aLayer.outPoint - aLayer.inPoint) / 2 + aLayer.inPoint;
           aLayer.shy = false;
+          aLayer.selected = true;
 
           if (doc.numKeys > 0) {
             t = doc.keyTime(parseInt(k));
