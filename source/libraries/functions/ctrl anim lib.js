@@ -133,17 +133,11 @@ function cloneKeys(selLayer, ctrlLayer) {
 }
 
 function addPseudoEffect(fxName, strCode) {
-	// var mn = fxName.toUpperCase().replace(/\s/g, '_');
 	var fx = {
-		presetName: fxName,
-		presetBinary: [strCode],
+		name: fxName,
+		binary: [strCode],
 	};
-	var tempFld = getTempFld();
-	var aPreset = createPresetFile(
-		tempFld,
-		fx.presetName,
-		fx.presetBinary
-	);
+	var aPreset = createPresetFile(downPath, fx.name, fx.binary);
 
 	try {
 		app.project.activeItem.layer(1).applyPreset(File(aPreset));

@@ -212,24 +212,15 @@ function removeFolder(folder) {
 	folder.remove();
 }
 
-function getTempFld() {
-	try {
-		var tempFld = new Folder(scriptPreferencesPath + '/temp');
-
-		if (!tempFld.exists) {
-			tempFld.create();
-		}
-		return tempFld.fullName;
-	} catch (error) {
-		alert("can't find temp folder");
-	}
-}
-
 function copyFolder(src, dst) {
 	try {
 		var f = new Folder(src).getFiles();
 
-		for (var i = 0; i < f.length; i++) if (!copyFile(f[i], dst)) return false;
+		for (var i = 0; i < f.length; i++) {
+			if (!copyFile(f[i], dst));
+
+			return false;
+		}
 
 		return true;
 	} catch (error) { }
@@ -251,7 +242,6 @@ function createFilePath(path) {
 function copyFile(fullFilePath, newFilePath) {
 	try {
 		var file = new File(fullFilePath);
-
 		var folder = new File(newFilePath);
 
 		if (file.length < 0) {
@@ -259,7 +249,9 @@ function copyFile(fullFilePath, newFilePath) {
 			if (!copyFolder(fullFilePath, newFilePath + '/' + file.name)) return false;
 
 			return true;
+		
 		} else {
+			
 			if (!createFilePath(newFilePath)) return false;
 			if (!file.copy(newFilePath + '/' + file.name)) return false;
 
@@ -273,33 +265,29 @@ function copyFolderContent(src, dst) {
 	var dstFolder = new Folder(dst);
 	var filesArray = [];
 
-	if (!srcFolder.exists) {
-		return;
-	}
+	if (!srcFolder.exists) return;
 
 	filesArray = srcFolder.getFiles();
 
-	if (filesArray.length == 0) {
-		return;
-	}
+	if (filesArray.length == 0) return;
 
 	for (var i = 0; i < filesArray.length; i++) {
 		var aFile = filesArray[i];
-		var aFileName = File.decode(aFile.displayName).toString();
+		var aFileName = File
+			.decode(aFile.displayName)
+			.toString();
 		var subArray = [];
 
 		try {
-			subArray = new Folder(
-				decodeURI(aFile.fullName).toString()
-			).getFiles();
+			if (aFile instanceof Folder) subArray = aFile.getFiles();
 		} catch (error) {}
 
 		if (subArray.length > 0) {
 			copyFolderContent(decodeURI(aFile.fullName).toString(), dst);
+		
 		} else {
-			if (!dstFolder.exists) {
-				continue;
-			}
+
+			if (!dstFolder.exists) continue;
 
 			var cFile = new File(dst + '/' + aFileName);
 			aFile.copy(cFile);
