@@ -113,25 +113,26 @@ importAetBtn.onClick = function () {
     showTabErr(netConfigName + ' not checked');
     return;
   }
+
   // github main repo...
   var url = repoURL + '/raw/main/downloads/templates.zip';
   var zipPath = downPath + '/templates.zip';
   var templatesLocalFolder = new Folder(fontsLocalPath);
 
-  if (!downFolder.exists) {
-    downFolder.create();
-  }
+  if (!downFolder.exists) downFolder.create();
+  
   if (!templatesFolder.exists || templatesFolder.getFiles().length == 0) {
     // → delete previous local templates folder
-    if (templatesLocalFolder.exists) removeFolder(templatesLocalFolder);
+    removeFolder(templatesLocalFolder);
     templatesLocalFolder.create(); // → new local templates folder
-
+    
     getURLContent([url], [downPath]); // → download templates.zip
     unzipContent(zipPath, templatesLocalPath); // → unzip templates
+    removeFolder(downPath);
 
     // HO preference
     if (!homeOffice) {
-      if (templatesFolder.exists) removeFolder(templatesFolder); // → delete previous templates folder
+      removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
       copyFolder(templatesLocalPath, templatesPath); // copy every file and folder
     }
