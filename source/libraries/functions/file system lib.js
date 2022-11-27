@@ -370,43 +370,42 @@ function createPresetFile(tempFld, fileName, strCode) {
 
 // copy all fonts used in the project...
 function fontCollect(savePath) {
-	var fontArray = [];
+	savePath += '/fonts'; // collect folder path...
+	var saveFolder = new Folder(savePath); // collect folder...
+	var fontArray = []; // copied fonts array...
+	var failArray = []; // failed copy array...
+	var compArray = getComps(); // all project comps...
+	
+	if (!saveFolder.exists) saveFolder.create();
 
-	for (f = 1; f <= app.project.numItems; f++) {
-		var aItem = app.project.item(f);
-
-		if (!(aItem instanceof CompItem)) {
-			continue;
-		}
-
-		for (l = 1; l <= aItem.numLayers; l++) {
-			var aLayer = aItem.layer(l);
-
-			if (!(aLayer instanceof TextLayer)) {
+	for (var c = 0; c < compArray.length; c++) {
+		var comp = compArray[c]; // current comp...
+		
+		for (var l = 1; l <= comp.numLayers; l++) {
+			var aLayer = comp.layer(l); // current layer...
+			
+			if (!(aLayer instanceof TextLayer)) continue;
+			// current text layer...
+			var textDoc = aLayer
+			.property('ADBE Text Properties')
+			.property('ADBE Text Document').value;
+			var fontName = textDoc.font; // font name...
+			var fontSrcFile = new File(decodeURI(textDoc.fontLocation)); // font file...
+			
+			if (!fontSrcFile.exists) {
+				if (failArray.indexOf(fontName) < 0) failArray.push(fontName); // no font file...
 				continue;
 			}
+			if (fontArray.indexOf(fontName) > 0) continue; // already copied...
+			
+			var fontCopyFile = new File(savePath + '/' + fontSrcFile.displayName);
 
-			var textProp = aLayer.property('ADBE Text Properties');
-			var textDoc = textProp.property('ADBE Text Document').value;
-			var fontName = textDoc.font;
+			fontArray.push(fontName);
 
-			if (textDoc.fontLocation == '') {
-				alert(fontName + ' not found... >_<');
-			} else if (fontArray.indexOf(fontName) >= 0) {
-				var fontFolder = new Folder(savePath + '/fonts/');
-				var fontCPath = fontFolder.absoluteURI + '/';
-				var fontPath = decodeURI(textDoc.fontLocation);
-				var ext = getFileExt(fontPath);
-				var fontFile = new File(fontPath);
-				var fontCFile = new File(fontCPath + fontName + ext);
-
-				fontArray.push(fontName);
-
-				if (!fontFolder.exists) {
-					fontFolder.create();
-				}
-				fontFile.copy(fontCFile);
-			}
+			fontSrcFile.copy(fontCopyFile);
 		}
 	}
+	if (fontArray == []) saveFolder.remove();
+	
+	if (failArray != []) alert(failArray.toString() + ' cant be copied');
 }

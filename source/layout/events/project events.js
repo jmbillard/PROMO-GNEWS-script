@@ -119,23 +119,24 @@ saveBtn.onClick = function () {
   app.beginUndoGroup('quick save');
 
   if (saveFolder != null) {
-    var savePath = saveFolder.fullName + '/';
+    var savePath = decodeURI(saveFolder.fullName);
     var projFullName = projId + ' ' + projName;
-    var projFile = new File(savePath + projFullName);
+    var projFile = new File(savePath + '/' + projFullName);
     app.project.save(projFile);
 
     if (collectTogBtn.value) {
       // collect files...
       app.executeCommand(2482);
     } else {
+      if (collectFontsTogBtn) fontCollect(savePath);
       openFolder(saveFolder);
     }
   }
-  if (appV > 22) {
+/*   if (appV > 22) {
     executeCommandID('Save a Copy As 22.x...');
     return;
   }
-};
+ */};
 
 pngPreviewBtn.onClick = function () {
   var aItem = app.project.activeItem;

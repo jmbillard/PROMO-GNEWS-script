@@ -53,14 +53,15 @@ function setTxtColor(sTxt, color) {
 
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
-
+  var hMargin = 50;
+  var vMargin = 10;
   // horizontal layout
   if (wLayout == 'row') {
     imgAlignment = 'left';
     closeAlignment = 'right';
 
     mainGrp.margins = [80, 0, 0, 0];
-    tabsGrp.menu.margins = [50, 0, 50, 0];
+    tabsGrp.menu.margins = [hMargin, 0, hMargin, 0];
     leftGrp.margins = [5, 0, 0, 0];
 
     // color buttons
@@ -101,13 +102,14 @@ function setLayout() {
     progTxt2.visible = true;
     progTxt2.size.width = 160;
 
+    tabsGrp.menu.spacing = 10;
   } else {
     // vertical layout
     imgAlignment = 'bottom';
     closeAlignment = 'top';
 
-    mainGrp.margins = [0, 10, 0, 20];
-    tabsGrp.menu.margins = [0, 10, 0, 20];
+    mainGrp.margins = [0, 0, 0, 20];
+    tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
     leftGrp.margins = [0, 0, 0, 5];
 
     // color buttons
@@ -147,6 +149,8 @@ function setLayout() {
     progTxt1.size.width = 0;
     progTxt2.visible = false;
     progTxt2.size.width = 0;
+
+    tabsGrp.menu.spacing = 2;
   }
   imgGrp.orientation = wLayout;
   // all tab subgroups
@@ -165,7 +169,6 @@ function setLayout() {
   colors1Grp.spacing = 2;
   colors2Grp.spacing = 2;
   colors3Grp.spacing = 2;
-  tabsGrp.menu.spacing = 6;
   tabsGrp.links.spacing = 8;
   tabsGrp.preferences.spacing = 8;
   
