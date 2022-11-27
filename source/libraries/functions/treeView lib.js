@@ -23,33 +23,35 @@ function cleanHierarchy(nodeTree) {
     } else {
       nodeTree.remove(branches[i]); // remove current folder item...
     }
-    if (nodeTree.items.length == 0) { // empty folder item...
+    if (nodeTree.items.length == 0 && nodeTree.type == 'node') { // empty folder item...
       nodeTree.parent.remove(nodeTree); // remove current folder item...
     }
   }
 }
 
-// [ ] comment - createHierarchy
 // populates the 'tree view' node hierarchy...
 function createHierarchy(array, node, fileTypes) {
+  
   for (var n = 0; n < array.length; n++) {
-    var nodeName = array[n].displayName;
-    var subArray = [];
+    var nodeName = array[n].displayName; // current item name...
+    var subArray = []; // folder content array...
 
-    try {
-      subArray = new Folder(array[n]).getFiles();
-    } catch (error) {}
+    // get folder content if current item is a folder...
+    if (array[n] instanceof Folder) subArray = array[n].getFiles();
 
     if (subArray.length > 0) {
-      nodeItem = node.add('node', nodeName);
-      nodeItem.image = fldTogIcon;
+      // current folder has content...
+      nodeItem = node.add('node', nodeName); // folder node...
+      nodeItem.image = fldTogIcon; // folder icon...
 
       createHierarchy(subArray, nodeItem, fileTypes);
+    
     } else {
-      if (fileTypes.indexOf(getFileExt(nodeName)) >= 0) {
-        var templateItem = node.add('item', nodeName);
-        templateItem.image = templateListIcon;
-      }
+      // filter file extensions...
+      if (fileTypes.indexOf(getFileExt(nodeName)) < 0) continue;
+      
+      var templateItem = node.add('item', nodeName); // item...
+      templateItem.image = templateListIcon; // item icon...
     }
   }
 }
@@ -83,14 +85,13 @@ function buildFontTree(folder, tree) {
     var fName = fontsArray[n].displayName;
     var subArray = [];
 
-    try {
-      subArray = new Folder(fontsArray[n]).getFiles();
-    } catch (error) {}
+    // get folder content if current item is a folder...
+    if (fontsArray[n] instanceof File) continue;
+    subArray = fontsArray[n].getFiles();
 
-    if (subArray.length > 0) {
-      var fontFamilyItem = folderNode.add('item', fName);
-      fontFamilyItem.image = fontFamilyIcon;
-    }
+    if (subArray.length == 0) continue;
+    var fontFamilyItem = folderNode.add('item', fName);
+    fontFamilyItem.image = fontFamilyIcon;
   }
   cleanHierarchy(tree);
 }

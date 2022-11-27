@@ -74,7 +74,7 @@ installFontsBtn.onClick = function () {
     downFolder.create();
   }
   if (!fontsFolder.exists || fontsFolder.getFiles().length == 0) {
-    if (fontsLocalFolder.exists) removeFolder(fontsLocalFolder); // → delete previous fonts folder
+    removeFolder(fontsLocalFolder); // → delete previous fonts folder
     fontsLocalFolder.create(); // → delete previous fonts folder
 
     getURLContent([url], [downPath]);

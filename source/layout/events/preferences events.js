@@ -76,7 +76,7 @@ updateBtn.onClick = function () {
     promoInsPath + '/BARRA UTILIDADES PROMO PARA SCRIPT', // → UTILIDADES//FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR
   ];
 
-  if (downFolder.exists) removeFolder(downFolder); // → delete previous download folder
+  removeFolder(downFolder); // → delete previous download folder
   downFolder.create(); // → create new download folder
 
   getURLContent(codeURLArray, pathArray); // → download files on codeURLArray

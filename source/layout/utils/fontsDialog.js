@@ -85,11 +85,9 @@ function fontsDialog() {
     removeFolder(fontsLocalFolder); // → delete previous fonts folder
     fontsLocalFolder.create(); // → delete previous templates folder
 
-    if (!downFolder.exists) {
-      downFolder.create();
-    }
-    getURLContent([url], [downPath]);
+    if (!downFolder.exists) downFolder.create();
 
+    getURLContent([url], [downPath]);
     unzipContent(zipPath, fontsLocalPath);
     removeFolder(downFolder); // → delete temp folder
 

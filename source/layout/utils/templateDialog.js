@@ -31,7 +31,7 @@ function templateDialog() {
   vGrp2.visible = false;
   var templateTree = vGrp1.add('treeview', [0, 0, 250, 340]);
   buildTree(templatesFolder, templateTree, fileFilter);
-
+  
   // buttons group...
   var bGrp = vGrp1.add('group');
   bGrp.orientation = 'stack';
@@ -54,7 +54,7 @@ function templateDialog() {
   var importBtn = bGrp2.add('button', undefined, 'import');
   importBtn.helpTip = 'import selected template';
   importBtn.enabled = false;
-
+  
   // preview...
   var pathTxt = vGrp2.add('statictext', undefined, '...');
   pathTxt.characters = 40;
@@ -75,7 +75,14 @@ function templateDialog() {
   info2Txt.characters = 40;
   setTxtColor(info2Txt, GNEWS_secColors[8]);
 
-  //*     
+  w.onShow = function () {
+    expandNodes(templateTree); // expand all tree folder nodes...
+    oWidth = w.size.width; // window width with image preview...
+    wWidth = oWidth - 490; // window width without image preview...
+    vGrp2.visible = false; // → hide preview
+    w.size.width = wWidth; // → resize window
+  };
+  
   templateTree.onChange = function () {
     // node folders should not be selectable...
     if (templateTree.selection != null && templateTree.selection.type == 'node') {
@@ -127,32 +134,23 @@ function templateDialog() {
     info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
     info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
   };
-  //*/  
-
-  w.onShow = function () {
-    expandNodes(templateTree); // expand all tree folder nodes...
-    oWidth = w.size.width; // window width with image preview...
-    wWidth = oWidth - 490; // window width without image preview...
-    vGrp2.visible = false; // → hide preview
-    w.size.width = wWidth; // → resize window
-  };
 
   importBtn.onClick = function () {
     var s = templateTree.selection; // → current selection
     var fileName = s.toString();
-
+    
     // iterate selection parent + parent + parent... to form selected template file path...
     while (s.parent.toString() != templatesFolder.displayName) {
       s = s.parent; // current parent...
       fileName = s.toString() + '/' + fileName; // → current parent/.../template name
     }
     var templateFile = new File(templatesPath + '/' + fileName); // → template file object
-
+    
     var IO = new ImportOptions(templateFile); // import options...
     app.project.importFile(IO); // → import template project
     w.close(); // → close window
   };
-
+  
   downloadBtn.onClick = function () {
     //alert...
     if (!netAccess()) {
@@ -162,10 +160,10 @@ function templateDialog() {
     var url = repoURL + '/raw/main/downloads/templates.zip';
     var zipPath = downPath + '/templates.zip'; // → ~AppData\Roaming\PROMO GNEWS script\temp\templates.zip
     var templatesLocalFolder = new Folder(templatesLocalPath);
-
+    
     removeFolder(templatesLocalFolder); // → delete previous templates folder
     templatesLocalFolder.create(); // → delete previous templates folder
-
+    
     if (!downFolder.exists) {
       // downloads folder does not exist...
       downFolder.create(); // → create temp folder
@@ -174,7 +172,7 @@ function templateDialog() {
 
     unzipContent(zipPath, templatesLocalPath); // → unzip file    
     removeFolder(downFolder); // → delete temp folder
-
+    
     // HO preference
     if (!homeOffice) {
       removeFolder(templatesFolder); // → delete previous templates folder
@@ -184,7 +182,7 @@ function templateDialog() {
     buildTree(templatesFolder, templateTree, fileFilter); // → update tree...
     expandNodes(templateTree); // expand all tree folder nodes...
   };
-
+  
   refreshBtn.onClick = function () {
     // alert...
     if (!netAccess()) {
@@ -201,13 +199,12 @@ function templateDialog() {
       alert('no access...  Σ(っ °Д °;)っ');
       return;
     }
-    if (!templatesFolder.exists) {
-      // template folder does not exist...
-      templatesFolder.create(); // → create template folder
-    }
+    if (!templatesFolder.exists) templatesFolder.create(); // → create template folder
+    
     openFolder(templatesPath); // → open template folder
   };
-
+  //*/  
+  
   w.show();
 }
 
