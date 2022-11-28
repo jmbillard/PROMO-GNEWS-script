@@ -167,6 +167,8 @@ function findDialog() {
 
       for (var l = 1; l <= comp.numLayers; l++) {
         var aLayer = comp.layer(l);
+        aLayer.shy = true;
+        aLayer.selected = false;
 
         if (l == parseInt(i)) {
           var doc = aLayer.property('ADBE Text Properties').property('ADBE Text Document');
@@ -179,7 +181,7 @@ function findDialog() {
           t = t < comp.duration ? t : comp.duration;
           t = t < 0 ? 0 : t;
         
-        } else aLayer.shy = true;
+        }
       }
       comp.hideShyLayers = true;
     }
