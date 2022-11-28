@@ -102,7 +102,7 @@ function setLayout() {
     progTxt2.visible = true;
     progTxt2.size.width = 160;
 
-    tabsGrp.menu.spacing = 10;
+    tabsGrp.menu.spacing = 8;
   } else {
     // vertical layout
     imgAlignment = 'bottom';
