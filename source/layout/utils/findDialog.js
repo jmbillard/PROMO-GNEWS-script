@@ -32,12 +32,12 @@ function findDialog() {
 
   // ==========
   var optMainGrp = searchMainGrp.add('group');
-  optMainGrp.spacing = 20;
+  optMainGrp.spacing = 15;
 
   // =======
   var optGrp5 = optMainGrp.add('group');
   optGrp5.alignChildren = ['center', 'top'];
-  optGrp5.spacing = 4;
+  optGrp5.spacing = 2;
 
   var optCkb5 = optGrp5.add('checkbox');
   optCkb5.value = true;
@@ -50,7 +50,7 @@ function findDialog() {
   // =======
   var optGrp1 = optMainGrp.add('group');
   optGrp1.alignChildren = ['center', 'top'];
-  optGrp1.spacing = 4;
+  optGrp1.spacing = 2;
 
   var optCkb1 = optGrp1.add('checkbox');
   optCkb1.value = false;
@@ -61,7 +61,7 @@ function findDialog() {
   // =======
   var optGrp2 = optMainGrp.add('group');
   optGrp2.alignChildren = ['center', 'top'];
-  optGrp2.spacing = 4;
+  optGrp2.spacing = 2;
 
   var optCkb2 = optGrp2.add('checkbox');
   optCkb2.value = false;
@@ -72,7 +72,7 @@ function findDialog() {
   // =======
   var optGrp4 = optMainGrp.add('group');
   optGrp4.alignChildren = ['center', 'top'];
-  optGrp4.spacing = 4;
+  optGrp4.spacing = 2;
 
   var optCkb4 = optGrp4.add('checkbox');
   optCkb4.value = false;
@@ -83,13 +83,16 @@ function findDialog() {
   // =======
   var optGrp3 = optMainGrp.add('group');
   optGrp3.alignChildren = ['center', 'top'];
-  optGrp3.spacing = 4;
+  optGrp3.spacing = 2;
 
   var optCkb3 = optGrp3.add('checkbox');
   optCkb3.value = false;
 
   var optTxt3 = optGrp3.add('statictext', undefined, 'RegExp');
   optCkb3.helpTip = optTxt3.helpTip = 'use regular expression';
+  
+  var infoBtn = optMainGrp.add('iconbutton', undefined, infoIcon, { style: 'toolbutton' });
+  infoBtn.helpTip = 'Help | README';
 
   // =========
   var resultGrp = w.add('group');
@@ -125,8 +128,7 @@ function findDialog() {
       invert: optCkb4.value,
     };
 
-    var selArray = app.project.selection;
-    selArray = selArray.length > 0 ? selArray : getComps(); // → [selected items] : [all comps]
+    var selArray = getComps(); // → [all comps]
     findTree = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
     resultArray = findTree.resultArray; // → [filtered comps]
     count = findTree.count; // → [filtered comps]
@@ -172,17 +174,22 @@ function findDialog() {
           t = (aLayer.outPoint - aLayer.inPoint) / 2 + aLayer.inPoint;
           aLayer.shy = false;
 
-          if (doc.numKeys > 0) {
-            t = doc.keyTime(parseInt(k));
-          }
-        } else {
-          aLayer.shy = true;
-        }
+          if (doc.numKeys > 0) t = doc.keyTime(parseInt(k));
+
+          t = t < comp.duration ? t : comp.duration;
+          t = t < 0 ? 0 : t;
+        
+        } else aLayer.shy = true;
       }
       comp.hideShyLayers = true;
     }
     comp.openInViewer();
     comp.time = t;
+  };
+
+  infoBtn.onClick = function() {
+  
+    openWebSite('https://github.com/jmbillard/find#find-script');
   };
 
   w.show();

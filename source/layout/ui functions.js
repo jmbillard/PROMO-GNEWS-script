@@ -160,7 +160,7 @@ function setLayout() {
   }
   
   // all tabs
-  for (var t = 0; t < tabs.length; t++) {
+  for (var t = 1; t < tabs.length; t++) {
     tabs[t].orientation = wLayout;
     tabs[t].spacing = 2;
   }
