@@ -6,16 +6,16 @@
 
 */
 
-emailBtn.onClick = function () {
-	// error...
-	if (!netAccess()) {
-		showTabErr(netConfigName + ' not checked');
-		return;
-	}
-	var site = 'https://outlook.office365.com/mail/';
+// emailBtn.onClick = function () {
+// 	// error...
+// 	if (!netAccess()) {
+// 		showTabErr(netConfigName + ' not checked');
+// 		return;
+// 	}
+// 	var site = 'https://outlook.office365.com/mail/';
 
-	openWebSite(site);
-};
+// 	openWebSite(site);
+// };
 
 oneDriveBtn.onClick = function () {
 	// error...
@@ -98,7 +98,7 @@ mamMagBtn.addEventListener('click', function (c) {
 
 		if (saveFolder != null) {
 			magazinePath = decodeURI(saveFolder).toString();
-			JSONObj.folders.magazinePath = magazinePath;
+			JSONPrefsObj.folders.magazinePath = magazinePath;
 			savePreferences();
 		}
 	}
@@ -125,7 +125,7 @@ mamArteBtn.addEventListener('click', function (c) {
 
 		if (saveFolder != null) {
 			artePath = decodeURI(saveFolder).toString();
-			JSONObj.folders.artePath = artePath;
+			JSONPrefsObj.folders.artePath = artePath;
 			savePreferences();
 		}
 	}

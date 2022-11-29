@@ -86,13 +86,8 @@ function setLayout() {
     limitTxt2.size.width = 0;
     limitTxt2.size.height = 0;
     // project tab - controls
-    projUserTxt.size.width = 30;
-    projIdTxt.size.width = 80;
-    projNameTxt.size.width = 140;
-    layerTypeDrop.size.width = 80;
-    projectModeDrop.size.width = 80;
-    colorDrop.size.width = 80;
-    tabColorBtn.size.width = 20;
+    projIdTxt.size.width = 70;
+    projNameTxt.size.width = 120;
     // error tab
     errTxt.visible = true;
     errTxt.size.width = 500;
@@ -101,8 +96,6 @@ function setLayout() {
     progTxt1.size.width = 160;
     progTxt2.visible = true;
     progTxt2.size.width = 160;
-
-    tabsGrp.menu.spacing = 8;
   } else {
     // vertical layout
     imgAlignment = 'bottom';
@@ -134,13 +127,8 @@ function setLayout() {
     limitTxt2.size.width = 70;
     limitTxt2.size.height = 24;
     // project tab - controls
-    projUserTxt.size.width = 70;
     projIdTxt.size.width = 70;
     projNameTxt.size.width = 70;
-    layerTypeDrop.size.width = 70;
-    projectModeDrop.size.width = 70;
-    colorDrop.size.width = 70;
-    tabColorBtn.size.width = 66;
     // error tab
     errTxt.visible = false;
     errTxt.size.width = 0;
@@ -149,8 +137,6 @@ function setLayout() {
     progTxt1.size.width = 0;
     progTxt2.visible = false;
     progTxt2.size.width = 0;
-
-    tabsGrp.menu.spacing = 2;
   }
   imgGrp.orientation = wLayout;
   // all tab subgroups
@@ -160,7 +146,7 @@ function setLayout() {
   }
   
   // all tabs
-  for (var t = 1; t < tabs.length; t++) {
+  for (var t = 0; t < tabs.length; t++) {
     tabs[t].orientation = wLayout;
     tabs[t].spacing = 2;
   }
@@ -171,12 +157,10 @@ function setLayout() {
   colors3Grp.spacing = 2;
   tabsGrp.links.spacing = 8;
   tabsGrp.dev.spacing = 8;
-  tabsGrp.preferences.spacing = 8;
   
   colors1Grp.orientation = wLayout;
   colors2Grp.orientation = wLayout;
   colors3Grp.orientation = wLayout;
-  preferences.orientation = wLayout;
   errTabGrp.orientation = wLayout;
 
   leftGrp.alignment = imgAlignment;
@@ -196,7 +180,6 @@ function hideTabs() {
   for (var t = 1; t < tabs.length; t++) {
     tabs[t].visible = false;
   }
-  preferences.visible = false;
   errTabGrp.visible = false;
   closeGrp.visible = false;
 }
@@ -218,9 +201,6 @@ function openTab() {
     closeGrp.visible = false;
     tabsGrp.menu.visible = true;
     prefGrp.visible = true;
-  }
-  if (currentGrp == preferences) {
-    bgColor = prefGrpColor;
   }
   progImgGrp.visible = false;
   progressGrp.visible = false;
@@ -273,7 +253,7 @@ function showTabProg(msg) {
 function getTabGroups() {
   var tabsGrpArray = [];
 
-  for (var t = 0; t < tabsGrp.children.length - 1; t++) {
+  for (var t = 0; t < tabsGrp.children.length; t++) {
     tabsGrpArray.push(tabsGrp.children[t]);
   }
 

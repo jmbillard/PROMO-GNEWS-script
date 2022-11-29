@@ -6,12 +6,6 @@
 
 */
 
-projUserTxt.onChange = function () {
-  userPrefix = projUserTxt.text.toUpperCase();
-  JSONObj.userPrefix = userPrefix;
-  savePreferences();
-};
-
 insertUserIdBtn.onClick = function () {
   // error...
   if (app.project.numItems == 0) {
@@ -76,12 +70,12 @@ renameItemBtn.onClick = function () {
   app.endUndoGroup();
 };
 
-tagBtn.onClick = function () {
-  if (app.project.numItems == 0) {
-    return;
+projOrgBtn.addEventListener('click', function (c) {
+	if (c.button == 2) {
+    if (app.project.numItems == 0) return;
+    tagDialog();
   }
-  tagDialog();
-};
+});
 
 projOrgBtn.onClick = function () {
   if (app.project.numItems == 0) {

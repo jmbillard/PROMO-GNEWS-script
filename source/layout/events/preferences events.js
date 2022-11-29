@@ -12,13 +12,13 @@
 
 layerTypeDrop.onChange = function () {
   layerType = layerTypeDrop.selection.index; // selected layer type...
-  JSONObj.selection.layerType = layerType; // update preferences object...
+  JSONPrefsObj.selection.layerType = layerType; // update preferences object...
   savePreferences(); // → save preferences.json
 };
 
 projectModeDrop.onChange = function () {
   projectMode = projectModeDrop.selection.index; // selected project model...
-  JSONObj.selection.projectMode = projectMode; // update preferences object...
+  JSONPrefsObj.selection.projectMode = projectMode; // update preferences object...
   savePreferences(); // → save preferences.json
 };
 
@@ -36,7 +36,7 @@ tabColorBtn.onClick = function () {
   if (configColor != -1) {
     configColor = eval(rgbStr(configColor)); // → [1,1,1]
     tabColors[colorDrop.selection.index] = configColor; // update color array...
-    JSONObj.color[colorDrop.selection] = rgbToHEX(configColor); // update preferences object...
+    JSONPrefsObj.color[colorDrop.selection] = rgbToHEX(configColor); // update preferences object...
 
     setBtnColor(tabColorBtn, configColor); // update color preview swatch...
     savePreferences(); // → save preferences.json
@@ -96,7 +96,7 @@ updateBtn.onClick = function () {
 hoCkb.onClick = function () {
 
   homeOffice = hoCkb.value;
-  JSONObj.homeOffice = homeOffice;
+  JSONPrefsObj.homeOffice = homeOffice;
   nUtilsBtn.enabled = !homeOffice;
   mamHardNewsBtn.enabled = !homeOffice;
   dayBtn.enabled = !homeOffice;

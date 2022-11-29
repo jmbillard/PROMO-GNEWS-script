@@ -153,10 +153,7 @@ findBtn.onClick = function () {
 };
 
 prefBtn.onClick = function () {
-  currentGrp.visible = false;
-  currentGrp = preferences;
-  readme = '#--seção-preferencias-';
-  openTab();
+  prefsDialog();
 };
 
 /* jshint ignore:start */
@@ -167,7 +164,6 @@ prefBtn.onClick = function () {
 #include 'events/dev events.js';
 #include 'events/fx events.js';
 #include 'events/links events.js';
-#include 'events/preferences events.js';
 #include 'events/project events.js';
 #include 'events/text events.js';
 /* jshint ignore:end */
