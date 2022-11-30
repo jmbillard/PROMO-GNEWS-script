@@ -226,7 +226,7 @@ function prefsDialog() {
 
 	darkRdo.onClick = function () {
 
-		importAetBtn.image = aeIconDark;
+		importAetBtn.image = File.decode(aeIconDark);
 		importAetBtn.notify('onDraw');
 		alert('oi');
 		setLayout();
@@ -404,6 +404,11 @@ function prefsDialog() {
 
 		hideTabs();
 		setBgColor(w, bgColor);
+		
+		importAetBtn.image = File.decode(aeIconDark);
+		importAetBtn.notify('onDraw');
+		alert('oi');
+		setLayout();
 	};
 
 	wPref.show();
