@@ -49,10 +49,10 @@ renameItemBtn.onClick = function () {
     showTabErr('empty project');
     return;
   }
-  userPrefix = projUserTxt.text.toUpperCase().replaceSpecialCharacters();
+  //userPrefix = projUserTxt.text.toUpperCase().replaceSpecialCharacters();
   projId = projIdTxt.text.toUpperCase().replaceSpecialCharacters();
   projName = projNameTxt.text.toLowerCase().replaceSpecialCharacters();
-  projUserTxt.text = userPrefix;
+  //projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
   projNameTxt.text = projName;
 
@@ -92,10 +92,10 @@ projOrgBtn.onClick = function () {
 };
 
 saveBtn.onClick = function () {
-  userPrefix = projUserTxt.text.toUpperCase().replaceSpecialCharacters();
+  //userPrefix = projUserTxt.text.toUpperCase().replaceSpecialCharacters();
   projId = projIdTxt.text.toUpperCase().replaceSpecialCharacters();
   projName = projNameTxt.text.toLowerCase().replaceSpecialCharacters();
-  projUserTxt.text = userPrefix;
+  //projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
   projNameTxt.text = projName;
 

@@ -69,7 +69,7 @@ function setLayout() {
       colors1Grp.children[c1].size = [20, 20];
     }
     for (var c2 = 1; c2 < colors2Grp.children.length; c2++) {
-      colors2Grp.children[c2].size = [20, 20];
+      colors2Grp.children[c2].size = [10, 20];
     }
     for (var c3 = 1; c3 < colors3Grp.children.length; c3++) {
       colors3Grp.children[c3].size = [10, 20];
@@ -110,7 +110,7 @@ function setLayout() {
       colors1Grp.children[b1].size = [66, 20];
     }
     for (var b2 = 1; b2 < colors2Grp.children.length; b2++) {
-      colors2Grp.children[b2].size = [66, 20];
+      colors2Grp.children[b2].size = [66, 15];
     }
     for (var b3 = 1; b3 < colors3Grp.children.length; b3++) {
       colors3Grp.children[b3].size = [66, 15];
@@ -148,7 +148,7 @@ function setLayout() {
   // all tabs
   for (var t = 0; t < tabs.length; t++) {
     tabs[t].orientation = wLayout;
-    tabs[t].spacing = 2;
+    tabs[t].spacing = 8;
   }
 
   colorsGrp.spacing = 8;
