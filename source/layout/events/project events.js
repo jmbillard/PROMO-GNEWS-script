@@ -130,7 +130,7 @@ saveBtn.onClick = function () {
       // collect files...
       app.executeCommand(2482);
     } else {
-      if (collectFontsTogBtn) fontCollect(savePath);
+      if (collectFontsTogBtn.value) fontCollect(savePath);
       openFolder(saveFolder);
     }
   }
