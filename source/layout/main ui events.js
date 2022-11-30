@@ -74,7 +74,6 @@ projBtn.onClick = function () {
   currentGrp = tabsGrp.project;
   readme = '#--seção-projeto-';
   openTab();
-  projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
   projNameTxt.text = projName;
 };

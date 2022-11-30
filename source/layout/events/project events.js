@@ -12,20 +12,27 @@ insertUserIdBtn.onClick = function () {
     showTabErr('empty project');
     return;
   }
-  userPrefix = projUserTxt.text.toUpperCase().replaceSpecialCharacters();
   projId = projIdTxt.text.toUpperCase().replaceSpecialCharacters();
-  projUserTxt.text = userPrefix;
+  projName = projNameTxt.text.toLowerCase().replaceSpecialCharacters();
   projIdTxt.text = projId;
+  projNameTxt.text = projName;
 
   var baseName = userPrefix + ' PROMO - ' + projId;
+  var sysDate = system.callSystem('cmd.exe /c date /t');
+  var dateStr = sysDate.substring(0, sysDate.length - 3);
+  
   var itemArray = [];
-
   app.beginUndoGroup('quick rename ID');
+  
+  setXMPdata('creator', system.userName);
+  setXMPdata('date', dateStr);
+  setXMPdata('identifier', projId);
+  setXMPdata('title', projName);
 
   for (k = 1; k <= app.project.numItems; k++) {
     var aItem = app.project.item(k);
 
-    if (aItem.selected == true && aItem instanceof CompItem) {
+    if (aItem.selected && aItem instanceof CompItem) {
       itemArray.push(aItem);
     }
   }
@@ -60,13 +67,14 @@ renameItemBtn.onClick = function () {
   var dateStr = sysDate.substring(0, sysDate.length - 3);
   var compsArray = app.project.selection.length > 0 ? app.project.selection : getCompsAndTemplates();
   app.beginUndoGroup('quick rename');
-
-  renameComps(projId, projName, compsArray);
+  
   setXMPdata('creator', system.userName);
   setXMPdata('date', dateStr);
   setXMPdata('identifier', projId);
   setXMPdata('title', projName);
 
+  renameComps(projId, projName, compsArray);
+  
   app.endUndoGroup();
 };
 
