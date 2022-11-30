@@ -108,6 +108,17 @@ function prefsDialog() {
 	setTxtColor(themeGrpTxt, sTxtColor);
 
 	// ============
+	var iconThemeGrp = themeGrp.add('group');
+	iconThemeGrp.spacing = 20;
+	iconThemeGrp.margins = [0,8,0,4];
+
+	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light icons');
+	lightRdo.helpTip = 'icon theme';
+
+	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark icons');
+	darkRdo.helpTip = 'icon theme';
+
+	// ============
 	var tabColorsGrp = themeGrp.add('group');
 	tabColorsGrp.spacing = 2;
 
@@ -212,6 +223,14 @@ function prefsDialog() {
 ---------------------------------------------------------------
 
 */
+
+	darkRdo.onClick = function() {
+	
+		importAetBtn.image = aeIconDark;
+		importAetBtn.notify('onDraw');
+		alert('oi');
+		setLayout();
+	};
 
 	resetBtn.onClick = function () {
 		JSONPrefsObj = defPrefsObj;
