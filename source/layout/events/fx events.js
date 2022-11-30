@@ -22,7 +22,7 @@ shpAdjBtn.onClick = function () {
   var adjW = aItem.width;
   var adjH = aItem.height;
 
-  if (layerTypeDrop.selection == 0) {
+  if (adjType == 0) {
     adjLayer = shpAdjustment();
   } else {
     adjLayer = aItem.layers.addSolid(adjC, '', adjW, adjH, 1.0);

@@ -86,9 +86,7 @@ projOrgBtn.addEventListener('click', function (c) {
 });
 
 projOrgBtn.onClick = function () {
-  if (app.project.numItems == 0) {
-    return;
-  }
+  if (app.project.numItems == 0) return;
   app.beginUndoGroup('quick project organization');
 
   removeProjFolders();
