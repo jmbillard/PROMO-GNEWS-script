@@ -28,10 +28,10 @@ function prefsDialog() {
 	userTxt.helpTip = 'user prefix';
 	userTxt.preferredSize = txtSize;
 
-  var projUserTxt = userGrp.add('edittext', undefined, userPrefix);
-  projUserTxt.preferredSize = dropSize;
-  projUserTxt.helpTip = 'user prefix';
-  
+	var projUserTxt = userGrp.add('edittext', undefined, userPrefix);
+	projUserTxt.preferredSize = dropSize;
+	projUserTxt.helpTip = 'user prefix';
+
 	// =================
 	var divider0 = wPref.add('panel');
 	divider0.alignment = 'fill';
@@ -110,7 +110,7 @@ function prefsDialog() {
 	// ============
 	var iconThemeGrp = themeGrp.add('group');
 	iconThemeGrp.spacing = 20;
-	iconThemeGrp.margins = [0,8,0,4];
+	iconThemeGrp.margins = [0, 8, 0, 4];
 
 	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light icons');
 	lightRdo.helpTip = 'icon theme';
@@ -218,14 +218,14 @@ function prefsDialog() {
 
 	/*
 
----------------------------------------------------------------
-> ⚙️ preferences tab events
----------------------------------------------------------------
+	---------------------------------------------------------------
+	> ⚙️ preferences tab events
+	---------------------------------------------------------------
 
-*/
+	*/
 
-	darkRdo.onClick = function() {
-	
+	darkRdo.onClick = function () {
+
 		importAetBtn.image = aeIconDark;
 		importAetBtn.notify('onDraw');
 		alert('oi');
@@ -249,24 +249,24 @@ function prefsDialog() {
 
 		alert('done!');
 	};
-  
-  openFldBtn.onClick = function () {
-    // alert...
-    if (!netAccess()) {
-      alert('no access...  Σ(っ °Д °;)っ');
-      return;
-    }
-    if (!fontsFolder.exists) {
-      fontsFolder.create();
-    }
-    openFolder(scriptPreferencesPath);
-  };
 
-  projUserTxt.onChange = function () {
-    userPrefix = projUserTxt.text.toUpperCase();
-    JSONPrefsObj.userPrefix = userPrefix;
-    savePreferences();
-  };
+	openFldBtn.onClick = function () {
+		// alert...
+		if (!netAccess()) {
+			alert('no access...  Σ(っ °Д °;)っ');
+			return;
+		}
+		if (!fontsFolder.exists) {
+			fontsFolder.create();
+		}
+		openFolder(scriptPreferencesPath);
+	};
+
+	projUserTxt.onChange = function () {
+		userPrefix = projUserTxt.text.toUpperCase();
+		JSONPrefsObj.userPrefix = userPrefix;
+		savePreferences();
+	};
 
 	nullTypeDrop.onChange = function () {
 		nullType = nullTypeDrop.selection.index; // selected null type...
@@ -382,7 +382,7 @@ function prefsDialog() {
 			if (homeOffice && p > 0) break; // only updates local folders
 			try {
 				copyFolderContent(downPath, destPathArray[p]);
-			} catch (error) {}
+			} catch (error) { }
 		}
 
 		showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
