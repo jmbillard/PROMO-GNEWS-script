@@ -18,6 +18,12 @@ String.prototype.toCamelCase = function () {
     .replace(/\s/g, '')
     .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
 };
+// string to camel case...
+String.prototype.toTitleCase = function () {
+  return this.toLowerCase()
+    .replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
+    .replace(/^(.)/, function ($1) { return $1.toUpperCase(); });
+};
 
 // trim...
 if (!String.prototype.trim) {

@@ -28,7 +28,6 @@ function deletePrefix(name, prefixStr) {
   return name.replace(pattern, '');
 }
 
-// sets the text case (upper, lower e title)...
 function titleCase(str) {
   str = str.toLowerCase().split(' ');
 

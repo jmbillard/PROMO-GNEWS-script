@@ -67,7 +67,8 @@ txtTitleBtn.onClick = function () {
     selLayers[i]
       .property('ADBE Text Properties')
       .property('ADBE Text Document')
-      .setValue(titleCase(txt));
+      .setValue(txt.toTitleCase());
+      //.setValue(titleCase(txt));
   }
   app.endUndoGroup();
 };
