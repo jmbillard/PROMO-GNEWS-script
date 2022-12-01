@@ -206,9 +206,9 @@ function prefsDialog() {
 	bGrp2.alignment = 'right';
 	bGrp2.spacing = 2;
 
-	var devBtn = bGrp1.add('iconbutton', undefined, exprTogIcon, { style: 'toolbutton' });
-	devBtn.helpTip = 'dev tools';
-	devBtn.enabled = false;
+	var devTogBtn = bGrp1.add('iconbutton', undefined, exprTogIcon, { style: 'toolbutton' , toggle: 1 });
+	devTogBtn.helpTip = 'dev tools';
+	devTogBtn.value = devMode;
 
 	var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, { style: 'toolbutton' });
 	openFldBtn.helpTip = 'open script preferences folder';
@@ -229,6 +229,13 @@ function prefsDialog() {
 
 	lightRdo.onClick = darkRdo.onClick = function () {
 		alert(wip);
+	};
+
+	devTogBtn.onClick = function () {
+		devMode = this.value;
+		JSONPrefsObj.devMode = devMode;
+		devBtn.enabled = devBtn.visible = devMode;
+		savePrefs(); // → save preferences.json
 	};
 
 	resetBtn.onClick = function () {
