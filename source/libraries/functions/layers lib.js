@@ -230,47 +230,21 @@ function textContent(aLayer) {
 		.value.toString();
 }
 
-function setTxtCase(selLayer, caseType) {
-	if (selLayer instanceof TextLayer) {
-		var srcTxt = selLayer
-			.property('ADBE Text Properties')
-			.property('ADBE Text Document');
-		var txt = srcTxt.value;
-
-		switch (caseType) {
-			case 0:
-				srcTxt.setValue(txt.toString().toUpperCase());
-				break;
-
-			case 1:
-				srcTxt.setValue(txt.toString().toLowerCase());
-				break;
-
-			case 2:
-				srcTxt.setValue(titleCase(txt.toString()));
-		}
-	} else {
-		return false;
-	}
-}
-
 // cleans multiple line breaks and consecutive space characters...
-function cleanText(sLayer) {
-	if (!(sLayer instanceof TextLayer)) {
-		return;
-	}
+function cleanText(aLayer) {
+	if (!(aLayer instanceof TextLayer)) return;
 
-	var srcTxt = sLayer
+	var srcTxt = aLayer
 		.property('ADBE Text Properties')
 		.property('ADBE Text Document');
-	var txt = srcTxt.value;
+	var lineArray = textContent(aLayer).split(/[\n|\r]+/);
 
-	txt = txt
-		.toString()
-		.replace(/[\r|\n][\s]{2,}/g, '\n')
-		.replace(/\s{2,}/g, ' ');
-
-	srcTxt.setValue(txt.trim());
+	for (var t = 0; t < lineArray.length; t++) {
+		lineArray[t] = lineArray[t]
+			.replace(/\s{2,}/g, ' ')
+			.trim();
+	}
+	srcTxt.setValue(lineArray.join('\n'));
 }
 
 // divides a text layer in multiple columns...

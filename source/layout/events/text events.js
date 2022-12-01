@@ -16,8 +16,14 @@ txtUpperBtn.onClick = function () {
   }
   app.beginUndoGroup('text to upper case');
 
-  for (i = 0; i < selLayers.length; i++) {
-    setTxtCase(selLayers[i], 0);
+  for (var i = 0; i < selLayers.length; i++) {
+    var txt = textContent(selLayers[i]);
+    
+    if (txt == '') continue;
+    selLayers[i]
+      .property('ADBE Text Properties')
+      .property('ADBE Text Document')
+      .setValue(txt.toUpperCase());
   }
   app.endUndoGroup();
 };
@@ -33,7 +39,13 @@ txtLowerBtn.onClick = function () {
   app.beginUndoGroup('text to lower case');
 
   for (i = 0; i < selLayers.length; i++) {
-    setTxtCase(selLayers[i], 1);
+    var txt = textContent(selLayers[i]);
+    
+    if (txt == '') continue;
+    selLayers[i]
+      .property('ADBE Text Properties')
+      .property('ADBE Text Document')
+      .setValue(txt.toLowerCase());
   }
   app.endUndoGroup();
 };
@@ -49,7 +61,13 @@ txtTitleBtn.onClick = function () {
   app.beginUndoGroup('text to title case');
 
   for (i = 0; i < selLayers.length; i++) {
-    setTxtCase(selLayers[i], 2);
+    var txt = textContent(selLayers[i]);
+    
+    if (txt == '') continue;
+    selLayers[i]
+      .property('ADBE Text Properties')
+      .property('ADBE Text Document')
+      .setValue(titleCase(txt));
   }
   app.endUndoGroup();
 };

@@ -22,11 +22,10 @@ function getFileExt(str) {
     .toLowerCase();
 }
 
-function deletePrefix(str, prefixStr) {
-  var patStr = 'new RegExp(/(' + prefixStr + '(\\s)*)+/)';
-  var pat = eval(patStr);
+function deletePrefix(name, prefixStr) {
+  var pattern = eval('new RegExp(/^' + prefixStr + '/)');
 
-  return str.replace(pat, '');
+  return name.replace(pattern, '');
 }
 
 // sets the text case (upper, lower e title)...
