@@ -99,7 +99,7 @@ mamMagBtn.addEventListener('click', function (c) {
 		if (saveFolder != null) {
 			magazinePath = decodeURI(saveFolder).toString();
 			JSONPrefsObj.folders.magazinePath = magazinePath;
-			savePreferences();
+			savePrefs();
 		}
 	}
 });
@@ -126,7 +126,7 @@ mamArteBtn.addEventListener('click', function (c) {
 		if (saveFolder != null) {
 			artePath = decodeURI(saveFolder).toString();
 			JSONPrefsObj.folders.artePath = artePath;
-			savePreferences();
+			savePrefs();
 		}
 	}
 });

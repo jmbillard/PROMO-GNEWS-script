@@ -114,9 +114,12 @@ function prefsDialog() {
 
 	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light icons');
 	lightRdo.helpTip = 'icon theme';
+	lightRdo.value = true;
+	lightRdo.enabled = false;
 
 	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark icons');
 	darkRdo.helpTip = 'icon theme';
+	darkRdo.enabled = false;
 
 	// ============
 	var tabColorsGrp = themeGrp.add('group');
@@ -224,16 +227,16 @@ function prefsDialog() {
 
 	*/
 
-	darkRdo.onClick = function () {
-
+	lightRdo.onClick = darkRdo.onClick = function () {
 		alert(wip);
 	};
 
 	resetBtn.onClick = function () {
 		JSONPrefsObj = defPrefsObj;
-		savePreferences(); // → save preferences.json
+		savePrefs(); // → save preferences.json
 		loadDefaultPrefs();
 
+		userPrefix = projUserTxt.text = userPrefix;
 		nullTypeDrop.selection = nullType;
 		adjTypeDrop.selection = adjType;
 		projectModeDrop.selection = projectMode;
@@ -244,6 +247,9 @@ function prefsDialog() {
 		hoCkb.value = homeOffice;
 		updateFolderPaths(); // → update templates and fonts folder
 
+		bgColor = tabColors[0];
+		setBgColor(w, bgColor);
+
 		alert('done!');
 	};
 
@@ -253,38 +259,38 @@ function prefsDialog() {
 			alert('no access...  Σ(っ °Д °;)っ');
 			return;
 		}
-		if (!fontsFolder.exists) {
-			fontsFolder.create();
-		}
+		if (!fontsFolder.exists) fontsFolder.create();
+
 		openFolder(scriptPreferencesPath);
 	};
 
-	projUserTxt.onChange = function () {
-		userPrefix = projUserTxt.text.toUpperCase();
+	projUserTxt.onChange = projUserTxt.onEnterKey = function () {
+		this.text = this.text.toUpperCase();
+		userPrefix = this.text;
 		JSONPrefsObj.userPrefix = userPrefix;
-		savePreferences();
+		savePrefs(); // → save preferences.json
 	};
 
 	nullTypeDrop.onChange = function () {
-		nullType = nullTypeDrop.selection.index; // selected null type...
+		nullType = this.selection.index; // selected null type...
 		JSONPrefsObj.selection.nullType = nullType; // update preferences object...
-		savePreferences(); // → save preferences.json
+		savePrefs(); // → save preferences.json
 	};
 
 	adjTypeDrop.onChange = function () {
-		adjType = adjTypeDrop.selection.index; // selected adj type...
+		adjType = this.selection.index; // selected adj type...
 		JSONPrefsObj.selection.adjType = adjType; // update preferences object...
-		savePreferences(); // → save preferences.json
+		savePrefs(); // → save preferences.json
 	};
 
 	projectModeDrop.onChange = function () {
-		projectMode = projectModeDrop.selection.index; // selected project model...
+		projectMode = this.selection.index; // selected project model...
 		JSONPrefsObj.selection.projectMode = projectMode; // update preferences object...
-		savePreferences(); // → save preferences.json
+		savePrefs(); // → save preferences.json
 	};
 
 	colorDrop.onChange = function () {
-		var c = tabColors[colorDrop.selection.index]; // selected tab color...
+		var c = tabColors[this.selection.index]; // selected tab color...
 		setBtnColor(tabColorBtn, c); // update color preview swatch...
 		tabColorBtn.notify('onDraw'); // force ui update...
 	};
@@ -299,8 +305,10 @@ function prefsDialog() {
 			tabColors[colorDrop.selection.index] = configColor; // update color array...
 			JSONPrefsObj.color[colorDrop.selection] = rgbToHEX(configColor); // update preferences object...
 
-			setBtnColor(tabColorBtn, configColor); // update color preview swatch...
-			savePreferences(); // → save preferences.json
+			setBtnColor(this, configColor); // update color preview swatch...
+			savePrefs(); // → save preferences.json
+			bgColor = tabColors[0];
+			setBgColor(w, bgColor);
 		}
 	};
 
@@ -316,7 +324,7 @@ function prefsDialog() {
 		if (saveFolder != null) {
 			magazinePath = decodeURI(saveFolder).toString();
 			JSONPrefsObj.folders.magazinePath = magazinePath;
-			savePreferences();
+			savePrefs();
 		}
 	};
 
@@ -332,7 +340,7 @@ function prefsDialog() {
 		if (saveFolder != null) {
 			artePath = decodeURI(saveFolder).toString();
 			JSONPrefsObj.folders.artePath = artePath;
-			savePreferences();
+			savePrefs();
 		}
 	};
 
@@ -348,7 +356,6 @@ function prefsDialog() {
 		}
 	});
 
-	// [ ] comment - updateBtn
 	updateBtn.onClick = function () {
 		// error...
 		if (!netAccess()) {
@@ -368,7 +375,6 @@ function prefsDialog() {
 			promoArcPath + '/scripts', // → /arquivamento/GLOBONEWS/On Air 2022/Promo/scripts
 			promoInsPath + '/BARRA UTILIDADES PROMO PARA SCRIPT', // → UTILIDADES//FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR
 		];
-
 		removeFolder(downFolder); // → delete previous download folder
 		downFolder.create(); // → create new download folder
 
@@ -379,10 +385,10 @@ function prefsDialog() {
 			if (homeOffice && p > 0) break; // only updates local folders
 			try {
 				copyFolderContent(downPath, destPathArray[p]);
-			} catch (error) { }
+			} catch (error) {}
 		}
-
 		showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
+		wPref.close();
 	};
 
 	hoCkb.onClick = function () {
@@ -392,15 +398,8 @@ function prefsDialog() {
 		mamHardNewsBtn.enabled = !homeOffice;
 		dayBtn.enabled = !homeOffice;
 		baseJorBtn.enabled = !homeOffice;
-		savePreferences(); // → save preferences.json
+		savePrefs(); // → save preferences.json
 		updateFolderPaths(); // → update templates and fonts folder
-	};
-
-	wPref.onClose = function () {
-		bgColor = tabColors[0];
-
-		hideTabs();
-		setBgColor(w, bgColor);
 	};
 
 	wPref.show();
