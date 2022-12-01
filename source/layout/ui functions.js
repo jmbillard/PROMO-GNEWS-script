@@ -67,13 +67,13 @@ function setLayout() {
     leftGrp.margins = [5, 0, 0, 0];
 
     // color buttons
-    for (var c1 = 1; c1 < colors1Grp.children.length; c1++) {
+    for (var c1 = 1; c1 < colorSubGrp1.children.length; c1++) {
       colors1Grp.children[c1].size = [10, 20];
     }
-    for (var c2 = 1; c2 < colors2Grp.children.length; c2++) {
+    for (var c2 = 1; c2 < colorSubGrp2.children.length; c2++) {
       colors2Grp.children[c2].size = [10, 20];
     }
-    for (var c3 = 1; c3 < colors3Grp.children.length; c3++) {
+    for (var c3 = 1; c3 < colorSubGrp3.children.length; c3++) {
       colors3Grp.children[c3].size = [10, 20];
     }
     // text tab - limit text horizontal controls
@@ -108,13 +108,13 @@ function setLayout() {
     leftGrp.margins = [0, 0, 0, 5];
 
     // color buttons
-    for (var b1 = 1; b1 < colors1Grp.children.length; b1++) {
+    for (var b1 = 1; b1 < colorSubGrp1.children.length; b1++) {
       colors1Grp.children[b1].size = [66, 15];
     }
-    for (var b2 = 1; b2 < colors2Grp.children.length; b2++) {
+    for (var b2 = 1; b2 < colorSubGrp2.children.length; b2++) {
       colors2Grp.children[b2].size = [66, 15];
     }
-    for (var b3 = 1; b3 < colors3Grp.children.length; b3++) {
+    for (var b3 = 1; b3 < colorSubGrp3.children.length; b3++) {
       colors3Grp.children[b3].size = [66, 15];
     }
     // text tab - limit text horizontal controls
