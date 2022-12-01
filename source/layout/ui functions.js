@@ -53,8 +53,10 @@ function setTxtColor(sTxt, color) {
 
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
+  
   var hMargin = 50;
   var vMargin = 10;
+  
   // horizontal layout
   if (wLayout == 'row') {
     imgAlignment = 'left';
@@ -66,7 +68,7 @@ function setLayout() {
 
     // color buttons
     for (var c1 = 1; c1 < colors1Grp.children.length; c1++) {
-      colors1Grp.children[c1].size = [20, 20];
+      colors1Grp.children[c1].size = [10, 20];
     }
     for (var c2 = 1; c2 < colors2Grp.children.length; c2++) {
       colors2Grp.children[c2].size = [10, 20];
@@ -107,7 +109,7 @@ function setLayout() {
 
     // color buttons
     for (var b1 = 1; b1 < colors1Grp.children.length; b1++) {
-      colors1Grp.children[b1].size = [66, 20];
+      colors1Grp.children[b1].size = [66, 15];
     }
     for (var b2 = 1; b2 < colors2Grp.children.length; b2++) {
       colors2Grp.children[b2].size = [66, 15];
@@ -139,6 +141,7 @@ function setLayout() {
     progTxt2.size.width = 0;
   }
   imgGrp.orientation = wLayout;
+
   // all tab subgroups
   for (var s = 0; s < tabSubGrps.length; s++) {
     tabSubGrps[s].orientation = wLayout;
@@ -151,17 +154,7 @@ function setLayout() {
     tabs[t].spacing = 8;
   }
 
-  colorsGrp.spacing = 8;
-  colors1Grp.spacing = 2;
-  colors2Grp.spacing = 2;
-  colors3Grp.spacing = 2;
-  tabsGrp.links.spacing = 8;
   tabsGrp.dev.spacing = 8;
-  
-  colors1Grp.orientation = wLayout;
-  colors2Grp.orientation = wLayout;
-  colors3Grp.orientation = wLayout;
-  errTabGrp.orientation = wLayout;
 
   leftGrp.alignment = imgAlignment;
   rightGrp.alignment = closeAlignment;
@@ -256,7 +249,6 @@ function getTabGroups() {
   for (var t = 0; t < tabsGrp.children.length; t++) {
     tabsGrpArray.push(tabsGrp.children[t]);
   }
-
   return tabsGrpArray;
 }
 
@@ -265,6 +257,7 @@ function getTabSubGroups() {
   var tabSubGrps = [];
 
   for (var st = 0; st < tabs.length; st++) {
+    
     for (var g = 0; g < tabs[st].children.length; g++) {
       var subGrp = tabs[st].children[g];
 

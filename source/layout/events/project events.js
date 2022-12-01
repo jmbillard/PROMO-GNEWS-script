@@ -56,10 +56,8 @@ renameItemBtn.onClick = function () {
     showTabErr('empty project');
     return;
   }
-  //userPrefix = projUserTxt.text.toUpperCase().replaceSpecialCharacters();
   projId = projIdTxt.text.toUpperCase().replaceSpecialCharacters();
   projName = projNameTxt.text.toLowerCase().replaceSpecialCharacters();
-  //projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
   projNameTxt.text = projName;
 
@@ -98,10 +96,8 @@ projOrgBtn.onClick = function () {
 };
 
 saveBtn.onClick = function () {
-  //userPrefix = projUserTxt.text.toUpperCase().replaceSpecialCharacters();
   projId = projIdTxt.text.toUpperCase().replaceSpecialCharacters();
   projName = projNameTxt.text.toLowerCase().replaceSpecialCharacters();
-  //projUserTxt.text = userPrefix;
   projIdTxt.text = projId;
   projNameTxt.text = projName;
 
@@ -141,15 +137,11 @@ saveBtn.onClick = function () {
 pngPreviewBtn.onClick = function () {
   var aItem = app.project.activeItem;
 
-  if (aItem == null) {
-    return;
-  }
+  if (aItem == null) return;
 
   var saveFolder = Folder.selectDialog();
 
-  if (saveFolder == null) {
-    return;
-  }
+  if (saveFolder == null) return;
 
   var savePath = saveFolder.fullName + '/';
   var previewPath = savePath + aItem.name + ' preview.png';
