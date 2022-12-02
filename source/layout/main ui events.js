@@ -151,6 +151,26 @@ findBtn.onClick = function () {
   findDialog();
 };
 
+pngPreviewBtn.onClick = function () {
+  var aItem = app.project.activeItem;
+
+  if (aItem == null) return;
+
+  var saveFolder = Folder.selectDialog();
+
+  if (saveFolder == null) return;
+
+  var savePath = saveFolder.fullName + '/';
+  var previewPath = savePath + aItem.name + ' preview.png';
+  var previewFile = new File(previewPath);
+
+  aItem.saveFrameToPng(aItem.time, previewFile);
+  // var setClipboard = 'Get-Content \'' + previewPath + '\' | Set-Clipboard';
+  // var cmdStr = 'cmd.exe /c powershell.exe -c "' + setClipboard + '"';
+  // system.callSystem(cmdStr);
+  openFolder(savePath);
+};
+
 prefBtn.onClick = function () {
   prefsDialog();
 };
