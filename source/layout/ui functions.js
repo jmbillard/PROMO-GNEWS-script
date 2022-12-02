@@ -68,13 +68,13 @@ function setLayout() {
 
     // color buttons
     for (var c1 = 1; c1 < colorSubGrp1.children.length; c1++) {
-      colors1Grp.children[c1].size = [10, 20];
+      colorSubGrp1.children[c1].size = [10, 20];
     }
     for (var c2 = 1; c2 < colorSubGrp2.children.length; c2++) {
-      colors2Grp.children[c2].size = [10, 20];
+      colorSubGrp2.children[c2].size = [10, 20];
     }
     for (var c3 = 1; c3 < colorSubGrp3.children.length; c3++) {
-      colors3Grp.children[c3].size = [10, 20];
+      colorSubGrp3.children[c3].size = [10, 20];
     }
     // text tab - limit text horizontal controls
     limitSld.visible = true;
@@ -109,13 +109,13 @@ function setLayout() {
 
     // color buttons
     for (var b1 = 1; b1 < colorSubGrp1.children.length; b1++) {
-      colors1Grp.children[b1].size = [66, 15];
+      colorSubGrp1.children[b1].size = [66, 15];
     }
     for (var b2 = 1; b2 < colorSubGrp2.children.length; b2++) {
-      colors2Grp.children[b2].size = [66, 15];
+      colorSubGrp2.children[b2].size = [66, 15];
     }
     for (var b3 = 1; b3 < colorSubGrp3.children.length; b3++) {
-      colors3Grp.children[b3].size = [66, 15];
+      colorSubGrp3.children[b3].size = [66, 15];
     }
     // text tab - limit text horizontal controls
     limitSld.visible = false;
@@ -153,8 +153,6 @@ function setLayout() {
     tabs[t].orientation = wLayout;
     tabs[t].spacing = 8;
   }
-
-  tabsGrp.dev.spacing = 8;
 
   leftGrp.alignment = imgAlignment;
   rightGrp.alignment = closeAlignment;
@@ -264,7 +262,7 @@ function getTabSubGroups() {
       if (subGrp.toString() != '[object Group]') continue;
       if (subGrp.properties != undefined) continue;
 
-      tabSubGrps.push(tabs[st].children[g]);
+      tabSubGrps.push(subGrp);
     }
   }
   return tabSubGrps;
