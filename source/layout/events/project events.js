@@ -7,31 +7,21 @@
 */
 
 projIdTxt.onChange = projIdTxt.onEnterKey = function () {
-
-  if (this.text.trim() == '') {
-    this.text = 'proj. ID';
-    setXMPdata('identifier', '');
-    return;
-  }
   this.text = projId = this.text
-    .toUpperCase()
-    .replaceSpecialCharacters();
+    .replaceSpecialCharacters()
+    .toUpperCase();
 
   setXMPdata('identifier', projId);
+  if (this.text.trim() == '') this.text = 'proj. ID';
 };
 
 projNameTxt.onChange = projNameTxt.onEnterKey = function () {
-
-  if (this.text.trim() == '') {
-    this.text = 'proj. name';
-    setXMPdata('title', '');
-    return;
-  }
   this.text = projName = this.text
-    .toLowerCase()
-    .replaceSpecialCharacters();
+    .replaceSpecialCharacters()
+    .toLowerCase();
 
   setXMPdata('title', projName);
+  if (this.text.trim() == '') this.text = 'proj. name';
 };
 
 insertUserIdBtn.onClick = function () {
@@ -41,8 +31,9 @@ insertUserIdBtn.onClick = function () {
     return;
   }
   var baseName = userPrefix + ' PROMO - ' + projId;
-  var sysDate = system.callSystem('cmd.exe /c date /t');
-  var dateStr = sysDate.substring(0, sysDate.length - 3);
+  var dateStr = system
+    .callSystem('cmd.exe /c date /t')
+    .trim();
 
   var itemArray = app.project.selection;
   app.beginUndoGroup('quick rename ID');
@@ -70,15 +61,17 @@ renameItemBtn.onClick = function () {
     showTabErr('empty project');
     return;
   }
-  var sysDate = system.callSystem('cmd.exe /c date /t');
-  var dateStr = sysDate.substring(0, sysDate.length - 3);
-  var compsArray = app.project.selection.length > 0 ? app.project.selection : getCompsAndTemplates();
-  app.beginUndoGroup('quick rename');
+  app.beginUndoGroup('rename templates');
+
+  var dateStr = system
+    .callSystem('cmd.exe /c date /t')
+    .trim();
+  var compArray = app.project.selection.length > 0 ? app.project.selection : getCompsAndTemplates();
 
   setXMPdata('creator', system.userName);
   setXMPdata('date', dateStr);
 
-  renameComps(projId, projName, compsArray);
+  renameComps(projId, projName, compArray);
 
   app.endUndoGroup();
 };
@@ -103,21 +96,14 @@ projOrgBtn.onClick = function () {
 };
 
 saveBtn.onClick = function () {
-  projId = projIdTxt.text.toUpperCase().replaceSpecialCharacters();
-  projName = projNameTxt.text.toLowerCase().replaceSpecialCharacters();
-  projIdTxt.text = projId;
-  projNameTxt.text = projName;
 
   var saveFolder = Folder.selectDialog();
-  var userStr = system.userName;
-  var sysDate = system.callSystem('cmd.exe /c date /t');
-  var dateStr = sysDate.substring(0, sysDate.length - 3);
+  var dateStr = system
+    .callSystem('cmd.exe /c date /t')
+    .trim();
 
-
-  setXMPdata('creator', userStr);
+  setXMPdata('creator', system.userName);
   setXMPdata('date', dateStr);
-  setXMPdata('identifier', projId);
-  setXMPdata('title', projName);
 
   app.beginUndoGroup('quick save');
 
@@ -140,26 +126,6 @@ saveBtn.onClick = function () {
     return;
   }
  */};
-
-pngPreviewBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-
-  if (aItem == null) return;
-
-  var saveFolder = Folder.selectDialog();
-
-  if (saveFolder == null) return;
-
-  var savePath = saveFolder.fullName + '/';
-  var previewPath = savePath + aItem.name + ' preview.png';
-  var previewFile = new File(previewPath);
-
-  aItem.saveFrameToPng(aItem.time, previewFile);
-  // var setClipboard = 'Get-Content \'' + previewPath + '\' | Set-Clipboard';
-  // var cmdStr = 'cmd.exe /c powershell.exe -c "' + setClipboard + '"';
-  // system.callSystem(cmdStr);
-  openFolder(savePath);
-};
 
 endPagePresetBtn.onClick = function () {
   currentGrp = tabsGrp.menu;
