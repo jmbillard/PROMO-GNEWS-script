@@ -19,7 +19,7 @@ function createColorButtons(colorArray, colorGrp) {
     var rgb = colorArray[c] * 255; // -> [255,255,255,255]
     var colorBtn = colorGrp.add('iconbutton', undefined, undefined, { name: hex, style: 'toolbutton' });
 
-    colorBtn.size = [10, 20];
+    colorBtn.size = [20, 20];
     setBtnColor(colorBtn, colorArray[c]);
     colorBtn.onDraw = customDraw;
     colorBtn.helpTip = 'R: ' + rgb[0] + '\nG: ' + rgb[1] + '\nB: ' + rgb[2] + '\nHEX: ' + hex;
@@ -109,13 +109,13 @@ function setLayout() {
 
     // color buttons
     for (var b1 = 1; b1 < colorSubGrp1.children.length; b1++) {
-      colorSubGrp1.children[b1].size = [66, 15];
+      colorSubGrp1.children[b1].size = [66, 10];
     }
     for (var b2 = 1; b2 < colorSubGrp2.children.length; b2++) {
-      colorSubGrp2.children[b2].size = [66, 15];
+      colorSubGrp2.children[b2].size = [66, 10];
     }
     for (var b3 = 1; b3 < colorSubGrp3.children.length; b3++) {
-      colorSubGrp3.children[b3].size = [66, 15];
+      colorSubGrp3.children[b3].size = [66, 10];
     }
     // text tab - limit text horizontal controls
     limitSld.visible = false;
