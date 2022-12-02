@@ -22,10 +22,15 @@ function getFileExt(str) {
     .toLowerCase();
 }
 
-function deletePrefix(name, prefixStr) {
-  var pattern = eval('new RegExp(/^' + prefixStr + '/)');
+function deletePrefix(name) {
+  var prefixArray = getPrefixes();
 
-  return name.replace(pattern, '');
+  for (var p = 0; p < prefixArray.length; p++) {
+    var pattern = eval('new RegExp(/^' + prefixArray[p] + '/)');
+    if (name.match(pattern) != null) name = name.replace(pattern, '');
+  }
+
+  return name;
 }
 
 function titleCase(str) {

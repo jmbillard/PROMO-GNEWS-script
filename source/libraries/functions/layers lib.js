@@ -287,3 +287,20 @@ function columnText(sLayer) {
 
 	return colLayers;
 }
+
+/*
+
+---------------------------------------------------------------
+> general...
+---------------------------------------------------------------
+
+*/
+
+function createNull(nullType) {
+	var nullLayer = nullType == 0 ? shpNull() : aItem.layers.addNull();
+	nullLayer.guideLayer = true;
+	nullLayer.name = nullPrefix;
+	nullLayer.label = 1;
+	
+	return nullLayer;
+}

@@ -17,6 +17,7 @@ for (var i = 1; i < colorSubGrp1.children.length; i++) {
     batchFill(hex, hexToRGB(hex));
   };
 }
+
 for (var i = 1; i < colorSubGrp2.children.length; i++) {
   colorSubGrp2.children[i].onClick = function () { 
     var hex = this.properties.name;
@@ -24,6 +25,7 @@ for (var i = 1; i < colorSubGrp2.children.length; i++) {
     batchFill(hex, hexToRGB(hex));
   };
 }
+
 for (var i = 1; i < colorSubGrp3.children.length; i++) {
   colorSubGrp3.children[i].onClick = function () { 
     var hex = this.properties.name;
@@ -46,8 +48,9 @@ shpPalletBtn.onClick = function () {
   palletLayer.name = 'pallet - GNEWS';
   palletLayer.guideLayer = true;
   palletLayer.locked = true;
-  palletLayer.property('ADBE Transform Group').position.setValue([0, 0]);
-  palletLayer.property('ADBE Transform Group').position.expression('[0,0]');
+  palletLayer.property('ADBE Transform Group')
+    .property('ADBE Position')
+    .expression('[0,0]');
 
   app.endUndoGroup();
 };
