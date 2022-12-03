@@ -59,7 +59,7 @@ function cloneExpressions(sLayer, cLayer) {
 
 		try {
 			cProp.setValue(prop.value);
-		} catch (error) {}
+		} catch (error) { }
 
 		cTrm.property(p).expression = expStr;
 
@@ -96,40 +96,49 @@ function setKeys(prop, cProp) {
 }
 
 // clone keyframes...
-function cloneKeys(selLayer, ctrlLayer) {
-	var selLayerTrm = selLayer.property('ADBE Transform Group');
-	var ctrlLayerTrm = ctrlLayer.property('ADBE Transform Group');
+function cloneKeys(sLayer, cLayer) {
+	var sLayerTrm = sLayer
+		.property('ADBE Transform Group');
+	var cLayerTrm = cLayer
+		.property('ADBE Transform Group');
 
-	selLayer.parent = ctrlLayer.parent;
+	sLayer.parent = cLayer.parent;
 
-	for (var p = 1; p <= selLayerTrm.numProperties; p++) {
-		var selLayerProp = selLayerTrm.property(p);
-		var ctrlLayerProp = ctrlLayerTrm.property(p);
+	for (var p = 1; p <= sLayerTrm.numProperties; p++) {
+		var sProp = sLayerTrm.property(p);
+		var cProp = cLayerTrm.property(p);
 
-		if (
-			selLayerProp.numKeys != 0 &&
-			selLayerProp.matchName != 'ADBE Opacity'
-		) {
-			if (selLayerProp.dimensionsSeparated) {
-				ctrlLayerProp.dimensionsSeparated = true;
 
-				for (var d = 0; d < selLayerProp.value.length; d++) {
-					var selLayerPropD = selLayerProp.getSeparationFollower(d);
-					var ctrlLayerPropD = ctrlLayerProp.getSeparationFollower(d);
-					setKeys(selLayerPropD, ctrlLayerPropD);
-				}
-			} else {
-				setKeys(selLayerProp, ctrlLayerProp);
+		if (sProp.numKeys == 0) continue;
+		if (sProp.matchName == 'ADBE Opacity') continue;
+
+		if (sProp.dimensionsSeparated) {
+			cProp.dimensionsSeparated = true;
+
+			for (var d = 0; d < sProp.value.length; d++) {
+				var sPropD = sProp.getSeparationFollower(d);
+				var cPropD = cProp.getSeparationFollower(d);
+				setKeys(sPropD, cPropD);
+				while (sPropD.numKeys > 0) sPropD.removeKey(1);
 			}
-			for (var k = 1; k <= ctrlLayerProp.numKeys; k++) {
-				selLayerProp.removeKey(1);
-			}
-			try {
-				selLayerProp.setValue(ctrlLayerProp.value);
-			} catch (error) {}
+		} else {
+			setKeys(sProp, cProp);
+			while (sProp.numKeys > 0) sProp.removeKey(1);
 		}
+		try {
+			sProp.setValue(cProp.value);
+		} catch (error) { }
 	}
-	selLayer.parent = ctrlLayer;
+	sLayer.parent = cLayer;
+	sLayerTrm
+		.property('ADBE Position')
+		.dimensionsSeparated = false;
+	sLayerTrm
+		.property('ADBE Position')
+		.setValue([0, 0, 0]);
+	sLayerTrm
+		.property('ADBE Scale')
+		.setValue([100, 100, 100]);
 }
 
 function addPseudoEffect(fxName, strCode) {
@@ -141,7 +150,7 @@ function addPseudoEffect(fxName, strCode) {
 
 	try {
 		app.project.activeItem.layer(1).applyPreset(File(aPreset));
-	} catch (error) {}
+	} catch (error) { }
 }
 
 // reposiciona e parenteia um layer mantendo a hierarquia...
@@ -151,20 +160,19 @@ function setHierarchy(sLayer, cLayer) {
 	var cTrm = cLayer.property('ADBE Transform Group');
 	var cPos = cTrm.property('ADBE Position');
 
-	if (sLayer.parent != null) {
-		cLayer.parent = sLayer.parent;
-	}
-	if (sLayer.threeDLayer || sLayer instanceof LightLayer) {
-		cLayer.threeDLayer = true;
-	}
+	if (sLayer.parent != null) cLayer.parent = sLayer.parent;
+
+	if (sLayer.threeDLayer) cLayer.threeDLayer = true;
+	if (sLayer instanceof LightLayer) cLayer.threeDLayer = true;
+
 	cPos.setValue(sPos.value);
 
-	if (sLayer instanceof CameraLayer) {
-		cLayer.threeDLayer = true;
-	}
+	if (sLayer instanceof CameraLayer) cLayer.threeDLayer = true;
+
 	sLayer.parent = cLayer;
 
-	for (i = 1; i <= sTrm.numProperties; i++) {
+	for (var i = 1; i <= sTrm.numProperties; i++) {
+
 		if (sTrm.property(i).dimensionsSeparated) {
 			cTrm.property(i).dimensionsSeparated = true;
 		}
@@ -181,38 +189,19 @@ function findCenter(lArray) {
 	var minZ = 0;
 
 	for (i = 0; i < lArray.length; i++) {
-		var aLayer = lArray[i];
-		var lPos = aLayer
+		var lPos1 = lArray[i]
 			.property('ADBE Transform Group')
 			.property('ADBE Position');
 		var lPosX = lPos.value[0];
 		var lPosY = lPos.value[1];
 		var lPosZ = lPos.value[2];
 
-		if (i == 0) {
-			maxX = lPosX;
-			minX = lPosX;
-			maxY = lPosY;
-			minY = lPosY;
-			minZ = lPosZ;
-			minZ = lPosZ;
-		} else {
-			if (lPosX > maxX) {
-				maxX = lPosX;
-			} else if (lPosX < minX) {
-				minX = lPosX;
-			}
-			if (lPosY > maxY) {
-				maxY = lPosY;
-			} else if (lPosY < minY) {
-				minY = lPosY;
-			}
-			if (lPosZ > maxZ) {
-				maxZ = lPosZ;
-			} else if (lPosZ < minZ) {
-				minZ = lPosZ;
-			}
-		}
+		maxX = Math.max(maxX, lPos.value[0]);
+		minX = Math.min(minX, lPos.value[0]);
+		maxY = Math.max(maxY, lPos.value[1]);
+		minY = Math.min(minY, lPos.value[1]);
+		maxZ = Math.max(maxZ, lPos.value[2]);
+		minZ = Math.min(minZ, lPos.value[2]);
 	}
 	var cPos = [];
 	cPos.push(minX + (maxX - minX) / 2);
