@@ -1,4 +1,5 @@
 /*
+
 ---------------------------------------------------------------
 > 🚶 animation tab events
 ---------------------------------------------------------------
@@ -8,8 +9,7 @@
 copyInfBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	var selLayer = aItem != null ? aItem.selectedLayers[0] : null;
-	var aProp =
-		selLayer != null ? selLayer.selectedProperties[0] : null;
+	var aProp = selLayer != null ? selLayer.selectedProperties[0] : null;
 	// error...
 	if (aProp.selectedKeys.length != 1) {
 		showTabErr('select 1 keyframe');
@@ -22,21 +22,19 @@ copyInfBtn.onClick = function () {
 	var kHelp =
 		selLayer.name + ' ' + aProp.name + ' key ' + k + ':\n\n';
 	kHelp +=
-		'<< in\nspeed: ' +
-		kIn.speed.toFixed(1) +
-		'\ninfluence: ' +
-		kIn.influence.toFixed(1);
-	kHelp +=
-		'\n\n>> out\nspeed: ' +
-		kOut.speed.toFixed(1) +
-		'\ninfluence: ' +
-		kOut.influence.toFixed(1);
+		'<< in\nspeed: ' + kIn.speed.toFixed(1) +
+		'\ninfluence: ' + kIn.influence.toFixed(1) +
+		'\n\n>> out\nspeed: ' + kOut.speed.toFixed(1) +
+		'\ninfluence: ' + kOut.influence.toFixed(1);
 
 	keyData.value = true;
 	keyData.inType = aProp.keyInInterpolationType(k);
 	keyData.outType = aProp.keyOutInterpolationType(k);
 	keyData.inEase = aProp.keyInTemporalEase(k);
 	keyData.outEase = aProp.keyOutTemporalEase(k);
+
+	// alert(JSON.stringify(keyData.inEase));
+	// alert(aProp.propertyValueType);
 
 	// hide all keyframe images...
 	for (var kf = 0; kf < keyStatsGrp.children.length; kf++) {
@@ -113,30 +111,33 @@ pasteInfBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : null;
 
-	if (keyData.value) {
-		for (var l = 0; l < selLayers.length; l++) {
-			var aLayer = selLayers[l];
-			var selProps = aLayer.selectedProperties;
+	for (var l = 0; l < selLayers.length; l++) {
+		var aLayer = selLayers[l];
+		var selProps = aLayer.selectedProperties;
 
-			for (var p = 0; p < selProps.length; p++) {
-				var aProp = selProps[p];
-				var selKeys = aProp.selectedKeys;
+		for (var p = 0; p < selProps.length; p++) {
+			var aProp = selProps[p];
+			var selKeys = aProp.selectedKeys;
 
-				for (var k = 0; k < selKeys.length; k++) {
-					try {
-						var aKey = selKeys[k];
-						aProp.setTemporalEaseAtKey(
-							aKey,
-							keyData.inEase,
-							keyData.outEase
-						);
-						aProp.setInterpolationTypeAtKey(
-							aKey,
-							keyData.inType,
-							keyData.outType
-						);
-					} catch (error) { }
+			for (var k = 0; k < selKeys.length; k++) {
+				var aKey = selKeys[k];
+
+				try {
+					aProp.setTemporalEaseAtKey(aKey, keyData.inEase, keyData.outEase);
+				} catch (error) {
+					var inEase = [keyData.inEase[0]];
+					var outEase = [keyData.outEase[0]];
+
+					if (Array.isArray(aProp.value)) {
+
+						for (var e = 1; e < aProp.value.length; e++) {
+							inEase.push(keyData.inEase[0]);
+							outEase.push(keyData.outEase[0]);
+						}
+					}
+					aProp.setTemporalEaseAtKey(aKey, inEase, outEase);
 				}
+				aProp.setInterpolationTypeAtKey(aKey, keyData.inType, keyData.outType);
 			}
 		}
 	}
