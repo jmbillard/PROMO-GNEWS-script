@@ -85,12 +85,11 @@ projOrgBtn.addEventListener('click', function (c) {
 
 projOrgBtn.onClick = function () {
   if (app.project.numItems == 0) return;
-  app.beginUndoGroup('quick project organization');
+  app.beginUndoGroup('organize project');
 
-  removeProjFolders();
-  deleteEmptyFolders();
-  populateFolders(projectMode);
-  deleteEmptyFolders();
+  deleteProjectFolders();
+  populateProjectFolders();
+  deleteEmptyProjectFolders();
 
   app.endUndoGroup();
 };

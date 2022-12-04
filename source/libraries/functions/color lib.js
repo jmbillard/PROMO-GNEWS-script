@@ -11,6 +11,11 @@
 //  jshint -W085
 //  jshint -W043
 
+// returns a random color from de color preferences...
+function randomColor(colorArray) {
+  return colorArray[randomInteger(0, colorArray.length)];
+}
+
 // converts rgb color to a simple array...
 function rgb(r, g, b) {
   r = r / 255;

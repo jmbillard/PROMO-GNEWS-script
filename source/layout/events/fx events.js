@@ -166,7 +166,7 @@ fillBtn.onClick = function () {
 
   for (i = 0; i < selLayers.length; i++) {
     var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-    effect.property(3).setValue(randomColor()); // color
+    effect.property(3).setValue(randomColor(labelColors)); // color
   }
   app.endUndoGroup();
 };

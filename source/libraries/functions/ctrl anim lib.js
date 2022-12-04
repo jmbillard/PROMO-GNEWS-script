@@ -20,15 +20,9 @@ function lockTrmProp(sLayer) {
 		var prop = trm.property(p);
 		var val = prop.value;
 
-		if (!prop.canSetExpression) {
-			continue;
-		}
-		if (prop.numKeys != 0) {
-			continue;
-		}
-		if (prop.expression != '') {
-			continue;
-		}
+		if (!prop.canSetExpression) continue;
+		if (prop.numKeys > 0) continue;
+		if (prop.expression != '') continue;
 
 		if (Array.isArray(val)) {
 			val = '[' + val.toString() + ']';
@@ -48,12 +42,8 @@ function cloneExpressions(sLayer, cLayer) {
 		var cProp = cTrm.property(p);
 		var expStr = prop.expression;
 
-		if (prop.matchName == 'ADBE Opacity') {
-			continue;
-		}
-		if (prop.expression == '') {
-			continue;
-		}
+		if (prop.matchName == 'ADBE Opacity') continue;
+		if (prop.expression == '') continue;
 
 		prop.expression = '';
 
@@ -189,7 +179,7 @@ function findCenter(lArray) {
 	var minZ = 0;
 
 	for (i = 0; i < lArray.length; i++) {
-		var lPos1 = lArray[i]
+		var lPos = lArray[i]
 			.property('ADBE Transform Group')
 			.property('ADBE Position');
 		var lPosX = lPos.value[0];
@@ -203,10 +193,10 @@ function findCenter(lArray) {
 		maxZ = Math.max(maxZ, lPos.value[2]);
 		minZ = Math.min(minZ, lPos.value[2]);
 	}
-	var cPos = [];
-	cPos.push(minX + (maxX - minX) / 2);
-	cPos.push(minY + (maxY - minY) / 2);
-	cPos.push(minZ + (maxZ - minZ) / 2);
 
-	return cPos;
+	return [
+		minX + (maxX - minX) / 2,
+		minY + (maxY - minY) / 2,
+		minZ + (maxZ - minZ) / 2
+	];
 }

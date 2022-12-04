@@ -11,6 +11,15 @@
 //  jshint -W085
 //  jshint -W043
 
+function nameInc(aName) {
+
+  var name = aName.replace(/\s*[0-9]+$/, '');
+  var num = aName.match(/\s*[0-9]+$/);
+  var numStr = (num == null) ? 2 : parseInt(num) + 1;
+
+  return name + ' ' + numStr.toString();
+}
+
 function deleteFileExt(str) {
   return str.replace(/\.[0-9a-z]+$/i, '');
 }

@@ -12,7 +12,7 @@
 //  jshint -W043
 
 // returns a random integer...
-function getRndInteger(min, max) {
+function randomInteger(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min; // → 17
 }
 
