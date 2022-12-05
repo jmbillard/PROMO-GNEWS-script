@@ -295,7 +295,7 @@ counterBtn.onClick = function () {
 
 		valArray.push(textDocVal);
 	}
-	// the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
+	// the pseudo effect is applied to all selected layers at once (ADOBE limitation);
 	addPseudoEffect('counter', toolCounter);
 
 	// textArray index... the textArray length may not match selLayers length...
@@ -452,7 +452,6 @@ ikBtn.onClick = function () {
 	app.endUndoGroup();
 };
 
-//[ ] typewriter - update animation preset v22.x...
 typeAnimBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	// error...
@@ -475,7 +474,7 @@ typeAnimBtn.onClick = function () {
 		if (content == '') continue;
 		txtArray.push(content);
 	}
-	// the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
+	// the pseudo effect is applied to all selected layers at once (ADOBE limitation);
 	addPseudoEffect('typewriter', toolTypewriter);
 
 	// textArray index... the textArray length may not match selLayers length...
@@ -486,11 +485,11 @@ typeAnimBtn.onClick = function () {
 
 		if (!(nLayer instanceof TextLayer)) continue;
 		// text document...
-		var text2 = nLayer.property('ADBE Text Properties');
-		var textDoc2 = text2.property('ADBE Text Document');
+		var textDoc2 = nLayer
+			.property('ADBE Text Properties')
+			.property('ADBE Text Document');
 		var textDocVal2 = textDoc2.value;
 
-		textDocVal2.justification = ParagraphJustification.LEFT_JUSTIFY;
 		textDocVal2.text = txtArray[t];
 		textDoc2.setValue(textDocVal2);
 
@@ -502,7 +501,6 @@ typeAnimBtn.onClick = function () {
 	app.endUndoGroup();
 };
 
-//[ ] words - update animation preset v22.x...
 wordsBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	// error...
@@ -525,7 +523,7 @@ wordsBtn.onClick = function () {
 		if (content == '') continue;
 		txtArray.push(content);
 	}
-	// the pseudo effect is applied to all selected layers at once (ADOBEs limitation);
+	// the pseudo effect is applied to all selected layers at once (ADOBE limitation);
 	addPseudoEffect('words', toolWords);
 
 	// textArray index... the textArray length may not match selLayers length...
@@ -536,8 +534,9 @@ wordsBtn.onClick = function () {
 
 		if (!(nLayer instanceof TextLayer)) continue;
 		// text document...
-		var text2 = nLayer.property('ADBE Text Properties');
-		var textDoc2 = text2.property('ADBE Text Document');
+		var textDoc2 = nLayer
+			.property('ADBE Text Properties')
+			.property('ADBE Text Document');
 		var textDocVal2 = textDoc2.value;
 
 		textDocVal2.text = txtArray[t];

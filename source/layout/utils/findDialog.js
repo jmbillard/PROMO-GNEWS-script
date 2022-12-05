@@ -148,7 +148,6 @@ function findDialog() {
     optCkb1.enabled = optCkb2.enabled = !optCkb3.value;
   };
 
-  // [ ] comment - resultTree
   resultTree.onChange = function () {
     var comp;
     var t;
