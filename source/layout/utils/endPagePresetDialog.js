@@ -306,7 +306,7 @@ function endPagePresetDialog() {
 
     return i;
   }
-  
+
   /*
   
   ---------------------------------------------------------------
@@ -979,7 +979,7 @@ function endPagePresetDialog() {
   refreshBtn.onClick = function () {
     presetDrop.selection = 0;
 
-    obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
+    obj = defaultEndPageObj(buildFxObj()); // set default data value if needed...
     updateObjLayers();
 
     compToUi_updateUi();
@@ -994,7 +994,7 @@ function endPagePresetDialog() {
   //---------------------------------------------------------
 
   saveBtn.onClick = function () {
-    obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
+    obj = defaultEndPageObj(buildFxObj()); // set default data value if needed...
     updateObjLayers();
 
     var fileName = titulo_servico.text

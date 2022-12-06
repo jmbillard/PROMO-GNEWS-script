@@ -9,7 +9,7 @@
 
 ![menu](/images/menu.png)
 
-a barra é **`responsiva`** e pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.
+a barra pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.
 a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **‣ ferramentas**...
 
 ```markdown
@@ -112,12 +112,9 @@ copia as seguintes propriedades do keyframe selecionado:
     ↑ velocidade de saída
 ```
 
-> BETA
-
 1) ### ![key stat 1](/images/icons/keyStat1Icon.png) ![key stat 2](/images/icons/keyStat2Icon.png) ![key stat 3](/images/icons/keyStat3Icon.png) ![key stat 4](/images/icons/keyStat4Icon.png) ![key stat 5](/images/icons/keyStat5Icon.png) ![key stat 6](/images/icons/keyStat6Icon.png) ![key stat 7](/images/icons/keyStat7Icon.png) ![key stat 8](/images/icons/keyStat8Icon.png) ![key stat 9](/images/icons/keyStat9Icon.png) keyframe stats
 
     info sobre as propriedades copiadas do keyframe selecionado
-    > BETA
 
 ## ![paste inf btn](/images/icons/pasteInfluenceIcon.png) botão **`colar influência`**
 
@@ -130,7 +127,6 @@ substitui as seguintes propriedades do keyframe selecionado:
     ↓ velocidade de saída
 ```
 
-> BETA
 <!-- [ ] ex: copiar e colar influencias -->
 ---
 <br />
@@ -426,7 +422,7 @@ adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada 
 
 > consulte a tabela de retrancas de *'PROMO'* para ver a lista completa de siglas dos produtos...
 
-## ![rename btn](/images/icons/shpNullIcon.png) botão **`renomear templates`**
+## ![rename btn](/images/icons/checkIcon.png) botão **`renomear templates`**
 
 renomeia as comps de templates e assinaturas de chamada seguindo o padrão de nomenclatura de promo.
 
@@ -452,9 +448,13 @@ renomeia as comps de templates e assinaturas de chamada seguindo o padrão de no
 ---
 <br />
 
-## ![tag btn](/images/icons/tagIcon.png) botão **`tags de projeto`**
+## ![organize btn](/images/icons/openIcon.png) botão **`organizar projeto`**
 
-aplica tags de organização nos itens selecionados da *'janela de projeto'*.
+cria e organiza a estrutura do projeto seguindo o modelo de projeto.
+> modelo de projeto pode ser alterado nas *'preferências do script'*...
+<!-- [ ] ex: organizar projeto -->
+
+> click direito -> aplica tags de organização nos itens selecionados da *'janela de projeto'*.
 
 - ![exportar btn](/images/icons/tg_ftgIcon.png) exportar
 - ![editar btn](/images/icons/tg_compIcon.png) editar
@@ -472,12 +472,6 @@ aplica tags de organização nos itens selecionados da *'janela de projeto'*.
 - ![locução btn](/images/icons/tg_sonoIcon.png) locução
 - ![assinatura btn](/images/icons/tg_compIcon.png) assinatura *'end page'*
 - ![abertura btn](/images/icons/tg_compIcon.png) abertura
-
-## ![organize btn](/images/icons/openIcon.png) botão **`organizar projeto`**
-
-cria e organiza a estrutura do projeto seguindo o modelo de projeto.
-> modelo de projeto pode ser alterado nas *'preferências do script'*...
-<!-- [ ] ex: organizar projeto -->
 
 ---
 <br />
@@ -512,12 +506,10 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
     habilita a coleta de todos os arquivos usados no projeto quando salvo.
     > 'collect files'...
 
-<!-- 
-1. ### ![fonts mod](/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
+2. ### ![fonts mod](/images/icons/tg_txtIcon.png) modificador **`coletar fontes`**
 
     habilita a coleta de todas as fontes usadas no projeto quando salvo.
-
-> limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas... -->
+    > limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
 
 ---
 
@@ -532,14 +524,12 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
 
 ## botões **`office globo`**
 
-[![email btn](/images/icons/link_emailIcon.png)**`webmail`**](https://outlook.office365.com/mail/)
 [![oneDrive btn](/images/icons/link_oneDriveIcon.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
 
-acessam os serviços que a 'globo' e a equipe de 'promo' usam na nuvem da 'microsoft'.
+acessa o oneDrive da conta 'globo'.
 
 ```markdown
-    urls: 'https://outlook.office365.com/mail/'
-          'https://tvglobocorp-my.sharepoint.com/'
+    urls: 'https://tvglobocorp-my.sharepoint.com/'
 ```
 
 ## botões **`work flow`**
@@ -570,7 +560,7 @@ acessam as plataformas que a 'globo' e a equipe de 'promo' usam para gerenciar t
 
 acessam as pastas na rede da 'globo'.
 
-> clique direito: configura um caminho personalizado para as pastas *'para ARTE'* e *'upload MAGAZINE'*
+> um caminho personalizado para as pastas *'para ARTE'* e *'upload MAGAZINE'* pode ser configurado nas *'preferências do script'*...
 
 ---
 
@@ -644,73 +634,6 @@ baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
 
 <br /><br />
 
-# ![preferences icon](/images/icons/prefsIcon.png) [ seção *preferencias* ]
+# ![preferences icon](/images/icons/prefsIcon.png) janela *preferencias*
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
-
----
-<br />
-
-## ![menu icon](/images/icons/menuIcon.png) **`null - adjustment`**
-
-define o tipo de 'layer' criado pelo script.
-
-- shape layer
-- solid
-
----
-<br />
-
-## ![menu icon](/images/icons/menuIcon.png) **`template de projeto`**
-
-define o 'template' de organização do projeto.
-
-- PROMO
-- custom
-
----
-<br />
-
-## ![color](/images/colors/FE674C.png) botão **`cor atual`**
-
-altera a 'cor' da aba selecionada.
-
-1. ### ![menu icon](/images/icons/menuIcon.png) modificador **`aba`**
-
-    define a 'aba' a ser alterada.
-    - menu
-    - controle
-    - animação
-    - efeitos
-    - texto
-    - guias
-    - projeto
-    - links
-    - programa
-    - dev
-
----
-<br />
-
-## ![HO btn](/images/icons/checkBoxIcon.png) **`HO`**
-
-habilita e desabilita o *'modo home office'*
-> verdadeiro -> utiliza pastas da maquina local.\
-> falso -> habilita e utiliza as pastas da rede.
-
----
-<br />
-
-## ![update btn](/images/icons/downloadIcon.png) botão **`atualizar`**
-
-baixa a ultima versão disponível no repositório do github
-
-> clique direito: acessa a pagina do repositório\
-> download: *'~\AppData\Roaming\PROMO GNEWS script\ScriptUI Panels'*\
-> instalação: *'versão instalada do After\Support Files\Scripts\ScriptUI Panels'*
-
----
-<br />
-
-as preferencias serão criadas e salvas sempre que uma alteração for feita.
-> preferencias: *'~\AppData\Roaming\PROMO GNEWS script\preferences.json'*
+> [documentação completa](/docs/preferences.md)
