@@ -19,19 +19,14 @@ function endPagePresetDialog() {
     presetFolder.create();
   }
   // all control effects as object...
-  var obj = buildFxObj();
-  // alert(obj);
-  defaultEndPageObj(obj); // adds a default data value if needed...
-
-  var servico = obj.servico_end_page; // service data object...
-  var layout = obj.layout_end_page; // layout data object...
-  var aparencia = obj.aparencia_end_page; // color theme data object...
+  var obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
+  
   function updateObjLayers() {
     try {
       var aItem = app.project.activeItem; // current selected project item...
 
-      servico.titulo = textContent(aItem.layer('txt_titulo')); // layer 'txt_titulo' text content...
-      servico.subtitulo = textContent(aItem.layer('txt_subtitulo')); // layer 'txt_subtitulo' text content...
+      obj.servico_end_page.titulo = textContent(aItem.layer('txt_titulo')); // layer 'txt_titulo' text content...
+      obj.servico_end_page.subtitulo = textContent(aItem.layer('txt_subtitulo')); // layer 'txt_subtitulo' text content...
 
       try {
         var patComp = aItem.layer('comp_pattern').source; // pattern precomp layer...
@@ -39,7 +34,7 @@ function endPagePresetDialog() {
         // get the first enabled layer...
         for (var l = 1; l <= patComp.numLayers; l++) {
           if (patComp.layer(l).enabled) {
-            layout.pattern_layer = patComp.layer(l).name; // first enabled layer → pattern layer name...
+            obj.layout_end_page.pattern_layer = patComp.layer(l).name; // first enabled layer → pattern layer name...
             break;
           }
         }
@@ -52,7 +47,7 @@ function endPagePresetDialog() {
           if (fotoComp.layer(f).name.match(/adj_/)) continue; // ignore adjustment layers...
 
           if (fotoComp.layer(f).enabled) {
-            layout.foto_layer = fotoComp.layer(f).name; // first enabled layer → photo layer name...
+            obj.layout_end_page.foto_layer = fotoComp.layer(f).name; // first enabled layer → photo layer name...
             break;
           }
         }
@@ -124,8 +119,8 @@ function endPagePresetDialog() {
 
   // update current first enabled layer as index...
   function updateUiLayers() {
-    var pattern = layout.pattern_layer;
-    var foto = layout.foto_layer;
+    var pattern = obj.layout_end_page.pattern_layer;
+    var foto = obj.layout_end_page.foto_layer;
     var patternArray = getLayers('comp_pattern', pattern_layoutDdl);
     var p = patternArray.indexOf(pattern);
 
@@ -143,25 +138,25 @@ function endPagePresetDialog() {
   function updateUi() {
     updateUiLayers();
 
-    modelo_layoutDdl.selection = layout.modelo - 1;
-    subtitulo_layout.value = layout.subtitulo;
-    footage_layout.value = layout.footage;
-    foto_layout.value = layout.foto;
-    foto_layoutDdl.enabled = layout.foto;
-    pattern_layout.value = layout.pattern;
-    pattern_layoutDdl.enabled = layout.pattern;
+    modelo_layoutDdl.selection = obj.layout_end_page.modelo - 1;
+    subtitulo_layout.value = obj.layout_end_page.subtitulo;
+    footage_layout.value = obj.layout_end_page.footage;
+    foto_layout.value = obj.layout_end_page.foto;
+    foto_layoutDdl.enabled = obj.layout_end_page.foto;
+    pattern_layout.value = obj.layout_end_page.pattern;
+    pattern_layoutDdl.enabled = obj.layout_end_page.pattern;
 
-    titulo_servico.text = servico.titulo;
-    subtitulo_servico.text = servico.subtitulo;
-    subtitulo_servico.visible = layout.subtitulo;
-    hora_servico.text = servico.hora;
-    min_servico.text = servico.min;
-    dia_servico.text = servico.dia;
-    formato_servicoDdl.selection = servico.formato - 1;
-    mes_servicoDdl.selection = servico.mes - 1;
-    semana_servicoDdl.selection = servico.semana - 1;
+    titulo_servico.text = obj.servico_end_page.titulo;
+    subtitulo_servico.text = obj.servico_end_page.subtitulo;
+    subtitulo_servico.visible = obj.layout_end_page.subtitulo;
+    hora_servico.text = obj.servico_end_page.hora;
+    min_servico.text = obj.servico_end_page.min;
+    dia_servico.text = obj.servico_end_page.dia;
+    formato_servicoDdl.selection = obj.servico_end_page.formato - 1;
+    mes_servicoDdl.selection = obj.servico_end_page.mes - 1;
+    semana_servicoDdl.selection = obj.servico_end_page.semana - 1;
 
-    tema_aparenciaDdl.selection = aparencia.tema - 1;
+    tema_aparenciaDdl.selection = obj.aparencia_end_page.tema - 1;
 
     updateUiColors();
     servicoUiVis();
@@ -170,11 +165,17 @@ function endPagePresetDialog() {
   function updateCompFx() {
     try {
       var aItem = app.project.activeItem;
-      var layoutFx = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('layout end page');
-      layoutFx.property('subtitulo').setValue(layout.subtitulo);
-      layoutFx.property('foto').setValue(layout.foto);
-      layoutFx.property('footage').setValue(layout.footage);
-      layoutFx.property('pattern').setValue(layout.pattern);
+      var layoutFx = aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('layout end page');
+      layoutFx.property('subtitulo')
+        .setValue(obj.layout_end_page.subtitulo);
+      layoutFx.property('foto')
+        .setValue(obj.layout_end_page.foto);
+      layoutFx.property('footage')
+        .setValue(obj.layout_end_page.footage);
+      layoutFx.property('pattern')
+        .setValue(obj.layout_end_page.pattern);
     } catch (error) { }
   }
 
@@ -193,6 +194,7 @@ function endPagePresetDialog() {
       dia_servicoGrp.visible = true;
       semana_servicoDdl.visible = false;
       mes_servicoDdl.visible = true;
+      //mes_servicoDdl.size = [85, 10];
       hora_servicoGrp.visible = true;
       min_servicoGrp.visible = true;
     }
@@ -216,74 +218,90 @@ function endPagePresetDialog() {
     }
     if (i == 6) {
       mes_servicoDdl.visible = true;
+      //mes_servicoDdl.size = [180, 10];
     }
   }
 
   function updateCompColors() {
     try {
       var aItem = app.project.activeItem;
-      var aparenciaFx = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('aparencia end page');
-      aparenciaFx.property('logo').setValue(hexToRGB(aparencia.logo));
-      aparenciaFx.property('titulo').setValue(hexToRGB(aparencia.titulo));
-      aparenciaFx.property('subtitulo').setValue(hexToRGB(aparencia.subtitulo));
-      aparenciaFx.property('apoio').setValue(hexToRGB(aparencia.apoio));
-      aparenciaFx.property('horario').setValue(hexToRGB(aparencia.horario));
-      aparenciaFx.property('horario base').setValue(hexToRGB(aparencia.horario_base));
-      aparenciaFx.property('footage').setValue(hexToRGB(aparencia.footage));
-      aparenciaFx.property('pattern').setValue(hexToRGB(aparencia.pattern));
-      aparenciaFx.property('fundo').setValue(hexToRGB(aparencia.fundo));
+      var aparenciaFx = aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('aparencia end page');
+      aparenciaFx.property('logo')
+        .setValue(hexToRGB(obj.aparencia_end_page.logo));
+      aparenciaFx.property('titulo')
+        .setValue(hexToRGB(obj.aparencia_end_page.titulo));
+      aparenciaFx.property('subtitulo')
+        .setValue(hexToRGB(obj.aparencia_end_page.subtitulo));
+      aparenciaFx.property('apoio')
+        .setValue(hexToRGB(obj.aparencia_end_page.apoio));
+      aparenciaFx.property('horario')
+        .setValue(hexToRGB(obj.aparencia_end_page.horario));
+      aparenciaFx.property('horario base')
+        .setValue(hexToRGB(obj.aparencia_end_page.horario_base));
+      aparenciaFx.property('footage')
+        .setValue(hexToRGB(obj.aparencia_end_page.footage));
+      aparenciaFx.property('pattern')
+        .setValue(hexToRGB(obj.aparencia_end_page.pattern));
+      aparenciaFx.property('fundo')
+        .setValue(hexToRGB(obj.aparencia_end_page.fundo));
     } catch (error) { }
   }
 
   function updateUiColors() {
-    setTxtColor(logo_aparencia, hexToRGB(aparencia.logo));
-    logo_aparencia.text = aparencia.logo;
-    setTxtColor(titulo_aparencia, hexToRGB(aparencia.titulo));
-    titulo_aparencia.text = aparencia.titulo;
-    setTxtColor(subtitulo_aparencia, hexToRGB(aparencia.subtitulo));
-    subtitulo_aparencia.text = aparencia.subtitulo;
-    setTxtColor(apoio_aparencia, hexToRGB(aparencia.apoio));
-    apoio_aparencia.text = aparencia.apoio;
-    setTxtColor(horario_aparencia, hexToRGB(aparencia.horario));
-    horario_aparencia.text = aparencia.horario;
-    setTxtColor(horario_base_aparencia, hexToRGB(aparencia.horario_base));
-    horario_base_aparencia.text = aparencia.horario_base;
-    setTxtColor(footage_aparencia, hexToRGB(aparencia.footage));
-    footage_aparencia.text = aparencia.footage;
-    setTxtColor(pattern_aparencia, hexToRGB(aparencia.pattern));
-    pattern_aparencia.text = aparencia.pattern;
-    setTxtColor(fundo_aparencia, hexToRGB(aparencia.fundo));
-    fundo_aparencia.text = aparencia.fundo;
+    setTxtColor(logo_aparencia, hexToRGB(obj.aparencia_end_page.logo));
+    logo_aparencia.text = obj.aparencia_end_page.logo;
+    setTxtColor(titulo_aparencia, hexToRGB(obj.aparencia_end_page.titulo));
+    titulo_aparencia.text = obj.aparencia_end_page.titulo;
+    setTxtColor(subtitulo_aparencia, hexToRGB(obj.aparencia_end_page.subtitulo));
+    subtitulo_aparencia.text = obj.aparencia_end_page.subtitulo;
+    setTxtColor(apoio_aparencia, hexToRGB(obj.aparencia_end_page.apoio));
+    apoio_aparencia.text = obj.aparencia_end_page.apoio;
+    setTxtColor(horario_aparencia, hexToRGB(obj.aparencia_end_page.horario));
+    horario_aparencia.text = obj.aparencia_end_page.horario;
+    setTxtColor(horario_base_aparencia, hexToRGB(obj.aparencia_end_page.horario_base));
+    horario_base_aparencia.text = obj.aparencia_end_page.horario_base;
+    setTxtColor(footage_aparencia, hexToRGB(obj.aparencia_end_page.footage));
+    footage_aparencia.text = obj.aparencia_end_page.footage;
+    setTxtColor(pattern_aparencia, hexToRGB(obj.aparencia_end_page.pattern));
+    pattern_aparencia.text = obj.aparencia_end_page.pattern;
+    setTxtColor(fundo_aparencia, hexToRGB(obj.aparencia_end_page.fundo));
+    fundo_aparencia.text = obj.aparencia_end_page.fundo;
   }
 
   // set layout property value...
   function setCompLayoutFxValue(thisObj, property) {
     var aItem = app.project.activeItem;
     var val = thisObj.value;
-    var subtituloFx = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('layout end page').property(property).setValue(val);
-    layout[property] = val;
+    var subtituloFx = aItem.layer('ctrl_comp')
+      .property('ADBE Effect Parade')
+      .property('layout end page')
+      .property(property)
+      .setValue(val);
+      obj.layout_end_page[property] = val;
 
     return val;
   }
 
   // set dropdown property index...
-  function setCompFxIndex(thisObj, obj, property) {
+  function setCompFxIndex(drop, aObj, property) {
     var aItem = app.project.activeItem;
-    var i = thisObj.selection.index + 1;
+    var i = drop.selection.index + 1;
     var modeloFx = aItem
       .layer('ctrl_comp')
       .property('ADBE Effect Parade')
-      .property(obj + ' end page')
+      .property(aObj + ' end page')
       .property(property)
       .setValue(i);
-    eval(obj + '.' + property + ' =' + i);
+    eval('obj.' + aObj + '_end_page.' + property + ' = ' + i);
 
     return i;
   }
 
-  var w = new Window('palette', 'end page preset...');
-  w.spacing = 30;
-  var preset_mainGrp = w.add('group');
+  var wPreset = new Window('palette', 'end page preset...');
+  //wPreset.spacing = 8;
+  var preset_mainGrp = wPreset.add('group');
   preset_mainGrp.orientation = 'column';
   var presetDdl = preset_mainGrp.add('dropdownlist', [0, 0, 180, 10], []);
   var radGrp = preset_mainGrp.add('group');
@@ -293,13 +311,24 @@ function endPagePresetDialog() {
   var expRad02 = radGrp.add('radiobutton', undefined, 'extended ui');
   expRad02.helpTip = 'full editor';
 
-  var layout_mainGrp = w.add('group');
+	// =================
+	divider = wPreset.add('panel');
+	divider.alignment = 'fill';
+
+  var layout_mainGrp = wPreset.add('group');
   layout_mainGrp.orientation = 'column';
+  layout_mainGrp.alignChildren = 'left';
   layout_mainGrp.visible = false;
   layout_mainGrp.spacing = 8;
-  var layoutTxt = layout_mainGrp.add('statictext', undefined, '- LAYOUT -');
-  setTxtColor(layoutTxt, GNEWS_secColors[8]);
-  var modelo_layoutDdl = layout_mainGrp.add('dropdownlist', [0, 0, 180, 10], ['livre', 'programa', 'jornal']);
+  var layoutTxt = layout_mainGrp.add('statictext', undefined, 'layout:');
+  setTxtColor(layoutTxt, sTxtColor);
+  
+  var modelArray = [
+    'livre',
+    'programa',
+    'jornal'
+  ];
+  var modelo_layoutDdl = layout_mainGrp.add('dropdownlist', [0, 0, 180, 10], modelArray);
 
   var layoutGrp = layout_mainGrp.add('group');
   layoutGrp.orientation = 'stack';
@@ -341,29 +370,31 @@ function endPagePresetDialog() {
   var foto_layoutDdl = layoutGrp1.add('dropdownlist', [0, 0, 85, 10], []);
   var pattern_layoutDdl = layoutGrp2.add('dropdownlist', [0, 0, 85, 10], []);
 
-  var servico_mainGrp = w.add('group');
+	// =================
+	divider = wPreset.add('panel');
+	divider.alignment = 'fill';
+
+  var servico_mainGrp = wPreset.add('group');
   servico_mainGrp.orientation = 'column';
+  servico_mainGrp.alignChildren = 'left';
   servico_mainGrp.spacing = 8;
   servico_mainGrp.visible = false;
-  var servicoTxt = servico_mainGrp.add('statictext', undefined, '- SERVICO -');
-  setTxtColor(servicoTxt, GNEWS_secColors[8]);
+  var servicoTxt = servico_mainGrp.add('statictext', undefined, 'servico:');
+  setTxtColor(servicoTxt, sTxtColor);
 
+  var servicoArray = [
+    '- formato livre -',
+    '[dia]  [mes]  —  [hora]  [min]',
+    'DIA  [dia]  —  [hora]  [min]',
+    '[semana]  —  [hora]  [min]',
+    'MAIS  TARDE  —  [hora]  [min]',
+    'TODA  [semana]  —  [hora]  [min]',
+    'EM  [mes]',
+  ];
   var titulo_servico = servico_mainGrp.add('edittext', [0, 0, 180, 40], '', { multiline: true });
   var subtitulo_servico = servico_mainGrp.add('edittext', [0, 0, 180, 20], '');
   subtitulo_servico.visible = subtitulo_layout.value;
-  var formato_servicoDdl = servico_mainGrp.add(
-    'dropdownlist',
-    [0, 0, 180, 10],
-    [
-      '- formato livre -',
-      '[dia]  [mes]  —  [hora]  [min]',
-      'DIA  [dia]  —  [hora]  [min]',
-      '[semana]  —  [hora]  [min]',
-      'MAIS  TARDE  —  [hora]  [min]',
-      'TODA  [semana]  —  [hora]  [min]',
-      'EM  [mes]',
-    ]
-  );
+  var formato_servicoDdl = servico_mainGrp.add('dropdownlist', [0, 0, 180, 10], servicoArray);
 
   var servicoGrp = servico_mainGrp.add('group');
   servicoGrp.orientation = 'stack';
@@ -379,31 +410,46 @@ function endPagePresetDialog() {
   var data_servicoGrp = servicoGrp1.add('group');
   data_servicoGrp.orientation = 'stack';
   var dia_servicoGrp = data_servicoGrp.add('group');
-  var dia_servico = dia_servicoGrp.add('edittext', [0, 0, 40, 20], servico.dia);
+  var dia_servico = dia_servicoGrp.add('edittext', [0, 0, 40, 20], obj.servico_end_page.dia);
   var dia_servicoTxt = dia_servicoGrp.add('statictext', undefined, '[dia]');
   setTxtColor(dia_servicoTxt, GNEWS_mainColors2[3]);
-  var semana_servicoDdl = data_servicoGrp.add('dropdownlist', [0, 0, 85, 10], ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB', 'HOJE']);
-  semana_servicoDdl.selection = servico.semana - 1;
+  
+  var semana_servicoDdl = data_servicoGrp.add('dropdownlist', [0, 0, 85, 10], shortWeekArray);
+  semana_servicoDdl.selection = obj.servico_end_page.semana - 1;
   var hora_servicoGrp = servicoGrp1.add('group');
-  var hora_servico = hora_servicoGrp.add('edittext', [0, 0, 40, 20], servico.hora);
+  var hora_servico = hora_servicoGrp.add('edittext', [0, 0, 40, 20], obj.servico_end_page.hora);
   var hora_servicoTxt = hora_servicoGrp.add('statictext', undefined, '[hora]');
   setTxtColor(hora_servicoTxt, GNEWS_mainColors2[3]);
-  var mes_servicoDdl = servicoGrp2.add('dropdownlist', [0, 0, 85, 10], ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']);
-  mes_servicoDdl.selection = servico.mes - 1;
+  
+  var mes_servicoDdl = servicoGrp2.add('dropdownlist', [0, 0, 85, 10], shortMonthArray);
+  mes_servicoDdl.selection = obj.servico_end_page.mes - 1;
   var min_servicoGrp = servicoGrp2.add('group');
-  var min_servico = min_servicoGrp.add('edittext', [0, 0, 40, 20], servico.min);
+  var min_servico = min_servicoGrp.add('edittext', [0, 0, 40, 20], obj.servico_end_page.min);
   var min_servicoTxt = min_servicoGrp.add('statictext', undefined, '[min]');
   setTxtColor(min_servicoTxt, GNEWS_mainColors2[3]);
 
-  var aparencia_mainGrp = w.add('group');
+	// =================
+	divider = wPreset.add('panel');
+	divider.alignment = 'fill';
+
+  var aparencia_mainGrp = wPreset.add('group');
   aparencia_mainGrp.orientation = 'column';
+  aparencia_mainGrp.alignChildren = 'left';
   aparencia_mainGrp.spacing = 8;
   aparencia_mainGrp.visible = false;
-  var aparenciaTxt = aparencia_mainGrp.add('statictext', undefined, '- APARENCIA -');
-  setTxtColor(aparenciaTxt, GNEWS_secColors[8]);
+  var aparenciaTxt = aparencia_mainGrp.add('statictext', undefined, 'aparencia:');
+  setTxtColor(aparenciaTxt, sTxtColor);
   var tema_aparenciaGrp = aparencia_mainGrp.add('group');
   tema_aparenciaGrp.alignChildren = 'left';
-  var tema_aparenciaDdl = tema_aparenciaGrp.add('dropdownlist', [0, 0, 180, 10], ['claro', 'cinza', 'escuro', 'vermelho', '- cores livres -']);
+  
+  var themeArray = [
+		'claro',
+		'cinza',
+		'escuro',
+		'vermelho',
+		'- cores livres -',
+	];
+  var tema_aparenciaDdl = tema_aparenciaGrp.add('dropdownlist', [0, 0, 180, 10], themeArray);
 
   var aparenciaGrp = aparencia_mainGrp.add('group');
   aparenciaGrp.orientation = 'stack';
@@ -421,35 +467,35 @@ function endPagePresetDialog() {
   aparenciaGrp3.spacing = 2;
   aparenciaGrp3.alignment = 'right';
 
-  var logo_aparencia = aparenciaGrp1.add('statictext', undefined, '');
+  var logo_aparencia = aparenciaGrp1.add('statictext', undefined, '######');
   logo_aparencia.helpTip = 'logo';
   logo_aparencia.characters = 5;
-  var titulo_aparencia = aparenciaGrp1.add('statictext', undefined, '');
+  var titulo_aparencia = aparenciaGrp1.add('statictext', undefined, '######');
   titulo_aparencia.helpTip = 'titulo';
   titulo_aparencia.characters = 5;
-  var subtitulo_aparencia = aparenciaGrp1.add('statictext', undefined, '');
+  var subtitulo_aparencia = aparenciaGrp1.add('statictext', undefined, '######');
   subtitulo_aparencia.helpTip = 'subtitulo';
   subtitulo_aparencia.characters = 5;
-  var apoio_aparencia = aparenciaGrp2.add('statictext', undefined, '');
+  var apoio_aparencia = aparenciaGrp2.add('statictext', undefined, '######');
   apoio_aparencia.helpTip = 'apoio';
   apoio_aparencia.characters = 5;
-  var horario_aparencia = aparenciaGrp2.add('statictext', undefined, '');
+  var horario_aparencia = aparenciaGrp2.add('statictext', undefined, '######');
   horario_aparencia.helpTip = 'horario';
   horario_aparencia.characters = 5;
-  var horario_base_aparencia = aparenciaGrp2.add('statictext', undefined, '');
+  var horario_base_aparencia = aparenciaGrp2.add('statictext', undefined, '######');
   horario_base_aparencia.helpTip = 'horario base';
   horario_base_aparencia.characters = 5;
-  var footage_aparencia = aparenciaGrp3.add('statictext', undefined, '');
+  var footage_aparencia = aparenciaGrp3.add('statictext', undefined, '######');
   footage_aparencia.helpTip = 'footage';
   footage_aparencia.characters = 5;
-  var pattern_aparencia = aparenciaGrp3.add('statictext', undefined, '');
+  var pattern_aparencia = aparenciaGrp3.add('statictext', undefined, '######');
   pattern_aparencia.helpTip = 'pattern';
   pattern_aparencia.characters = 5;
-  var fundo_aparencia = aparenciaGrp3.add('statictext', undefined, '');
+  var fundo_aparencia = aparenciaGrp3.add('statictext', undefined, '######');
   fundo_aparencia.helpTip = 'fundo';
   fundo_aparencia.characters = 5;
 
-  var bGrp = w.add('group');
+  var bGrp = wPreset.add('group');
   bGrp.orientation = 'stack';
   bGrp.alignment = 'fill';
 
@@ -479,24 +525,24 @@ function endPagePresetDialog() {
   // value subtracted from the window height -> simple ui
   // var sHeight = 510;
 
-  w.onShow = function () {
-    w.size.height = 130;
-    bGrp.location[1] = 80;
+  wPreset.onShow = function () {
+    wPreset.size.height = 140;
+    bGrp.location[1] = 90;
     updateObjLayers();
     updateUi();
     getPresetNames();
   };
 
   expRad01.onClick = function () {
-    w.size.height = 130;
-    bGrp.location[1] = 80;
+    wPreset.size.height = 140;
+    bGrp.location[1] = 90;
     layout_mainGrp.visible = false;
     aparencia_mainGrp.visible = false;
     servico_mainGrp.visible = false;
   };
 
   expRad02.onClick = function () {
-    w.layout.layout(true);
+    wPreset.layout.layout(true);
     layout_mainGrp.visible = true;
     aparencia_mainGrp.visible = true;
     servico_mainGrp.visible = true;
@@ -504,28 +550,22 @@ function endPagePresetDialog() {
 
   foto_layoutDdl.onChange = function () {
     var sLayer = showLayer('comp_img apresentador', foto_layoutDdl);
-    layout.foto_layer = sLayer;
+    obj.layout_end_page.foto_layer = sLayer;
   };
 
   pattern_layoutDdl.onChange = function () {
     var sLayer = showLayer('comp_pattern', pattern_layoutDdl);
-    layout.pattern_layer = sLayer;
+    obj.layout_end_page.pattern_layer = sLayer;
   };
 
   presetDdl.onChange = function () {
     var fileName = presetDdl.selection.toString();
     var presetFile = new File(presetPath + '/' + fileName + '.json');
 
-    if (!presetFile.exists) {
-      return;
-    }
+    if (!presetFile.exists) return;
 
     var presetStr = readFile(presetFile);
     obj = defaultEndPageObj(JSON.parse(presetStr));
-
-    layout = obj.layout_end_page;
-    servico = obj.servico_end_page;
-    aparencia = obj.aparencia_end_page;
 
     updateCompColors();
     updateUi();
@@ -534,43 +574,66 @@ function endPagePresetDialog() {
     try {
       var aItem = app.project.activeItem;
       var titulo = titulo_servico.text;
-      aItem.layer('txt_titulo').property('ADBE Text Properties').property('ADBE Text Document').setValue(titulo);
+      aItem.layer('txt_titulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(titulo);
       var subtitulo = subtitulo_servico.text;
-      aItem.layer('txt_subtitulo').property('ADBE Text Properties').property('ADBE Text Document').setValue(subtitulo);
+      aItem.layer('txt_subtitulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(subtitulo);
       var hora = hora_servico.text.replace(/\D/g, '');
       hora = parseInt(hora);
       hora = hora < 23 ? hora : 23;
-      aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[hora]').setValue(hora);
+      aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[hora]')
+        .setValue(hora);
       var min = min_servico.text.replace(/\D/g, '');
       min = parseInt(min);
       min = min < 59 ? min : 59;
-      aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[min]').setValue(min);
+      aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[min]')
+        .setValue(min);
     } catch (error) { }
   };
 
   applyBtn.onClick = function () {
-    // alert('foi');
-    layout = obj.layout_end_page;
-    servico = obj.servico_end_page;
-    aparencia = obj.aparencia_end_page;
-
     updateCompColors();
     updateCompFx();
 
     try {
       var aItem = app.project.activeItem;
       var titulo = titulo_servico.text;
-      aItem.layer('txt_titulo').property('ADBE Text Properties').property('ADBE Text Document').setValue(titulo);
+      aItem.layer('txt_titulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(titulo);
       var subtitulo = subtitulo_servico.text;
-      aItem.layer('txt_subtitulo').property('ADBE Text Properties').property('ADBE Text Document').setValue(subtitulo);
+      aItem.layer('txt_subtitulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(subtitulo);
       var hora = hora_servico.text.replace(/\D/g, '');
       hora = parseInt(hora);
       hora = hora < 23 ? hora : 23;
-      aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[hora]').setValue(hora);
+      aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[hora]')
+        .setValue(hora);
       var min = min_servico.text.replace(/\D/g, '');
       min = parseInt(min);
       min = min < 59 ? min : 59;
-      aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[min]').setValue(min);
+      aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[min]')
+        .setValue(min);
     } catch (error) { }
   };
 
@@ -578,7 +641,7 @@ function endPagePresetDialog() {
     try {
       setCompFxIndex(this, 'layout', 'modelo');
     } catch (error) {
-      modelo_layoutDdl.selection = layout.modelo - 1;
+      modelo_layoutDdl.selection = obj.layout_end_page.modelo - 1;
     }
   };
 
@@ -587,7 +650,7 @@ function endPagePresetDialog() {
       setCompFxIndex(this, 'servico', 'formato');
       servicoUiVis();
     } catch (error) {
-      formato_servicoDdl.selection = servico.formato - 1;
+      formato_servicoDdl.selection = obj.servico_end_page.formato - 1;
       servicoUiVis();
     }
   };
@@ -597,7 +660,7 @@ function endPagePresetDialog() {
       setCompFxIndex(this, 'servico', 'mes');
       servicoUiVis();
     } catch (error) {
-      mes_servicoDdl.selection = servico.mes - 1;
+      mes_servicoDdl.selection = obj.servico_end_page.mes - 1;
     }
   };
 
@@ -605,7 +668,7 @@ function endPagePresetDialog() {
     try {
       setCompFxIndex(this, 'servico', 'semana');
     } catch (error) {
-      semana_servicoDdl.selection = servico.semana - 1;
+      semana_servicoDdl.selection = obj.servico_end_page.semana - 1;
     }
   };
 
@@ -613,18 +676,23 @@ function endPagePresetDialog() {
     try {
       var aItem = app.project.activeItem;
       var titulo = titulo_servico.text;
-      aItem.layer('txt_titulo').property('ADBE Text Properties').property('ADBE Text Document').setValue(titulo);
+      aItem.layer('txt_titulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(titulo);
     } catch (error) {
-      titulo_servico.text = servico.titulo;
+      titulo_servico.text = obj.servico_end_page.titulo;
     }
   };
 
   titulo_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
-      var titulo = aItem.layer('txt_titulo').property('ADBE Text Properties').property('ADBE Text Document');
-      servico.titulo = titulo.value;
-      titulo_servico.text = servico.titulo;
+      var titulo = aItem.layer('txt_titulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document');
+      obj.servico_end_page.titulo = titulo.value;
+      titulo_servico.text = obj.servico_end_page.titulo;
     } catch (error) { }
   };
 
@@ -632,18 +700,23 @@ function endPagePresetDialog() {
     try {
       var aItem = app.project.activeItem;
       var subtitulo = subtitulo_servico.text;
-      aItem.layer('txt_subtitulo').property('ADBE Text Properties').property('ADBE Text Document').setValue(subtitulo);
+      aItem.layer('txt_subtitulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(subtitulo);
     } catch (error) {
-      subtitulo_servico.text = servico.subtitulo;
+      subtitulo_servico.text = obj.servico_end_page.subtitulo;
     }
   };
 
   subtitulo_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
-      var subtitulo = aItem.layer('txt_subtitulo').property('ADBE Text Properties').property('ADBE Text Document');
-      servico.subtitulo = subtitulo.value;
-      subtitulo_servico.text = servico.subtitulo;
+      var subtitulo = aItem.layer('txt_subtitulo')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document');
+      obj.servico_end_page.subtitulo = subtitulo.value;
+      subtitulo_servico.text = obj.servico_end_page.subtitulo;
     } catch (error) { }
   };
 
@@ -654,11 +727,15 @@ function endPagePresetDialog() {
       dia = dia != '' ? dia : '1';
       dia = parseInt(dia);
       dia = dia < 31 ? dia : 31;
-      aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[dia]').setValue(dia);
+      aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[dia]')
+        .setValue(dia);
 
-      servico.dia = dia;
+      obj.servico_end_page.dia = dia;
     } catch (error) {
-      dia_servico.text = servico.dia;
+      dia_servico.text = obj.servico_end_page.dia;
     }
   };
 
@@ -669,18 +746,25 @@ function endPagePresetDialog() {
       hora = hora != '' ? hora : '0';
       hora = parseInt(hora);
       hora = hora < 23 ? hora : 23;
-      aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[hora]').setValue(hora);
+      aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[hora]')
+        .setValue(hora);
 
-      servico.hora = hora;
+      obj.servico_end_page.hora = hora;
     } catch (error) {
-      hora_servico.text = servico.hora;
+      hora_servico.text = obj.servico_end_page.hora;
     }
   };
 
   hora_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
-      var hora = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[hora]');
+      var hora = aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[hora]');
 
       hora_servico.text = hora.value;
     } catch (error) { }
@@ -689,7 +773,10 @@ function endPagePresetDialog() {
   dia_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
-      var dia = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[dia]');
+      var dia = aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[dia]');
 
       dia_servico.text = dia.value;
     } catch (error) { }
@@ -702,18 +789,25 @@ function endPagePresetDialog() {
       min = min != '' ? min : '0';
       min = parseInt(min);
       min = min < 59 ? min : 59;
-      aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[min]').setValue(min);
+      aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[min]')
+        .setValue(min);
 
-      servico.min = min;
+      obj.servico_end_page.min = min;
     } catch (error) {
-      min_servico.text = servico.min;
+      min_servico.text = obj.servico_end_page.min;
     }
   };
 
   min_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
-      var min = aItem.layer('ctrl_comp').property('ADBE Effect Parade').property('servico end page').property('[min]');
+      var min = aItem.layer('ctrl_comp')
+        .property('ADBE Effect Parade')
+        .property('servico end page')
+        .property('[min]');
 
       min_servico.text = min.value;
     } catch (error) { }
@@ -724,7 +818,7 @@ function endPagePresetDialog() {
       setCompFxIndex(this, 'aparencia', 'tema');
       updateUiColors();
     } catch (error) {
-      tema_aparenciaDdl.selection = aparencia.tema - 1;
+      tema_aparenciaDdl.selection = obj.aparencia_end_page.tema - 1;
     }
   };
 
@@ -734,12 +828,12 @@ function endPagePresetDialog() {
       subtitulo_servico.visible = val;
 
       if (!val) {
-        servico.subtitulo = 'SUBTÍTULO';
+        obj.servico_end_page.subtitulo = 'SUBTÍTULO';
         return;
       }
-      servico.subtitulo = subtitulo_servico.text;
+      obj.servico_end_page.subtitulo = subtitulo_servico.text;
     } catch (error) {
-      subtitulo_layout.value = layout.subtitulo;
+      subtitulo_layout.value = obj.layout_end_page.subtitulo;
     }
   };
 
@@ -749,12 +843,12 @@ function endPagePresetDialog() {
       foto_layoutDdl.enabled = val;
 
       if (!val) {
-        layout.foto_layer = '-------';
+        obj.layout_end_page.foto_layer = '-------';
         return;
       }
-      layout.foto_layer = foto_layoutDdl.selection;
+      obj.layout_end_page.foto_layer = foto_layoutDdl.selection;
     } catch (error) {
-      foto_layout.value = layout.foto;
+      foto_layout.value = obj.layout_end_page.foto;
     }
   };
 
@@ -762,7 +856,7 @@ function endPagePresetDialog() {
     try {
       var val = setCompLayoutFxValue(this, 'footage');
     } catch (error) {
-      footage_layout.value = layout.footage;
+      footage_layout.value = obj.layout_end_page.footage;
     }
   };
 
@@ -772,41 +866,41 @@ function endPagePresetDialog() {
       pattern_layoutDdl.enabled = val;
 
       if (!pattern_layout.value) {
-        layout.pattern_layer = '-------';
+        obj.layout_end_page.pattern_layer = '-------';
         return;
       }
-      layout.pattern_layer = pattern_layoutDdl.selection;
+      obj.layout_end_page.pattern_layer = pattern_layoutDdl.selection;
     } catch (error) {
-      pattern_layout.value = layout.pattern;
+      pattern_layout.value = obj.layout_end_page.pattern;
     }
   };
 
   refreshBtn.onClick = function () {
     presetDdl.selection = 0;
 
-    obj = buildFxObj();
-    defaultEndPageObj(obj); // adds a default data value if needed...
-
-    servico = obj.servico_end_page; // service data object...
-    layout = obj.layout_end_page; // layout data object...
-    aparencia = obj.aparencia_end_page; // color theme data object...
-
+    obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
     updateObjLayers();
+    
     updateUi();
     getPresetNames();
   };
 
   saveBtn.onClick = function () {
-    var fileName = titulo_servico.text.replace(/\s+/g, ' ').toLowerCase().trim();
+    obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
+    updateObjLayers();
+
+    var fileName = titulo_servico.text
+      .replace(/\s+/g, ' ')
+      .toLowerCase()
+      .trim();
+
     var filePath = presetPath + '/' + fileName + '.json';
     var presetStr = JSON.stringify(obj, null, '\t');
     saveFile(presetStr, filePath);
 
     var presetArray = getPresetNames();
 
-    if (presetArray.indexOf(fileName) < 0) {
-      return;
-    }
+    if (presetArray.indexOf(fileName) < 0) return;
 
     presetDdl.selection = presetArray.indexOf(fileName);
   };
@@ -815,5 +909,5 @@ function endPagePresetDialog() {
     openFolder(presetPath);
   };
 
-  w.show();
+  wPreset.show();
 }
