@@ -23,6 +23,8 @@ copyAMEPresetsBtn.addEventListener('click', function (c) {
   }
 });
 
+//---------------------------------------------------------
+
 copyAMEPresetsBtn.onClick = function () {
   // error...
   if (!netAccess()) {
@@ -58,6 +60,8 @@ copyAMEPresetsBtn.onClick = function () {
   }
   removeFolder(downFolder); // → delete temp folder
 };
+
+//---------------------------------------------------------
 
 installFontsBtn.onClick = function () {
   // error...

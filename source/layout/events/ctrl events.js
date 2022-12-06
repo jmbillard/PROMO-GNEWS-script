@@ -46,6 +46,8 @@ upHBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 dwnHBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -90,6 +92,8 @@ dwnHBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 nullShpBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -127,6 +131,8 @@ nullShpBtn.onClick = function () {
   }
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 nullCShpBtn.onClick = function () {
   var aItem = app.project.activeItem;

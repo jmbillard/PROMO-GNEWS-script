@@ -34,6 +34,8 @@ for (var i = 1; i < colorSubGrp3.children.length; i++) {
   };
 }
 
+//---------------------------------------------------------
+
 shpPalletBtn.onClick = function () {
   var aItem = app.project.activeItem;
   // error...
@@ -55,6 +57,8 @@ shpPalletBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 arrowOnAirBtn.onClick = function () {
   var aItem = app.project.activeItem;
   // error...
@@ -69,6 +73,8 @@ arrowOnAirBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 logoStaticBtn.onClick = function () {
   var aItem = app.project.activeItem;
   // error...
@@ -82,6 +88,8 @@ logoStaticBtn.onClick = function () {
 
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 logoAnim3sBtn.onClick = function () {
   var aItem = app.project.activeItem;

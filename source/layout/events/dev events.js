@@ -10,6 +10,8 @@ binBtn.onClick = function () {
   bin();
 };
 
+//---------------------------------------------------------
+
 zipTemplatesBtn.onClick = function () {
   // error...
   if (!netAccess()) {
@@ -39,6 +41,8 @@ zipTemplatesBtn.onClick = function () {
     openFolder(destPath);
   }
 };
+
+//---------------------------------------------------------
 
 zipFontsBtn.onClick = function () {
   // error...

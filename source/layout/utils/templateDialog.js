@@ -18,9 +18,11 @@ function templateDialog() {
   var previewScale = 0.25; // preview image scale factor...
   var fileFilter = ['.aep', '.aet']; // template files extensions...
 
-  var w = new Window('dialog', 'import options...');
+  //---------------------------------------------------------
+
+  var wTemplates = new Window('dialog', 'import options...');
   // main group...
-  var mainGrp = w.add('group');
+  var mainGrp = wTemplates.add('group');
   // left vertical group...
   var vGrp1 = mainGrp.add('group');
   vGrp1.orientation = 'column';
@@ -31,7 +33,9 @@ function templateDialog() {
   vGrp2.visible = false;
   var templateTree = vGrp1.add('treeview', [0, 0, 250, 340]);
   buildTree(templatesFolder, templateTree, fileFilter);
-  
+
+  //---------------------------------------------------------
+
   // buttons group...
   var bGrp = vGrp1.add('group');
   bGrp.orientation = 'stack';
@@ -54,10 +58,12 @@ function templateDialog() {
   var importBtn = bGrp2.add('button', undefined, 'import');
   importBtn.helpTip = 'import selected template';
   importBtn.enabled = false;
-  
+
+  //---------------------------------------------------------
+
   // preview...
   var pathTxt = vGrp2.add('statictext', undefined, '...');
-  pathTxt.characters = 40;
+  pathTxt.characters = 60;
   setTxtColor(pathTxt, GNEWS_mainColors2[3]);
   var previewImg = vGrp2.add('image', undefined, no_preview);
   previewImg.size = [1920 * previewScale, 1080 * previewScale];
@@ -75,14 +81,18 @@ function templateDialog() {
   info2Txt.characters = 40;
   setTxtColor(info2Txt, GNEWS_secColors[8]);
 
-  w.onShow = function () {
+  //---------------------------------------------------------
+
+  wTemplates.onShow = function () {
     expandNodes(templateTree); // expand all tree folder nodes...
-    oWidth = w.size.width; // window width with image preview...
+    oWidth = wTemplates.size.width; // window width with image preview...
     wWidth = oWidth - 490; // window width without image preview...
     vGrp2.visible = false; // → hide preview
-    w.size.width = wWidth; // → resize window
+    wTemplates.size.width = wWidth; // → resize window
   };
-  
+
+  //---------------------------------------------------------
+
   templateTree.onChange = function () {
     // node folders should not be selectable...
     if (templateTree.selection != null && templateTree.selection.type == 'node') {
@@ -91,7 +101,7 @@ function templateDialog() {
     importBtn.enabled = templateTree.selection != null; // → enable | disable import button
     if (templateTree.selection == null) {
       // nothing selected...
-      w.size.width = wWidth; // → resize window
+      wTemplates.size.width = wWidth; // → resize window
       vGrp2.visible = false; // → hide preview
       return;
     }
@@ -109,31 +119,33 @@ function templateDialog() {
 
     var templateFile = new File(templatesPath + '/' + templateName); // → template file object
     var previewImgFile = new File(templatesPath + '/' + imgName); // → preview image object
-    var infoFile = new File(templatesPath + '/' + infoName); // → info file object
+    // var infoFile = new File(templatesPath + '/' + infoName); // → info file object
 
     var fWidth = wWidth;
     var infoContent = ['...', '...']; // info placeholder text...
 
-    if (infoFile.exists) {
-      infoFile.open('r'); // → open file
-      infoFile.encoding = 'UTF-8'; // → file encoding
-      infoContent = infoFile
-        .read()
-        .toString()
-        .split(/[\n|\r]+/); // text content as array → ['line1', 'line2']
-    }
+    // if (infoFile.exists) {
+    //   infoFile.open('r'); // → open file
+    //   infoFile.encoding = 'UTF-8'; // → file encoding
+    //   infoContent = infoFile
+    //     .read()
+    //     .toString()
+    //     .split(/[\n|\r]+/); // text content as array → ['line1', 'line2']
+    // }
     if (previewImgFile.exists) {
       previewImg.image = previewImgFile; // → set preview image file
     } else {
       previewImg.image = no_preview; // → set image 'no preview available'
     }
     vGrp2.visible = true; // → show preview
-    w.size.width = oWidth; // → resize window
-    pathTxt.text = 'templates/' + templateName; // → 'templates/.../template name'
+    wTemplates.size.width = oWidth; // → resize window
+    pathTxt.text = limitNameSize(decodeURI(templateFile.fullName), 90); // → 'templates/.../template name'
     updateTxt.text = 'updated on: ' + templateFile.created.toString(); // → 'updated on: date and time'
     info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
     info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
   };
+
+  //---------------------------------------------------------
 
   importBtn.onClick = function () {
     var s = templateTree.selection; // → current selection
@@ -148,9 +160,11 @@ function templateDialog() {
     
     var IO = new ImportOptions(templateFile); // import options...
     app.project.importFile(IO); // → import template project
-    w.close(); // → close window
+    wTemplates.close(); // → close window
   };
-  
+
+  //---------------------------------------------------------
+
   downloadBtn.onClick = function () {
     //alert...
     if (!netAccess()) {
@@ -173,7 +187,7 @@ function templateDialog() {
     unzipContent(zipPath, templatesLocalPath); // → unzip file    
     removeFolder(downFolder); // → delete temp folder
     
-    // HO preference
+    // HO preference...
     if (!homeOffice) {
       removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
@@ -182,7 +196,9 @@ function templateDialog() {
     buildTree(templatesFolder, templateTree, fileFilter); // → update tree...
     expandNodes(templateTree); // expand all tree folder nodes...
   };
-  
+
+  //---------------------------------------------------------
+
   refreshBtn.onClick = function () {
     // alert...
     if (!netAccess()) {
@@ -192,6 +208,8 @@ function templateDialog() {
     buildTree(templatesFolder, templateTree, fileFilter); // → update tree
     expandNodes(templateTree); // expand all tree folder nodes...
   };
+
+  //---------------------------------------------------------
 
   openFldBtn.onClick = function () {
     // alert...
@@ -205,7 +223,7 @@ function templateDialog() {
   };
   //*/  
   
-  w.show();
+  wTemplates.show();
 }
 
 // templateDialog();
