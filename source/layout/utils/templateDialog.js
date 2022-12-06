@@ -15,7 +15,7 @@
 function templateDialog() {
   var wWidth; // window width without image preview...
   var oWidth; // window width with image preview...
-  var previewScale = 0.25; // preview image scale factor...
+  var previewScale = 0.3; // preview image scale factor...
   var fileFilter = ['.aep', '.aet']; // template files extensions...
 
   //---------------------------------------------------------
@@ -26,9 +26,16 @@ function templateDialog() {
   // left vertical group...
   var vGrp1 = mainGrp.add('group');
   vGrp1.orientation = 'column';
+  vGrp1.alignment = ['center', 'top'];
+
+  //---------------------------------------------------------
+
+	var divider = mainGrp.add('panel');
+	divider.alignment = 'fill';
   // preview vertical group...
   var vGrp2 = mainGrp.add('group');
   vGrp2.orientation = 'column';
+  vGrp2.alignment = ['center', 'top'];
   vGrp2.alignChildren = 'left';
   vGrp2.visible = false;
   var templateTree = vGrp1.add('treeview', [0, 0, 250, 340]);
@@ -71,23 +78,24 @@ function templateDialog() {
   updateTxt.characters = 40;
   setTxtColor(updateTxt, GNEWS_secColors[10]);
   // preview info...
-  var infoGrp = vGrp2.add('group');
-  infoGrp.orientation = 'column';
-  infoGrp.spacing = 3;
-  var info1Txt = infoGrp.add('statictext', undefined, '...');
-  info1Txt.characters = 40;
-  setTxtColor(info1Txt, GNEWS_secColors[8]);
-  var info2Txt = infoGrp.add('statictext', undefined, '...');
-  info2Txt.characters = 40;
-  setTxtColor(info2Txt, GNEWS_secColors[8]);
+  // var infoGrp = vGrp2.add('group');
+  // infoGrp.orientation = 'column';
+  // infoGrp.spacing = 3;
+  // var info1Txt = infoGrp.add('statictext', undefined, '...');
+  // info1Txt.characters = 40;
+  // setTxtColor(info1Txt, GNEWS_secColors[8]);
+  // var info2Txt = infoGrp.add('statictext', undefined, '...');
+  // info2Txt.characters = 40;
+  // setTxtColor(info2Txt, GNEWS_secColors[8]);
 
   //---------------------------------------------------------
 
   wTemplates.onShow = function () {
     expandNodes(templateTree); // expand all tree folder nodes...
     oWidth = wTemplates.size.width; // window width with image preview...
-    wWidth = oWidth - 490; // window width without image preview...
+    wWidth = oWidth - 600; // window width without image preview...
     vGrp2.visible = false; // → hide preview
+    divider.visible = false; // → hide preview
     wTemplates.size.width = wWidth; // → resize window
   };
 
@@ -103,6 +111,7 @@ function templateDialog() {
       // nothing selected...
       wTemplates.size.width = wWidth; // → resize window
       vGrp2.visible = false; // → hide preview
+      divider.visible = false; // → hide preview
       return;
     }
     // template selected...
@@ -122,7 +131,7 @@ function templateDialog() {
     // var infoFile = new File(templatesPath + '/' + infoName); // → info file object
 
     var fWidth = wWidth;
-    var infoContent = ['...', '...']; // info placeholder text...
+    // var infoContent = ['...', '...']; // info placeholder text...
 
     // if (infoFile.exists) {
     //   infoFile.open('r'); // → open file
@@ -138,11 +147,12 @@ function templateDialog() {
       previewImg.image = no_preview; // → set image 'no preview available'
     }
     vGrp2.visible = true; // → show preview
+    divider.visible = true; // → show preview
     wTemplates.size.width = oWidth; // → resize window
     pathTxt.text = limitNameSize(decodeURI(templateFile.fullName), 90); // → 'templates/.../template name'
     updateTxt.text = 'updated on: ' + templateFile.created.toString(); // → 'updated on: date and time'
-    info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
-    info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
+    // info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
+    // info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
   };
 
   //---------------------------------------------------------
