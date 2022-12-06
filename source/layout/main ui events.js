@@ -15,14 +15,21 @@
 w.onShow = function () {
   setLayout();
 };
+
+//---------------------------------------------------------
+
 // layouts all the UI
 w.onResizing = w.onResize = function () {
   setLayout();
 };
 
+//---------------------------------------------------------
+
 infoBtn.onClick = function () {
   openWebSite(repoURL + readme);
 };
+
+//---------------------------------------------------------
 
 ctrlBtn.onClick = function () {
   currentGrp.visible = false;
@@ -31,12 +38,16 @@ ctrlBtn.onClick = function () {
   openTab();
 };
 
+//---------------------------------------------------------
+
 animBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.animation;
   readme = '#--seção-animação-';
   openTab();
 };
+
+//---------------------------------------------------------
 
 fxBtn.onClick = function () {
   currentGrp.visible = false;
@@ -45,12 +56,16 @@ fxBtn.onClick = function () {
   openTab();
 };
 
+//---------------------------------------------------------
+
 txtBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.text;
   readme = '#--seção-texto-';
   openTab();
 };
+
+//---------------------------------------------------------
 
 guideBtn.onClick = function () {
   currentGrp.visible = false;
@@ -59,12 +74,16 @@ guideBtn.onClick = function () {
   openTab();
 };
 
+//---------------------------------------------------------
+
 toolBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.tools;
   readme = '#--subseção-ferramentas-';
   openTab();
 };
+
+//---------------------------------------------------------
 
 projBtn.onClick = function () {
   projName = getXMPdata('title[1]') == '' ? 'proj name' : getXMPdata('title[1]');
@@ -78,6 +97,8 @@ projBtn.onClick = function () {
   projNameTxt.text = projName;
 };
 
+//---------------------------------------------------------
+
 appBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.app;
@@ -85,11 +106,15 @@ appBtn.onClick = function () {
   openTab();
 };
 
+//---------------------------------------------------------
+
 devBtn.onClick = function () {
   currentGrp.visible = false;
   currentGrp = tabsGrp.dev;
   openTab();
 };
+
+//---------------------------------------------------------
 
 linksBtn.onClick = function () {
   currentGrp.visible = false;
@@ -151,6 +176,8 @@ findBtn.onClick = function () {
   findDialog();
 };
 
+//---------------------------------------------------------
+
 pngPreviewBtn.onClick = function () {
   var aItem = app.project.activeItem;
 
@@ -171,9 +198,13 @@ pngPreviewBtn.onClick = function () {
   openFolder(savePath);
 };
 
+//---------------------------------------------------------
+
 prefBtn.onClick = function () {
   prefsDialog();
 };
+
+//---------------------------------------------------------
 
 /* jshint ignore:start */
 #include 'events/animation events.js';
@@ -210,6 +241,8 @@ closeBtn.onClick = function () {
   hideTabs();
   setBgColor(w, bgColor);
 };
+
+//---------------------------------------------------------
 
 closeErrBtn.onClick = function () {
   GNEWS_LOGO.visible = true;
