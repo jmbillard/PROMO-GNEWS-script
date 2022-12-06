@@ -33,6 +33,7 @@ function endPagePresetDialog() {
 
         // get the first enabled layer...
         for (var l = 1; l <= patComp.numLayers; l++) {
+
           if (patComp.layer(l).enabled) {
             obj.layout_end_page.pattern_layer = patComp.layer(l).name; // first enabled layer → pattern layer name...
             break;
@@ -44,6 +45,7 @@ function endPagePresetDialog() {
 
         // get the first enabled layer...
         for (var f = 1; f <= fotoComp.numLayers; f++) {
+
           if (fotoComp.layer(f).name.match(/adj_/)) continue; // ignore adjustment layers...
 
           if (fotoComp.layer(f).enabled) {
@@ -124,14 +126,12 @@ function endPagePresetDialog() {
     var patternArray = getLayers('comp_pattern', pattern_layoutDrop);
     var p = patternArray.indexOf(pattern);
 
-    if (p >= 0) {
-      pattern_layoutDrop.selection = p; // → pattern index
-    }
+    if (p >= 0) pattern_layoutDrop.selection = p; // → pattern index
+
     var fotoArray = getLayers('comp_img apresentador', foto_layoutDrop);
     var f = fotoArray.indexOf(foto);
-    if (f >= 0) {
-      foto_layoutDrop.selection = f; // → photo index
-    }
+
+    if (f >= 0) foto_layoutDrop.selection = f; // → photo index
   }
 
   // update window ui controls..
@@ -306,6 +306,14 @@ function endPagePresetDialog() {
 
     return i;
   }
+  
+  /*
+  
+  ---------------------------------------------------------------
+  > UI...
+  ---------------------------------------------------------------
+  
+  */
 
   var wPreset = new Window('palette', 'end page preset...');
   var preset_mainGrp = wPreset.add('group');
@@ -729,7 +737,7 @@ function endPagePresetDialog() {
       var servico = aItem.layer('txt_data e horario')
         .property('ADBE Text Properties')
         .property('ADBE Text Document');
-        livre_servico.text = servico.value;
+      livre_servico.text = servico.value;
     } catch (error) { }
   };
 
