@@ -134,7 +134,7 @@ function templateDialog() {
 
   //---------------------------------------------------------
 
-  importBtn.onClick = function () {
+  importBtn.onClick = templateTree.onDoubleClick = function () {
     var s = templateTree.selection; // → current selection
     var fileName = s.toString();
     
