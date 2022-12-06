@@ -13,15 +13,17 @@
 // install fonts UI...
 function fontsDialog() {
   // UI definition...
-  var w = new Window('dialog', 'font options...');
+  var wFonts = new Window('dialog', 'font options...');
   // treeview...
-  var tree = w.add('treeview', [0, 0, 250, 380]);
+  var tree = wFonts.add('treeview', [0, 0, 250, 380]);
 
   // creates all the 'treeview nodes'...
   buildFontTree(fontsFolder, tree);
 
+  //---------------------------------------------------------
+
   // buttons group...
-  var bGrp = w.add('group');
+  var bGrp = wFonts.add('group');
   bGrp.orientation = 'stack';
   bGrp.alignment = 'fill';
   // left buttons group...
@@ -43,6 +45,8 @@ function fontsDialog() {
   installBtn.helpTip = 'install selected fonts';
   installBtn.enabled = false; // → disable install button
 
+  //---------------------------------------------------------
+
   tree.onChange = function () {
     // node folders should not be selectable...
     if (tree.selection != null && tree.selection.type == 'node') {
@@ -51,10 +55,14 @@ function fontsDialog() {
     installBtn.enabled = tree.selection != null; // → enable | disable install button
   };
 
+  //---------------------------------------------------------
+
   // expands every node from the start...
-  w.onShow = function () {
+  wFonts.onShow = function () {
     expandNodes(tree);
   };
+
+  //---------------------------------------------------------
 
   // font installation...
   installBtn.onClick = function () {
@@ -70,6 +78,8 @@ function fontsDialog() {
       installFonts(fontFamilyPath.toString());
     }
   };
+
+  //---------------------------------------------------------
 
   // download and merge/overwrite files on the preferences font folder...
   downloadBtn.onClick = function () {
@@ -101,6 +111,8 @@ function fontsDialog() {
     expandNodes(tree);
   };
 
+  //---------------------------------------------------------
+
   refreshBtn.onClick = function () {
     // alert...
     if (!netAccess()) {
@@ -110,6 +122,8 @@ function fontsDialog() {
     buildFontTree(fontsFolder, tree);
     expandNodes(tree);
   };
+
+  //---------------------------------------------------------
 
   openFldBtn.onClick = function () {
     // alert...
@@ -123,5 +137,5 @@ function fontsDialog() {
     openFolder(fontsPath);
   };
 
-  w.show();
+  wFonts.show();
 }

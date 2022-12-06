@@ -16,11 +16,12 @@ function prefsDialog() {
 	var txtSize = [90, 20];
 	var dropSize = [85, 20];
 
+  //---------------------------------------------------------
+
 	var wPref = new Window('dialog', 'script preferences...');
 	wPref.alignChildren = ['left', 'top'];
 	wPref.spacing = 10;
 
-	// =====
 	var userGrp = wPref.add('group');
 	userGrp.spacing = 2;
 
@@ -32,11 +33,11 @@ function prefsDialog() {
 	projUserTxt.preferredSize = dropSize;
 	projUserTxt.helpTip = 'user prefix';
 
-	// =================
+  //---------------------------------------------------------
+
 	var divider0 = wPref.add('panel');
 	divider0.alignment = 'fill';
 
-	// ========
 	var layerGrp = wPref.add('group');
 	layerGrp.orientation = 'column';
 	layerGrp.alignChildren = ['left', 'center'];
@@ -45,7 +46,6 @@ function prefsDialog() {
 	var layerGrpTxt = layerGrp.add('statictext', undefined, 'layer types:');
 	setTxtColor(layerGrpTxt, sTxtColor);
 
-	// =======
 	var nullGrp = layerGrp.add('group');
 	nullGrp.spacing = 0;
 
@@ -57,7 +57,6 @@ function prefsDialog() {
 	nullTypeDrop.selection = nullType;
 	nullTypeDrop.preferredSize = dropSize;
 
-	// ======
 	var adjGrp = layerGrp.add('group');
 	adjGrp.spacing = 0;
 
@@ -69,11 +68,11 @@ function prefsDialog() {
 	adjTypeDrop.selection = adjType;
 	adjTypeDrop.preferredSize = dropSize;
 
-	// =================
+  //---------------------------------------------------------
+
 	var divider1 = wPref.add('panel');
 	divider1.alignment = 'fill';
 
-	// ==========
 	var projectGrp = wPref.add('group');
 	projectGrp.orientation = 'column';
 	projectGrp.alignChildren = ['left', 'center'];
@@ -82,7 +81,6 @@ function prefsDialog() {
 	var projectGrpTxt = projectGrp.add('statictext', undefined, 'project:');
 	setTxtColor(projectGrpTxt, sTxtColor);
 
-	// ======
 	var orgGrp = projectGrp.add('group');
 	orgGrp.spacing = 0;
 
@@ -94,11 +92,12 @@ function prefsDialog() {
 	projectModeDrop.selection = projectMode;
 	projectModeDrop.preferredSize = dropSize;
 
-	// =================
+
+  //---------------------------------------------------------
+
 	var divider2 = wPref.add('panel');
 	divider2.alignment = 'fill';
 
-	// ========
 	var themeGrp = wPref.add('group');
 	themeGrp.orientation = 'column';
 	themeGrp.alignChildren = ['left', 'center'];
@@ -107,7 +106,6 @@ function prefsDialog() {
 	var themeGrpTxt = themeGrp.add('statictext', undefined, 'theme:');
 	setTxtColor(themeGrpTxt, sTxtColor);
 
-	// ============
 	var iconThemeGrp = themeGrp.add('group');
 	iconThemeGrp.spacing = 20;
 	iconThemeGrp.margins = [0, 8, 0, 4];
@@ -121,7 +119,6 @@ function prefsDialog() {
 	darkRdo.helpTip = 'icon theme';
 	darkRdo.enabled = false;
 
-	// ============
 	var tabColorsGrp = themeGrp.add('group');
 	tabColorsGrp.spacing = 2;
 
@@ -138,11 +135,11 @@ function prefsDialog() {
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
 
-	// =================
+  //---------------------------------------------------------
+
 	var divider3 = wPref.add('panel');
 	divider3.alignment = 'fill';
 
-	// =====
 	var hoGrp = wPref.add('group');
 	hoGrp.spacing = 28;
 
@@ -154,7 +151,8 @@ function prefsDialog() {
 	hoCkb.preferredSize.height = 18;
 	hoCkb.value = homeOffice;
 
-	// =================
+  //---------------------------------------------------------
+
 	var divider4 = wPref.add('panel');
 	divider4.alignment = 'fill';
 
@@ -167,7 +165,6 @@ function prefsDialog() {
 	var networkGrpTxt = networkGrp.add('statictext', undefined, 'network:');
 	setTxtColor(networkGrpTxt, sTxtColor);
 
-	// =======
 	var fldGrp1 = networkGrp.add('group');
 	fldGrp1.spacing = 15;
 
@@ -178,7 +175,6 @@ function prefsDialog() {
 	var fldMagBtn = fldGrp1.add('iconbutton', undefined, magazineFolderIcon, { style: 'toolbutton' });
 	fldMagBtn.helpTip = 'map folder';
 
-	// =======
 	var fldGrp2 = networkGrp.add('group');
 	fldGrp2.spacing = 15;
 
@@ -189,11 +185,11 @@ function prefsDialog() {
 	var fldArteBtn = fldGrp2.add('iconbutton', undefined, arteFolderIcon, { style: 'toolbutton' });
 	fldArteBtn.helpTip = 'map folder';
 
-	// =================
+  //---------------------------------------------------------
+
 	var divider5 = wPref.add('panel');
 	divider5.alignment = 'fill';
 
-	// ======
 	var btnGrp = wPref.add('group');
 	btnGrp.orientation = 'stack';
 	btnGrp.alignment = 'fill';
@@ -222,7 +218,7 @@ function prefsDialog() {
 	/*
 
 	---------------------------------------------------------------
-	> ⚙️ preferences tab events
+	> ⚙️ preferences events
 	---------------------------------------------------------------
 
 	*/
@@ -231,12 +227,16 @@ function prefsDialog() {
 		alert(wip);
 	};
 
+  //---------------------------------------------------------
+
 	devTogBtn.onClick = function () {
 		devMode = this.value;
 		JSONPrefsObj.devMode = devMode;
 		devBtn.enabled = devBtn.visible = devMode;
 		savePrefs(); // → save preferences.json
 	};
+
+  //---------------------------------------------------------
 
 	resetBtn.onClick = function () {
 		JSONPrefsObj = defPrefsObj;
@@ -260,6 +260,8 @@ function prefsDialog() {
 		alert('done!');
 	};
 
+  //---------------------------------------------------------
+
 	openFldBtn.onClick = function () {
 		// alert...
 		if (!netAccess()) {
@@ -271,6 +273,8 @@ function prefsDialog() {
 		openFolder(scriptPreferencesPath);
 	};
 
+  //---------------------------------------------------------
+
 	projUserTxt.onChange = projUserTxt.onEnterKey = function () {
 		this.text = this.text.toUpperCase();
 		userPrefix = this.text;
@@ -278,11 +282,15 @@ function prefsDialog() {
 		savePrefs(); // → save preferences.json
 	};
 
+  //---------------------------------------------------------
+
 	nullTypeDrop.onChange = function () {
 		nullType = this.selection.index; // selected null type...
 		JSONPrefsObj.selection.nullType = nullType; // update preferences object...
 		savePrefs(); // → save preferences.json
 	};
+
+  //---------------------------------------------------------
 
 	adjTypeDrop.onChange = function () {
 		adjType = this.selection.index; // selected adj type...
@@ -290,17 +298,23 @@ function prefsDialog() {
 		savePrefs(); // → save preferences.json
 	};
 
+  //---------------------------------------------------------
+
 	projectModeDrop.onChange = function () {
 		projectMode = this.selection.index; // selected project model...
 		JSONPrefsObj.selection.projectMode = projectMode; // update preferences object...
 		savePrefs(); // → save preferences.json
 	};
 
+  //---------------------------------------------------------
+
 	colorDrop.onChange = function () {
 		var c = tabColors[this.selection.index]; // selected tab color...
 		setBtnColor(tabColorBtn, c); // update color preview swatch...
 		tabColorBtn.notify('onDraw'); // force ui update...
 	};
+
+  //---------------------------------------------------------
 
 	tabColorBtn.onClick = function () {
 		var c = tabColors[colorDrop.selection.index]; // selected tab color...
@@ -319,6 +333,8 @@ function prefsDialog() {
 		}
 	};
 
+  //---------------------------------------------------------
+
 	// configure 'MAM - magazine' path...
 	fldMagBtn.onClick = function () {
 		// error...
@@ -334,6 +350,8 @@ function prefsDialog() {
 			savePrefs();
 		}
 	};
+
+  //---------------------------------------------------------
 
 	// configure 'MAM - para arte' path...
 	fldArteBtn.onClick = function () {
@@ -351,6 +369,8 @@ function prefsDialog() {
 		}
 	};
 
+  //---------------------------------------------------------
+
 	// right click -> opens the git repo...
 	updateBtn.addEventListener('click', function (c) {
 		if (c.button == 2) {
@@ -362,6 +382,8 @@ function prefsDialog() {
 			openWebSite(repoURL); // → launch internet browser
 		}
 	});
+
+  //---------------------------------------------------------
 
 	updateBtn.onClick = function () {
 		// error...
@@ -397,6 +419,8 @@ function prefsDialog() {
 		showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
 		wPref.close();
 	};
+
+  //---------------------------------------------------------
 
 	hoCkb.onClick = function () {
 		homeOffice = hoCkb.value;

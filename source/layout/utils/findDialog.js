@@ -15,12 +15,12 @@ function findDialog() {
   w.spacing = 5;
   w.margins = 0;
 
-  // =============
+  //---------------------------------------------------------
+
   var searchMainGrp = w.add('group');
   searchMainGrp.orientation = 'column';
   searchMainGrp.alignChildren = ['center', 'top'];
 
-  // ========
   var inputGrp = searchMainGrp.add('group');
   inputGrp.spacing = 0;
   inputGrp.margins = 8;
@@ -30,24 +30,23 @@ function findDialog() {
   var findBtn = inputGrp.add('iconbutton', undefined, findIcon, { style: 'toolbutton' });
   findBtn.helpTip = 'find';
 
-  // ==========
+  //---------------------------------------------------------
+
   var optMainGrp = searchMainGrp.add('group');
   optMainGrp.spacing = 15;
 
-  // =======
   var optGrp5 = optMainGrp.add('group');
   optGrp5.alignChildren = ['center', 'top'];
   optGrp5.spacing = 2;
 
   var optCkb5 = optGrp5.add('checkbox');
   optCkb5.value = true;
-  //optCkb5.enabled = false;
 
   var optIco5 = optGrp5.add('image', undefined, eyeOpenLabelIcon);
-  //var optTxt5 = optGrp5.add('statictext', undefined, '>_<');
   optCkb5.helpTip = optIco5.helpTip = 'only visible layers';
 
-  // =======
+  //---------------------------------------------------------
+
   var optGrp1 = optMainGrp.add('group');
   optGrp1.alignChildren = ['center', 'top'];
   optGrp1.spacing = 2;
@@ -58,7 +57,8 @@ function findDialog() {
   var optTxt1 = optGrp1.add('statictext', undefined, 'Tt');
   optCkb1.helpTip = optTxt1.helpTip = 'match case';
 
-  // =======
+  //---------------------------------------------------------
+
   var optGrp2 = optMainGrp.add('group');
   optGrp2.alignChildren = ['center', 'top'];
   optGrp2.spacing = 2;
@@ -69,7 +69,8 @@ function findDialog() {
   var optTxt2 = optGrp2.add('statictext', undefined, 'àê');
   optCkb2.helpTip = optTxt2.helpTip = 'match accentuation';
 
-  // =======
+  //---------------------------------------------------------
+
   var optGrp4 = optMainGrp.add('group');
   optGrp4.alignChildren = ['center', 'top'];
   optGrp4.spacing = 2;
@@ -80,7 +81,8 @@ function findDialog() {
   var optTxt4 = optGrp4.add('statictext', undefined, '!=');
   optCkb4.helpTip = optTxt4.helpTip = 'results will not include the search keyword';
 
-  // =======
+  //---------------------------------------------------------
+
   var optGrp3 = optMainGrp.add('group');
   optGrp3.alignChildren = ['center', 'top'];
   optGrp3.spacing = 2;
@@ -90,20 +92,22 @@ function findDialog() {
 
   var optTxt3 = optGrp3.add('statictext', undefined, 'RegExp');
   optCkb3.helpTip = optTxt3.helpTip = 'use regular expression';
-  
+
+  //---------------------------------------------------------
+
   var infoBtn = optMainGrp.add('iconbutton', undefined, infoIcon, { style: 'toolbutton' });
   infoBtn.helpTip = 'Help | README';
 
-  // =========
   var resultGrp = w.add('group');
 
   var findPb = w.add('progressbar', [0, 0, 305, 5], undefined);
   findPb.value = 100;
 
-  // ==========
   var resultTree = w.add('treeview', [0, 0, 320, 0]);
   resultTree.visible = false;
   var resultArray = [];
+
+  //---------------------------------------------------------
 
   findEdTxt.onEnterKey = findBtn.onClick = function () {
     // starting timer...
@@ -118,7 +122,6 @@ function findDialog() {
       w.text = 'find...';
       return;
     }
-
     var optObj = {
       sKey: sKey,
       vis: optCkb5.value,
@@ -127,7 +130,6 @@ function findDialog() {
       regExp: optCkb3.value,
       invert: optCkb4.value,
     };
-
     var selArray = getComps(); // → [all comps]
     findTree = buildFindTree(resultTree, optObj, selArray, findPb); // → [filtered comps]
     resultArray = findTree.resultArray; // → [filtered comps]
@@ -144,9 +146,13 @@ function findDialog() {
     w.layout.layout(true);
   };
 
+  //---------------------------------------------------------
+
   optCkb3.onClick = function () {
     optCkb1.enabled = optCkb2.enabled = !optCkb3.value;
   };
+
+  //---------------------------------------------------------
 
   resultTree.onChange = function () {
     var comp;
@@ -187,6 +193,8 @@ function findDialog() {
     comp.openInViewer();
     comp.time = t;
   };
+
+  //---------------------------------------------------------
 
   infoBtn.onClick = function() {
   

@@ -132,15 +132,11 @@ function installFonts(fontsPath) {
 	var filesArray = [];
 	var filter = ['.ttf', '.otf'];
 
-	if (!srcFolder.exists) {
-		return;
-	}
+	if (!srcFolder.exists) return;
 
 	filesArray = srcFolder.getFiles();
 
-	if (filesArray.length == 0) {
-		return;
-	}
+	if (filesArray.length == 0) return;
 
 	var installFontsPS =
 		"Write-Host '------------- PROMO GNEWS script -------------'";
@@ -156,10 +152,8 @@ function installFonts(fontsPath) {
 		var subArray = [];
 
 		try {
-			subArray = new Folder(
-				decodeURI(aFile.fullName).toString()
-			).getFiles();
-		} catch (error) {}
+			subArray = new Folder(decodeURI(aFile.fullName).toString()).getFiles();
+		} catch (error) { }
 
 		if (subArray.length > 0) {
 			installFonts(decodeURI(aFile.fullName).toString());
@@ -167,10 +161,7 @@ function installFonts(fontsPath) {
 			continue;
 		} else {
 			if (filter.indexOf(getFileExt(aFileName)) >= 0) {
-				var aFontPath = fontsPath.replace(
-					/\~/,
-					'C:/Users/' + system.userName.toString()
-				);
+				var aFontPath = fontsPath.replace(/\~/, 'C:/Users/' + system.userName.toString());
 				aFontPath = aFontPath.replace(/\//g, '\\');
 				installFontsPS +=
 					"$Destination.CopyHere('" +
@@ -185,8 +176,7 @@ function installFonts(fontsPath) {
 			}
 		}
 	}
-	var cmdStr =
-		'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
+	var cmdStr = 'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
 	system.callSystem(cmdStr);
 }
 
@@ -249,7 +239,7 @@ function removeFolder(folder) {
 	var files = folder.getFiles();
 
 	for (var n = 0; n < files.length; n++) {
-		
+
 		if (files[n] instanceof File) {
 			files[n].remove();
 		} else {
@@ -279,11 +269,11 @@ function copyFolderContent(src, dst) {
 
 		try {
 			if (aFile instanceof Folder) subArray = aFile.getFiles();
-		} catch (error) {}
+		} catch (error) { }
 
 		if (subArray.length > 0) {
 			copyFolderContent(decodeURI(aFile.fullName).toString(), dst);
-		
+
 		} else {
 
 			if (!dstFolder.exists) continue;
@@ -316,6 +306,7 @@ function saveFile(fileContent, filePath) {
 	var newFile = new File(filePath);
 
 	newFile.open('w');
+	newFile.encoding = 'UTF-8'; // → file encoding
 	newFile.write(fileContent);
 	newFile.close();
 
@@ -352,7 +343,7 @@ function createPresetFile(tempFld, fileName, strCode) {
 		exportFile(aFile, strCode);
 
 		return aFile;
-	} catch (error) {}
+	} catch (error) { }
 }
 
 // copy all fonts used in the project...
@@ -362,29 +353,29 @@ function fontCollect(savePath) {
 	var fontArray = []; // copied fonts array...
 	var failArray = []; // failed copy array...
 	var compArray = getComps(); // all project comps...
-	
+
 	if (!saveFolder.exists) saveFolder.create();
 
 	for (var c = 0; c < compArray.length; c++) {
 		var comp = compArray[c]; // current comp...
-		
+
 		for (var l = 1; l <= comp.numLayers; l++) {
 			var aLayer = comp.layer(l); // current layer...
-			
+
 			if (!(aLayer instanceof TextLayer)) continue;
 			// current text layer...
 			var textDoc = aLayer
-			.property('ADBE Text Properties')
-			.property('ADBE Text Document').value;
+				.property('ADBE Text Properties')
+				.property('ADBE Text Document').value;
 			var fontName = textDoc.font; // font name...
 			var fontSrcFile = new File(decodeURI(textDoc.fontLocation)); // font file...
-			
+
 			if (!fontSrcFile.exists) {
 				if (failArray.indexOf(fontName) < 0) failArray.push(fontName); // no font file...
 				continue;
 			}
 			if (fontArray.indexOf(fontName) > 0) continue; // already copied...
-			
+
 			var fontCopyFile = new File(savePath + '/' + fontSrcFile.displayName);
 
 			fontArray.push(fontName);
@@ -393,6 +384,6 @@ function fontCollect(savePath) {
 		}
 	}
 	if (fontArray == []) saveFolder.remove();
-	
+
 	if (failArray != []) alert(failArray.toString() + ' cant be copied');
 }
