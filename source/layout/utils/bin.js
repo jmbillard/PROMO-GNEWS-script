@@ -500,9 +500,9 @@ function bin(thisObj) {
               fileName = File.decode(fileName.substring(0, fileName.length - 4))
                 .replaceSpecialCharacters();
               fileName = (fileName.split(/\s/).length > 1) ? fileName.toCamelCase() : fileName;
-              codeTxt += '\nvar ' + fileName + ' = ' + convertToBinary(fileObj) + ';\n';
+              codeTxt += '\nvar ' + fileName + ' = ' + fileToBinary(fileObj) + ';\n';
 
-              codeArray.push(convertToBinary(fileObj));
+              codeArray.push(fileToBinary(fileObj));
               prgBar.value = (i + 1) / fileArray.length * 100;
             }
             nameTxt = File.decode(nameTxt.substring(0, nameTxt.length - 2));
@@ -568,7 +568,7 @@ function bin(thisObj) {
         fileExpObj = File.saveDialog('export...', fileTypesArray);
 
         if (fileExpObj != null) {
-          exportFile(fileExpObj, edtText.text);
+          writeFileContent(fileExpObj, edtText.text);
         }
       }
       prgBar.value = 100;

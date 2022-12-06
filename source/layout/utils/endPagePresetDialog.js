@@ -591,7 +591,7 @@ function endPagePresetDialog() {
 
     if (!presetFile.exists) return;
 
-    var presetStr = readFile(presetFile);
+    var presetStr = readFileContent(presetFile);
     obj = defaultEndPageObj(JSON.parse(presetStr));
 
     uiToComp_colors();
@@ -1004,7 +1004,7 @@ function endPagePresetDialog() {
 
     var filePath = presetPath + '/' + fileName + '.json';
     var presetStr = JSON.stringify(obj, null, '\t');
-    saveFile(presetStr, filePath);
+    saveTextFile(presetStr, filePath);
 
     var presetArray = getPresetNames();
 

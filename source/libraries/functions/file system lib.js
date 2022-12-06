@@ -264,7 +264,7 @@ function copyFolderContent(src, dst) {
 
 */
 
-function readFile(file) {
+function readFileContent(file) {
 	var fileContent;
 
 	file.open('r');
@@ -274,14 +274,14 @@ function readFile(file) {
 	return fileContent;
 }
 
-function saveFile(fileContent, filePath) {
+function saveTextFile(fileContent, filePath) {
 	var newFile = new File(filePath);
 
 	newFile.encoding = 'UTF-8'; // → file encoding
-	return exportFile(newFile, fileContent);
+	return writeFileContent(newFile, fileContent);
 }
 
-function convertToBinary(aFile) {
+function fileToBinary(aFile) {
 	aFile.open('r');
 	aFile.encoding = 'binary';
 
@@ -297,7 +297,7 @@ function convertToBinary(aFile) {
 		.replace(/[\"]+$/, "'");
 }
 
-function exportFile(newFile, fileContent) {
+function writeFileContent(newFile, fileContent) {
 	newFile.open('w');
 	newFile.write(fileContent);
 	newFile.close();
@@ -310,7 +310,7 @@ function createPresetFile(tempFld, fileName, strCode) {
 		var aFile = new File(tempFld + '/' + fileName);
 
 		aFile.encoding = 'BINARY';
-		exportFile(aFile, strCode);
+		writeFileContent(aFile, strCode);
 
 		return aFile;
 	} catch (error) { }
