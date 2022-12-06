@@ -55,14 +55,7 @@ function getURLContent(urlArray, dstArray) {
 			// current action description...
 			cmd += "Write-Host '> downloading " + fileName + "...';";
 			// downloads file...
-			cmd +=
-				"curl '" +
-				urlArray[i] +
-				"' -OutFile '" +
-				dstArray[i] +
-				'/' +
-				fileName +
-				"';";
+			cmd += "curl '" + urlArray[i] + "' -OutFile '" + dstArray[i] + '/' + fileName + "';";
 		}
 		// pass the powershell command → cmd...
 		var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
@@ -80,18 +73,12 @@ function unzipContent(zipPath, dstPath) {
 
 		// powershell command string...
 		// header...
-		var cmd =
-			"Write-Host '------------- PROMO GNEWS script -------------'";
+		var cmd = "Write-Host '------------- PROMO GNEWS script -------------'";
 		cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
 		// current action description...
 		cmd += "Write-Host '> extracting " + fileName + "...';";
 		// unzip file...
-		cmd +=
-			"Expand-Archive -Path '" +
-			zipPath +
-			"' -DestinationPath '" +
-			dstPath +
-			"'  -Force;";
+		cmd += "Expand-Archive -Path '" + zipPath + "' -DestinationPath '" + dstPath + "'  -Force;";
 		// pass the powershell command thru cmd...
 		var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 
@@ -108,17 +95,12 @@ function zipContent(path, zipPath) {
 
 		// powershell command string...
 		// header...
-		var cmd =
-			"Write-Host '------------- PROMO GNEWS script -------------'";
+		var cmd = "Write-Host '------------- PROMO GNEWS script -------------'";
 		cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
 		// current action description...
 		cmd += "Write-Host '> compressing " + fileName + "...';";
 		// zip file...
-		cmd +=
-			"Compress-Archive -Path '" +
-			path +
-			"' -DestinationPath '" +
-			zipPath;
+		cmd += "Compress-Archive -Path '" + path + "' -DestinationPath '" + zipPath;
 		cmd += "' -CompressionLevel Optimal -Force;";
 		// pass the powershell command thru cmd...
 		var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
@@ -138,13 +120,10 @@ function installFonts(fontsPath) {
 
 	if (filesArray.length == 0) return;
 
-	var installFontsPS =
-		"Write-Host '------------- PROMO GNEWS script -------------'";
-	installFontsPS +=
-		' -ForegroundColor white -BackgroundColor DarkRed;';
+	var installFontsPS = "Write-Host '------------- PROMO GNEWS script -------------'";
+	installFontsPS += ' -ForegroundColor white -BackgroundColor DarkRed;';
 	installFontsPS += "Write-Host '                (u.u )...zzz';";
-	installFontsPS +=
-		'$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14);';
+	installFontsPS += '$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14);';
 
 	for (var i = 0; i < filesArray.length; i++) {
 		var aFile = filesArray[i];
@@ -160,20 +139,13 @@ function installFonts(fontsPath) {
 
 			continue;
 		} else {
+
 			if (filter.indexOf(getFileExt(aFileName)) >= 0) {
 				var aFontPath = fontsPath.replace(/\~/, 'C:/Users/' + system.userName.toString());
 				aFontPath = aFontPath.replace(/\//g, '\\');
-				installFontsPS +=
-					"$Destination.CopyHere('" +
-					aFontPath +
-					'\\' +
-					aFileName +
-					"');";
-				installFontsPS +=
-					"Write-Host '> installing " + aFileName + "...';";
-			} else {
-				continue;
-			}
+				installFontsPS += "$Destination.CopyHere('" + aFontPath + '\\' + aFileName + "');";
+				installFontsPS += "Write-Host '> installing " + aFileName + "...';";
+			} else continue;
 		}
 	}
 	var cmdStr = 'cmd.exe /c powershell.exe -c "' + installFontsPS + '"';
