@@ -77,16 +77,6 @@ function templateDialog() {
   var updateTxt = vGrp2.add('statictext', undefined, '...');
   updateTxt.characters = 40;
   setTxtColor(updateTxt, GNEWS_secColors[10]);
-  // preview info...
-  // var infoGrp = vGrp2.add('group');
-  // infoGrp.orientation = 'column';
-  // infoGrp.spacing = 3;
-  // var info1Txt = infoGrp.add('statictext', undefined, '...');
-  // info1Txt.characters = 40;
-  // setTxtColor(info1Txt, GNEWS_secColors[8]);
-  // var info2Txt = infoGrp.add('statictext', undefined, '...');
-  // info2Txt.characters = 40;
-  // setTxtColor(info2Txt, GNEWS_secColors[8]);
 
   //---------------------------------------------------------
 
@@ -130,17 +120,6 @@ function templateDialog() {
     var previewImgFile = new File(templatesPath + '/' + imgName); // → preview image object
     // var infoFile = new File(templatesPath + '/' + infoName); // → info file object
 
-    var fWidth = wWidth;
-    // var infoContent = ['...', '...']; // info placeholder text...
-
-    // if (infoFile.exists) {
-    //   infoFile.open('r'); // → open file
-    //   infoFile.encoding = 'UTF-8'; // → file encoding
-    //   infoContent = infoFile
-    //     .read()
-    //     .toString()
-    //     .split(/[\n|\r]+/); // text content as array → ['line1', 'line2']
-    // }
     if (previewImgFile.exists) {
       previewImg.image = previewImgFile; // → set preview image file
     } else {
@@ -151,8 +130,6 @@ function templateDialog() {
     wTemplates.size.width = oWidth; // → resize window
     pathTxt.text = limitNameSize(decodeURI(templateFile.fullName), 90); // → 'templates/.../template name'
     updateTxt.text = 'updated on: ' + templateFile.created.toString(); // → 'updated on: date and time'
-    // info1Txt.text = '>> ' + infoContent[0]; // → '>> info line 1'
-    // info2Txt.text = '>> ' + infoContent[1]; // → '>> info line 2'
   };
 
   //---------------------------------------------------------
