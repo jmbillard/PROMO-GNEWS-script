@@ -277,12 +277,8 @@ function readFile(file) {
 function saveFile(fileContent, filePath) {
 	var newFile = new File(filePath);
 
-	newFile.open('w');
 	newFile.encoding = 'UTF-8'; // → file encoding
-	newFile.write(fileContent);
-	newFile.close();
-
-	return newFile;
+	return exportFile(newFile, fileContent);
 }
 
 function convertToBinary(aFile) {
@@ -301,10 +297,12 @@ function convertToBinary(aFile) {
 		.replace(/[\"]+$/, "'");
 }
 
-function exportFile(outFile, strCode) {
-	outFile.open('w');
-	outFile.write(strCode);
-	outFile.close();
+function exportFile(newFile, fileContent) {
+	newFile.open('w');
+	newFile.write(fileContent);
+	newFile.close();
+
+	return newFile;
 }
 
 function createPresetFile(tempFld, fileName, strCode) {
