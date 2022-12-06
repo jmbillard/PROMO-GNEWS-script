@@ -28,6 +28,8 @@ txtUpperBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 txtLowerBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -49,6 +51,8 @@ txtLowerBtn.onClick = function () {
   }
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 txtTitleBtn.onClick = function () {
   var aItem = app.project.activeItem;
@@ -73,6 +77,8 @@ txtTitleBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 txtCleanerBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -88,6 +94,8 @@ txtCleanerBtn.onClick = function () {
   }
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 txtColumnBtn.onClick = function () {
   var aItem = app.project.activeItem;
@@ -123,15 +131,21 @@ txtColumnBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 limitSld.onChanging = function () {
   limitTxt.text = parseInt(limitSld.value);
   limitTxt2.text = parseInt(limitSld.value);
 };
 
+//---------------------------------------------------------
+
 limitTxt2.onChanging = function () {
   limitTxt.text = parseInt(limitTxt2.text);
   limitSld.value = parseInt(limitTxt2.text);
 };
+
+//---------------------------------------------------------
 
 limitSld.onChange = function () {
   var aItem = app.project.activeItem;
@@ -146,6 +160,8 @@ limitSld.onChange = function () {
     app.endUndoGroup();
   }
 };
+
+//---------------------------------------------------------
 
 limitTxt2.onChange = function () {
   var aItem = app.project.activeItem;

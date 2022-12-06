@@ -20,7 +20,7 @@ function endPagePresetDialog() {
   }
   // all control effects as object...
   var obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
-  
+
   function updateObjLayers() {
     try {
       var aItem = app.project.activeItem; // current selected project item...
@@ -57,7 +57,7 @@ function endPagePresetDialog() {
 
   // get preset file names..
   function getPresetNames() {
-    presetDdl.removeAll();
+    presetDrop.removeAll();
 
     var filesArray = presetFolder.getFiles();
     var presetArray = ['new end page preset'];
@@ -66,8 +66,8 @@ function endPagePresetDialog() {
       var fileName = deleteFileExt(filesArray[f].displayName);
       presetArray.push(fileName);
     }
-    populateDropdownList(presetArray, presetDdl);
-    presetDdl.selection = 0;
+    populateDropdownList(presetArray, presetDrop);
+    presetDrop.selection = 0;
 
     return presetArray;
   }
@@ -94,7 +94,7 @@ function endPagePresetDialog() {
   }
 
   // enable selected layer...
-  function showLayer(compName, dropdown) {
+  function uiToComp_updateLayers(compName, dropdown) {
     var selectedName = dropdown.selection;
     var selectedLayerName = '-------';
 
@@ -118,51 +118,52 @@ function endPagePresetDialog() {
   }
 
   // update current first enabled layer as index...
-  function updateUiLayers() {
+  function compToUi_updateLayers() {
     var pattern = obj.layout_end_page.pattern_layer;
     var foto = obj.layout_end_page.foto_layer;
-    var patternArray = getLayers('comp_pattern', pattern_layoutDdl);
+    var patternArray = getLayers('comp_pattern', pattern_layoutDrop);
     var p = patternArray.indexOf(pattern);
 
     if (p >= 0) {
-      pattern_layoutDdl.selection = p; // → pattern index
+      pattern_layoutDrop.selection = p; // → pattern index
     }
-    var fotoArray = getLayers('comp_img apresentador', foto_layoutDdl);
+    var fotoArray = getLayers('comp_img apresentador', foto_layoutDrop);
     var f = fotoArray.indexOf(foto);
     if (f >= 0) {
-      foto_layoutDdl.selection = f; // → photo index
+      foto_layoutDrop.selection = f; // → photo index
     }
   }
 
   // update window ui controls..
-  function updateUi() {
-    updateUiLayers();
+  function compToUi_updateUi() {
+    compToUi_updateLayers();
 
-    modelo_layoutDdl.selection = obj.layout_end_page.modelo - 1;
+    modelo_layoutDrop.selection = obj.layout_end_page.modelo - 1;
     subtitulo_layout.value = obj.layout_end_page.subtitulo;
     footage_layout.value = obj.layout_end_page.footage;
     foto_layout.value = obj.layout_end_page.foto;
-    foto_layoutDdl.enabled = obj.layout_end_page.foto;
+    foto_layoutDrop.enabled = obj.layout_end_page.foto;
     pattern_layout.value = obj.layout_end_page.pattern;
-    pattern_layoutDdl.enabled = obj.layout_end_page.pattern;
+    pattern_layoutDrop.enabled = obj.layout_end_page.pattern;
 
     titulo_servico.text = obj.servico_end_page.titulo;
     subtitulo_servico.text = obj.servico_end_page.subtitulo;
-    subtitulo_servico.visible = obj.layout_end_page.subtitulo;
+    subtitulo_servico.enabled = obj.layout_end_page.subtitulo;
     hora_servico.text = obj.servico_end_page.hora;
     min_servico.text = obj.servico_end_page.min;
     dia_servico.text = obj.servico_end_page.dia;
-    formato_servicoDdl.selection = obj.servico_end_page.formato - 1;
-    mes_servicoDdl.selection = obj.servico_end_page.mes - 1;
-    semana_servicoDdl.selection = obj.servico_end_page.semana - 1;
+    livre_servico.text = 'DIGITE O TEXTO';
+    formato_servicoDrop.selection = obj.servico_end_page.formato - 1;
+    mes_servicoDrop.selection = obj.servico_end_page.mes - 1;
+    semana_servicoDrop.selection = obj.servico_end_page.semana - 1;
 
-    tema_aparenciaDdl.selection = obj.aparencia_end_page.tema - 1;
+    tema_aparenciaDrop.selection = obj.aparencia_end_page.tema - 1;
 
-    updateUiColors();
-    servicoUiVis();
+    compToUi_colors();
+    updateServicoUiVis();
   }
 
-  function updateCompFx() {
+  function uiToComp_updateCompFx() {
     try {
       var aItem = app.project.activeItem;
       var layoutFx = aItem.layer('ctrl_comp')
@@ -179,50 +180,57 @@ function endPagePresetDialog() {
     } catch (error) { }
   }
 
-  function servicoUiVis() {
-    var i = formato_servicoDdl.selection.index;
+  function updateServicoUiVis() {
+    var i = formato_servicoDrop.selection.index;
 
-    data_servicoGrp.visible = false;
-    dia_servicoGrp.visible = false;
-    semana_servicoDdl.visible = false;
-    mes_servicoDdl.visible = false;
-    hora_servicoGrp.visible = false;
-    min_servicoGrp.visible = false;
+    livre_servico.visible = false;
+    semana_servicoDrop.visible = false;
+    mes_servicoDrop.visible = false;
+    servicoGrp2.visible = false;
 
+    dia_servicoGrp.enabled = false;
+    hora_servicoGrp.enabled = false;
+    min_servicoGrp.enabled = false;
+
+    if (i == 0) {
+      livre_servico.visible = true;
+    }
     if (i == 1) {
-      data_servicoGrp.visible = true;
-      dia_servicoGrp.visible = true;
-      semana_servicoDdl.visible = false;
-      mes_servicoDdl.visible = true;
-      //mes_servicoDdl.size = [85, 10];
-      hora_servicoGrp.visible = true;
-      min_servicoGrp.visible = true;
+      semana_servicoDrop.visible = false;
+      mes_servicoDrop.visible = true;
+
+      servicoGrp2.visible = true;
+      dia_servicoGrp.enabled = true;
+      hora_servicoGrp.enabled = true;
+      min_servicoGrp.enabled = true;
     }
     if (i == 2) {
-      data_servicoGrp.visible = true;
-      dia_servicoGrp.visible = true;
-      semana_servicoDdl.visible = false;
-      hora_servicoGrp.visible = true;
-      min_servicoGrp.visible = true;
+      semana_servicoDrop.visible = false;
+
+      servicoGrp2.visible = true;
+      dia_servicoGrp.enabled = true;
+      hora_servicoGrp.enabled = true;
+      min_servicoGrp.enabled = true;
     }
     if (i == 3 || i == 5) {
-      data_servicoGrp.visible = true;
-      dia_servicoGrp.visible = false;
-      semana_servicoDdl.visible = true;
-      hora_servicoGrp.visible = true;
-      min_servicoGrp.visible = true;
+      semana_servicoDrop.visible = true;
+
+      servicoGrp2.visible = true;
+      dia_servicoGrp.enabled = false;
+      hora_servicoGrp.enabled = true;
+      min_servicoGrp.enabled = true;
     }
     if (i == 4) {
-      hora_servicoGrp.visible = true;
-      min_servicoGrp.visible = true;
+      servicoGrp2.visible = true;
+      hora_servicoGrp.enabled = true;
+      min_servicoGrp.enabled = true;
     }
     if (i == 6) {
-      mes_servicoDdl.visible = true;
-      //mes_servicoDdl.size = [180, 10];
+      mes_servicoDrop.visible = true;
     }
   }
 
-  function updateCompColors() {
+  function uiToComp_colors() {
     try {
       var aItem = app.project.activeItem;
       var aparenciaFx = aItem.layer('ctrl_comp')
@@ -249,7 +257,7 @@ function endPagePresetDialog() {
     } catch (error) { }
   }
 
-  function updateUiColors() {
+  function compToUi_colors() {
     setTxtColor(logo_aparencia, hexToRGB(obj.aparencia_end_page.logo));
     logo_aparencia.text = obj.aparencia_end_page.logo;
     setTxtColor(titulo_aparencia, hexToRGB(obj.aparencia_end_page.titulo));
@@ -271,7 +279,7 @@ function endPagePresetDialog() {
   }
 
   // set layout property value...
-  function setCompLayoutFxValue(thisObj, property) {
+  function uiToComp_layoutFxValue(thisObj, property) {
     var aItem = app.project.activeItem;
     var val = thisObj.value;
     var subtituloFx = aItem.layer('ctrl_comp')
@@ -279,31 +287,30 @@ function endPagePresetDialog() {
       .property('layout end page')
       .property(property)
       .setValue(val);
-      obj.layout_end_page[property] = val;
+    obj.layout_end_page[property] = val;
 
     return val;
   }
 
   // set dropdown property index...
-  function setCompFxIndex(drop, aObj, property) {
+  function uiToComp_setDropDownIndex(dropDown, category, property) {
     var aItem = app.project.activeItem;
-    var i = drop.selection.index + 1;
-    var modeloFx = aItem
-      .layer('ctrl_comp')
+    var i = dropDown.selection.index + 1;
+    aItem.layer('ctrl_comp')
       .property('ADBE Effect Parade')
-      .property(aObj + ' end page')
+      .property(category + ' end page')
       .property(property)
       .setValue(i);
-    eval('obj.' + aObj + '_end_page.' + property + ' = ' + i);
+
+    obj[category + '_end_page'][property] = i;
 
     return i;
   }
 
   var wPreset = new Window('palette', 'end page preset...');
-  //wPreset.spacing = 8;
   var preset_mainGrp = wPreset.add('group');
   preset_mainGrp.orientation = 'column';
-  var presetDdl = preset_mainGrp.add('dropdownlist', [0, 0, 180, 10], []);
+  var presetDrop = preset_mainGrp.add('dropdownlist', [0, 0, 180, 10], []);
   var radGrp = preset_mainGrp.add('group');
   var expRad01 = radGrp.add('radiobutton', undefined, 'simple ui');
   expRad01.value = true;
@@ -311,9 +318,10 @@ function endPagePresetDialog() {
   var expRad02 = radGrp.add('radiobutton', undefined, 'extended ui');
   expRad02.helpTip = 'full editor';
 
-	// =================
-	divider = wPreset.add('panel');
-	divider.alignment = 'fill';
+  //---------------------------------------------------------
+
+  divider = wPreset.add('panel');
+  divider.alignment = 'fill';
 
   var layout_mainGrp = wPreset.add('group');
   layout_mainGrp.orientation = 'column';
@@ -322,13 +330,13 @@ function endPagePresetDialog() {
   layout_mainGrp.spacing = 8;
   var layoutTxt = layout_mainGrp.add('statictext', undefined, 'layout:');
   setTxtColor(layoutTxt, sTxtColor);
-  
+
   var modelArray = [
     'livre',
     'programa',
     'jornal'
   ];
-  var modelo_layoutDdl = layout_mainGrp.add('dropdownlist', [0, 0, 180, 10], modelArray);
+  var modelo_layoutDrop = layout_mainGrp.add('dropdownlist', [0, 0, 180, 10], modelArray);
 
   var layoutGrp = layout_mainGrp.add('group');
   layoutGrp.orientation = 'stack';
@@ -367,12 +375,13 @@ function endPagePresetDialog() {
   pattern_layoutTxt.characters = 6;
   setTxtColor(pattern_layoutTxt, GNEWS_mainColors2[3]);
 
-  var foto_layoutDdl = layoutGrp1.add('dropdownlist', [0, 0, 85, 10], []);
-  var pattern_layoutDdl = layoutGrp2.add('dropdownlist', [0, 0, 85, 10], []);
+  var foto_layoutDrop = layoutGrp1.add('dropdownlist', [0, 0, 85, 10], []);
+  var pattern_layoutDrop = layoutGrp2.add('dropdownlist', [0, 0, 85, 10], []);
 
-	// =================
-	divider = wPreset.add('panel');
-	divider.alignment = 'fill';
+  //---------------------------------------------------------
+
+  divider = wPreset.add('panel');
+  divider.alignment = 'fill';
 
   var servico_mainGrp = wPreset.add('group');
   servico_mainGrp.orientation = 'column';
@@ -393,44 +402,43 @@ function endPagePresetDialog() {
   ];
   var titulo_servico = servico_mainGrp.add('edittext', [0, 0, 180, 40], '', { multiline: true });
   var subtitulo_servico = servico_mainGrp.add('edittext', [0, 0, 180, 20], '');
-  subtitulo_servico.visible = subtitulo_layout.value;
-  var formato_servicoDdl = servico_mainGrp.add('dropdownlist', [0, 0, 180, 10], servicoArray);
+  subtitulo_servico.enabled = subtitulo_layout.value;
+  var formato_servicoDrop = servico_mainGrp.add('dropdownlist', [0, 0, 180, 10], servicoArray);
 
-  var servicoGrp = servico_mainGrp.add('group');
-  servicoGrp.orientation = 'stack';
-  servicoGrp.alignment = 'fill';
+  var servicoGrp1 = servico_mainGrp.add('group');
+  servicoGrp1.orientation = 'stack';
 
-  var servicoGrp1 = servicoGrp.add('group');
-  servicoGrp1.orientation = 'column';
-  servicoGrp1.alignment = 'left';
-  var servicoGrp2 = servicoGrp.add('group');
-  servicoGrp2.orientation = 'column';
-  servicoGrp2.alignment = 'right';
+  var servicoGrp2 = servico_mainGrp.add('group');
 
-  var data_servicoGrp = servicoGrp1.add('group');
-  data_servicoGrp.orientation = 'stack';
-  var dia_servicoGrp = data_servicoGrp.add('group');
-  var dia_servico = dia_servicoGrp.add('edittext', [0, 0, 40, 20], obj.servico_end_page.dia);
-  var dia_servicoTxt = dia_servicoGrp.add('statictext', undefined, '[dia]');
-  setTxtColor(dia_servicoTxt, GNEWS_mainColors2[3]);
-  
-  var semana_servicoDdl = data_servicoGrp.add('dropdownlist', [0, 0, 85, 10], shortWeekArray);
-  semana_servicoDdl.selection = obj.servico_end_page.semana - 1;
-  var hora_servicoGrp = servicoGrp1.add('group');
-  var hora_servico = hora_servicoGrp.add('edittext', [0, 0, 40, 20], obj.servico_end_page.hora);
-  var hora_servicoTxt = hora_servicoGrp.add('statictext', undefined, '[hora]');
-  setTxtColor(hora_servicoTxt, GNEWS_mainColors2[3]);
-  
-  var mes_servicoDdl = servicoGrp2.add('dropdownlist', [0, 0, 85, 10], shortMonthArray);
-  mes_servicoDdl.selection = obj.servico_end_page.mes - 1;
+  var semana_servicoDrop = servicoGrp1.add('dropdownlist', [0, 0, 180, 10], fullWeekArray);
+  semana_servicoDrop.selection = obj.servico_end_page.semana - 1;
+  var mes_servicoDrop = servicoGrp1.add('dropdownlist', [0, 0, 180, 10], fullMonthArray);
+  mes_servicoDrop.selection = obj.servico_end_page.mes - 1;
+  var livre_servico = servicoGrp1.add('edittext', [0, 0, 180, 20], '');
+
+  var dia_servicoGrp = servicoGrp2.add('group');
+  dia_servicoGrp.spacing = 6;
+  var hora_servicoGrp = servicoGrp2.add('group');
+  hora_servicoGrp.spacing = 6;
   var min_servicoGrp = servicoGrp2.add('group');
-  var min_servico = min_servicoGrp.add('edittext', [0, 0, 40, 20], obj.servico_end_page.min);
-  var min_servicoTxt = min_servicoGrp.add('statictext', undefined, '[min]');
+  min_servicoGrp.spacing = 6;
+
+  var dia_servico = dia_servicoGrp.add('edittext', [0, 0, 25, 20], obj.servico_end_page.dia);
+  var dia_servicoTxt = dia_servicoGrp.add('statictext', undefined, 'dia');
+  setTxtColor(dia_servicoTxt, GNEWS_mainColors2[3]);
+
+  var hora_servico = hora_servicoGrp.add('edittext', [0, 0, 25, 20], obj.servico_end_page.hora);
+  var hora_servicoTxt = hora_servicoGrp.add('statictext', undefined, 'hora');
+  setTxtColor(hora_servicoTxt, GNEWS_mainColors2[3]);
+
+  var min_servico = min_servicoGrp.add('edittext', [0, 0, 25, 20], obj.servico_end_page.min);
+  var min_servicoTxt = min_servicoGrp.add('statictext', undefined, 'min');
   setTxtColor(min_servicoTxt, GNEWS_mainColors2[3]);
 
-	// =================
-	divider = wPreset.add('panel');
-	divider.alignment = 'fill';
+  //---------------------------------------------------------
+
+  divider = wPreset.add('panel');
+  divider.alignment = 'fill';
 
   var aparencia_mainGrp = wPreset.add('group');
   aparencia_mainGrp.orientation = 'column';
@@ -441,15 +449,15 @@ function endPagePresetDialog() {
   setTxtColor(aparenciaTxt, sTxtColor);
   var tema_aparenciaGrp = aparencia_mainGrp.add('group');
   tema_aparenciaGrp.alignChildren = 'left';
-  
+
   var themeArray = [
-		'claro',
-		'cinza',
-		'escuro',
-		'vermelho',
-		'- cores livres -',
-	];
-  var tema_aparenciaDdl = tema_aparenciaGrp.add('dropdownlist', [0, 0, 180, 10], themeArray);
+    'claro',
+    'cinza',
+    'escuro',
+    'vermelho',
+    '- cores livres -',
+  ];
+  var tema_aparenciaDrop = tema_aparenciaGrp.add('dropdownlist', [0, 0, 180, 10], themeArray);
 
   var aparenciaGrp = aparencia_mainGrp.add('group');
   aparenciaGrp.orientation = 'stack';
@@ -495,6 +503,8 @@ function endPagePresetDialog() {
   fundo_aparencia.helpTip = 'fundo';
   fundo_aparencia.characters = 5;
 
+  //---------------------------------------------------------
+
   var bGrp = wPreset.add('group');
   bGrp.orientation = 'stack';
   bGrp.alignment = 'fill';
@@ -522,16 +532,17 @@ function endPagePresetDialog() {
   var saveBtn = bGrp2.add('button', undefined, 'save');
   saveBtn.helpTip = 'save new end page preset JSON file';
 
-  // value subtracted from the window height -> simple ui
-  // var sHeight = 510;
+  //---------------------------------------------------------
 
   wPreset.onShow = function () {
     wPreset.size.height = 140;
     bGrp.location[1] = 90;
     updateObjLayers();
-    updateUi();
+    compToUi_updateUi();
     getPresetNames();
   };
+
+  //---------------------------------------------------------
 
   expRad01.onClick = function () {
     wPreset.size.height = 140;
@@ -541,6 +552,8 @@ function endPagePresetDialog() {
     servico_mainGrp.visible = false;
   };
 
+  //---------------------------------------------------------
+
   expRad02.onClick = function () {
     wPreset.layout.layout(true);
     layout_mainGrp.visible = true;
@@ -548,18 +561,24 @@ function endPagePresetDialog() {
     servico_mainGrp.visible = true;
   };
 
-  foto_layoutDdl.onChange = function () {
-    var sLayer = showLayer('comp_img apresentador', foto_layoutDdl);
+  //---------------------------------------------------------
+
+  foto_layoutDrop.onChange = function () {
+    var sLayer = uiToComp_updateLayers('comp_img apresentador', foto_layoutDrop);
     obj.layout_end_page.foto_layer = sLayer;
   };
 
-  pattern_layoutDdl.onChange = function () {
-    var sLayer = showLayer('comp_pattern', pattern_layoutDdl);
+  //---------------------------------------------------------
+
+  pattern_layoutDrop.onChange = function () {
+    var sLayer = uiToComp_updateLayers('comp_pattern', pattern_layoutDrop);
     obj.layout_end_page.pattern_layer = sLayer;
   };
 
-  presetDdl.onChange = function () {
-    var fileName = presetDdl.selection.toString();
+  //---------------------------------------------------------
+
+  presetDrop.onChange = function () {
+    var fileName = presetDrop.selection.toString();
     var presetFile = new File(presetPath + '/' + fileName + '.json');
 
     if (!presetFile.exists) return;
@@ -567,9 +586,9 @@ function endPagePresetDialog() {
     var presetStr = readFile(presetFile);
     obj = defaultEndPageObj(JSON.parse(presetStr));
 
-    updateCompColors();
-    updateUi();
-    updateCompFx();
+    uiToComp_colors();
+    compToUi_updateUi();
+    uiToComp_updateCompFx();
 
     try {
       var aItem = app.project.activeItem;
@@ -601,10 +620,12 @@ function endPagePresetDialog() {
         .setValue(min);
     } catch (error) { }
   };
+
+  //---------------------------------------------------------
 
   applyBtn.onClick = function () {
-    updateCompColors();
-    updateCompFx();
+    uiToComp_colors();
+    uiToComp_updateCompFx();
 
     try {
       var aItem = app.project.activeItem;
@@ -618,6 +639,11 @@ function endPagePresetDialog() {
         .property('ADBE Text Properties')
         .property('ADBE Text Document')
         .setValue(subtitulo);
+      var servico = livre_servico.text;
+      aItem.layer('txt_data e horario')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(servico);
       var hora = hora_servico.text.replace(/\D/g, '');
       hora = parseInt(hora);
       hora = hora < 23 ? hora : 23;
@@ -637,40 +663,77 @@ function endPagePresetDialog() {
     } catch (error) { }
   };
 
-  modelo_layoutDdl.onChange = function () {
+  //---------------------------------------------------------
+
+  modelo_layoutDrop.onChange = function () {
     try {
-      setCompFxIndex(this, 'layout', 'modelo');
+      uiToComp_setDropDownIndex(this, 'layout', 'modelo');
     } catch (error) {
-      modelo_layoutDdl.selection = obj.layout_end_page.modelo - 1;
+      modelo_layoutDrop.selection = obj.layout_end_page.modelo - 1;
     }
   };
 
-  formato_servicoDdl.onChange = function () {
+  //---------------------------------------------------------
+
+  formato_servicoDrop.onChange = function () {
     try {
-      setCompFxIndex(this, 'servico', 'formato');
-      servicoUiVis();
+      uiToComp_setDropDownIndex(this, 'servico', 'formato');
+      updateServicoUiVis();
     } catch (error) {
-      formato_servicoDdl.selection = obj.servico_end_page.formato - 1;
-      servicoUiVis();
+      formato_servicoDrop.selection = obj.servico_end_page.formato - 1;
+      updateServicoUiVis();
     }
   };
 
-  mes_servicoDdl.onChange = function () {
+  //---------------------------------------------------------
+
+  mes_servicoDrop.onChange = function () {
     try {
-      setCompFxIndex(this, 'servico', 'mes');
-      servicoUiVis();
+      uiToComp_setDropDownIndex(this, 'servico', 'mes');
+      updateServicoUiVis();
     } catch (error) {
-      mes_servicoDdl.selection = obj.servico_end_page.mes - 1;
+      mes_servicoDrop.selection = obj.servico_end_page.mes - 1;
     }
   };
 
-  semana_servicoDdl.onChange = function () {
+  //---------------------------------------------------------
+
+  semana_servicoDrop.onChange = function () {
     try {
-      setCompFxIndex(this, 'servico', 'semana');
+      uiToComp_setDropDownIndex(this, 'servico', 'semana');
     } catch (error) {
-      semana_servicoDdl.selection = obj.servico_end_page.semana - 1;
+      semana_servicoDrop.selection = obj.servico_end_page.semana - 1;
     }
   };
+
+  //---------------------------------------------------------
+
+  livre_servico.onChanging = function () {
+    try {
+      var aItem = app.project.activeItem;
+      var servico = livre_servico.text;
+      aItem.layer('txt_data e horario')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document')
+        .setValue(servico);
+    } catch (error) {
+      livre_servico.text = 'DIGITE O TEXTO';
+    }
+  };
+
+  //---------------------------------------------------------
+
+  livre_servico.onChange = function () {
+    try {
+      var aItem = app.project.activeItem;
+      var servico = aItem.layer('txt_data e horario')
+        .property('ADBE Text Properties')
+        .property('ADBE Text Document');
+        livre_servico.text = servico.value;
+    } catch (error) { }
+  };
+
+  //---------------------------------------------------------
 
   titulo_servico.onChanging = function () {
     try {
@@ -685,6 +748,8 @@ function endPagePresetDialog() {
     }
   };
 
+  //---------------------------------------------------------
+
   titulo_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
@@ -695,6 +760,8 @@ function endPagePresetDialog() {
       titulo_servico.text = obj.servico_end_page.titulo;
     } catch (error) { }
   };
+
+  //---------------------------------------------------------
 
   subtitulo_servico.onChanging = function () {
     try {
@@ -709,6 +776,8 @@ function endPagePresetDialog() {
     }
   };
 
+  //---------------------------------------------------------
+
   subtitulo_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
@@ -719,6 +788,8 @@ function endPagePresetDialog() {
       subtitulo_servico.text = obj.servico_end_page.subtitulo;
     } catch (error) { }
   };
+
+  //---------------------------------------------------------
 
   dia_servico.onChanging = function () {
     try {
@@ -739,6 +810,8 @@ function endPagePresetDialog() {
     }
   };
 
+  //---------------------------------------------------------
+
   hora_servico.onChanging = function () {
     try {
       var aItem = app.project.activeItem;
@@ -758,6 +831,8 @@ function endPagePresetDialog() {
     }
   };
 
+  //---------------------------------------------------------
+
   hora_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
@@ -770,6 +845,8 @@ function endPagePresetDialog() {
     } catch (error) { }
   };
 
+  //---------------------------------------------------------
+
   dia_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
@@ -781,6 +858,8 @@ function endPagePresetDialog() {
       dia_servico.text = dia.value;
     } catch (error) { }
   };
+
+  //---------------------------------------------------------
 
   min_servico.onChanging = function () {
     try {
@@ -801,6 +880,8 @@ function endPagePresetDialog() {
     }
   };
 
+  //---------------------------------------------------------
+
   min_servico.onChange = function () {
     try {
       var aItem = app.project.activeItem;
@@ -813,19 +894,23 @@ function endPagePresetDialog() {
     } catch (error) { }
   };
 
-  tema_aparenciaDdl.onChange = function () {
+  //---------------------------------------------------------
+
+  tema_aparenciaDrop.onChange = function () {
     try {
-      setCompFxIndex(this, 'aparencia', 'tema');
-      updateUiColors();
+      uiToComp_setDropDownIndex(this, 'aparencia', 'tema');
+      compToUi_colors();
     } catch (error) {
-      tema_aparenciaDdl.selection = obj.aparencia_end_page.tema - 1;
+      tema_aparenciaDrop.selection = obj.aparencia_end_page.tema - 1;
     }
   };
 
+  //---------------------------------------------------------
+
   subtitulo_layout.onClick = function () {
     try {
-      var val = setCompLayoutFxValue(this, 'subtitulo');
-      subtitulo_servico.visible = val;
+      var val = uiToComp_layoutFxValue(this, 'subtitulo');
+      subtitulo_servico.enabled = val;
 
       if (!val) {
         obj.servico_end_page.subtitulo = 'SUBTÍTULO';
@@ -837,53 +922,68 @@ function endPagePresetDialog() {
     }
   };
 
+  //---------------------------------------------------------
+
   foto_layout.onClick = function () {
     try {
-      var val = setCompLayoutFxValue(this, 'foto');
-      foto_layoutDdl.enabled = val;
+      var val = uiToComp_layoutFxValue(this, 'foto');
+      foto_layoutDrop.enabled = val;
 
       if (!val) {
         obj.layout_end_page.foto_layer = '-------';
         return;
       }
-      obj.layout_end_page.foto_layer = foto_layoutDdl.selection;
+      obj.layout_end_page.foto_layer = foto_layoutDrop.selection;
     } catch (error) {
       foto_layout.value = obj.layout_end_page.foto;
     }
   };
 
+  //---------------------------------------------------------
+
   footage_layout.onClick = function () {
     try {
-      var val = setCompLayoutFxValue(this, 'footage');
+      var val = uiToComp_layoutFxValue(this, 'footage');
     } catch (error) {
       footage_layout.value = obj.layout_end_page.footage;
     }
   };
 
+  //---------------------------------------------------------
+
   pattern_layout.onClick = function () {
     try {
-      var val = setCompLayoutFxValue(this, 'pattern');
-      pattern_layoutDdl.enabled = val;
+      var val = uiToComp_layoutFxValue(this, 'pattern');
+      pattern_layoutDrop.enabled = val;
 
       if (!pattern_layout.value) {
         obj.layout_end_page.pattern_layer = '-------';
         return;
       }
-      obj.layout_end_page.pattern_layer = pattern_layoutDdl.selection;
+      obj.layout_end_page.pattern_layer = pattern_layoutDrop.selection;
     } catch (error) {
       pattern_layout.value = obj.layout_end_page.pattern;
     }
   };
 
+  //---------------------------------------------------------
+
   refreshBtn.onClick = function () {
-    presetDdl.selection = 0;
+    presetDrop.selection = 0;
 
     obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
     updateObjLayers();
-    
-    updateUi();
+
+    compToUi_updateUi();
     getPresetNames();
+
+    try {
+      var aItem = app.project.activeItem;
+      livre_servico.text = textContent(aItem.layer('txt_data e horario'));
+    } catch (error) { }
   };
+
+  //---------------------------------------------------------
 
   saveBtn.onClick = function () {
     obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
@@ -902,8 +1002,10 @@ function endPagePresetDialog() {
 
     if (presetArray.indexOf(fileName) < 0) return;
 
-    presetDdl.selection = presetArray.indexOf(fileName);
+    presetDrop.selection = presetArray.indexOf(fileName);
   };
+
+  //---------------------------------------------------------
 
   openBtn.onClick = function () {
     openFolder(presetPath);

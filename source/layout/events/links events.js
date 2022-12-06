@@ -28,16 +28,7 @@ oneDriveBtn.onClick = function () {
 	openWebSite(site);
 };
 
-// sharePointBtn.onClick = function () {
-// 	// error...
-// 	if (!netAccess()) {
-// 		showTabErr(netConfigName + ' not checked');
-// 		return;
-// 	}
-// 	var site = 'https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx';
-
-// 	openWebSite(site);
-// };
+//---------------------------------------------------------
 
 trelloBtn.onClick = function () {
 	// error...
@@ -50,6 +41,8 @@ trelloBtn.onClick = function () {
 	openWebSite(site);
 };
 
+//---------------------------------------------------------
+
 typeFormBtn.onClick = function () {
 	// error...
 	if (!netAccess()) {
@@ -61,6 +54,8 @@ typeFormBtn.onClick = function () {
 	openWebSite(site);
 };
 
+//---------------------------------------------------------
+
 plannerBtn.onClick = function () {
 	// error...
 	if (!netAccess()) {
@@ -71,6 +66,8 @@ plannerBtn.onClick = function () {
 
 	openWebSite(site);
 };
+
+//---------------------------------------------------------
 
 mamHardNewsBtn.onClick = function () {
 	// error...
@@ -85,6 +82,8 @@ mamHardNewsBtn.onClick = function () {
 	}
 	openFolder(hnPath);
 };
+
+//---------------------------------------------------------
 
 // right click -> configure 'MAM - magazine' path...
 mamMagBtn.addEventListener('click', function (c) {
@@ -104,6 +103,8 @@ mamMagBtn.addEventListener('click', function (c) {
 	}
 });
 
+//---------------------------------------------------------
+
 mamMagBtn.onClick = function () {
 	// error...
 	if (!netAccess()) {
@@ -112,6 +113,8 @@ mamMagBtn.onClick = function () {
 	}
 	openFolder(magazinePath);
 };
+
+//---------------------------------------------------------
 
 // right click -> configure 'MAM - para arte' path...
 mamArteBtn.addEventListener('click', function (c) {
@@ -131,6 +134,8 @@ mamArteBtn.addEventListener('click', function (c) {
 	}
 });
 
+//---------------------------------------------------------
+
 mamArteBtn.onClick = function () {
 	// error...
 	if (!netAccess()) {
@@ -139,6 +144,8 @@ mamArteBtn.onClick = function () {
 	}
 	openFolder(artePath);
 };
+
+//---------------------------------------------------------
 
 nUtilsBtn.onClick = function () {
 	// error...
@@ -153,6 +160,8 @@ nUtilsBtn.onClick = function () {
 	}
 	openFolder(utiPath);
 };
+
+//---------------------------------------------------------
 
 baseJorBtn.onClick = function () {
 	// error...
@@ -169,6 +178,8 @@ baseJorBtn.onClick = function () {
 	}
 	openFolder(basesPath);
 };
+
+//---------------------------------------------------------
 
 dayBtn.onClick = function () {
 	// error...

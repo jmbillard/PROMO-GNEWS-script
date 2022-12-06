@@ -44,6 +44,8 @@ shpAdjBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 curBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -61,6 +63,8 @@ curBtn.onClick = function () {
   }
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 levBtn.onClick = function () {
   var aItem = app.project.activeItem;
@@ -80,6 +84,8 @@ levBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 lumBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -97,6 +103,8 @@ lumBtn.onClick = function () {
   }
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 gaublurBtn.onClick = function () {
   var aItem = app.project.activeItem;
@@ -116,6 +124,8 @@ gaublurBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 comblurBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -134,6 +144,8 @@ comblurBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 lensblurBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -151,6 +163,8 @@ lensblurBtn.onClick = function () {
   }
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 fillBtn.onClick = function () {
   var aItem = app.project.activeItem;
@@ -171,6 +185,8 @@ fillBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 fracBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -189,6 +205,8 @@ fracBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 grainBtn.onClick = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -206,6 +224,8 @@ grainBtn.onClick = function () {
   }
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 glassBtn.onClick = function () {
   var aItem = app.project.activeItem;

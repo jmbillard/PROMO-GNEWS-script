@@ -15,6 +15,8 @@ projIdTxt.onChange = projIdTxt.onEnterKey = function () {
   if (this.text.trim() == '') this.text = 'proj. ID';
 };
 
+//---------------------------------------------------------
+
 projNameTxt.onChange = projNameTxt.onEnterKey = function () {
   this.text = projName = this.text
     .replaceSpecialCharacters()
@@ -23,6 +25,8 @@ projNameTxt.onChange = projNameTxt.onEnterKey = function () {
   setXMPdata('title', projName);
   if (this.text.trim() == '') this.text = 'proj. name';
 };
+
+//---------------------------------------------------------
 
 insertUserIdBtn.onClick = function () {
   // error...
@@ -55,6 +59,8 @@ insertUserIdBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 renameItemBtn.onClick = function () {
   // error...
   if (app.project.numItems == 0) {
@@ -76,6 +82,8 @@ renameItemBtn.onClick = function () {
   app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 projOrgBtn.addEventListener('click', function (c) {
   if (c.button == 2) {
     if (app.project.numItems == 0) return;
@@ -93,6 +101,8 @@ projOrgBtn.onClick = function () {
 
   app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 saveBtn.onClick = function () {
 
@@ -123,8 +133,10 @@ saveBtn.onClick = function () {
 /*   if (appV > 22) {
     executeCommandID('Save a Copy As 22.x...');
     return;
-  }
- */};
+  }*/
+ };
+
+//---------------------------------------------------------
 
 endPagePresetBtn.onClick = function () {
   currentGrp = tabsGrp.menu;

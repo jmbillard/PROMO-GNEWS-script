@@ -102,6 +102,8 @@ copyInfBtn.onClick = function () {
 	}
 };
 
+//---------------------------------------------------------
+
 pasteInfBtn.onClick = function () {
 	// error...
 	if (!keyData.value) {
@@ -143,6 +145,8 @@ pasteInfBtn.onClick = function () {
 	}
 };
 
+//---------------------------------------------------------
+
 lockTrmBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -158,6 +162,8 @@ lockTrmBtn.onClick = function () {
 	}
 	app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 // randomize layer start times
 layerRandBtn.onClick = function () {
@@ -266,6 +272,8 @@ arrowBtn.onClick = function () {
 	app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 counterBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	// error...
@@ -320,6 +328,8 @@ counterBtn.onClick = function () {
 	app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 wigBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	// error...
@@ -352,6 +362,8 @@ wigBtn.onClick = function () {
 	}
 	app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 ikBtn.onClick = function () {
 	var aItem = app.project.activeItem;
@@ -452,6 +464,8 @@ ikBtn.onClick = function () {
 	app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 typeAnimBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	// error...
@@ -501,6 +515,8 @@ typeAnimBtn.onClick = function () {
 	app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
 wordsBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	// error...
@@ -549,6 +565,8 @@ wordsBtn.onClick = function () {
 	}
 	app.endUndoGroup();
 };
+
+//---------------------------------------------------------
 
 simpleBoxBtn.onClick = function () {
 	var aItem = app.project.activeItem;
