@@ -54,7 +54,7 @@ function setTxtColor(sTxt, color) {
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
   
-  var hMargin = 50;
+  var hMargin = 60;
   var vMargin = 10;
   
   // horizontal layout
@@ -62,7 +62,7 @@ function setLayout() {
     imgAlignment = 'left';
     closeAlignment = 'right';
 
-    mainGrp.margins = [90, 0, 0, 0];
+    mainGrp.margins = [85, 0, 0, 0];
     tabsGrp.menu.margins = [hMargin, 0, hMargin, 0];
     leftGrp.margins = [5, 0, 0, 0];
 

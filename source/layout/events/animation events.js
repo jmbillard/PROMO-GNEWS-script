@@ -104,6 +104,75 @@ copyInfBtn.onClick = function () {
 
 //---------------------------------------------------------
 
+easeSld1.onChanging = function () {
+
+	this.value = Math.floor(this.value / 5) * 5;
+	easeSld1Txt.text = (this.value * 2) + '%';
+};
+
+easeSld1.onChange = function () {
+
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : null;
+	var inf = this.value * 2;
+	inf = inf == 0 ? 0.1 : inf;
+	
+	for (var l = 0; l < selLayers.length; l++) {
+		var aLayer = selLayers[l];
+		var selProps = aLayer.selectedProperties;
+
+		for (var p = 0; p < selProps.length; p++) {
+			var aProp = selProps[p];
+			var selKeys = aProp.selectedKeys;
+
+			for (var k = 0; k < selKeys.length; k++) {
+				var aKey = parseInt(selKeys[k]);
+				if (aKey == aProp.numKeys) continue;
+				var easeIn = aProp.keyOutTemporalEase(aKey);
+				var easeOut = new KeyframeEase(0, inf);
+				
+				aProp.setTemporalEaseAtKey(aKey, easeIn, [easeOut]);
+
+			}
+		}
+	}
+};
+
+easeSld2.onChange = function () {
+
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : null;
+	var inf = (50 - this.value) * 2;
+	inf = inf == 0 ? 0.1 : inf;
+	
+	for (var l = 0; l < selLayers.length; l++) {
+		var aLayer = selLayers[l];
+		var selProps = aLayer.selectedProperties;
+
+		for (var p = 0; p < selProps.length; p++) {
+			var aProp = selProps[p];
+			var selKeys = aProp.selectedKeys;
+
+			for (var k = 0; k < selKeys.length; k++) {
+				var aKey = parseInt(selKeys[k]);
+				if (aKey == 1) continue;
+				var easeOut = aProp.keyInTemporalEase(aKey);
+				var easeIn = new KeyframeEase(0, inf);
+				
+				aProp.setTemporalEaseAtKey(aKey, [easeIn], easeOut);
+			}
+		}
+	}
+};
+
+easeSld2.onChanging = function () {
+
+	this.value = Math.floor(this.value / 5) * 5;
+	easeSld2Txt.text = (100 - (this.value * 2)) + '%';
+};
+
+//---------------------------------------------------------
+
 pasteInfBtn.onClick = function () {
 	// error...
 	if (!keyData.value) {
