@@ -62,6 +62,7 @@ function setLayout() {
     ltAlignment = 'left';
     rbAlignment = 'right';
     
+    // [left, top, right, bottom]
     mainGrp.margins = [80, 0, 0, 0];
     tabsGrp.menu.margins = [hMargin, 0, hMargin, 0];
     leftGrp.margins = [5, 0, 0, 0];
@@ -95,6 +96,7 @@ function setLayout() {
     ltAlignment = 'bottom';
     rbAlignment = 'top';
 
+    // [left, top, right, bottom]
     mainGrp.margins = [0, 0, 0, 20];
     tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
     leftGrp.margins = [0, 0, 0, 5];
@@ -157,11 +159,13 @@ function setLayout() {
   if (w.size.width < 70) {
     GNEWS_LOGO.visible = false;
     GNEWS_LOGO.size.width = 0;
+    progImg.size.width = 0;
     aboutTxt.text = '...';
     aboutTxt.size.width = vMin;
   } else {
     GNEWS_LOGO.visible = true;
     GNEWS_LOGO.size.width = 70;
+    progImg.size.width = 70;
     aboutTxt.text = vStr;
     aboutTxt.size.width = 60;
   }
