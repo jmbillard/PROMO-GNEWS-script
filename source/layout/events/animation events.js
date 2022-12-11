@@ -106,15 +106,15 @@ copyInfBtn.onClick = function () {
 
 easeSld1.onChanging = function () {
 
-	this.value = Math.floor(this.value / 0.5) * 0.5;
-	easeSld1Txt.text = (this.value * 2) + '%';
+	this.value = Math.floor(this.value);
+	easeSld1Txt.text = this.value + '%';
 };
 
 easeSld1.onChange = function () {
 
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : null;
-	easeOutInfluence = this.value * 2;
+	easeOutInfluence = this.value;
 	
 	for (var l = 0; l < selLayers.length; l++) {
 		var aLayer = selLayers[l];
@@ -158,7 +158,7 @@ easeSld2.onChange = function () {
 
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : null;
-	easeInInfluence = (50 - this.value) * 2;
+	easeInInfluence = 100 - this.value;
 	
 	for (var l = 0; l < selLayers.length; l++) {
 		var aLayer = selLayers[l];
@@ -200,8 +200,8 @@ easeSld2.onChange = function () {
 
 easeSld2.onChanging = function () {
 
-	this.value = Math.floor(this.value / 0.5) * 0.5;
-	easeSld2Txt.text = ((50 - this.value) * 2) + '%';
+	this.value = Math.floor(this.value);
+	easeSld2Txt.text = (100 - this.value) + '%';
 };
 
 //---------------------------------------------------------

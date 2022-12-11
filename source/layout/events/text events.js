@@ -135,35 +135,11 @@ txtColumnBtn.onClick = function () {
 
 limitSld.onChanging = function () {
   limitTxt.text = parseInt(limitSld.value);
-  limitTxt2.text = parseInt(limitSld.value);
-};
-
-//---------------------------------------------------------
-
-limitTxt2.onChanging = function () {
-  limitTxt.text = parseInt(limitTxt2.text);
-  limitSld.value = parseInt(limitTxt2.text);
 };
 
 //---------------------------------------------------------
 
 limitSld.onChange = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-
-  if (aItem != null) {
-    app.beginUndoGroup('break text');
-
-    for (i = 0; i < selLayers.length; i++) {
-      lineBreak(selLayers[i], Number(limitTxt.text));
-    }
-    app.endUndoGroup();
-  }
-};
-
-//---------------------------------------------------------
-
-limitTxt2.onChange = function () {
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
 

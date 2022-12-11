@@ -54,42 +54,34 @@ function setTxtColor(sTxt, color) {
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
   
-  var hMargin = 60;
+  var hMargin = 68;
   var vMargin = 10;
   
   // horizontal layout
   if (wLayout == 'row') {
-    imgAlignment = 'left';
-    closeAlignment = 'right';
-
-    mainGrp.margins = [85, 0, 0, 0];
+    ltAlignment = 'left';
+    rbAlignment = 'right';
+    
+    mainGrp.margins = [80, 0, 0, 0];
     tabsGrp.menu.margins = [hMargin, 0, hMargin, 0];
     leftGrp.margins = [5, 0, 0, 0];
 
     // color buttons
     for (var c1 = 1; c1 < colorSubGrp1.children.length; c1++) {
-      colorSubGrp1.children[c1].size = [10, 20];
+      colorSubGrp1.children[c1].minimumSize = [20, 20];
+      colorSubGrp1.children[c1].maximumSize = [20, 20];
+      colorSubGrp1.children[c1].size = [20, 20];
     }
     for (var c2 = 1; c2 < colorSubGrp2.children.length; c2++) {
-      colorSubGrp2.children[c2].size = [10, 20];
+      colorSubGrp2.children[c2].minimumSize = [10, 20];
+      colorSubGrp2.children[c2].maximumSize = [20, 20];
+      colorSubGrp2.children[c2].size = [(w.size.width - 500) /22, 20];
     }
     for (var c3 = 1; c3 < colorSubGrp3.children.length; c3++) {
-      colorSubGrp3.children[c3].size = [10, 20];
+      colorSubGrp3.children[c3].minimumSize = [10, 20];
+      colorSubGrp3.children[c3].maximumSize = [20, 20];
+      colorSubGrp3.children[c3].size = [(w.size.width - 500) /22, 20];
     }
-    // text tab - limit text horizontal controls
-    limitSld.visible = true;
-    limitSld.size.width = 200;
-    limitSld.size.height = 16;
-    limitTxt.visible = true;
-    limitTxt.size.width = 60;
-    limitTxt.size.height = 24;
-    // text tab - limit text vertical controls
-    limitTxt2.visible = false;
-    limitTxt2.size.width = 0;
-    limitTxt2.size.height = 0;
-    // project tab - controls
-    projIdTxt.size.width = 70;
-    projNameTxt.size.width = 120;
     // error tab
     errTxt.visible = true;
     errTxt.size.width = 500;
@@ -100,8 +92,8 @@ function setLayout() {
     progTxt2.size.width = 160;
   } else {
     // vertical layout
-    imgAlignment = 'bottom';
-    closeAlignment = 'top';
+    ltAlignment = 'bottom';
+    rbAlignment = 'top';
 
     mainGrp.margins = [0, 0, 0, 20];
     tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
@@ -109,28 +101,20 @@ function setLayout() {
 
     // color buttons
     for (var b1 = 1; b1 < colorSubGrp1.children.length; b1++) {
-      colorSubGrp1.children[b1].size = [66, 10];
+      colorSubGrp1.children[b1].minimumSize = [vMin, 10];
+      colorSubGrp1.children[b1].maximumSize = [80, 20];
+      colorSubGrp1.children[b1].size = [w.size.width - 8, (w.size.height - 500) / 22];
     }
     for (var b2 = 1; b2 < colorSubGrp2.children.length; b2++) {
-      colorSubGrp2.children[b2].size = [66, 10];
+      colorSubGrp2.children[b2].minimumSize = [vMin, 10];
+      colorSubGrp2.children[b2].maximumSize = [80, 20];
+      colorSubGrp2.children[b2].size = [w.size.width - 8, (w.size.height - 500) / 22];
     }
     for (var b3 = 1; b3 < colorSubGrp3.children.length; b3++) {
-      colorSubGrp3.children[b3].size = [66, 10];
+      colorSubGrp3.children[b3].minimumSize = [vMin, 10];
+      colorSubGrp3.children[b3].maximumSize = [80, 20];
+      colorSubGrp3.children[b3].size = [w.size.width - 8, (w.size.height - 500) / 22];
     }
-    // text tab - limit text horizontal controls
-    limitSld.visible = false;
-    limitSld.size.width = 0;
-    limitSld.size.height = 0;
-    limitTxt.visible = false;
-    limitTxt.size.width = 0;
-    limitTxt.size.height = 0;
-    // text tab - limit text vertical controls
-    limitTxt2.visible = true;
-    limitTxt2.size.width = 70;
-    limitTxt2.size.height = 24;
-    // project tab - controls
-    projIdTxt.size.width = 70;
-    projNameTxt.size.width = 70;
     // error tab
     errTxt.visible = false;
     errTxt.size.width = 0;
@@ -141,7 +125,20 @@ function setLayout() {
     progTxt2.size.width = 0;
   }
   imgGrp.orientation = wLayout;
+  
+  // text tab - controls
+  limitSld.size.width = w.size.width - 16;
 
+  // animation tab - controls
+  easeSld1.size.width = w.size.width - 16;
+  easeSld2.size.width = w.size.width - 16;
+  
+  // project tab - controls
+  projIdTxt.size.width = w.size.width - 8;
+  projNameTxt.size.width = w.size.width - 8;
+  
+  // links
+  linkTxt2.size.width = w.size.width - 8;
   // all tab subgroups
   for (var s = 0; s < tabSubGrps.length; s++) {
     tabSubGrps[s].orientation = wLayout;
@@ -154,9 +151,20 @@ function setLayout() {
     tabs[t].spacing = 8;
   }
 
-  leftGrp.alignment = imgAlignment;
-  rightGrp.alignment = closeAlignment;
+  leftGrp.alignment = ltAlignment;
+  rightGrp.alignment = rbAlignment;
 
+  if (w.size.width < 70) {
+    GNEWS_LOGO.visible = false;
+    GNEWS_LOGO.size.width = 0;
+    aboutTxt.text = '...';
+    aboutTxt.size.width = vMin;
+  } else {
+    GNEWS_LOGO.visible = true;
+    GNEWS_LOGO.size.width = 70;
+    aboutTxt.text = vStr;
+    aboutTxt.size.width = 60;
+  }
   updateLayout();
 }
 

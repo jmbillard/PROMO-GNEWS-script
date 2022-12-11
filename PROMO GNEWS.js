@@ -7,8 +7,11 @@
   notes:   a collection of tools designed to
   speedup the motion graphics team workflow
 
+  copy the .jsxbin file ('release' folder)
+  to 'ScriptUI Panels' folder
+
   author:  Jean-Marc Billard
-  version: 1.9 beta 8
+  version: 1.9 beta 7
   date:    xx-xx-2022
 
 --------------------------------------------------------------
