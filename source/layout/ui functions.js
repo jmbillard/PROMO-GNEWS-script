@@ -139,14 +139,18 @@ function setLayout() {
   projIdTxt.size.width = w.size.width - 8;
   projNameTxt.size.width = w.size.width - 8;
   
-  // links
+  // links tab - controls
   linkTxt2.size.width = w.size.width - 8;
+
+  // dev tab - controls
+  zipTxt1.size.width = w.size.width - 8;
+
   // all tab subgroups
   for (var s = 0; s < tabSubGrps.length; s++) {
     tabSubGrps[s].orientation = wLayout;
     tabSubGrps[s].spacing = 2;
   }
-  
+
   // all tabs
   for (var t = 0; t < tabs.length; t++) {
     tabs[t].orientation = wLayout;

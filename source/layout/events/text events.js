@@ -134,7 +134,8 @@ txtColumnBtn.onClick = function () {
 //---------------------------------------------------------
 
 limitSld.onChanging = function () {
-  limitTxt.text = parseInt(limitSld.value);
+  this.value = parseInt(this.value);
+  limitTxt.text = this.value;
 };
 
 //---------------------------------------------------------
@@ -147,8 +148,35 @@ limitSld.onChange = function () {
     app.beginUndoGroup('break text');
 
     for (i = 0; i < selLayers.length; i++) {
-      lineBreak(selLayers[i], Number(limitTxt.text));
+      lineBreak(selLayers[i], this.value);
     }
     app.endUndoGroup();
   }
 };
+
+//---------------------------------------------------------
+
+// right click -> opens the git repo...
+limitSld.addEventListener('click', function (c) {
+  if (c.button == 2) {
+
+    var input = Window.prompt('value:', limitSld.value, 'break text')
+      .match(/\d/g);
+
+    input = parseInt(input) * 10;
+    limitSld.value = input < 100 ? input : 100;
+    limitTxt.text = input;
+
+    var aItem = app.project.activeItem;
+    var selLayers = aItem != null ? aItem.selectedLayers : [];
+  
+    if (aItem != null) {
+      app.beginUndoGroup('break text');
+  
+      for (i = 0; i < selLayers.length; i++) {
+        lineBreak(selLayers[i], parseInt(input));
+      }
+      app.endUndoGroup();
+    }
+  }
+});
