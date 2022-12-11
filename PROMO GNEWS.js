@@ -7,11 +7,8 @@
   notes:   a collection of tools designed to
   speedup the motion graphics team workflow
 
-  copy the .jsxbin file ('release' folder)
-  to 'ScriptUI Panels' folder
-
   author:  Jean-Marc Billard
-  version: 1.9 beta 7
+  version: 1.9 beta 8
   date:    xx-xx-2022
 
 --------------------------------------------------------------
@@ -24,7 +21,7 @@
 function PROMO_GNEWS_UTL(thisObj) {
 
   // current script version...
-  var vStr = 'v1.9b7';
+  var vStr = 'v1.9b8';
 
   /* jshint ignore:start */
   #include 'source/globals.js'; // global variables...

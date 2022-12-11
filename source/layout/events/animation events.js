@@ -137,7 +137,7 @@ easeSld1.onChange = function () {
 				try {
 					aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
 
-				} catch (error) {
+				} catch (err) {
 
 					if (Array.isArray(aProp.value)) {
 	
@@ -181,7 +181,7 @@ easeSld2.onChange = function () {
 				try {
 					aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
 
-				} catch (error) {
+				} catch (err) {
 
 					if (Array.isArray(aProp.value)) {
 	
@@ -228,7 +228,7 @@ pasteInfBtn.onClick = function () {
 
 				try {
 					aProp.setTemporalEaseAtKey(aKey, keyData.inEase, keyData.outEase);
-				} catch (error) {
+				} catch (err) {
 					var inEase = [keyData.inEase[0]];
 					var outEase = [keyData.outEase[0]];
 

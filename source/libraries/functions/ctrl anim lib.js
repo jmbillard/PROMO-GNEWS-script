@@ -49,7 +49,7 @@ function cloneExpressions(sLayer, cLayer) {
 
 		try {
 			cProp.setValue(prop.value);
-		} catch (error) { }
+		} catch (err) { }
 
 		cTrm.property(p).expression = expStr;
 
@@ -117,7 +117,7 @@ function cloneKeys(sLayer, cLayer) {
 		}
 		try {
 			sProp.setValue(cProp.value);
-		} catch (error) { }
+		} catch (err) { }
 	}
 	sLayer.parent = cLayer;
 	sLayerTrm
@@ -140,7 +140,7 @@ function addPseudoEffect(fxName, strCode) {
 
 	try {
 		app.project.activeItem.layer(1).applyPreset(File(aPreset));
-	} catch (error) { }
+	} catch (err) { }
 }
 
 // reposiciona e parenteia um layer mantendo a hierarquia...

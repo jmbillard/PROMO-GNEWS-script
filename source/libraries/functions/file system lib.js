@@ -132,7 +132,7 @@ function installFonts(fontsPath) {
 
 		try {
 			subArray = new Folder(decodeURI(aFile.fullName).toString()).getFiles();
-		} catch (error) { }
+		} catch (err) { }
 
 		if (subArray.length > 0) {
 			installFonts(decodeURI(aFile.fullName).toString());
@@ -168,7 +168,7 @@ function copyFolder(src, dst) {
 
 		return true;
 	}
-	catch (error) { }
+	catch (err) { }
 }
 
 function copyFile(fullPath, newPath) {
@@ -189,7 +189,7 @@ function copyFile(fullPath, newPath) {
 			return true;
 		}
 	}
-	catch (error) { }
+	catch (err) { }
 }
 
 function createPath(path) {
@@ -241,7 +241,7 @@ function copyFolderContent(src, dst) {
 
 		try {
 			if (aFile instanceof Folder) subArray = aFile.getFiles();
-		} catch (error) { }
+		} catch (err) { }
 
 		if (subArray.length > 0) {
 			copyFolderContent(decodeURI(aFile.fullName).toString(), dst);
@@ -313,7 +313,7 @@ function createPresetFile(tempFld, fileName, strCode) {
 		writeFileContent(aFile, strCode);
 
 		return aFile;
-	} catch (error) { }
+	} catch (err) { }
 }
 
 // copy all fonts used in the project...

@@ -199,7 +199,7 @@ function bin(thisObj) {
         anim += '\t' + varName + '.property(\'' + mn + '\').setTemporalEaseAtKey(' + k + ', [' + easeIn + '], [' + easeOut + ']);\
 \t' + varName + '.property(\'' + mn + '\').setInterpolationTypeAtKey(' + k + ', ' + kInIType + ', ' + kOutIType + ');\n';
 
-      } catch (error) { }
+      } catch (err) { }
 
       try {
 
@@ -211,7 +211,7 @@ function bin(thisObj) {
           anim += '\t' + varName + '.property(\'' + mn + '\').setSpatialTangentsAtKey(' + k + ', [' + kInSArray + '], [' + kOutSArray + ']);\n';
           anim += '\t' + varName + '.property(\'' + mn + '\').setSpatialContinuousAtKey(' + k + ', ' + ct + ');\n';
         }
-      } catch (error) { }
+      } catch (err) { }
     }
 
     return anim;
@@ -261,7 +261,7 @@ function bin(thisObj) {
           // effects like 'tint' have a button that breaks the function...
           try {
             getProperties(cProp);
-          } catch (error) { }
+          } catch (err) { }
 
         } else {
 
@@ -283,7 +283,7 @@ function bin(thisObj) {
 \texp = \'' + expCode(exp) + '\';\
 \t' + var2 + '.property(\'' + mn + '\').expression = exp;\n\n';
               }
-            } catch (error) { }
+            } catch (err) { }
 
             if (cProp.numKeys > 0) {
               layerStr += animCode(cProp, var2);
@@ -294,7 +294,7 @@ function bin(thisObj) {
             try {
               pProp.name = pProp.name;
               layerStr += '\t' + var2 + '.name = \'' + varN + '\';\n';
-            } catch (error) { }
+            } catch (err) { }
           }
         }
       }
@@ -378,7 +378,7 @@ function bin(thisObj) {
 \tlayer.property(\'ADBE Marker\').setValueAtTime(t' + i + ', marker' + i + ');\n\n';
         i += 1;
 
-      } catch (error) {
+      } catch (err) {
         break;
       }
     }

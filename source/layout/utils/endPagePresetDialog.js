@@ -39,7 +39,7 @@ function endPagePresetDialog() {
             break;
           }
         }
-      } catch (error) { }
+      } catch (err) { }
       try {
         var fotoComp = aItem.layer('comp_img apresentador').source; // host image precomp layer...
 
@@ -53,8 +53,8 @@ function endPagePresetDialog() {
             break;
           }
         }
-      } catch (error) { }
-    } catch (error) { }
+      } catch (err) { }
+    } catch (err) { }
   }
 
   // get preset file names..
@@ -90,7 +90,7 @@ function endPagePresetDialog() {
         layersArray.push(layerName);
       }
       populateDropdownList(layersArray, dropdown);
-    } catch (error) { }
+    } catch (err) { }
 
     return layersArray;
   }
@@ -115,7 +115,7 @@ function endPagePresetDialog() {
           selectedLayerName = selectedName;
         }
       }
-    } catch (error) { }
+    } catch (err) { }
     return selectedLayerName;
   }
 
@@ -177,7 +177,7 @@ function endPagePresetDialog() {
         .setValue(obj.layout_end_page.footage);
       layoutFx.property('pattern')
         .setValue(obj.layout_end_page.pattern);
-    } catch (error) { }
+    } catch (err) { }
   }
 
   function updateServicoUiVis() {
@@ -254,7 +254,7 @@ function endPagePresetDialog() {
         .setValue(hexToRGB(obj.aparencia_end_page.pattern));
       aparenciaFx.property('fundo')
         .setValue(hexToRGB(obj.aparencia_end_page.fundo));
-    } catch (error) { }
+    } catch (err) { }
   }
 
   function compToUi_colors() {
@@ -626,7 +626,7 @@ function endPagePresetDialog() {
         .property('servico end page')
         .property('[min]')
         .setValue(min);
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -668,7 +668,7 @@ function endPagePresetDialog() {
         .property('servico end page')
         .property('[min]')
         .setValue(min);
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -676,7 +676,7 @@ function endPagePresetDialog() {
   modelo_layoutDrop.onChange = function () {
     try {
       uiToComp_setDropDownIndex(this, 'layout', 'modelo');
-    } catch (error) {
+    } catch (err) {
       modelo_layoutDrop.selection = obj.layout_end_page.modelo - 1;
     }
   };
@@ -687,7 +687,7 @@ function endPagePresetDialog() {
     try {
       uiToComp_setDropDownIndex(this, 'servico', 'formato');
       updateServicoUiVis();
-    } catch (error) {
+    } catch (err) {
       formato_servicoDrop.selection = obj.servico_end_page.formato - 1;
       updateServicoUiVis();
     }
@@ -699,7 +699,7 @@ function endPagePresetDialog() {
     try {
       uiToComp_setDropDownIndex(this, 'servico', 'mes');
       updateServicoUiVis();
-    } catch (error) {
+    } catch (err) {
       mes_servicoDrop.selection = obj.servico_end_page.mes - 1;
     }
   };
@@ -709,7 +709,7 @@ function endPagePresetDialog() {
   semana_servicoDrop.onChange = function () {
     try {
       uiToComp_setDropDownIndex(this, 'servico', 'semana');
-    } catch (error) {
+    } catch (err) {
       semana_servicoDrop.selection = obj.servico_end_page.semana - 1;
     }
   };
@@ -724,7 +724,7 @@ function endPagePresetDialog() {
         .property('ADBE Text Properties')
         .property('ADBE Text Document')
         .setValue(servico);
-    } catch (error) {
+    } catch (err) {
       livre_servico.text = 'DIGITE O TEXTO';
     }
   };
@@ -738,7 +738,7 @@ function endPagePresetDialog() {
         .property('ADBE Text Properties')
         .property('ADBE Text Document');
       livre_servico.text = servico.value;
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -751,7 +751,7 @@ function endPagePresetDialog() {
         .property('ADBE Text Properties')
         .property('ADBE Text Document')
         .setValue(titulo);
-    } catch (error) {
+    } catch (err) {
       titulo_servico.text = obj.servico_end_page.titulo;
     }
   };
@@ -766,7 +766,7 @@ function endPagePresetDialog() {
         .property('ADBE Text Document');
       obj.servico_end_page.titulo = titulo.value;
       titulo_servico.text = obj.servico_end_page.titulo;
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -779,7 +779,7 @@ function endPagePresetDialog() {
         .property('ADBE Text Properties')
         .property('ADBE Text Document')
         .setValue(subtitulo);
-    } catch (error) {
+    } catch (err) {
       subtitulo_servico.text = obj.servico_end_page.subtitulo;
     }
   };
@@ -794,7 +794,7 @@ function endPagePresetDialog() {
         .property('ADBE Text Document');
       obj.servico_end_page.subtitulo = subtitulo.value;
       subtitulo_servico.text = obj.servico_end_page.subtitulo;
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -813,7 +813,7 @@ function endPagePresetDialog() {
         .setValue(dia);
 
       obj.servico_end_page.dia = dia;
-    } catch (error) {
+    } catch (err) {
       dia_servico.text = obj.servico_end_page.dia;
     }
   };
@@ -834,7 +834,7 @@ function endPagePresetDialog() {
         .setValue(hora);
 
       obj.servico_end_page.hora = hora;
-    } catch (error) {
+    } catch (err) {
       hora_servico.text = obj.servico_end_page.hora;
     }
   };
@@ -850,7 +850,7 @@ function endPagePresetDialog() {
         .property('[hora]');
 
       hora_servico.text = hora.value;
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -864,7 +864,7 @@ function endPagePresetDialog() {
         .property('[dia]');
 
       dia_servico.text = dia.value;
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -883,7 +883,7 @@ function endPagePresetDialog() {
         .setValue(min);
 
       obj.servico_end_page.min = min;
-    } catch (error) {
+    } catch (err) {
       min_servico.text = obj.servico_end_page.min;
     }
   };
@@ -899,7 +899,7 @@ function endPagePresetDialog() {
         .property('[min]');
 
       min_servico.text = min.value;
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------
@@ -908,7 +908,7 @@ function endPagePresetDialog() {
     try {
       uiToComp_setDropDownIndex(this, 'aparencia', 'tema');
       compToUi_colors();
-    } catch (error) {
+    } catch (err) {
       tema_aparenciaDrop.selection = obj.aparencia_end_page.tema - 1;
     }
   };
@@ -925,7 +925,7 @@ function endPagePresetDialog() {
         return;
       }
       obj.servico_end_page.subtitulo = subtitulo_servico.text;
-    } catch (error) {
+    } catch (err) {
       subtitulo_layout.value = obj.layout_end_page.subtitulo;
     }
   };
@@ -942,7 +942,7 @@ function endPagePresetDialog() {
         return;
       }
       obj.layout_end_page.foto_layer = foto_layoutDrop.selection;
-    } catch (error) {
+    } catch (err) {
       foto_layout.value = obj.layout_end_page.foto;
     }
   };
@@ -952,7 +952,7 @@ function endPagePresetDialog() {
   footage_layout.onClick = function () {
     try {
       var val = uiToComp_layoutFxValue(this, 'footage');
-    } catch (error) {
+    } catch (err) {
       footage_layout.value = obj.layout_end_page.footage;
     }
   };
@@ -969,7 +969,7 @@ function endPagePresetDialog() {
         return;
       }
       obj.layout_end_page.pattern_layer = pattern_layoutDrop.selection;
-    } catch (error) {
+    } catch (err) {
       pattern_layout.value = obj.layout_end_page.pattern;
     }
   };
@@ -988,7 +988,7 @@ function endPagePresetDialog() {
     try {
       var aItem = app.project.activeItem;
       livre_servico.text = textContent(aItem.layer('txt_data e horario'));
-    } catch (error) { }
+    } catch (err) { }
   };
 
   //---------------------------------------------------------

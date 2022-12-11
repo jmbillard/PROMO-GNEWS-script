@@ -55,7 +55,7 @@ copyAMEPresetsBtn.onClick = function () {
     if (presetsAMEFolder.exists) {
       try {
         copyFolderContent(unzipPath, presetsAMEPath);
-      } catch (error) { }
+      } catch (err) { }
     }
   }
   removeFolder(downFolder); // → delete temp folder

@@ -410,11 +410,17 @@ function prefsDialog() {
 		getURLContent(codeURLArray, pathArray); // → download files on codeURLArray
 
 		// copy downloaded files...
-		for (var p = 0; p < destPathArray.length; p++) {
-			if (homeOffice && p > 0) break; // only updates local folders
+
+		if (homeOffice) copyFolderContent(downPath, destPathArray[0]);
+		
+		if (!homeOffice) {
 			try {
-				copyFolderContent(downPath, destPathArray[p]);
-			} catch (error) {}
+				copyFolderContent(downPath, destPathArray[2]);
+			
+			} catch (err) {
+				alert('nope... (っ °Д °;)っ \n\n' + error.message);
+				copyFolderContent(downPath, destPathArray[0]);
+			}
 		}
 		showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
 		wPref.close();
