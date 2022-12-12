@@ -55,7 +55,7 @@ function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
   
   var hMargin = 68;
-  var vMargin = 10;
+  var vMargin = 40;
   
   // horizontal layout
   if (wLayout == 'row') {
@@ -67,6 +67,7 @@ function setLayout() {
     tabsGrp.menu.margins = [hMargin, 0, hMargin, 0];
     leftGrp.margins = [5, 0, 0, 0];
 
+    divHeight = 20;
     // color buttons
     for (var c1 = 1; c1 < colorSubGrp1.children.length; c1++) {
       colorSubGrp1.children[c1].minimumSize = [20, 20];
@@ -97,25 +98,26 @@ function setLayout() {
     rbAlignment = 'top';
 
     // [left, top, right, bottom]
-    mainGrp.margins = [0, 0, 0, 20];
+    mainGrp.margins = [0, 0, 0, 30];
     tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
     leftGrp.margins = [0, 0, 0, 5];
 
+    divHeight = 10;
     // color buttons
     for (var b1 = 1; b1 < colorSubGrp1.children.length; b1++) {
       colorSubGrp1.children[b1].minimumSize = [vMin, 10];
       colorSubGrp1.children[b1].maximumSize = [80, 20];
-      colorSubGrp1.children[b1].size = [w.size.width - 8, (w.size.height - 500) / 22];
+      colorSubGrp1.children[b1].size = [w.size.width - 8, (w.size.height - 400) / 22];
     }
     for (var b2 = 1; b2 < colorSubGrp2.children.length; b2++) {
       colorSubGrp2.children[b2].minimumSize = [vMin, 10];
       colorSubGrp2.children[b2].maximumSize = [80, 20];
-      colorSubGrp2.children[b2].size = [w.size.width - 8, (w.size.height - 500) / 22];
+      colorSubGrp2.children[b2].size = [w.size.width - 8, (w.size.height - 400) / 22];
     }
     for (var b3 = 1; b3 < colorSubGrp3.children.length; b3++) {
       colorSubGrp3.children[b3].minimumSize = [vMin, 10];
       colorSubGrp3.children[b3].maximumSize = [80, 20];
-      colorSubGrp3.children[b3].size = [w.size.width - 8, (w.size.height - 500) / 22];
+      colorSubGrp3.children[b3].size = [w.size.width - 8, (w.size.height - 400) / 22];
     }
     // error tab
     errTxt.visible = false;
@@ -155,6 +157,11 @@ function setLayout() {
   for (var t = 0; t < tabs.length; t++) {
     tabs[t].orientation = wLayout;
     tabs[t].spacing = 8;
+  }
+
+  // all dividers
+  for (var d = 0; d < tabDividers.length; d++) {
+    tabDividers[d].size.height = divHeight;
   }
 
   leftGrp.alignment = ltAlignment;
@@ -282,4 +289,20 @@ function getTabSubGroups() {
     }
   }
   return tabSubGrps;
+}
+
+// all tab subgroups except keyStatsGrp...
+function getTabDividers() {
+  var tabDividers = [];
+
+  for (var st = 0; st < tabs.length; st++) {
+    
+    for (var g = 0; g < tabs[st].children.length; g++) {
+      var div = tabs[st].children[g];
+
+      if (div.properties == undefined) continue;
+      if (div.properties.name == 'div') tabDividers.push(div);
+    }
+  }
+  return tabDividers;
 }
