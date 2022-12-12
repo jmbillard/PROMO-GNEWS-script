@@ -306,3 +306,27 @@ function getTabDividers() {
   }
   return tabDividers;
 }
+
+// all tab subgroups except keyStatsGrp...
+function getLabels() {
+  var uiLabels = [];
+
+  for (var st = 0; st < tabSubGrps.length; st++) {
+    
+    for (var l = 0; l < tabSubGrps[st].children.length; l++) {
+      var lab = tabSubGrps[st].children[l];
+
+      if (lab.properties == undefined) continue;
+      if (lab.properties.name != 'label') continue;
+      
+      tabDividers.push(lab);
+
+      setTxtColor(lab, sTxtColor);
+      lab.minimumSize = [vMin, 20];
+      lab.justify = 'center';
+      lab.helpTip = lab.text;
+      lab.properties.truncate = 'end';
+    }
+  }
+  return uiLabels;
+}
