@@ -160,23 +160,31 @@ limitSld.onChange = function () {
 limitSld.addEventListener('click', function (c) {
   if (c.button == 2) {
 
-    var input = Window.prompt('value:', limitSld.value, 'break text')
-      .match(/\d/g);
+    var pos = [
+      c.screenX + 10,
+      c.screenY - 16
+    ];
 
-    input = parseInt(input) * 10;
-    limitSld.value = input < 100 ? input : 100;
-    limitTxt.text = input;
+    var input = inputDialog('title', sliderIcon, this.value, pos)
+      .match(/\d+/);
 
-    var aItem = app.project.activeItem;
-    var selLayers = aItem != null ? aItem.selectedLayers : [];
+    alert(input);
+    // var input = Window.prompt('value:', limitSld.value, 'break text')
+
+    // input = parseInt(input) * 10;
+    // limitSld.value = input < 100 ? input : 100;
+    // limitTxt.text = input;
+
+    // var aItem = app.project.activeItem;
+    // var selLayers = aItem != null ? aItem.selectedLayers : [];
   
-    if (aItem != null) {
-      app.beginUndoGroup('break text');
+    // if (aItem != null) {
+    //   app.beginUndoGroup('break text');
   
-      for (i = 0; i < selLayers.length; i++) {
-        lineBreak(selLayers[i], parseInt(input));
-      }
-      app.endUndoGroup();
-    }
+    //   for (i = 0; i < selLayers.length; i++) {
+    //     lineBreak(selLayers[i], parseInt(input));
+    //   }
+    //   app.endUndoGroup();
+    // }
   }
 });
