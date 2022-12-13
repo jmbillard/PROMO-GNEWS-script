@@ -172,13 +172,11 @@ function setLayout() {
     GNEWS_LOGO.size.width = 0;
     progImg.size.width = 0;
     aboutTxt.text = '...';
-    aboutTxt.size.width = vMin;
   } else {
     GNEWS_LOGO.visible = true;
     GNEWS_LOGO.size.width = 70;
     progImg.size.width = 70;
     aboutTxt.text = vStr;
-    aboutTxt.size.width = 60;
   }
   updateLayout();
 }
