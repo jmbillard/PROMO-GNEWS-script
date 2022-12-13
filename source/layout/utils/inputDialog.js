@@ -26,9 +26,20 @@ function inputDialog(title, icon, val, pos) {
   wInput.location = pos;
   //---------------------------------------------------------
 
+  wInput.onShow = function () {
+
+    inputValTxt.active = true;
+  };
+
   inputValTxt.onEnterKey = function () {
 
     wInput.close();
+    return inputValTxt.text;
+  };
+
+  wInput.onclose = function () {
+
+    return inputValTxt.text;
   };
 
   wInput.show();

@@ -143,10 +143,17 @@ function templateDialog() {
       s = s.parent; // current parent...
       fileName = s.toString() + '/' + fileName; // → current parent/.../template name
     }
-    var templateFile = new File(templatesPath + '/' + fileName); // → template file object
     
-    var IO = new ImportOptions(templateFile); // import options...
-    app.project.importFile(IO); // → import template project
+    try {
+      var templateFile = new File(templatesPath + '/' + fileName); // → template file object
+      var IO = new ImportOptions(templateFile); // import options...
+      
+      app.project.importFile(IO); // → import template project
+      
+    } catch (err) {
+      alert(err.message);
+      return;
+    }
     wTemplates.close(); // → close window
   };
 

@@ -157,34 +157,34 @@ limitSld.onChange = function () {
 //---------------------------------------------------------
 
 // right click -> opens the git repo...
-limitSld.addEventListener('click', function (c) {
-  if (c.button == 2) {
+limitTxt.addEventListener('click', function (c) {
+  if (c.detail == 2) {
 
-    var pos = [
-      c.screenX + 10,
-      c.screenY - 16
-    ];
-
-    var input = inputDialog('title', sliderIcon, this.value, pos)
-      .match(/\d+/);
-
-    alert(input);
-    // var input = Window.prompt('value:', limitSld.value, 'break text')
-
-    // input = parseInt(input) * 10;
-    // limitSld.value = input < 100 ? input : 100;
-    // limitTxt.text = input;
-
-    // var aItem = app.project.activeItem;
-    // var selLayers = aItem != null ? aItem.selectedLayers : [];
+    try {
+      var pos = [
+        c.screenX + 10,
+        c.screenY - 16
+      ];
   
-    // if (aItem != null) {
-    //   app.beginUndoGroup('break text');
+      var input = inputDialog('title', sliderIcon, this.text, pos)
+        .replace(/\D/g, '');
   
-    //   for (i = 0; i < selLayers.length; i++) {
-    //     lineBreak(selLayers[i], parseInt(input));
-    //   }
-    //   app.endUndoGroup();
-    // }
+      //alert(input);
+      input = input != '' ||  parseInt(input) < 5 ? parseInt(input) : 5;
+      limitSld.value = input < 100 ? input : 100;
+      limitTxt.text = input;
+  
+      var aItem = app.project.activeItem;
+      var selLayers = aItem != null ? aItem.selectedLayers : [];
+    
+      if (aItem != null) {
+        app.beginUndoGroup('break text');
+    
+        for (i = 0; i < selLayers.length; i++) {
+          lineBreak(selLayers[i], parseInt(input));
+        }
+        app.endUndoGroup();
+      }  
+    } catch (err) { }
   }
 });
