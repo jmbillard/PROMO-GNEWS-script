@@ -416,7 +416,7 @@ function prefsDialog() {
 		
 		if (!homeOffice) {
 			try {
-				copyFolderContent(downPath, destPathArray[2]);
+				copyFolderContent(downPath, destPathArray[1]);
 			
 			} catch (err) {
 				alert('nope... (っ °Д °;)っ \n\n' + error.message);
