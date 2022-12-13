@@ -233,6 +233,7 @@ function prefsDialog() {
 		devMode = this.value;
 		JSONPrefsObj.devMode = devMode;
 		devBtn.enabled = devBtn.visible = devMode;
+		setLayout();
 		savePrefs(); // → save preferences.json
 	};
 

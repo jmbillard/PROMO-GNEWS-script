@@ -53,15 +53,18 @@ function setTxtColor(sTxt, color) {
 
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
-  
-  var hMargin = 68;
-  var vMargin = 40;
-  
+
+  var hOffset = devMode ? 0 : 12;
+  var hMargin = 90 + hOffset;
+  var vMargin = 40 + hOffset;
+
+  aboutTxt.text = vStr;
+
   // horizontal layout
   if (wLayout == 'row') {
     ltAlignment = 'left';
     rbAlignment = 'right';
-    
+
     // [left, top, right, bottom]
     mainGrp.margins = [80, 0, 0, 0];
     tabsGrp.menu.margins = [hMargin, 0, hMargin, 0];
@@ -77,12 +80,12 @@ function setLayout() {
     for (var c2 = 1; c2 < colorSubGrp2.children.length; c2++) {
       colorSubGrp2.children[c2].minimumSize = [10, 20];
       colorSubGrp2.children[c2].maximumSize = [20, 20];
-      colorSubGrp2.children[c2].size = [(w.size.width - 500) /22, 20];
+      colorSubGrp2.children[c2].size = [(w.size.width - 520) / 22, 20];
     }
     for (var c3 = 1; c3 < colorSubGrp3.children.length; c3++) {
       colorSubGrp3.children[c3].minimumSize = [10, 20];
       colorSubGrp3.children[c3].maximumSize = [20, 20];
-      colorSubGrp3.children[c3].size = [(w.size.width - 500) /22, 20];
+      colorSubGrp3.children[c3].size = [(w.size.width - 520) / 22, 20];
     }
     // error tab
     errTxt.visible = true;
@@ -98,26 +101,26 @@ function setLayout() {
     rbAlignment = 'top';
 
     // [left, top, right, bottom]
-    mainGrp.margins = [0, 0, 0, 30];
+    mainGrp.margins = [0, 0, 0, 24];
     tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
     leftGrp.margins = [0, 0, 0, 5];
 
     divHeight = 10;
     // color buttons
     for (var b1 = 1; b1 < colorSubGrp1.children.length; b1++) {
-      colorSubGrp1.children[b1].minimumSize = [vMin, 10];
+      colorSubGrp1.children[b1].minimumSize = [vMin, 20];
       colorSubGrp1.children[b1].maximumSize = [80, 20];
-      colorSubGrp1.children[b1].size = [w.size.width - 8, (w.size.height - 400) / 22];
+      colorSubGrp1.children[b1].size = [w.size.width - 8, (w.size.height - 402) / 22];
     }
     for (var b2 = 1; b2 < colorSubGrp2.children.length; b2++) {
       colorSubGrp2.children[b2].minimumSize = [vMin, 10];
       colorSubGrp2.children[b2].maximumSize = [80, 20];
-      colorSubGrp2.children[b2].size = [w.size.width - 8, (w.size.height - 400) / 22];
+      colorSubGrp2.children[b2].size = [w.size.width - 8, (w.size.height - 402) / 22];
     }
     for (var b3 = 1; b3 < colorSubGrp3.children.length; b3++) {
       colorSubGrp3.children[b3].minimumSize = [vMin, 10];
       colorSubGrp3.children[b3].maximumSize = [80, 20];
-      colorSubGrp3.children[b3].size = [w.size.width - 8, (w.size.height - 400) / 22];
+      colorSubGrp3.children[b3].size = [w.size.width - 8, (w.size.height - 402) / 22];
     }
     // error tab
     errTxt.visible = false;
@@ -127,20 +130,29 @@ function setLayout() {
     progTxt1.size.width = 0;
     progTxt2.visible = false;
     progTxt2.size.width = 0;
+
+    GNEWS_LOGO.size.width = w.size.width - 8;
+    progImg.size.width = w.size.width - 8;
+
+    if (w.size.width < vMin + 8) {
+      GNEWS_LOGO.size.width = 0;
+      progImg.size.width = 0;
+      aboutTxt.text = '...';
+    }
   }
   imgGrp.orientation = wLayout;
-  
+
   // text tab - controls
   limitSld.size.width = w.size.width - 16;
 
   // animation tab - controls
   easeSld1.size.width = w.size.width - 16;
   easeSld2.size.width = w.size.width - 16;
-  
+
   // project tab - controls
   projIdTxt.size.width = w.size.width - 8;
   projNameTxt.size.width = w.size.width - 8;
-  
+
   // links tab - controls
   linkTxt2.size.width = w.size.width - 8;
 
@@ -152,13 +164,11 @@ function setLayout() {
     tabSubGrps[s].orientation = wLayout;
     tabSubGrps[s].spacing = 2;
   }
-
   // all tabs
   for (var t = 0; t < tabs.length; t++) {
     tabs[t].orientation = wLayout;
     tabs[t].spacing = 8;
   }
-
   // all dividers
   for (var d = 0; d < tabDividers.length; d++) {
     tabDividers[d].size.height = divHeight;
@@ -167,17 +177,7 @@ function setLayout() {
   leftGrp.alignment = ltAlignment;
   rightGrp.alignment = rbAlignment;
 
-  if (w.size.width < 70) {
-    GNEWS_LOGO.visible = false;
-    GNEWS_LOGO.size.width = 0;
-    progImg.size.width = 0;
-    aboutTxt.text = '...';
-  } else {
-    GNEWS_LOGO.visible = true;
-    GNEWS_LOGO.size.width = 70;
-    progImg.size.width = 70;
-    aboutTxt.text = vStr;
-  }
+  devBtn.size = devMode ? [24, 24] : [0, 0];
   updateLayout();
 }
 
@@ -276,7 +276,7 @@ function getTabSubGroups() {
   var tabSubGrps = [];
 
   for (var st = 0; st < tabs.length; st++) {
-    
+
     for (var g = 0; g < tabs[st].children.length; g++) {
       var subGrp = tabs[st].children[g];
 
@@ -294,7 +294,7 @@ function getTabDividers() {
   var tabDividers = [];
 
   for (var st = 0; st < tabs.length; st++) {
-    
+
     for (var g = 0; g < tabs[st].children.length; g++) {
       var div = tabs[st].children[g];
 
@@ -310,17 +310,17 @@ function getLabels() {
   var uiLabels = [];
 
   for (var st = 0; st < tabSubGrps.length; st++) {
-    
+
     for (var l = 0; l < tabSubGrps[st].children.length; l++) {
       var lab = tabSubGrps[st].children[l];
 
       if (lab.properties == undefined) continue;
       if (lab.properties.name != 'label') continue;
-      
+
       tabDividers.push(lab);
 
       setTxtColor(lab, sTxtColor);
-      lab.minimumSize = [vMin, 20];
+      lab.minimumSize = [vMin, 12];
       lab.justify = 'center';
       lab.helpTip = lab.text;
       lab.properties.truncate = 'end';
