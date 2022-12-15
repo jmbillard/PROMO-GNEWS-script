@@ -18,7 +18,7 @@ txtUpperBtn.onClick = function () {
 
   for (var i = 0; i < selLayers.length; i++) {
     var txt = textContent(selLayers[i]);
-    
+
     if (txt == '') continue;
     selLayers[i]
       .property('ADBE Text Properties')
@@ -42,7 +42,7 @@ txtLowerBtn.onClick = function () {
 
   for (i = 0; i < selLayers.length; i++) {
     var txt = textContent(selLayers[i]);
-    
+
     if (txt == '') continue;
     selLayers[i]
       .property('ADBE Text Properties')
@@ -66,13 +66,13 @@ txtTitleBtn.onClick = function () {
 
   for (i = 0; i < selLayers.length; i++) {
     var txt = textContent(selLayers[i]);
-    
+
     if (txt == '') continue;
     selLayers[i]
       .property('ADBE Text Properties')
       .property('ADBE Text Document')
       .setValue(txt.toTitleCase());
-      //.setValue(titleCase(txt));
+    //.setValue(titleCase(txt));
   }
   app.endUndoGroup();
 };
@@ -135,12 +135,13 @@ txtColumnBtn.onClick = function () {
 
 limitSld.onChanging = function () {
   this.value = parseInt(this.value);
-  limitTxt.text = this.value;
+  limitTxt.text = limitTxt.helpTip = this.value;
 };
 
 //---------------------------------------------------------
 
 limitSld.onChange = function () {
+  if (app.project.numItens == 0) return;
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
 
@@ -160,31 +161,36 @@ limitSld.onChange = function () {
 limitTxt.addEventListener('click', function (c) {
   if (c.detail == 2) {
 
-    try {
-      var pos = [
-        c.screenX + 10,
-        c.screenY - 16
-      ];
-  
-      var input = inputDialog('title', sliderIcon, this.text, pos)
+    var input = this.text;
+    var pos = [
+      c.screenX + 16,
+      c.screenY - 16
+    ];
+
+    // try {
+      input = inputDialog(this, pos)
+        .toString()
         .replace(/\D/g, '');
-  
-      //alert(input);
-      input = input != '' ||  parseInt(input) < 5 ? parseInt(input) : 5;
-      limitSld.value = input < 100 ? input : 100;
-      limitTxt.text = input;
-  
+
+      // if (input == '') return;
+      // if (app.project.numItens == 0) return;
+      input = parseInt(input) > 5 ? input : 5;
+      this.text = this.helpTip = input;
+      limitSld.value = parseInt(input) > 100 ? 100 : parseInt(input);
+
       var aItem = app.project.activeItem;
       var selLayers = aItem != null ? aItem.selectedLayers : [];
-    
+
       if (aItem != null) {
         app.beginUndoGroup('break text');
-    
+
         for (i = 0; i < selLayers.length; i++) {
           lineBreak(selLayers[i], parseInt(input));
         }
         app.endUndoGroup();
-      }  
-    } catch (err) { }
+      }
+    // } catch (err) {
+    //   alert(err.message);
+    // }
   }
 });
