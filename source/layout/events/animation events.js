@@ -112,6 +112,12 @@ easeSld1.onChanging = function () {
 };
 
 easeSld1.onChange = function () {
+	var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+	var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+	
+	easePrevGrp.remove(0);
+	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+	easePrevGrp.layout.layout(true);
 
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : null;
@@ -120,15 +126,15 @@ easeSld1.onChange = function () {
 	for (var l = 0; l < selLayers.length; l++) {
 		applyEase(selLayers[l]);
 	}
-	var suf1 =  Math.round(parseInt(easeSld1Txt.text) / 25) * 25;
-	var suf2 =  Math.round(parseInt(easeSld2Txt.text) / 25) * 25;
+};
+
+easeSld2.onChange = function () {
+	var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+	var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
 	
 	easePrevGrp.remove(0);
 	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
 	easePrevGrp.layout.layout(true);
-};
-
-easeSld2.onChange = function () {
 
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : null;
@@ -137,12 +143,6 @@ easeSld2.onChange = function () {
 	for (var l = 0; l < selLayers.length; l++) {
 		applyEase(selLayers[l]);
 	}
-	var suf1 =  Math.round(parseInt(easeSld1Txt.text) / 25) * 25;
-	var suf2 =  Math.round(parseInt(easeSld2Txt.text) / 25) * 25;
-	
-	easePrevGrp.remove(0);
-	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
-	easePrevGrp.layout.layout(true);
 };
 
 easeSld2.onChanging = function () {
