@@ -25,5 +25,5 @@ try {
   scriptFile.close();
 
 } catch (err) {
-  alert('nope... (っ °Д °;)っ \n\n' + error.message);
+  alert('nope... (っ °Д °;)っ\n\n' + err.message);
 }

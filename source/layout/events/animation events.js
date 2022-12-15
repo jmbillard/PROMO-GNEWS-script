@@ -107,7 +107,8 @@ copyInfBtn.onClick = function () {
 easeSld1.onChanging = function () {
 
 	this.value = Math.floor(this.value);
-	easeSld1Txt.text = easeSld1Txt.helpTip = this.value + '% out';
+	var val = this.value;
+	easeSld1Txt.text = easeSld1Txt.helpTip = val + '%';
 };
 
 easeSld1.onChange = function () {
@@ -117,41 +118,14 @@ easeSld1.onChange = function () {
 	easeOutInfluence = this.value;
 	
 	for (var l = 0; l < selLayers.length; l++) {
-		var aLayer = selLayers[l];
-		var selProps = aLayer.selectedProperties;
-
-		for (var p = 0; p < selProps.length; p++) {
-			var aProp = selProps[p];
-			var selKeys = aProp.selectedKeys;
-
-			for (var k = 0; k < selKeys.length; k++) {
-				var aKey = selKeys[k];
-
-				// if (selKeys.length > 1 && k == selKeys.length - 1) continue;
-
-				var easeIn = new KeyframeEase(0, easeInInfluence);
-				var easeOut = new KeyframeEase(0, easeOutInfluence);
-				var easeInArray = [easeIn];
-				var easeOutArray = [easeOut];
-				
-				try {
-					aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-
-				} catch (err) {
-
-					if (Array.isArray(aProp.value)) {
-	
-						for (var e = 1; e < aProp.value.length; e++) {
-							easeOutArray.push(easeOut);
-							easeInArray.push(easeIn);
-						}
-					}
-	
-					aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-				}
-			}
-		}
+		applyEase(selLayers[l]);
 	}
+	var suf1 =  Math.round(parseInt(easeSld1Txt.text) / 25) * 25;
+	var suf2 =  Math.round(parseInt(easeSld2Txt.text) / 25) * 25;
+	
+	easePrevGrp.remove(0);
+	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+	easePrevGrp.layout.layout(true);
 };
 
 easeSld2.onChange = function () {
@@ -161,47 +135,21 @@ easeSld2.onChange = function () {
 	easeInInfluence = 100 - this.value;
 	
 	for (var l = 0; l < selLayers.length; l++) {
-		var aLayer = selLayers[l];
-		var selProps = aLayer.selectedProperties;
-
-		for (var p = 0; p < selProps.length; p++) {
-			var aProp = selProps[p];
-			var selKeys = aProp.selectedKeys;
-
-			for (var k = 0; k < selKeys.length; k++) {
-				var aKey = selKeys[k];
-
-				// if (selKeys.length > 1 && k == 0) continue;
-
-				var easeOut = new KeyframeEase(0, easeOutInfluence);
-				var easeIn = new KeyframeEase(0, easeInInfluence);
-				var easeInArray = [easeIn];
-				var easeOutArray = [easeOut];
-				
-				try {
-					aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-
-				} catch (err) {
-
-					if (Array.isArray(aProp.value)) {
-	
-						for (var e = 1; e < aProp.value.length; e++) {
-							easeOutArray.push(easeOut);
-							easeInArray.push(easeIn);
-						}
-					}
-	
-					aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-				}
-			}
-		}
+		applyEase(selLayers[l]);
 	}
+	var suf1 =  Math.round(parseInt(easeSld1Txt.text) / 25) * 25;
+	var suf2 =  Math.round(parseInt(easeSld2Txt.text) / 25) * 25;
+	
+	easePrevGrp.remove(0);
+	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+	easePrevGrp.layout.layout(true);
 };
 
 easeSld2.onChanging = function () {
 
 	this.value = Math.floor(this.value);
-	easeSld2Txt.text = easeSld2Txt.helpTip = (100 - this.value) + '% in';
+	var val = 100 - this.value;
+	easeSld2Txt.text = easeSld2Txt.helpTip = val + '%';
 };
 
 //---------------------------------------------------------
@@ -216,34 +164,7 @@ pasteInfBtn.onClick = function () {
 	var selLayers = aItem != null ? aItem.selectedLayers : null;
 
 	for (var l = 0; l < selLayers.length; l++) {
-		var aLayer = selLayers[l];
-		var selProps = aLayer.selectedProperties;
-
-		for (var p = 0; p < selProps.length; p++) {
-			var aProp = selProps[p];
-			var selKeys = aProp.selectedKeys;
-
-			for (var k = 0; k < selKeys.length; k++) {
-				var aKey = selKeys[k];
-
-				try {
-					aProp.setTemporalEaseAtKey(aKey, keyData.inEase, keyData.outEase);
-				} catch (err) {
-					var inEase = [keyData.inEase[0]];
-					var outEase = [keyData.outEase[0]];
-
-					if (Array.isArray(aProp.value)) {
-
-						for (var e = 1; e < aProp.value.length; e++) {
-							inEase.push(keyData.inEase[0]);
-							outEase.push(keyData.outEase[0]);
-						}
-					}
-					aProp.setTemporalEaseAtKey(aKey, inEase, outEase);
-				}
-				aProp.setInterpolationTypeAtKey(aKey, keyData.inType, keyData.outType);
-			}
-		}
+			applyEase(selLayers[l]);
 	}
 };
 
@@ -265,7 +186,7 @@ easeSld1Txt.addEventListener('click', function (c) {
 		input = parseInt(input);
 		input = input > 0 ? input : 1;
 		input = input < 99 ? input : 99;
-		this.text = this.helpTip = input + '% out';
+		this.text = this.helpTip = input + '%';
     easeSld1.value = input;
 	
 		var aItem = app.project.activeItem;
@@ -274,39 +195,7 @@ easeSld1Txt.addEventListener('click', function (c) {
 		easeInInfluence = 100 - easeSld2.value;
 
 		for (var l = 0; l < selLayers.length; l++) {
-			var aLayer = selLayers[l];
-			var selProps = aLayer.selectedProperties;
-	
-			for (var p = 0; p < selProps.length; p++) {
-				var aProp = selProps[p];
-				var selKeys = aProp.selectedKeys;
-	
-				for (var k = 0; k < selKeys.length; k++) {
-					var aKey = selKeys[k];
-	
-					// if (selKeys.length > 1 && k == selKeys.length - 1) continue;
-	
-					var easeIn = new KeyframeEase(0, easeInInfluence);
-					var easeOut = new KeyframeEase(0, easeOutInfluence);
-					var easeInArray = [easeIn];
-					var easeOutArray = [easeOut];
-					
-					try {
-						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-	
-					} catch (err) {
-	
-						if (Array.isArray(aProp.value)) {
-		
-							for (var e = 1; e < aProp.value.length; e++) {
-								easeOutArray.push(easeOut);
-								easeInArray.push(easeIn);
-							}
-						}
-						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-					}
-				}
-			}
+			applyEase(selLayers[l]);
 		}	
 	}
 });
@@ -329,7 +218,7 @@ easeSld2Txt.addEventListener('click', function (c) {
     input = parseInt(input);
     input = input > 0 ? input : 1;
     input = input < 99 ? input : 99;
-    this.text = this.helpTip = input + '% in';
+    this.text = this.helpTip = input + '%';
     easeSld2.value = 100 - input;
 
 		var aItem = app.project.activeItem;
@@ -338,40 +227,7 @@ easeSld2Txt.addEventListener('click', function (c) {
 		easeInInfluence = 100 - easeSld2.value;
 		
 		for (var l = 0; l < selLayers.length; l++) {
-			var aLayer = selLayers[l];
-			var selProps = aLayer.selectedProperties;
-	
-			for (var p = 0; p < selProps.length; p++) {
-				var aProp = selProps[p];
-				var selKeys = aProp.selectedKeys;
-	
-				for (var k = 0; k < selKeys.length; k++) {
-					var aKey = selKeys[k];
-	
-					// if (selKeys.length > 1 && k == 0) continue;
-	
-					var easeOut = new KeyframeEase(0, easeOutInfluence);
-					var easeIn = new KeyframeEase(0, easeInInfluence);
-					var easeInArray = [easeIn];
-					var easeOutArray = [easeOut];
-					
-					try {
-						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-	
-					} catch (err) {
-	
-						if (Array.isArray(aProp.value)) {
-		
-							for (var e = 1; e < aProp.value.length; e++) {
-								easeOutArray.push(easeOut);
-								easeInArray.push(easeIn);
-							}
-						}
-		
-						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-					}
-				}
-			}
+			applyEase(selLayers[l]);
 		}
 	}
 });

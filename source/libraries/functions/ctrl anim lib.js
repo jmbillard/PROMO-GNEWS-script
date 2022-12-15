@@ -200,3 +200,38 @@ function findCenter(lArray) {
 		minZ + (maxZ - minZ) / 2
 	];
 }
+
+
+function applyEase(sLayer) {
+	var selProps = sLayer.selectedProperties;
+
+	for (var p = 0; p < selProps.length; p++) {
+		var aProp = selProps[p];
+		var selKeys = aProp.selectedKeys;
+
+		for (var k = 0; k < selKeys.length; k++) {
+			var aKey = selKeys[k];
+
+			var easeOut = new KeyframeEase(0, easeOutInfluence);
+			var easeIn = new KeyframeEase(0, easeInInfluence);
+			var easeInArray = [easeIn];
+			var easeOutArray = [easeOut];
+
+			try {
+				aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+
+			} catch (err) {
+
+				if (Array.isArray(aProp.value)) {
+
+					for (var e = 1; e < aProp.value.length; e++) {
+						easeOutArray.push(easeOut);
+						easeInArray.push(easeIn);
+					}
+				}
+
+				aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+			}
+		}
+	}
+}

@@ -21,6 +21,6 @@
 try {
   #include '~/PROMO-GNEWS-script/PROMO GNEWS.js'; // → UI definition file
 } catch (err) {
-  alert('nope... (っ °Д °;)っ');
+  alert('nope... (っ °Д °;)っ\n\n' + err.message);
 }
 /* jshint ignore:end */
