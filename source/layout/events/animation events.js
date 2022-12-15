@@ -10,6 +10,9 @@ copyInfBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	var selLayer = aItem != null ? aItem.selectedLayers[0] : null;
 	var aProp = selLayer != null ? selLayer.selectedProperties[0] : null;
+
+	if (aProp == null) return;
+
 	// error...
 	if (aProp.selectedKeys.length != 1) {
 		showTabErr('select 1 keyframe');
@@ -19,8 +22,7 @@ copyInfBtn.onClick = function () {
 	var kIn = aProp.keyInTemporalEase(k)[0];
 	var kOut = aProp.keyOutTemporalEase(k)[0];
 	// keyframe data formatted as tooltip...
-	var kHelp =
-		selLayer.name + ' ' + aProp.name + ' key ' + k + ':\n\n';
+	var kHelp = selLayer.name + ' ' + aProp.name + ' key ' + k + ':\n\n';
 	kHelp +=
 		'<< in\nspeed: ' + kIn.speed.toFixed(1) +
 		'\ninfluence: ' + kIn.influence.toFixed(1) +
@@ -120,7 +122,7 @@ easeSld1.onChange = function () {
 	easePrevGrp.layout.layout(true);
 
 	var aItem = app.project.activeItem;
-	var selLayers = aItem != null ? aItem.selectedLayers : null;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
 	easeOutInfluence = this.value;
 	
 	for (var l = 0; l < selLayers.length; l++) {
@@ -137,9 +139,9 @@ easeSld2.onChange = function () {
 	easePrevGrp.layout.layout(true);
 
 	var aItem = app.project.activeItem;
-	var selLayers = aItem != null ? aItem.selectedLayers : null;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
 	easeInInfluence = 100 - this.value;
-	
+
 	for (var l = 0; l < selLayers.length; l++) {
 		applyEase(selLayers[l]);
 	}
@@ -161,7 +163,7 @@ pasteInfBtn.onClick = function () {
 		return;
 	}
 	var aItem = app.project.activeItem;
-	var selLayers = aItem != null ? aItem.selectedLayers : null;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
 
 	for (var l = 0; l < selLayers.length; l++) {
 			applyEase(selLayers[l]);
@@ -190,7 +192,7 @@ easeSld1Txt.addEventListener('click', function (c) {
     easeSld1.value = input;
 	
 		var aItem = app.project.activeItem;
-		var selLayers = aItem != null ? aItem.selectedLayers : null;
+		var selLayers = aItem != null ? aItem.selectedLayers : [];
 		easeOutInfluence = easeSld1.value;
 		easeInInfluence = 100 - easeSld2.value;
 
@@ -222,10 +224,10 @@ easeSld2Txt.addEventListener('click', function (c) {
     easeSld2.value = 100 - input;
 
 		var aItem = app.project.activeItem;
-		var selLayers = aItem != null ? aItem.selectedLayers : null;
+		var selLayers = aItem != null ? aItem.selectedLayers : [];
 		easeOutInfluence = easeSld1.value;
 		easeInInfluence = 100 - easeSld2.value;
-		
+
 		for (var l = 0; l < selLayers.length; l++) {
 			applyEase(selLayers[l]);
 		}
