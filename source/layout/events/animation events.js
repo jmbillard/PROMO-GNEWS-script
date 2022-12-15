@@ -191,6 +191,13 @@ easeSld1Txt.addEventListener('click', function (c) {
 		this.text = this.helpTip = input + '%';
     easeSld1.value = input;
 	
+		var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+		var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+		
+		easePrevGrp.remove(0);
+		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+		easePrevGrp.layout.layout(true);
+	
 		var aItem = app.project.activeItem;
 		var selLayers = aItem != null ? aItem.selectedLayers : [];
 		easeOutInfluence = easeSld1.value;
@@ -223,6 +230,13 @@ easeSld2Txt.addEventListener('click', function (c) {
     this.text = this.helpTip = input + '%';
     easeSld2.value = 100 - input;
 
+		var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+		var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+		
+		easePrevGrp.remove(0);
+		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+		easePrevGrp.layout.layout(true);
+	
 		var aItem = app.project.activeItem;
 		var selLayers = aItem != null ? aItem.selectedLayers : [];
 		easeOutInfluence = easeSld1.value;
