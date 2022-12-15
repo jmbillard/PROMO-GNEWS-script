@@ -1,3 +1,58 @@
+
+/*
+
+---------------------------------------------------------------
+> 🗃️ project tab
+---------------------------------------------------------------
+
+*/
+
+currentGrp = tabsGrp.project;
+var projSubGrp1 = currentGrp.add('group');
+
+var projIdTxt = projSubGrp1.add('edittext', undefined, 'proj id');
+projIdTxt.maximumSize.width = 100;
+projIdTxt.minimumSize.width = vMin;
+projIdTxt.helpTip = 'project id';
+var insertUserIdBtn = projSubGrp1.add('iconbutton', undefined, addIcon, { name: 'btn', style: 'toolbutton' });
+insertUserIdBtn.helpTip = 'insert user with project ID';
+
+var projNameTxt = projSubGrp1.add('edittext', undefined, 'proj name');
+projNameTxt.maximumSize.width = 100;
+projNameTxt.minimumSize.width = vMin;
+projNameTxt.helpTip = 'project name';
+var renameItemBtn = projSubGrp1.add('iconbutton', undefined, chkIcon, { name: 'btn', style: 'toolbutton' });
+renameItemBtn.helpTip = 'quick template rename';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+var projOrgBtn = currentGrp.add('iconbutton', undefined, templateIcon, { name: 'btn', style: 'toolbutton' });
+projOrgBtn.helpTip = 'organize project | organization tags';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+// end page presets UI button...
+var endPagePresetBtn = currentGrp.add('iconbutton', undefined, endPagePresetIcon, { name: 'btn', style: 'toolbutton' });
+endPagePresetBtn.helpTip = 'end page JSON presets';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+var projSubGrp2 = currentGrp.add('group');
+
+var collectTogBtn = projSubGrp2.add('iconbutton', undefined, fldTogIcon, { name: 'btn', style: 'toolbutton', toggle: 1 });
+collectTogBtn.helpTip = 'collect files';
+
+var collectFontsTogBtn = projSubGrp2.add('iconbutton', undefined, txtTogIcon, { name: 'btn', style: 'toolbutton', toggle: 1 });
+collectFontsTogBtn.helpTip = 'collect fonts';
+
+var saveBtn = projSubGrp2.add('iconbutton', undefined, quickSaveIcon, { name: 'btn', style: 'toolbutton' });
+saveBtn.helpTip = 'quick project save';
+
 /*
 
 ---------------------------------------------------------------
@@ -130,11 +185,11 @@ saveBtn.onClick = function () {
       openFolder(saveFolder);
     }
   }
-/*   if (appV > 22) {
-    executeCommandID('Save a Copy As 22.x...');
-    return;
-  }*/
- };
+  /*   if (appV > 22) {
+      executeCommandID('Save a Copy As 22.x...');
+      return;
+    }*/
+};
 
 //---------------------------------------------------------
 

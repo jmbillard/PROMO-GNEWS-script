@@ -1,6 +1,74 @@
 /*
 
 ---------------------------------------------------------------
+> 🔥 fx tab
+---------------------------------------------------------------
+
+*/
+
+currentGrp = tabsGrp.fx;
+
+var shpAdjBtn = currentGrp.add('iconbutton', undefined, shpAdjIcon, { name: 'btn', style: 'toolbutton' });
+shpAdjBtn.helpTip = 'adjustment layer';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+var fxSubGrp1 = currentGrp.add('group');
+
+var curBtn = fxSubGrp1.add('iconbutton', undefined, curIcon, { name: 'btn', style: 'toolbutton' });
+curBtn.helpTip = 'curves';
+
+var levBtn = fxSubGrp1.add('iconbutton', undefined, levIcon, { name: 'btn', style: 'toolbutton' });
+levBtn.helpTip = 'levels';
+
+var lumBtn = fxSubGrp1.add('iconbutton', undefined, lumIcon, { name: 'btn', style: 'toolbutton' });
+lumBtn.helpTip = 'lumetri color';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, hSpacer);
+var fxSubGrp2 = currentGrp.add('group');
+
+var gaublurBtn = fxSubGrp2.add('iconbutton', undefined, gaublurIcon, { name: 'btn', style: 'toolbutton' });
+gaublurBtn.helpTip = 'gaussian blur';
+
+var comblurBtn = fxSubGrp2.add('iconbutton', undefined, comblurIcon, { name: 'btn', style: 'toolbutton' });
+comblurBtn.helpTip = 'compound blur';
+
+var lensblurBtn = fxSubGrp2.add('iconbutton', undefined, lensblurIcon, { name: 'btn', style: 'toolbutton' });
+lensblurBtn.helpTip = 'lens blur';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, hSpacer);
+var fxSubGrp3 = currentGrp.add('group');
+
+var fillBtn = fxSubGrp3.add('iconbutton', undefined, fillIcon, { name: 'btn', style: 'toolbutton' });
+fillBtn.helpTip = 'fill';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, hSpacer);
+var fxSubGrp4 = currentGrp.add('group');
+
+var glassBtn = fxSubGrp4.add('iconbutton', undefined, glassIcon, { name: 'btn', style: 'toolbutton' });
+glassBtn.helpTip = '3d glasses';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, hSpacer);
+var fxSubGrp5 = currentGrp.add('group');
+
+var fracBtn = fxSubGrp5.add('iconbutton', undefined, fracIcon, { name: 'btn', style: 'toolbutton' });
+fracBtn.helpTip = 'fractal noise';
+
+var grainBtn = fxSubGrp5.add('iconbutton', undefined, grainIcon, { name: 'btn', style: 'toolbutton' });
+grainBtn.helpTip = 'add grain';
+
+/*
+
+---------------------------------------------------------------
 > 🔥 fx tab events
 ---------------------------------------------------------------
 

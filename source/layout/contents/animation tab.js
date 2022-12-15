@@ -1,3 +1,79 @@
+
+/*
+
+---------------------------------------------------------------
+> 🚶 anim tab
+---------------------------------------------------------------
+
+*/
+
+currentGrp = tabsGrp.animation;
+var animSubGrp1 = currentGrp.add('group');
+
+// copy keyframe influences...
+var copyInfBtn = animSubGrp1.add('iconbutton', undefined, copyInfluenceIcon, { name: 'btn', style: 'toolbutton' });
+copyInfBtn.helpTip = 'copy keyframe influence';
+
+var keyStatsGrp = animSubGrp1.add('group', undefined, { name: 'keyStatsGrp' });
+keyStatsGrp.orientation = 'stack';
+
+// keyframe images...
+for (var kf = 0; kf < keyImgs.length; kf++) {
+	var keyImg = keyStatsGrp.add('image', undefined, keyImgs[kf], { name: 'keyImg' + kf });
+	keyImg.helpTip = 'no keyframe data';
+
+	// only the first keyframe image is visible...
+	if (kf > 0) keyImg.visible = false;
+}
+
+// paste keyframe influences...
+var pasteInfBtn = animSubGrp1.add('iconbutton', undefined, pasteInfluenceIcon, { name: 'btn', style: 'toolbutton' });
+pasteInfBtn.helpTip = 'paste keyframe influence';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+var animSubGrp2 = currentGrp.add('group');
+
+var easeSld1Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' });
+
+var easeSld1 = animSubGrp2.add('slider', undefined, 1, 1, 99);
+easeSld1.helpTip = 'ease out influence';
+easeSld1.maximumSize.width = 80;
+easeSld1.minimumSize.width = vMin;
+
+var easePrevGrp = animSubGrp2.add('group');
+easePrevGrp.add('image', undefined, easePrev.img00);
+
+var easeSld2 = animSubGrp2.add('slider', undefined, 99, 1, 99);
+easeSld2.helpTip = 'ease in influence';
+easeSld2.maximumSize.width = 80;
+easeSld2.minimumSize.width = vMin;
+
+var easeSld2Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' });
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+var lockTrmBtn = currentGrp.add('iconbutton', undefined, lockPropIcon, { name: 'btn', style: 'toolbutton' });
+lockTrmBtn.helpTip = 'lock transform properties';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+var layerRandBtn = currentGrp.add('iconbutton', undefined, randomizeLayerTimesIcon, { name: 'btn', style: 'toolbutton' });
+layerRandBtn.helpTip = 'randomize layer times';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+// tools button...
+var toolBtn = currentGrp.add('iconbutton', undefined, rigToolsIcon, { name: 'btn', style: 'toolbutton' });
+toolBtn.helpTip = 'rigs and tools';
+
 /*
 
 ---------------------------------------------------------------
@@ -114,9 +190,9 @@ easeSld1.onChanging = function () {
 };
 
 easeSld1.onChange = function () {
-	var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
-	var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
-	
+	var suf1 = Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+	var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+
 	easePrevGrp.remove(0);
 	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
 	easePrevGrp.layout.layout(true);
@@ -124,16 +200,16 @@ easeSld1.onChange = function () {
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : [];
 	easeOutInfluence = this.value;
-	
+
 	for (var l = 0; l < selLayers.length; l++) {
 		applyEase(selLayers[l]);
 	}
 };
 
 easeSld2.onChange = function () {
-	var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
-	var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
-	
+	var suf1 = Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+	var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+
 	easePrevGrp.remove(0);
 	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
 	easePrevGrp.layout.layout(true);
@@ -166,7 +242,7 @@ pasteInfBtn.onClick = function () {
 	var selLayers = aItem != null ? aItem.selectedLayers : [];
 
 	for (var l = 0; l < selLayers.length; l++) {
-			applyEase(selLayers[l]);
+		applyEase(selLayers[l]);
 	}
 };
 
@@ -175,29 +251,29 @@ pasteInfBtn.onClick = function () {
 easeSld1Txt.addEventListener('click', function (c) {
 
 	if (c.detail == 2) {
-		
-    var pos = [
-      c.screenX + 16,
-      c.screenY - 16
-    ];
 
-    var input = inputDialog(parseInt(this.text).toString(), pos)
-      .toString()
-      .replace(/\D/g, '');
+		var pos = [
+			c.screenX + 16,
+			c.screenY - 16
+		];
+
+		var input = inputDialog(parseInt(this.text).toString(), pos)
+			.toString()
+			.replace(/\D/g, '');
 
 		input = parseInt(input);
 		input = input > 0 ? input : 1;
 		input = input < 99 ? input : 99;
 		this.text = this.helpTip = input + '%';
-    easeSld1.value = input;
-	
-		var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
-		var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
-		
+		easeSld1.value = input;
+
+		var suf1 = Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+		var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+
 		easePrevGrp.remove(0);
 		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
 		easePrevGrp.layout.layout(true);
-	
+
 		var aItem = app.project.activeItem;
 		var selLayers = aItem != null ? aItem.selectedLayers : [];
 		easeOutInfluence = easeSld1.value;
@@ -205,7 +281,7 @@ easeSld1Txt.addEventListener('click', function (c) {
 
 		for (var l = 0; l < selLayers.length; l++) {
 			applyEase(selLayers[l]);
-		}	
+		}
 	}
 });
 
@@ -214,29 +290,29 @@ easeSld1Txt.addEventListener('click', function (c) {
 easeSld2Txt.addEventListener('click', function (c) {
 
 	if (c.detail == 2) {
-		
-    var pos = [
-      c.screenX + 16,
-      c.screenY - 16
-    ];
 
-    var input = inputDialog(parseInt(this.text).toString(), pos)
-      .toString()
-      .replace(/\D/g, '');
+		var pos = [
+			c.screenX + 16,
+			c.screenY - 16
+		];
 
-    input = parseInt(input);
-    input = input > 0 ? input : 1;
-    input = input < 99 ? input : 99;
-    this.text = this.helpTip = input + '%';
-    easeSld2.value = 100 - input;
+		var input = inputDialog(parseInt(this.text).toString(), pos)
+			.toString()
+			.replace(/\D/g, '');
 
-		var suf1 =  Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
-		var suf2 =  Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
-		
+		input = parseInt(input);
+		input = input > 0 ? input : 1;
+		input = input < 99 ? input : 99;
+		this.text = this.helpTip = input + '%';
+		easeSld2.value = 100 - input;
+
+		var suf1 = Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+		var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+
 		easePrevGrp.remove(0);
 		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
 		easePrevGrp.layout.layout(true);
-	
+
 		var aItem = app.project.activeItem;
 		var selLayers = aItem != null ? aItem.selectedLayers : [];
 		easeOutInfluence = easeSld1.value;
@@ -309,6 +385,59 @@ layerRandBtn.onClick = function () {
 	}
 	app.endUndoGroup();
 };
+
+/*
+
+---------------------------------------------------------------
+> 🔨 tools tab
+---------------------------------------------------------------
+
+*/
+
+currentGrp = tabsGrp.tools;
+
+// dynamic arrow rig...
+var arrowBtn = currentGrp.add('iconbutton', undefined, arrowIcon, { name: 'btn', style: 'toolbutton' });
+arrowBtn.helpTip = 'simple arrow rig';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+// simple counter rig...
+var counterBtn = currentGrp.add('iconbutton', undefined, counterIcon, { name: 'btn', style: 'toolbutton' });
+counterBtn.helpTip = 'make counter rig';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, hSpacer);
+var toolsSubGrp1 = currentGrp.add('group');
+
+// text typing rig...
+var typeAnimBtn = toolsSubGrp1.add('iconbutton', undefined, typewriterIcon, { name: 'btn', style: 'toolbutton' });
+typeAnimBtn.helpTip = 'typewriter animation';
+
+var wordsBtn = toolsSubGrp1.add('iconbutton', undefined, wordsIcon, { name: 'btn', style: 'toolbutton' });
+wordsBtn.helpTip = 'words animation';
+
+var simpleBoxBtn = toolsSubGrp1.add('iconbutton', undefined, boxIcon, { name: 'btn', style: 'toolbutton' });
+simpleBoxBtn.helpTip = 'simple box bg base';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+// wiggle position rig...
+var wigBtn = currentGrp.add('iconbutton', undefined, wigIcon, { name: 'btn', style: 'toolbutton' });
+wigBtn.helpTip = 'wig rig';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+// simple ik rig...
+var ikBtn = currentGrp.add('iconbutton', undefined, ikIcon, { name: 'btn', style: 'toolbutton' });
+ikBtn.helpTip = 'simple ik rig';
 
 /*
 

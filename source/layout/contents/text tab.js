@@ -1,6 +1,51 @@
 /*
 
 ---------------------------------------------------------------
+> txt tab
+---------------------------------------------------------------
+
+*/
+
+currentGrp = tabsGrp.text;
+var textSubGrp1 = currentGrp.add('group');
+
+var txtUpperBtn = textSubGrp1.add('iconbutton', undefined, txtUpperIcon, { name: 'btn', style: 'toolbutton' });
+txtUpperBtn.helpTip = 'set text layer to upper case';
+
+var txtLowerBtn = textSubGrp1.add('iconbutton', undefined, txtLowerIcon, { name: 'btn', style: 'toolbutton' });
+txtLowerBtn.helpTip = 'set text layer to lower case';
+
+var txtTitleBtn = textSubGrp1.add('iconbutton', undefined, txtTitleIcon, { name: 'btn', style: 'toolbutton' });
+txtTitleBtn.helpTip = 'set text layer to title case';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+var textSubGrp2 = currentGrp.add('group');
+
+var txtCleanerBtn = textSubGrp2.add('iconbutton', undefined, txtCleanerIcon, { name: 'btn', style: 'toolbutton' });
+txtCleanerBtn.helpTip = 'deletes consecutive spaces and line breaks';
+
+var txtColumnBtn = textSubGrp2.add('iconbutton', undefined, txtColumnsIcon, { name: 'btn', style: 'toolbutton' });
+txtColumnBtn.helpTip = 'divides consecutive spaces in columns';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+var textSubGrp3 = currentGrp.add('group');
+
+var limitSld = textSubGrp3.add('slider', undefined, 60, 5, 100);
+limitSld.maximumSize.width = 100;
+limitSld.minimumSize.width = vMin;
+
+var limitTxt = textSubGrp3.add('statictext', undefined, limitSld.value, { name: 'label' });
+
+
+/*
+
+---------------------------------------------------------------
 > text tab events
 ---------------------------------------------------------------
 

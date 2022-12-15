@@ -1,3 +1,32 @@
+
+/*
+
+---------------------------------------------------------------
+> ✌️ app tab
+---------------------------------------------------------------
+
+*/
+
+currentGrp = tabsGrp.app;
+
+var installFontsBtn = currentGrp.add('iconbutton', undefined, fontsIcon, { name: 'btn', style: 'toolbutton' });
+installFontsBtn.helpTip = 'install fonts | open fonts folder';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+var copyAMEPresetsBtn = currentGrp.add('iconbutton', undefined, eprIcon, { name: 'btn', style: 'toolbutton' });
+copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+
+var templatesLocalBtn = currentGrp.add('iconbutton', undefined, aetIcon, { name: 'btn', style: 'toolbutton' });
+templatesLocalBtn.helpTip = 'install templates locally';
+templatesLocalBtn.enabled = false;
+
 /*
 
 ---------------------------------------------------------------

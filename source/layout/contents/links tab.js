@@ -1,3 +1,69 @@
+
+/*
+ 
+---------------------------------------------------------------
+> 🔗 links tab
+---------------------------------------------------------------
+ 
+*/
+
+currentGrp = tabsGrp.links;
+
+var linksSubGrp2 = currentGrp.add('group');
+
+var linkTxt1 = linksSubGrp2.add('statictext', undefined, 'sites:', { name: 'label' });
+linkTxt1.maximumSize.width = 30;
+
+var oneDriveBtn = linksSubGrp2.add('iconbutton', undefined, oneDriveIcon, { name: 'btn', style: 'toolbutton' });
+oneDriveBtn.helpTip = 'OneDrive globo';
+
+//---------------------------------------------------------
+
+linksSubGrp2.add('image', undefined, hSpacer);
+
+// var linksSubGrp3 = currentGrp.add('group');
+var trelloBtn = linksSubGrp2.add('iconbutton', undefined, trelloIcon, { name: 'btn', style: 'toolbutton' });
+trelloBtn.helpTip = 'trello promo GNEWS';
+
+var typeFormBtn = linksSubGrp2.add('iconbutton', undefined, typeFormIcon, { name: 'btn', style: 'toolbutton' });
+typeFormBtn.helpTip = 'type form globo';
+
+var plannerBtn = linksSubGrp2.add('iconbutton', undefined, plannerIcon, { name: 'btn', style: 'toolbutton' });
+plannerBtn.helpTip = 'planner globo';
+
+//---------------------------------------------------------
+
+currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+var linksSubGrp1 = currentGrp.add('group');
+
+var linkTxt2 = linksSubGrp1.add('statictext', undefined, 'folders:', { name: 'label' });
+linkTxt2.maximumSize.width = 40;
+
+var mamArteBtn = linksSubGrp1.add('iconbutton', undefined, arteFolderIcon, { name: 'btn', style: 'toolbutton' });
+mamArteBtn.helpTip = 'MAM Para Arte | set custom folder';
+var mamMagBtn = linksSubGrp1.add('iconbutton', undefined, magazineFolderIcon, { name: 'btn', style: 'toolbutton' });
+mamMagBtn.helpTip = 'upload MAM Magazine | set custom folder';
+
+//---------------------------------------------------------
+
+linksSubGrp1.add('image', undefined, hSpacer);
+
+var mamHardNewsBtn = linksSubGrp1.add('iconbutton', undefined, hardNewsFolderIcon, { name: 'btn', style: 'toolbutton' });
+mamHardNewsBtn.helpTip = 'upload MAM Hard News';
+mamHardNewsBtn.enabled = !homeOffice;
+
+var nUtilsBtn = linksSubGrp1.add('iconbutton', undefined, utilsFolderIcon, { name: 'btn', style: 'toolbutton' });
+nUtilsBtn.helpTip = 'N: Utilidades';
+nUtilsBtn.enabled = !homeOffice;
+
+var baseJorBtn = linksSubGrp1.add('iconbutton', undefined, baseFolderIcon, { name: 'btn', style: 'toolbutton' });
+baseJorBtn.helpTip = 'Bases Jornais';
+baseJorBtn.enabled = !homeOffice;
+
+var dayBtn = linksSubGrp1.add('iconbutton', undefined, dayFolderIcon, { name: 'btn', style: 'toolbutton' });
+dayBtn.helpTip = 'HOJE - dia a dia';
+dayBtn.enabled = !homeOffice;
+
 /*
   
 ---------------------------------------------------------------
@@ -5,17 +71,6 @@
 ---------------------------------------------------------------
 
 */
-
-// emailBtn.onClick = function () {
-// 	// error...
-// 	if (!netAccess()) {
-// 		showTabErr(netConfigName + ' not checked');
-// 		return;
-// 	}
-// 	var site = 'https://outlook.office365.com/mail/';
-
-// 	openWebSite(site);
-// };
 
 oneDriveBtn.onClick = function () {
 	// error...
