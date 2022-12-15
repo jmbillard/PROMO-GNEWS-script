@@ -10,10 +10,10 @@
 //  jshint -W061
 //  jshint -W043
 
-function inputDialog(label, pos) {
+function inputDialog(val, pos) {
   var keyName;
-  var output = label.text;
-  var wInput = new Window('dialog', '...', undefined, { borderless: true });
+  var output = val;
+  var wInput = new Window('dialog', undefined, undefined, { borderless: true });
   wInput.margins = 4;
   wInput.spacing = 4;
   wInput.location = pos;
@@ -42,15 +42,10 @@ function inputDialog(label, pos) {
   };
 
   cBtn.onClick = function () {
-    output = label.text;
+    output = val;
     wInput.close();
     alert('escaping...');
   };
-
-  wInput.addEventListener('click', function (c) {
-
-    alert(c.clientX);
-  });
 
   wInput.show();
 

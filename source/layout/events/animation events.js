@@ -107,7 +107,7 @@ copyInfBtn.onClick = function () {
 easeSld1.onChanging = function () {
 
 	this.value = Math.floor(this.value);
-	easeSld1Txt.text = this.value + '%';
+	easeSld1Txt.text = easeSld1Txt.helpTip = this.value + '% out';
 };
 
 easeSld1.onChange = function () {
@@ -201,7 +201,7 @@ easeSld2.onChange = function () {
 easeSld2.onChanging = function () {
 
 	this.value = Math.floor(this.value);
-	easeSld2Txt.text = (100 - this.value) + '%';
+	easeSld2Txt.text = easeSld2Txt.helpTip = (100 - this.value) + '% in';
 };
 
 //---------------------------------------------------------
@@ -246,6 +246,135 @@ pasteInfBtn.onClick = function () {
 		}
 	}
 };
+
+//---------------------------------------------------------
+
+easeSld1Txt.addEventListener('click', function (c) {
+
+	if (c.detail == 2) {
+		
+    var pos = [
+      c.screenX + 16,
+      c.screenY - 16
+    ];
+
+    var input = inputDialog(parseInt(this.text).toString(), pos)
+      .toString()
+      .replace(/\D/g, '');
+
+		input = parseInt(input);
+		input = input > 0 ? input : 1;
+		input = input < 99 ? input : 99;
+		this.text = this.helpTip = input + '% out';
+    easeSld1.value = input;
+	
+		var aItem = app.project.activeItem;
+		var selLayers = aItem != null ? aItem.selectedLayers : null;
+		easeOutInfluence = easeSld1.value;
+		easeInInfluence = 100 - easeSld2.value;
+
+		for (var l = 0; l < selLayers.length; l++) {
+			var aLayer = selLayers[l];
+			var selProps = aLayer.selectedProperties;
+	
+			for (var p = 0; p < selProps.length; p++) {
+				var aProp = selProps[p];
+				var selKeys = aProp.selectedKeys;
+	
+				for (var k = 0; k < selKeys.length; k++) {
+					var aKey = selKeys[k];
+	
+					// if (selKeys.length > 1 && k == selKeys.length - 1) continue;
+	
+					var easeIn = new KeyframeEase(0, easeInInfluence);
+					var easeOut = new KeyframeEase(0, easeOutInfluence);
+					var easeInArray = [easeIn];
+					var easeOutArray = [easeOut];
+					
+					try {
+						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+	
+					} catch (err) {
+	
+						if (Array.isArray(aProp.value)) {
+		
+							for (var e = 1; e < aProp.value.length; e++) {
+								easeOutArray.push(easeOut);
+								easeInArray.push(easeIn);
+							}
+						}
+						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+					}
+				}
+			}
+		}	
+	}
+});
+
+//---------------------------------------------------------
+
+easeSld2Txt.addEventListener('click', function (c) {
+
+	if (c.detail == 2) {
+		
+    var pos = [
+      c.screenX + 16,
+      c.screenY - 16
+    ];
+
+    var input = inputDialog(parseInt(this.text).toString(), pos)
+      .toString()
+      .replace(/\D/g, '');
+
+    input = parseInt(input);
+    input = input > 0 ? input : 1;
+    input = input < 99 ? input : 99;
+    this.text = this.helpTip = input + '% in';
+    easeSld2.value = 100 - input;
+
+		var aItem = app.project.activeItem;
+		var selLayers = aItem != null ? aItem.selectedLayers : null;
+		easeOutInfluence = easeSld1.value;
+		easeInInfluence = 100 - easeSld2.value;
+		
+		for (var l = 0; l < selLayers.length; l++) {
+			var aLayer = selLayers[l];
+			var selProps = aLayer.selectedProperties;
+	
+			for (var p = 0; p < selProps.length; p++) {
+				var aProp = selProps[p];
+				var selKeys = aProp.selectedKeys;
+	
+				for (var k = 0; k < selKeys.length; k++) {
+					var aKey = selKeys[k];
+	
+					// if (selKeys.length > 1 && k == 0) continue;
+	
+					var easeOut = new KeyframeEase(0, easeOutInfluence);
+					var easeIn = new KeyframeEase(0, easeInInfluence);
+					var easeInArray = [easeIn];
+					var easeOutArray = [easeOut];
+					
+					try {
+						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+	
+					} catch (err) {
+	
+						if (Array.isArray(aProp.value)) {
+		
+							for (var e = 1; e < aProp.value.length; e++) {
+								easeOutArray.push(easeOut);
+								easeInArray.push(easeIn);
+							}
+						}
+		
+						aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+					}
+				}
+			}
+		}
+	}
+});
 
 //---------------------------------------------------------
 
