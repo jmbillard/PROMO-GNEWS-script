@@ -242,13 +242,7 @@ dayBtn.onClick = function () {
 		showTabErr(netConfigName + ' not checked');
 		return;
 	}
-	var date = system.callSystem('cmd.exe /c date /t'); // ->'24/11/2022   '
-	var y = date.split('/')[2].trim(); // -> 2022
-	var m = date.split('/')[1]; // -> 11
-	m += '_' + shortMonthArray[parseInt(m) - 1]; // -> 11_NOV
-	var d = date.split('/')[0]; // -> 24
-	var todayPath = nAdd + '/PRODUCAO-DIA-A-DIA/' + y + '/' + m + '/' + d + '/GNEWS';
-	var fld = new Folder(todayPath);
+	var fld = PRODUCAO_DIA_A_DIA ();
 
 	if (!fld.exists) {
 		showTabErr('this folder is not accessible...');

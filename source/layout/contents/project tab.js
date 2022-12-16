@@ -161,7 +161,7 @@ projOrgBtn.onClick = function () {
 
 saveBtn.onClick = function () {
 
-  var saveFolder = Folder.selectDialog();
+  var saveFolder = hardNews ? PRODUCAO_DIA_A_DIA () : new Folder(projPath);
   var dateStr = system
     .callSystem('cmd.exe /c date /t')
     .trim();
@@ -169,21 +169,22 @@ saveBtn.onClick = function () {
   setXMPdata('creator', system.userName);
   setXMPdata('date', dateStr);
 
-  app.beginUndoGroup('quick save');
+  app.beginUndoGroup('save project');
 
-  if (saveFolder != null) {
-    var savePath = decodeURI(saveFolder.fullName);
-    var projFullName = projId + ' ' + projName;
-    var projFile = new File(savePath + '/' + projFullName);
-    app.project.save(projFile);
+	if (!saveFolder.exists) {
+    saveFolder = new Folder('~/Desktop');
+	}
+  var savePath = decodeURI(saveFolder.fullName);
+  var projFullName = projId + ' ' + projName;
+  var projFile = new File(savePath + '/' + projFullName);
+  app.project.save(projFile);
 
-    if (collectTogBtn.value) {
-      // collect files...
-      app.executeCommand(2482);
-    } else {
-      if (collectFontsTogBtn.value) fontCollect(savePath);
-      openFolder(saveFolder);
-    }
+  if (collectTogBtn.value) {
+    // collect files...
+    app.executeCommand(2482);
+  } else {
+    if (collectFontsTogBtn.value) fontCollect(savePath);
+    openFolder(saveFolder);
   }
   /*   if (appV > 22) {
       executeCommandID('Save a Copy As 22.x...');

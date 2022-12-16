@@ -8,6 +8,7 @@
 
 //  linter settings:
 //  jshint -W061
+//  jshint -W043
 //  jscs:disable maximumLineLength
 
 function prefsDialog() {
@@ -16,7 +17,7 @@ function prefsDialog() {
 	var txtSize = [90, 20];
 	var dropSize = [85, 20];
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	var wPref = new Window('dialog', 'script preferences...');
 	wPref.alignChildren = ['left', 'top'];
@@ -33,7 +34,7 @@ function prefsDialog() {
 	projUserTxt.preferredSize = dropSize;
 	projUserTxt.helpTip = 'user prefix';
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	var divider0 = wPref.add('panel');
 	divider0.alignment = 'fill';
@@ -68,7 +69,7 @@ function prefsDialog() {
 	adjTypeDrop.selection = adjType;
 	adjTypeDrop.preferredSize = dropSize;
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	var divider1 = wPref.add('panel');
 	divider1.alignment = 'fill';
@@ -81,19 +82,30 @@ function prefsDialog() {
 	var projectGrpTxt = projectGrp.add('statictext', undefined, 'project:');
 	setTxtColor(projectGrpTxt, sTxtColor);
 
-	var orgGrp = projectGrp.add('group');
-	orgGrp.spacing = 0;
+	var projOrgGrp = projectGrp.add('group');
+	projOrgGrp.spacing = 0;
 
-	var projModelTxt = orgGrp.add('statictext', undefined, 'org. model');
+	var projModelTxt = projOrgGrp.add('statictext', undefined, 'org. model');
 	projModelTxt.helpTip = 'project organization model';
 	projModelTxt.preferredSize = txtSize;
 
-	var projectModeDrop = orgGrp.add('dropdownlist', undefined, projectModeDropArray);
+	var projectModeDrop = projOrgGrp.add('dropdownlist', undefined, projectModeDropArray);
 	projectModeDrop.selection = projectMode;
 	projectModeDrop.preferredSize = dropSize;
 
+	var projFldGrp = projectGrp.add('group');
+	projFldGrp.spacing = 15;
 
-  //---------------------------------------------------------
+	var fldProjTxt = projFldGrp.add('statictext', undefined, 'proj. folder');
+	fldProjTxt.helpTip = '\'save project\' button default folder\n(\'PRODUCAO DIA-A-DIA\' on \'hard news\' mode)';
+	fldProjTxt.preferredSize = txtSize;
+
+	var fldProjBtn = projFldGrp.add('iconbutton', undefined, projFolderIcon, { style: 'toolbutton' });
+	fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
+
+	projFldGrp.enabled = homeOffice ? true : !hardNews;
+
+	//---------------------------------------------------------
 
 	var divider2 = wPref.add('panel');
 	divider2.alignment = 'fill';
@@ -135,7 +147,7 @@ function prefsDialog() {
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	var divider3 = wPref.add('panel');
 	divider3.alignment = 'fill';
@@ -144,19 +156,40 @@ function prefsDialog() {
 	hoGrp.spacing = 28;
 
 	var hoTxt = hoGrp.add('statictext', undefined, 'home office');
-	hoTxt.helpTip = 'home office mode';
+	hoTxt.helpTip = 'home office mode\n\
+> uses yor local machine... all files and\
+templates will be downloaded and stored \
+on the script preferences folder';
 	hoTxt.preferredSize = txtSize;
 
 	var hoCkb = hoGrp.add('checkbox');
 	hoCkb.preferredSize.height = 18;
 	hoCkb.value = homeOffice;
 
-  //---------------------------------------------------------
+	var hnGrp = wPref.add('group');
+	hnGrp.spacing = 28;
+
+	var hnTxt = hnGrp.add('statictext', undefined, 'hard news');
+	hnTxt.helpTip = 'hard news mode\n\
+> overwrites the \'save project\' button\
+default folder to \'PRODUCAO DIA-A-DIA\'\n\
+> overwrites the default naming scheme to\
+\'user prefix\' + GNEWS + \'proj. name\' + \'client name\'\
+ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
+(only available with \'home office\' mode disabled)\'';
+	hnTxt.preferredSize = txtSize;
+
+	var hnCkb = hnGrp.add('checkbox');
+	hnCkb.preferredSize.height = 18;
+	hnCkb.value = hardNews;
+
+	hnGrp.enabled = !hoCkb.value;
+
+	//---------------------------------------------------------
 
 	var divider4 = wPref.add('panel');
 	divider4.alignment = 'fill';
 
-	// ==========
 	var networkGrp = wPref.add('group');
 	networkGrp.orientation = 'column';
 	networkGrp.alignChildren = ['left', 'center'];
@@ -169,23 +202,23 @@ function prefsDialog() {
 	fldGrp1.spacing = 15;
 
 	var fldMagTxt = fldGrp1.add('statictext', undefined, 'MAM - magazine');
-	fldMagTxt.helpTip = 'null and adjustment layer type';
+	fldMagTxt.helpTip = 'upload MAM - magazine';
 	fldMagTxt.preferredSize = txtSize;
 
 	var fldMagBtn = fldGrp1.add('iconbutton', undefined, magazineFolderIcon, { style: 'toolbutton' });
-	fldMagBtn.helpTip = 'map folder';
+	fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
 
 	var fldGrp2 = networkGrp.add('group');
 	fldGrp2.spacing = 15;
 
 	var fldArteTxt = fldGrp2.add('statictext', undefined, 'MAM - para arte');
-	fldArteTxt.helpTip = 'null and adjustment layer type';
+	fldArteTxt.helpTip = 'download MAM - para arte';
 	fldArteTxt.preferredSize = txtSize;
 
 	var fldArteBtn = fldGrp2.add('iconbutton', undefined, arteFolderIcon, { style: 'toolbutton' });
-	fldArteBtn.helpTip = 'map folder';
+	fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	var divider5 = wPref.add('panel');
 	divider5.alignment = 'fill';
@@ -202,7 +235,7 @@ function prefsDialog() {
 	bGrp2.alignment = 'right';
 	bGrp2.spacing = 2;
 
-	var devTogBtn = bGrp1.add('iconbutton', undefined, exprTogIcon, { style: 'toolbutton' , toggle: 1 });
+	var devTogBtn = bGrp1.add('iconbutton', undefined, exprTogIcon, { style: 'toolbutton', toggle: 1 });
 	devTogBtn.helpTip = 'dev tools';
 	devTogBtn.value = devMode;
 
@@ -227,7 +260,7 @@ function prefsDialog() {
 		alert(wip);
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	devTogBtn.onClick = function () {
 		devMode = this.value;
@@ -237,7 +270,7 @@ function prefsDialog() {
 		savePrefs(); // → save preferences.json
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	resetBtn.onClick = function () {
 		JSONPrefsObj = defPrefsObj;
@@ -261,7 +294,7 @@ function prefsDialog() {
 		alert('done!');
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	openFldBtn.onClick = function () {
 		// alert...
@@ -274,7 +307,7 @@ function prefsDialog() {
 		openFolder(scriptPreferencesPath);
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	projUserTxt.onChange = projUserTxt.onEnterKey = function () {
 		this.text = this.text.toUpperCase();
@@ -283,7 +316,7 @@ function prefsDialog() {
 		savePrefs(); // → save preferences.json
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	nullTypeDrop.onChange = function () {
 		nullType = this.selection.index; // selected null type...
@@ -291,7 +324,7 @@ function prefsDialog() {
 		savePrefs(); // → save preferences.json
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	adjTypeDrop.onChange = function () {
 		adjType = this.selection.index; // selected adj type...
@@ -299,7 +332,7 @@ function prefsDialog() {
 		savePrefs(); // → save preferences.json
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	projectModeDrop.onChange = function () {
 		projectMode = this.selection.index; // selected project model...
@@ -307,7 +340,7 @@ function prefsDialog() {
 		savePrefs(); // → save preferences.json
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	colorDrop.onChange = function () {
 		var c = tabColors[this.selection.index]; // selected tab color...
@@ -315,7 +348,7 @@ function prefsDialog() {
 		tabColorBtn.notify('onDraw'); // force ui update...
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	tabColorBtn.onClick = function () {
 		var c = tabColors[colorDrop.selection.index]; // selected tab color...
@@ -334,7 +367,7 @@ function prefsDialog() {
 		}
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	// configure 'MAM - magazine' path...
 	fldMagBtn.onClick = function () {
@@ -352,7 +385,7 @@ function prefsDialog() {
 		}
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	// configure 'MAM - para arte' path...
 	fldArteBtn.onClick = function () {
@@ -370,7 +403,25 @@ function prefsDialog() {
 		}
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
+
+	// configure 'MAM - para arte' path...
+	fldProjBtn.onClick = function () {
+		// error...
+		if (!netAccess()) {
+			showTabErr(netConfigName + ' not checked');
+			return;
+		}
+		var saveFolder = Folder.selectDialog();
+
+		if (saveFolder != null) {
+			projPath = decodeURI(saveFolder).toString();
+			JSONPrefsObj.folders.projPath = projPath;
+			savePrefs();
+		}
+	};
+
+	//---------------------------------------------------------
 
 	// right click -> opens the git repo...
 	updateBtn.addEventListener('click', function (c) {
@@ -384,7 +435,7 @@ function prefsDialog() {
 		}
 	});
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	updateBtn.onClick = function () {
 		// error...
@@ -413,11 +464,11 @@ function prefsDialog() {
 		// copy downloaded files...
 
 		if (homeOffice) copyFolderContent(downPath, destPathArray[0]);
-		
+
 		if (!homeOffice) {
 			try {
 				copyFolderContent(downPath, destPathArray[1]);
-			
+
 			} catch (err) {
 				alert('nope... (っ °Д °;)っ \n\n' + error.message);
 				copyFolderContent(downPath, destPathArray[0]);
@@ -427,15 +478,29 @@ function prefsDialog() {
 		wPref.close();
 	};
 
-  //---------------------------------------------------------
+	//---------------------------------------------------------
 
 	hoCkb.onClick = function () {
-		homeOffice = hoCkb.value;
+		homeOffice = this.value;
 		JSONPrefsObj.homeOffice = homeOffice;
 		nUtilsBtn.enabled = !homeOffice;
 		mamHardNewsBtn.enabled = !homeOffice;
 		dayBtn.enabled = !homeOffice;
 		baseJorBtn.enabled = !homeOffice;
+		hnGrp.enabled = !homeOffice;
+		projFldGrp.enabled = homeOffice ? true : !hardNews;
+
+		savePrefs(); // → save preferences.json
+		updateFolderPaths(); // → update templates and fonts folder
+	};
+
+	//---------------------------------------------------------
+
+	hnCkb.onClick = function () {
+		hardNews = this.value;
+		JSONPrefsObj.hardNews = hardNews;
+		projFldGrp.enabled = !hardNews;
+
 		savePrefs(); // → save preferences.json
 		updateFolderPaths(); // → update templates and fonts folder
 	};

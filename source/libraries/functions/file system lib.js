@@ -256,6 +256,20 @@ function copyFolderContent(src, dst) {
 	}
 }
 
+function PRODUCAO_DIA_A_DIA () {
+	var dateStr = system
+	.callSystem('cmd.exe /c date /t')
+	.trim();
+
+	var y = dateStr.split('/')[2].trim(); // -> 2022
+	var m = dateStr.split('/')[1]; // -> 11
+	m += '_' + shortMonthArray[parseInt(m) - 1]; // -> 11_NOV
+	var d = dateStr.split('/')[0]; // -> 24
+	var todayPath = nAdd + '/PRODUCAO-DIA-A-DIA/' + y + '/' + m + '/' + d + '/GNEWS';
+
+	return new Folder(todayPath);
+}
+
 /*
 
 ---------------------------------------------------------------
