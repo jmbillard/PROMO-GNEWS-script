@@ -10,19 +10,21 @@
 currentGrp = tabsGrp.project;
 var projSubGrp1 = currentGrp.add('group');
 
-var projIdTxt = projSubGrp1.add('edittext', undefined, 'proj id');
+var projIdContent = hardNews ? 'client' : 'proj id';
+var projIdTxt = projSubGrp1.add('edittext', undefined, projIdContent);
 projIdTxt.maximumSize.width = 100;
 projIdTxt.minimumSize.width = vMin;
-projIdTxt.helpTip = 'project id';
+projIdTxt.helpTip = projIdContent;
+
 var insertUserIdBtn = projSubGrp1.add('iconbutton', undefined, addIcon, { name: 'btn', style: 'toolbutton' });
-insertUserIdBtn.helpTip = 'insert user with project ID';
+insertUserIdBtn.helpTip = 'insert user with ' + projIdContent;
 
 var projNameTxt = projSubGrp1.add('edittext', undefined, 'proj name');
 projNameTxt.maximumSize.width = 100;
 projNameTxt.minimumSize.width = vMin;
 projNameTxt.helpTip = 'project name';
 var renameItemBtn = projSubGrp1.add('iconbutton', undefined, chkIcon, { name: 'btn', style: 'toolbutton' });
-renameItemBtn.helpTip = 'quick template rename';
+renameItemBtn.helpTip = 'rename comps';
 
 //---------------------------------------------------------
 
@@ -171,11 +173,13 @@ saveBtn.onClick = function () {
 
   app.beginUndoGroup('save project');
 
-	if (!saveFolder.exists) {
-    saveFolder = new Folder('~/Desktop');
-	}
+	if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
+
+  var promoName = projId + ' ' + projName;
+  var hnName =  userPrefix + ' - GNEWS ' + projName + ' - ' + projId;
+
   var savePath = decodeURI(saveFolder.fullName);
-  var projFullName = projId + ' ' + projName;
+  var projFullName = hardNews ? hnName : promoName;
   var projFile = new File(savePath + '/' + projFullName);
   app.project.save(projFile);
 
