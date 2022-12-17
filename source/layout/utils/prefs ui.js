@@ -159,7 +159,9 @@ function prefsDialog() {
 	hoTxt.helpTip = 'home office mode\n\
 > uses yor local machine... all files and\
 templates will be downloaded and stored \
-on the script preferences folder';
+on the script preferences folder\n\
+> disables most of the links tab folder shortcuts\
+(\'MAM - magazine\' and \'MAM - para arte\' can be mapped)';
 	hoTxt.preferredSize = txtSize;
 
 	var hoCkb = hoGrp.add('checkbox');
@@ -502,7 +504,6 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		projFldGrp.enabled = !hardNews;
 
 		savePrefs(); // → save preferences.json
-		updateFolderPaths(); // → update templates and fonts folder
 	};
 
 	wPref.show();
