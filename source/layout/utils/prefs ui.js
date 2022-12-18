@@ -311,11 +311,12 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 
 	//---------------------------------------------------------
 
-	projUserTxt.onChange = projUserTxt.onEnterKey = function () {
+	projUserTxt.onEnterKey = projUserTxt.onChange = function () {
 		this.text = this.text.toUpperCase();
 		userPrefix = this.text;
 		JSONPrefsObj.userPrefix = userPrefix;
 		savePrefs(); // → save preferences.json
+		userTxt.active = true;
 	};
 
 	//---------------------------------------------------------

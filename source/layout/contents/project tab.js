@@ -68,8 +68,10 @@ projIdTxt.onChange = projIdTxt.onEnterKey = function () {
     .replaceSpecialCharacters()
     .toUpperCase();
 
+  if (hardNews) this.text = projId = this.text.toLowerCase();
+
   setXMPdata('identifier', projId);
-  if (this.text.trim() == '') this.text = 'proj. ID';
+  if (this.text.trim() == '') this.text = projIdContent;
 };
 
 //---------------------------------------------------------
@@ -78,6 +80,8 @@ projNameTxt.onChange = projNameTxt.onEnterKey = function () {
   this.text = projName = this.text
     .replaceSpecialCharacters()
     .toLowerCase();
+
+  if (hardNews) this.text = projName = this.text.toUpperCase();
 
   setXMPdata('title', projName);
   if (this.text.trim() == '') this.text = 'proj. name';
@@ -91,27 +95,18 @@ insertUserIdBtn.onClick = function () {
     showTabErr('empty project');
     return;
   }
-  var baseName = userPrefix + ' PROMO - ' + projId;
+  app.beginUndoGroup('insert ID');
+
   var dateStr = system
     .callSystem('cmd.exe /c date /t')
     .trim();
-
-  var itemArray = app.project.selection;
-  app.beginUndoGroup('quick rename ID');
-
   setXMPdata('creator', system.userName);
   setXMPdata('date', dateStr);
 
-  for (c = 0; c < itemArray.length; c++) {
-    var aItem = itemArray[c];
-    if (!(aItem instanceof CompItem)) continue;
-
-    aItem.name = baseName + ' ' + aItem.name
-      .replace(compPrefix, '')
-      .replace(/^.*\w{3}\d{6}[\s\_]*/, '')
-      .replaceSpecialCharacters();
-
-    if (aItem.comment == '') aItem.comment = 'export: true';
+  if (hardNews) {
+    insertHnID(projId);
+  } else {
+    insertPromoID(projId);
   }
   app.endUndoGroup();
 };
@@ -124,17 +119,25 @@ renameItemBtn.onClick = function () {
     showTabErr('empty project');
     return;
   }
-  app.beginUndoGroup('rename templates');
+  app.beginUndoGroup('rename comps');
 
   var dateStr = system
     .callSystem('cmd.exe /c date /t')
     .trim();
-  var compArray = app.project.selection.length > 0 ? app.project.selection : getCompsAndTemplates();
-
+  
   setXMPdata('creator', system.userName);
   setXMPdata('date', dateStr);
+    
+  var compArray = app.project.selection;
 
-  renameComps(projId, projName, compArray);
+  if (hardNews) {
+    compArray = compArray.length > 0 ? compArray : getComps();
+    renameHNComps(projId, projName, compArray);
+
+  } else {
+    compArray = compArray.length > 0 ? compArray : getCompsAndTemplates();
+    renamePromoComps(projId, projName, compArray);
+  }
 
   app.endUndoGroup();
 };
@@ -176,7 +179,7 @@ saveBtn.onClick = function () {
 	if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
 
   var promoName = projId + ' ' + projName;
-  var hnName =  userPrefix + ' - GNEWS ' + projName + ' - ' + projId;
+  var hnName =  userPrefix + ' - GNEWS ' + projName;
 
   var savePath = decodeURI(saveFolder.fullName);
   var projFullName = hardNews ? hnName : promoName;
