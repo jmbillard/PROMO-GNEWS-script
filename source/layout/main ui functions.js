@@ -95,13 +95,19 @@ function setLayout() {
     progTxt1.size.width = 160;
     progTxt2.visible = true;
     progTxt2.size.width = 160;
+
+    for (var mlh = 0; mlh < mainMenuLabels.length; mlh++) {
+      mainMenuLabels[mlh].size.width = 0;
+      mainMenuLabels[mlh].parent.spacing = 0;
+    }
+
   } else {
     // vertical layout
     ltAlignment = 'bottom';
     rbAlignment = 'top';
 
     // [left, top, right, bottom]
-    mainGrp.margins = [0, 0, 0, 24];
+    mainGrp.margins = [0, 0, 0, 24 - hOffset - 4];
     tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
     leftGrp.margins = [0, 0, 0, 5];
 
@@ -134,6 +140,15 @@ function setLayout() {
     GNEWS_LOGO.size.width = w.size.width - 8;
     progImg.size.width = w.size.width - 8;
 
+    for (var mlv = 0; mlv < mainMenuLabels.length; mlv++) {
+      mainMenuLabels[mlv].size.width = w.size.width - 60;
+      mainMenuLabels[mlv].parent.spacing = 2;
+
+      if (w.size.width < 100) {
+        mainMenuLabels[mlv].size.width = 0;
+        mainMenuLabels[mlv].parent.spacing = 0;  
+      }
+    }
     if (w.size.width < vMin + 8) {
       GNEWS_LOGO.size.width = 0;
       progImg.size.width = 0;
@@ -306,25 +321,48 @@ function getTabDividers() {
 }
 
 // all tab subgroups except keyStatsGrp...
-function getLabels() {
-  var uiLabels = [];
+function getTabLabels() {
+  var tabLabels = [];
 
-  for (var st = 0; st < tabSubGrps.length; st++) {
+  for (var st = 1; st < tabs.length; st++) {
+    var uiLabels = getStaticTextLabels(tabs[st], []);
 
-    for (var l = 0; l < tabSubGrps[st].children.length; l++) {
-      var lab = tabSubGrps[st].children[l];
+    for (var l = 0; l < uiLabels.length; l++) {
+      var lab = uiLabels[l];
 
       if (lab.properties == undefined) continue;
       if (lab.properties.name != 'label') continue;
 
-      tabDividers.push(lab);
+      tabLabels.push(lab);
 
-      setTxtColor(lab, sTxtColor);
-      lab.minimumSize = [vMin, 12];
       lab.justify = 'center';
       lab.helpTip = lab.text;
+      lab.minimumSize = [vMin, 12];
+    }
+  }
+  return tabLabels;
+}
+
+function getStaticTextLabels(grp, resultArray) {
+
+  for (var g = 0; g < grp.children.length; g++) {
+    var subGrp = grp.children[g];
+    
+    if (subGrp.toString() == '[object Group]') {
+      subGrp.spacing = 4;
+      getStaticTextLabels(subGrp, resultArray);
+
+    } else {
+      var lab = subGrp;
+      
+      if (lab.properties == undefined) continue;
+      if (lab.properties.name != 'label') continue;
+  
+      resultArray.push(lab);
+  
+      setTxtColor(lab, sTxtColor);
       lab.properties.truncate = 'end';
     }
   }
-  return uiLabels;
+  return resultArray;
 }

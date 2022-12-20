@@ -267,7 +267,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	devTogBtn.onClick = function () {
 		devMode = this.value;
 		JSONPrefsObj.devMode = devMode;
-		devBtn.enabled = devBtn.visible = devMode;
+		menuSubGrp5.enabled = menuSubGrp5.visible = devMode;
 		setLayout();
 		savePrefs(); // → save preferences.json
 	};
