@@ -96,9 +96,30 @@ function setLayout() {
     progTxt2.visible = true;
     progTxt2.size.width = 160;
 
+    var mainMenuLabelsMaxW = [
+      55, // control
+      65, // animation
+      45, // effects
+      70, // text utilities
+      40, // brand
+      50, // project
+      60, // shortcuts
+      60, // templates
+      65, // text search
+      60, // preview
+      65, // app utilities
+      60  // dev tools
+    ];
+
     for (var mlh = 0; mlh < mainMenuLabels.length; mlh++) {
+      mainMenuLabels[mlh].maximumSize.width = mainMenuLabelsMaxW[mlh];
       mainMenuLabels[mlh].size.width = 0;
       mainMenuLabels[mlh].parent.spacing = 0;
+
+      if (w.size.width > 1480) {
+        mainMenuLabels[mlh].size.width = mainMenuLabelsMaxW[mlh];
+        mainMenuLabels[mlh].parent.spacing = 2;  
+      }
     }
 
   } else {
@@ -141,6 +162,7 @@ function setLayout() {
     progImg.size.width = w.size.width - 8;
 
     for (var mlv = 0; mlv < mainMenuLabels.length; mlv++) {
+      mainMenuLabels[mlv].maximumSize.width = 70;
       mainMenuLabels[mlv].size.width = w.size.width - 60;
       mainMenuLabels[mlv].parent.spacing = 2;
 

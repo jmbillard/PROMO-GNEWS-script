@@ -7,7 +7,7 @@
 
 */
 
-currentGrp = tabsGrp.ctrl;
+currentGrp = tabsGrp.controls;
 var ctrlSubGrp1 = currentGrp.add('group');
 
 // copy animation toggle... 

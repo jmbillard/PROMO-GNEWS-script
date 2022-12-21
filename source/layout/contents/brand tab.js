@@ -6,7 +6,7 @@
 
 */
 
-currentGrp = tabsGrp.guide;
+currentGrp = tabsGrp.brand;
 
 // ui GNEWS color buttons...
 //var colorsGrp = currentGrp.add('group');

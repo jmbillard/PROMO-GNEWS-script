@@ -7,7 +7,7 @@
  
 */
 
-currentGrp = tabsGrp.links;
+currentGrp = tabsGrp.shortcuts;
 
 var linksSubGrp2 = currentGrp.add('group');
 

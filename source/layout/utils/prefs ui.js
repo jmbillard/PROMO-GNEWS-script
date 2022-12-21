@@ -279,10 +279,14 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		savePrefs(); // → save preferences.json
 		loadDefaultPrefs();
 
-		userPrefix = projUserTxt.text = userPrefix;
+		projUserTxt.text = userPrefix;
 		nullTypeDrop.selection = nullType;
 		adjTypeDrop.selection = adjType;
 		projectModeDrop.selection = projectMode;
+
+		fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
+		fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
+		fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
 
 		setBtnColor(tabColorBtn, tabColors[0]);
 		tabColorBtn.notify('onDraw'); // force ui update...
@@ -503,6 +507,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		hardNews = this.value;
 		JSONPrefsObj.hardNews = hardNews;
 		projFldGrp.enabled = !hardNews;
+		fldProjBtn.helpTip = this.value ? '> \'PRODUCAO DIA-A-DIA\'' : 'map folder\n\n' + '> \'' + projPath + '\'';
 
 		savePrefs(); // → save preferences.json
 	};
