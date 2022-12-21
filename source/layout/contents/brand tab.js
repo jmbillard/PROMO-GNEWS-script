@@ -16,14 +16,14 @@ var colors1Txt = colorSubGrp1.add('statictext', undefined, 'main:', { name: 'lab
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 
 var colorSubGrp2 = currentGrp.add('group');
 var colors2Txt = colorSubGrp2.add('statictext', undefined, 'mono:', { name: 'label' });
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 
 var colorSubGrp3 = currentGrp.add('group');
 var colors3Txt = colorSubGrp3.add('statictext', undefined, 'sec:', { name: 'label' });
@@ -37,14 +37,14 @@ createColorButtons(GNEWS_secColors, colorSubGrp3);
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 
 var shpPalletBtn = currentGrp.add('iconbutton', undefined, palletIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 shpPalletBtn.helpTip = 'color pallet as shape layer';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var colorSubGrp4 = currentGrp.add('group');
 

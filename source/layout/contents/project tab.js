@@ -28,14 +28,14 @@ renameItemBtn.helpTip = 'rename comps';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var projOrgBtn = currentGrp.add('iconbutton', undefined, templateIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 projOrgBtn.helpTip = 'organize project | organization tags';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // end page presets UI button...
 var endPagePresetBtn = currentGrp.add('iconbutton', undefined, endPagePresetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -43,7 +43,7 @@ endPagePresetBtn.helpTip = 'end page JSON presets';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var projSubGrp2 = currentGrp.add('group');
 
 var collectTogBtn = projSubGrp2.add('iconbutton', undefined, fldTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });

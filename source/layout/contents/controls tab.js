@@ -24,7 +24,7 @@ nullShpBtn.helpTip = 'create parent null';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // create centered null
 var nullCShpBtn = currentGrp.add('iconbutton', undefined, nullCIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -32,7 +32,7 @@ nullCShpBtn.helpTip = 'centered null';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // select hierarchy sub group...
 var hGrp = currentGrp.add('group', undefined, { name: 'hGrp' });

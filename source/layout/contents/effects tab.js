@@ -13,7 +13,7 @@ shpAdjBtn.helpTip = 'adjustment layer';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var fxSubGrp1 = currentGrp.add('group');
 
 var curBtn = fxSubGrp1.add('iconbutton', undefined, curIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -27,7 +27,7 @@ lumBtn.helpTip = 'lumetri color';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp2 = currentGrp.add('group');
 
 var gaublurBtn = fxSubGrp2.add('iconbutton', undefined, gaublurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -41,7 +41,7 @@ lensblurBtn.helpTip = 'lens blur';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp3 = currentGrp.add('group');
 
 var fillBtn = fxSubGrp3.add('iconbutton', undefined, fillIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -49,7 +49,7 @@ fillBtn.helpTip = 'fill';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp4 = currentGrp.add('group');
 
 var glassBtn = fxSubGrp4.add('iconbutton', undefined, glassIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -57,7 +57,7 @@ glassBtn.helpTip = '3d glasses';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp5 = currentGrp.add('group');
 
 var fracBtn = fxSubGrp5.add('iconbutton', undefined, fracIcon[iconTheme], { name: 'btn', style: 'toolbutton' });

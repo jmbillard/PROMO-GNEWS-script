@@ -20,7 +20,7 @@ txtTitleBtn.helpTip = 'set text layer to title case';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var textSubGrp2 = currentGrp.add('group');
 
@@ -32,7 +32,7 @@ txtColumnBtn.helpTip = 'divides consecutive spaces in columns';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var textSubGrp3 = currentGrp.add('group');
 

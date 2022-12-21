@@ -18,19 +18,20 @@ binBtn.helpTip = 'binary converter | layer source code';
 //---------------------------------------------------------
 
 var devGrp2 = currentGrp.add('group');
-var dTxt = devGrp2.add('statictext', undefined, 'dark icons:', { name: 'label' });
+var dTxt = devGrp2.add('statictext', undefined, 'dark:', { name: 'label' });
+dTxt.maximumSize.width = 30;
 
 var dBtn = devGrp2.add('iconbutton', undefined, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 dBtn.helpTip = 'convert .png to dark icon theme';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var devGrp3 = currentGrp.add('group');
 
 var zipTxt1 = devGrp3.add('statictext', undefined, 'templates:', { name: 'label' });
-zipTxt1.maximumSize.width = 56;
+zipTxt1.maximumSize.width = 55;
 
 var zipTemplatesBtn = devGrp3.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 zipTemplatesBtn.helpTip = 'zip the templates folder';
@@ -94,7 +95,8 @@ dBtn.onClick = function () {
   for (var i = 0; i < iconArray.length; i++) {
     try {
       var icon = iconArray[i];
-      var compN = deleteFileExt(icon.name);
+      var compN = deleteFileExt(icon.name)
+        .replace(/\s*(light)$/i, '');
       var compW = icon.width;
       var compH = icon.height;
   

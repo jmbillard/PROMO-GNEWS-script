@@ -32,7 +32,7 @@ pasteInfBtn.helpTip = 'paste keyframe influence';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var animSubGrp2 = currentGrp.add('group');
 
 var easeSld1Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' });
@@ -54,21 +54,21 @@ var easeSld2Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label'
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var lockTrmBtn = currentGrp.add('iconbutton', undefined, lockPropIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 lockTrmBtn.helpTip = 'lock transform properties';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var layerRandBtn = currentGrp.add('iconbutton', undefined, randomizeLayerTimesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 layerRandBtn.helpTip = 'randomize layer times';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // tools button...
 var toolBtn = currentGrp.add('iconbutton', undefined, rigToolsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -402,7 +402,7 @@ arrowBtn.helpTip = 'simple arrow rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // simple counter rig...
 var counterBtn = currentGrp.add('iconbutton', undefined, counterIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -410,7 +410,7 @@ counterBtn.helpTip = 'make counter rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, hSpacer);
+currentGrp.add('image', undefined, spacer.horizontal);
 var toolsSubGrp1 = currentGrp.add('group');
 
 // text typing rig...
@@ -425,7 +425,7 @@ simpleBoxBtn.helpTip = 'simple box bg base';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // wiggle position rig...
 var wigBtn = currentGrp.add('iconbutton', undefined, wigIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -433,7 +433,7 @@ wigBtn.helpTip = 'wig rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // simple ik rig...
 var ikBtn = currentGrp.add('iconbutton', undefined, ikIcon[iconTheme], { name: 'btn', style: 'toolbutton' });

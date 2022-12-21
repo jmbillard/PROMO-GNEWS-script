@@ -19,7 +19,7 @@ oneDriveBtn.helpTip = 'OneDrive globo';
 
 //---------------------------------------------------------
 
-linksSubGrp2.add('image', undefined, hSpacer);
+linksSubGrp2.add('image', undefined, spacer.horizontal);
 
 // var linksSubGrp3 = currentGrp.add('group');
 var trelloBtn = linksSubGrp2.add('iconbutton', undefined, trelloIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -33,7 +33,7 @@ plannerBtn.helpTip = 'planner globo';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, vSpacer, { name: 'div' });
+currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var linksSubGrp1 = currentGrp.add('group');
 
 var linkTxt2 = linksSubGrp1.add('statictext', undefined, 'folders:', { name: 'label' });
@@ -46,7 +46,7 @@ mamMagBtn.helpTip = 'upload MAM Magazine | set custom folder';
 
 //---------------------------------------------------------
 
-linksSubGrp1.add('image', undefined, hSpacer);
+linksSubGrp1.add('image', undefined, spacer.horizontal);
 
 var mamHardNewsBtn = linksSubGrp1.add('iconbutton', undefined, hardNewsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 mamHardNewsBtn.helpTip = 'upload MAM Hard News';
