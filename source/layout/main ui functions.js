@@ -388,7 +388,7 @@ function getStaticTextLabels(grp, resultArray) {
   
       resultArray.push(lab);
   
-      setTxtColor(lab, sTxtColor);
+      setTxtColor(lab, sTxtColor[iconTheme]);
       lab.properties.truncate = 'end';
     }
   }

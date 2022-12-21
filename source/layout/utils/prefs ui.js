@@ -45,7 +45,7 @@ function prefsDialog() {
 	layerGrp.spacing = 2;
 
 	var layerGrpTxt = layerGrp.add('statictext', undefined, 'layer types:');
-	setTxtColor(layerGrpTxt, sTxtColor);
+	setTxtColor(layerGrpTxt, sTxtColor.light);
 
 	var nullGrp = layerGrp.add('group');
 	nullGrp.spacing = 0;
@@ -80,7 +80,7 @@ function prefsDialog() {
 	projectGrp.spacing = 2;
 
 	var projectGrpTxt = projectGrp.add('statictext', undefined, 'project:');
-	setTxtColor(projectGrpTxt, sTxtColor);
+	setTxtColor(projectGrpTxt, sTxtColor.light);
 
 	var projOrgGrp = projectGrp.add('group');
 	projOrgGrp.spacing = 0;
@@ -116,7 +116,7 @@ function prefsDialog() {
 	themeGrp.spacing = 2;
 
 	var themeGrpTxt = themeGrp.add('statictext', undefined, 'theme:');
-	setTxtColor(themeGrpTxt, sTxtColor);
+	setTxtColor(themeGrpTxt, sTxtColor.light);
 
 	var iconThemeGrp = themeGrp.add('group');
 	iconThemeGrp.spacing = 60;
@@ -143,7 +143,7 @@ function prefsDialog() {
 	colorDrop.selection = 0;
 	colorDrop.preferredSize = dropSize;
 
-	var tabColorBtn = wPref.add('iconbutton', undefined, undefined.light, { style: 'toolbutton' });
+	var tabColorBtn = wPref.add('iconbutton', undefined, undefined, { style: 'toolbutton' });
 	tabColorBtn.size = [176, 20];
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
@@ -199,7 +199,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	networkGrp.spacing = 2;
 
 	var networkGrpTxt = networkGrp.add('statictext', undefined, 'network:');
-	setTxtColor(networkGrpTxt, sTxtColor);
+	setTxtColor(networkGrpTxt, sTxtColor.light);
 
 	var fldGrp1 = networkGrp.add('group');
 	fldGrp1.spacing = 15;
@@ -519,4 +519,4 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	wPref.show();
 }
 
-//prefsDialog();
+// prefsDialog();

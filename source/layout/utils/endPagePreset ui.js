@@ -337,7 +337,7 @@ function endPagePresetDialog() {
   layout_mainGrp.visible = false;
   layout_mainGrp.spacing = 8;
   var layoutTxt = layout_mainGrp.add('statictext', undefined, 'layout:');
-  setTxtColor(layoutTxt, sTxtColor);
+  setTxtColor(layoutTxt, sTxtColor.light);
 
   var modelArray = [
     'livre',
@@ -397,7 +397,7 @@ function endPagePresetDialog() {
   servico_mainGrp.spacing = 8;
   servico_mainGrp.visible = false;
   var servicoTxt = servico_mainGrp.add('statictext', undefined, 'servico:');
-  setTxtColor(servicoTxt, sTxtColor);
+  setTxtColor(servicoTxt, sTxtColor.light);
 
   var servicoArray = [
     '- formato livre -',
@@ -454,7 +454,7 @@ function endPagePresetDialog() {
   aparencia_mainGrp.spacing = 8;
   aparencia_mainGrp.visible = false;
   var aparenciaTxt = aparencia_mainGrp.add('statictext', undefined, 'aparencia:');
-  setTxtColor(aparenciaTxt, sTxtColor);
+  setTxtColor(aparenciaTxt, sTxtColor.light);
   var tema_aparenciaGrp = aparencia_mainGrp.add('group');
   tema_aparenciaGrp.alignChildren = 'left';
 
@@ -1021,3 +1021,5 @@ function endPagePresetDialog() {
 
   wPreset.show();
 }
+
+// endPagePresetDialog();
