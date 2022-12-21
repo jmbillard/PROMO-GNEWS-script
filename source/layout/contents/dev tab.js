@@ -17,20 +17,28 @@ binBtn.helpTip = 'binary converter | layer source code';
 
 //---------------------------------------------------------
 
+var devGrp2 = currentGrp.add('group');
+var dTxt = devGrp2.add('statictext', undefined, 'dark icons:', { name: 'label' });
+
+var dBtn = devGrp2.add('iconbutton', undefined, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+dBtn.helpTip = 'convert .png to dark icon theme';
+
+//---------------------------------------------------------
+
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
-var devGrp2 = currentGrp.add('group');
+var devGrp3 = currentGrp.add('group');
 
-var zipTxt1 = devGrp2.add('statictext', undefined, 'templates:', { name: 'label' });
+var zipTxt1 = devGrp3.add('statictext', undefined, 'templates:', { name: 'label' });
 zipTxt1.maximumSize.width = 56;
 
-var zipTemplatesBtn = devGrp2.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var zipTemplatesBtn = devGrp3.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 zipTemplatesBtn.helpTip = 'zip the templates folder';
 
-var zipTxt2 = devGrp2.add('statictext', undefined, 'fonts:', { name: 'label' });
+var zipTxt2 = devGrp3.add('statictext', undefined, 'fonts:', { name: 'label' });
 zipTxt2.maximumSize.width = 30;
 
-var zipFontsBtn = devGrp2.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var zipFontsBtn = devGrp3.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 zipFontsBtn.helpTip = 'zip the fonts folder';
 
 
@@ -76,6 +84,37 @@ zipTemplatesBtn.onClick = function () {
     zipContent(templatesStr, zipPath);
     openFolder(destPath);
   }
+};
+
+//---------------------------------------------------------
+
+dBtn.onClick = function () {
+  var iconArray = app.project.importFileWithDialog();
+  var folderPath = decodeURI(iconArray[0].file.path);
+  for (var i = 0; i < iconArray.length; i++) {
+    try {
+      var icon = iconArray[i];
+      var compN = deleteFileExt(icon.name);
+      var compW = icon.width;
+      var compH = icon.height;
+  
+      var comp = app.project.items.addComp(compN, compW, compH, 1, 1, 1);
+      var aLayer = comp.layers.add(icon);
+      var effects = aLayer.property('ADBE Effect Parade');
+      // fill effect...
+      var fill = effects.addProperty('ADBE Fill');
+      fill.property('ADBE Fill-0002').setValue(sTxtColor.dark);
+      var previewFile = new File(folderPath + '/' + compN + ' dark.png');
+  
+      comp.saveFrameToPng(0, previewFile);
+      comp.remove();
+      icon.remove();
+  
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+  openFolder(folderPath);
 };
 
 //---------------------------------------------------------
