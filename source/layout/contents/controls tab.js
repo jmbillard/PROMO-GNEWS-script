@@ -11,15 +11,15 @@ currentGrp = tabsGrp.controls;
 var ctrlSubGrp1 = currentGrp.add('group');
 
 // copy animation toggle... 
-var aniTogBtn = ctrlSubGrp1.add('iconbutton', undefined, aniTogIcon, { name: 'btn', style: 'toolbutton', toggle: 1 });
+var aniTogBtn = ctrlSubGrp1.add('iconbutton', undefined, aniTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
 aniTogBtn.helpTip = 'copy animation';
 
 // copy expressions toggle... 
-var exprTogBtn = ctrlSubGrp1.add('iconbutton', undefined, exprTogIcon, { name: 'btn', style: 'toolbutton', toggle: 1 });
+var exprTogBtn = ctrlSubGrp1.add('iconbutton', undefined, exprTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
 exprTogBtn.helpTip = 'copy expressions';
 
 // create parent null... 
-var nullShpBtn = currentGrp.add('iconbutton', undefined, shpNullIcon, { name: 'btn', style: 'toolbutton' });
+var nullShpBtn = currentGrp.add('iconbutton', undefined, shpNullIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 nullShpBtn.helpTip = 'create parent null';
 
 //---------------------------------------------------------
@@ -27,7 +27,7 @@ nullShpBtn.helpTip = 'create parent null';
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
 // create centered null
-var nullCShpBtn = currentGrp.add('iconbutton', undefined, nullCIcon, { name: 'btn', style: 'toolbutton' });
+var nullCShpBtn = currentGrp.add('iconbutton', undefined, nullCIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 nullCShpBtn.helpTip = 'centered null';
 
 //---------------------------------------------------------
@@ -40,11 +40,11 @@ hGrp.orientation = 'column';
 hGrp.spacing = 0;
 
 // select parent button...
-var upHBtn = hGrp.add('iconbutton', undefined, upIcon, { name: 'btn', style: 'toolbutton' });
+var upHBtn = hGrp.add('iconbutton', undefined, upIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 upHBtn.helpTip = 'select parent';
 
 // select children button...
-var dwnHBtn = hGrp.add('iconbutton', undefined, downIcon, { name: 'btn', style: 'toolbutton' });
+var dwnHBtn = hGrp.add('iconbutton', undefined, downIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 dwnHBtn.helpTip = 'select children';
 
 /*

@@ -42,7 +42,7 @@ function createHierarchy(array, node, fileTypes) {
     if (subArray.length > 0) {
       // current folder has content...
       nodeItem = node.add('node', nodeName); // folder node...
-      nodeItem.image = fldTogIcon; // folder icon...
+      nodeItem.image = fldTogIcon.light; // folder icon...
 
       createHierarchy(subArray, nodeItem, fileTypes);
     
@@ -51,7 +51,7 @@ function createHierarchy(array, node, fileTypes) {
       if (fileTypes.indexOf(getFileExt(nodeName)) < 0) continue;
       
       var templateItem = node.add('item', nodeName); // item...
-      templateItem.image = templateListIcon; // item icon...
+      templateItem.image = templateListIcon.light; // item icon...
     }
   }
 }
@@ -65,7 +65,7 @@ function buildTree(folder, tree, fileTypes) {
 
   // adds a new 'root' node...
   var folderNode = tree.add('node', folder.displayName);
-  folderNode.image = fldTogIcon;
+  folderNode.image = fldTogIcon.light;
 
   // starts the recursive population...
   createHierarchy(folderContentArray, folderNode, fileTypes);
@@ -79,7 +79,7 @@ function buildFontTree(folder, tree) {
   var fontsArray = folder.getFiles();
 
   var folderNode = tree.add('node', folder.displayName);
-  folderNode.image = fldTogIcon;
+  folderNode.image = fldTogIcon.light;
 
   for (var n = 0; n < fontsArray.length; n++) {
     var fName = fontsArray[n].displayName;
@@ -170,7 +170,7 @@ function buildFindTree(tree, obj, compArray, progBar) {
           var compName = limitNameSize(compArray[i].name, 45);
            // add comp tree item... -> comp_comp...name
           compItem = tree.add('node', compName);
-          compItem.image = compTogIcon; // add com icon...
+          compItem.image = compTogIcon.light; // add com icon...
           count += 1; // incremente tree items count...
 
           resultArray.push(compArray[i]); // push current comp to resultArray...

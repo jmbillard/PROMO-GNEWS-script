@@ -11,7 +11,7 @@ currentGrp = tabsGrp.animation;
 var animSubGrp1 = currentGrp.add('group');
 
 // copy keyframe influences...
-var copyInfBtn = animSubGrp1.add('iconbutton', undefined, copyInfluenceIcon, { name: 'btn', style: 'toolbutton' });
+var copyInfBtn = animSubGrp1.add('iconbutton', undefined, copyInfluenceIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 copyInfBtn.helpTip = 'copy keyframe influence';
 
 var keyStatsGrp = animSubGrp1.add('group', undefined, { name: 'keyStatsGrp' });
@@ -27,7 +27,7 @@ for (var kf = 0; kf < keyImgs.length; kf++) {
 }
 
 // paste keyframe influences...
-var pasteInfBtn = animSubGrp1.add('iconbutton', undefined, pasteInfluenceIcon, { name: 'btn', style: 'toolbutton' });
+var pasteInfBtn = animSubGrp1.add('iconbutton', undefined, pasteInfluenceIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 pasteInfBtn.helpTip = 'paste keyframe influence';
 
 //---------------------------------------------------------
@@ -56,14 +56,14 @@ var easeSld2Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label'
 
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
-var lockTrmBtn = currentGrp.add('iconbutton', undefined, lockPropIcon, { name: 'btn', style: 'toolbutton' });
+var lockTrmBtn = currentGrp.add('iconbutton', undefined, lockPropIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 lockTrmBtn.helpTip = 'lock transform properties';
 
 //---------------------------------------------------------
 
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
-var layerRandBtn = currentGrp.add('iconbutton', undefined, randomizeLayerTimesIcon, { name: 'btn', style: 'toolbutton' });
+var layerRandBtn = currentGrp.add('iconbutton', undefined, randomizeLayerTimesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 layerRandBtn.helpTip = 'randomize layer times';
 
 //---------------------------------------------------------
@@ -71,7 +71,7 @@ layerRandBtn.helpTip = 'randomize layer times';
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
 // tools button...
-var toolBtn = currentGrp.add('iconbutton', undefined, rigToolsIcon, { name: 'btn', style: 'toolbutton' });
+var toolBtn = currentGrp.add('iconbutton', undefined, rigToolsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 toolBtn.helpTip = 'rigs and tools';
 
 /*
@@ -397,7 +397,7 @@ layerRandBtn.onClick = function () {
 currentGrp = tabsGrp.tools;
 
 // dynamic arrow rig...
-var arrowBtn = currentGrp.add('iconbutton', undefined, arrowIcon, { name: 'btn', style: 'toolbutton' });
+var arrowBtn = currentGrp.add('iconbutton', undefined, arrowIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 arrowBtn.helpTip = 'simple arrow rig';
 
 //---------------------------------------------------------
@@ -405,7 +405,7 @@ arrowBtn.helpTip = 'simple arrow rig';
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
 // simple counter rig...
-var counterBtn = currentGrp.add('iconbutton', undefined, counterIcon, { name: 'btn', style: 'toolbutton' });
+var counterBtn = currentGrp.add('iconbutton', undefined, counterIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 counterBtn.helpTip = 'make counter rig';
 
 //---------------------------------------------------------
@@ -414,13 +414,13 @@ currentGrp.add('image', undefined, hSpacer);
 var toolsSubGrp1 = currentGrp.add('group');
 
 // text typing rig...
-var typeAnimBtn = toolsSubGrp1.add('iconbutton', undefined, typewriterIcon, { name: 'btn', style: 'toolbutton' });
+var typeAnimBtn = toolsSubGrp1.add('iconbutton', undefined, typewriterIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 typeAnimBtn.helpTip = 'typewriter animation';
 
-var wordsBtn = toolsSubGrp1.add('iconbutton', undefined, wordsIcon, { name: 'btn', style: 'toolbutton' });
+var wordsBtn = toolsSubGrp1.add('iconbutton', undefined, wordsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 wordsBtn.helpTip = 'words animation';
 
-var simpleBoxBtn = toolsSubGrp1.add('iconbutton', undefined, boxIcon, { name: 'btn', style: 'toolbutton' });
+var simpleBoxBtn = toolsSubGrp1.add('iconbutton', undefined, boxIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 simpleBoxBtn.helpTip = 'simple box bg base';
 
 //---------------------------------------------------------
@@ -428,7 +428,7 @@ simpleBoxBtn.helpTip = 'simple box bg base';
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
 // wiggle position rig...
-var wigBtn = currentGrp.add('iconbutton', undefined, wigIcon, { name: 'btn', style: 'toolbutton' });
+var wigBtn = currentGrp.add('iconbutton', undefined, wigIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 wigBtn.helpTip = 'wig rig';
 
 //---------------------------------------------------------
@@ -436,7 +436,7 @@ wigBtn.helpTip = 'wig rig';
 currentGrp.add('image', undefined, vSpacer, { name: 'div' });
 
 // simple ik rig...
-var ikBtn = currentGrp.add('iconbutton', undefined, ikIcon, { name: 'btn', style: 'toolbutton' });
+var ikBtn = currentGrp.add('iconbutton', undefined, ikIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 ikBtn.helpTip = 'simple ik rig';
 
 /*

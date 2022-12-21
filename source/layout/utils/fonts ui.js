@@ -34,11 +34,11 @@ function fontsDialog() {
   var bGrp2 = bGrp.add('group');
   bGrp2.alignment = 'right';
   // left buttons...
-  var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon, { style: 'toolbutton' });
+  var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon.light, { style: 'toolbutton' });
   downloadBtn.helpTip = 'downloads the latest templates';
-  var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, { style: 'toolbutton' }); //bGroup.add('button', undefined, 'refresh');
+  var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon.light, { style: 'toolbutton' }); //bGroup.add('button', undefined, 'refresh');
   refreshBtn.helpTip = 'refresh list content';
-  var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, { style: 'toolbutton' }); //bGroup.add('button', undefined, 'refresh');
+  var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon.light, { style: 'toolbutton' }); //bGroup.add('button', undefined, 'refresh');
   openFldBtn.helpTip = 'open fonts folder';
   // right buttons...
   var installBtn = bGrp2.add('button', undefined, 'install');

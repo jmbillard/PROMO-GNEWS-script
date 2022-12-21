@@ -27,7 +27,7 @@ function findDialog() {
 
   var findEdTxt = inputGrp.add('edittext', [0, 0, 260, 38]);
 
-  var findBtn = inputGrp.add('iconbutton', undefined, findIcon, { style: 'toolbutton' });
+  var findBtn = inputGrp.add('iconbutton', undefined, findIcon.light, { style: 'toolbutton' });
   findBtn.helpTip = 'find';
 
   //---------------------------------------------------------
@@ -95,7 +95,7 @@ function findDialog() {
 
   //---------------------------------------------------------
 
-  var infoBtn = optMainGrp.add('iconbutton', undefined, infoIcon, { style: 'toolbutton' });
+  var infoBtn = optMainGrp.add('iconbutton', undefined, infoIcon.light, { style: 'toolbutton' });
   infoBtn.helpTip = 'Help | README';
 
   var resultGrp = w.add('group');

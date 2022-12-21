@@ -100,7 +100,7 @@ function prefsDialog() {
 	fldProjTxt.helpTip = '\'save project\' button default folder\n(\'PRODUCAO DIA-A-DIA\' on \'hard news\' mode)';
 	fldProjTxt.preferredSize = txtSize;
 
-	var fldProjBtn = projFldGrp.add('iconbutton', undefined, projFolderIcon, { style: 'toolbutton' });
+	var fldProjBtn = projFldGrp.add('iconbutton', undefined, projFolderIcon.light, { style: 'toolbutton' });
 	fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
 
 	projFldGrp.enabled = homeOffice ? true : !hardNews;
@@ -119,17 +119,18 @@ function prefsDialog() {
 	setTxtColor(themeGrpTxt, sTxtColor);
 
 	var iconThemeGrp = themeGrp.add('group');
-	iconThemeGrp.spacing = 20;
+	iconThemeGrp.spacing = 60;
 	iconThemeGrp.margins = [0, 8, 0, 4];
 
-	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light icons');
+	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light');
 	lightRdo.helpTip = 'icon theme';
-	lightRdo.value = true;
-	lightRdo.enabled = false;
+	lightRdo.value = lightRdo.text == iconTheme;
+	// lightRdo.enabled = false;
 
-	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark icons');
+	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark');
 	darkRdo.helpTip = 'icon theme';
-	darkRdo.enabled = false;
+	darkRdo.value = darkRdo.text == iconTheme;
+	// darkRdo.enabled = false;
 
 	var tabColorsGrp = themeGrp.add('group');
 	tabColorsGrp.spacing = 2;
@@ -142,7 +143,7 @@ function prefsDialog() {
 	colorDrop.selection = 0;
 	colorDrop.preferredSize = dropSize;
 
-	var tabColorBtn = wPref.add('iconbutton', undefined, undefined, { style: 'toolbutton' });
+	var tabColorBtn = wPref.add('iconbutton', undefined, undefined.light, { style: 'toolbutton' });
 	tabColorBtn.size = [176, 20];
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
@@ -207,7 +208,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	fldMagTxt.helpTip = 'upload MAM - magazine';
 	fldMagTxt.preferredSize = txtSize;
 
-	var fldMagBtn = fldGrp1.add('iconbutton', undefined, magazineFolderIcon, { style: 'toolbutton' });
+	var fldMagBtn = fldGrp1.add('iconbutton', undefined, magazineFolderIcon.light, { style: 'toolbutton' });
 	fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
 
 	var fldGrp2 = networkGrp.add('group');
@@ -217,7 +218,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	fldArteTxt.helpTip = 'download MAM - para arte';
 	fldArteTxt.preferredSize = txtSize;
 
-	var fldArteBtn = fldGrp2.add('iconbutton', undefined, arteFolderIcon, { style: 'toolbutton' });
+	var fldArteBtn = fldGrp2.add('iconbutton', undefined, arteFolderIcon.light, { style: 'toolbutton' });
 	fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
 
 	//---------------------------------------------------------
@@ -237,17 +238,17 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	bGrp2.alignment = 'right';
 	bGrp2.spacing = 2;
 
-	var devTogBtn = bGrp1.add('iconbutton', undefined, exprTogIcon, { style: 'toolbutton', toggle: 1 });
+	var devTogBtn = bGrp1.add('iconbutton', undefined, exprTogIcon.light, { style: 'toolbutton', toggle: 1 });
 	devTogBtn.helpTip = 'dev tools';
 	devTogBtn.value = devMode;
 
-	var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, { style: 'toolbutton' });
+	var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon.light, { style: 'toolbutton' });
 	openFldBtn.helpTip = 'open script preferences folder';
 
-	var resetBtn = bGrp2.add('iconbutton', undefined, refreshIcon, { style: 'toolbutton' });
+	var resetBtn = bGrp2.add('iconbutton', undefined, refreshIcon.light, { style: 'toolbutton' });
 	resetBtn.helpTip = 'reset script preferences';
 
-	var updateBtn = bGrp2.add('iconbutton', undefined, downloadIcon, { style: 'toolbutton' });
+	var updateBtn = bGrp2.add('iconbutton', undefined, downloadIcon.light, { style: 'toolbutton' });
 	updateBtn.helpTip = 'download the latest script version from github';
 
 	/*
@@ -259,7 +260,10 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	*/
 
 	lightRdo.onClick = darkRdo.onClick = function () {
-		alert(wip);
+		iconTheme = this.text;
+		JSONPrefsObj.iconTheme = iconTheme;
+		savePrefs(); // → save preferences.json
+		alert('please restart the script');
 	};
 
 	//---------------------------------------------------------

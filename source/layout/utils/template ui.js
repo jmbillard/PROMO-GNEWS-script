@@ -55,11 +55,11 @@ function templateDialog() {
   var bGrp2 = bGrp.add('group');
   bGrp2.alignment = 'right';
   // left buttons...
-  var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon, { style: 'toolbutton' });
+  var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon.light, { style: 'toolbutton' });
   downloadBtn.helpTip = 'downloads the latest templates';
-  var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon, { style: 'toolbutton' });
+  var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon.light, { style: 'toolbutton' });
   refreshBtn.helpTip = 'refresh list content';
-  var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon, { style: 'toolbutton' });
+  var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon.light, { style: 'toolbutton' });
   openFldBtn.helpTip = 'open template folder';
   // right buttons...
   var importBtn = bGrp2.add('button', undefined, 'import');
