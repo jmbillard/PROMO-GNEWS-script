@@ -55,6 +55,7 @@ function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
 
   var hOffset = devMode ? 0 : 12;
+  if (w.size.width > 1380) hOffset = hOffset * 4;
   var hMargin = 90 + hOffset;
   var vMargin = 40 + hOffset;
 
@@ -102,11 +103,11 @@ function setLayout() {
       45, // effects
       70, // text utilities
       40, // brand
-      50, // project
-      60, // shortcuts
+      45, // project
+      55, // shortcuts
       60, // templates
       65, // text search
-      60, // preview
+      50, // preview
       65, // app utilities
       60  // dev tools
     ];
@@ -116,10 +117,13 @@ function setLayout() {
       mainMenuLabels[mlh].size.width = 0;
       mainMenuLabels[mlh].parent.spacing = 0;
 
-      if (w.size.width > 1480) {
+      if (w.size.width > 1380) {
         mainMenuLabels[mlh].size.width = mainMenuLabelsMaxW[mlh];
         mainMenuLabels[mlh].parent.spacing = 2;  
       }
+    }
+    if (w.size.width > 1380) {
+      tabsGrp.menu.margins = [0, 0, 0, 0];
     }
 
   } else {
@@ -215,6 +219,8 @@ function setLayout() {
   rightGrp.alignment = rbAlignment;
 
   devBtn.size = devMode ? [24, 24] : [0, 0];
+  if (w.size.width > 1380) devLab.size = devMode ? [60, 12] : [0, 0];
+
   updateLayout();
 }
 
