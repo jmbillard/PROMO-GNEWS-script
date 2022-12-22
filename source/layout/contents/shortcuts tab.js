@@ -242,7 +242,8 @@ dayBtn.onClick = function () {
 		showTabErr(netConfigName + ' not checked');
 		return;
 	}
-	var fld = PRODUCAO_DIA_A_DIA ();
+  var todayPath = PRODUCAO_DIA_A_DIA ();
+	var fld = new Folder(todayPath);
 
 	if (!fld.exists) {
 		showTabErr('this folder is not accessible...');

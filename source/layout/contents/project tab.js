@@ -166,7 +166,8 @@ projOrgBtn.onClick = function () {
 
 saveBtn.onClick = function () {
 
-  var saveFolder = hardNews ? PRODUCAO_DIA_A_DIA () : new Folder(projPath);
+  var todayPath = PRODUCAO_DIA_A_DIA ();
+  var saveFolder = hardNews ? new Folder(todayPath) : new Folder(projPath);
   var dateStr = system
     .callSystem('cmd.exe /c date /t')
     .trim();

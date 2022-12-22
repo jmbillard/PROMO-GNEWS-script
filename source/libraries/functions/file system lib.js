@@ -267,7 +267,7 @@ function PRODUCAO_DIA_A_DIA () {
 	var d = dateStr.split('/')[0]; // -> 24
 	var todayPath = nAdd + '/PRODUCAO-DIA-A-DIA/' + y + '/' + m + '/' + d + '/GNEWS';
 
-	return new Folder(todayPath);
+	return todayPath;
 }
 
 /*
