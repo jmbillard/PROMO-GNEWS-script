@@ -19,7 +19,7 @@ var exprTogBtn = ctrlSubGrp1.add('iconbutton', undefined, exprTogIcon[iconTheme]
 exprTogBtn.helpTip = 'copy expressions';
 
 // create parent null... 
-var nullShpBtn = currentGrp.add('iconbutton', undefined, shpNullIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var nullShpBtn = currentGrp.add('iconbutton', undefined, nullIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 nullShpBtn.helpTip = 'create parent null';
 
 //---------------------------------------------------------
@@ -27,7 +27,7 @@ nullShpBtn.helpTip = 'create parent null';
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // create centered null
-var nullCShpBtn = currentGrp.add('iconbutton', undefined, nullCIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var nullCShpBtn = currentGrp.add('iconbutton', undefined, nullCenterIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 nullCShpBtn.helpTip = 'centered null';
 
 //---------------------------------------------------------

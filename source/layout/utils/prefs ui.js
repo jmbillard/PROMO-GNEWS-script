@@ -245,7 +245,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon.light, { style: 'toolbutton' });
 	openFldBtn.helpTip = 'open script preferences folder';
 
-	var resetBtn = bGrp2.add('iconbutton', undefined, refreshIcon.light, { style: 'toolbutton' });
+	var resetBtn = bGrp2.add('iconbutton', undefined, resetIcon.light, { style: 'toolbutton' });
 	resetBtn.helpTip = 'reset script preferences';
 
 	var updateBtn = bGrp2.add('iconbutton', undefined, downloadIcon.light, { style: 'toolbutton' });

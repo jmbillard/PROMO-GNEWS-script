@@ -23,7 +23,7 @@ var projNameTxt = projSubGrp1.add('edittext', undefined, 'proj name');
 projNameTxt.maximumSize.width = 100;
 projNameTxt.minimumSize.width = vMin;
 projNameTxt.helpTip = 'project name';
-var renameItemBtn = projSubGrp1.add('iconbutton', undefined, chkIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var renameItemBtn = projSubGrp1.add('iconbutton', undefined, applyIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 renameItemBtn.helpTip = 'rename comps';
 
 //---------------------------------------------------------

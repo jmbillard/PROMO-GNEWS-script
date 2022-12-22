@@ -40,7 +40,7 @@ a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **
 ---
 <br />
 
-## ![null btn](/images/icons/shpNullIcon.png) botão **`null`**
+## ![null btn](/images/icons/nullIcon.png) botão **`null`**
 
 cria um 'null' pai na mesma posição de cada layer selecionado.
 
