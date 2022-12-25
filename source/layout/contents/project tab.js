@@ -61,7 +61,7 @@ currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var projSubGrp3 = currentGrp.add('group');
 
 var fldProjBtn2 = projSubGrp3.add('iconbutton', undefined, projFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-fldProjBtn2.helpTip = 'pasta de projetos';
+fldProjBtn2.helpTip = 'project folder';
 
 /*
 
@@ -229,9 +229,11 @@ fldProjBtn2.onClick = function () {
 		return;
 	}
   var todayPath = PRODUCAO_DIA_A_DIA ();
-  alert(projPath);
-  var fld = hardNews ? new Folder(todayPath) : new Folder(projPath);
-	if (!fld.exists) {
+  var currentProj = app.project.file;
+  var currentProjPath = currentProj != null ? decodeURI(currentProj.path) : projPath;
+  var fld = hardNews ? new Folder(todayPath) : new Folder(currentProjPath);
+	
+  if (!fld.exists) {
 		showTabErr('this folder is not accessible...');
 		return;
 	}
