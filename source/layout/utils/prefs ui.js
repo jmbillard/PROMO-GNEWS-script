@@ -483,7 +483,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 				copyFolderContent(downPath, destPathArray[1]);
 
 			} catch (err) {
-				alert('nope... (っ °Д °;)っ \n\n' + error.message);
+				alert('nope... (っ °Д °;)っ \n\n' + err.message);
 				copyFolderContent(downPath, destPathArray[0]);
 			}
 		}
