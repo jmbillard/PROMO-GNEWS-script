@@ -263,7 +263,9 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		iconTheme = this.text;
 		JSONPrefsObj.iconTheme = iconTheme;
 		savePrefs(); // → save preferences.json
-		alert('please restart the script');
+		showTabProg('restart the script  ヽ(✿ﾟ▽ﾟ)ノ');
+		wPref.close();
+
 	};
 
 	//---------------------------------------------------------
@@ -485,7 +487,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 				copyFolderContent(downPath, destPathArray[0]);
 			}
 		}
-		showTabProg('and run the script  ヽ(✿ﾟ▽ﾟ)ノ');
+		showTabProg('restart the script  ヽ(✿ﾟ▽ﾟ)ノ');
 		wPref.close();
 	};
 
