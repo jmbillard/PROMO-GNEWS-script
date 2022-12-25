@@ -367,7 +367,7 @@ function fontCollect(savePath) {
 			fontSrcFile.copy(fontCopyFile);
 		}
 	}
-	if (fontArray == []) saveFolder.remove();
+	if (saveFolder.getFiles().length == 0) saveFolder.remove();
 
-	if (failArray != []) alert(failArray.toString() + ' cant be copied');
+	if (failArray.length > 0) alert(failArray.toString() + ' cant be copied');
 }
