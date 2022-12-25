@@ -485,7 +485,7 @@ seleciona, modifica, aplica e salva modelos do template de assinatura *'end page
 ---
 <br />
 
-## ![save btn](/images/icons/quickSaveIcon.png) botão **`salvar projeto`**
+## ![save btn](/images/icons/saveIcon.png) botão **`salvar projeto`**
 
 abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
 

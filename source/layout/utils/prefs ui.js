@@ -125,12 +125,12 @@ function prefsDialog() {
 	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light');
 	lightRdo.helpTip = 'icon theme';
 	lightRdo.value = lightRdo.text == iconTheme;
-	lightRdo.enabled = false;
+	// lightRdo.enabled = false;
 
 	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark');
 	darkRdo.helpTip = 'icon theme';
 	darkRdo.value = darkRdo.text == iconTheme;
-	darkRdo.enabled = false;
+	// darkRdo.enabled = false;
 
 	var tabColorsGrp = themeGrp.add('group');
 	tabColorsGrp.spacing = 2;

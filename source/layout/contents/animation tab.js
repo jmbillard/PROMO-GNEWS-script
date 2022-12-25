@@ -43,7 +43,7 @@ easeSld1.maximumSize.width = 80;
 easeSld1.minimumSize.width = vMin;
 
 var easePrevGrp = animSubGrp2.add('group');
-easePrevGrp.add('image', undefined, easePrev.img00);
+easePrevGrp.add('image', undefined, easePrev['img00' + iconTheme]);
 
 var easeSld2 = animSubGrp2.add('slider', undefined, 99, 1, 99);
 easeSld2.helpTip = 'ease in influence';
@@ -194,7 +194,7 @@ easeSld1.onChange = function () {
 	var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
 
 	easePrevGrp.remove(0);
-	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2 + iconTheme]);
 	easePrevGrp.layout.layout(true);
 
 	var aItem = app.project.activeItem;
@@ -211,7 +211,7 @@ easeSld2.onChange = function () {
 	var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
 
 	easePrevGrp.remove(0);
-	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2 + iconTheme]);
 	easePrevGrp.layout.layout(true);
 
 	var aItem = app.project.activeItem;
@@ -271,7 +271,7 @@ easeSld1Txt.addEventListener('click', function (c) {
 		var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
 
 		easePrevGrp.remove(0);
-		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2 + iconTheme]);
 		easePrevGrp.layout.layout(true);
 
 		var aItem = app.project.activeItem;
@@ -310,7 +310,7 @@ easeSld2Txt.addEventListener('click', function (c) {
 		var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
 
 		easePrevGrp.remove(0);
-		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2]);
+		easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2 + iconTheme]);
 		easePrevGrp.layout.layout(true);
 
 		var aItem = app.project.activeItem;

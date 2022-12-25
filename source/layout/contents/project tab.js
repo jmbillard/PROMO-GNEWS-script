@@ -30,7 +30,7 @@ renameItemBtn.helpTip = 'rename comps';
 
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
-var projOrgBtn = currentGrp.add('iconbutton', undefined, templateIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var projOrgBtn = currentGrp.add('iconbutton', undefined, projOrgIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 projOrgBtn.helpTip = 'organize project | organization tags';
 
 //---------------------------------------------------------
@@ -52,7 +52,7 @@ collectTogBtn.helpTip = 'collect files';
 var collectFontsTogBtn = projSubGrp2.add('iconbutton', undefined, txtTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
 collectFontsTogBtn.helpTip = 'collect fonts';
 
-var saveBtn = projSubGrp2.add('iconbutton', undefined, quickSaveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var saveBtn = projSubGrp2.add('iconbutton', undefined, saveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 saveBtn.helpTip = 'quick project save';
 
 //---------------------------------------------------------
