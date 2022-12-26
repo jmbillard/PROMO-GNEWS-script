@@ -1,18 +1,49 @@
 {
-	"devMode": false,
-	"darkTheme": false,
 	"color": {
-		"menu": "#3E50B4",
-		"controls": "#BF3A48",
-		"animation": "#CB6259",
-		"tools": "#6EA57D",
-		"effects": "#D68A69",
-		"text": "#C2B6A3",
-		"brand": "#3F3F58",
-		"project": "#00B5C2",
-		"shortcuts": "#CD4548",
-		"app": "#6639B6",
-		"dev": "#202020"
+		"menu": {
+			"light": "#3E50B4",
+			"dark": "#8FF7A7"
+		},
+		"controls": {
+			"light": "#BF3A48",
+			"dark": "#DA6877"
+		},
+		"animation": {
+			"light": "#CB6259",
+			"dark": "#B7B5E4 "
+		},
+		"tools": {
+			"light": "#6EA57D",
+			"dark": "#E2EE96"
+		},
+		"effects": {
+			"light": "#D68A69",
+			"dark": "#ACCDEC"
+		},
+		"text": {
+			"light": "#C2B6A3",
+			"dark": "#F4E76E"
+		},
+		"brand": {
+			"light": "#3F3F58",
+			"dark": "#BBBBBD"
+		},
+		"project": {
+			"light": "#00B5C2",
+			"dark": "#7CC6FE"
+		},
+		"shortcuts": {
+			"light": "#CD4548",
+			"dark": "#FFB398"
+		},
+		"app": {
+			"light": "#6639B6",
+			"dark": "#FFAFB7"
+		},
+		"dev": {
+			"light": "#202020",
+			"dark": "#F4FAFF"
+		}
 	},
 	"labels": [
 		"#F44336",
@@ -33,8 +64,8 @@
 		"#5F7C8A"
 	],
 	"folders": {
-		"artePath": "//192.168.3.10/Share Point/Para Arte - Download MAM Magazine",
-		"magazinePath": "//192.168.3.10/Share Point/Para Ilha - Upload Magazine",
+		"artePath": "//10.181.53.152/arte_ilhasjorn/PARA ARTE/PROMO GNEWS/MXF ARTE",
+		"magazinePath": "//10.181.53.152/arte_ilhasjorn/UPLOAD_MAM/Magazine",
 		"projPath": "~/Desktop"
 	},
 	"selection": {
@@ -43,6 +74,8 @@
 		"projectMode": 1
 	},
 	"userPrefix": "JBI",
-	"homeOffice": true,
-	"hardNews": false
+	"homeOffice": false,
+	"hardNews": false,
+	"devMode": true,
+	"iconTheme": "dark"
 }

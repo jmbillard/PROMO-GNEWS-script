@@ -63,8 +63,6 @@ zipTemplatesBtn.onClick = function () {
     showTabErr(netConfigName + ' not checked');
     return;
   }
-  var templatesPath = scriptPreferencesPath + '/templates';
-  var templatesFolder = new Folder(templatesPath);
   // dev folder path '[user name]/PROMO-GNEWS-script'...
   var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
   var devFolder = new Folder(destPath);
@@ -127,8 +125,6 @@ zipFontsBtn.onClick = function () {
     showTabErr(netConfigName + ' not checked');
     return;
   }
-  var fontsPath = scriptPreferencesPath + '/fonts';
-  var fontsFolder = new Folder(fontsPath);
   // dev folder path '[user name]/PROMO-GNEWS-script'...
   var destPath = Folder.myDocuments.parent.toString() + '/PROMO-GNEWS-script';
   var devFolder = new Folder(destPath);

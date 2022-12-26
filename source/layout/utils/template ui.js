@@ -20,7 +20,7 @@ function templateDialog() {
 
   //---------------------------------------------------------
 
-  var wTemplates = new Window('dialog', 'import options...');
+  var wTemplates = new Window('dialog', 'templates...');
   // main group...
   var mainGrp = wTemplates.add('group');
   // left vertical group...
@@ -55,11 +55,11 @@ function templateDialog() {
   var bGrp2 = bGrp.add('group');
   bGrp2.alignment = 'right';
   // left buttons...
-  var downloadBtn = bGrp1.add('iconbutton', undefined, downloadIcon.light, { style: 'toolbutton' });
+  var downloadBtn = bGrp1.add('iconbutton', iconSize, downloadIcon.light, { style: 'toolbutton' });
   downloadBtn.helpTip = 'downloads the latest templates';
-  var refreshBtn = bGrp1.add('iconbutton', undefined, refreshIcon.light, { style: 'toolbutton' });
+  var refreshBtn = bGrp1.add('iconbutton', iconSize, refreshIcon.light, { style: 'toolbutton' });
   refreshBtn.helpTip = 'refresh list content';
-  var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon.light, { style: 'toolbutton' });
+  var openFldBtn = bGrp1.add('iconbutton', iconSize, folderIcon.light, { style: 'toolbutton' });
   openFldBtn.helpTip = 'open template folder';
   // right buttons...
   var importBtn = bGrp2.add('button', undefined, 'import');
@@ -106,12 +106,12 @@ function templateDialog() {
     }
     // template selected...
     var s = templateTree.selection; // → selected template
-    var templateName = s.toString();
+    var templateName = s.toString().replace(' / ', '/');
 
     // iterate selection parent + parent + parent... to form selected template file path...
     while (s.parent.toString() != templatesFolder.displayName) {
       s = s.parent; // current parent...
-      templateName = s.toString() + '/' + templateName; // → 'current parent/.../template name'
+      templateName = s.toString().replace(' / ', '/') + '/' + templateName; // → 'current parent/.../template name'
     }
     var imgName = templateName.replace(/\.[\w]+$/i, ' preview.png'); // → template preview.png
     var infoName = templateName.replace(/\.[\w]+$/i, ' info.txt'); // → template info.png
@@ -136,12 +136,12 @@ function templateDialog() {
 
   importBtn.onClick = templateTree.onDoubleClick = function () {
     var s = templateTree.selection; // → current selection
-    var fileName = s.toString();
+    var fileName = s.toString().replace(' / ', '/');
     
     // iterate selection parent + parent + parent... to form selected template file path...
     while (s.parent.toString() != templatesFolder.displayName) {
       s = s.parent; // current parent...
-      fileName = s.toString() + '/' + fileName; // → current parent/.../template name
+      fileName = s.toString().replace(' / ', '/') + '/' + fileName; // → current parent/.../template name
     }
     
     try {

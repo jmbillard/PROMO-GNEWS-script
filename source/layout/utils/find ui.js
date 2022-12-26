@@ -27,7 +27,7 @@ function findDialog() {
 
   var findEdTxt = inputGrp.add('edittext', [0, 0, 260, 38]);
 
-  var findBtn = inputGrp.add('iconbutton', undefined, findIcon.light, { style: 'toolbutton' });
+  var findBtn = inputGrp.add('iconbutton', iconSize, findIcon.light, { style: 'toolbutton' });
   findBtn.helpTip = 'find';
 
   //---------------------------------------------------------

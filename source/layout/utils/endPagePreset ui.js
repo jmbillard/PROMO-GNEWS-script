@@ -527,15 +527,15 @@ function endPagePresetDialog() {
   // sub group...
   var oGrp = bGrp1.add('group');
   oGrp.orientation = 'column';
-  oGrp.spacing = 0;
+  oGrp.spacing = 2;
   // refresh button...
-  var refreshBtn = oGrp.add('iconbutton', undefined, upIcon.light, { style: 'toolbutton' });
+  var refreshBtn = oGrp.add('iconbutton', [0, 0, 36, 16], upIcon.light, { style: 'toolbutton' });
   refreshBtn.helpTip = 'pull comp changes';
   // apply button...
-  var applyBtn = oGrp.add('iconbutton', undefined, downIcon.light, { style: 'toolbutton' });
+  var applyBtn = oGrp.add('iconbutton', [0, 0, 36, 16], downIcon.light, { style: 'toolbutton' });
   applyBtn.helpTip = 'apply current changes';
 
-  var openBtn = bGrp1.add('iconbutton', undefined, folderIcon.light, { style: 'toolbutton' });
+  var openBtn = bGrp1.add('iconbutton', iconSize, folderIcon.light, { style: 'toolbutton' });
   openBtn.helpTip = 'open end page presets folder';
   var saveBtn = bGrp2.add('button', undefined, 'save');
   saveBtn.helpTip = 'save new end page preset JSON file';

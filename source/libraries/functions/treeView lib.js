@@ -29,6 +29,47 @@ function cleanHierarchy(nodeTree) {
   }
 }
 
+// remove empty tree folders...
+function optimizeHierarchy(nodeTree) {
+  var branches = nodeTree.items; // all current tree item subitems...
+
+  for (var i = branches.length - 1; i >= 0; i--) {
+    
+    if (branches[i].type != 'node') continue; // ignore item...
+
+    if (branches[i].items.length > 1) {
+      optimizeHierarchy(branches[i]);
+
+    } else {
+
+      if (branches[i].items.length == 1 && branches[i].items[0].type == 'node') {
+        //alert(branches[i].text + ' tem 1 pasta');
+        branches[i].text += ' / ' + branches[i].items[0].text;
+
+        for (var it = branches[i].items[0].items.length - 1; it >= 0; it--) {
+          var nItem = branches[i].add(branches[i].items[0].items[it].type, branches[i].items[0].items[it].text);
+          nItem.image = branches[i].items[0].items[it].image;
+          branches[i].remove(0);
+        }
+        //var nNode = branches[i].add('item', branches[i].items[0].text);
+
+      }
+    }
+
+    // if (branches[i].items.length == 1) {
+    //   nodeTree.text += '/' + branches[i].text;
+    //   var nNode = nodeTree.add('node', branches[i].items[0].text);
+    //   nNode.image = branches[i].items[0].image;
+    // } else {
+    //   optimizeHierarchy(branches[i]); // current item is folder item...
+      //nodeTree.remove(branches[i]); // remove current folder item...
+    // }
+    // if (nodeTree.items.length == 1 && nodeTree.type == 'node') { // empty folder item...
+    //   alert(nodeTree.text + ' tem 1 pasta'); // remove current folder item...
+    // }
+  }
+}
+
 // populates the 'tree view' node hierarchy...
 function createHierarchy(array, node, fileTypes) {
   
@@ -70,6 +111,7 @@ function buildTree(folder, tree, fileTypes) {
   // starts the recursive population...
   createHierarchy(folderContentArray, folderNode, fileTypes);
   cleanHierarchy(tree);
+  optimizeHierarchy(tree);
 }
 
 // [ ] comment - buildFontTree

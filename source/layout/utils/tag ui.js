@@ -52,7 +52,7 @@ mainGrp.alignChildren = \'left\';\n\n';
   // comp comment buttons...
   for (var c = 0; c < compCommentTags.length; c++) {
     tagWindow += 'var compComTagGrp' + c + ' = mainGrp.add(\'group\');\
-var compComTagBtn'+ c + ' = compComTagGrp' + c + '.add(\'iconbutton\', undefined, ' + compCommentTags[c][1] + '.light, {style: \'toolbutton\'});\
+var compComTagBtn'+ c + ' = compComTagGrp' + c + '.add(\'iconbutton\', iconTogSize, ' + compCommentTags[c][1] + '.light, {style: \'toolbutton\'});\
 compComTagBtn'+ c + '.helpTip = \'' + compCommentTags[c][0] + ' comp comment tag\';\
 var compComTag'+ c + 'Txt = compComTagGrp' + c + '.add(\'statictext\', undefined, \'' + compCommentTags[c][0] + '\');\
 setTxtColor(compComTag'+ c + 'Txt, GNEWS_secColors[10]);\n\n';
@@ -60,7 +60,7 @@ setTxtColor(compComTag'+ c + 'Txt, GNEWS_secColors[10]);\n\n';
   // template buttons...
   for (var b = 0; b < multiTags.length; b++) {
     tagWindow += 'var multiTagGrp' + b + ' = mainGrp.add(\'group\');\
-var multiTagBtn'+ b + ' = multiTagGrp' + b + '.add(\'iconbutton\', undefined, ' + multiTags[b][1] + '.light, {style: \'toolbutton\'});\
+var multiTagBtn'+ b + ' = multiTagGrp' + b + '.add(\'iconbutton\', iconTogSize, ' + multiTags[b][1] + '.light, {style: \'toolbutton\'});\
 multiTagBtn'+ b + '.helpTip = \'' + multiTags[b][0] + ' tag\';\
 var multiTag'+ b + 'Txt = multiTagGrp' + b + '.add(\'statictext\', undefined, \'' + multiTags[b][0] + '\');\
 setTxtColor(multiTag'+ b + 'Txt, GNEWS_secColors[9]);\n\n';
@@ -68,7 +68,7 @@ setTxtColor(multiTag'+ b + 'Txt, GNEWS_secColors[9]);\n\n';
   // template buttons...
   for (var p = 0; p < compTemplateTags.length; p++) {
     tagWindow += 'var temTagGrp' + p + ' = mainGrp.add(\'group\');\
-var temTagBtn'+ p + ' = temTagGrp' + p + '.add(\'iconbutton\', undefined, ' + compTemplateTags[p][1] + '.light, {style: \'toolbutton\'});\
+var temTagBtn'+ p + ' = temTagGrp' + p + '.add(\'iconbutton\', iconTogSize, ' + compTemplateTags[p][1] + '.light, {style: \'toolbutton\'});\
 temTagBtn'+ p + '.helpTip = \'' + compTemplateTags[p][0] + ' template tag\';\
 var temTag'+ p + 'Txt = temTagGrp' + p + '.add(\'statictext\', undefined, \'' + compTemplateTags[p][0] + '\');\
 setTxtColor(temTag'+ p + 'Txt, GNEWS_secColors[8]);\n\n\n';
