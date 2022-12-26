@@ -283,27 +283,8 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	resetBtn.onClick = function () {
 		JSONPrefsObj = defPrefsObj;
 		savePrefs(); // → save preferences.json
-		loadDefaultPrefs();
-
-		projUserTxt.text = userPrefix;
-		nullTypeDrop.selection = nullType;
-		adjTypeDrop.selection = adjType;
-		projectModeDrop.selection = projectMode;
-
-		fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
-		fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
-		fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
-
-		setBtnColor(tabColorBtn, tabColors[0]);
-		tabColorBtn.notify('onDraw'); // force ui update...
-
-		hoCkb.value = homeOffice;
-		updateFolderPaths(); // → update templates and fonts folder
-
-		bgColor = tabColors[0];
-		setBgColor(w, bgColor);
-
-		alert('done!');
+		showTabProg('restart the script  ヽ(✿ﾟ▽ﾟ)ノ');
+		wPref.close();
 	};
 
 	//---------------------------------------------------------
@@ -371,7 +352,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		if (configColor != -1) {
 			configColor = eval(rgbStr(configColor)); // → [1,1,1]
 			tabColors[colorDrop.selection.index] = configColor; // update color array...
-			JSONPrefsObj.color[colorDrop.selection] = rgbToHEX(configColor); // update preferences object...
+			JSONPrefsObj.color[colorDrop.selection][iconTheme] = rgbToHEX(configColor); // update preferences object...
 
 			setBtnColor(this, configColor); // update color preview swatch...
 			savePrefs(); // → save preferences.json
