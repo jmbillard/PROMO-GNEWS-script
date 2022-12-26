@@ -8,7 +8,7 @@
 
 currentGrp = tabsGrp.effects;
 
-var shpAdjBtn = currentGrp.add('iconbutton', undefined, shpAdjIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var shpAdjBtn = currentGrp.add('iconbutton', iconSize, shpAdjIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 shpAdjBtn.helpTip = 'adjustment layer';
 
 //---------------------------------------------------------
@@ -16,13 +16,13 @@ shpAdjBtn.helpTip = 'adjustment layer';
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var fxSubGrp1 = currentGrp.add('group');
 
-var curBtn = fxSubGrp1.add('iconbutton', undefined, curIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var curBtn = fxSubGrp1.add('iconbutton', iconTogSize, curIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 curBtn.helpTip = 'curves';
 
-var levBtn = fxSubGrp1.add('iconbutton', undefined, levIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var levBtn = fxSubGrp1.add('iconbutton', iconTogSize, levIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 levBtn.helpTip = 'levels';
 
-var lumBtn = fxSubGrp1.add('iconbutton', undefined, lumIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var lumBtn = fxSubGrp1.add('iconbutton', iconTogSize, lumIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 lumBtn.helpTip = 'lumetri color';
 
 //---------------------------------------------------------
@@ -30,13 +30,13 @@ lumBtn.helpTip = 'lumetri color';
 currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp2 = currentGrp.add('group');
 
-var gaublurBtn = fxSubGrp2.add('iconbutton', undefined, gaublurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var gaublurBtn = fxSubGrp2.add('iconbutton', iconTogSize, gaublurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 gaublurBtn.helpTip = 'gaussian blur';
 
-var comblurBtn = fxSubGrp2.add('iconbutton', undefined, comblurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var comblurBtn = fxSubGrp2.add('iconbutton', iconTogSize, comblurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 comblurBtn.helpTip = 'compound blur';
 
-var lensblurBtn = fxSubGrp2.add('iconbutton', undefined, lensblurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var lensblurBtn = fxSubGrp2.add('iconbutton', iconTogSize, lensblurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 lensblurBtn.helpTip = 'lens blur';
 
 //---------------------------------------------------------
@@ -44,7 +44,7 @@ lensblurBtn.helpTip = 'lens blur';
 currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp3 = currentGrp.add('group');
 
-var fillBtn = fxSubGrp3.add('iconbutton', undefined, fillIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var fillBtn = fxSubGrp3.add('iconbutton', iconTogSize, fillIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 fillBtn.helpTip = 'fill';
 
 //---------------------------------------------------------
@@ -52,7 +52,7 @@ fillBtn.helpTip = 'fill';
 currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp4 = currentGrp.add('group');
 
-var glassBtn = fxSubGrp4.add('iconbutton', undefined, glassIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var glassBtn = fxSubGrp4.add('iconbutton', iconTogSize, glassIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 glassBtn.helpTip = '3d glasses';
 
 //---------------------------------------------------------
@@ -60,10 +60,10 @@ glassBtn.helpTip = '3d glasses';
 currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp5 = currentGrp.add('group');
 
-var fracBtn = fxSubGrp5.add('iconbutton', undefined, fracIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var fracBtn = fxSubGrp5.add('iconbutton', iconTogSize, fracIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 fracBtn.helpTip = 'fractal noise';
 
-var grainBtn = fxSubGrp5.add('iconbutton', undefined, grainIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var grainBtn = fxSubGrp5.add('iconbutton', iconTogSize, grainIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 grainBtn.helpTip = 'add grain';
 
 /*

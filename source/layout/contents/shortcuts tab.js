@@ -14,7 +14,7 @@ var linksSubGrp2 = currentGrp.add('group');
 var linkTxt1 = linksSubGrp2.add('statictext', undefined, 'sites:', { name: 'label' });
 linkTxt1.maximumSize.width = 30;
 
-var oneDriveBtn = linksSubGrp2.add('iconbutton', undefined, oneDriveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var oneDriveBtn = linksSubGrp2.add('iconbutton', iconSize, oneDriveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 oneDriveBtn.helpTip = 'OneDrive globo';
 
 //---------------------------------------------------------
@@ -22,13 +22,13 @@ oneDriveBtn.helpTip = 'OneDrive globo';
 linksSubGrp2.add('image', undefined, spacer.horizontal);
 
 // var linksSubGrp3 = currentGrp.add('group');
-var trelloBtn = linksSubGrp2.add('iconbutton', undefined, trelloIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var trelloBtn = linksSubGrp2.add('iconbutton', iconSize, trelloIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 trelloBtn.helpTip = 'trello promo GNEWS';
 
-var typeFormBtn = linksSubGrp2.add('iconbutton', undefined, typeFormIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var typeFormBtn = linksSubGrp2.add('iconbutton', iconSize, typeFormIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 typeFormBtn.helpTip = 'type form globo';
 
-var plannerBtn = linksSubGrp2.add('iconbutton', undefined, plannerIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var plannerBtn = linksSubGrp2.add('iconbutton', iconSize, plannerIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 plannerBtn.helpTip = 'planner globo';
 
 //---------------------------------------------------------
@@ -39,28 +39,28 @@ var linksSubGrp1 = currentGrp.add('group');
 var linkTxt2 = linksSubGrp1.add('statictext', undefined, 'folders:', { name: 'label' });
 linkTxt2.maximumSize.width = 40;
 
-var mamArteBtn = linksSubGrp1.add('iconbutton', undefined, arteFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var mamArteBtn = linksSubGrp1.add('iconbutton', iconSize, arteFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 mamArteBtn.helpTip = 'MAM Para Arte | set custom folder';
-var mamMagBtn = linksSubGrp1.add('iconbutton', undefined, magazineFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var mamMagBtn = linksSubGrp1.add('iconbutton', iconSize, magazineFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 mamMagBtn.helpTip = 'upload MAM Magazine | set custom folder';
 
 //---------------------------------------------------------
 
 linksSubGrp1.add('image', undefined, spacer.horizontal);
 
-var mamHardNewsBtn = linksSubGrp1.add('iconbutton', undefined, hardNewsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var mamHardNewsBtn = linksSubGrp1.add('iconbutton', iconSize, hardNewsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 mamHardNewsBtn.helpTip = 'upload MAM Hard News';
 mamHardNewsBtn.enabled = !homeOffice;
 
-var nUtilsBtn = linksSubGrp1.add('iconbutton', undefined, utilsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var nUtilsBtn = linksSubGrp1.add('iconbutton', iconSize, utilsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 nUtilsBtn.helpTip = 'N: Utilidades';
 nUtilsBtn.enabled = !homeOffice;
 
-var baseJorBtn = linksSubGrp1.add('iconbutton', undefined, baseFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var baseJorBtn = linksSubGrp1.add('iconbutton', iconSize, baseFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 baseJorBtn.helpTip = 'Bases Jornais';
 baseJorBtn.enabled = !homeOffice;
 
-var dayBtn = linksSubGrp1.add('iconbutton', undefined, dayFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var dayBtn = linksSubGrp1.add('iconbutton', iconSize, dayFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 dayBtn.helpTip = 'HOJE - dia a dia';
 dayBtn.enabled = !homeOffice;
 

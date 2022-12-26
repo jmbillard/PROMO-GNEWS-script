@@ -9,13 +9,13 @@
 currentGrp = tabsGrp.text;
 var textSubGrp1 = currentGrp.add('group');
 
-var txtUpperBtn = textSubGrp1.add('iconbutton', undefined, txtUpperIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var txtUpperBtn = textSubGrp1.add('iconbutton', iconSize, txtUpperIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 txtUpperBtn.helpTip = 'set text layer to upper case';
 
-var txtLowerBtn = textSubGrp1.add('iconbutton', undefined, txtLowerIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var txtLowerBtn = textSubGrp1.add('iconbutton', iconSize, txtLowerIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 txtLowerBtn.helpTip = 'set text layer to lower case';
 
-var txtTitleBtn = textSubGrp1.add('iconbutton', undefined, txtTitleIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var txtTitleBtn = textSubGrp1.add('iconbutton', iconSize, txtTitleIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 txtTitleBtn.helpTip = 'set text layer to title case';
 
 //---------------------------------------------------------
@@ -24,10 +24,10 @@ currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var textSubGrp2 = currentGrp.add('group');
 
-var txtCleanerBtn = textSubGrp2.add('iconbutton', undefined, txtCleanerIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var txtCleanerBtn = textSubGrp2.add('iconbutton', iconSize, txtCleanerIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 txtCleanerBtn.helpTip = 'deletes consecutive spaces and line breaks';
 
-var txtColumnBtn = textSubGrp2.add('iconbutton', undefined, txtColumnsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var txtColumnBtn = textSubGrp2.add('iconbutton', iconSize, txtColumnsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 txtColumnBtn.helpTip = 'divides consecutive spaces in columns';
 
 //---------------------------------------------------------

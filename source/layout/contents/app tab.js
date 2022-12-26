@@ -9,21 +9,21 @@
 
 currentGrp = tabsGrp.app;
 
-var installFontsBtn = currentGrp.add('iconbutton', undefined, fontsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var installFontsBtn = currentGrp.add('iconbutton', iconSize, fontsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 installFontsBtn.helpTip = 'install fonts | open fonts folder';
 
 //---------------------------------------------------------
 
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
-var copyAMEPresetsBtn = currentGrp.add('iconbutton', undefined, eprIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var copyAMEPresetsBtn = currentGrp.add('iconbutton', iconSize, eprIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
 
 //---------------------------------------------------------
 
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
-var templatesLocalBtn = currentGrp.add('iconbutton', undefined, aetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var templatesLocalBtn = currentGrp.add('iconbutton', iconSize, aetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 templatesLocalBtn.helpTip = 'install templates locally';
 templatesLocalBtn.enabled = false;
 

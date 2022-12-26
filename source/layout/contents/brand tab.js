@@ -39,7 +39,7 @@ createColorButtons(GNEWS_secColors, colorSubGrp3);
 
 currentGrp.add('image', undefined, spacer.horizontal);
 
-var shpPalletBtn = currentGrp.add('iconbutton', undefined, palletIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var shpPalletBtn = currentGrp.add('iconbutton', iconSize, palletIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 shpPalletBtn.helpTip = 'color pallet as shape layer';
 
 //---------------------------------------------------------
@@ -48,13 +48,13 @@ currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var colorSubGrp4 = currentGrp.add('group');
 
-var arrowOnAirBtn = colorSubGrp4.add('iconbutton', undefined, arrowOnAirIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var arrowOnAirBtn = colorSubGrp4.add('iconbutton', iconSize, arrowOnAirIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 arrowOnAirBtn.helpTip = 'arrow on-air';
 
-var logoStaticBtn = colorSubGrp4.add('iconbutton', undefined, newsStaticIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var logoStaticBtn = colorSubGrp4.add('iconbutton', iconSize, newsStaticIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 logoStaticBtn.helpTip = 'GNEWS logo static';
 
-var logoAnim3sBtn = colorSubGrp4.add('iconbutton', undefined, newsAnimIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var logoAnim3sBtn = colorSubGrp4.add('iconbutton', iconSize, newsAnimIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 logoAnim3sBtn.helpTip = 'GNEWS logo 3 seconds animation';
 
 /*

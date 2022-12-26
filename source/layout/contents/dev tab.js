@@ -12,7 +12,7 @@ currentGrp = tabsGrp.dev;
 var devGrp1 = currentGrp.add('group');
 var binTxt = devGrp1.add('statictext', undefined, 'bin:', { name: 'label' });
 
-var binBtn = devGrp1.add('iconbutton', undefined, binIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var binBtn = devGrp1.add('iconbutton', iconSize, binIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 binBtn.helpTip = 'binary converter | layer source code';
 
 //---------------------------------------------------------
@@ -21,7 +21,7 @@ var devGrp2 = currentGrp.add('group');
 var dTxt = devGrp2.add('statictext', undefined, 'dark:', { name: 'label' });
 dTxt.maximumSize.width = 30;
 
-var dBtn = devGrp2.add('iconbutton', undefined, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var dBtn = devGrp2.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 dBtn.helpTip = 'convert .png to dark icon theme';
 
 //---------------------------------------------------------
@@ -33,13 +33,13 @@ var devGrp3 = currentGrp.add('group');
 var zipTxt1 = devGrp3.add('statictext', undefined, 'templates:', { name: 'label' });
 zipTxt1.maximumSize.width = 60;
 
-var zipTemplatesBtn = devGrp3.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var zipTemplatesBtn = devGrp3.add('iconbutton', iconSize, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 zipTemplatesBtn.helpTip = 'zip the templates folder';
 
 var zipTxt2 = devGrp3.add('statictext', undefined, 'fonts:', { name: 'label' });
 zipTxt2.maximumSize.width = 30;
 
-var zipFontsBtn = devGrp3.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var zipFontsBtn = devGrp3.add('iconbutton', iconSize, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 zipFontsBtn.helpTip = 'zip the fonts folder';
 
 

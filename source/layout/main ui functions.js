@@ -54,7 +54,7 @@ function setTxtColor(sTxt, color) {
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
 
-  var hOffset = devMode ? 0 : 12;
+  var hOffset = devMode ? 0 : iconSize[3] / 2;
   if (w.size.width > 1380) hOffset = hOffset * 4;
   var hMargin = 90 + hOffset;
   var vMargin = 40 + hOffset;
@@ -132,7 +132,7 @@ function setLayout() {
     rbAlignment = 'top';
 
     // [left, top, right, bottom]
-    mainGrp.margins = [0, 0, 0, 24 - hOffset - 4];
+    mainGrp.margins = [0, 0, 0, iconSize[3] - hOffset - 4];
     tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
     leftGrp.margins = [0, 0, 0, 5];
 
@@ -218,7 +218,7 @@ function setLayout() {
   leftGrp.alignment = ltAlignment;
   rightGrp.alignment = rbAlignment;
 
-  devBtn.size = devMode ? [24, 24] : [0, 0];
+  devBtn.size = devMode ? [36, 36] : [0, 0];
   if (w.size.width > 1380) devLab.size = devMode ? [60, 12] : [0, 0];
 
   updateLayout();

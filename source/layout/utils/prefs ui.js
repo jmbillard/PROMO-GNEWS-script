@@ -238,17 +238,17 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	bGrp2.alignment = 'right';
 	bGrp2.spacing = 2;
 
-	var devTogBtn = bGrp1.add('iconbutton', undefined, exprTogIcon.light, { style: 'toolbutton', toggle: 1 });
+	var devTogBtn = bGrp1.add('iconbutton', iconTogSize, exprTogIcon.light, { style: 'toolbutton', toggle: 1 });
 	devTogBtn.helpTip = 'dev tools';
 	devTogBtn.value = devMode;
 
-	var openFldBtn = bGrp1.add('iconbutton', undefined, folderIcon.light, { style: 'toolbutton' });
+	var openFldBtn = bGrp1.add('iconbutton', iconSize, folderIcon.light, { style: 'toolbutton' });
 	openFldBtn.helpTip = 'open script preferences folder';
 
-	var resetBtn = bGrp2.add('iconbutton', undefined, resetIcon.light, { style: 'toolbutton' });
+	var resetBtn = bGrp2.add('iconbutton', iconSize, resetIcon.light, { style: 'toolbutton' });
 	resetBtn.helpTip = 'reset script preferences';
 
-	var updateBtn = bGrp2.add('iconbutton', undefined, downloadIcon.light, { style: 'toolbutton' });
+	var updateBtn = bGrp2.add('iconbutton', iconSize, downloadIcon.light, { style: 'toolbutton' });
 	updateBtn.helpTip = 'download the latest script version from github';
 
 	/*

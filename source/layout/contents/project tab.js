@@ -16,21 +16,21 @@ projIdTxt.maximumSize.width = 100;
 projIdTxt.minimumSize.width = vMin;
 projIdTxt.helpTip = projIdContent;
 
-var insertUserIdBtn = projSubGrp1.add('iconbutton', undefined, addIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var insertUserIdBtn = projSubGrp1.add('iconbutton', iconSize, addIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 insertUserIdBtn.helpTip = 'insert user with ' + projIdContent;
 
 var projNameTxt = projSubGrp1.add('edittext', undefined, 'proj name');
 projNameTxt.maximumSize.width = 100;
 projNameTxt.minimumSize.width = vMin;
 projNameTxt.helpTip = 'project name';
-var renameItemBtn = projSubGrp1.add('iconbutton', undefined, applyIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var renameItemBtn = projSubGrp1.add('iconbutton', iconSize, applyIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 renameItemBtn.helpTip = 'rename comps';
 
 //---------------------------------------------------------
 
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
-var projOrgBtn = currentGrp.add('iconbutton', undefined, projOrgIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var projOrgBtn = currentGrp.add('iconbutton', iconSize, projOrgIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 projOrgBtn.helpTip = 'organize project | organization tags';
 
 //---------------------------------------------------------
@@ -38,7 +38,7 @@ projOrgBtn.helpTip = 'organize project | organization tags';
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 // end page presets UI button...
-var endPagePresetBtn = currentGrp.add('iconbutton', undefined, endPagePresetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var endPagePresetBtn = currentGrp.add('iconbutton', iconSize, endPagePresetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 endPagePresetBtn.helpTip = 'end page JSON presets';
 
 //---------------------------------------------------------
@@ -46,13 +46,13 @@ endPagePresetBtn.helpTip = 'end page JSON presets';
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var projSubGrp2 = currentGrp.add('group');
 
-var collectTogBtn = projSubGrp2.add('iconbutton', undefined, fldTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
+var collectTogBtn = projSubGrp2.add('iconbutton', iconTogSize, fldTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
 collectTogBtn.helpTip = 'collect files';
 
-var collectFontsTogBtn = projSubGrp2.add('iconbutton', undefined, txtTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
+var collectFontsTogBtn = projSubGrp2.add('iconbutton', iconTogSize, txtTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
 collectFontsTogBtn.helpTip = 'collect fonts';
 
-var saveBtn = projSubGrp2.add('iconbutton', undefined, saveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var saveBtn = projSubGrp2.add('iconbutton', iconSize, saveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 saveBtn.helpTip = 'quick project save';
 
 //---------------------------------------------------------
@@ -60,7 +60,7 @@ saveBtn.helpTip = 'quick project save';
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var projSubGrp3 = currentGrp.add('group');
 
-var fldProjBtn2 = projSubGrp3.add('iconbutton', undefined, projFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var fldProjBtn2 = projSubGrp3.add('iconbutton', iconSize, projFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 fldProjBtn2.helpTip = 'project folder';
 
 /*
