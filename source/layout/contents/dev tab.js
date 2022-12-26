@@ -31,7 +31,7 @@ currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var devGrp3 = currentGrp.add('group');
 
 var zipTxt1 = devGrp3.add('statictext', undefined, 'templates:', { name: 'label' });
-zipTxt1.maximumSize.width = 55;
+zipTxt1.maximumSize.width = 60;
 
 var zipTemplatesBtn = devGrp3.add('iconbutton', undefined, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 zipTemplatesBtn.helpTip = 'zip the templates folder';
