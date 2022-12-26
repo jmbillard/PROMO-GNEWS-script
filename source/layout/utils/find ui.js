@@ -11,13 +11,13 @@
 //  jshint -W043
 
 function findDialog() {
-  var w = new Window('palette', 'find...');
-  w.spacing = 5;
-  w.margins = 0;
+  var findW = new Window('palette', 'find...');
+  findW.spacing = 5;
+  findW.margins = 0;
 
   //---------------------------------------------------------
 
-  var searchMainGrp = w.add('group');
+  var searchMainGrp = findW.add('group');
   searchMainGrp.orientation = 'column';
   searchMainGrp.alignChildren = ['center', 'top'];
 
@@ -98,28 +98,32 @@ function findDialog() {
   var infoBtn = optMainGrp.add('iconbutton', undefined, infoIcon.light, { style: 'toolbutton' });
   infoBtn.helpTip = 'Help | README';
 
-  var resultGrp = w.add('group');
+  var resultGrp = findW.add('group');
 
-  var findPb = w.add('progressbar', [0, 0, 305, 5], undefined);
+  var findPb = findW.add('progressbar', [0, 0, 305, 5], undefined);
   findPb.value = 100;
 
-  var resultTree = w.add('treeview', [0, 0, 320, 0]);
+  var resultTree = findW.add('treeview', [0, 0, 320, 0]);
   resultTree.visible = false;
   var resultArray = [];
 
   //---------------------------------------------------------
 
+  findW.onShow = function () {
+    findEdTxt.active = true;
+  };
+
   findEdTxt.onEnterKey = findBtn.onClick = function () {
     // starting timer...
     timer();
-    w.text = 'searching...';
+    findW.text = 'searching...';
     resultTree.visible = false;
     resultTree.size.height = 0;
-    w.layout.layout(true);
+    findW.layout.layout(true);
 
     var sKey = findEdTxt.text;
     if (sKey == '' || app.project.numItems == 0) {
-      w.text = 'find...';
+      findW.text = 'find...';
       return;
     }
     var optObj = {
@@ -142,8 +146,8 @@ function findDialog() {
     expandNodes(resultTree);
     resultTree.visible = true;
     resultTree.size.height = count >= 16 ? 320 : (count * 21) + 5;
-    w.text = 'complete - ' + timer() + 's  (o °▽ °)o☆';
-    w.layout.layout(true);
+    findW.text = 'complete - ' + timer() + 's  (o °▽ °)o☆';
+    findW.layout.layout(true);
   };
 
   //---------------------------------------------------------
@@ -201,5 +205,5 @@ function findDialog() {
     openWebSite('https://github.com/jmbillard/find#find-script');
   };
 
-  w.show();
+  findW.show();
 }

@@ -132,10 +132,10 @@ renameItemBtn.onClick = function () {
   var dateStr = system
     .callSystem('cmd.exe /c date /t')
     .trim();
-  
+
   setXMPdata('creator', system.userName);
   setXMPdata('date', dateStr);
-    
+
   var compArray = app.project.selection;
 
   if (hardNews) {
@@ -174,7 +174,7 @@ projOrgBtn.onClick = function () {
 
 saveBtn.onClick = function () {
 
-  var todayPath = PRODUCAO_DIA_A_DIA ();
+  var todayPath = PRODUCAO_DIA_A_DIA();
   var saveFolder = hardNews ? new Folder(todayPath) : new Folder(projPath);
   var dateStr = system
     .callSystem('cmd.exe /c date /t')
@@ -185,10 +185,10 @@ saveBtn.onClick = function () {
 
   app.beginUndoGroup('save project');
 
-	if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
+  if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
 
   var promoName = projId + ' ' + projName;
-  var hnName =  userPrefix + ' - GNEWS ' + projName;
+  var hnName = userPrefix + ' - GNEWS ' + projName;
 
   var savePath = decodeURI(saveFolder.fullName);
   var projFullName = hardNews ? hnName : promoName;
@@ -223,19 +223,19 @@ endPagePresetBtn.onClick = function () {
 //---------------------------------------------------------
 
 fldProjBtn2.onClick = function () {
-	// error...
-	if (!netAccess()) {
-		showTabErr(netConfigName + ' not checked');
-		return;
-	}
-  var todayPath = PRODUCAO_DIA_A_DIA ();
+  // error...
+  if (!netAccess()) {
+    showTabErr(netConfigName + ' not checked');
+    return;
+  }
+  var todayPath = PRODUCAO_DIA_A_DIA();
   var currentProj = app.project.file;
   var currentProjPath = currentProj != null ? decodeURI(currentProj.path) : projPath;
   var fld = hardNews ? new Folder(todayPath) : new Folder(currentProjPath);
-	
+
   if (!fld.exists) {
-		showTabErr('this folder is not accessible...');
-		return;
-	}
-	openFolder(decodeURI(fld.fullName));
+    showTabErr('this folder is not accessible...');
+    return;
+  }
+  openFolder(decodeURI(fld.fullName));
 };
