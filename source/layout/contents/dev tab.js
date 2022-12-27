@@ -21,7 +21,7 @@ var devGrp2 = currentGrp.add('group');
 var dTxt = devGrp2.add('statictext', undefined, 'dark:', { name: 'label' });
 dTxt.maximumSize.width = 30;
 
-var dBtn = devGrp2.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var dBtn = devGrp2.add('iconbutton', iconSize, darkIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 dBtn.helpTip = 'convert .png to dark icon theme';
 
 //---------------------------------------------------------
