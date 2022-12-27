@@ -285,6 +285,8 @@ function showTabErr(msg) {
 
 // show progress blocking user interaction...
 function showTabProg(msg) {
+  alert('ヽ(✿ﾟ▽ﾟ)ノ     please restart the script!\njust close and reopen the script window...');
+
   progTxt1.text = 'KEEP CALM';
   progTxt2.text = msg;
   progressGrp.visible = true;
