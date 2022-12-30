@@ -35,7 +35,7 @@ a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **
 
 # ![ctrl icon](/images/icons/ctrlIcon.png) [ seção *controles* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
@@ -96,7 +96,7 @@ avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os
 
 # ![animation icon](/images/icons/animationIcon.png) [ seção *animação* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
@@ -158,7 +158,7 @@ avança e atrasa os tempos de entrada e saída de cada layer selecionado entre o
 
 # ![tools btn](/images/icons/rigToolsIcon.png) [ subseção **`ferramentas`** ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
@@ -238,20 +238,20 @@ cria um rig simples de movimento usando cinemática inversa com 3 layers selecio
 
 <br /><br />
 
-# ![fx icon](/images/icons/fxIcon.png) [ seção *efeitos* ]
+# ![fx icon](/images/icons/0%20-%20menu/effectsIcon%20dark.png) [ seção *efeitos* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
 
-## ![adj btn](/images/icons/adjIcon.png) botão **`adjustment layer`**
+## ![adj btn](/images/icons/3%20-%20effects/adjIcon%20dark.png) botão **`adjustment layer`**
 
 cria um 'adjustment layer' responsivo com as dimensões da composição.
 
 > o tipo de layer usado como *'adjustment layer'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
 
-## ![curves btn](/images/icons/fx_curIcon.png)![levels tab](/images/icons/fx_levIcon.png)![lumetri tab](/images/icons/fx_lumIcon.png)  botões **`correção de cor`**
+## ![curves btn](/images/icons/3%20-%20effects/fx_curIcon%20dark.png)![levels tab](/images/icons/3%20-%20effects/fx_levIcon%20dark.png)![lumetri tab](/images/icons/3%20-%20effects/fx_lumIcon%20dark.png)  botões **`correção de cor`**
 
 ```markdown
     efeitos: 'curves'
@@ -263,25 +263,25 @@ cria um 'adjustment layer' responsivo com as dimensões da composição.
 
 <br /><br />
 
-# ![text icon](/images/icons/titleCaseIcon.png) [ seção *texto* ]
+# ![text icon](/images/icons/4%20-%20text/titleCaseIcon%20dark.png) [ seção *texto* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
 
-## ![Title icon](/images/icons/upperCaseIcon.png) ![Title icon](/images/icons/lowerCaseIcon.png) ![Title icon](/images/icons/titleCaseIcon.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
+## ![Title icon](/images/icons/4%20-%20text/upperCaseIcon%20dark.png) ![Title icon](/images/icons/4%20-%20text/lowerCaseIcon%20dark.png) ![Title icon](/images/icons/4%20-%20text/titleCaseIcon%20dark.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
 
 converte todo o conteúdo dos layers de texto selecionados.
 
 ![lineBreaker ex](/images/gifs/text-case.gif)
 
-## ![txtCleaner btn](/images/icons/cleanerIcon.png) botão **`limpar texto`**
+## ![txtCleaner btn](/images/icons/4%20-%20text/cleanerIcon%20dark.png) botão **`limpar texto`**
 
 remove múltiplos espaços consecutivos, quebras de linha e faz o trim do layer de texto.
 <!-- [ ] ex: limpador de texto -->
 
-## ![txtColumns btn](/images/icons/txtColumnsIcon.png) botão **`separar colunas`**
+## ![txtColumns btn](/images/icons/4%20-%20text/txtColumnsIcon%20dark.png) botão **`separar colunas`**
 
 separa um layer de texto em 2 ou mais colunas cada coluna gera um novo layer de texto .
 
@@ -290,7 +290,7 @@ separa um layer de texto em 2 ou mais colunas cada coluna gera um novo layer de 
 ---
 <br />
 
-## ![slider](/images/icons/sliderIcon.png) **`quebra linhas`**
+## ![slider](/images/icons/general/ui/sliderIcon%20dark.png) **`quebra linhas`**
 
 estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
 
@@ -302,7 +302,7 @@ estabelece um limite de caracteres por linha e quebra o texto assim que esse lim
 
 # ![guides icon](/images/icons/guidesIcon.png) [ seção *guias* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
@@ -396,7 +396,7 @@ habilita o 'shy' e esconde todos os layers selecionados.
 
 # ![project icon](/images/icons/toolsIcon.png) [ seção *projeto* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
@@ -517,7 +517,7 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
 
 # ![links icon](/images/icons/linksIcon.png) [ seção *links* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
@@ -600,7 +600,7 @@ exporta o frame atual da comp selecionada em *'.png'*.
 
 # ![app icon](/images/icons/aeIcon.png) [ seção *programa* ]
 
-![info](/images/icons/infoIcon.png) → abre a documentação | ajuda da seção.
+![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
 ---
 <br />
