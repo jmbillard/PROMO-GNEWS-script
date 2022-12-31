@@ -114,12 +114,12 @@ function setLayout() {
 
     for (var mlh = 0; mlh < mainMenuLabels.length; mlh++) {
       mainMenuLabels[mlh].maximumSize.width = mainMenuLabelsMaxW[mlh];
-      mainMenuLabels[mlh].size.width = 0;
-      mainMenuLabels[mlh].parent.spacing = 0;
+      mainMenuLabels[mlh].size.width = mainMenuLabelsMaxW[mlh];
+      mainMenuLabels[mlh].parent.spacing = 2;  
 
-      if (w.size.width > 1380) {
-        mainMenuLabels[mlh].size.width = mainMenuLabelsMaxW[mlh];
-        mainMenuLabels[mlh].parent.spacing = 2;  
+      if (w.size.width < 1380  || !showLabels) {
+        mainMenuLabels[mlh].size.width = 0;
+        mainMenuLabels[mlh].parent.spacing = 0;
       }
     }
     if (w.size.width > 1380) {
@@ -170,7 +170,7 @@ function setLayout() {
       mainMenuLabels[mlv].size.width = w.size.width - 60;
       mainMenuLabels[mlv].parent.spacing = 2;
 
-      if (w.size.width < 100) {
+      if (w.size.width < 100 || !showLabels) {
         mainMenuLabels[mlv].size.width = 0;
         mainMenuLabels[mlv].parent.spacing = 0;  
       }
@@ -219,7 +219,7 @@ function setLayout() {
   rightGrp.alignment = rbAlignment;
 
   devBtn.size = devMode ? [36, 36] : [0, 0];
-  if (w.size.width > 1380) devLab.size = devMode ? [60, 12] : [0, 0];
+  if (w.size.width > 1380 && showLabels) devLab.size = devMode ? [60, 12] : [0, 0];
 
   updateLayout();
 }

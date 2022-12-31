@@ -148,6 +148,18 @@ function prefsDialog() {
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
 
+	
+	var slGrp = wPref.add('group');
+	slGrp.spacing = 28;
+
+	var slTxt = slGrp.add('statictext', undefined, 'show labels');
+	slTxt.helpTip = 'show labels on large screens';
+	slTxt.preferredSize = txtSize;
+
+	var slCkb = slGrp.add('checkbox');
+	slCkb.preferredSize.height = 18;
+	slCkb.value = showLabels;
+
 	//---------------------------------------------------------
 
 	var divider3 = wPref.add('panel');
@@ -273,8 +285,8 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	devTogBtn.onClick = function () {
 		devMode = this.value;
 		JSONPrefsObj.devMode = devMode;
-		menuSubGrp5.enabled = menuSubGrp5.visible = devMode;
 		setLayout();
+		menuSubGrp5.enabled = menuSubGrp5.visible = devMode;
 		savePrefs(); // → save preferences.json
 	};
 
@@ -486,6 +498,16 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 
 		savePrefs(); // → save preferences.json
 		updateFolderPaths(); // → update templates and fonts folder
+	};
+
+	//---------------------------------------------------------
+
+	slCkb.onClick = function () {
+		showLabels = this.value;
+		JSONPrefsObj.showLabels = showLabels;
+
+		setLayout();
+		savePrefs(); // → save preferences.json
 	};
 
 	//---------------------------------------------------------
