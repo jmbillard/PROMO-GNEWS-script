@@ -99,6 +99,7 @@ dBtn.onClick = function () {
       var compH = icon.height;
   
       var comp = app.project.items.addComp(compN, compW, compH, 1, 1, 1);
+      comp.bgColor = sTxtColor.dark;
       var aLayer = comp.layers.add(icon);
       var effects = aLayer.property('ADBE Effect Parade');
       // fill effect...
