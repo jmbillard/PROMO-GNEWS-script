@@ -17,13 +17,13 @@ a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **
     - [animação]
     - [efeitos]
     - [texto]             →   manipulação de layers de texto...
-    - [guias]
+    - [marca]             →   logos, cores e elementos do on-air atual...
     - [projeto]           →   organiza tudo em pastinhas...
-    - [links]
+    - [atalhos]
     - templates
     - busca
     - preview
-    - [programa]          →   configurações do after e media encoder...
+    - [programa]          →   configurações do after, media encoder, fonts, etc...
     - [dev]               →   ferramentas de desenvolvimento...
     - [preferencias]      →   preferencias do script...
 ```
@@ -300,7 +300,7 @@ estabelece um limite de caracteres por linha e quebra o texto assim que esse lim
 
 <br /><br />
 
-# ![guides icon](/images/icons/0%20-%20menu/brandIcon%20dark.png) [ seção *guias* ]
+# ![guides icon](/images/icons/0%20-%20menu/brandIcon%20dark.png) [ seção *marca* ]
 
 ![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
@@ -515,7 +515,7 @@ abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o pa
 
 <br /><br />
 
-# ![links icon](/images/icons/0%20-%20menu/shortcutsIcon%20dark.png) [ seção *links* ]
+# ![links icon](/images/icons/0%20-%20menu/shortcutsIcon%20dark.png) [ seção *atalhos* ]
 
 ![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
 
