@@ -227,7 +227,8 @@ function textContent(aLayer) {
 	return aLayer
 		.property('ADBE Text Properties')
 		.property('ADBE Text Document')
-		.value.toString();
+		.value.toString()
+		.trim();
 }
 
 // cleans multiple line breaks and consecutive space characters...
