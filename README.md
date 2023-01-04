@@ -224,6 +224,7 @@ cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos
 ## ![ik btn](/images/icons/2%20-%20animation/tools/ikIcon%20dark.png) botão **`ik`**
 
 cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
+
 ![ik ex](/images/gifs/ik.gif)
 > a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida...
 
