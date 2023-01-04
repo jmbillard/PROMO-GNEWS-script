@@ -105,7 +105,7 @@ function fontsDialog() {
     if (!homeOffice) {
       removeFolder(fontsFolder); // → delete previous templates folder
       fontsFolder.create(); // → delete previous templates folder
-      copyFolder(fontsLocalPath, fontsPath);
+      copyFolderContent(fontsLocalPath, fontsPath);
     }
     buildFontTree(fontsFolder, tree);
     expandNodes(tree);

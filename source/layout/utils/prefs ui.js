@@ -469,15 +469,15 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 
 		// copy downloaded files...
 
-		if (homeOffice) copyFolderContent(downPath, destPathArray[0]);
+		if (homeOffice) copyFolderContentContent(downPath, destPathArray[0]);
 
 		if (!homeOffice) {
 			try {
-				copyFolderContent(downPath, destPathArray[1]);
+				copyFolderContentContent(downPath, destPathArray[1]);
 
 			} catch (err) {
 				alert('nope... (っ °Д °;)っ \n\n' + err.message);
-				copyFolderContent(downPath, destPathArray[0]);
+				copyFolderContentContent(downPath, destPathArray[0]);
 			}
 		}
 		showTabProg('restart the script  ヽ(✿ﾟ▽ﾟ)ノ');

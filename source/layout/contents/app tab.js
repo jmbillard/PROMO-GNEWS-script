@@ -83,7 +83,7 @@ copyAMEPresetsBtn.onClick = function () {
 
     if (presetsAMEFolder.exists) {
       try {
-        copyFolderContent(unzipPath, presetsAMEPath);
+        copyFolderContentContent(unzipPath, presetsAMEPath);
       } catch (err) { }
     }
   }
@@ -117,7 +117,7 @@ installFontsBtn.onClick = function () {
     if (!homeOffice) {
       removeFolder(fontsFolder); // → delete previous templates folder
       fontsFolder.create(); // → delete previous templates folder
-      copyFolder(fontsLocalPath, fontsPath);
+      copyFolderContent(fontsLocalPath, fontsPath);
     }
   }
   fontsDialog();

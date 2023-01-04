@@ -160,7 +160,7 @@ function installFonts(fontsPath) {
 
 */
 
-function copyFolder(src, dst) {
+function copyFolderContent(src, dst) {
 	try {
 		var f = (new Folder(src)).getFiles();
 
@@ -178,7 +178,7 @@ function copyFile(fullPath, newPath) {
 
 		if (file.length < 0) {
 			if (!createPath(newPath + "/" + file.name)) return false;
-			if (!copyFolder(fullPath, newPath + "/" + file.name)) return false;
+			if (!copyFolderContent(fullPath, newPath + "/" + file.name)) return false;
 
 			return true;
 		}
@@ -221,7 +221,7 @@ function removeFolder(folder) {
 	folder.remove();
 }
 
-function copyFolderContent(src, dst) {
+function copyFolderContentContent(src, dst) {
 	var srcFolder = new Folder(src);
 	var dstFolder = new Folder(dst);
 	var filesArray = [];
@@ -244,7 +244,7 @@ function copyFolderContent(src, dst) {
 		} catch (err) { }
 
 		if (subArray.length > 0) {
-			copyFolderContent(decodeURI(aFile.fullName).toString(), dst);
+			copyFolderContentContent(decodeURI(aFile.fullName).toString(), dst);
 
 		} else {
 
@@ -256,10 +256,10 @@ function copyFolderContent(src, dst) {
 	}
 }
 
-function PRODUCAO_DIA_A_DIA () {
+function PRODUCAO_DIA_A_DIA() {
 	var dateStr = system
-	.callSystem('cmd.exe /c date /t')
-	.trim();
+		.callSystem('cmd.exe /c date /t')
+		.trim();
 
 	var y = dateStr.split('/')[2].trim(); // -> 2022
 	var m = dateStr.split('/')[1]; // -> 11

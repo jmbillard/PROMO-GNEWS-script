@@ -185,7 +185,7 @@ function templateDialog() {
     if (!homeOffice) {
       removeFolder(templatesFolder); // → delete previous templates folder
       templatesFolder.create(); // → delete previous templates folder
-      copyFolder(templatesLocalPath, templatesPath);
+      copyFolderContent(templatesLocalPath, templatesPath);
     }
     buildTree(templatesFolder, templateTree, fileFilter); // → update tree...
     expandNodes(templateTree); // expand all tree folder nodes...
