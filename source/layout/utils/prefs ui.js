@@ -424,6 +424,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 			projPath = decodeURI(saveFolder).toString();
 			JSONPrefsObj.folders.projPath = projPath;
 			savePrefs();
+			fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
 		}
 	};
 
@@ -516,7 +517,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		hardNews = this.value;
 		JSONPrefsObj.hardNews = hardNews;
 		projFldGrp.enabled = !hardNews;
-		fldProjBtn.helpTip = this.value ? '> \'PRODUCAO DIA-A-DIA\'' : 'map folder\n\n' + '> \'' + projPath + '\'';
+		fldProjBtn.helpTip = hardNews ? '> \'PRODUCAO DIA-A-DIA\'' : 'map folder\n\n' + '> \'' + projPath + '\'';
 
 		savePrefs(); // → save preferences.json
 	};
