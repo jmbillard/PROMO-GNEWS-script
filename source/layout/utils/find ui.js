@@ -140,7 +140,7 @@ function findDialog() {
     count = findTree.count; // → [filtered comps]
 
     if (resultArray.length == 0) {
-      w.text = 'no matches - ' + timer() + 's  (っ °Д °;)っ';
+      findW.text = 'no matches - ' + timer() + 's  (っ °Д °;)っ';
       return;
     }
     expandNodes(resultTree);
@@ -180,16 +180,18 @@ function findDialog() {
         aLayer.selected = false;
 
         if (l == parseInt(i)) {
-          var doc = aLayer.property('ADBE Text Properties').property('ADBE Text Document');
+          var doc = aLayer
+            .property('ADBE Text Properties')
+            .property('ADBE Text Document');
 
           t = (aLayer.outPoint - aLayer.inPoint) / 2 + aLayer.inPoint;
           aLayer.shy = false;
+          aLayer.selected = true;
 
           if (doc.numKeys > 0) t = doc.keyTime(parseInt(k));
 
           t = t < comp.duration ? t : comp.duration;
           t = t < 0 ? 0 : t;
-        
         }
       }
       comp.hideShyLayers = true;
@@ -200,8 +202,8 @@ function findDialog() {
 
   //---------------------------------------------------------
 
-  infoBtn.onClick = function() {
-  
+  infoBtn.onClick = function () {
+
     openWebSite('https://github.com/jmbillard/find#find-script');
   };
 
