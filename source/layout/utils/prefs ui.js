@@ -516,9 +516,10 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	hnCkb.onClick = function () {
 		hardNews = this.value;
 		JSONPrefsObj.hardNews = hardNews;
-		projFldGrp.enabled = !hardNews;
 		fldProjBtn.helpTip = hardNews ? '> \'PRODUCAO DIA-A-DIA\'' : 'map folder\n\n' + '> \'' + projPath + '\'';
-
+		
+		projFldGrp.enabled = !hardNews;
+		endPagePresetBtn.enabled = !hardNews;
 		savePrefs(); // → save preferences.json
 	};
 

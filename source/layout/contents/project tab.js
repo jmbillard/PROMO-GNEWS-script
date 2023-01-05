@@ -40,6 +40,7 @@ currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 // end page presets UI button...
 var endPagePresetBtn = currentGrp.add('iconbutton', iconSize, endPagePresetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 endPagePresetBtn.helpTip = 'end page JSON presets';
+endPagePresetBtn.enabled = !hardNews;
 
 //---------------------------------------------------------
 
