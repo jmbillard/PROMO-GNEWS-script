@@ -189,7 +189,7 @@ on the script preferences folder\n\
 > overwrites the \'save project\' button\
 default folder to \'PRODUCAO DIA-A-DIA\'\n\
 > overwrites the default naming scheme to\
-\'user prefix\' + GNEWS + \'proj. name\' + \'client name\'\
+\'user prefix\' + GNEWS + \'proj name\' + \'client name\'\
 ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 (only available with \'home office\' mode disabled)\'';
 	hnTxt.preferredSize = txtSize;
@@ -514,7 +514,9 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	//---------------------------------------------------------
 
 	hnCkb.onClick = function () {
+		// projIdTxt.text = projIdContent
 		hardNews = this.value;
+		projIdContent = hardNews ? 'client' : 'PROJ ID';
 		JSONPrefsObj.hardNews = hardNews;
 		fldProjBtn.helpTip = hardNews ? '> \'PRODUCAO DIA-A-DIA\'' : 'map folder\n\n' + '> \'' + projPath + '\'';
 		

@@ -10,7 +10,7 @@
 currentGrp = tabsGrp.project;
 var projSubGrp1 = currentGrp.add('group');
 
-var projIdContent = hardNews ? 'client' : 'proj id';
+var projIdContent = hardNews ? 'client' : 'PROJ ID';
 var projIdTxt = projSubGrp1.add('edittext', undefined, projIdContent);
 projIdTxt.maximumSize.width = 100;
 projIdTxt.minimumSize.width = vMin;
@@ -79,9 +79,27 @@ projIdTxt.onChange = projIdTxt.onEnterKey = function () {
 
   if (hardNews) this.text = projId = this.text.toLowerCase();
 
-  setXMPdata('identifier', projId);
+  if (projIdTxt.text != projIdContent) setXMPdata('identifier', projId);
   if (this.text.trim() == '') this.text = projIdContent;
 };
+
+projIdTxt.addEventListener('focus', function () {
+  this.text = this.text == projIdContent ? '' : this.text;
+});
+
+projIdTxt.addEventListener('blur', function () {
+  this.text = this.text == '' ? projIdContent : this.text;
+});
+
+// projIdTxt.addEventListener('keydown', function (k) {
+
+//   //alert(k.keyName);
+//   if (k.keyName == 'Escape') {
+//     // alert('foi');
+//     projIdTxt.text = projId;
+//     projIdTxt.active = false;
+//   }
+// });
 
 //---------------------------------------------------------
 
@@ -93,8 +111,16 @@ projNameTxt.onChange = projNameTxt.onEnterKey = function () {
   if (hardNews) this.text = projName = this.text.toUpperCase();
 
   setXMPdata('title', projName);
-  if (this.text.trim() == '') this.text = 'proj. name';
+  if (this.text.trim() == '') this.text = 'proj name';
 };
+
+projNameTxt.addEventListener('focus', function () {
+  this.text = this.text == 'proj name' ? '' : this.text;
+});
+
+projNameTxt.addEventListener('blur', function () {
+  this.text = this.text == '' ? 'proj name' : this.text;
+});
 
 //---------------------------------------------------------
 
