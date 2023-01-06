@@ -14,8 +14,8 @@
 function prefsDialog() {
 	var layerTypeArray = ['shape layer', 'solid layer'];
 	var projectModeDropArray = ['PROMO', 'custom'];
-	var txtSize = [90, 20];
-	var dropSize = [85, 20];
+	var txtSize = [100, 30];
+	var dropSize = [85, 24];
 
 	//---------------------------------------------------------
 
@@ -82,6 +82,18 @@ function prefsDialog() {
 	var projectGrpTxt = projectGrp.add('statictext', undefined, 'project:');
 	setTxtColor(projectGrpTxt, sTxtColor.light);
 
+	var missGrp = projectGrp.add('group');
+	missGrp.spacing = 28;
+
+	var missTxt = missGrp.add('statictext', undefined, 'ignore missing files');
+	missTxt.helpTip = 'ignore missing footage files\n\
+> no missing footage alerts during project organization';
+	missTxt.preferredSize = txtSize;
+
+	var missCkb = missGrp.add('checkbox');
+	missCkb.preferredSize.height = 18;
+	missCkb.value = ignoreMissing;
+
 	var projOrgGrp = projectGrp.add('group');
 	projOrgGrp.spacing = 0;
 
@@ -100,7 +112,7 @@ function prefsDialog() {
 	fldProjTxt.helpTip = '\'save project\' button default folder\n(\'PRODUCAO DIA-A-DIA\' on \'hard news\' mode)';
 	fldProjTxt.preferredSize = txtSize;
 
-	var fldProjBtn = projFldGrp.add('iconbutton', undefined, projFolderIcon.light, { style: 'toolbutton' });
+	var fldProjBtn = projFldGrp.add('iconbutton', iconSize, projFolderIcon.light, { style: 'toolbutton' });
 	fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
 
 	projFldGrp.enabled = homeOffice ? true : !hardNews;
@@ -119,17 +131,17 @@ function prefsDialog() {
 	setTxtColor(themeGrpTxt, sTxtColor.light);
 
 	var iconThemeGrp = themeGrp.add('group');
-	iconThemeGrp.spacing = 60;
+	iconThemeGrp.spacing = 40;
 	iconThemeGrp.margins = [0, 8, 0, 4];
 
-	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light');
+	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light icons');
 	lightRdo.helpTip = 'icon theme';
-	lightRdo.value = lightRdo.text == iconTheme;
+	lightRdo.value = lightRdo.text.split(' ')[0] == iconTheme;
 	// lightRdo.enabled = false;
 
-	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark');
+	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark icons');
 	darkRdo.helpTip = 'icon theme';
-	darkRdo.value = darkRdo.text == iconTheme;
+	darkRdo.value = darkRdo.text.split(' ')[0] == iconTheme;
 	// darkRdo.enabled = false;
 
 	var tabColorsGrp = themeGrp.add('group');
@@ -144,7 +156,7 @@ function prefsDialog() {
 	colorDrop.preferredSize = dropSize;
 
 	var tabColorBtn = wPref.add('iconbutton', undefined, undefined, { style: 'toolbutton' });
-	tabColorBtn.size = [176, 20];
+	tabColorBtn.size = [186, 20];
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
 
@@ -165,7 +177,15 @@ function prefsDialog() {
 	var divider3 = wPref.add('panel');
 	divider3.alignment = 'fill';
 
-	var hoGrp = wPref.add('group');
+	var modeGrp = wPref.add('group');
+	modeGrp.orientation = 'column';
+	modeGrp.alignChildren = ['left', 'center'];
+	modeGrp.spacing = 2;
+
+	var modeGrpTxt = modeGrp.add('statictext', undefined, 'modes:');
+	setTxtColor(modeGrpTxt, sTxtColor.light);
+
+	var hoGrp = modeGrp.add('group');
 	hoGrp.spacing = 28;
 
 	var hoTxt = hoGrp.add('statictext', undefined, 'home office');
@@ -181,7 +201,7 @@ on the script preferences folder\n\
 	hoCkb.preferredSize.height = 18;
 	hoCkb.value = homeOffice;
 
-	var hnGrp = wPref.add('group');
+	var hnGrp = modeGrp.add('group');
 	hnGrp.spacing = 28;
 
 	var hnTxt = hnGrp.add('statictext', undefined, 'hard news');
@@ -220,7 +240,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	fldMagTxt.helpTip = 'upload MAM - magazine';
 	fldMagTxt.preferredSize = txtSize;
 
-	var fldMagBtn = fldGrp1.add('iconbutton', undefined, magazineFolderIcon.light, { style: 'toolbutton' });
+	var fldMagBtn = fldGrp1.add('iconbutton', iconSize, magazineFolderIcon.light, { style: 'toolbutton' });
 	fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
 
 	var fldGrp2 = networkGrp.add('group');
@@ -230,7 +250,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	fldArteTxt.helpTip = 'download MAM - para arte';
 	fldArteTxt.preferredSize = txtSize;
 
-	var fldArteBtn = fldGrp2.add('iconbutton', undefined, arteFolderIcon.light, { style: 'toolbutton' });
+	var fldArteBtn = fldGrp2.add('iconbutton', iconSize, arteFolderIcon.light, { style: 'toolbutton' });
 	fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
 
 	//---------------------------------------------------------
@@ -272,7 +292,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	*/
 
 	lightRdo.onClick = darkRdo.onClick = function () {
-		iconTheme = this.text;
+		iconTheme = this.text.split(' ')[0];
 		JSONPrefsObj.iconTheme = iconTheme;
 		savePrefs(); // → save preferences.json
 		showTabProg('restart the script  ヽ(✿ﾟ▽ﾟ)ノ');
@@ -508,6 +528,15 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		JSONPrefsObj.showLabels = showLabels;
 
 		setLayout();
+		savePrefs(); // → save preferences.json
+	};
+
+	//---------------------------------------------------------
+
+	missCkb.onClick = function () {
+		ignoreMissing = this.value;
+		JSONPrefsObj.ignoreMissing = ignoreMissing;
+
 		savePrefs(); // → save preferences.json
 	};
 

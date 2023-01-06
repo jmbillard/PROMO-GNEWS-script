@@ -692,7 +692,6 @@ ikBtn.onClick = function () {
 			.property('flip orientation')
 			.setValue(true);
 	}
-
 	app.endUndoGroup();
 };
 
@@ -807,6 +806,8 @@ simpleBoxBtn.onClick = function () {
 		showTabErr('comp not selected');
 		return;
 	}
+	app.beginUndoGroup('simple box');
+
 	var selLayers = aItem != null ? aItem.selectedLayers : [];
 
 	if (selLayers.length == 0) {
@@ -836,4 +837,5 @@ simpleBoxBtn.onClick = function () {
 			.property('ADBE Tint-0002')
 			.setValue([238 / 255, 1, 140 / 255, 1]);
 	}
+	app.endUndoGroup();
 };
