@@ -378,12 +378,6 @@ function fileCollectHN(projName) {
 	var saveFolder = new Folder(savePath); // collect folder...
 	// var footage = getFootage(); // all project footage...
 
-
-	// var failArray = []; // failed copy array...
-	// var compArray = getComps(); // all project comps...
-
-	// if (!saveFolder.exists) saveFolder.create();
-
 	for (var i = 0; i < app.project.numItems; i++) {
     var aItem = app.project.item(i);
 
@@ -396,34 +390,4 @@ function fileCollectHN(projName) {
 
 		copyFile(filePath, savePath);
 	}
-	// for (var c = 0; c < compArray.length; c++) {
-	// 	var comp = compArray[c]; // current comp...
-
-	// 	for (var l = 1; l <= comp.numLayers; l++) {
-	// 		var aLayer = comp.layer(l); // current layer...
-
-	// 		if (!(aLayer instanceof TextLayer)) continue;
-	// 		// current text layer...
-	// 		var textDoc = aLayer
-	// 			.property('ADBE Text Properties')
-	// 			.property('ADBE Text Document').value;
-	// 		var fontName = textDoc.font; // font name...
-	// 		var fontSrcFile = new File(decodeURI(textDoc.fontLocation)); // font file...
-
-	// 		if (!fontSrcFile.exists) {
-	// 			if (failArray.indexOf(fontName) < 0) failArray.push(fontName); // no font file...
-	// 			continue;
-	// 		}
-	// 		if (fontArray.indexOf(fontName) > 0) continue; // already copied...
-
-	// 		var fontCopyFile = new File(savePath + '/' + fontSrcFile.displayName);
-
-	// 		fontArray.push(fontName);
-
-	// 		fontSrcFile.copy(fontCopyFile);
-	// 	}
-	// }
-	// if (saveFolder.getFiles().length == 0) saveFolder.remove();
-
-	// if (failArray.length > 0) alert(failArray.toString() + ' cant be copied');
 }

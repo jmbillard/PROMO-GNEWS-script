@@ -186,16 +186,19 @@ projOrgBtn.addEventListener('click', function (c) {
   }
 });
 
-projOrgBtn.onClick = function () {  
+projOrgBtn.onClick = function () {
   if (app.project.numItems == 0) return;
-  
+
   var progressWindow = progressDialog();
   var enterBtn = progressWindow.children[2].children[0];
   var cancelBtn = progressWindow.children[2].children[1];
   app.beginUndoGroup('organize project');
 
+  // progressWindow.onShow = function () {
+  //   enterBtn.notify();
+  // };
+
   enterBtn.onClick = progressWindow.onEnterKey = function () {
-    
     deleteProjectFolders();
     populateProjectFolders(progressWindow);
     deleteEmptyProjectFolders();
@@ -203,11 +206,11 @@ projOrgBtn.onClick = function () {
     app.endUndoGroup();
     progressWindow.close();
   };
-  
+
   cancelBtn.onClick = function () {
     progressWindow.close();
     app.endUndoGroup();
-    
+
     alert('escaping...');
     executeCommandID('Undo organize project');
   };
