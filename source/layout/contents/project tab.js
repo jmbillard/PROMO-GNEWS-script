@@ -241,8 +241,9 @@ saveBtn.onClick = function () {
     if (hardNews) filesCollectHN(projName);
     
     if (!hardNews) {
-      savePath += promoName;
-      filesCollectPROMO(projName);
+      savePath = savePath + '/' + promoName;
+      alert(wip);
+      // filesCollectPROMO(projName);
     }
   }
   var projFullName = hardNews ? hnName : promoName;
