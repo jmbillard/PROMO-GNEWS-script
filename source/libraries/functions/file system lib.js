@@ -372,11 +372,10 @@ function fontCollect(savePath) {
 	if (failArray.length > 0) alert(failArray.toString() + ' cant be copied');
 }
 
-// copy all fonts used in the project...
+// copy all local files used in the project to PRODUCAO DIA-A-DIA...
 function filesCollectHN(projName) {
 	var savePath = PRODUCAO_DIA_A_DIA() + '/_EMAILS'; // collect folder path...
 	var saveFolder = new Folder(savePath); // collect folder...
-	// var footage = getFootage(); // all project footage...
 
 	for (var i = 1; i <= app.project.numItems; i++) {
 		try {
@@ -393,7 +392,32 @@ function filesCollectHN(projName) {
 			copyFile(filePath, newFilePath);
 			var newFile = new File([newFilePath, fileName].join('/'));
 			aItem.replace(newFile);
-			
+
+		} catch (err) { }
+	}
+}
+
+// copy all files used in the project to the project folder...
+function filesCollectPROMO(projName) {
+	var savePath = PRODUCAO_DIA_A_DIA() + '/_EMAILS'; // collect folder path...
+	var saveFolder = new Folder(savePath); // collect folder...
+
+	for (var i = 1; i <= app.project.numItems; i++) {
+		try {
+			var aItem = app.project.item(i);
+
+			if (!(aItem instanceof FootageItem)) continue;
+
+			var fileName = decodeURI(aItem.file.name);
+			var filePath = decodeURI(aItem.file.fullName);
+			var newFilePath = [savePath, projName].join('/');
+
+			if (!filePath.match(/^\/(c|d|f|i)\/|^~/)) continue;
+
+			copyFile(filePath, newFilePath);
+			var newFile = new File([newFilePath, fileName].join('/'));
+			aItem.replace(newFile);
+
 		} catch (err) { }
 	}
 }

@@ -194,10 +194,6 @@ projOrgBtn.onClick = function () {
   var cancelBtn = progressWindow.children[2].children[1];
   app.beginUndoGroup('organize project');
 
-  // progressWindow.onShow = function () {
-  //   enterBtn.notify();
-  // };
-
   enterBtn.onClick = progressWindow.onEnterKey = function () {
     deleteProjectFolders();
     populateProjectFolders(progressWindow);
@@ -235,22 +231,28 @@ saveBtn.onClick = function () {
 
   if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
 
+  var savePath = decodeURI(saveFolder.fullName);
   var promoName = projId + ' ' + projName;
   var hnName = userPrefix + ' - GNEWS ' + projName;
 
-  var savePath = decodeURI(saveFolder.fullName);
-  var projFullName = hardNews ? hnName : promoName;
-  var projFile = new File(savePath + '/' + projFullName);
-
   if (collectTogBtn.value) {
     // collect files...
-    // app.executeCommand(2482); // collect files
+    // app.executeCommand(2482); // collect files...
     if (hardNews) filesCollectHN(projName);
+    
+    if (!hardNews) {
+      savePath += promoName;
+      filesCollectPROMO(projName);
+    }
   }
+  var projFullName = hardNews ? hnName : promoName;
+  var projFile = new File(savePath + '/' + projFullName);
   app.project.save(projFile);
 
   if (collectFontsTogBtn.value) fontCollect(savePath);
   openFolder(saveFolder);
+  app.endUndoGroup();
+
   /*   if (appV > 22) {
       executeCommandID('Save a Copy As 22.x...');
       return;
