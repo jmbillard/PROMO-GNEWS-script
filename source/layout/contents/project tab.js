@@ -241,15 +241,16 @@ saveBtn.onClick = function () {
   var savePath = decodeURI(saveFolder.fullName);
   var projFullName = hardNews ? hnName : promoName;
   var projFile = new File(savePath + '/' + projFullName);
-  app.project.save(projFile);
 
   if (collectTogBtn.value) {
     // collect files...
-    app.executeCommand(2482);
-  } else {
-    if (collectFontsTogBtn.value) fontCollect(savePath);
-    openFolder(saveFolder);
+    // app.executeCommand(2482); // collect files
+    if (hardNews) filesCollectHN(projName);
   }
+  app.project.save(projFile);
+
+  if (collectFontsTogBtn.value) fontCollect(savePath);
+  openFolder(saveFolder);
   /*   if (appV > 22) {
       executeCommandID('Save a Copy As 22.x...');
       return;

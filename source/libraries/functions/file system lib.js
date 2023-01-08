@@ -177,14 +177,14 @@ function copyFile(fullPath, newPath) {
 		var folder = new File(newPath);
 
 		if (file.length < 0) {
-			if (!createPath(newPath + "/" + file.name)) return false;
-			if (!copyFolderContent(fullPath, newPath + "/" + file.name)) return false;
+			if (!createPath(newPath + '/' + file.name)) return false;
+			if (!copyFolderContent(fullPath, newPath + '/' + file.name)) return false;
 
 			return true;
 		}
 		else {
 			if (!createPath(newPath)) return false;
-			if (!file.copy(newPath + "/" + file.name)) return false;
+			if (!file.copy(newPath + '/' + file.name)) return false;
 
 			return true;
 		}
@@ -373,21 +373,27 @@ function fontCollect(savePath) {
 }
 
 // copy all fonts used in the project...
-function fileCollectHN(projName) {
+function filesCollectHN(projName) {
 	var savePath = PRODUCAO_DIA_A_DIA() + '/_EMAILS'; // collect folder path...
 	var saveFolder = new Folder(savePath); // collect folder...
 	// var footage = getFootage(); // all project footage...
 
-	for (var i = 0; i < app.project.numItems; i++) {
-    var aItem = app.project.item(i);
+	for (var i = 1; i <= app.project.numItems; i++) {
+		try {
+			var aItem = app.project.item(i);
 
-    if (!(aItem instanceof FootageItem)) continue;
+			if (!(aItem instanceof FootageItem)) continue;
 
-		var fileName = decodeURI(aItem.file.name);
-		var filePath = decodeURI(aItem.file.fullName);
-		var newFilePath = [savePath, projName, fileName].join('/');
-		if (!filePath.match(/^\/[c|d|f|i]\/|^~/)) continue;
+			var fileName = decodeURI(aItem.file.name);
+			var filePath = decodeURI(aItem.file.fullName);
+			var newFilePath = [savePath, projName].join('/');
 
-		copyFile(filePath, savePath);
+			if (!filePath.match(/^\/(c|d|f|i)\/|^~/)) continue;
+
+			copyFile(filePath, newFilePath);
+			var newFile = new File([newFilePath, fileName].join('/'));
+			aItem.replace(newFile);
+			
+		} catch (err) { }
 	}
 }
