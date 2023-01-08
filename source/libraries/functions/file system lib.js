@@ -391,10 +391,10 @@ function fileCollectHN(projName) {
 
 		var fileName = decodeURI(aItem.file.name);
 		var filePath = decodeURI(aItem.file.fullName);
-		
+		var newFilePath = [savePath, projName, fileName].join('/');
 		if (!filePath.match(/^\/[c|d|f|i]\/|^~/)) continue;
 
-		copyFile(filePath, savePath)
+		copyFile(filePath, savePath);
 	}
 	// for (var c = 0; c < compArray.length; c++) {
 	// 	var comp = compArray[c]; // current comp...
