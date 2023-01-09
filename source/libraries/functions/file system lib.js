@@ -171,27 +171,6 @@ function copyFolderContent(src, dst) {
 	catch (err) { }
 }
 
-function copyFile(fullPath, newPath) {
-	try {
-		var file = new File(fullPath);
-		var folder = new File(newPath);
-
-		if (file.length < 0) {
-			if (!createPath(newPath + '/' + file.name)) return false;
-			if (!copyFolderContent(fullPath, newPath + '/' + file.name)) return false;
-
-			return true;
-		}
-		else {
-			if (!createPath(newPath)) return false;
-			if (!file.copy(newPath + '/' + file.name)) return false;
-
-			return true;
-		}
-	}
-	catch (err) { }
-}
-
 function createPath(path) {
 	var folder = new Folder(path);
 
@@ -277,6 +256,27 @@ function PRODUCAO_DIA_A_DIA() {
 ---------------------------------------------------------------
 
 */
+
+function copyFile(fullPath, newPath) {
+	try {
+		var file = new File(fullPath);
+		var folder = new File(newPath);
+
+		if (file.length < 0) {
+			if (!createPath(newPath + '/' + file.name)) return false;
+			if (!copyFolderContent(fullPath, newPath + '/' + file.name)) return false;
+
+			return true;
+		}
+		else {
+			if (!createPath(newPath)) return false;
+			if (!file.copy(newPath + '/' + file.name)) return false;
+
+			return true;
+		}
+	}
+	catch (err) { }
+}
 
 function readFileContent(file) {
 	var fileContent;
@@ -387,7 +387,9 @@ function filesCollectHN(projName) {
 			var filePath = decodeURI(aItem.file.fullName);
 			var newFilePath = [savePath, projName].join('/');
 
-			if (!filePath.match(/^\/(c|d|f|i)\/|^~/)) continue;
+			// local drives C:, D:, F:, I: | local user folders...
+			var regExp = /^\/(c|d|f|i)\/|^~\//;
+			if (!filePath.match(savePath) && !filePath.match(regExp)) continue;
 
 			copyFile(filePath, newFilePath);
 			var newFile = new File([newFilePath, fileName].join('/'));
@@ -412,7 +414,7 @@ function filesCollectPROMO(projName) {
 			var filePath = decodeURI(aItem.file.fullName);
 			var newFilePath = [savePath, projName].join('/');
 
-			if (!filePath.match(/^\/(c|d|f|i)\/|^~/)) continue;
+			if (filePath.match(savePath)) continue;
 
 			copyFile(filePath, newFilePath);
 			var newFile = new File([newFilePath, fileName].join('/'));

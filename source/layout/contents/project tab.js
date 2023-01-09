@@ -242,8 +242,8 @@ saveBtn.onClick = function () {
     
     if (!hardNews) {
       savePath = savePath + '/' + promoName;
-      alert(wip);
-      // filesCollectPROMO(projName);
+      // wipAlert();
+      filesCollectPROMO(projName);
     }
   }
   var projFullName = hardNews ? hnName : promoName;
