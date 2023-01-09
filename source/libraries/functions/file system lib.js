@@ -373,15 +373,25 @@ function fontCollect(savePath) {
 }
 
 // copy all local files used in the project to PRODUCAO DIA-A-DIA...
-function filesCollectHN(projName) {
+function filesCollectHN(projName, progressWindow) {
+	var progressLabel = progressWindow.children[0];
+  var progressBar = progressWindow.children[1];
+
+  progressBar.maxvalue = app.project.numItems;
+
 	var savePath = PRODUCAO_DIA_A_DIA() + '/_EMAILS'; // collect folder path...
 	var saveFolder = new Folder(savePath); // collect folder...
 
 	for (var i = 1; i <= app.project.numItems; i++) {
+		progressBar.value = i;
+		
 		try {
 			var aItem = app.project.item(i);
-
+			
 			if (!(aItem instanceof FootageItem)) continue;
+
+			progressLabel.text = 'collecting: ' + aItem.name;
+			progressWindow.update();
 
 			var fileName = decodeURI(aItem.file.name);
 			var filePath = decodeURI(aItem.file.fullName);
@@ -400,19 +410,36 @@ function filesCollectHN(projName) {
 }
 
 // copy all files used in the project to the project folder...
-function filesCollectPROMO(projName) {
+function filesCollectPROMO(projName, progressWindow) {
+	var progressLabel = progressWindow.children[0];
+  var progressBar = progressWindow.children[1];
+
+  progressBar.maxvalue = app.project.numItems;
+
 	var savePath = projPath + '/' + projName; // collect folder path...
 	var saveFolder = new Folder(savePath); // collect folder...
 
 	for (var i = 1; i <= app.project.numItems; i++) {
+		progressBar.value = i;
+		
 		try {
 			var aItem = app.project.item(i);
 
 			if (!(aItem instanceof FootageItem)) continue;
 
+			progressLabel.text = 'collecting: ' + aItem.name;
+			progressWindow.update();
+
+			var itemPath = '';
+			var itemFolder = aItem.parentFolder;
+
+			while (itemFolder != app.project.rootFolder) {
+				itemPath = itemFolder.name + '/' + itemPath;
+				itemFolder = itemFolder.parentFolder;
+			}
 			var fileName = decodeURI(aItem.file.name);
 			var filePath = decodeURI(aItem.file.fullName);
-			var newFilePath = [savePath, projName].join('/');
+			var newFilePath = [savePath, 'project', itemPath].join('/');
 
 			if (filePath.match(savePath)) continue;
 

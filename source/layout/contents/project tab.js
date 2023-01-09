@@ -234,25 +234,45 @@ saveBtn.onClick = function () {
   var savePath = decodeURI(saveFolder.fullName);
   var promoName = projId + ' ' + projName;
   var hnName = userPrefix + ' - GNEWS ' + projName;
-
-  if (collectTogBtn.value) {
-    // collect files...
-    // app.executeCommand(2482); // collect files...
-    if (hardNews) filesCollectHN(projName);
-    
-    if (!hardNews) {
-      savePath = savePath + '/' + promoName;
-      // wipAlert();
-      filesCollectPROMO(projName);
-    }
-  }
   var projFullName = hardNews ? hnName : promoName;
   var projFile = new File(savePath + '/' + projFullName);
-  app.project.save(projFile);
 
-  if (collectFontsTogBtn.value) fontCollect(savePath);
-  openFolder(saveFolder);
-  app.endUndoGroup();
+  if (collectTogBtn.value) {
+
+    var progressWindow = progressDialog();
+
+    var enterBtn = progressWindow.children[2].children[0];
+    var cancelBtn = progressWindow.children[2].children[1];
+
+    // collect files...
+    // app.executeCommand(2482); // collect files...
+    enterBtn.onClick = progressWindow.onEnterKey = function () {
+
+      if (hardNews) {
+        filesCollectHN(projName, progressWindow);
+      } else {
+        savePath = savePath + '/' + promoName;
+        filesCollectPROMO(promoName, progressWindow);
+      }
+
+      progressWindow.close();
+      projFile = new File(savePath + '/' + projFullName);
+      app.project.save(projFile);
+
+      if (collectFontsTogBtn.value) fontCollect(savePath);
+      openFolder(savePath);
+      app.endUndoGroup();
+    };
+
+    cancelBtn.onClick = function () {
+      progressWindow.close();
+      app.endUndoGroup();
+
+      alert('escaping...');
+      executeCommandID('Undo save project');
+    };
+    progressWindow.show();
+  }
 
   /*   if (appV > 22) {
       executeCommandID('Save a Copy As 22.x...');
