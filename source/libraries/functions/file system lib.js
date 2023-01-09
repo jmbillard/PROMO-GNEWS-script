@@ -375,78 +375,78 @@ function fontCollect(savePath) {
 // copy all local files used in the project to PRODUCAO DIA-A-DIA...
 function filesCollectHN(projName, progressWindow) {
 	var progressLabel = progressWindow.children[0];
-  var progressBar = progressWindow.children[1];
+	var progressBar = progressWindow.children[1];
 
-  progressBar.maxvalue = app.project.numItems;
+	progressBar.maxvalue = app.project.numItems;
 
 	var savePath = PRODUCAO_DIA_A_DIA() + '/_EMAILS'; // collect folder path...
 	var saveFolder = new Folder(savePath); // collect folder...
 
+	if (!saveFolder.exists) saveFolder.create();
+
 	for (var i = 1; i <= app.project.numItems; i++) {
+		var aItem = app.project.item(i);
 		progressBar.value = i;
-		
-		try {
-			var aItem = app.project.item(i);
-			
-			if (!(aItem instanceof FootageItem)) continue;
 
-			progressLabel.text = 'collecting: ' + aItem.name;
-			progressWindow.update();
+		if (!(aItem instanceof FootageItem)) continue;
+		if (aItem.file == null) continue;
+		if (!aItem.file.exists) continue;
 
-			var fileName = decodeURI(aItem.file.name);
-			var filePath = decodeURI(aItem.file.fullName);
-			var newFilePath = [savePath, projName].join('/');
+		progressLabel.text = 'collecting: ' + aItem.name;
+		progressWindow.update();
 
-			// local drives C:, D:, F:, I: | local user folders...
-			var regExp = /^\/(c|d|f|i)\/|^~\//;
-			if (!filePath.match(savePath) && !filePath.match(regExp)) continue;
+		var fileName = decodeURI(aItem.file.name);
+		var filePath = decodeURI(aItem.file.fullName);
+		var newFilePath = [savePath, projName].join('/');
 
-			copyFile(filePath, newFilePath);
-			var newFile = new File([newFilePath, fileName].join('/'));
-			aItem.replace(newFile);
+		// local drives C:, D:, F:, I: | local user folders...
+		var regExp = /^\/(c|d|f|i)\/|^~\//;
+		if (!filePath.match(savePath) && !filePath.match(regExp)) continue;
 
-		} catch (err) { }
+		copyFile(filePath, newFilePath);
+		var newFile = new File([newFilePath, fileName].join('/'));
+		aItem.replace(newFile);
 	}
 }
 
 // copy all files used in the project to the project folder...
 function filesCollectPROMO(projName, progressWindow) {
 	var progressLabel = progressWindow.children[0];
-  var progressBar = progressWindow.children[1];
+	var progressBar = progressWindow.children[1];
 
-  progressBar.maxvalue = app.project.numItems;
+	progressBar.maxvalue = app.project.numItems;
 
 	var savePath = projPath + '/' + projName; // collect folder path...
 	var saveFolder = new Folder(savePath); // collect folder...
 
+	if (!saveFolder.exists) saveFolder.create();
+
 	for (var i = 1; i <= app.project.numItems; i++) {
+		var aItem = app.project.item(i);
 		progressBar.value = i;
-		
-		try {
-			var aItem = app.project.item(i);
 
-			if (!(aItem instanceof FootageItem)) continue;
+		if (!(aItem instanceof FootageItem)) continue;
+		if (aItem.file == null) continue;
+		if (!aItem.file.exists) continue;
 
-			progressLabel.text = 'collecting: ' + aItem.name;
-			progressWindow.update();
+		progressLabel.text = 'collecting: ' + aItem.name;
+		progressWindow.update();
 
-			var itemPath = '';
-			var itemFolder = aItem.parentFolder;
+		var itemPath = '';
+		var itemFolder = aItem.parentFolder;
 
-			while (itemFolder != app.project.rootFolder) {
-				itemPath = itemFolder.name + '/' + itemPath;
-				itemFolder = itemFolder.parentFolder;
-			}
-			var fileName = decodeURI(aItem.file.name);
-			var filePath = decodeURI(aItem.file.fullName);
-			var newFilePath = [savePath, 'project', itemPath].join('/');
+		while (itemFolder != app.project.rootFolder) {
+			itemPath = itemFolder.name + '/' + itemPath;
+			itemFolder = itemFolder.parentFolder;
+		}
+		var fileName = decodeURI(aItem.file.name);
+		var filePath = decodeURI(aItem.file.fullName);
+		var newFilePath = [savePath, 'project', itemPath].join('/');
 
-			if (filePath.match(savePath)) continue;
+		if (filePath.match(savePath)) continue;
 
-			copyFile(filePath, newFilePath);
-			var newFile = new File([newFilePath, fileName].join('/'));
-			aItem.replace(newFile);
-
-		} catch (err) { }
+		copyFile(filePath, newFilePath);
+		var newFile = new File([newFilePath, fileName].join('/'));
+		aItem.replace(newFile);
 	}
 }

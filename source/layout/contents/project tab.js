@@ -218,6 +218,8 @@ projOrgBtn.onClick = function () {
 
 saveBtn.onClick = function () {
 
+  if (app.project.numItems == 0) return;
+
   var todayPath = PRODUCAO_DIA_A_DIA();
   var saveFolder = hardNews ? new Folder(todayPath) : new Folder(projPath);
   var dateStr = system
@@ -232,35 +234,28 @@ saveBtn.onClick = function () {
   if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
 
   var savePath = decodeURI(saveFolder.fullName);
-  var promoName = projId + ' ' + projName;
-  var hnName = userPrefix + ' - GNEWS ' + projName;
-  var projFullName = hardNews ? hnName : promoName;
-  var projFile = new File(savePath + '/' + projFullName);
+  var promoName = projId + ' ' + projName; // ex: 'COB110423 historia ao vivo'
+  var hnName = userPrefix + ' - GNEWS ' + projName; // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
+
+  var projFullName = hardNews ? hnName : promoName; // final project name
 
   if (collectTogBtn.value) {
-
     var progressWindow = progressDialog();
-
     var enterBtn = progressWindow.children[2].children[0];
     var cancelBtn = progressWindow.children[2].children[1];
 
     // collect files...
     // app.executeCommand(2482); // collect files...
     enterBtn.onClick = progressWindow.onEnterKey = function () {
-
       if (hardNews) {
         filesCollectHN(projName, progressWindow);
+
       } else {
         savePath = savePath + '/' + promoName;
         filesCollectPROMO(promoName, progressWindow);
       }
-
       progressWindow.close();
-      projFile = new File(savePath + '/' + projFullName);
-      app.project.save(projFile);
 
-      if (collectFontsTogBtn.value) fontCollect(savePath);
-      openFolder(savePath);
       app.endUndoGroup();
     };
 
@@ -273,6 +268,11 @@ saveBtn.onClick = function () {
     };
     progressWindow.show();
   }
+  if (collectFontsTogBtn.value) fontCollect(savePath);
+
+  projFile = new File(savePath + '/' + projFullName);
+  app.project.save(projFile);
+  openFolder(savePath);
 
   /*   if (appV > 22) {
       executeCommandID('Save a Copy As 22.x...');
