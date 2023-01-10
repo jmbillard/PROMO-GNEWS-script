@@ -189,12 +189,12 @@ projOrgBtn.addEventListener('click', function (c) {
 projOrgBtn.onClick = function () {
   if (app.project.numItems == 0) return;
 
-  var progressWindow = progressDialog();
+  var progressWindow = progressDialog('organize project...');
   var enterBtn = progressWindow.children[2].children[0];
   var cancelBtn = progressWindow.children[2].children[1];
   app.beginUndoGroup('organize project');
 
-  enterBtn.onClick = progressWindow.onEnterKey = function () {
+  progressWindow.onShow = enterBtn.onClick = progressWindow.onEnterKey = function () {
     deleteProjectFolders();
     populateProjectFolders(progressWindow);
     deleteEmptyProjectFolders();
@@ -220,6 +220,7 @@ saveBtn.onClick = function () {
 
   if (app.project.numItems == 0) return;
 
+  var escape = false;
   var todayPath = PRODUCAO_DIA_A_DIA();
   var saveFolder = hardNews ? new Folder(todayPath) : new Folder(projPath);
   var dateStr = system
@@ -238,9 +239,10 @@ saveBtn.onClick = function () {
   var hnName = userPrefix + ' - GNEWS ' + projName; // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
 
   var projFullName = hardNews ? hnName : promoName; // final project name
-
+  var collectText = saveFolder.name + '/' + projFullName;
+  
   if (collectTogBtn.value) {
-    var progressWindow = progressDialog();
+    var progressWindow = progressDialog('collecting files to "' + collectText + '"');
     var enterBtn = progressWindow.children[2].children[0];
     var cancelBtn = progressWindow.children[2].children[1];
 
@@ -265,9 +267,12 @@ saveBtn.onClick = function () {
 
       alert('escaping...');
       executeCommandID('Undo save project');
+      escape = true;
     };
     progressWindow.show();
   }
+  if (escape) return;
+  
   if (collectFontsTogBtn.value) fontCollect(savePath);
 
   projFile = new File(savePath + '/' + projFullName);
