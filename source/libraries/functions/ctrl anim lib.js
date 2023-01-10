@@ -136,10 +136,13 @@ function addPseudoEffect(fxName, strCode) {
 		name: fxName,
 		binary: [strCode],
 	};
+	var tempFld = new Folder(downPath);
+	if (!tempFld.exists) tempFld.create();
 	var aPreset = createPresetFile(downPath, fx.name, fx.binary);
 
 	try {
 		app.project.activeItem.layer(1).applyPreset(File(aPreset));
+		removeFolder(tempFld);
 	} catch (err) { }
 }
 
