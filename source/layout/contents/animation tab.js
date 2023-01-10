@@ -720,6 +720,8 @@ typeAnimBtn.onClick = function () {
 		txtArray.push(content);
 	}
 	// the pseudo effect is applied to all selected layers at once (ADOBE limitation);
+
+	if (txtArray.length == 0) return;
 	addPseudoEffect('typewriter', toolTypewriter);
 
 	// textArray index... the textArray length may not match selLayers length...
@@ -770,6 +772,7 @@ wordsBtn.onClick = function () {
 		if (content == '') continue;
 		txtArray.push(content);
 	}
+	if (txtArray.length == 0) return;
 	// the pseudo effect is applied to all selected layers at once (ADOBE limitation);
 	addPseudoEffect('words', toolWords);
 
