@@ -470,35 +470,35 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 			showTabErr(netConfigName + ' not checked');
 			return;
 		}
-		var downPath = scriptPreferencesPath + '/ScriptUI Panels';
+		var uiPath = scriptPreferencesPath + '/ScriptUI Panels';
 		var pathArray = [];
 
 		for (var i = 0; i < codeURLArray.length; i++) {
-			pathArray.push(downPath);
+			pathArray.push(uiPath);
 		}
-		var downFolder = new Folder(downPath);
+		var uiFolder = new Folder(uiPath);
 		var scriptUIPath = new File($.fileName).path.toString();
 		var destPathArray = [
 			scriptUIPath, // → Scripts/Script UiPanels
 			promoArcPath + '/scripts', // → /arquivamento/GLOBONEWS/On Air 2022/Promo/scripts
 			promoInsPath + '/BARRA UTILIDADES PROMO PARA SCRIPT', // → UTILIDADES//FERRAMENTAS/SCRIPTS/SCRIPTS AFX/BARRA UTILIDADES PROMO PARA INSTALAR
 		];
-		removeFolder(downFolder); // → delete previous download folder
-		downFolder.create(); // → create new download folder
+		removeFolder(uiFolder); // → delete previous download folder
+		uiFolder.create(); // → create new download folder
 
 		getURLContent(codeURLArray, pathArray); // → download files on codeURLArray
 
 		// copy downloaded files...
 
-		if (homeOffice) copyFolderContentContent(downPath, destPathArray[0]);
+		if (homeOffice) copyFolderContentContent(uiPath, destPathArray[0]);
 
 		if (!homeOffice) {
 			try {
-				copyFolderContentContent(downPath, destPathArray[1]);
+				copyFolderContentContent(uiPath, destPathArray[1]);
 
 			} catch (err) {
 				alert('nope... (っ °Д °;)っ \n\n' + err.message);
-				copyFolderContentContent(downPath, destPathArray[0]);
+				copyFolderContentContent(uiPath, destPathArray[0]);
 			}
 		}
 		showTabProg('restart the script  ヽ(✿ﾟ▽ﾟ)ノ');

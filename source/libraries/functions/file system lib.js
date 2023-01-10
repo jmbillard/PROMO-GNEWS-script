@@ -319,9 +319,9 @@ function writeFileContent(newFile, fileContent) {
 	return newFile;
 }
 
-function createPresetFile(tempFld, fileName, strCode) {
+function createPresetFile(tempFolder, fileName, strCode) {
 	try {
-		var aFile = new File(tempFld + '/' + fileName);
+		var aFile = new File(tempFolder + '/' + fileName);
 
 		aFile.encoding = 'BINARY';
 		writeFileContent(aFile, strCode);

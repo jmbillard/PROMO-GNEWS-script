@@ -89,17 +89,17 @@ function fontsDialog() {
       return;
     }
     var url = repoURL + '/raw/main/downloads/fonts.zip';
-    var zipPath = downPath + '/fonts.zip';
+    var zipPath = tempPath + '/fonts.zip';
     var fontsLocalFolder = new Folder(fontsLocalPath);
 
     removeFolder(fontsLocalFolder); // → delete previous fonts folder
     fontsLocalFolder.create(); // → delete previous templates folder
 
-    if (!downFolder.exists) downFolder.create();
+    if (!tempFolder.exists) tempFolder.create();
 
-    getURLContent([url], [downPath]);
+    getURLContent([url], [tempPath]);
     unzipContent(zipPath, fontsLocalPath);
-    removeFolder(downFolder); // → delete temp folder
+    removeFolder(tempFolder); // → delete temp folder
 
     // HO preference
     if (!homeOffice) {

@@ -62,19 +62,19 @@ copyAMEPresetsBtn.onClick = function () {
   }
   var url = repoURL + '/raw/main/downloads/AME.zip';
 
-  var downPath = scriptPreferencesPath + '/temp';
-  var downFolder = new Folder(downPath);
+  var tempPath = scriptPreferencesPath + '/temp';
+  var tempFolder = new Folder(tempPath);
   var amePath = '~/Documents/Adobe/Adobe Media Encoder';
   var ameFolder = new Folder(amePath);
   var vFolders = ameFolder.getFiles();
 
-  var zipPath = downPath + '/AME.zip';
+  var zipPath = tempPath + '/AME.zip';
   var unzipPath = scriptPreferencesPath + '/AME presets';
 
-  if (!downFolder.exists) {
-    downFolder.create();
+  if (!tempFolder.exists) {
+    tempFolder.create();
   }
-  getURLContent([url], [downPath]);
+  getURLContent([url], [tempPath]);
   unzipContent(zipPath, unzipPath);
 
   for (var i = 0; i < vFolders.length; i++) {
@@ -87,7 +87,7 @@ copyAMEPresetsBtn.onClick = function () {
       } catch (err) { }
     }
   }
-  removeFolder(downFolder); // → delete temp folder
+  removeFolder(tempFolder); // → delete temp folder
 };
 
 //---------------------------------------------------------
@@ -100,17 +100,17 @@ installFontsBtn.onClick = function () {
   }
   // github main repo...
   var url = repoURL + '/raw/main/downloads/fonts.zip';
-  var zipPath = downPath + '/fonts.zip';
+  var zipPath = tempPath + '/fonts.zip';
   var fontsLocalFolder = new Folder(fontsLocalPath);
 
-  if (!downFolder.exists) {
-    downFolder.create();
+  if (!tempFolder.exists) {
+    tempFolder.create();
   }
   if (!fontsFolder.exists || fontsFolder.getFiles().length == 0) {
     removeFolder(fontsLocalFolder); // → delete previous fonts folder
     fontsLocalFolder.create(); // → delete previous fonts folder
 
-    getURLContent([url], [downPath]);
+    getURLContent([url], [tempPath]);
     unzipContent(zipPath, fontsPath);
 
     // HO preference
