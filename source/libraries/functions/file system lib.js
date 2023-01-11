@@ -249,6 +249,18 @@ function PRODUCAO_DIA_A_DIA() {
 	return todayPath;
 }
 
+function createPathFolders(path) {
+
+	var folderNamesArray = path.split('/');
+	var parentFolderName = '';
+	
+	for (var f = 0; f < folderNamesArray.length; f++) {
+		parentFolderName += '/' + folderNamesArray[f];
+		createPath(parentFolderName);
+	}
+	return new Folder(parentFolderName);
+}
+
 /*
 
 ---------------------------------------------------------------
@@ -380,9 +392,7 @@ function filesCollectHN(projName, progressWindow) {
 	progressBar.maxvalue = app.project.numItems;
 
 	var savePath = PRODUCAO_DIA_A_DIA() + '/_EMAILS'; // collect folder path...
-	var saveFolder = new Folder(savePath); // collect folder...
-
-	if (!saveFolder.exists) saveFolder.create();
+	var saveFolder = createPathFolders(savePath);
 
 	for (var i = 1; i <= app.project.numItems; i++) {
 		var aItem = app.project.item(i);
@@ -407,6 +417,7 @@ function filesCollectHN(projName, progressWindow) {
 		var newFile = new File([newFilePath, fileName].join('/'));
 		aItem.replace(newFile);
 	}
+	return savePath;
 }
 
 // copy all files used in the project to the project folder...
@@ -416,10 +427,15 @@ function filesCollectPROMO(projName, progressWindow) {
 
 	progressBar.maxvalue = app.project.numItems;
 
-	var savePath = projPath + '/' + projName; // collect folder path...
-	var saveFolder = new Folder(savePath); // collect folder...
+	if (orgFolders) {
+		var objId = projId.substring(0, 3);
 
-	if (!saveFolder.exists) saveFolder.create();
+		if (!promoSubPath.hasOwnProperty(objId)) return;
+
+		projName = promoSubPath[objId] + '/' + projName;
+	}
+	var savePath = projPath + '/' + projName; // collect folder path...
+	var saveFolder = createPathFolders(savePath);
 
 	for (var i = 1; i <= app.project.numItems; i++) {
 		var aItem = app.project.item(i);
@@ -449,4 +465,5 @@ function filesCollectPROMO(projName, progressWindow) {
 		var newFile = new File([newFilePath, fileName].join('/'));
 		aItem.replace(newFile);
 	}
+	return savePath;
 }

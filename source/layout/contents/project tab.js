@@ -216,6 +216,32 @@ projOrgBtn.onClick = function () {
 
 //---------------------------------------------------------
 
+saveBtn.addEventListener('click', function (c) {
+  if (c.button == 2) {
+
+    if (app.project.numItems == 0) return;
+
+    var dateStr = system
+      .callSystem('cmd.exe /c date /t')
+      .trim();
+
+    setXMPdata('creator', system.userName);
+    setXMPdata('date', dateStr);
+
+    app.beginUndoGroup('save project');
+
+    var savePath = '~/Desktop';
+    var promoProjectName = [projId, projName].join(' '); // ex: 'COB110423 historia ao vivo'
+    var hnProjectName = [userPrefix, '- GNEWS', projName].join(' '); // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
+
+    var projFullName = hardNews ? hnProjectName : promoProjectName; // final project name
+
+    projFile = new File(savePath + '/' + projFullName);
+    app.project.save(projFile);
+    openFolder(savePath);
+  }
+});
+
 saveBtn.onClick = function () {
 
   if (app.project.numItems == 0) return;
@@ -235,14 +261,13 @@ saveBtn.onClick = function () {
   if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
 
   var savePath = decodeURI(saveFolder.fullName);
-  var promoName = projId + ' ' + projName; // ex: 'COB110423 historia ao vivo'
-  var hnName = userPrefix + ' - GNEWS ' + projName; // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
+  var promoProjectName = [projId, projName].join(' '); // ex: 'COB110423 historia ao vivo'
+  var hnProjectName = [userPrefix, '- GNEWS', projName].join(' '); // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
 
-  var projFullName = hardNews ? hnName : promoName; // final project name
-  var collectText = saveFolder.name + '/' + projFullName;
-  
+  var projFullName = hardNews ? hnProjectName : promoProjectName; // final project name
+
   if (collectTogBtn.value) {
-    var progressWindow = progressDialog('collecting files to "' + collectText + '"');
+    var progressWindow = progressDialog('collecting files to \'' + saveFolder.name + '\'');
     var enterBtn = progressWindow.children[2].children[0];
     var cancelBtn = progressWindow.children[2].children[1];
 
@@ -253,8 +278,7 @@ saveBtn.onClick = function () {
         filesCollectHN(projName, progressWindow);
 
       } else {
-        savePath = savePath + '/' + promoName;
-        filesCollectPROMO(promoName, progressWindow);
+        savePath = filesCollectPROMO(promoProjectName, progressWindow);
       }
       progressWindow.close();
 
@@ -272,7 +296,7 @@ saveBtn.onClick = function () {
     progressWindow.show();
   }
   if (escape) return;
-  
+
   if (collectFontsTogBtn.value) fontCollect(savePath);
 
   projFile = new File(savePath + '/' + projFullName);
