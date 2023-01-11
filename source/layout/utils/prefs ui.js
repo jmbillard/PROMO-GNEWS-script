@@ -23,6 +23,8 @@ function prefsDialog() {
 	wPref.alignChildren = ['left', 'top'];
 	wPref.spacing = 10;
 
+	//
+
 	var userGrp = wPref.add('group');
 	userGrp.spacing = 2;
 
@@ -47,6 +49,8 @@ function prefsDialog() {
 	var layerGrpTxt = layerGrp.add('statictext', undefined, 'layer types:');
 	setTxtColor(layerGrpTxt, sTxtColor.light);
 
+	//
+
 	var nullGrp = layerGrp.add('group');
 	nullGrp.spacing = 0;
 
@@ -57,6 +61,8 @@ function prefsDialog() {
 	var nullTypeDrop = nullGrp.add('dropdownlist', undefined, layerTypeArray);
 	nullTypeDrop.selection = nullType;
 	nullTypeDrop.preferredSize = dropSize;
+
+	//
 
 	var adjGrp = layerGrp.add('group');
 	adjGrp.spacing = 0;
@@ -82,6 +88,8 @@ function prefsDialog() {
 	var projectGrpTxt = projectGrp.add('statictext', undefined, 'project:');
 	setTxtColor(projectGrpTxt, sTxtColor.light);
 
+	//
+
 	var missGrp = projectGrp.add('group');
 	missGrp.spacing = 28;
 
@@ -94,6 +102,8 @@ function prefsDialog() {
 	missCkb.preferredSize.height = 18;
 	missCkb.value = ignoreMissing;
 
+	//
+
 	var projOrgGrp = projectGrp.add('group');
 	projOrgGrp.spacing = 0;
 
@@ -104,6 +114,25 @@ function prefsDialog() {
 	var projectModeDrop = projOrgGrp.add('dropdownlist', undefined, projectModeDropArray);
 	projectModeDrop.selection = projectMode;
 	projectModeDrop.preferredSize = dropSize;
+
+	//
+
+	var orgFoldersGrp = projectGrp.add('group');
+	orgFoldersGrp.spacing = 28;
+
+	var orgFoldersTxt = orgFoldersGrp.add('statictext', undefined, 'organization folders');
+	orgFoldersTxt.helpTip = 'use PROMO organization folders with collect files\n\
+> ex: proj id: \'DOC120723\' → \'Projects/PROGRAMAS/documentario/DOC120723 doc name\'\n\
+> only available with \'hard news mode\' disabled';
+	orgFoldersTxt.preferredSize = txtSize;
+
+	var orgFoldersCkb = orgFoldersGrp.add('checkbox');
+	orgFoldersCkb.preferredSize.height = 18;
+	orgFoldersCkb.value = orgFolders;
+
+	orgFoldersGrp.enabled = !hardNews;
+
+	//
 
 	var projFldGrp = projectGrp.add('group');
 	projFldGrp.spacing = 15;
@@ -130,6 +159,8 @@ function prefsDialog() {
 	var themeGrpTxt = themeGrp.add('statictext', undefined, 'theme:');
 	setTxtColor(themeGrpTxt, sTxtColor.light);
 
+	//
+
 	var iconThemeGrp = themeGrp.add('group');
 	iconThemeGrp.spacing = 40;
 	iconThemeGrp.margins = [0, 8, 0, 4];
@@ -137,12 +168,12 @@ function prefsDialog() {
 	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light icons');
 	lightRdo.helpTip = 'icon theme';
 	lightRdo.value = lightRdo.text.split(' ')[0] == iconTheme;
-	// lightRdo.enabled = false;
 
 	var darkRdo = iconThemeGrp.add('radiobutton', undefined, 'dark icons');
 	darkRdo.helpTip = 'icon theme';
 	darkRdo.value = darkRdo.text.split(' ')[0] == iconTheme;
-	// darkRdo.enabled = false;
+
+	//
 
 	var tabColorsGrp = themeGrp.add('group');
 	tabColorsGrp.spacing = 2;
@@ -160,7 +191,8 @@ function prefsDialog() {
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
 
-	
+	//
+
 	var slGrp = wPref.add('group');
 	slGrp.spacing = 28;
 
@@ -185,6 +217,8 @@ function prefsDialog() {
 	var modeGrpTxt = modeGrp.add('statictext', undefined, 'modes:');
 	setTxtColor(modeGrpTxt, sTxtColor.light);
 
+	//
+
 	var hoGrp = modeGrp.add('group');
 	hoGrp.spacing = 28;
 
@@ -200,6 +234,8 @@ on the script preferences folder\n\
 	var hoCkb = hoGrp.add('checkbox');
 	hoCkb.preferredSize.height = 18;
 	hoCkb.value = homeOffice;
+
+	//
 
 	var hnGrp = modeGrp.add('group');
 	hnGrp.spacing = 28;
@@ -233,6 +269,8 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	var networkGrpTxt = networkGrp.add('statictext', undefined, 'network:');
 	setTxtColor(networkGrpTxt, sTxtColor.light);
 
+	//
+
 	var fldGrp1 = networkGrp.add('group');
 	fldGrp1.spacing = 15;
 
@@ -242,6 +280,8 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 
 	var fldMagBtn = fldGrp1.add('iconbutton', iconSize, magazineFolderIcon.light, { style: 'toolbutton' });
 	fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
+
+	//
 
 	var fldGrp2 = networkGrp.add('group');
 	fldGrp2.spacing = 15;
@@ -270,12 +310,16 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	bGrp2.alignment = 'right';
 	bGrp2.spacing = 2;
 
+	//
+
 	var devTogBtn = bGrp1.add('iconbutton', iconTogSize, exprTogIcon.light, { style: 'toolbutton', toggle: 1 });
 	devTogBtn.helpTip = 'dev tools';
 	devTogBtn.value = devMode;
 
 	var openFldBtn = bGrp1.add('iconbutton', iconSize, folderIcon.light, { style: 'toolbutton' });
 	openFldBtn.helpTip = 'open script preferences folder';
+
+	//
 
 	var resetBtn = bGrp2.add('iconbutton', iconSize, resetIcon.light, { style: 'toolbutton' });
 	resetBtn.helpTip = 'reset script preferences';
@@ -543,14 +587,22 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	//---------------------------------------------------------
 
 	hnCkb.onClick = function () {
-		// projIdTxt.text = projIdContent
 		hardNews = this.value;
 		projIdContent = hardNews ? 'client' : 'PROJ ID';
 		JSONPrefsObj.hardNews = hardNews;
 		fldProjBtn.helpTip = hardNews ? '> \'PRODUCAO DIA-A-DIA\'' : 'map folder\n\n' + '> \'' + projPath + '\'';
-		
+
 		projFldGrp.enabled = !hardNews;
-		endPagePresetBtn.enabled = !hardNews;
+		orgFoldersGrp.enabled = !hardNews;
+		endPagePresetBtn.enabled = !hardNews; // end page presets button > project tab
+		savePrefs(); // → save preferences.json
+	};
+
+	//---------------------------------------------------------
+
+	orgFoldersCkb.onClick = function () {
+		orgFolders = this.value;
+		JSONPrefsObj.orgFolders = orgFolders;
 		savePrefs(); // → save preferences.json
 	};
 
