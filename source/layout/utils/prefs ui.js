@@ -151,7 +151,7 @@ function prefsDialog() {
 	fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
 
 	var resetFldProjBtn = projFldGrp.add('iconbutton', iconTogSize, resetIcon.light, { style: 'toolbutton' });
-	resetFldProjBtn.helpTip = 'reset project default folder';
+	resetFldProjBtn.helpTip = 'reset \'save project\' default folder';
 	//resetFldProjBtn.enabled = false;
 
 	projFldGrp.enabled = homeOffice ? true : !hardNews;

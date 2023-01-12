@@ -54,7 +54,7 @@ var collectFontsTogBtn = projSubGrp2.add('iconbutton', iconTogSize, txtTogIcon[i
 collectFontsTogBtn.helpTip = 'collect fonts';
 
 var saveBtn = projSubGrp2.add('iconbutton', iconSize, saveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-saveBtn.helpTip = 'quick project save';
+saveBtn.helpTip = 'save project';
 
 //---------------------------------------------------------
 
