@@ -51,6 +51,24 @@ function setTxtColor(sTxt, color) {
   sTxt.graphics.foregroundColor = sTxt.graphics.newPen(pType, color, 1);
 }
 
+function setTxtHighlight(sTxt, color) {
+  setTxtColor(sTxt, color);
+
+  sTxt.addEventListener('mouseover', function () {
+    setTxtColor(sTxt, ([138 / 255, 138 / 255, 138 / 255, 1]));
+  });
+  sTxt.addEventListener('mouseout', function () {
+    setTxtColor(sTxt, color);
+  });
+}
+
+// simulates a button click with other control obj...
+function setTxtBtnLink(sTxt, btn) {
+  sTxt.addEventListener('mousedown', function () {
+    btn.notify();
+  });
+}
+
 function setLayout() {
   wLayout = w.size.width > w.size.height ? 'row' : 'column';
 
@@ -115,9 +133,9 @@ function setLayout() {
     for (var mlh = 0; mlh < mainMenuLabels.length; mlh++) {
       mainMenuLabels[mlh].maximumSize.width = mainMenuLabelsMaxW[mlh];
       mainMenuLabels[mlh].size.width = mainMenuLabelsMaxW[mlh];
-      mainMenuLabels[mlh].parent.spacing = 2;  
+      mainMenuLabels[mlh].parent.spacing = 2;
 
-      if (w.size.width < 1380  || !showLabels) {
+      if (w.size.width < 1380 || !showLabels) {
         mainMenuLabels[mlh].size.width = 0;
         mainMenuLabels[mlh].parent.spacing = 0;
       }
@@ -172,7 +190,7 @@ function setLayout() {
 
       if (w.size.width < 100 || !showLabels) {
         mainMenuLabels[mlv].size.width = 0;
-        mainMenuLabels[mlv].parent.spacing = 0;  
+        mainMenuLabels[mlv].parent.spacing = 0;
       }
     }
     if (w.size.width < vMin + 8) {
@@ -373,23 +391,33 @@ function getTabLabels() {
   return tabLabels;
 }
 
+function highlighMenuLabels() {
+  var uiLabels = getStaticTextLabels(tabsGrp.menu, []);
+
+  for (var l = 0; l < uiLabels.length; l++) {
+    var lab = uiLabels[l];
+    setTxtHighlight(lab, sTxtColor[iconTheme]);
+    setTxtBtnLink(lab, lab.parent.children[0]);
+  }
+}
+
 function getStaticTextLabels(grp, resultArray) {
 
   for (var g = 0; g < grp.children.length; g++) {
     var subGrp = grp.children[g];
-    
+
     if (subGrp.toString() == '[object Group]') {
       subGrp.spacing = 4;
       getStaticTextLabels(subGrp, resultArray);
 
     } else {
       var lab = subGrp;
-      
+
       if (lab.properties == undefined) continue;
       if (lab.properties.name != 'label') continue;
-  
+
       resultArray.push(lab);
-  
+
       setTxtColor(lab, sTxtColor[iconTheme]);
       lab.properties.truncate = 'end';
     }
