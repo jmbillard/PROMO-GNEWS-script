@@ -14,7 +14,10 @@
 function prefsDialog() {
 	var layerTypeArray = ['shape layer', 'solid layer'];
 	var projectModeDropArray = ['PROMO', 'custom'];
-	var txtSize = [100, 30];
+	var ckbGrpSpacing = 20;
+	var btnGrpSpacing = 10;
+	var drpGrpSpacing = 2;
+	var txtSize = [120, 30];
 	var dropSize = [85, 24];
 
 	//---------------------------------------------------------
@@ -52,7 +55,7 @@ function prefsDialog() {
 	//
 
 	var nullGrp = layerGrp.add('group');
-	nullGrp.spacing = 0;
+	nullGrp.spacing = drpGrpSpacing;
 
 	var nullTypeTxt = nullGrp.add('statictext', undefined, 'new null');
 	nullTypeTxt.helpTip = 'null type';
@@ -65,7 +68,7 @@ function prefsDialog() {
 	//
 
 	var adjGrp = layerGrp.add('group');
-	adjGrp.spacing = 0;
+	adjGrp.spacing = drpGrpSpacing;
 
 	var adjTypeTxt = adjGrp.add('statictext', undefined, 'adj. layer');
 	adjTypeTxt.helpTip = 'adjustment layer type';
@@ -91,21 +94,20 @@ function prefsDialog() {
 	//
 
 	var missGrp = projectGrp.add('group');
-	missGrp.spacing = 28;
+	missGrp.spacing = ckbGrpSpacing;
 
 	var missTxt = missGrp.add('statictext', undefined, 'ignore missing files');
 	missTxt.helpTip = 'ignore missing footage files\n\
 > no missing footage alerts during project organization';
 	missTxt.preferredSize = txtSize;
 
-	var missCkb = missGrp.add('checkbox');
-	missCkb.preferredSize.height = 18;
+	var missCkb = missGrp.add('checkbox', [8, 4, 24, 18]);
 	missCkb.value = ignoreMissing;
 
 	//
 
 	var projOrgGrp = projectGrp.add('group');
-	projOrgGrp.spacing = 0;
+	projOrgGrp.spacing = drpGrpSpacing;
 
 	var projModelTxt = projOrgGrp.add('statictext', undefined, 'org. model');
 	projModelTxt.helpTip = 'project organization model';
@@ -118,24 +120,28 @@ function prefsDialog() {
 	//
 
 	var orgFoldersGrp = projectGrp.add('group');
-	orgFoldersGrp.spacing = 28;
+	orgFoldersGrp.spacing = ckbGrpSpacing;
 
 	var orgFoldersTxt = orgFoldersGrp.add('statictext', undefined, 'organization folders');
 	orgFoldersTxt.helpTip = 'use PROMO organization folders with collect files\n\
 > ex: proj id: \'DOC120723\' → \'Projects/PROGRAMAS/documentario/DOC120723 doc name\'\n\
-> only available with \'hard news mode\' disabled';
+> only available with \'hard news\' mode disabled\n\
+> current folders:\n' + formatObjTxt(promoSubPath);
 	orgFoldersTxt.preferredSize = txtSize;
 
-	var orgFoldersCkb = orgFoldersGrp.add('checkbox');
-	orgFoldersCkb.preferredSize.height = 18;
+	var orgFoldersCkb = orgFoldersGrp.add('checkbox', [8, 4, 24, 18]);
 	orgFoldersCkb.value = orgFolders;
+
+	var resetOrgFoldersBtn = orgFoldersGrp.add('iconbutton', iconTogSize, resetIcon.light, { style: 'toolbutton' });
+	resetOrgFoldersBtn.helpTip = 'reset PROMO organization folders';
+	resetOrgFoldersBtn.enabled = orgFolders;
 
 	orgFoldersGrp.enabled = !hardNews;
 
 	//
 
 	var projFldGrp = projectGrp.add('group');
-	projFldGrp.spacing = 15;
+	projFldGrp.spacing = btnGrpSpacing;
 
 	var fldProjTxt = projFldGrp.add('statictext', undefined, 'proj. folder');
 	fldProjTxt.helpTip = '\'save project\' button default folder\n(\'PRODUCAO DIA-A-DIA\' on \'hard news\' mode)';
@@ -143,6 +149,10 @@ function prefsDialog() {
 
 	var fldProjBtn = projFldGrp.add('iconbutton', iconSize, projFolderIcon.light, { style: 'toolbutton' });
 	fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
+
+	var resetFldProjBtn = projFldGrp.add('iconbutton', iconTogSize, resetIcon.light, { style: 'toolbutton' });
+	resetFldProjBtn.helpTip = 'reset project default folder';
+	//resetFldProjBtn.enabled = false;
 
 	projFldGrp.enabled = homeOffice ? true : !hardNews;
 
@@ -162,7 +172,7 @@ function prefsDialog() {
 	//
 
 	var iconThemeGrp = themeGrp.add('group');
-	iconThemeGrp.spacing = 40;
+	iconThemeGrp.spacing = 60;
 	iconThemeGrp.margins = [0, 8, 0, 4];
 
 	var lightRdo = iconThemeGrp.add('radiobutton', undefined, 'light icons');
@@ -187,21 +197,20 @@ function prefsDialog() {
 	colorDrop.preferredSize = dropSize;
 
 	var tabColorBtn = wPref.add('iconbutton', undefined, undefined, { style: 'toolbutton' });
-	tabColorBtn.size = [186, 20];
+	tabColorBtn.size = [208, 20];
 	setBtnColor(tabColorBtn, tabColors[0]);
 	tabColorBtn.onDraw = customDraw;
 
 	//
 
 	var slGrp = wPref.add('group');
-	slGrp.spacing = 28;
+	slGrp.spacing = ckbGrpSpacing;
 
 	var slTxt = slGrp.add('statictext', undefined, 'show labels');
 	slTxt.helpTip = 'show labels on large screens';
 	slTxt.preferredSize = txtSize;
 
-	var slCkb = slGrp.add('checkbox');
-	slCkb.preferredSize.height = 18;
+	var slCkb = slGrp.add('checkbox', [8, 4, 24, 18]);
 	slCkb.value = showLabels;
 
 	//---------------------------------------------------------
@@ -220,7 +229,7 @@ function prefsDialog() {
 	//
 
 	var hoGrp = modeGrp.add('group');
-	hoGrp.spacing = 28;
+	hoGrp.spacing = ckbGrpSpacing;
 
 	var hoTxt = hoGrp.add('statictext', undefined, 'home office');
 	hoTxt.helpTip = 'home office mode\n\
@@ -231,14 +240,13 @@ on the script preferences folder\n\
 (\'MAM - magazine\' and \'MAM - para arte\' can be mapped)';
 	hoTxt.preferredSize = txtSize;
 
-	var hoCkb = hoGrp.add('checkbox');
-	hoCkb.preferredSize.height = 18;
+	var hoCkb = hoGrp.add('checkbox', [8, 4, 24, 18]);
 	hoCkb.value = homeOffice;
 
 	//
 
 	var hnGrp = modeGrp.add('group');
-	hnGrp.spacing = 28;
+	hnGrp.spacing = ckbGrpSpacing;
 
 	var hnTxt = hnGrp.add('statictext', undefined, 'hard news');
 	hnTxt.helpTip = 'hard news mode\n\
@@ -250,8 +258,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 (only available with \'home office\' mode disabled)\'';
 	hnTxt.preferredSize = txtSize;
 
-	var hnCkb = hnGrp.add('checkbox');
-	hnCkb.preferredSize.height = 18;
+	var hnCkb = hnGrp.add('checkbox', [8, 4, 24, 18]);
 	hnCkb.value = hardNews;
 
 	hnGrp.enabled = !hoCkb.value;
@@ -272,7 +279,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	//
 
 	var fldGrp1 = networkGrp.add('group');
-	fldGrp1.spacing = 15;
+	fldGrp1.spacing = btnGrpSpacing;
 
 	var fldMagTxt = fldGrp1.add('statictext', undefined, 'MAM - magazine');
 	fldMagTxt.helpTip = 'upload MAM - magazine';
@@ -281,10 +288,14 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	var fldMagBtn = fldGrp1.add('iconbutton', iconSize, magazineFolderIcon.light, { style: 'toolbutton' });
 	fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
 
+	var resetFldMagBtn = fldGrp1.add('iconbutton', iconTogSize, resetIcon.light, { style: 'toolbutton' });
+	resetFldMagBtn.helpTip = 'reset \'upload MAM - magazine\' folder';
+	// resetFldMagBtn.enabled = false;
+
 	//
 
 	var fldGrp2 = networkGrp.add('group');
-	fldGrp2.spacing = 15;
+	fldGrp2.spacing = btnGrpSpacing;
 
 	var fldArteTxt = fldGrp2.add('statictext', undefined, 'MAM - para arte');
 	fldArteTxt.helpTip = 'download MAM - para arte';
@@ -292,6 +303,10 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 
 	var fldArteBtn = fldGrp2.add('iconbutton', iconSize, arteFolderIcon.light, { style: 'toolbutton' });
 	fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
+
+	var resetFldArteBtn = fldGrp2.add('iconbutton', iconTogSize, resetIcon.light, { style: 'toolbutton' });
+	resetFldArteBtn.helpTip = 'reset \'download MAM - para arte\' folder';
+	// resetFldArteBtn.enabled = false;
 
 	//---------------------------------------------------------
 
@@ -443,7 +458,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	fldMagBtn.onClick = function () {
 		// error...
 		if (!netAccess()) {
-			showTabErr(netConfigName + ' not checked');
+			alert(netConfigName + ' not checked');
 			return;
 		}
 		var saveFolder = Folder.selectDialog();
@@ -451,8 +466,23 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		if (saveFolder != null) {
 			magazinePath = decodeURI(saveFolder).toString();
 			JSONPrefsObj.folders.magazinePath = magazinePath;
+			fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
+
 			savePrefs();
 		}
+	};
+
+	resetFldMagBtn.onClick = function () {
+		// error...
+		if (!netAccess()) {
+			alert(netConfigName + ' not checked');
+			return;
+		}
+		magazinePath = defPrefsObj.folders.magazinePath;
+		JSONPrefsObj.folders.magazinePath = magazinePath;
+		fldMagBtn.helpTip = 'map folder\n\n' + '> \'' + magazinePath + '\'';
+
+		savePrefs();
 	};
 
 	//---------------------------------------------------------
@@ -461,7 +491,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	fldArteBtn.onClick = function () {
 		// error...
 		if (!netAccess()) {
-			showTabErr(netConfigName + ' not checked');
+			alert(netConfigName + ' not checked');
 			return;
 		}
 		var saveFolder = Folder.selectDialog();
@@ -469,8 +499,22 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		if (saveFolder != null) {
 			artePath = decodeURI(saveFolder).toString();
 			JSONPrefsObj.folders.artePath = artePath;
+			fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
+
 			savePrefs();
 		}
+	};
+
+	resetFldArteBtn.onClick = function () {
+		// error...
+		if (!netAccess()) {
+			alert(netConfigName + ' not checked');
+			return;
+		}
+		artePath = defPrefsObj.folders.artePath;
+		JSONPrefsObj.folders.artePath = artePath;
+		fldArteBtn.helpTip = 'map folder\n\n' + '> \'' + artePath + '\'';
+		savePrefs();
 	};
 
 	//---------------------------------------------------------
@@ -479,7 +523,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	fldProjBtn.onClick = function () {
 		// error...
 		if (!netAccess()) {
-			showTabErr(netConfigName + ' not checked');
+			alert(netConfigName + ' not checked');
 			return;
 		}
 		var saveFolder = Folder.selectDialog();
@@ -492,6 +536,18 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		}
 	};
 
+	resetFldProjBtn.onClick = function () {
+		// error...
+		if (!netAccess()) {
+			alert(netConfigName + ' not checked');
+			return;
+		}
+		projPath = defPrefsObj.folders.projPath;
+		JSONPrefsObj.folders.projPath = projPath;
+		fldProjBtn.helpTip = 'map folder\n\n' + '> \'' + projPath + '\'';
+		savePrefs();
+	};
+
 	//---------------------------------------------------------
 
 	// right click -> opens the git repo...
@@ -499,7 +555,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		if (c.button == 2) {
 			// error...
 			if (!netAccess()) {
-				showTabErr(netConfigName + ' not checked');
+				alert(netConfigName + ' not checked');
 				return;
 			}
 			openWebSite(repoURL); // → launch internet browser
@@ -511,7 +567,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 	updateBtn.onClick = function () {
 		// error...
 		if (!netAccess()) {
-			showTabErr(netConfigName + ' not checked');
+			alert(netConfigName + ' not checked');
 			return;
 		}
 		var uiPath = scriptPreferencesPath + '/ScriptUI Panels';
@@ -602,7 +658,25 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 
 	orgFoldersCkb.onClick = function () {
 		orgFolders = this.value;
-		JSONPrefsObj.orgFolders = orgFolders;
+		JSONPrefsObj.orgFolders = orgFolders;		
+		resetOrgFoldersBtn.enabled = orgFolders;
+
+		savePrefs(); // → save preferences.json
+	};
+
+	resetOrgFoldersBtn.onClick = function () {
+		// error...
+		if (!netAccess()) {
+			alert(netConfigName + ' not checked');
+			return;
+		}
+		var promoSubPath = defPrefsObj.folders.promoSubPath;
+		JSONPrefsObj.folders.promoSubPath = promoSubPath;
+		orgFoldersTxt.helpTip = 'use PROMO organization folders with collect files\n\
+		> ex: proj id: \'DOC120723\' → \'Projects/PROGRAMAS/documentario/DOC120723 doc name\'\n\
+		> only available with \'hard news\' mode disabled\n\
+		> current folders:\n' + formatObjTxt(promoSubPath);
+
 		savePrefs(); // → save preferences.json
 	};
 

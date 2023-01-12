@@ -11,6 +11,16 @@
 //  jshint -W085
 //  jshint -W043
 
+function formatObjTxt(obj) {
+	return JSON.stringify(obj, null, '\t')
+		.replace(/(\{[\r\n]|[\r\n]\})/g, '')
+		.replace(/\t\"/g, '\t')
+		.replace(/\//g, ' \/ ')
+		.replace(/\":/g, ' →')
+		.replace(/\"/g, '\'')
+		.replace(/,/g, '');
+}
+
 function nameInc(aName) {
 
   var name = aName.replace(/\s*[0-9]+$/, '');
