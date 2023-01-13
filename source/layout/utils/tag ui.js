@@ -79,7 +79,7 @@ setTxtColor(temTag'+ p + 'Txt, GNEWS_secColors[8]);\n\n\n';
 \tif (app.project.selection.length == 0) {return;}\
 \tfor (var i = 0; i < app.project.selection.length; i++) {\
 \t\tif (!(app.project.selection[i] instanceof CompItem)) {continue;}\
-\t\tapp.project.selection[i].comment = \'' + compCommentTags[t][0] + ': true\';\
+\t\tapp.project.selection[i].comment = \'' + compCommentTags[t][0] + '\';\
 \t}\n};\n';
   }
 
@@ -91,7 +91,7 @@ setTxtColor(temTag'+ p + 'Txt, GNEWS_secColors[8]);\n\n\n';
 \t\t\tapp.project.selection[i].motionGraphicsTemplateName = \'' + multiTags[m][0] + '\';\
 \t\t}\
 \t\tif (app.project.selection[i] instanceof FootageItem) {\
-\t\t\tapp.project.selection[i].comment = \'' + multiTags[m][0] + ': true\';\
+\t\t\tapp.project.selection[i].comment = \'' + multiTags[m][0] + '\';\
 \t\t}\
 \t}\n};\n';
   }
