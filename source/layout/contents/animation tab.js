@@ -396,6 +396,12 @@ layerRandBtn.onClick = function () {
 
 currentGrp = tabsGrp.tools;
 
+// guides rig...
+var guidesBtn = currentGrp.add('iconbutton', iconSize, guidesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+guidesBtn.helpTip = 'columns guide layer rig';
+
+currentGrp.add('image', undefined, spacer.horizontal, { name: 'div' });
+
 // dynamic arrow rig...
 var arrowBtn = currentGrp.add('iconbutton', iconSize, arrowIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 arrowBtn.helpTip = 'simple arrow rig';
@@ -552,11 +558,30 @@ counterBtn.onClick = function () {
 
 		textDoc2.setValue(valArray[t]);
 
-		selLayers[n].name =
-			txtPrefix + 'counter ' + (valArray.length - t); // → txt_counter 1 ... txtArray.length
+		selLayers[n].name = txtPrefix + 'counter ' + (valArray.length - t); // → txt_counter 1 ... txtArray.length
 		// textArray index increment...
 		t += 1;
 	}
+	app.endUndoGroup();
+};
+
+//---------------------------------------------------------
+
+guidesBtn.onClick = function () {
+	var aItem = app.project.activeItem;
+	// error...
+	if (!(aItem instanceof CompItem)) {
+		showTabErr('comp not selected');
+		return;
+	}
+
+	app.beginUndoGroup('column guides');
+
+	var guideLayer = app.project.activeItem.layers.addShape();
+	addPseudoEffect('guides', toolGuides);
+	guideLayer.name = 'guides - GNEWS';
+  guideLayer.guideLayer = true;
+
 	app.endUndoGroup();
 };
 
