@@ -45,73 +45,21 @@ function tagDialog() {
       var tagTxt = subGrp.add('statictext', undefined, tag);
       tagBtn.helpTip = '\'' + tag + '\' comp comment tag';
 
-      if (tagGrpName == 'compCommentTags') {
-        setTxtColor(tagTxt, GNEWS_secColors[10]);
-
-        tagBtn.onClick = function () {
-
-          if (app.project.selection.length == 0) return;
-
-          for (var i = 0; i < app.project.selection.length; i++) {
-            if (!(app.project.selection[i] instanceof CompItem)) continue;
-            app.project.selection[i].comment = this.properties.name;
-          }
-        };
-      }
-
       //---------------------------------------------------------
 
-      if (tagGrpName == 'compCommentTags') {
-        setTxtColor(tagTxt, GNEWS_secColors[10]);
+      tagBtn.onClick = function () {
 
-        tagBtn.onClick = function () {
+        if (app.project.selection.length == 0) return;
 
-          if (app.project.selection.length == 0) return;
-
-          for (var i = 0; i < app.project.selection.length; i++) {
-            if (!(app.project.selection[i] instanceof CompItem)) continue;
-
-            app.project.selection[i].comment = this.properties.name;
-          }
-        };
-      }
-
-      //---------------------------------------------------------
-
-      if (tagGrpName == 'multiTags') {
-        setTxtColor(tagTxt, GNEWS_secColors[9]);
-
-        tagBtn.onClick = function () {
-
-          if (app.project.selection.length == 0) return;
-
-          for (var i = 0; i < app.project.selection.length; i++) {
-            if (app.project.selection[i] instanceof CompItem) {
-              app.project.selection[i].motionGraphicsTemplateName = this.properties.name;
-            }
-            if (app.project.selection[i] instanceof FootageItem) {
-              app.project.selection[i].comment = this.properties.name;
-            }
-          }
-        };
-      }
-
-      //---------------------------------------------------------
-
-      if (tagGrpName == 'compTemplateTags') {
-        setTxtColor(tagTxt, GNEWS_secColors[8]);
-
-        tagBtn.onClick = function () {
-
-          if (app.project.selection.length == 0) return;
-
-          for (var i = 0; i < app.project.selection.length; i++) {
-            if (!(app.project.selection[i] instanceof CompItem)) continue;
-
+        for (var i = 0; i < app.project.selection.length; i++) {
+          if (app.project.selection[i] instanceof CompItem) {
             app.project.selection[i].motionGraphicsTemplateName = this.properties.name;
           }
-        };
-      }
+          if (app.project.selection[i] instanceof FootageItem) {
+            app.project.selection[i].comment = this.properties.name;
+          }
+        }
+      };
 
       //---------------------------------------------------------
 
@@ -125,6 +73,61 @@ function tagDialog() {
           }
         }
       });
+
+      //---------------------------------------------------------
+
+      if (tagGrpName == 'hardNewsTags') setTxtColor(tagTxt, GNEWS_secColors[1]);
+      if (tagGrpName == 'multiTags') setTxtColor(tagTxt, GNEWS_secColors[9]);
+
+      //---------------------------------------------------------
+
+      if (tagGrpName == 'compCommentTags') {
+        setTxtColor(tagTxt, GNEWS_secColors[10]);
+
+        tagBtn.onClick = function () {
+
+          if (app.project.selection.length == 0) return;
+
+          for (var i = 0; i < app.project.selection.length; i++) {
+            if (!(app.project.selection[i] instanceof CompItem)) continue;
+            app.project.selection[i].comment = this.properties.name;
+          }
+        };
+      }
+
+      //---------------------------------------------------------
+
+      if (tagGrpName == 'compCommentTags') {
+        setTxtColor(tagTxt, GNEWS_secColors[10]);
+
+        tagBtn.onClick = function () {
+
+          if (app.project.selection.length == 0) return;
+
+          for (var i = 0; i < app.project.selection.length; i++) {
+            if (!(app.project.selection[i] instanceof CompItem)) continue;
+
+            app.project.selection[i].comment = this.properties.name;
+          }
+        };
+      }
+
+      //---------------------------------------------------------
+
+      if (tagGrpName == 'compTemplatePromoTags') {
+        setTxtColor(tagTxt, GNEWS_secColors[8]);
+
+        tagBtn.onClick = function () {
+
+          if (app.project.selection.length == 0) return;
+
+          for (var i = 0; i < app.project.selection.length; i++) {
+            if (!(app.project.selection[i] instanceof CompItem)) continue;
+
+            app.project.selection[i].motionGraphicsTemplateName = this.properties.name;
+          }
+        };
+      }
     }
   }
 
