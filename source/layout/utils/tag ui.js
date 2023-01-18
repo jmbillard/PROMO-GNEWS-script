@@ -137,7 +137,12 @@ function tagDialog() {
     if (app.project.selection.length == 0) return;
 
     for (var i = 0; i < app.project.selection.length; i++) {
-      app.project.selection[i].comment = tagCustomTxt.text;
+      if (app.project.selection[i] instanceof CompItem) {
+        app.project.selection[i].motionGraphicsTemplateName = this.properties.name;
+      }
+      if (app.project.selection[i] instanceof FootageItem) {
+        app.project.selection[i].comment = this.properties.name;
+      }
     }
   };
 

@@ -63,8 +63,12 @@ lockTrmBtn.helpTip = 'lock transform properties';
 
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
-var layerRandBtn = currentGrp.add('iconbutton', iconSize, randomizeLayerTimesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var animSubGrp3 = currentGrp.add('group');
+
+var layerRandBtn = animSubGrp3.add('iconbutton', iconSize, randomizeLayerTimesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 layerRandBtn.helpTip = 'randomize layer times';
+
+var layerRandTxt = animSubGrp3.add('statictext', undefined, '30', { name: 'label' });
 
 //---------------------------------------------------------
 
@@ -326,6 +330,28 @@ easeSld2Txt.addEventListener('click', function (c) {
 
 //---------------------------------------------------------
 
+layerRandTxt.addEventListener('click', function (c) {
+
+	if (c.detail == 2) {
+
+		var pos = [
+			c.screenX + 16,
+			c.screenY - 16
+		];
+
+		var input = inputDialog(parseInt(this.text).toString(), pos)
+			.toString()
+			.replace(/\D/g, '');
+
+		input = parseInt(input);
+		input = input > 0 ? input : 1;
+		this.text = input;
+		this.helpTip = input + ' frames';
+	}
+});
+
+//---------------------------------------------------------
+
 lockTrmBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : [];
@@ -353,35 +379,19 @@ layerRandBtn.onClick = function () {
 		showTabErr('layer not selected');
 		return;
 	}
-	var limit = 30;
+	var limit = parseInt(layerRandTxt.text);
 
 	app.beginUndoGroup('randomize layer times');
 
 	var fDur = aItem.frameDuration;
-	var sTimeMin = selLayers[0].startTime;
-	var sTimeMax = selLayers[0].startTime;
-
-	// gets the min and max layer start times...
-	for (i = 1; i < selLayers.length; i++) {
-		selTime = selLayers[i].startTime;
-		sTimeMin = sTimeMin < selTime ? sTimeMin : selTime;
-		sTimeMax = sTimeMax > selTime ? sTimeMax : selTime;
-	}
-
-	// number of frames between the last and first layer start times...
-	limit = sTimeMax != sTimeMin ? (sTimeMax - sTimeMin) / fDur : limit;
-
+	
 	for (i = 0; i < selLayers.length; i++) {
+		var sTimeMin = selLayers[i].startTime;
 		// generates a random number of frames between 0 and limit...
 		var nRandFrames = Math.round(gaussRnd(3) * limit) * fDur;
 
-		if (sTimeMax != sTimeMin) {
-			// sets each layer start time as the min + random number of frames...
-			selLayers[i].startTime = sTimeMin + nRandFrames;
-		} else {
-			var halfLimit = (limit / 2) * fDur;
-			selLayers[i].startTime = sTimeMin - halfLimit + nRandFrames;
-		}
+		// var halfLimit = (limit / 2) * fDur;
+		selLayers[i].startTime = sTimeMin + nRandFrames;
 	}
 	app.endUndoGroup();
 };
