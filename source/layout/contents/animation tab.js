@@ -66,9 +66,13 @@ currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var animSubGrp3 = currentGrp.add('group');
 
 var layerRandBtn = animSubGrp3.add('iconbutton', iconSize, randomizeLayerTimesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-layerRandBtn.helpTip = 'randomize layer times';
+layerRandBtn.helpTip = 'randomize layers';
 
-var layerRandTxt = animSubGrp3.add('statictext', undefined, '30', { name: 'label' });
+var layerRandTxt = animSubGrp3.add('edittext', undefined, '30');
+layerRandTxt.minimumSize.width = vMin;
+
+var layerSeqBtn = animSubGrp3.add('iconbutton', iconSize, sequenceLayerTimesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+layerSeqBtn.helpTip = 'sequence layers';
 
 //---------------------------------------------------------
 
@@ -330,25 +334,12 @@ easeSld2Txt.addEventListener('click', function (c) {
 
 //---------------------------------------------------------
 
-layerRandTxt.addEventListener('click', function (c) {
+layerRandTxt.onEnterKey = layerRandTxt.onChange = function () {
+	var limit = parseInt(this.text.replace(/\D/g, ''));
 
-	if (c.detail == 2) {
-
-		var pos = [
-			c.screenX + 16,
-			c.screenY - 16
-		];
-
-		var input = inputDialog(parseInt(this.text).toString(), pos)
-			.toString()
-			.replace(/\D/g, '');
-
-		input = parseInt(input);
-		input = input > 0 ? input : 1;
-		this.text = input;
-		this.helpTip = input + ' frames';
-	}
-});
+	this.text = limit;
+	this.helpTip = limit + ' frames';
+};
 
 //---------------------------------------------------------
 
@@ -375,23 +366,58 @@ layerRandBtn.onClick = function () {
 	var aItem = app.project.activeItem;
 	var selLayers = aItem != null ? aItem.selectedLayers : [];
 	// error...
-	if (selLayers.length == 0) {
-		showTabErr('layer not selected');
+	if (selLayers.length < 2) {
+		showTabErr('select 2 or more layers');
 		return;
 	}
-	var limit = parseInt(layerRandTxt.text);
-
-	app.beginUndoGroup('randomize layer times');
-
+	var limit = parseInt(layerRandTxt.text.replace(/\D/g, ''));
 	var fDur = aItem.frameDuration;
+	var rArray = [];
+	var rMax = 0;
+	var rMin = 1;
 	
-	for (i = 0; i < selLayers.length; i++) {
-		var sTimeMin = selLayers[i].startTime;
-		// generates a random number of frames between 0 and limit...
-		var nRandFrames = Math.round(gaussRnd(3) * limit) * fDur;
+	app.beginUndoGroup('randomize layers');
+		
+	for (var j = 0; j < selLayers.length; j++) {
+		// generates a random integer between 0 and 1...
+		var r = gaussRnd(3);
+		rArray.push(r);
+		
+		// update the highest and lowest values so far...
+		rMax = Math.max(r, rMax);
+		rMin = Math.min(r, rMin);
+	}
+	for (var i = 0; i < selLayers.length; i++) {
+		var f = (rArray[i] - rMin) / (rMax - rMin); // normalized value...
+		var increment = Math.round(limit * f) * fDur; // final random inclement time...
 
-		// var halfLimit = (limit / 2) * fDur;
-		selLayers[i].startTime = sTimeMin + nRandFrames;
+		selLayers[i].startTime += increment;
+	}
+	app.endUndoGroup();
+};
+
+//---------------------------------------------------------
+
+// sequence layer start times
+layerSeqBtn.onClick = function () {
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length < 2) {
+		showTabErr('select 2 or more layers');
+		return;
+	}
+	var fDur = aItem.frameDuration;
+	var increment = parseInt(layerRandTxt.text.replace(/\D/g, '')) * fDur;
+	var stMin = selLayers[0].startTime;
+
+	app.beginUndoGroup('sequence layers');
+
+	for (var j = 1; j < selLayers.length; j++) {
+		stMin = Math.min(selLayers[j].startTime, stMin);
+	}
+	for (var i = 0; i < selLayers.length; i++) {
+		selLayers[i].startTime = stMin + (increment * i);
 	}
 	app.endUndoGroup();
 };
