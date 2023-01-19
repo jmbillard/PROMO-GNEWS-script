@@ -79,6 +79,10 @@ function setLayout() {
 
   aboutTxt.text = vStr;
 
+  for (var lab = 0; lab < tabLabels.length; lab++) {
+    tabLabels[lab].size.width =  w.size.width - 24;
+  }
+
   // horizontal layout
   if (wLayout == 'row') {
     ltAlignment = 'left';
@@ -419,7 +423,6 @@ function getStaticTextLabels(grp, resultArray) {
       resultArray.push(lab);
 
       setTxtColor(lab, sTxtColor[iconTheme]);
-      lab.properties.truncate = 'end';
     }
   }
   return resultArray;

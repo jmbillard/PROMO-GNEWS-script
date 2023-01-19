@@ -40,8 +40,8 @@ var limitSld = textSubGrp3.add('slider', undefined, 60, 5, 100);
 limitSld.maximumSize.width = 100;
 limitSld.minimumSize.width = vMin;
 
-var limitTxt = textSubGrp3.add('statictext', undefined, limitSld.value, { name: 'label' });
-limitTxt.helpTip = parseInt(limitSld.value) + ' characters';
+var limitTxt = textSubGrp3.add('statictext', undefined, limitSld.value + ' characters', { name: 'label' , truncate: 'end'});
+limitTxt.maximumSize.width = 70;
 
 /*
 
@@ -180,16 +180,14 @@ txtColumnBtn.onClick = function () {
 
 limitSld.onChanging = function () {
   this.value = parseInt(this.value);
-  limitTxt.text = this.value;
-  limitTxt.helpTip = this.value + ' characters';
+  limitTxt.text = limitTxt.helpTip = this.value + ' characters';
 };
 
 //---------------------------------------------------------
 
 limitSld.onChange = function () {
   this.value = parseInt(this.value);
-  limitTxt.text = this.value;
-  limitTxt.helpTip = this.value + ' characters';
+  limitTxt.text = limitTxt.helpTip = this.value + ' characters';
 
   if (app.project.numItens == 0) return;
   var aItem = app.project.activeItem;
@@ -221,7 +219,7 @@ limitTxt.addEventListener('click', function (c) {
       .replace(/\D/g, '');
 
     input = parseInt(input) > 5 ? input : 5;
-    this.text = this.helpTip = input;
+    this.text = this.helpTip = input + ' characters';
     limitSld.value = parseInt(input) > 100 ? 100 : parseInt(input);
 
     var aItem = app.project.activeItem;

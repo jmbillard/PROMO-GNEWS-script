@@ -12,21 +12,26 @@ currentGrp = tabsGrp.brand;
 //var colorsGrp = currentGrp.add('group');
 
 var colorSubGrp1 = currentGrp.add('group');
-var colors1Txt = colorSubGrp1.add('statictext', undefined, 'main:', { name: 'label' });
+var colors1Txt = colorSubGrp1.add('statictext', undefined, 'main:', { name: 'label' , truncate: 'end'});
+colors1Txt.maximumSize.width = 30;
 
 //---------------------------------------------------------
 
 currentGrp.add('image', undefined, spacer.horizontal);
 
 var colorSubGrp2 = currentGrp.add('group');
-var colors2Txt = colorSubGrp2.add('statictext', undefined, 'mono:', { name: 'label' });
+var colors2Txt = colorSubGrp2.add('statictext', undefined, 'mono:', { name: 'label' , truncate: 'end'});
+colors2Txt.maximumSize.width = 30;
+
 
 //---------------------------------------------------------
 
 currentGrp.add('image', undefined, spacer.horizontal);
 
 var colorSubGrp3 = currentGrp.add('group');
-var colors3Txt = colorSubGrp3.add('statictext', undefined, 'sec:', { name: 'label' });
+var colors3Txt = colorSubGrp3.add('statictext', undefined, 'sec:', { name: 'label' , truncate: 'end'});
+colors3Txt.maximumSize.width = 30;
+
 
 // main colors...
 createColorButtons(GNEWS_mainColors1, colorSubGrp1);

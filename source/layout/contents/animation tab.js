@@ -35,7 +35,8 @@ pasteInfBtn.helpTip = 'paste keyframe influence';
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var animSubGrp2 = currentGrp.add('group');
 
-var easeSld1Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' });
+var easeSld1Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' , truncate: 'end'});
+easeSld1Txt.maximumSize.width = 30;
 
 var easeSld1 = animSubGrp2.add('slider', undefined, 1, 1, 99);
 easeSld1.helpTip = 'ease out influence';
@@ -50,7 +51,8 @@ easeSld2.helpTip = 'ease in influence';
 easeSld2.maximumSize.width = 80;
 easeSld2.minimumSize.width = vMin;
 
-var easeSld2Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' });
+var easeSld2Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' , truncate: 'end'});
+easeSld2Txt.maximumSize.width = 30;
 
 //---------------------------------------------------------
 

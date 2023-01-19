@@ -11,7 +11,7 @@ currentGrp = tabsGrp.shortcuts;
 
 var linksSubGrp2 = currentGrp.add('group');
 
-var linkTxt1 = linksSubGrp2.add('statictext', undefined, 'sites:', { name: 'label' });
+var linkTxt1 = linksSubGrp2.add('statictext', undefined, 'sites:', { name: 'label' , truncate: 'end'});
 linkTxt1.maximumSize.width = 30;
 
 var oneDriveBtn = linksSubGrp2.add('iconbutton', iconSize, oneDriveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -36,7 +36,7 @@ plannerBtn.helpTip = 'planner globo';
 currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 var linksSubGrp1 = currentGrp.add('group');
 
-var linkTxt2 = linksSubGrp1.add('statictext', undefined, 'folders:', { name: 'label' });
+var linkTxt2 = linksSubGrp1.add('statictext', undefined, 'folders:', { name: 'label' , truncate: 'end'});
 linkTxt2.maximumSize.width = 40;
 
 var mamArteBtn = linksSubGrp1.add('iconbutton', iconSize, arteFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });

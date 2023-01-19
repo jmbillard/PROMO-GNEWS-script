@@ -10,7 +10,9 @@
 currentGrp = tabsGrp.dev;
 
 var devGrp1 = currentGrp.add('group');
-var binTxt = devGrp1.add('statictext', undefined, 'bin:', { name: 'label' });
+var binTxt = devGrp1.add('statictext', undefined, 'bin:', { name: 'label' , truncate: 'end'});
+binTxt.maximumSize.width = 30;
+
 
 var binBtn = devGrp1.add('iconbutton', iconSize, binIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 binBtn.helpTip = 'binary converter | layer source code';
@@ -18,7 +20,7 @@ binBtn.helpTip = 'binary converter | layer source code';
 //---------------------------------------------------------
 
 var devGrp2 = currentGrp.add('group');
-var dTxt = devGrp2.add('statictext', undefined, 'dark:', { name: 'label' });
+var dTxt = devGrp2.add('statictext', undefined, 'dark:', { name: 'label' , truncate: 'end'});
 dTxt.maximumSize.width = 30;
 
 var dBtn = devGrp2.add('iconbutton', iconSize, darkIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -30,13 +32,13 @@ currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
 
 var devGrp3 = currentGrp.add('group');
 
-var zipTxt1 = devGrp3.add('statictext', undefined, 'templates:', { name: 'label' });
+var zipTxt1 = devGrp3.add('statictext', undefined, 'templates:', { name: 'label' , truncate: 'end'});
 zipTxt1.maximumSize.width = 60;
 
 var zipTemplatesBtn = devGrp3.add('iconbutton', iconSize, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 zipTemplatesBtn.helpTip = 'zip the templates folder';
 
-var zipTxt2 = devGrp3.add('statictext', undefined, 'fonts:', { name: 'label' });
+var zipTxt2 = devGrp3.add('statictext', undefined, 'fonts:', { name: 'label' , truncate: 'end'});
 zipTxt2.maximumSize.width = 30;
 
 var zipFontsBtn = devGrp3.add('iconbutton', iconSize, zipIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
