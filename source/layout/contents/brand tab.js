@@ -21,7 +21,7 @@ currentGrp.add('image', undefined, spacer.horizontal);
 
 var colorSubGrp2 = currentGrp.add('group');
 var colors2Txt = colorSubGrp2.add('statictext', undefined, 'mono:', { name: 'label' , truncate: 'end'});
-colors2Txt.maximumSize.width = 30;
+colors2Txt.maximumSize.width = 35;
 
 
 //---------------------------------------------------------
