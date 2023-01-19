@@ -191,13 +191,16 @@ copyInfBtn.onClick = function () {
 //---------------------------------------------------------
 
 easeSld1.onChanging = function () {
-
 	this.value = Math.floor(this.value);
-	var val = this.value;
-	easeSld1Txt.text = easeSld1Txt.helpTip = val + '%';
+
+	easeSld1Txt.text = this.value;
+	easeSld1Txt.helpTip = this.value + '%';
 };
 
 easeSld1.onChange = function () {
+	easeSld1Txt.text = this.value;
+	easeSld1Txt.helpTip = this.value + '%';
+
 	var suf1 = Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
 	var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
 
@@ -215,6 +218,9 @@ easeSld1.onChange = function () {
 };
 
 easeSld2.onChange = function () {
+	easeSld1Txt.text = this.value;
+	easeSld1Txt.helpTip = this.value + '%';
+
 	var suf1 = Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
 	var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
 
@@ -232,10 +238,10 @@ easeSld2.onChange = function () {
 };
 
 easeSld2.onChanging = function () {
-
 	this.value = Math.floor(this.value);
-	var val = 100 - this.value;
-	easeSld2Txt.text = easeSld2Txt.helpTip = val + '%';
+
+	easeSld1Txt.text = 100 - this.value;
+	easeSld1Txt.helpTip = (100 - this.value) + '%';
 };
 
 //---------------------------------------------------------

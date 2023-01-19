@@ -41,7 +41,7 @@ limitSld.maximumSize.width = 100;
 limitSld.minimumSize.width = vMin;
 
 var limitTxt = textSubGrp3.add('statictext', undefined, limitSld.value, { name: 'label' });
-
+limitTxt.helpTip = parseInt(limitSld.value) + ' characters';
 
 /*
 
@@ -180,12 +180,17 @@ txtColumnBtn.onClick = function () {
 
 limitSld.onChanging = function () {
   this.value = parseInt(this.value);
-  limitTxt.text = limitTxt.helpTip = this.value;
+  limitTxt.text = this.value;
+  limitTxt.helpTip = this.value + ' characters';
 };
 
 //---------------------------------------------------------
 
 limitSld.onChange = function () {
+  this.value = parseInt(this.value);
+  limitTxt.text = this.value;
+  limitTxt.helpTip = this.value + ' characters';
+
   if (app.project.numItens == 0) return;
   var aItem = app.project.activeItem;
   var selLayers = aItem != null ? aItem.selectedLayers : [];
