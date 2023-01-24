@@ -138,10 +138,10 @@ function tagDialog() {
 
     for (var i = 0; i < app.project.selection.length; i++) {
       if (app.project.selection[i] instanceof CompItem) {
-        app.project.selection[i].motionGraphicsTemplateName = this.properties.name;
+        app.project.selection[i].motionGraphicsTemplateName = this.text;
       }
       if (app.project.selection[i] instanceof FootageItem) {
-        app.project.selection[i].comment = this.properties.name;
+        app.project.selection[i].comment = this.text;
       }
     }
   };
