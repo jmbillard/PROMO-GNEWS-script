@@ -261,6 +261,7 @@ function layerCode(layer) {
 						layerStr += '\t' + var1 + '.name = \'' + varN + '\';\n';
           
 					} catch (err) { }
+					
 					if (!cProp.enabled) {
 						layerStr += var1 + '.enabled = false;\n';
 					}
