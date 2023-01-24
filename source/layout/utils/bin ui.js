@@ -430,7 +430,7 @@ function bin_ui() {
 	// botões e spacers
 	var stcTxt = wBin.add('statictext', [0, 0, 600, 15], '', { truncate: 'end'});
 	var edtText = wBin.add('edittext', [0, 0, 600, 600], '', { multiline: true });
-	var prgBar = wBin.add('progressbar', [0, 0, 600, 5], 0, 100);
+	var progressBarBin = wBin.add('progressbar', [0, 0, 600, 5], 0, 100);
 	var btnGrp = wBin.add('group');
 	btnGrp.alignment = 'center';
 	var pickBtn = btnGrp.add('iconbutton', undefined, pickIcon, { style: 'toolbutton' });
@@ -488,7 +488,7 @@ function bin_ui() {
 			var fileNameArray = [];
 
 			if (fileArray != null) {
-				prgBar.maxvalue = fileArray.length - 1;
+				progressBarBin.maxvalue = fileArray.length - 1;
 
 				for (var i = 0; i < fileArray.length; i++) {
 					var fileName = decodeURI(fileArray[i].name);
@@ -500,7 +500,7 @@ function bin_ui() {
 					codeTxt += '\nvar ' + fileName + ' = ' + fileToBinary(fileArray[i]) + ';\n';
 
 					codeArray.push(fileToBinary(fileArray[i]));
-					prgBar.value = i;
+					progressBarBin.value = i;
 					wBin.update();
 				}
 				nameTxt = fileNameArray.join(' | ');
@@ -516,7 +516,7 @@ function bin_ui() {
 			fileArray = File.openDialog('open icons...', undefined, true);
 
 			if (fileArray != null) {
-				prgBar.maxvalue = fileArray.length - 1;
+				progressBarBin.maxvalue = fileArray.length - 1;
 
 				for (var n = 0; n < fileArray.length; n++) {
 					var iconFileName = decodeURI(deleteFileExt(fileArray[n].name));
@@ -549,7 +549,7 @@ function bin_ui() {
 						iconObj = iconObjArray[o];
 						codeTxt += '\nvar ' + objName + ' = ' + formatObjStr(iconObj) + ';\n';
 					}
-					prgBar.value = i;
+					progressBarBin.value = i;
 					wBin.update();
 				}
 				edtText.text = codeTxt;
@@ -600,7 +600,8 @@ function bin_ui() {
 
 	exportBtn.onClick = function () {
 		var fileExpObj;
-		prgBar.value = 0;
+		progressBarBin.value = 0;
+		progressBarBin.maxvalue = 100;
 
 		if (edtText.text != '') {
 			var fileTypesArray = ['Script:*.jsx', 'Script include:*.jsxinc', 'Text:*.txt'];
@@ -610,7 +611,7 @@ function bin_ui() {
 				writeFileContent(fileExpObj, edtText.text);
 			}
 		}
-		prgBar.value = 100;
+		progressBarBin.value = 100;
 	};
 
 	evalBtn.onClick = function () {
@@ -626,7 +627,6 @@ function bin_ui() {
 	};
 
 	expRad01.onClick = expRad02.onClick = expRad03.onClick = function () {
-
 		evalBtn.enabled = expRad02.value && hasData;
 	};
 
