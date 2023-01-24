@@ -108,9 +108,9 @@ dBtn.onClick = function () {
 			// fill effect...
 			var fill = effects.addProperty('ADBE Fill');
 			fill.property('ADBE Fill-0002').setValue(sTxtColor.dark);
-			var previewFile = new File(folderPath + '/' + compN + ' dark.png');
+			var dIconFile = new File(folderPath + '/' + compN + ' dark.png');
   
-			comp.saveFrameToPng(0, previewFile);
+			comp.saveFrameToPng(0, dIconFile);
 			comp.remove();
 			icon.remove();
   
