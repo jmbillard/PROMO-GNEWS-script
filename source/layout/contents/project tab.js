@@ -28,14 +28,16 @@ renameItemBtn.helpTip = 'rename comps';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 var projOrgBtn = currentGrp.add('iconbutton', iconSize, projOrgIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 projOrgBtn.helpTip = 'organize project | organization tags';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 // end page presets UI button...
 var endPagePresetBtn = currentGrp.add('iconbutton', iconSize, endPagePresetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -44,7 +46,8 @@ endPagePresetBtn.enabled = !hardNews;
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 var projSubGrp2 = currentGrp.add('group');
 
 var collectTogBtn = projSubGrp2.add('iconbutton', iconTogSize, fldTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
@@ -58,7 +61,8 @@ saveBtn.helpTip = 'save project';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 var projSubGrp3 = currentGrp.add('group');
 
 var fldProjBtn2 = projSubGrp3.add('iconbutton', iconSize, projFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });

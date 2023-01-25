@@ -1,3 +1,7 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 /*
 
 ---------------------------------------------------------------
@@ -252,10 +256,10 @@ function cleanText(aLayer) {
 function columnText(sLayer) {
 	var srcTxt = textContent(sLayer);
 	var txt = srcTxt.replace(/\s*[\r\n]{1,}\s*/g, '*|*')
-		.replace(/\s*\-{3,}\s*/g, '*|*')
+		.replace(/\s*-{3,}\s*/g, '*|*')
 		.replace(/\s{2,}/g, '*|*');
 	var columnsNum = srcTxt.split(/[\r\n]+/g)[0]
-		.replace(/\s*\-{3,}\s*/g, '*|*')
+		.replace(/\s*-{3,}\s*/g, '*|*')
 		.replace(/\s{2,}/g, '*|*')
 		.split('*|*')
 		.length;

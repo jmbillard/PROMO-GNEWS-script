@@ -497,7 +497,7 @@ function bin_ui() {
 					fileName = deleteFileExt(fileName)
 						.replaceSpecialCharacters();
 					fileName = (fileName.split(/\s/).length > 1) ? fileName.toCamelCase() : fileName;
-					codeTxt += '\nvar ' + fileName + ' = ' + fileToBinary(fileArray[i]) + ';\n';
+					codeTxt += ['\nvar', fileName, '=', fileToBinary(fileArray[i]) + ';\n'].join(' ');
 
 					codeArray.push(fileToBinary(fileArray[i]));
 					progressBarBin.value = i;

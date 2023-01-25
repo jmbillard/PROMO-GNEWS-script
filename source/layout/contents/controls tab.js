@@ -24,7 +24,8 @@ nullShpBtn.helpTip = 'create parent null';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 var ctrlSubGrp2 = currentGrp.add('group');
 
 // create centered null
@@ -33,7 +34,8 @@ nullCShpBtn.helpTip = 'centered null';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 var ctrlSubGrp3 = currentGrp.add('group');
 
 // select hierarchy sub group...

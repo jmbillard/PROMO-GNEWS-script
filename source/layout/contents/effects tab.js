@@ -1,3 +1,8 @@
+/* eslint-disable no-with */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 /*
 
 ---------------------------------------------------------------
@@ -13,7 +18,8 @@ shpAdjBtn.helpTip = 'adjustment layer';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 var fxSubGrp1 = currentGrp.add('group');
 
 var curBtn = fxSubGrp1.add('iconbutton', iconTogSize, curIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -27,7 +33,6 @@ lumBtn.helpTip = 'lumetri color';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp2 = currentGrp.add('group');
 
 var gaublurBtn = fxSubGrp2.add('iconbutton', iconTogSize, gaublurIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -41,7 +46,6 @@ lensblurBtn.helpTip = 'lens blur';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp3 = currentGrp.add('group');
 
 var fillBtn = fxSubGrp3.add('iconbutton', iconTogSize, fillIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -49,7 +53,6 @@ fillBtn.helpTip = 'fill';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp4 = currentGrp.add('group');
 
 var glassBtn = fxSubGrp4.add('iconbutton', iconTogSize, glassIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -57,7 +60,6 @@ glassBtn.helpTip = '3d glasses';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.horizontal);
 var fxSubGrp5 = currentGrp.add('group');
 
 var fracBtn = fxSubGrp5.add('iconbutton', iconTogSize, fracIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -75,243 +77,243 @@ grainBtn.helpTip = 'add grain';
 */
 
 shpAdjBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayer = aItem != null ? aItem.selectedLayers[0] : null;
-  var adjLayer;
+	var aItem = app.project.activeItem;
+	var selLayer = aItem != null ? aItem.selectedLayers[0] : null;
+	var adjLayer;
 
-  // error...
-  if (!(aItem instanceof CompItem)) {
-    showTabErr('comp not selected');
-    return;
-  }
-  app.beginUndoGroup('create adj layer');
+	// error...
+	if (!(aItem instanceof CompItem)) {
+		showTabErr('comp not selected');
+		return;
+	}
+	app.beginUndoGroup('create adj layer');
 
-  var adjC = rgb(255, 255, 255);
-  var adjW = aItem.width;
-  var adjH = aItem.height;
+	var adjC = rgb(255, 255, 255);
+	var adjW = aItem.width;
+	var adjH = aItem.height;
 
-  if (adjType == 0) {
-    adjLayer = shpAdjustment();
-  } else {
-    adjLayer = aItem.layers.addSolid(adjC, '', adjW, adjH, 1.0);
-  }
-  if (selLayer != null) {
-    adjLayer.moveBefore(selLayer);
-    adjLayer.inPoint = selLayer.inPoint;
-    adjLayer.outPoint = selLayer.outPoint;
-  }
-  adjLayer.name = adjPrefix;
-  adjLayer.adjustmentLayer = true;
-  adjLayer.label = 5;
+	if (adjType == 0) {
+		adjLayer = shpAdjustment();
+	} else {
+		adjLayer = aItem.layers.addSolid(adjC, '', adjW, adjH, 1.0);
+	}
+	if (selLayer != null) {
+		adjLayer.moveBefore(selLayer);
+		adjLayer.inPoint = selLayer.inPoint;
+		adjLayer.outPoint = selLayer.outPoint;
+	}
+	adjLayer.name = adjPrefix;
+	adjLayer.adjustmentLayer = true;
+	adjLayer.label = 5;
 
-  if (adjLayer instanceof AVLayer) {
-    var expStr = scaleToCompSize();
-    adjLayer.property('ADBE Transform Group')
-      .property('ADBE Scale').expression = expStr;
-  }
-  app.endUndoGroup();
+	if (adjLayer instanceof AVLayer) {
+		var expStr = scaleToCompSize();
+		adjLayer.property('ADBE Transform Group')
+			.property('ADBE Scale').expression = expStr;
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 curBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE CurvesCustom';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE CurvesCustom';
 
-  app.beginUndoGroup('curves');
+	app.beginUndoGroup('curves');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 levBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE Pro Levels2';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE Pro Levels2';
 
-  app.beginUndoGroup('levels');
+	app.beginUndoGroup('levels');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 lumBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE Lumetri';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE Lumetri';
 
-  app.beginUndoGroup('lumetri color');
+	app.beginUndoGroup('lumetri color');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 gaublurBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE Gaussian Blur 2';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE Gaussian Blur 2';
 
-  app.beginUndoGroup('gaussian blur');
+	app.beginUndoGroup('gaussian blur');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 comblurBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE Compound Blur';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE Compound Blur';
 
-  app.beginUndoGroup('compound blur');
+	app.beginUndoGroup('compound blur');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 lensblurBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE Camera Lens Blur';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE Camera Lens Blur';
 
-  app.beginUndoGroup('lens blur');
+	app.beginUndoGroup('lens blur');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 fillBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE Fill';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE Fill';
 
-  app.beginUndoGroup('fill');
+	app.beginUndoGroup('fill');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-    effect.property(3).setValue(randomColor(labelColors)); // color
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+		effect.property(3).setValue(randomColor(labelColors)); // color
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 fracBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE Fractal Noise';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE Fractal Noise';
 
-  app.beginUndoGroup('fractal noise');
+	app.beginUndoGroup('fractal noise');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 grainBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'VISINF Grain Implant';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'VISINF Grain Implant';
 
-  app.beginUndoGroup('add grain');
+	app.beginUndoGroup('add grain');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+	}
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 glassBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  var selLayers = aItem != null ? aItem.selectedLayers : [];
-  // error...
-  if (selLayers.length == 0) {
-    showTabErr('layer not selected');
-    return;
-  }
-  var fxName = 'ADBE 3D Glasses2';
+	var aItem = app.project.activeItem;
+	var selLayers = aItem != null ? aItem.selectedLayers : [];
+	// error...
+	if (selLayers.length == 0) {
+		showTabErr('layer not selected');
+		return;
+	}
+	var fxName = 'ADBE 3D Glasses2';
 
-  app.beginUndoGroup('3d glasses');
+	app.beginUndoGroup('3d glasses');
 
-  for (i = 0; i < selLayers.length; i++) {
-    var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
-    effect.property(1).setValue(selLayers[i].index); // left view
-    effect.property(2).setValue(selLayers[i].index); // right view
-    effect.property(7).setValue(12); // 3d view
-  }
-  app.endUndoGroup();
+	for (i = 0; i < selLayers.length; i++) {
+		var effect = selLayers[i].property('ADBE Effect Parade').addProperty(fxName);
+		effect.property(1).setValue(selLayers[i].index); // left view
+		effect.property(2).setValue(selLayers[i].index); // right view
+		effect.property(7).setValue(12); // 3d view
+	}
+	app.endUndoGroup();
 };

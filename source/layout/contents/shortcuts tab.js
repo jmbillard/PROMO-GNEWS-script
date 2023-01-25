@@ -1,4 +1,8 @@
-
+/* eslint-disable no-with */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 /*
  
 ---------------------------------------------------------------
@@ -19,8 +23,6 @@ oneDriveBtn.helpTip = 'OneDrive globo';
 
 //---------------------------------------------------------
 
-linksSubGrp2.add('image', undefined, spacer.horizontal);
-
 // var linksSubGrp3 = currentGrp.add('group');
 var trelloBtn = linksSubGrp2.add('iconbutton', iconSize, trelloIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 trelloBtn.helpTip = 'trello promo GNEWS';
@@ -33,7 +35,8 @@ plannerBtn.helpTip = 'planner globo';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 var linksSubGrp1 = currentGrp.add('group');
 
 var linkTxt2 = linksSubGrp1.add('statictext', undefined, 'folders:', { name: 'label' , truncate: 'end'});
@@ -45,8 +48,6 @@ var mamMagBtn = linksSubGrp1.add('iconbutton', iconSize, magazineFolderIcon[icon
 mamMagBtn.helpTip = 'upload MAM Magazine | set custom folder';
 
 //---------------------------------------------------------
-
-linksSubGrp1.add('image', undefined, spacer.horizontal);
 
 var mamHardNewsBtn = linksSubGrp1.add('iconbutton', iconSize, hardNewsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 mamHardNewsBtn.helpTip = 'upload MAM Hard News';
@@ -242,7 +243,7 @@ dayBtn.onClick = function () {
 		showTabErr(netConfigName + ' not checked');
 		return;
 	}
-  var todayPath = PRODUCAO_DIA_A_DIA ();
+	var todayPath = PRODUCAO_DIA_A_DIA ();
 	var fld = new Folder(todayPath);
 
 	if (!fld.exists) {

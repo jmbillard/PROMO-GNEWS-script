@@ -14,14 +14,16 @@ installFontsBtn.helpTip = 'install fonts | open fonts folder';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 var copyAMEPresetsBtn = currentGrp.add('iconbutton', iconSize, eprIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 var templatesLocalBtn = currentGrp.add('iconbutton', iconSize, aetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 templatesLocalBtn.helpTip = 'install templates locally';

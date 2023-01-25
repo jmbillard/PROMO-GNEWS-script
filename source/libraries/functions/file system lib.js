@@ -1,3 +1,7 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 /*
 
 ---------------------------------------------------------------
@@ -44,18 +48,19 @@ function getURLContent(urlArray, dstArray) {
 		// powershell command string...
 		// header...
 		var cmd =
-			"Write-Host '------------- PROMO GNEWS script -------------'";
+			'Write-Host \'------------- PROMO GNEWS script -------------\'';
 		cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
 
 		for (var i = 0; i < urlArray.length; i++) {
 			// get only the NOT '\' OR '/' at the end...
+			// eslint-disable-next-line no-useless-escape
 			var fileName = decodeURI(urlArray[i].match(/[^\\|\/]*$/i));
 			// removes any character after the '?' at the end...
-			fileName = fileName.replace(/[\?].*$/, '');
+			fileName = fileName.replace(/[?].*$/, '');
 			// current action description...
-			cmd += "Write-Host '> downloading " + fileName + "...';";
+			cmd += 'Write-Host \'> downloading ' + fileName + '...\';';
 			// downloads file...
-			cmd += "curl '" + urlArray[i] + "' -OutFile '" + dstArray[i] + '/' + fileName + "';";
+			cmd += 'curl \'' + urlArray[i] + '\' -OutFile \'' + dstArray[i] + '/' + fileName + '\';';
 		}
 		// pass the powershell command → cmd...
 		var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
@@ -67,18 +72,19 @@ function getURLContent(urlArray, dstArray) {
 function unzipContent(zipPath, dstPath) {
 	if (appOs == 'Win') {
 		// get only the NOT '\' OR '/' at the end...
+		// eslint-disable-next-line no-useless-escape
 		var fileName = decodeURI(zipPath.match(/[^\\|\/]*$/i));
 		// removes any character after the '?' at the end...
-		fileName = fileName.replace(/[\?].*$/, '');
+		fileName = fileName.replace(/[?].*$/, '');
 
 		// powershell command string...
 		// header...
-		var cmd = "Write-Host '------------- PROMO GNEWS script -------------'";
+		var cmd = 'Write-Host \'------------- PROMO GNEWS script -------------\'';
 		cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
 		// current action description...
-		cmd += "Write-Host '> extracting " + fileName + "...';";
+		cmd += 'Write-Host \'> extracting ' + fileName + '...\';';
 		// unzip file...
-		cmd += "Expand-Archive -Path '" + zipPath + "' -DestinationPath '" + dstPath + "'  -Force;";
+		cmd += 'Expand-Archive -Path \'' + zipPath + '\' -DestinationPath \'' + dstPath + '\'  -Force;';
 		// pass the powershell command thru cmd...
 		var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 
@@ -89,19 +95,20 @@ function unzipContent(zipPath, dstPath) {
 function zipContent(path, zipPath) {
 	if (appOs == 'Win') {
 		// get only the NOT '\' OR '/' at the end...
+		// eslint-disable-next-line no-useless-escape
 		var fileName = decodeURI(zipPath.match(/[^\\|\/]*$/i));
 		// removes any character after the '?' at the end...
-		fileName = fileName.replace(/[\?].*$/, '');
+		fileName = fileName.replace(/[?].*$/, '');
 
 		// powershell command string...
 		// header...
-		var cmd = "Write-Host '------------- PROMO GNEWS script -------------'";
+		var cmd = 'Write-Host \'------------- PROMO GNEWS script -------------\'';
 		cmd += ' -ForegroundColor white -BackgroundColor DarkRed;';
 		// current action description...
-		cmd += "Write-Host '> compressing " + fileName + "...';";
+		cmd += 'Write-Host \'> compressing ' + fileName + '...\';';
 		// zip file...
-		cmd += "Compress-Archive -Path '" + path + "' -DestinationPath '" + zipPath;
-		cmd += "' -CompressionLevel Optimal -Force;";
+		cmd += 'Compress-Archive -Path \'' + path + '\' -DestinationPath \'' + zipPath;
+		cmd += '\' -CompressionLevel Optimal -Force;';
 		// pass the powershell command thru cmd...
 		var cmdStr = 'cmd.exe /c powershell.exe -c "' + cmd + '"';
 
@@ -120,9 +127,9 @@ function installFonts(fontsPath) {
 
 	if (filesArray.length == 0) return;
 
-	var installFontsPS = "Write-Host '------------- PROMO GNEWS script -------------'";
+	var installFontsPS = 'Write-Host \'------------- PROMO GNEWS script -------------\'';
 	installFontsPS += ' -ForegroundColor white -BackgroundColor DarkRed;';
-	installFontsPS += "Write-Host '                (u.u )...zzz';";
+	installFontsPS += 'Write-Host \'                (u.u )...zzz\';';
 	installFontsPS += '$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14);';
 
 	for (var i = 0; i < filesArray.length; i++) {
@@ -141,10 +148,10 @@ function installFonts(fontsPath) {
 		} else {
 
 			if (filter.indexOf(getFileExt(aFileName)) >= 0) {
-				var aFontPath = fontsPath.replace(/\~/, 'C:/Users/' + system.userName.toString());
+				var aFontPath = fontsPath.replace(/~/, 'C:/Users/' + system.userName.toString());
 				aFontPath = aFontPath.replace(/\//g, '\\');
-				installFontsPS += "$Destination.CopyHere('" + aFontPath + '\\' + aFileName + "');";
-				installFontsPS += "Write-Host '> installing " + aFileName + "...';";
+				installFontsPS += '$Destination.CopyHere(\'' + aFontPath + '\\' + aFileName + '\');';
+				installFontsPS += 'Write-Host \'> installing ' + aFileName + '...\';';
 			} else continue;
 		}
 	}
@@ -314,13 +321,12 @@ function fileToBinary(aFile) {
 	var bin = aFile.read();
 	var strCode = bin.toSource().toString();
 
-	strCode = strCode.substring(12, strCode.length - 2);
+	strCode = strCode.substring(13, strCode.length - 3);
 	aFile.close();
 
-	return strCode
-		.replace(/\'/g, "\\'")
-		.replace(/^\"/, "'")
-		.replace(/[\"]+$/, "'");
+	return '\'' + strCode
+		.replace(/'/g, '\\\'')
+		.replace(/\\"/g, '"') + '\'';
 }
 
 function writeFileContent(newFile, fileContent) {

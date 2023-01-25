@@ -1,4 +1,7 @@
-
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 /*
 
 ---------------------------------------------------------------
@@ -32,7 +35,8 @@ pasteInfBtn.helpTip = 'paste keyframe influence';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 var animSubGrp2 = currentGrp.add('group');
 
 var easeSld1Txt = animSubGrp2.add('statictext', undefined, '1%', { name: 'label' , truncate: 'end'});
@@ -56,14 +60,16 @@ easeSld2Txt.maximumSize.width = 30;
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 var lockTrmBtn = currentGrp.add('iconbutton', iconSize, lockPropIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 lockTrmBtn.helpTip = 'lock transform properties';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 var animSubGrp3 = currentGrp.add('group');
 
@@ -78,7 +84,8 @@ layerSeqBtn.helpTip = 'sequence layers';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 // tools button...
 var toolBtn = currentGrp.add('iconbutton', iconSize, rigToolsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -134,59 +141,59 @@ copyInfBtn.onClick = function () {
 	// 6612 - linear
 	// shows the keyframe image based on the in|out interpolation type....
 	switch (true) {
-		// ease - linear
-		case keyData.inType == 6613 && keyData.outType == 6612:
-			keyStatsGrp.keyImg1.visible = true;
-			keyStatsGrp.keyImg1.helpTip = kHelp;
-			break;
+	// ease - linear
+	case keyData.inType == 6613 && keyData.outType == 6612:
+		keyStatsGrp.keyImg1.visible = true;
+		keyStatsGrp.keyImg1.helpTip = kHelp;
+		break;
 
 		// linear - ease
-		case keyData.inType == 6612 && keyData.outType == 6613:
-			keyStatsGrp.keyImg2.visible = true;
-			keyStatsGrp.keyImg2.helpTip = kHelp;
-			break;
+	case keyData.inType == 6612 && keyData.outType == 6613:
+		keyStatsGrp.keyImg2.visible = true;
+		keyStatsGrp.keyImg2.helpTip = kHelp;
+		break;
 
 		// ease - ease
-		case keyData.inType == 6613 && keyData.outType == 6613:
-			keyStatsGrp.keyImg3.visible = true;
-			keyStatsGrp.keyImg3.helpTip = kHelp;
-			break;
+	case keyData.inType == 6613 && keyData.outType == 6613:
+		keyStatsGrp.keyImg3.visible = true;
+		keyStatsGrp.keyImg3.helpTip = kHelp;
+		break;
 
 		// hold - linear
-		case keyData.inType == 6614 && keyData.outType == 6612:
-			keyStatsGrp.keyImg6.visible = true;
-			keyStatsGrp.keyImg6.helpTip = kHelp;
-			break;
+	case keyData.inType == 6614 && keyData.outType == 6612:
+		keyStatsGrp.keyImg6.visible = true;
+		keyStatsGrp.keyImg6.helpTip = kHelp;
+		break;
 
 		// hold - ease
-		case keyData.inType == 6614 && keyData.outType == 6613:
-			keyStatsGrp.keyImg9.visible = true;
-			keyStatsGrp.keyImg9.helpTip = kHelp;
-			break;
+	case keyData.inType == 6614 && keyData.outType == 6613:
+		keyStatsGrp.keyImg9.visible = true;
+		keyStatsGrp.keyImg9.helpTip = kHelp;
+		break;
 
 		// linear - hold
-		case keyData.inType == 6612 && keyData.outType == 6614:
-			keyStatsGrp.keyImg7.visible = true;
-			keyStatsGrp.keyImg7.helpTip = kHelp;
-			break;
+	case keyData.inType == 6612 && keyData.outType == 6614:
+		keyStatsGrp.keyImg7.visible = true;
+		keyStatsGrp.keyImg7.helpTip = kHelp;
+		break;
 
 		// ease - hold
-		case keyData.inType == 6613 && keyData.outType == 6614:
-			keyStatsGrp.keyImg8.visible = true;
-			keyStatsGrp.keyImg8.helpTip = kHelp;
-			break;
+	case keyData.inType == 6613 && keyData.outType == 6614:
+		keyStatsGrp.keyImg8.visible = true;
+		keyStatsGrp.keyImg8.helpTip = kHelp;
+		break;
 
 		// hold - hold
-		case keyData.inType == 6614 && keyData.outType == 6614:
-			keyStatsGrp.keyImg5.visible = true;
-			keyStatsGrp.keyImg5.helpTip = kHelp;
-			break;
+	case keyData.inType == 6614 && keyData.outType == 6614:
+		keyStatsGrp.keyImg5.visible = true;
+		keyStatsGrp.keyImg5.helpTip = kHelp;
+		break;
 
 		// linear - linear
-		default:
-			keyStatsGrp.keyImg4.visible = true;
-			keyStatsGrp.keyImg4.helpTip = kHelp;
-			break;
+	default:
+		keyStatsGrp.keyImg4.visible = true;
+		keyStatsGrp.keyImg4.helpTip = kHelp;
+		break;
 	}
 };
 
@@ -440,15 +447,14 @@ currentGrp = tabsGrp.tools;
 var guidesBtn = currentGrp.add('iconbutton', iconSize, guidesIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 guidesBtn.helpTip = 'columns guide layer rig';
 
-currentGrp.add('image', undefined, spacer.horizontal, { name: 'div' });
-
 // dynamic arrow rig...
 var arrowBtn = currentGrp.add('iconbutton', iconSize, arrowIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 arrowBtn.helpTip = 'simple arrow rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 // simple counter rig...
 var counterBtn = currentGrp.add('iconbutton', iconSize, counterIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -456,7 +462,6 @@ counterBtn.helpTip = 'make counter rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.horizontal);
 var toolsSubGrp1 = currentGrp.add('group');
 
 // text typing rig...
@@ -471,7 +476,8 @@ simpleBoxBtn.helpTip = 'simple box bg base';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 // wiggle position rig...
 var wigBtn = currentGrp.add('iconbutton', iconSize, wigIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -479,7 +485,8 @@ wigBtn.helpTip = 'wig rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 // simple ik rig...
 var ikBtn = currentGrp.add('iconbutton', iconSize, ikIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -620,7 +627,7 @@ guidesBtn.onClick = function () {
 	var guideLayer = app.project.activeItem.layers.addShape();
 	addPseudoEffect('guides', toolGuides);
 	guideLayer.name = 'guides - GNEWS';
-  guideLayer.guideLayer = true;
+	guideLayer.guideLayer = true;
 
 	app.endUndoGroup();
 };

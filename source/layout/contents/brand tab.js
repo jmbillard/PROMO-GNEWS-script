@@ -1,3 +1,8 @@
+/* eslint-disable no-with */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 /*
 
 ---------------------------------------------------------------
@@ -17,16 +22,12 @@ colors1Txt.maximumSize.width = 30;
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.horizontal);
 
 var colorSubGrp2 = currentGrp.add('group');
 var colors2Txt = colorSubGrp2.add('statictext', undefined, 'mono:', { name: 'label' , truncate: 'end'});
 colors2Txt.maximumSize.width = 35;
 
-
 //---------------------------------------------------------
-
-currentGrp.add('image', undefined, spacer.horizontal);
 
 var colorSubGrp3 = currentGrp.add('group');
 var colors3Txt = colorSubGrp3.add('statictext', undefined, 'sec:', { name: 'label' , truncate: 'end'});
@@ -42,14 +43,13 @@ createColorButtons(GNEWS_secColors, colorSubGrp3);
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.horizontal);
-
 var shpPalletBtn = currentGrp.add('iconbutton', iconSize, palletIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 shpPalletBtn.helpTip = 'color pallet as shape layer';
 
 //---------------------------------------------------------
 
-currentGrp.add('image', undefined, spacer.vertical, { name: 'div' });
+currentGrp.add('panel', undefined, undefined, { name: 'div'});
+ 
 
 var colorSubGrp4 = currentGrp.add('group');
 
@@ -74,100 +74,100 @@ logoAnim3sBtn.helpTip = 'GNEWS logo 3 seconds animation';
 //  jshint -W083
 
 for (var i = 1; i < colorSubGrp1.children.length; i++) {
-  colorSubGrp1.children[i].onClick = function () {
-    var hex = this.properties.name;
+	colorSubGrp1.children[i].onClick = function () {
+		var hex = this.properties.name;
 
-    batchFill(hex, hexToRGB(hex));
-  };
+		batchFill(hex, hexToRGB(hex));
+	};
 }
 
-for (var i = 1; i < colorSubGrp2.children.length; i++) {
-  colorSubGrp2.children[i].onClick = function () {
-    var hex = this.properties.name;
+for (var j = 1; j < colorSubGrp2.children.length; j++) {
+	colorSubGrp2.children[j].onClick = function () {
+		var hex = this.properties.name;
 
-    batchFill(hex, hexToRGB(hex));
-  };
+		batchFill(hex, hexToRGB(hex));
+	};
 }
 
-for (var i = 1; i < colorSubGrp3.children.length; i++) {
-  colorSubGrp3.children[i].onClick = function () {
-    var hex = this.properties.name;
+for (var l = 1; l < colorSubGrp3.children.length; l++) {
+	colorSubGrp3.children[l].onClick = function () {
+		var hex = this.properties.name;
 
-    batchFill(hex, hexToRGB(hex));
-  };
+		batchFill(hex, hexToRGB(hex));
+	};
 }
 
 //---------------------------------------------------------
 
 shpPalletBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  // error...
-  if (!(aItem instanceof CompItem)) {
-    showTabErr('comp not selected');
-    return;
-  }
-  app.beginUndoGroup('pallet');
+	var aItem = app.project.activeItem;
+	// error...
+	if (!(aItem instanceof CompItem)) {
+		showTabErr('comp not selected');
+		return;
+	}
+	app.beginUndoGroup('pallet');
 
-  var palletLayer = colorPallet();
+	var palletLayer = colorPallet();
 
-  palletLayer.name = 'pallet - GNEWS';
-  palletLayer.guideLayer = true;
-  palletLayer.locked = true;
-  palletLayer.property('ADBE Transform Group')
-    .property('ADBE Position')
-    .expression('[0,0]');
+	palletLayer.name = 'pallet - GNEWS';
+	palletLayer.guideLayer = true;
+	palletLayer.locked = true;
+	palletLayer.property('ADBE Transform Group')
+		.property('ADBE Position')
+		.expression('[0,0]');
 
-  app.endUndoGroup();
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 arrowOnAirBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  // error...
-  if (!(aItem instanceof CompItem)) {
-    showTabErr('comp not selected');
-    return;
-  }
-  app.beginUndoGroup('logo GNEWS');
+	var aItem = app.project.activeItem;
+	// error...
+	if (!(aItem instanceof CompItem)) {
+		showTabErr('comp not selected');
+		return;
+	}
+	app.beginUndoGroup('logo GNEWS');
 
-  shp_arrow();
+	shp_arrow();
 
-  app.endUndoGroup();
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 logoStaticBtn.onClick = function () {
-  var aItem = app.project.activeItem;
-  // error...
-  if (!(aItem instanceof CompItem)) {
-    showTabErr('comp not selected');
-    return;
-  }
-  app.beginUndoGroup('logo GNEWS');
+	var aItem = app.project.activeItem;
+	// error...
+	if (!(aItem instanceof CompItem)) {
+		showTabErr('comp not selected');
+		return;
+	}
+	app.beginUndoGroup('logo GNEWS');
 
-  shpMarcaGnewsStatic();
+	shpMarcaGnewsStatic();
 
-  app.endUndoGroup();
+	app.endUndoGroup();
 };
 
 //---------------------------------------------------------
 
 logoAnim3sBtn.onClick = function () {
-  var aItem = app.project.activeItem;
+	var aItem = app.project.activeItem;
 
-  // error...
-  if (!(aItem instanceof CompItem)) {
-    showTabErr('comp not selected');
-    return;
-  }
-  app.beginUndoGroup('logo GNEWS 3s');
+	// error...
+	if (!(aItem instanceof CompItem)) {
+		showTabErr('comp not selected');
+		return;
+	}
+	app.beginUndoGroup('logo GNEWS 3s');
 
-  var layer = app.project.activeItem.layers.addShape();
-  layer.startTime = aItem.time;
-  layer.name = 'marca_gnews 3s';
+	var layer = app.project.activeItem.layers.addShape();
+	layer.startTime = aItem.time;
+	layer.name = 'marca_gnews 3s';
 
-  addPseudoEffect('marca_3s', toolMarca3s);
-  app.endUndoGroup();
+	addPseudoEffect('marca_3s', toolMarca3s);
+	app.endUndoGroup();
 };

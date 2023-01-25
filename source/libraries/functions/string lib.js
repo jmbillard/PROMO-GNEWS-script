@@ -1,5 +1,7 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
 /*
 
 ---------------------------------------------------------------
@@ -33,7 +35,6 @@ function formatObjStr(obj) {
 }
 
 function nameInc(aName) {
-
 	var name = aName.replace(/\s*[0-9]+$/, '');
 	var num = aName.match(/\s*[0-9]+$/);
 	var numStr = (num == null) ? 2 : parseInt(num) + 1;
