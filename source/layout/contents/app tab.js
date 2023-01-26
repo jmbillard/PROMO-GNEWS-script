@@ -10,12 +10,7 @@
 currentGrp = tabsGrp.app;
 
 var installFontsBtn = currentGrp.add('iconbutton', iconSize, fontsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-installFontsBtn.helpTip = 'install fonts | open fonts folder';
-
-//---------------------------------------------------------
-
-currentGrp.add('panel');
- 
+installFontsBtn.helpTip = 'install fonts';
 
 var copyAMEPresetsBtn = currentGrp.add('iconbutton', iconSize, eprIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
@@ -23,11 +18,13 @@ copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
 //---------------------------------------------------------
 
 currentGrp.add('panel');
- 
 
-var templatesLocalBtn = currentGrp.add('iconbutton', iconSize, aetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-templatesLocalBtn.helpTip = 'install templates locally';
-templatesLocalBtn.enabled = false;
+
+var setupProjBtn = currentGrp.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+setupProjBtn.helpTip = 'setup project';
+
+var setupCompBtn = currentGrp.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+setupCompBtn.helpTip = 'setup selected comp\nhorizontal | vertical';
 
 /*
 
@@ -123,4 +120,54 @@ installFontsBtn.onClick = function () {
     }
   }
   fontsDialog();
+};
+
+//---------------------------------------------------------
+
+setupCompBtn.addEventListener('click', function (c) {
+  if (c.button == 2) {
+    var aItem = app.project.activeItem;
+    // error...
+    if (!(aItem instanceof CompItem)) {
+      showTabErr('comp not selected');
+      return;
+    }
+    app.beginUndoGroup('setup comp');
+
+    aItem.height = 1080;
+    aItem.width = 606;
+    aItem.frameRate = 29.97;
+    aItem.pixelAspect = 1;
+    aItem.bgColor = [0, 0, 0];
+    aItem.preserveNestedFrameRate = true;
+    aItem.displayStartTime = 0;
+    aItem.workAreaStart = 0;
+    aItem.workAreaDuration = aItem.duration;
+
+    app.endUndoGroup();
+  }
+});
+
+//---------------------------------------------------------
+
+setupCompBtn.onClick = function () {
+  var aItem = app.project.activeItem;
+  // error...
+  if (!(aItem instanceof CompItem)) {
+    showTabErr('comp not selected');
+    return;
+  }
+  app.beginUndoGroup('setup comp');
+
+  aItem.height = 1080;
+  aItem.width = 1920;
+  aItem.frameRate = 29.97;
+  aItem.pixelAspect = 1;
+  aItem.bgColor = [0, 0, 0];
+  aItem.preserveNestedFrameRate = true;
+  aItem.displayStartTime = 0;
+  aItem.workAreaStart = 0;
+  aItem.workAreaDuration = aItem.duration;
+
+  app.endUndoGroup();
 };

@@ -420,7 +420,7 @@ layerSeqBtn.onClick = function () {
 	}
 	var fDur = aItem.frameDuration;
 	var increment = parseInt(layerRandTxt.text.replace(/\D/g, '')) * fDur;
-	var stMin = selLayers[0].startTime;
+	var stMin = aItem.duration;
 
 	app.beginUndoGroup('sequence layers');
 
@@ -428,7 +428,8 @@ layerSeqBtn.onClick = function () {
 		stMin = Math.min(selLayers[j].startTime, stMin);
 	}
 	for (var i = 0; i < selLayers.length; i++) {
-		selLayers[i].startTime = stMin + (increment * i);
+		alert(selLayers[i].name + '\nst: ' + selLayers[i].startTime + '\nip: ' + selLayers[i].startTime);
+		//selLayers[i].startTime = aItem.time;// + (increment * i);
 	}
 	app.endUndoGroup();
 };
