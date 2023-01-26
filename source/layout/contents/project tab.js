@@ -28,7 +28,7 @@ renameItemBtn.helpTip = 'rename comps';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 var projOrgBtn = currentGrp.add('iconbutton', iconSize, projOrgIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -36,7 +36,7 @@ projOrgBtn.helpTip = 'organize project | organization tags';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 // end page presets UI button...
@@ -46,7 +46,7 @@ endPagePresetBtn.enabled = !hardNews;
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 var projSubGrp2 = currentGrp.add('group');
 
@@ -61,7 +61,7 @@ saveBtn.helpTip = 'save project';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 var projSubGrp3 = currentGrp.add('group');
 

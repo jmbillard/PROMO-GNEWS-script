@@ -35,7 +35,7 @@ pasteInfBtn.helpTip = 'paste keyframe influence';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 var animSubGrp2 = currentGrp.add('group');
 
@@ -60,7 +60,7 @@ easeSld2Txt.maximumSize.width = 30;
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 var lockTrmBtn = currentGrp.add('iconbutton', iconSize, lockPropIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
@@ -68,7 +68,7 @@ lockTrmBtn.helpTip = 'lock transform properties';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 var animSubGrp3 = currentGrp.add('group');
@@ -84,7 +84,7 @@ layerSeqBtn.helpTip = 'sequence layers';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 // tools button...
@@ -453,7 +453,7 @@ arrowBtn.helpTip = 'simple arrow rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 // simple counter rig...
@@ -476,7 +476,7 @@ simpleBoxBtn.helpTip = 'simple box bg base';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 // wiggle position rig...
@@ -485,7 +485,7 @@ wigBtn.helpTip = 'wig rig';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 // simple ik rig...

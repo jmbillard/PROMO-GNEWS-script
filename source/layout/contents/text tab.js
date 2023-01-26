@@ -20,7 +20,7 @@ txtTitleBtn.helpTip = 'set text layer to title case';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 var textSubGrp2 = currentGrp.add('group');
@@ -33,7 +33,7 @@ txtColumnBtn.helpTip = 'divides consecutive spaces in columns';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 var textSubGrp3 = currentGrp.add('group');

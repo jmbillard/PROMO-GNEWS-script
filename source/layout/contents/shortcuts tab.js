@@ -35,7 +35,7 @@ plannerBtn.helpTip = 'planner globo';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 var linksSubGrp1 = currentGrp.add('group');
 

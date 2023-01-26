@@ -48,7 +48,7 @@ shpPalletBtn.helpTip = 'color pallet as shape layer';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 var colorSubGrp4 = currentGrp.add('group');

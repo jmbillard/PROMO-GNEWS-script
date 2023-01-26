@@ -24,7 +24,7 @@ nullShpBtn.helpTip = 'create parent null';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 var ctrlSubGrp2 = currentGrp.add('group');
 
@@ -34,7 +34,7 @@ nullCShpBtn.helpTip = 'centered null';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 var ctrlSubGrp3 = currentGrp.add('group');
 

@@ -18,7 +18,7 @@ shpAdjBtn.helpTip = 'adjustment layer';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 var fxSubGrp1 = currentGrp.add('group');
 

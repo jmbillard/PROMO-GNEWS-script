@@ -85,7 +85,7 @@ function setLayout() {
 	aboutTxt.text = vStr;
 
 	for (var lab = 0; lab < tabLabels.length; lab++) {
-		tabLabels[lab].size.width =  w.size.width - 24;
+		tabLabels[lab].size.width = w.size.width - 24;
 	}
 
 	// horizontal layout
@@ -98,7 +98,6 @@ function setLayout() {
 		tabsGrp.menu.margins = [hMargin, 0, hMargin, 0];
 		leftGrp.margins = [5, 0, 0, 0];
 
-		// divHeight = 20;
 		// color buttons
 		for (var c1 = 1; c1 < colorSubGrp1.children.length; c1++) {
 			colorSubGrp1.children[c1].minimumSize = [20, 20];
@@ -136,13 +135,12 @@ function setLayout() {
 			65, // text search
 			50, // preview
 			65, // app utilities
-			60  // dev tools
+			50  // dev tools
 		];
 
 		for (var mlh = 0; mlh < mainMenuLabels.length; mlh++) {
 			mainMenuLabels[mlh].maximumSize.width = mainMenuLabelsMaxW[mlh];
 			mainMenuLabels[mlh].size.width = mainMenuLabelsMaxW[mlh];
-			mainMenuLabels[mlh].parent.spacing = 2;
 
 			if (w.size.width < 1380 || !showLabels) {
 				mainMenuLabels[mlh].size.width = 0;
@@ -163,7 +161,6 @@ function setLayout() {
 		tabsGrp.menu.margins = [0, vMargin, 0, vMargin];
 		leftGrp.margins = [0, 0, 0, 5];
 
-		// divHeight = 10;
 		// color buttons
 		for (var b1 = 1; b1 < colorSubGrp1.children.length; b1++) {
 			colorSubGrp1.children[b1].minimumSize = [vMin, 20];
@@ -195,7 +192,6 @@ function setLayout() {
 		for (var mlv = 0; mlv < mainMenuLabels.length; mlv++) {
 			mainMenuLabels[mlv].maximumSize.width = 70;
 			mainMenuLabels[mlv].size.width = w.size.width - 60;
-			mainMenuLabels[mlv].parent.spacing = 2;
 
 			if (w.size.width < 100 || !showLabels) {
 				mainMenuLabels[mlv].size.width = 0;
@@ -221,12 +217,6 @@ function setLayout() {
 	projIdTxt.size.width = w.size.width - 8;
 	projNameTxt.size.width = w.size.width - 8;
 
-	// links tab - controls
-	linkTxt2.size.width = w.size.width - 8;
-
-	// dev tab - controls
-	zipTxt1.size.width = w.size.width - 8;
-
 	// all tab subgroups
 	for (var s = 0; s < tabSubGrps.length; s++) {
 		tabSubGrps[s].orientation = wLayout;
@@ -237,11 +227,6 @@ function setLayout() {
 		tabs[t].orientation = wLayout;
 		tabs[t].spacing = 8;
 	}
-	// all dividers
-	// for (var d = 0; d < tabDividers.length; d++) {
-	// 	tabDividers[d].size.height = divHeight;
-	// }
-
 	leftGrp.alignment = ltAlignment;
 	rightGrp.alignment = rbAlignment;
 
@@ -364,16 +349,11 @@ function getTabSubGroups() {
 // all tab subgroups except keyStatsGrp...
 function getTabDividers() {
 	var tabDividers = [];
+	for (var g = 0; g < tabsGrp.menu.children.length; g++) {
+		var div = tabsGrp.menu.children[g];
 
-	for (var st = 0; st < tabs.length; st++) {
-
-		for (var g = 0; g < tabs[st].children.length; g++) {
-			var div = tabs[st].children[g];
-
-			if (div.properties == undefined) continue;
-			if (div.properties.name == 'div') tabDividers.push(div);
-			// div.alignment = 'fill';
-		}
+		if (div.toString() != '[object Panel]') continue;
+		div.alignment = 'fill';
 	}
 	return tabDividers;
 }

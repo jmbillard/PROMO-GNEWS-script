@@ -29,7 +29,7 @@ dBtn.helpTip = 'convert .png to dark icon theme';
 
 //---------------------------------------------------------
 
-currentGrp.add('panel', undefined, undefined, { name: 'div'});
+currentGrp.add('panel');
  
 
 var devGrp3 = currentGrp.add('group');
