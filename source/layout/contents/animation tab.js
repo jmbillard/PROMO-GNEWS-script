@@ -424,12 +424,11 @@ layerSeqBtn.onClick = function () {
 
 	app.beginUndoGroup('sequence layers');
 
-	for (var j = 1; j < selLayers.length; j++) {
-		stMin = Math.min(selLayers[j].startTime, stMin);
+	for (var j = 0; j < selLayers.length; j++) {
+		stMin = Math.min(selLayers[j].inPoint, stMin);
 	}
 	for (var i = 0; i < selLayers.length; i++) {
-		alert(selLayers[i].name + '\nst: ' + selLayers[i].startTime + '\nip: ' + selLayers[i].startTime);
-		//selLayers[i].startTime = aItem.time;// + (increment * i);
+		selLayers[i].startTime += (stMin - selLayers[i].inPoint) + (increment * i);
 	}
 	app.endUndoGroup();
 };
