@@ -186,9 +186,8 @@ setupProjBtn.onClick = function () {
 
 setupLabsBtn.onClick = function () {
 
-	// alert(getLabelsFromPrefs());
-	alert(readLabelColorsFromPrefs().join('\n'));
-	// app.endUndoGroup();
+	alert(getLabelColors().join('\n'));
+	alert(getLabelColorNames().join('\n'));
 };
 
 //---------------------------------------------------------

@@ -30,8 +30,8 @@ function tagDialog() {
 	tagCustomTxt.size = [60, 24];
 	tagCustomBtn.helpTip = 'custom comment tag';
 
-	for (var tagGrpName in tgsObj) {
-		var tagGrp = tgsObj[tagGrpName];
+	for (var tagGrpName in tagsObj) {
+		var tagGrp = tagsObj[tagGrpName];
 
 		var divider1 = wTag.add('panel');
 		divider1.alignment = 'fill';
