@@ -14,6 +14,9 @@
 currentGrp = tabsGrp.app;
 var appSubGrp1 = currentGrp.add('group');
 
+var appUtilTxt = appSubGrp1.add('statictext', undefined, 'utilities:', { name: 'label' , truncate: 'end'});
+appUtilTxt.maximumSize.width = 45;
+
 var installFontsBtn = appSubGrp1.add('iconbutton', iconSize, fontsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 installFontsBtn.helpTip = 'install fonts';
 
@@ -30,6 +33,9 @@ appProjTxt.maximumSize.width = 40;
 
 var setupProjBtn = appSubGrp2.add('iconbutton', iconSize, setupProjIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 setupProjBtn.helpTip = 'setup project:\n\nbit depth: 8\ncolor space: \'Rec 709\'\nexp. engine: \'javascript\'';
+
+var setupLabsBtn = appSubGrp2.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+setupLabsBtn.helpTip = 'setup project label colors';
 
 var appSubGrp3 = currentGrp.add('group');
 
@@ -174,6 +180,15 @@ setupProjBtn.onClick = function () {
 	app.project.workingSpace = 'Rec.709 Gamma 2.4';
   
 	app.endUndoGroup();
+};
+
+//---------------------------------------------------------
+
+setupLabsBtn.onClick = function () {
+
+	// alert(getLabelsFromPrefs());
+	alert(readLabelColorsFromPrefs().join('\n'));
+	// app.endUndoGroup();
 };
 
 //---------------------------------------------------------
