@@ -185,9 +185,28 @@ setupProjBtn.onClick = function () {
 //---------------------------------------------------------
 
 setupLabsBtn.onClick = function () {
+	var prefFile = PREFType.PREF_Type_MACHINE_INDEPENDENT;
 
-	alert(getLabelColors().join('\n'));
-	alert(getLabelColorNames().join('\n'));
+	app.beginUndoGroup('setup layer labels');
+
+	for (var i = 1; i < 17; i++) {
+		var color = labelsObj['l' + i].color;
+		var name = labelsObj['l' + i].name;
+
+		var sectionName = 'Label Preference Color Section 5';
+		var keyName = 'Label Color ID 2 # ' + i;
+		app.preferences.savePrefAsString(sectionName, keyName, color, prefFile);
+
+		sectionName = 'Label Preference Text Section 7';
+		keyName = 'Label Text ID 2 # ' + i;
+		app.preferences.savePrefAsString(sectionName, keyName, name, prefFile);
+	}
+	app.preferences.saveToDisk();
+	app.preferences.reload();
+	
+	app.endUndoGroup();
+
+	app.activate();
 };
 
 //---------------------------------------------------------
