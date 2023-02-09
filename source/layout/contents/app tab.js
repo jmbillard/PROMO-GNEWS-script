@@ -34,8 +34,8 @@ appProjTxt.maximumSize.width = 40;
 var setupProjBtn = appSubGrp2.add('iconbutton', iconSize, setupProjIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 setupProjBtn.helpTip = 'setup project:\n\nbit depth: 8\ncolor space: \'Rec 709\'\nexp. engine: \'javascript\'';
 
-var setupLabsBtn = appSubGrp2.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-setupLabsBtn.helpTip = 'setup project label colors';
+var setupLabsBtn = appSubGrp2.add('iconbutton', iconSize, setupLabIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+setupLabsBtn.helpTip = 'setup project label colors / names';
 
 var appSubGrp3 = currentGrp.add('group');
 
@@ -206,7 +206,18 @@ setupLabsBtn.onClick = function () {
 	
 	app.endUndoGroup();
 
-	app.activate();
+	// refresh UI ?!...
+	var aItem = app.project.activeItem;
+	
+	if (!(aItem instanceof CompItem)) return;
+	var st = aItem.workAreaStart;
+	aItem.workAreaStart = st;
+	
+	for (var l = 1; l <= aItem.numLayers; l++) {
+		var aLayer = aItem.layer(l);
+		var sl = aLayer.selected;
+		aLayer.selected = sl;
+	}
 };
 
 //---------------------------------------------------------
