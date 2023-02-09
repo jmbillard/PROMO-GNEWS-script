@@ -28,7 +28,7 @@
 function PROMO_GNEWS_UTL(thisObj) {
 
 	// current script version...
-	var vStr = 'v2.0b7';
+	var vStr = 'v2.0b8';
 
 	/* jshint ignore:start */
 	#include 'source/globals.js'; // global variables...
