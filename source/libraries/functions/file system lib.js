@@ -23,6 +23,14 @@
 
 */
 
+function setClipboard(str) {
+	if (appOs == 'Win') {
+		var setClipboard = 'Set-Clipboard -Value "' + str + '"';
+		var cmdStr = 'cmd.exe /c powershell.exe -c "' + setClipboard + '"';
+		system.callSystem(cmdStr);  
+	}
+}
+
 // open system folder...
 function openFolder(folderPath) {
 	var folder = Folder(folderPath);
