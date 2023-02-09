@@ -463,7 +463,7 @@ function filesCollectPROMO(projName, progressWindow) {
 		}
 		var fileName = decodeURI(aItem.file.name);
 		var filePath = decodeURI(aItem.file.fullName);
-		var newFilePath = [savePath, 'project', itemPath].join('/');
+		var newFilePath = [savePath, 'project files', itemPath].join('/');
 
 		if (filePath.match(savePath)) continue;
 
