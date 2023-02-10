@@ -32,7 +32,7 @@ function progressDialog (text) {
 	var btnGrp = progW.add('group');
 	var okBtn = btnGrp.add('button', [0, 0, 0, 0], '', { name: 'ok' });
 	var cancelBtn = btnGrp.add('button', [0, 0, 0, 0], '', { name: 'cancel' });
-	var keyLabelTxt = progW.add('statictext', undefined, '"ENTER" to proceed                                                                  "ESC" to cancel at any time...');
+	var keyLabelTxt = progW.add('statictext', undefined, '"ENTER" to proceed                                                                                   "ESC" to cancel');
 
 
 	return progW;

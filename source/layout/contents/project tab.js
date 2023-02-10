@@ -313,7 +313,6 @@ saveBtn.onClick = function () {
   
 	if (appV > 22) {
 		executeCommandID('Save a Copy As 22.x...');
-		return;
 	}
 	openFolder(savePath);
 };
