@@ -25,9 +25,9 @@
 
 function setClipboard(str) {
 	if (appOs == 'Win') {
-		var setClipboard = 'Set-Clipboard -Value "' + str + '"';
-		var cmdStr = 'cmd.exe /c powershell.exe -c "' + setClipboard + '"';
-		system.callSystem(cmdStr);  
+		var setClipboard = 'Set-Clipboard -Value \'' + str + '\'';
+		var cmd = 'cmd.exe /c powershell.exe -c "' + setClipboard + '"';
+		system.callSystem(cmd);  
 	}
 }
 
@@ -444,10 +444,9 @@ function filesCollectPROMO(projName, progressWindow) {
 	if (orgFolders) {
 		var objId = projId.substring(0, 3);
 
-		if (!promoSubPath.hasOwnProperty(objId)) return;
-
-		projName = promoSubPath[objId] + '/' + projName;
+		if (promoSubPath.hasOwnProperty(objId)) projName = promoSubPath[objId] + '/' + projName;
 	}
+	// alert(projName);
 	var savePath = projPath + '/' + projName; // collect folder path...
 	var saveFolder = createPathFolders(savePath);
 
