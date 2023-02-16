@@ -433,6 +433,16 @@ layerSeqBtn.onClick = function () {
 	app.endUndoGroup();
 };
 
+//---------------------------------------------------------
+
+toolBtn.onClick = function () {
+	currentGrp.visible = false;
+	currentGrp = tabsGrp.tools;
+	readme = '#--subseção-ferramentas-';
+	openTab();
+};
+
+
 /*
 
 ---------------------------------------------------------------
