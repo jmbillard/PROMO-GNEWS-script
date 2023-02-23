@@ -446,7 +446,6 @@ function filesCollectPROMO(projName, progressWindow) {
 
 		if (promoSubPath.hasOwnProperty(objId)) projName = promoSubPath[objId] + '/' + projName;
 	}
-	// alert(projName);
 	var savePath = projPath + '/' + projName; // collect folder path...
 	var saveFolder = createPathFolders(savePath);
 

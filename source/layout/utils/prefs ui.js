@@ -98,6 +98,19 @@ function prefsDialog() {
 
 	//
 
+	var v22Grp = projectGrp.add('group');
+	v22Grp.spacing = ckbGrpSpacing;
+
+	var v22Txt = v22Grp.add('statictext', undefined, 'save as v22.x');
+	v22Txt.helpTip = 'save as v22.x window\n\
+> opens the save as window if the AE version is higher than v22';
+	v22Txt.preferredSize = txtSize;
+
+	var v22Ckb = v22Grp.add('checkbox', [8, 4, 24, 18]);
+	v22Ckb.value = saveAsV22;
+
+	//
+
 	var missGrp = projectGrp.add('group');
 	missGrp.spacing = ckbGrpSpacing;
 
@@ -608,6 +621,15 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		}
 		showTabProg('restart the script  ヽ(✿ﾟ▽ﾟ)ノ');
 		wPref.close();
+	};
+
+	//---------------------------------------------------------
+
+	v22Ckb.onClick = function () {
+		saveAsV22 = this.value;
+		JSONPrefsObj.saveAsV22 = saveAsV22;
+		
+		savePrefs(); // → save preferences.json
 	};
 
 	//---------------------------------------------------------

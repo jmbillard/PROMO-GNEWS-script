@@ -245,6 +245,7 @@ saveBtn.addEventListener('click', function (c) {
 
 		projFile = new File(savePath + '/' + projFullName);
 		app.project.save(projFile);
+		
 		openFolder(savePath);
 		setClipboard(savePath.replace(/^~\//, '').replace(/\//g, '\\'));
 	}
@@ -309,12 +310,13 @@ saveBtn.onClick = function () {
 
 	projFile = new File(savePath + '/' + projFullName);
 	app.project.save(projFile);
+	
+	openFolder(savePath);
 	setClipboard(savePath.replace(/^~\//, '').replace(/\//g, '\\'));
-  
-	if (appV > 22) {
+
+	if (appV > 22 && saveAsV22) {
 		executeCommandID('Save a Copy As 22.x...');
 	}
-	openFolder(savePath);
 };
 
 //---------------------------------------------------------
