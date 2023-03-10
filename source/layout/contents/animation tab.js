@@ -565,6 +565,7 @@ arrowBtn.onClick = function () {
 	addPseudoEffect('arrow', expFx);
 	shpLayer.name = 'arrow';
 	app.endUndoGroup();
+	removeFolder(tempFolder);
 };
 
 //---------------------------------------------------------
@@ -620,6 +621,7 @@ counterBtn.onClick = function () {
 		t += 1;
 	}
 	app.endUndoGroup();
+	removeFolder(tempFolder);
 };
 
 //---------------------------------------------------------
@@ -640,6 +642,7 @@ guidesBtn.onClick = function () {
 	guideLayer.guideLayer = true;
 
 	app.endUndoGroup();
+	removeFolder(tempFolder);
 };
 
 //---------------------------------------------------------
@@ -675,6 +678,7 @@ wigBtn.onClick = function () {
 		wProp.expression = expStr;
 	}
 	app.endUndoGroup();
+	removeFolder(tempFolder);
 };
 
 //---------------------------------------------------------
@@ -775,6 +779,7 @@ ikBtn.onClick = function () {
 			.setValue(true);
 	}
 	app.endUndoGroup();
+	removeFolder(tempFolder);
 };
 
 //---------------------------------------------------------
@@ -828,6 +833,7 @@ typeAnimBtn.onClick = function () {
 		t += 1;
 	}
 	app.endUndoGroup();
+	removeFolder(tempFolder);
 };
 
 //---------------------------------------------------------
@@ -880,6 +886,7 @@ wordsBtn.onClick = function () {
 		t += 1;
 	}
 	app.endUndoGroup();
+	removeFolder(tempFolder);
 };
 
 //---------------------------------------------------------

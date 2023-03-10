@@ -145,7 +145,6 @@ function addPseudoEffect(fxName, strCode) {
 
 	try {
 		app.project.activeItem.layer(1).applyPreset(File(aPreset));
-		removeFolder(tempFolder);
 	} catch (err) { }
 }
 
