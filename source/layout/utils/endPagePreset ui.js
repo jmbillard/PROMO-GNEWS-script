@@ -597,7 +597,7 @@ function endPagePresetDialog() {
 
 	presetDrop.onChange = function () {
 		
-		app.beginUndoGroup('end page preset selection');
+		//app.beginUndoGroup('end page preset selection');
 
 		var fileName = presetDrop.selection.toString();
 		var presetFile = new File(presetPath + '/' + fileName + '.json');
@@ -641,7 +641,7 @@ function endPagePresetDialog() {
 				.setValue(min);
 		} catch (err) { }
 
-		app.endUndoGroup();
+		//app.endUndoGroup();
 	};
 
 	//---------------------------------------------------------
