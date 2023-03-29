@@ -17,12 +17,11 @@
 
 // end page presets UI...
 function endPagePresetDialog() {
-	var presetPath = scriptPreferencesPath + '/templates/ON-AIR/end page/end page presets';// → '~/AppData/Roaming/PROMO GNEWS script/templates'
+	var presetPath = templatesPath + '/ON-AIR/end page/end page presets';// → '~/AppData/Roaming/PROMO GNEWS script/templates'
 	var presetFolder = new Folder(presetPath);
 
-	if (!presetFolder.exists) {
-		presetFolder.create();
-	}
+	if (!presetFolder.exists) presetFolder.create();
+
 	// all control effects as object...
 	var obj = defaultEndPageObj(buildFxObj()); // adds a default data value if needed...
 
@@ -575,20 +574,31 @@ function endPagePresetDialog() {
 	//---------------------------------------------------------
 
 	foto_layoutDrop.onChange = function () {
+		app.beginUndoGroup('end page preset action');
+
 		var sLayer = uiToComp_updateLayers('comp_img apresentador', foto_layoutDrop);
 		obj.layout_end_page.foto_layer = sLayer;
+
+		app.endUndoGroup();
 	};
 
 	//---------------------------------------------------------
 
 	pattern_layoutDrop.onChange = function () {
+		app.beginUndoGroup('end page preset action');
+
 		var sLayer = uiToComp_updateLayers('comp_pattern', pattern_layoutDrop);
 		obj.layout_end_page.pattern_layer = sLayer;
+
+		app.endUndoGroup();
 	};
 
 	//---------------------------------------------------------
 
 	presetDrop.onChange = function () {
+		
+		app.beginUndoGroup('end page preset selection');
+
 		var fileName = presetDrop.selection.toString();
 		var presetFile = new File(presetPath + '/' + fileName + '.json');
 
@@ -630,11 +640,16 @@ function endPagePresetDialog() {
 				.property('[min]')
 				.setValue(min);
 		} catch (err) { }
+
+		app.endUndoGroup();
 	};
 
 	//---------------------------------------------------------
 
 	applyBtn.onClick = function () {
+
+		app.beginUndoGroup('apply end page preset');
+
 		uiToComp_colors();
 		uiToComp_updateCompFx();
 
@@ -672,13 +687,19 @@ function endPagePresetDialog() {
 				.property('[min]')
 				.setValue(min);
 		} catch (err) { }
+
+		app.endUndoGroup();
 	};
 
 	//---------------------------------------------------------
 
 	modelo_layoutDrop.onChange = function () {
 		try {
+			app.beginUndoGroup('end page preset select model');
+
 			uiToComp_setDropDownIndex(this, 'layout', 'modelo');
+
+			app.endUndoGroup();
 		} catch (err) {
 			modelo_layoutDrop.selection = obj.layout_end_page.modelo - 1;
 		}
@@ -688,8 +709,12 @@ function endPagePresetDialog() {
 
 	formato_servicoDrop.onChange = function () {
 		try {
+			app.beginUndoGroup('end page preset select format');
+
 			uiToComp_setDropDownIndex(this, 'servico', 'formato');
 			updateServicoUiVis();
+
+			app.endUndoGroup();
 		} catch (err) {
 			formato_servicoDrop.selection = obj.servico_end_page.formato - 1;
 			updateServicoUiVis();
@@ -700,8 +725,12 @@ function endPagePresetDialog() {
 
 	mes_servicoDrop.onChange = function () {
 		try {
+			app.beginUndoGroup('end page preset set month');
+
 			uiToComp_setDropDownIndex(this, 'servico', 'mes');
 			updateServicoUiVis();
+
+			app.endUndoGroup();
 		} catch (err) {
 			mes_servicoDrop.selection = obj.servico_end_page.mes - 1;
 		}
@@ -711,7 +740,11 @@ function endPagePresetDialog() {
 
 	semana_servicoDrop.onChange = function () {
 		try {
+			app.beginUndoGroup('end page preset set weekday');
+
 			uiToComp_setDropDownIndex(this, 'servico', 'semana');
+
+			app.endUndoGroup();
 		} catch (err) {
 			semana_servicoDrop.selection = obj.servico_end_page.semana - 1;
 		}
@@ -723,10 +756,14 @@ function endPagePresetDialog() {
 		try {
 			var aItem = app.project.activeItem;
 			var servico = livre_servico.text;
+			app.beginUndoGroup('end page preset set free service');
+
 			aItem.layer('txt_data e horario')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document')
 				.setValue(servico);
+
+			app.endUndoGroup();
 		} catch (err) {
 			livre_servico.text = 'DIGITE O TEXTO';
 		}
@@ -740,7 +777,12 @@ function endPagePresetDialog() {
 			var servico = aItem.layer('txt_data e horario')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document');
+
+			app.beginUndoGroup('end page preset set free service');
+
 			livre_servico.text = servico.value;
+
+			app.endUndoGroup();
 		} catch (err) { }
 	};
 
@@ -750,10 +792,15 @@ function endPagePresetDialog() {
 		try {
 			var aItem = app.project.activeItem;
 			var titulo = titulo_servico.text;
+
+			app.beginUndoGroup('end page preset set title');
+
 			aItem.layer('txt_titulo')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document')
 				.setValue(titulo);
+
+			app.endUndoGroup();
 		} catch (err) {
 			titulo_servico.text = obj.servico_end_page.titulo;
 		}
@@ -767,8 +814,13 @@ function endPagePresetDialog() {
 			var titulo = aItem.layer('txt_titulo')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document');
+
+			app.beginUndoGroup('end page preset set title');
+
 			obj.servico_end_page.titulo = titulo.value;
 			titulo_servico.text = obj.servico_end_page.titulo;
+
+			app.endUndoGroup();
 		} catch (err) { }
 	};
 
@@ -778,10 +830,15 @@ function endPagePresetDialog() {
 		try {
 			var aItem = app.project.activeItem;
 			var subtitulo = subtitulo_servico.text;
+
+			app.beginUndoGroup('end page preset set subtitle');
+
 			aItem.layer('txt_subtitulo')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document')
 				.setValue(subtitulo);
+
+			app.endUndoGroup();
 		} catch (err) {
 			subtitulo_servico.text = obj.servico_end_page.subtitulo;
 		}
@@ -795,8 +852,13 @@ function endPagePresetDialog() {
 			var subtitulo = aItem.layer('txt_subtitulo')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document');
+
+			app.beginUndoGroup('end page preset set subtitle');
+
 			obj.servico_end_page.subtitulo = subtitulo.value;
 			subtitulo_servico.text = obj.servico_end_page.subtitulo;
+
+			app.endUndoGroup();
 		} catch (err) { }
 	};
 
@@ -809,6 +871,9 @@ function endPagePresetDialog() {
 			dia = dia != '' ? dia : '1';
 			dia = parseInt(dia);
 			dia = dia < 31 ? dia : 31;
+
+			app.beginUndoGroup('end page preset set day');
+
 			aItem.layer('ctrl_comp')
 				.property('ADBE Effect Parade')
 				.property('servico end page')
@@ -816,6 +881,8 @@ function endPagePresetDialog() {
 				.setValue(dia);
 
 			obj.servico_end_page.dia = dia;
+
+			app.endUndoGroup();
 		} catch (err) {
 			dia_servico.text = obj.servico_end_page.dia;
 		}
@@ -830,13 +897,19 @@ function endPagePresetDialog() {
 			hora = hora != '' ? hora : '0';
 			hora = parseInt(hora);
 			hora = hora < 23 ? hora : 23;
+
+			app.beginUndoGroup('end page preset set hour');
+
 			aItem.layer('ctrl_comp')
 				.property('ADBE Effect Parade')
 				.property('servico end page')
 				.property('[hora]')
 				.setValue(hora);
 
+
 			obj.servico_end_page.hora = hora;
+
+			app.endUndoGroup();
 		} catch (err) {
 			hora_servico.text = obj.servico_end_page.hora;
 		}
@@ -852,7 +925,11 @@ function endPagePresetDialog() {
 				.property('servico end page')
 				.property('[hora]');
 
+			app.beginUndoGroup('end page preset set hour');
+
 			hora_servico.text = hora.value;
+
+			app.endUndoGroup();
 		} catch (err) { }
 	};
 
@@ -866,7 +943,11 @@ function endPagePresetDialog() {
 				.property('servico end page')
 				.property('[dia]');
 
+			app.beginUndoGroup('end page preset set day');
+
 			dia_servico.text = dia.value;
+
+			app.endUndoGroup();
 		} catch (err) { }
 	};
 
@@ -879,6 +960,9 @@ function endPagePresetDialog() {
 			min = min != '' ? min : '0';
 			min = parseInt(min);
 			min = min < 59 ? min : 59;
+
+			app.beginUndoGroup('end page preset set minutes');
+
 			aItem.layer('ctrl_comp')
 				.property('ADBE Effect Parade')
 				.property('servico end page')
@@ -886,6 +970,8 @@ function endPagePresetDialog() {
 				.setValue(min);
 
 			obj.servico_end_page.min = min;
+
+			app.endUndoGroup();
 		} catch (err) {
 			min_servico.text = obj.servico_end_page.min;
 		}
@@ -901,7 +987,11 @@ function endPagePresetDialog() {
 				.property('servico end page')
 				.property('[min]');
 
+			app.beginUndoGroup('end page preset set minutes');
+
 			min_servico.text = min.value;
+
+			app.endUndoGroup();
 		} catch (err) { }
 	};
 
@@ -909,8 +999,12 @@ function endPagePresetDialog() {
 
 	tema_aparenciaDrop.onChange = function () {
 		try {
+			app.beginUndoGroup('end page preset theme');
+
 			uiToComp_setDropDownIndex(this, 'aparencia', 'tema');
 			compToUi_colors();
+
+			app.endUndoGroup();
 		} catch (err) {
 			tema_aparenciaDrop.selection = obj.aparencia_end_page.tema - 1;
 		}
@@ -920,6 +1014,8 @@ function endPagePresetDialog() {
 
 	subtitulo_layout.onClick = function () {
 		try {
+			app.beginUndoGroup('end page preset enable subtitle');
+
 			var val = uiToComp_layoutFxValue(this, 'subtitulo');
 			subtitulo_servico.enabled = val;
 
@@ -928,6 +1024,8 @@ function endPagePresetDialog() {
 				return;
 			}
 			obj.servico_end_page.subtitulo = subtitulo_servico.text;
+
+			app.endUndoGroup();
 		} catch (err) {
 			subtitulo_layout.value = obj.layout_end_page.subtitulo;
 		}
@@ -937,6 +1035,8 @@ function endPagePresetDialog() {
 
 	foto_layout.onClick = function () {
 		try {
+			app.beginUndoGroup('end page preset enable photo');
+
 			var val = uiToComp_layoutFxValue(this, 'foto');
 			foto_layoutDrop.enabled = val;
 
@@ -945,6 +1045,8 @@ function endPagePresetDialog() {
 				return;
 			}
 			obj.layout_end_page.foto_layer = foto_layoutDrop.selection;
+
+			app.endUndoGroup();
 		} catch (err) {
 			foto_layout.value = obj.layout_end_page.foto;
 		}
@@ -954,7 +1056,11 @@ function endPagePresetDialog() {
 
 	footage_layout.onClick = function () {
 		try {
+			app.beginUndoGroup('end page preset enable footage');
+
 			var val = uiToComp_layoutFxValue(this, 'footage');
+
+			app.endUndoGroup();
 		} catch (err) {
 			footage_layout.value = obj.layout_end_page.footage;
 		}
@@ -964,6 +1070,8 @@ function endPagePresetDialog() {
 
 	pattern_layout.onClick = function () {
 		try {
+			app.beginUndoGroup('end page preset enable pattern');
+
 			var val = uiToComp_layoutFxValue(this, 'pattern');
 			pattern_layoutDrop.enabled = val;
 
@@ -972,6 +1080,8 @@ function endPagePresetDialog() {
 				return;
 			}
 			obj.layout_end_page.pattern_layer = pattern_layoutDrop.selection;
+
+			app.endUndoGroup();
 		} catch (err) {
 			pattern_layout.value = obj.layout_end_page.pattern;
 		}
