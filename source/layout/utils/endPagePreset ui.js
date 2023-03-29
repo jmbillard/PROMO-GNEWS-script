@@ -574,7 +574,7 @@ function endPagePresetDialog() {
 	//---------------------------------------------------------
 
 	foto_layoutDrop.onChange = function () {
-		app.beginUndoGroup('end page preset action');
+		app.beginUndoGroup('end page preset set photo');
 
 		var sLayer = uiToComp_updateLayers('comp_img apresentador', foto_layoutDrop);
 		obj.layout_end_page.foto_layer = sLayer;
@@ -585,7 +585,7 @@ function endPagePresetDialog() {
 	//---------------------------------------------------------
 
 	pattern_layoutDrop.onChange = function () {
-		app.beginUndoGroup('end page preset action');
+		app.beginUndoGroup('end page preset set pattern');
 
 		var sLayer = uiToComp_updateLayers('comp_pattern', pattern_layoutDrop);
 		obj.layout_end_page.pattern_layer = sLayer;
@@ -597,8 +597,6 @@ function endPagePresetDialog() {
 
 	presetDrop.onChange = function () {
 		
-		//app.beginUndoGroup('end page preset selection');
-
 		var fileName = presetDrop.selection.toString();
 		var presetFile = new File(presetPath + '/' + fileName + '.json');
 
@@ -607,8 +605,12 @@ function endPagePresetDialog() {
 		var presetStr = readFileContent(presetFile);
 		obj = defaultEndPageObj(JSON.parse(presetStr));
 
-		uiToComp_colors();
+		
 		compToUi_updateUi();
+		
+		app.beginUndoGroup('end page preset selection');
+		
+		uiToComp_colors();
 		uiToComp_updateCompFx();
 
 		try {
@@ -639,9 +641,9 @@ function endPagePresetDialog() {
 				.property('servico end page')
 				.property('[min]')
 				.setValue(min);
-		} catch (err) { }
+		} catch (err) {}
 
-		//app.endUndoGroup();
+		app.endUndoGroup();
 	};
 
 	//---------------------------------------------------------
@@ -756,14 +758,12 @@ function endPagePresetDialog() {
 		try {
 			var aItem = app.project.activeItem;
 			var servico = livre_servico.text;
-			app.beginUndoGroup('end page preset set free service');
 
 			aItem.layer('txt_data e horario')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document')
 				.setValue(servico);
 
-			app.endUndoGroup();
 		} catch (err) {
 			livre_servico.text = 'DIGITE O TEXTO';
 		}
@@ -793,14 +793,11 @@ function endPagePresetDialog() {
 			var aItem = app.project.activeItem;
 			var titulo = titulo_servico.text;
 
-			app.beginUndoGroup('end page preset set title');
-
 			aItem.layer('txt_titulo')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document')
 				.setValue(titulo);
 
-			app.endUndoGroup();
 		} catch (err) {
 			titulo_servico.text = obj.servico_end_page.titulo;
 		}
@@ -831,14 +828,11 @@ function endPagePresetDialog() {
 			var aItem = app.project.activeItem;
 			var subtitulo = subtitulo_servico.text;
 
-			app.beginUndoGroup('end page preset set subtitle');
-
 			aItem.layer('txt_subtitulo')
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document')
 				.setValue(subtitulo);
 
-			app.endUndoGroup();
 		} catch (err) {
 			subtitulo_servico.text = obj.servico_end_page.subtitulo;
 		}
@@ -872,8 +866,6 @@ function endPagePresetDialog() {
 			dia = parseInt(dia);
 			dia = dia < 31 ? dia : 31;
 
-			app.beginUndoGroup('end page preset set day');
-
 			aItem.layer('ctrl_comp')
 				.property('ADBE Effect Parade')
 				.property('servico end page')
@@ -882,7 +874,6 @@ function endPagePresetDialog() {
 
 			obj.servico_end_page.dia = dia;
 
-			app.endUndoGroup();
 		} catch (err) {
 			dia_servico.text = obj.servico_end_page.dia;
 		}
@@ -898,8 +889,6 @@ function endPagePresetDialog() {
 			hora = parseInt(hora);
 			hora = hora < 23 ? hora : 23;
 
-			app.beginUndoGroup('end page preset set hour');
-
 			aItem.layer('ctrl_comp')
 				.property('ADBE Effect Parade')
 				.property('servico end page')
@@ -909,7 +898,6 @@ function endPagePresetDialog() {
 
 			obj.servico_end_page.hora = hora;
 
-			app.endUndoGroup();
 		} catch (err) {
 			hora_servico.text = obj.servico_end_page.hora;
 		}
@@ -961,8 +949,6 @@ function endPagePresetDialog() {
 			min = parseInt(min);
 			min = min < 59 ? min : 59;
 
-			app.beginUndoGroup('end page preset set minutes');
-
 			aItem.layer('ctrl_comp')
 				.property('ADBE Effect Parade')
 				.property('servico end page')
@@ -971,7 +957,6 @@ function endPagePresetDialog() {
 
 			obj.servico_end_page.min = min;
 
-			app.endUndoGroup();
 		} catch (err) {
 			min_servico.text = obj.servico_end_page.min;
 		}
