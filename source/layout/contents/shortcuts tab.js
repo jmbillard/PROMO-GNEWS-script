@@ -27,8 +27,8 @@ oneDriveBtn.helpTip = 'OneDrive globo';
 var trelloBtn = linksSubGrp2.add('iconbutton', iconSize, trelloIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 trelloBtn.helpTip = 'trello promo GNEWS';
 
-var typeFormBtn = linksSubGrp2.add('iconbutton', iconSize, typeFormIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-typeFormBtn.helpTip = 'type form globo';
+var apontamentoBtn = linksSubGrp2.add('iconbutton', iconSize, apontamentoIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+apontamentoBtn.helpTip = 'apontamento globo';
 
 var plannerBtn = linksSubGrp2.add('iconbutton', iconSize, plannerIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 plannerBtn.helpTip = 'planner globo';
@@ -99,13 +99,13 @@ trelloBtn.onClick = function () {
 
 //---------------------------------------------------------
 
-typeFormBtn.onClick = function () {
+apontamentoBtn.onClick = function () {
 	// error...
 	if (!netAccess()) {
 		showTabErr(netConfigName + ' not checked');
 		return;
 	}
-	var site = 'https://tvglobo.typeform.com/to/wiqX4z0X';
+	var site = 'https://gglobo-pea-hdg-prd.web.app/#card_view';
 
 	openWebSite(site);
 };
