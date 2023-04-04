@@ -22,9 +22,6 @@
 
 */
 
-//  linter settings:
-//  jshint -W061
-
 function PROMO_GNEWS_UTL(thisObj) {
 
 	// current script version...
