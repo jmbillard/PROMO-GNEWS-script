@@ -271,7 +271,7 @@ saveBtn.onClick = function () {
 
 	var savePath = decodeURI(saveFolder.fullName);
 	var promoProjectName = [projId, projName].join(' '); // ex: 'COB110423 historia ao vivo'
-	var hnProjectName = [userPrefix, '- GNEWS', projName].join(' '); // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
+	var hnProjectName = [userPrefix, '- GNEWS', projName, '-', projId].join(' '); // ex: 'JBI - GNEWS TWITTER PRESIDENTE - cassia'
 
 	var projFullName = hardNews ? hnProjectName : promoProjectName; // final project name
 
