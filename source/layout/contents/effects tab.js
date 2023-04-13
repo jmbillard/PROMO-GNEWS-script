@@ -93,7 +93,7 @@ shpAdjBtn.onClick = function () {
 	var adjH = aItem.height;
 
 	if (adjType == 0) {
-		adjLayer = shpAdjustment();
+		adjLayer = shpAdjustment(aItem);
 	} else {
 		adjLayer = aItem.layers.addSolid(adjC, '', adjW, adjH, 1.0);
 	}

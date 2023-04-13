@@ -14,35 +14,47 @@
 currentGrp = tabsGrp.app;
 var appSubGrp1 = currentGrp.add('group');
 
-var appUtilTxt = appSubGrp1.add('statictext', undefined, 'utilities:', { name: 'label' , truncate: 'end'});
+var appBatchTxt = appSubGrp1.add('statictext', undefined, 'batch:', { name: 'label' , truncate: 'end'});
+appBatchTxt.maximumSize.width = 35;
+
+var batchVNDBtn = appSubGrp1.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+batchVNDBtn.helpTip = 'vinheta nunca desliga\nselect file sources';
+
+
+//---------------------------------------------------------
+
+currentGrp = tabsGrp.app;
+var appSubGrp2 = currentGrp.add('group');
+
+var appUtilTxt = appSubGrp2.add('statictext', undefined, 'utilities:', { name: 'label' , truncate: 'end'});
 appUtilTxt.maximumSize.width = 45;
 
-var installFontsBtn = appSubGrp1.add('iconbutton', iconSize, fontsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var installFontsBtn = appSubGrp2.add('iconbutton', iconSize, fontsIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 installFontsBtn.helpTip = 'install fonts';
 
-var copyAMEPresetsBtn = appSubGrp1.add('iconbutton', iconSize, eprIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var copyAMEPresetsBtn = appSubGrp2.add('iconbutton', iconSize, eprIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 copyAMEPresetsBtn.helpTip = 'install Encoder presets | open presets folder';
 
 //---------------------------------------------------------
 
 currentGrp.add('panel');
-var appSubGrp2 = currentGrp.add('group');
-
-var appProjTxt = appSubGrp2.add('statictext', undefined, 'project:', { name: 'label' , truncate: 'end'});
-appProjTxt.maximumSize.width = 40;
-
-var setupProjBtn = appSubGrp2.add('iconbutton', iconSize, setupProjIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-setupProjBtn.helpTip = 'setup project:\n\nbit depth: 8\ncolor space: \'Rec 709\'\nexp. engine: \'javascript\'';
-
-var setupLabsBtn = appSubGrp2.add('iconbutton', iconSize, setupLabIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-setupLabsBtn.helpTip = 'setup project label colors / names';
-
 var appSubGrp3 = currentGrp.add('group');
 
-var appCompTxt = appSubGrp3.add('statictext', undefined, 'comp:', { name: 'label' , truncate: 'end'});
+var appProjTxt = appSubGrp3.add('statictext', undefined, 'project:', { name: 'label' , truncate: 'end'});
+appProjTxt.maximumSize.width = 40;
+
+var setupProjBtn = appSubGrp3.add('iconbutton', iconSize, setupProjIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+setupProjBtn.helpTip = 'setup project:\n\nbit depth: 8\ncolor space: \'Rec 709\'\nexp. engine: \'javascript\'';
+
+var setupLabsBtn = appSubGrp3.add('iconbutton', iconSize, setupLabIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+setupLabsBtn.helpTip = 'setup project label colors / names';
+
+var appSubGrp4 = currentGrp.add('group');
+
+var appCompTxt = appSubGrp4.add('statictext', undefined, 'comp:', { name: 'label' , truncate: 'end'});
 appCompTxt.maximumSize.width = 35;
 
-var setupCompBtn = appSubGrp3.add('iconbutton', iconSize, setupCompIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var setupCompBtn = appSubGrp4.add('iconbutton', iconSize, setupCompIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 setupCompBtn.helpTip = 'setup selected comp:\n\nhorizontal | vertical\nbg color: \'#000000\'\npreserve framerate: true';
 
 /*
@@ -52,6 +64,42 @@ setupCompBtn.helpTip = 'setup selected comp:\n\nhorizontal | vertical\nbg color:
 ---------------------------------------------------------------
 
 */
+
+batchVNDBtn.onClick = function () {
+	var footageArray = app.project.importFileWithDialog();
+	
+	app.beginUndoGroup('batch...');
+
+	rndFolder = app.project.items.addFolder('---- render ----');
+	astFolder = app.project.items.addFolder('assets');
+	ftgFolder = app.project.items.addFolder('footage');
+	ftgFolder.parentFolder = astFolder;
+
+	for (var i = 0; i < footageArray.length; i++) {
+		try {
+			var footage = footageArray[i];
+			var compN = 'vinheta nunca desliga ' + (i + 1);
+			var compW = 1920;
+			var compH = 1080;
+  
+			var comp = app.project.items.addComp(compN, compW, compH, 1, 6, 29.97);
+			comp.bgColor = sTxtColor.dark;
+			var aLayer = comp.layers.add(footage);
+    
+			layersVND(comp);
+
+			comp.hideShyLayers = true;
+			comp.comment = 'export';
+
+			footage.parentFolder = ftgFolder;
+			comp.parentFolder = rndFolder;
+		
+		} catch (err) {
+			alert(err.message);
+		}
+	}
+	app.endUndoGroup();
+};
 
 copyAMEPresetsBtn.addEventListener('click', function (c) {
 	if (c.button == 2) {

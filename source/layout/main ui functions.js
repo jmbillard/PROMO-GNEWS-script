@@ -253,7 +253,8 @@ function hideTabs() {
 
 // turns on the respective tab group visibility...
 function openTab() {
-	infoBtn.visible = true;
+	if (currentGrp != tabsGrp.menu) infoBtn.visible = true;
+
 	aboutTxt.visible = false;
 	bgColor = tabColors[tabs.indexOf(currentGrp)];
 	currentGrp.visible = true;
@@ -282,7 +283,8 @@ function showTabErr(msg) {
 	closeGrp.visible = true;
 	errTabGrp.visible = true;
 	closeErrBtn.visible = true;
-
+	
+	infoBtn.visible = false;
 	prefGrp.visible = false;
 	currentGrp.visible = false;
 	tabsGrp.menu.visible = false;
@@ -304,7 +306,8 @@ function showTabProg(msg) {
 	progressGrp.visible = true;
 	progImgGrp.visible = true;
 	progImgGrp.helpTip = msg;
-
+	
+	infoBtn.visible = false;
 	closeGrp.visible = false;
 	prefGrp.visible = false;
 	currentGrp.visible = false;
