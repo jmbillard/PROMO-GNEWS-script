@@ -9,9 +9,9 @@
   title:   bin
 
   notes:   a multi purpose tool to for development
-           1. binary converter;
-           2. layer definition;
-           3. expression string formatter;
+		   1. binary converter;
+		   2. layer definition;
+		   3. expression string formatter;
 
   copy this file to 'ScriptUI Panels' folder
 
@@ -51,64 +51,64 @@ function objCode(obj) {
 	var valName = '';
 	var objValue = '';
 	switch (obj.toString()) {
-	case '[object Shape]':
-		valName = 'shp';
+		case '[object Shape]':
+			valName = 'shp';
 
-		for (var o in obj) {
+			for (var o in obj) {
 
-			if (obj.hasOwnProperty(o)) {
-				var keyVal = obj[o];
-				var keyName = o.toString();
-				var keyStrVal = keyVal.toString();
+				if (obj.hasOwnProperty(o)) {
+					var keyVal = obj[o];
+					var keyName = o.toString();
+					var keyStrVal = keyVal.toString();
 
-				if (keyStrVal != '') {
+					if (keyStrVal != '') {
 
-					if (Array.isArray(keyVal)) {
-						keyStrVal = '[';
+						if (Array.isArray(keyVal)) {
+							keyStrVal = '[';
 
-						for (var v = 0; v < keyVal.length; v++) {
-							var kv = keyVal[v];
+							for (var v = 0; v < keyVal.length; v++) {
+								var kv = keyVal[v];
 
-							if (Array.isArray(kv)) {
-								keyStrVal += '[';
+								if (Array.isArray(kv)) {
+									keyStrVal += '[';
 
-								for (var d = 0; d < kv.length; d++) {
-									keyStrVal += kv[d].toFixed(2) + ',';
+									for (var d = 0; d < kv.length; d++) {
+										keyStrVal += kv[d].toFixed(2) + ',';
+									}
+									keyStrVal = keyStrVal.popLastCharacter() + '],';
 								}
-								keyStrVal = keyStrVal.popLastCharacter() + '],';
 							}
+							keyStrVal = keyStrVal.popLastCharacter() + ']';
 						}
-						keyStrVal = keyStrVal.popLastCharacter() + ']';
+						objValue += '\t' + valName + '.' + keyName + '= ' + keyStrVal + ';\n';
 					}
-					objValue += '\t' + valName + '.' + keyName + '= ' + keyStrVal + ';\n';
 				}
 			}
-		}
-		objValue = '\n\t' + valName + ' = new Shape();\n' + objValue;
-		break;
+			objValue = '\n\t' + valName + ' = new Shape();\n' + objValue;
+			break;
 
-	default:
-		valName = 'textDoc';
-		var textDoc = obj;
-		var textContent = textDoc.text.replace(/\n|\r/g, '\\n');
-		objValue += '\ttextDoc.text = \'' + textContent + '\';\
+		default:
+			valName = 'textDoc';
+			var textDoc = obj;
+			var textContent = textDoc.text.replace(/\n|\r/g, '\\n');
+			objValue += '\ttextDoc.text = \'' + textContent + '\';\
 \ttextDoc.font = \'' + textDoc.font + '\';\
 \ttextDoc.fontSize = ' + textDoc.fontSize + ';\
 \ttextDoc.applyStroke = ' + textDoc.applyStroke.toString() + ';\
 \ttextDoc.applyFill = ' + textDoc.applyFill.toString() + ';\n';
 
-		if (textDoc.applyFill) {
-			objValue += '\ttextDoc.fillColor = [' + textDoc.fillColor.toString() + '];\n';
-		}
-		if (textDoc.applyStroke) {
-			objValue += '\ttextDoc.strokeColor = [' + textDoc.strokeColor.toString() + '];\n';
-		}
-		objValue += '\ttextDoc.strokeWidth = ' + textDoc.strokeWidth + ';\
+			if (textDoc.applyFill) {
+				objValue += '\ttextDoc.fillColor = [' + textDoc.fillColor.toString() + '];\n';
+			}
+			if (textDoc.applyStroke) {
+				objValue += '\ttextDoc.strokeColor = [' + textDoc.strokeColor.toString() + '];\n';
+			}
+			objValue += '\ttextDoc.strokeWidth = ' + textDoc.strokeWidth + ';\
 \ttextDoc.strokeOverFill = ' + textDoc.strokeOverFill.toString() + ';\
 \ttextDoc.tracking = ' + textDoc.tracking + ';\
 \ttextDoc.leading = ' + textDoc.leading + ';\
 \ttextDoc.justification = ' + textDoc.justification + ';\n';
-		break;
+			break;
 	}
 	return [objValue + '\n', valName];
 }
@@ -145,7 +145,7 @@ function animCode(prop, varName) {
 
 	anim += '\n\t// ' + prop.parentProperty.name
 		.toLowerCase() + ' ' + prop.name
-		.toLowerCase() + ' animation...\n';
+			.toLowerCase() + ' animation...\n';
 
 	for (var k = 1; k <= prop.numKeys; k++) {
 
@@ -223,6 +223,9 @@ function animCode(prop, varName) {
 function layerCode(layer) {
 
 	var layerStr = '';
+	var lName = layer.name
+		.replace(/\\/g, '\\\\')
+		.replace(/'/g, '\\\'');
 
 	function getProperties(prop) {
 
@@ -233,38 +236,42 @@ function layerCode(layer) {
 			var pName = pProp.name
 				.replace(/^[\d]+/, 'n')
 				.toCamelCase()
-				.replace(/-/, '_');
+				//.replace(/[-&|.]+/, '_')
+				.replace(/[^a-z0-9_]/ig, '');
 			var pName2 = pProp.parentProperty.name
 				.replace(/^[\d]+/, 'n')
 				.toCamelCase()
-				.replace(/-/, '_') + (D - 1);
+				//.replace(/[-&|.]+/, '_')
+				.replace(/[^a-z0-9_]/ig, '') + (D - 1);
 			var var2 = (pProp.propertyDepth == 1) ? pName : pName + '_' + pName2;
-			var varN = cProp.name;
+			var varN = cProp.name
+				.replace(/\\/g, '\\\\')
+				.replace(/'/g, '\\\'');
 			var mn = cProp.matchName;
 			var exp;
 			var var1 = cProp.name.replace(/^[\d]+/, 'n')
 				.toCamelCase()
-				.replace(/-/, '_') + '_' + pName + D;
+				//.replace(/[-&|.]+/, '_')
+				.replace(/[^a-z0-9_]/ig, '') + '_' + pName + D;
 
 			if (cProp.numProperties > 0) {
 
 				if (pProp.canAddProperty(mn)) {
 
-					if (pProp == effects) {
-						layerStr += '\t// ' + cProp.name.toLowerCase() + ' effect...\n';
-					}
+					if (pProp == effects) layerStr += '\t// \'' + cProp.name.toLowerCase() + '\' effect...\n';
+					if (pProp == masks) layerStr += '\n\t// \'' + cProp.name.toLowerCase() + '\' mask...\n';
+
 					layerStr += '\t' + var1 + ' = ' + var2 + '.addProperty(\'' + mn + '\');\n';
 					try {
 						var cPropName = cProp.name;
 						cProp.name = cPropName;
 
 						layerStr += '\t' + var1 + '.name = \'' + varN + '\';\n';
-          
+
 					} catch (err) { }
-					
-					if (!cProp.enabled) {
-						layerStr += var1 + '.enabled = false;\n';
-					}
+
+					if (!cProp.enabled) layerStr += var1 + '.enabled = false;\n';
+
 				} else {
 					layerStr += '\t' + var1 + ' = ' + var2 + '.property(\'' + mn + '\');\n';
 				}
@@ -272,6 +279,16 @@ function layerCode(layer) {
 				try {
 					getProperties(cProp);
 				} catch (err) { }
+				
+				if (pProp == masks) {
+					layerStr += '\t' + var1 + '.maskMode = ' + cProp.maskMode + ';\n';
+					if (cProp.inverted) layerStr += '\t' + var1 + '.inverted = true;\n';
+					layerStr += '\t' + var1 + '.color = [' + cProp.color.toString() + '];\n';
+					layerStr += '\t' + var1 + '.maskFeatherFalloff = ' + cProp.maskFeatherFalloff + ';\n';
+					layerStr += '\t' + var1 + '.maskMotionBlur = ' + cProp.maskMotionBlur + ';\n';
+					if (cProp.rotoBezier) layerStr += '\t' + var1 + '.rotoBezier = true;\n';
+					if (cProp.locked) layerStr += '\t' + var1 + '.locked = true;\n';
+				}
 
 			} else {
 
@@ -299,14 +316,6 @@ function layerCode(layer) {
 						layerStr += animCode(cProp, var2);
 					}
 				}
-				if (i == pProp.numProperties) {
-
-					try {
-						var pPropName = pProp.name;
-						pProp.name = pPropName;
-						layerStr += '\t' + var2 + '.name = \'' + varN + '\';\n';
-					} catch (err) { }
-				}
 			}
 		}
 		return layerStr;
@@ -316,10 +325,10 @@ function layerCode(layer) {
 	var masks = layer.property('ADBE Mask Parade');
 	var marker = layer.property('ADBE Marker');
 
-	layerStr += 'function ' + layer.name
+	layerStr += 'function ' + lName
 		.replaceSpecialCharacters()
 		.toCamelCase()
-		.replace(/-/, '_')
+		.replace(/-/g, '_')
 		.replace(/\W/g, '') + '() {\n\n';
 	layerStr += '\t// expressions variable...\
 \tvar exp;\
@@ -333,30 +342,30 @@ function layerCode(layer) {
 
 	switch (true) {
 
-	case layer instanceof ShapeLayer:
-		var contents = layer.property('ADBE Root Vectors Group');
-		layerStr += '\n\t// shape object variable...\
+		case layer instanceof ShapeLayer:
+			var contents = layer.property('ADBE Root Vectors Group');
+			layerStr += '\n\t// shape object variable...\
 \tvar shp;\
 \n\t// shape layer creation...\
 \tvar layer = app.project.activeItem.layers.addShape();\n';
 
-		if (contents.numProperties > 0) {
-			layerStr += '\n\t// vector content...\
+			if (contents.numProperties > 0) {
+				layerStr += '\n\t// vector content...\
 \tvar contents = layer.property(\'ADBE Root Vectors Group\');\n';
-			getProperties(contents);
-		}
-		break;
+				getProperties(contents);
+			}
+			break;
 
-	case layer instanceof TextLayer:
-		var text = layer.property('ADBE Text Properties');
-		layerStr += '\n\t// text layer creation...\
+		case layer instanceof TextLayer:
+			var text = layer.property('ADBE Text Properties');
+			layerStr += '\n\t// text layer creation...\
 \tvar layer = app.project.activeItem.layers.addText();\
 \n\t// text document...\
 \tvar text = layer.property(\'ADBE Text Properties\');\
 \tvar textDoc = text.property(\'ADBE Text Document\').value;\n';
 
-		getProperties(text);
-		break;
+			getProperties(text);
+			break;
 	}
 	layerStr += '\n\t// transformations...\
 \tvar transform = layer.property(\'ADBE Transform Group\');\n';
@@ -394,20 +403,21 @@ function layerCode(layer) {
 		}
 	}
 	layerStr += '\n\t// layer attributes...\
-\tlayer.autoOrient = ' + layer.autoOrient + ';\
-\tlayer.inPoint = ' + layer.inPoint + ';\
-\tlayer.outPoint = ' + layer.outPoint + ';\
-\tlayer.comment = \'' + layer.comment + '\';\
-\tlayer.name = \'' + layer.name + '\';\
+\tlayer.name = \'' + lName + '\';\
 \tlayer.label = ' + layer.label + ';\
-\tlayer.locked = ' + layer.locked + ';\
-\tlayer.guideLayer = ' + layer.guideLayer + ';\
-\n\treturn layer;\
-}\n\n';
-	layerStr += layer.name
+\tlayer.inPoint = ' + layer.inPoint + ';\
+\tlayer.outPoint = ' + layer.outPoint + ';';
+	
+	if (layer.autoOrient != 4212) layerStr += '\n\tlayer.autoOrient = ' + layer.autoOrient + ';';
+	if (layer.comment != '') layerStr += '\n\tlayer.comment = \'' + layer.comment + '\';';
+	if (layer.locked) layerStr += '\n\tlayer.locked = true;';
+	if (layer.guideLayer) layerStr += '\n\tlayer.guideLayer = true;';
+	
+	layerStr += '\n\n\treturn layer;\n}\n\n';
+	layerStr += lName
 		.replaceSpecialCharacters()
 		.toCamelCase()
-		.replace(/-/, '_')
+		.replace(/-/g, '_')
 		.replace(/\W/g, '') + '();';
 
 	return layerStr;
@@ -428,7 +438,7 @@ function bin_ui() {
 	wBin.alignChildren = 'fill';
 
 	// botões e spacers
-	var stcTxt = wBin.add('statictext', [0, 0, 600, 15], '', { truncate: 'end'});
+	var stcTxt = wBin.add('statictext', [0, 0, 600, 15], '', { truncate: 'end' });
 	var edtText = wBin.add('edittext', [0, 0, 600, 600], '', { multiline: true });
 	var progressBarBin = wBin.add('progressbar', [0, 0, 600, 5], 0, 100);
 	var btnGrp = wBin.add('group');
@@ -483,115 +493,115 @@ function bin_ui() {
 
 		switch (true) {
 
-		case expRad01.value:
-			fileArray = File.openDialog('open files...', undefined, true);
-			var fileNameArray = [];
+			case expRad01.value:
+				fileArray = File.openDialog('open files...', undefined, true);
+				var fileNameArray = [];
 
-			if (fileArray != null) {
-				progressBarBin.maxvalue = fileArray.length - 1;
+				if (fileArray != null) {
+					progressBarBin.maxvalue = fileArray.length - 1;
 
-				for (var i = 0; i < fileArray.length; i++) {
-					var fileName = decodeURI(fileArray[i].name);
-					fileNameArray.push(fileName);
+					for (var i = 0; i < fileArray.length; i++) {
+						var fileName = decodeURI(fileArray[i].name);
+						fileNameArray.push(fileName);
 
-					fileName = deleteFileExt(fileName)
-						.replaceSpecialCharacters();
-					fileName = (fileName.split(/\s/).length > 1) ? fileName.toCamelCase() : fileName;
-					codeTxt += ['\nvar', fileName, '=', fileToBinary(fileArray[i]) + ';\n'].join(' ');
+						fileName = deleteFileExt(fileName)
+							.replaceSpecialCharacters();
+						fileName = (fileName.split(/\s/).length > 1) ? fileName.toCamelCase() : fileName;
+						codeTxt += ['\nvar', fileName, '=', fileToBinary(fileArray[i]) + ';\n'].join(' ');
 
-					codeArray.push(fileToBinary(fileArray[i]));
-					progressBarBin.value = i;
-					wBin.update();
+						codeArray.push(fileToBinary(fileArray[i]));
+						progressBarBin.value = i;
+						wBin.update();
+					}
+					nameTxt = fileNameArray.join(' | ');
+					stcTxt.helpTip = nameTxt;
+					stcTxt.text = 'file: ' + nameTxt;
+					edtText.text = codeTxt;
 				}
-				nameTxt = fileNameArray.join(' | ');
-				stcTxt.helpTip = nameTxt;
-				stcTxt.text = 'file: ' + nameTxt;
-				edtText.text = codeTxt;
-			}
-			break;
+				break;
 
-		case expRad04.value:
-			var iconObjNameArray = [];
-			var iconObjArray = [];
-			fileArray = File.openDialog('open icons...', undefined, true);
+			case expRad04.value:
+				var iconObjNameArray = [];
+				var iconObjArray = [];
+				fileArray = File.openDialog('open icons...', undefined, true);
 
-			if (fileArray != null) {
-				progressBarBin.maxvalue = fileArray.length - 1;
+				if (fileArray != null) {
+					progressBarBin.maxvalue = fileArray.length - 1;
 
-				for (var n = 0; n < fileArray.length; n++) {
-					var iconFileName = decodeURI(deleteFileExt(fileArray[n].name));
-					var objName = iconFileName.replaceSpecialCharacters()
-						.replace(/dark/gi, '')
-						.replace(/light/gi, '')
-						.toCamelCase();
-					var iconObj = {};
+					for (var n = 0; n < fileArray.length; n++) {
+						var iconFileName = decodeURI(deleteFileExt(fileArray[n].name));
+						var objName = iconFileName.replaceSpecialCharacters()
+							.replace(/dark/gi, '')
+							.replace(/light/gi, '')
+							.toCamelCase();
+						var iconObj = {};
 
-					var o = iconObjNameArray.indexOf(objName);
+						var o = iconObjNameArray.indexOf(objName);
 
-					if (o < 0) {
+						if (o < 0) {
 
-						if (iconFileName.match(/dark/i)) {
-							iconObj.dark = fileToBinary(fileArray[n]);
+							if (iconFileName.match(/dark/i)) {
+								iconObj.dark = fileToBinary(fileArray[n]);
+
+							} else {
+								iconObj.light = fileToBinary(fileArray[n]);
+							}
+							iconObjNameArray.push(objName);
+							iconObjArray.push(iconObj);
 
 						} else {
-							iconObj.light = fileToBinary(fileArray[n]);
-						}
-						iconObjNameArray.push(objName);
-						iconObjArray.push(iconObj);
+							if (iconFileName.match(/dark/i)) {
+								iconObjArray[o].dark = fileToBinary(fileArray[n]);
 
-					} else {
-						if (iconFileName.match(/dark/i)) {
-							iconObjArray[o].dark = fileToBinary(fileArray[n]);
-
-						} else {
-							iconObjArray[o].light = fileToBinary(fileArray[n]);
+							} else {
+								iconObjArray[o].light = fileToBinary(fileArray[n]);
+							}
+							iconObj = iconObjArray[o];
+							codeTxt += '\nvar ' + objName + ' = ' + formatObjStr(iconObj) + ';\n';
 						}
-						iconObj = iconObjArray[o];
-						codeTxt += '\nvar ' + objName + ' = ' + formatObjStr(iconObj) + ';\n';
+						progressBarBin.value = i;
+						wBin.update();
 					}
-					progressBarBin.value = i;
-					wBin.update();
+					edtText.text = codeTxt;
 				}
-				edtText.text = codeTxt;
-			}
-			break;
+				break;
 
-		case expRad02.value:
-			aItem = app.project.activeItem;
-			aLayer = aItem.selectedLayers[0];
+			case expRad02.value:
+				aItem = app.project.activeItem;
+				aLayer = aItem.selectedLayers[0];
 
-			stcTxt.text = 'layer: ' + aLayer.name;
-			edtText.text = layerCode(aLayer);
-			break;
+				stcTxt.text = 'layer: ' + aLayer.name;
+				edtText.text = layerCode(aLayer);
+				break;
 
-		case expRad03.value:
-			aItem = app.project.activeItem;
-			aLayer = aItem.selectedLayers[0];
-			var aProp = aLayer.selectedProperties[0];
-			var exp;
-			if (aProp.numProperties == undefined) {
-				exp = (aProp.expression == undefined) ? '' : aProp.expression;
-				if (exp != '') {
-					exp = 'var exp = \'' + expCode(exp) + '\';\n';
-					edtText.text = exp;
-				}
-				stcTxt.text = 'prop: ' + aProp.name;
+			case expRad03.value:
+				aItem = app.project.activeItem;
+				aLayer = aItem.selectedLayers[0];
+				var aProp = aLayer.selectedProperties[0];
+				var exp;
+				if (aProp.numProperties == undefined) {
+					exp = (aProp.expression == undefined) ? '' : aProp.expression;
+					if (exp != '') {
+						exp = 'var exp = \'' + expCode(exp) + '\';\n';
+						edtText.text = exp;
+					}
+					stcTxt.text = 'prop: ' + aProp.name;
 
-			} else {
-				for (var p = 1; p <= aProp.numProperties; p++) {
-					var sProp = aProp.property(p);
+				} else {
+					for (var p = 1; p <= aProp.numProperties; p++) {
+						var sProp = aProp.property(p);
 
-					if (aProp.property(p).selected) {
-						exp = (sProp.expression == undefined) ? '' : sProp.expression;
-						if (exp != '') {
-							exp = 'var exp = \'' + expCode(exp) + '\';\n';
-							edtText.text = exp;
+						if (aProp.property(p).selected) {
+							exp = (sProp.expression == undefined) ? '' : sProp.expression;
+							if (exp != '') {
+								exp = 'var exp = \'' + expCode(exp) + '\';\n';
+								edtText.text = exp;
+							}
+							stcTxt.text = 'prop: ' + aProp.name;
 						}
-						stcTxt.text = 'prop: ' + aProp.name;
 					}
 				}
-			}
-			break;
+				break;
 		}
 		hasData = (edtText.text.trim() != '');
 		exportBtn.enabled = hasData;
