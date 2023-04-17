@@ -17,7 +17,7 @@ var appSubGrp1 = currentGrp.add('group');
 var appBatchTxt = appSubGrp1.add('statictext', undefined, 'batch:', { name: 'label' , truncate: 'end'});
 appBatchTxt.maximumSize.width = 35;
 
-var batchVNDBtn = appSubGrp1.add('iconbutton', iconSize, solTogIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
+var batchVNDBtn = appSubGrp1.add('iconbutton', iconSize, batchVNDIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 batchVNDBtn.helpTip = 'vinheta nunca desliga\nselect file sources';
 
 
@@ -70,29 +70,32 @@ batchVNDBtn.onClick = function () {
 	
 	app.beginUndoGroup('batch...');
 
-	rndFolder = app.project.items.addFolder('---- render ----');
-	astFolder = app.project.items.addFolder('assets');
-	ftgFolder = app.project.items.addFolder('footage');
-	ftgFolder.parentFolder = astFolder;
+	// rndFolder = app.project.items.addFolder('---- render ----');
+	// astFolder = app.project.items.addFolder('assets');
+	// ftgFolder = app.project.items.addFolder('footage');
+	// ftgFolder.parentFolder = astFolder;
 
 	for (var i = 0; i < footageArray.length; i++) {
 		try {
 			var footage = footageArray[i];
+			
 			var compN = 'vinheta nunca desliga ' + (i + 1);
 			var compW = 1920;
 			var compH = 1080;
+			var compAspect = 1;
+			var compDuration = 6;
+			var compFPS = 29.97;
   
-			var comp = app.project.items.addComp(compN, compW, compH, 1, 6, 29.97);
-			comp.bgColor = sTxtColor.dark;
-			var aLayer = comp.layers.add(footage);
-    
+			var comp = app.project.items.addComp(compN, compW, compH, compAspect, compDuration, compFPS);
+			comp.layers.add(footage);
+			
 			layersVND(comp);
-
+			comp.bgColor = [0, 0, 0];
 			comp.hideShyLayers = true;
 			comp.comment = 'export';
 
-			footage.parentFolder = ftgFolder;
-			comp.parentFolder = rndFolder;
+			// footage.parentFolder = ftgFolder;
+			// comp.parentFolder = rndFolder;
 		
 		} catch (err) {
 			alert(err.message);

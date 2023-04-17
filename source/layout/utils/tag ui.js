@@ -28,7 +28,7 @@ function tagDialog() {
 	var tagCustomBtn = subCustomGrp.add('iconbutton', iconTogSize, solTogIcon.light, { style: 'toolbutton' });
 	var tagCustomTxt = subCustomGrp.add('edittext');
 	tagCustomTxt.size = [60, 24];
-	tagCustomBtn.helpTip = 'custom comment tag';
+	tagCustomBtn.helpTip = 'custom tag';
 
 	for (var tagGrpName in tagsObj) {
 		var tagGrp = tagsObj[tagGrpName];
