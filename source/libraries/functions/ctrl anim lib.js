@@ -177,19 +177,16 @@ function setHierarchy(sLayer, cLayer) {
 // find center point...
 function findCenter(lArray) {
 	var maxY = 0;
-	var minY = 0;
+	var minY = 99999999999999999999;
 	var maxX = 0;
-	var minX = 0;
+	var minX = 99999999999999999999;
 	var maxZ = 0;
-	var minZ = 0;
+	var minZ = 99999999999999999999;
 
 	for (i = 0; i < lArray.length; i++) {
 		var lPos = lArray[i]
 			.property('ADBE Transform Group')
 			.property('ADBE Position');
-		var lPosX = lPos.value[0];
-		var lPosY = lPos.value[1];
-		var lPosZ = lPos.value[2];
 
 		maxX = Math.max(maxX, lPos.value[0]);
 		minX = Math.min(minX, lPos.value[0]);
