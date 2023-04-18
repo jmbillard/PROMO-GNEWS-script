@@ -128,8 +128,14 @@ copyInfBtn.onClick = function () {
 	keyData.inEase = aProp.keyInTemporalEase(k);
 	keyData.outEase = aProp.keyOutTemporalEase(k);
 
-	// alert(JSON.stringify(keyData.inEase));
-	// alert(aProp.propertyValueType);
+	easeInInfluence = kIn.influence;
+	easeOutInfluence = kOut.influence;
+
+	easeSld1.value = easeInInfluence;
+	easeSld1Txt.text = easeSld1Txt.helpTip = easeInInfluence.toFixed(0) + '%';
+	
+	easeSld2.value = 100 - easeOutInfluence;
+	easeSld2Txt.text = easeSld2Txt.helpTip = (100 - easeOutInfluence).toFixed(0) + '%';
 
 	// hide all keyframe images...
 	for (var kf = 0; kf < keyStatsGrp.children.length; kf++) {
@@ -195,6 +201,12 @@ copyInfBtn.onClick = function () {
 		keyStatsGrp.keyImg4.helpTip = kHelp;
 		break;
 	}
+	var suf1 = Math.floor(parseInt(easeSld1Txt.text) / 10) * 10;
+	var suf2 = Math.floor(parseInt(easeSld2Txt.text) / 10) * 10;
+
+	easePrevGrp.remove(0);
+	easePrevGrp.add('image', undefined, easePrev['img' + suf1 + suf2 + iconTheme]);
+	easePrevGrp.layout.layout(true);
 };
 
 //---------------------------------------------------------

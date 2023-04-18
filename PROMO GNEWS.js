@@ -15,7 +15,7 @@
   to 'ScriptUI Panels' folder
 
   author:  Jean-Marc Billard
-  version: 2.0 beta 11
+  version: 2.0 beta 12
   date:    xx-xx-2023
 
 --------------------------------------------------------------
@@ -25,7 +25,7 @@
 function PROMO_GNEWS_UTL(thisObj) {
 
 	// current script version...
-	var vStr = 'v2.0b11';
+	var vStr = 'v2.0b12';
 
 	/* jshint ignore:start */
 	#include 'source/globals.js'; // global variables...
