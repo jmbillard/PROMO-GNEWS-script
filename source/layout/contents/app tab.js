@@ -70,11 +70,6 @@ batchVNDBtn.onClick = function () {
 	
 	app.beginUndoGroup('batch...');
 
-	// rndFolder = app.project.items.addFolder('---- render ----');
-	// astFolder = app.project.items.addFolder('assets');
-	// ftgFolder = app.project.items.addFolder('footage');
-	// ftgFolder.parentFolder = astFolder;
-
 	for (var i = 0; i < footageArray.length; i++) {
 		try {
 			var footage = footageArray[i];
@@ -93,15 +88,14 @@ batchVNDBtn.onClick = function () {
 			comp.bgColor = [0, 0, 0];
 			comp.hideShyLayers = true;
 			comp.comment = 'export';
-
-			// footage.parentFolder = ftgFolder;
-			// comp.parentFolder = rndFolder;
 		
 		} catch (err) {
 			alert(err.message);
 		}
 	}
+	
 	app.endUndoGroup();
+	projOrgBtn.notify();
 };
 
 copyAMEPresetsBtn.addEventListener('click', function (c) {

@@ -315,66 +315,34 @@ function layersVND(comp) {
 
 	// keyframe ease objects variable...
 	var easeIn1;
-	var easeIn2;
 	var easeOut1;
-	var easeOut2;
 
 	// shape object variable...
 	var shp;
 
 	// shape layer creation...
-	var layer = comp.layers.addShape();
+	var divLayer = comp.layers.addShape();
 
-	// layer marker 1...
+	// divLayer marker 1...
 	var t1 = 0;
 	var marker1 = new MarkerValue('coloque o footage em baixo');
 	marker1.label = 13;
 	marker1.duration = 0;
-	layer.property('ADBE Marker').setValueAtTime(t1, marker1);
+	divLayer.property('ADBE Marker').setValueAtTime(t1, marker1);
 
 	// layer attributes...
-	layer.name = '----------------';
-	layer.label = 8;
-	layer.guideLayer = true;
-	layer.locked = true;
+	divLayer.name = '----------------';
+	divLayer.label = 8;
+	divLayer.guideLayer = true;
+	divLayer.locked = true;
 
 	//-----------------------------------------------------------------------
 
 	// shape layer creation...
-	layer = shpAdjustment(comp);
-
-	// fx...
-	effects = layer.property('ADBE Effect Parade');
-	// 'pos y offset' effect...
-	posYOffset_effects1 = effects.addProperty('ADBE Tile');
-	posYOffset_effects1.name = 'pos y offset';
-	posYOffset_effects1.property('ADBE Tile-0001').setValue([960, 540]);
-
-	// pos y offset tile center expression...
-	exp = 'var posYsld = thisComp.layer(\'ctrl\').effect(\'pos y offset\')(1).value;\
-var mainAnim = thisComp.layer(\'adj_footage animation\').effect(\'main transform\')(\'Position\')[1];\
-var posY = linear(mainAnim, 850, 540, thisComp.height / 2, thisComp.height / 2 - posYsld);\
-[thisComp.width / 2, posY];';
-	posYOffset_effects1.property('ADBE Tile-0001').expression = exp;
-
-	posYOffset_effects1.property('ADBE Tile-0006').setValue(1);
-
-	// layer attributes...
-	layer.name = 'adj_footage pos y offset';
-	layer.label = 5;
-	layer.adjustmentLayer = true;
-	layer.inPoint = 2.16883550216884;
-	layer.outPoint = 3.6036036036036;
-	layer.shy = true;
-	layer.locked = true;
-
-	//-----------------------------------------------------------------------
-
-	// shape layer creation...
-	layer = shpAdjustment(comp);
+	footageAnimLayer = shpAdjustment(comp);
 
 	// masks...
-	var masks = layer.property('ADBE Mask Parade');
+	var masks = footageAnimLayer.property('ADBE Mask Parade');
 	mask1_masks1 = masks.addProperty('ADBE Mask Atom');
 	mask1_masks1.name = 'Mask 1';
 
@@ -410,7 +378,7 @@ var posY = linear(mainAnim, 850, 540, thisComp.height / 2, thisComp.height / 2 -
 	mask1_masks1.name = 'footage botton';
 
 	// fx...
-	effects = layer.property('ADBE Effect Parade');
+	effects = footageAnimLayer.property('ADBE Effect Parade');
 	// main transform effect...
 	mainTransform_effects1 = effects.addProperty('ADBE Geometry2');
 	mainTransform_effects1.name = 'main transform';
@@ -481,36 +449,36 @@ var posY = linear(mainAnim, 850, 540, thisComp.height / 2, thisComp.height / 2 -
 	maskReference1_masks4.property('ADBE Effect Path Stream Ref').setValue(1);
 	maskReference1_masks4.name = 'Mask Reference 1';
 
-	// layer attributes...
-	layer.inPoint = 2.16883550216884;
-	layer.outPoint = 3.6036036036036;
-	layer.adjustmentLayer = true;
-	layer.name = 'adj_footage animation';
-	layer.label = 5;
-	layer.shy = true;
-	layer.locked = true;
+	// footageAnimLayer attributes...
+	footageAnimLayer.inPoint = 2.16883550216884;
+	footageAnimLayer.outPoint = 3.6036036036036;
+	footageAnimLayer.adjustmentLayer = true;
+	footageAnimLayer.name = 'adj_footage animation';
+	footageAnimLayer.label = 5;
+	footageAnimLayer.shy = true;
+	footageAnimLayer.locked = true;
 
 	//-----------------------------------------------------------------------
 
 	// shape layer creation...
-	layer = shpAdjustment(comp);
+	ccLayer = shpAdjustment(comp);
 
 	// fx...
-	effects = layer.property('ADBE Effect Parade');
+	effects = ccLayer.property('ADBE Effect Parade');
 	// black & white effect...
 	blackWhite_effects1 = effects.addProperty('ADBE Black&White');
 	blackWhite_effects1.name = 'Black & White';
 	compositingOptions_blackWhite2 = blackWhite_effects1.property('ADBE Effect Built In Params');
 
-	// layer attributes...
-	layer.inPoint = 0;
-	layer.outPoint = 0.73406740073407;
-	layer.comment = '';
-	layer.adjustmentLayer = true;
-	layer.name = 'adj_bw';
-	layer.label = 5;
-	layer.shy = true;
-	layer.locked = true;
+	// ccLayer attributes...
+	ccLayer.inPoint = 0;
+	ccLayer.outPoint = 0.73406740073407;
+	ccLayer.comment = '';
+	ccLayer.adjustmentLayer = true;
+	ccLayer.name = 'adj_bw';
+	ccLayer.label = 5;
+	ccLayer.shy = true;
+	ccLayer.locked = true;
 
 	//-----------------------------------------------------------------------
 
@@ -536,10 +504,41 @@ var posY = linear(mainAnim, 850, 540, thisComp.height / 2, thisComp.height / 2 -
 
 	//-----------------------------------------------------------------------
 
+	// shape layer creation...
+	posOffsetLayer = shpAdjustment(comp);
+
+	// fx...
+	effects = posOffsetLayer.property('ADBE Effect Parade');
+	// 'pos y offset' effect...
+	posYOffset_effects1 = effects.addProperty('ADBE Tile');
+	posYOffset_effects1.name = 'pos y offset';
+	posYOffset_effects1.property('ADBE Tile-0001').setValue([960, 540]);
+
+	// pos y offset tile center expression...
+	exp = 'var posYsld = thisComp.layer(\'ctrl\').effect(\'pos y offset\')(1).value;\
+var mainAnim = thisComp.layer(\'adj_footage animation\').effect(\'main transform\')(\'Position\')[1];\
+var posY = linear(mainAnim, 850, 540, thisComp.height / 2, thisComp.height / 2 - posYsld);\
+[thisComp.width / 2, posY];';
+	posYOffset_effects1.property('ADBE Tile-0001').expression = exp;
+
+	posYOffset_effects1.property('ADBE Tile-0006').setValue(1);
+
+	// posOffsetLayer attributes...
+	posOffsetLayer.name = 'adj_footage pos y offset';
+	posOffsetLayer.label = 5;
+	posOffsetLayer.adjustmentLayer = true;
+	posOffsetLayer.inPoint = 2.16883550216884;
+	posOffsetLayer.outPoint = 3.6036036036036;
+	//-----------------------------------------------------------------------
+
 	var VNDLayer = shpNuncaDesliga(comp);
 
 	VNDLayer.moveAfter(cLayer);
 	VNDLayer.shy = true;
 	VNDLayer.locked = true;
 	VNDLayer.selected = false;
+	
+	posOffsetLayer.moveAfter(footageAnimLayer);
+	posOffsetLayer.shy = true;
+	posOffsetLayer.locked = true;
 }
