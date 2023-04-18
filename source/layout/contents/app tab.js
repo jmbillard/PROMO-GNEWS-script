@@ -22,8 +22,7 @@ batchVNDBtn.helpTip = 'vinheta nunca desliga\nselect file sources';
 
 
 //---------------------------------------------------------
-
-currentGrp = tabsGrp.app;
+currentGrp.add('panel');
 var appSubGrp2 = currentGrp.add('group');
 
 var appUtilTxt = appSubGrp2.add('statictext', undefined, 'utilities:', { name: 'label' , truncate: 'end'});
@@ -49,6 +48,7 @@ setupProjBtn.helpTip = 'setup project:\n\nbit depth: 8\ncolor space: \'Rec 709\'
 var setupLabsBtn = appSubGrp3.add('iconbutton', iconSize, setupLabIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
 setupLabsBtn.helpTip = 'setup project label colors / names';
 
+currentGrp.add('panel');
 var appSubGrp4 = currentGrp.add('group');
 
 var appCompTxt = appSubGrp4.add('statictext', undefined, 'comp:', { name: 'label' , truncate: 'end'});
