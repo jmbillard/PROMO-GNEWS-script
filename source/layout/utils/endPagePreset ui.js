@@ -650,8 +650,20 @@ function endPagePresetDialog() {
 
 	applyBtn.onClick = function () {
 
+		// compToUi_updateUi();
+
 		app.beginUndoGroup('apply end page preset');
 
+		//try {
+			uiToComp_updateLayers('comp_img apresentador', foto_layoutDrop);
+			uiToComp_updateLayers('comp_pattern', pattern_layoutDrop);
+		//} catch (err) { }
+
+		uiToComp_setDropDownIndex(pattern_layoutDrop, 'layout', 'pattern');
+		uiToComp_setDropDownIndex(formato_servicoDrop, 'servico', 'formato');
+		uiToComp_setDropDownIndex(mes_servicoDrop, 'servico', 'mes');
+		uiToComp_setDropDownIndex(semana_servicoDrop, 'servico', 'semana');
+		uiToComp_setDropDownIndex(tema_aparenciaDrop, 'aparencia', 'tema');
 		uiToComp_colors();
 		uiToComp_updateCompFx();
 
