@@ -173,6 +173,9 @@ function endPagePresetDialog() {
 			var layoutFx = aItem.layer('ctrl_comp')
 				.property('ADBE Effect Parade')
 				.property('layout end page');
+			var servicoFx = aItem.layer('ctrl_comp')
+				.property('ADBE Effect Parade')
+				.property('servico end page');
 			layoutFx.property('subtitulo')
 				.setValue(obj.layout_end_page.subtitulo);
 			layoutFx.property('foto')
@@ -181,6 +184,8 @@ function endPagePresetDialog() {
 				.setValue(obj.layout_end_page.footage);
 			layoutFx.property('pattern')
 				.setValue(obj.layout_end_page.pattern);
+			servicoFx.property('a partir das')
+				.setValue(obj.servico_end_page.a_partir_das);
 		} catch (err) { }
 	}
 
@@ -650,16 +655,12 @@ function endPagePresetDialog() {
 
 	applyBtn.onClick = function () {
 
-		// compToUi_updateUi();
-
 		app.beginUndoGroup('apply end page preset');
 
-		//try {
-			uiToComp_updateLayers('comp_img apresentador', foto_layoutDrop);
-			uiToComp_updateLayers('comp_pattern', pattern_layoutDrop);
-		//} catch (err) { }
-
-		uiToComp_setDropDownIndex(pattern_layoutDrop, 'layout', 'pattern');
+		uiToComp_updateLayers('comp_img apresentador', foto_layoutDrop);
+		uiToComp_updateLayers('comp_pattern', pattern_layoutDrop);
+		
+		uiToComp_setDropDownIndex(modelo_layoutDrop, 'layout', 'modelo');
 		uiToComp_setDropDownIndex(formato_servicoDrop, 'servico', 'formato');
 		uiToComp_setDropDownIndex(mes_servicoDrop, 'servico', 'mes');
 		uiToComp_setDropDownIndex(semana_servicoDrop, 'servico', 'semana');
@@ -703,6 +704,8 @@ function endPagePresetDialog() {
 		} catch (err) { }
 
 		app.endUndoGroup();
+		
+		refreshBtn.notify();
 	};
 
 	//---------------------------------------------------------
