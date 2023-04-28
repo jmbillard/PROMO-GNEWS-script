@@ -148,7 +148,7 @@ tranca todas as propriedades de transformação não animadas dos layers selecio
 ---
 <br />
 
-## ![randomize layers btn](/images/icons/2%20-%20animation/randomizeLayerTimesIcon%20dark.png) botão **`randomizar layers`**
+## ![randomize layers btn](/images/icons/2%20-%20animation/randomLayerIcon%20dark.png) botão **`randomizar layers`**
 
 avança e atrasa os tempos de entrada e saída de cada layer selecionado entre o primeiro e último tempos de entrada.
 > caso os layers selecionados tenham o mesmo tempo de entrada todos serão deslocados entre 0 e 1 segundo.
@@ -312,13 +312,13 @@ estabelece um limite de caracteres por linha e quebra o texto assim que esse lim
 
 aplica um efeito 'fill' com a cor selecionada.
   
-| cor                                | rgb           | #hex    |
+| cor                                 | rgb           | #hex    |
 | ----------------------------------- | ------------- | ------- |
 | ![color](/images/colors/E52F2E.png) | 229, 49, 49   | #E52F2E |
 | ![color](/images/colors/ECFF8C.png) | 238, 255, 140 | #ECFF8C |
 | ![color](/images/colors/221E1D.png) | 35, 30, 30    | #221E1D |
 
-| cor                                | rgb           | #hex    |
+| cor                                 | rgb           | #hex    |
 | ----------------------------------- | ------------- | ------- |
 | ![color](/images/colors/141414.png) | 20, 20, 20    | #141414 |
 | ![color](/images/colors/333333.png) | 51, 51, 51    | #333333 |
