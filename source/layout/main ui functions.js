@@ -82,7 +82,7 @@ function setLayout() {
 	var hMargin = 90 + hOffset;
 	var vMargin = 40 + hOffset;
 
-	aboutTxt.text = vStr;
+	aboutTxt.text = !hardNews ? vStr : vStr + ' HN';
 
 	for (var lab = 0; lab < tabLabels.length; lab++) {
 		tabLabels[lab].size.width = w.size.width - 24;
