@@ -678,9 +678,9 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		projFldGrp.enabled = !hardNews;
 		orgFoldersGrp.enabled = !hardNews;
 		endPagePresetBtn.enabled = !hardNews; // end page presets button > project tab
+		aboutTxt.text = !hardNews ? vStr : vStr + ' HN';
 		savePrefs(); // → save preferences.json
 
-		aboutTxt.text = !hardNews ? vStr : vStr + ' HN';
 	};
 
 	//---------------------------------------------------------
