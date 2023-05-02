@@ -148,7 +148,7 @@ tranca todas as propriedades de transformação não animadas dos layers selecio
 ---
 <br />
 
-## ![randomize layers btn](/images/icons/2%20-%20animation/randomizeLayerTimesIcon%20dark.png) botão **`randomizar layers`**
+## ![randomize layers btn](/images/icons/2%20-%20animation/randomLayerIcon%20dark.png) botão **`randomizar layers`**
 
 avança e atrasa os tempos de entrada e saída de cada layer selecionado entre o primeiro e último tempos de entrada.
 > caso os layers selecionados tenham o mesmo tempo de entrada todos serão deslocados entre 0 e 1 segundo.
