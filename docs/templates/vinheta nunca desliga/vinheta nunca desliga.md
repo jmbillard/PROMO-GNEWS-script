@@ -5,7 +5,7 @@
 - *escura* - fundo preto e texto branco
 
 > 📋 *exemplo:*\
->![exemplos_marca](vinheta%20nunca%20desliga%20assets/comp_exemplos.gif)
+>![exemplos_nunca_desliga](vinheta%20nunca%20desliga%20assets/comp_exemplos.gif)
 
 ---
 <br/>
