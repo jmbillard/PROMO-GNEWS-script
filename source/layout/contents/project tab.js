@@ -20,14 +20,14 @@ projIdTxt.minimumSize.width = vMin;
 projIdTxt.helpTip = projIdContent;
 
 var insertUserIdBtn = projSubGrp1.add('iconbutton', iconSize, addIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-insertUserIdBtn.helpTip = 'insert user with ' + projIdContent;
+insertUserIdBtn.helpTip = '◖ → insert user with ' + projIdContent;
 
 var projNameTxt = projSubGrp1.add('edittext', undefined, 'proj name');
 projNameTxt.maximumSize.width = 100;
 projNameTxt.minimumSize.width = vMin;
 projNameTxt.helpTip = 'project name';
 var renameItemBtn = projSubGrp1.add('iconbutton', iconSize, applyIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-renameItemBtn.helpTip = 'rename comps';
+renameItemBtn.helpTip = '◖ → rename comps';
 
 //---------------------------------------------------------
 
@@ -35,7 +35,7 @@ currentGrp.add('panel');
  
 
 var projOrgBtn = currentGrp.add('iconbutton', iconSize, projOrgIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-projOrgBtn.helpTip = 'organize project | organization tags';
+projOrgBtn.helpTip = '◖ → organize project\n◗ → organization tags';
 
 //---------------------------------------------------------
 
@@ -44,7 +44,7 @@ currentGrp.add('panel');
 
 // end page presets UI button...
 var endPagePresetBtn = currentGrp.add('iconbutton', iconSize, endPagePresetIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-endPagePresetBtn.helpTip = 'end page JSON presets';
+endPagePresetBtn.helpTip = '◖ → end page JSON presets';
 endPagePresetBtn.enabled = !hardNews;
 
 //---------------------------------------------------------
@@ -54,13 +54,13 @@ currentGrp.add('panel');
 var projSubGrp2 = currentGrp.add('group');
 
 var collectTogBtn = projSubGrp2.add('iconbutton', iconTogSize, fldTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
-collectTogBtn.helpTip = 'collect files';
+collectTogBtn.helpTip = '⦿ → collect files';
 
 var collectFontsTogBtn = projSubGrp2.add('iconbutton', iconTogSize, txtTogIcon[iconTheme], { name: 'btn', style: 'toolbutton', toggle: 1 });
-collectFontsTogBtn.helpTip = 'collect fonts';
+collectFontsTogBtn.helpTip = '⦿ → collect fonts';
 
 var saveBtn = projSubGrp2.add('iconbutton', iconSize, saveIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-saveBtn.helpTip = 'save project';
+saveBtn.helpTip = '◖ → save inside project folder\n◗ → save inside custom folder';
 
 //---------------------------------------------------------
 
@@ -69,7 +69,7 @@ currentGrp.add('panel');
 var projSubGrp3 = currentGrp.add('group');
 
 var fldProjBtn2 = projSubGrp3.add('iconbutton', iconSize, projFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-fldProjBtn2.helpTip = 'project folder';
+fldProjBtn2.helpTip = '◖ → open current project folder';
 
 /*
 
@@ -81,11 +81,17 @@ fldProjBtn2.helpTip = 'project folder';
 
 projIdTxt.onChange = projIdTxt.onEnterKey = function () {
 	this.text = projId = this.text
-		.replaceSpecialCharacters()
-		.toUpperCase();
+		.replaceSpecialCharacters();
 
-	if (hardNews) this.text = projId = this.text.toLowerCase();
+	if (hardNews) {
+		this.text = projId = this.text
+			.toLowerCase();
 
+	} else {
+		this.text = projId = this.text
+			.replace(/\s/g, '')
+			.toUpperCase();
+	}
 	if (projIdTxt.text != projIdContent) setXMPdata('identifier', projId);
 	if (this.text.trim() == '') this.text = projIdContent;
 };
