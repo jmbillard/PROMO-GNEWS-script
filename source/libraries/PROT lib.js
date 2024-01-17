@@ -41,7 +41,7 @@ String.prototype.replaceSpecialCharacters = function () {
 	return this.replace(/À|Á|Â|Ã|Ä|\u00C0|\u00C1|\u00C2|\u00C3|\u00C4/g, 'A')
 		.replace(/à|á|â|ã|ä|\u00E0|\u00E1|\u00E2|\u00E3|\u00E4/g, 'a')
 		.replace(/È|É|Ê|Ë|\u00C8|\u00C9|\u00CA|\u00CB/g, 'E')
-		.replace(/è|é|ê|ë|\u00E8|\u00E9|\u00EA|\u00EB/g, 'e')
+		.replace(/è|é|ê|ë|&|\u00E8|\u00E9|\u00EA|\u00EB/g, 'e')
 		.replace(/Ì|Í|Î|Ï|\u00CC|\u00CD|\u00CE|\u00CF/g, 'I')
 		.replace(/ì|í|î|ï|\u00EC|\u00ED|\u00EE|\u00EF/g, 'i')
 		.replace(/Ò|Ó|Ô|Õ|Ö|\u00D2|\u00D3|\u00D4|\u00D5|\u00D6/g, 'O')

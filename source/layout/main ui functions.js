@@ -83,6 +83,7 @@ function setLayout() {
 	var vMargin = 40 + hOffset;
 
 	aboutTxt.text = !hardNews ? vStr : vStr + ' HN';
+	aboutTxt.text = !homeOffice ? vStr : vStr + ' HO';
 
 	for (var lab = 0; lab < tabLabels.length; lab++) {
 		tabLabels[lab].size.width = w.size.width - 24;

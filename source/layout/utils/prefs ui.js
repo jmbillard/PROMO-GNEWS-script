@@ -643,6 +643,7 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		baseJorBtn.enabled = !homeOffice;
 		hnGrp.enabled = !homeOffice;
 		projFldGrp.enabled = homeOffice ? true : !hardNews;
+		aboutTxt.text = !homeOffice ? vStr : vStr + ' HO';
 
 		savePrefs(); // → save preferences.json
 		updateFolderPaths(); // → update templates and fonts folder
@@ -680,7 +681,6 @@ ex: \'RTR - GNEWS DESTAQUES J10 - mariana\'\
 		endPagePresetBtn.enabled = !hardNews; // end page presets button > project tab
 		aboutTxt.text = !hardNews ? vStr : vStr + ' HN';
 		savePrefs(); // → save preferences.json
-
 	};
 
 	//---------------------------------------------------------
