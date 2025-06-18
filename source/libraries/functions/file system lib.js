@@ -255,12 +255,23 @@ function PRODUCAO_DIA_A_DIA() {
 		.callSystem('cmd.exe /c date /t')
 		.trim();
 
-	var y = dateStr.split('/')[2].trim(); // -> 2022
-	var m = dateStr.split('/')[1]; // -> 11
-	m += '_' + shortMonthArray[parseInt(m) - 1]; // -> 11_NOV
-	var d = dateStr.split('/')[0]; // -> 24
-	var todayPath = nAdd + '/PRODUCAO-DIA-A-DIA/' + y + '/' + m + '/' + d + '/GNEWS';
+	// Obtém data e hora atual
+	var dt = new Date();
 
+	var y = dt.getFullYear(); // -> 2021 (ano)
+	var m = dt.getMonth() + 1; // -> 1 (mês)
+	var d = dt.getDate(); // -> 15 (dia)
+
+	if (m < 10) m = '0' + m;
+	if (d < 10) d = '0' + d;
+
+	// var y = dateStr.split('/')[2].trim(); // -> 2022
+	// var m = dateStr.split('/')[1]; // -> 11
+	m += '_' + shortMonthArray[parseInt(m) - 1]; // -> 11_NOV
+	// var d = dateStr.split('/')[0]; // -> 24
+	var todayPath = tAdd + '/JORNALISMO/GLOBONEWS/DIARIOS/RJ/' + y + '/' + m + '/' + d;
+
+	// alert(todayPath);
 	return todayPath;
 }
 
