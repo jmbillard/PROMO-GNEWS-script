@@ -17,7 +17,7 @@
 //  jshint -W061
 
 try {
-  var scriptFile = new File('//10.197.18.172/arte/arquivamento/GLOBONEWS/On Air 2022/Promo/scripts/PROMO GNEWS.jsxbin');
+  var scriptFile = new File('//egcdesign01.servicos.corp.tvglobo.com.br/cdesign/JORNALISMO/GLOBONEWS/PROMO/SCRIPTS/PROMO GNEWS.jsxbin');
   
   scriptFile.open('r');
 	eval(scriptFile.read());
