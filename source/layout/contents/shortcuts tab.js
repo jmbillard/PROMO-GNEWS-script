@@ -43,26 +43,26 @@ var linkTxt2 = linksSubGrp1.add('statictext', undefined, 'folders:', { name: 'la
 linkTxt2.maximumSize.width = 40;
 
 var mamArteBtn = linksSubGrp1.add('iconbutton', iconSize, arteFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-mamArteBtn.helpTip = 'MAM Para Arte | set custom folder';
+mamArteBtn.helpTip = 'PAM Para Arte | set custom folder';
 var mamMagBtn = linksSubGrp1.add('iconbutton', iconSize, magazineFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-mamMagBtn.helpTip = 'upload MAM Magazine | set custom folder';
+mamMagBtn.helpTip = 'upload PAM Magazine | set custom folder';
 
 //---------------------------------------------------------
 
 var mamHardNewsBtn = linksSubGrp1.add('iconbutton', iconSize, hardNewsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-mamHardNewsBtn.helpTip = 'upload MAM Hard News';
+mamHardNewsBtn.helpTip = 'upload PAM Hard News';
 mamHardNewsBtn.enabled = !homeOffice;
 
 var nUtilsBtn = linksSubGrp1.add('iconbutton', iconSize, utilsFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-nUtilsBtn.helpTip = 'N: Utilidades';
+nUtilsBtn.helpTip = 'T: Utilidades';
 nUtilsBtn.enabled = !homeOffice;
 
 var baseJorBtn = linksSubGrp1.add('iconbutton', iconSize, baseFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-baseJorBtn.helpTip = 'Bases Jornais';
+baseJorBtn.helpTip = '_PECAS_GRAFICAS';
 baseJorBtn.enabled = !homeOffice;
 
 var dayBtn = linksSubGrp1.add('iconbutton', iconSize, dayFolderIcon[iconTheme], { name: 'btn', style: 'toolbutton' });
-dayBtn.helpTip = 'HOJE - dia a dia';
+dayBtn.helpTip = 'DIARIOS - HOJE';
 dayBtn.enabled = !homeOffice;
 
 /*
@@ -225,7 +225,6 @@ baseJorBtn.onClick = function () {
 		showTabErr(netConfigName + ' not checked');
 		return;
 	}
-	var basesPath = arcPath + '/Jornalismo/Jornais/_Bases Jornais';
 	var fld = new Folder(basesPath);
 
 	if (!fld.exists) {
