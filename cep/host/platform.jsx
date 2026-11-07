@@ -803,8 +803,33 @@ PGN_override('updateFolderPaths', function () {
 // preferences reload → folder paths in local form...
 PGN_override('loadDefaultPrefs', function () {
 	PGN.classic.loadDefaultPrefs();
+	PGN_dropRemovedSubPaths();
 	PGN.net.localPrefs();
 });
+
+// org. folders: the classic loader puts back every missing default sigla; the settings
+// window keeps the default siglas the user removed in folders.removedSubPath...
+function PGN_dropRemovedSubPaths() {
+	try {
+		var f = JSONPrefsObj.folders;
+		var rm = f.removedSubPath;
+
+		if (!(rm instanceof Array) || !rm.length) return;
+		var src = f.promoSubPath;
+		var copy = {};
+
+		// a copy: the object may be shared with defPrefsObj...
+		for (var k in src) {
+			if (src.hasOwnProperty(k)) copy[k] = src[k];
+		}
+		for (var i = 0; i < rm.length; i++) {
+			if (copy.hasOwnProperty(rm[i])) delete copy[rm[i]];
+		}
+		f.promoSubPath = copy;
+		promoSubPath = copy;
+	} catch (err) { }
+}
+PGN_dropRemovedSubPaths();
 
 /*
 

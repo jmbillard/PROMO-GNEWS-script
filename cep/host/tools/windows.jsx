@@ -723,6 +723,7 @@ PGN.register('prefs.resetOrgFolders', function (args) {
 
 	PGN.prefs.detach();
 	JSONPrefsObj.folders.promoSubPath = PGN.win.clone(defPrefsObj.folders.promoSubPath);
+	JSONPrefsObj.folders.removedSubPath = [];
 	savePrefs(); // → save preferences.json
 	promoSubPath = JSONPrefsObj.folders.promoSubPath;
 
@@ -734,10 +735,12 @@ PGN.register('prefs.resetOrgFolders', function (args) {
 PGN.register('prefs.setOrgFolders', function (args) {
 	var map = args.map;
 	var clean = {};
-	var n = 0;
+	var removed = [];
+	var defs = defPrefsObj.folders.promoSubPath;
 
 	if (map == null || typeof map != 'object') PGN.fail('lista inv\u00E1lida');
 
+	// key order = the order shown in the editor...
 	for (var k in map) {
 		if (!map.hasOwnProperty(k)) continue;
 		var key = String(k).toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -745,14 +748,18 @@ PGN.register('prefs.setOrgFolders', function (args) {
 
 		if (key == '' || val == '') continue;
 		clean[key] = val;
-		n++;
+	}
+	// default siglas missing from the list stay removed (see PGN_dropRemovedSubPaths)...
+	for (var d in defs) {
+		if (defs.hasOwnProperty(d) && !clean.hasOwnProperty(d)) removed.push(d);
 	}
 	PGN.prefs.detach();
 	JSONPrefsObj.folders.promoSubPath = clean;
+	JSONPrefsObj.folders.removedSubPath = removed;
 	savePrefs(); // → save preferences.json
-	loadDefaultPrefs(); // → adds back any missing default sigla
+	loadDefaultPrefs(); // → defaults back, then the removed ones dropped again
 
-	return { msg: 'Pastas de organiza\u00E7\u00E3o salvas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defPrefsObj.folders.promoSubPath) } };
+	return { msg: 'Pastas de organiza\u00E7\u00E3o salvas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defs) } };
 });
 
 // updateBtn: left click → download the latest release | right click → open the github repo...

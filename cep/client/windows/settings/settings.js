@@ -96,37 +96,237 @@
 		]);
 	}
 
-	// ---- org folders editor (sigla → sub path) ----
+	// ---- org folders editor: a small tree (pasta → sigla + subpasta) ----
+	// rows reorder by dragging the vertical handle (also across folders), new rows/folders, × removes
 	function orgEditor() {
 		var ed = h('div.orged');
 		var inner = h('div.oi');
 		ed.appendChild(inner);
-		var map = Object.assign({}, (P.folders && P.folders.promoSubPath) || {});
-		var defs = (P.defaults && P.defaults.folders && P.defaults.folders.promoSubPath) || {};
-		var q = '';
+		var defs = {};
 		var saveT;
+		var tree = h('div.olist');
 
-		function persist() {
+		function split(path) {
+			var i = path.indexOf('/');
+			return i < 0 ? { cat: path, sub: '' } : { cat: path.slice(0, i), sub: path.slice(i + 1) };
+		}
+		function clean(v) { return String(v || '').replace(/\\/g, '/').replace(/^\/+|\/+$/g, '').replace(/\/{2,}/g, '/').trim(); }
+
+		// ordered model → DOM
+		function fromMap(map) {
+			var groups = [], byName = {};
+			Object.keys(map).forEach(function (k) {
+				var p = split(map[k]);
+				if (!byName[p.cat]) { byName[p.cat] = { name: p.cat, rows: [] }; groups.push(byName[p.cat]); }
+				byName[p.cat].rows.push({ k: k, sub: p.sub });
+			});
+			return groups;
+		}
+
+		// DOM → ordered map (the order is saved too)
+		function toMap() {
+			var map = {}, seen = {};
+			tree.querySelectorAll('.ogrp').forEach(function (g) {
+				var name = clean(g.querySelector('.ogn').value);
+				g.querySelectorAll('.oit').forEach(function (r) {
+					var k = r.querySelector('.sig').value.trim();
+					var sub = clean(r.querySelector('.pth').value);
+					r.classList.toggle('dup', !!(k && seen[k]));
+					if (!k || !name || seen[k]) return;
+					seen[k] = true;
+					map[k] = name + (sub ? '/' + sub : '');
+				});
+			});
+			return map;
+		}
+
+		function mark() {
+			tree.querySelectorAll('.ogrp').forEach(function (g) {
+				var name = clean(g.querySelector('.ogn').value);
+				var n = g.querySelectorAll('.oit').length;
+				g.querySelector('.ogc').textContent = n;
+				g.classList.toggle('empty', !n);
+				g.querySelectorAll('.oit').forEach(function (r) {
+					var k = r.querySelector('.sig').value.trim();
+					var sub = clean(r.querySelector('.pth').value);
+					var full = name + (sub ? '/' + sub : '');
+					r.classList.toggle('custom', !!k && defs[k] == null);
+					r.classList.toggle('mod', !!k && defs[k] != null && defs[k] !== full);
+				});
+			});
+			count.textContent = Object.keys(toMap()).length + ' siglas';
+		}
+
+		function changed() {
+			mark();
 			clearTimeout(saveT);
 			saveT = setTimeout(function () {
+				var map = toMap();
 				PGN.run('prefs.setOrgFolders', { map: map }).then(function (r) {
 					if (r.ok && r.data) {
-						map = Object.assign({}, r.data.promoSubPath);
 						if (r.data.defaults) defs = r.data.defaults;
-						P.folders.promoSubPath = Object.assign({}, map);
-						count.textContent = Object.keys(map).length + ' siglas';
+						P.folders.promoSubPath = Object.assign({}, r.data.promoSubPath);
+						mark();
 					}
 					UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
 				});
-			}, 450);
+			}, 500);
 		}
 
-		function cat(path) { var i = path.indexOf('/'); return i < 0 ? path : path.slice(0, i); }
+		function x(title, fn) {
+			return h('button.ox', { title: title, 'aria-label': title, onclick: fn }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.close)]));
+		}
 
-		// header: count · filter · reset (two clicks)
-		var count = h('span.cnt.mono', { text: Object.keys(map).length + ' siglas' });
-		var filter = h('input.fld.mini-fld', { type: 'text', placeholder: 'filtrar', 'aria-label': 'Filtrar siglas', spellcheck: 'false' });
-		filter.addEventListener('input', function () { q = UI.strip(filter.value.toLowerCase()); list(); });
+		function rowEl(r, delay) {
+			var sig = h('input.sig', { type: 'text', value: r.k, maxlength: 6, placeholder: 'SIG', 'aria-label': 'Sigla', spellcheck: 'false' });
+			var pth = h('input.pth', { type: 'text', value: r.sub, placeholder: '(raiz da pasta)', 'aria-label': 'Subpasta da sigla', spellcheck: 'false' });
+			var handle = h('button.oh', { title: 'arrastar para reordenar (Alt + ↑/↓)', 'aria-label': 'Reordenar ' + (r.k || 'linha') }, h('i'));
+			var row = h('div.oit', { style: { animationDelay: delay + 'ms' } }, [handle, sig, pth]);
+			row.appendChild(x('remover linha', function () {
+				row.classList.add('out');
+				setTimeout(function () { row.remove(); changed(); }, 200);
+			}));
+			sig.addEventListener('input', function () { sig.value = sig.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); changed(); });
+			pth.addEventListener('change', function () { pth.value = clean(pth.value); changed(); });
+			[sig, pth].forEach(function (i) { i.addEventListener('keydown', function (e) { if (e.key === 'Enter') i.blur(); }); });
+			handle.addEventListener('pointerdown', function (e) { startDrag(row, e); });
+			handle.addEventListener('keydown', function (e) {
+				if (!e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+				e.preventDefault();
+				var rows = [].slice.call(tree.querySelectorAll('.oit'));
+				var i = rows.indexOf(row), j = i + (e.key === 'ArrowUp' ? -1 : 1);
+				if (j < 0 || j >= rows.length) return;
+				flip(function () { if (j < i) rows[j].before(row); else rows[j].after(row); });
+				handle.focus();
+				changed();
+			});
+			return row;
+		}
+
+		function groupEl(g, d) {
+			var rows = h('div.orows');
+			var name = h('input.ogn', { type: 'text', value: g.name, 'aria-label': 'Nome da pasta', spellcheck: 'false' });
+			var armT;
+			var del = x('remover pasta (clique duas vezes)', function () {
+				if (!grp.classList.contains('arm')) {
+					grp.classList.add('arm');
+					armT = setTimeout(function () { grp.classList.remove('arm'); }, 2500);
+					return;
+				}
+				clearTimeout(armT);
+				grp.classList.add('out');
+				setTimeout(function () { grp.remove(); changed(); }, 220);
+			});
+			var add = h('button.oa', { title: 'nova linha', 'aria-label': 'Nova linha em ' + g.name }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 6v12M6 12h12')]));
+			var chev = h('button.oc', { title: 'recolher', 'aria-label': 'Recolher ' + g.name, 'aria-expanded': 'true' }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.chev)]));
+			var grp = h('div.ogrp', { style: { animationDelay: d + 'ms' } }, [
+				h('div.ogh', null, [chev, UI.svg('0 0 24 24', { class: 'ofi', 'aria-hidden': 'true' }, [UI.path(I.folder)]), name, h('span.ogc.mono'), add, del]),
+				rows
+			]);
+			g.rows.forEach(function (r, i) { rows.appendChild(rowEl(r, d + 20 + i * 14)); });
+			chev.addEventListener('click', function () {
+				var shut = grp.classList.toggle('shut');
+				chev.setAttribute('aria-expanded', String(!shut));
+			});
+			name.addEventListener('change', function () { name.value = clean(name.value).toUpperCase() || g.name; changed(); });
+			name.addEventListener('keydown', function (e) { if (e.key === 'Enter') name.blur(); });
+			add.addEventListener('click', function () {
+				grp.classList.remove('shut');
+				var r = rowEl({ k: '', sub: '' }, 0);
+				r.classList.add('new');
+				rows.appendChild(r);
+				r.querySelector('.sig').focus();
+				mark();
+			});
+			return grp;
+		}
+
+		function render(map) {
+			tree.textContent = '';
+			var d = 0;
+			fromMap(map).forEach(function (g) { tree.appendChild(groupEl(g, d)); d += 40; });
+			mark();
+		}
+
+		/* --- drag & drop (pointer based, FLIP animations) --- */
+		function flip(mutate) {
+			var els = [].slice.call(tree.querySelectorAll('.oit:not(.drag)'));
+			var before = els.map(function (e) { return e.getBoundingClientRect().top; });
+			mutate();
+			els.forEach(function (e, i) {
+				var dy = before[i] - e.getBoundingClientRect().top;
+				if (!dy) return;
+				e.style.transition = 'none';
+				e.style.transform = 'translateY(' + dy + 'px)';
+				requestAnimationFrame(function () {
+					e.style.transition = 'transform .22s cubic-bezier(.3, 1.2, .5, 1)';
+					e.style.transform = '';
+				});
+			});
+		}
+
+		function startDrag(row, e) {
+			e.preventDefault();
+			var grab = e.clientY - row.getBoundingClientRect().top;
+			var ty = 0;
+			row.classList.add('drag');
+			tree.classList.add('dragging');
+			var move = function (ev) {
+				// auto scroll near the edges
+				var tr = tree.getBoundingClientRect();
+				if (ev.clientY < tr.top + 24) tree.scrollTop -= 8;
+				if (ev.clientY > tr.bottom - 24) tree.scrollTop += 8;
+				// where should it go?
+				var y = ev.clientY;
+				var groups = [].slice.call(tree.querySelectorAll('.ogrp:not(.shut)'));
+				var target = null, before = null;
+				for (var i = 0; i < groups.length; i++) {
+					var gr = groups[i].getBoundingClientRect();
+					if (y < gr.bottom || i === groups.length - 1) {
+						target = groups[i].querySelector('.orows');
+						var rows = [].slice.call(target.querySelectorAll('.oit:not(.drag)'));
+						for (var j = 0; j < rows.length; j++) {
+							var rr = rows[j].getBoundingClientRect();
+							if (y < rr.top + rr.height / 2) { before = rows[j]; break; }
+						}
+						break;
+					}
+				}
+				if (target && !(before ? row.nextElementSibling === before && row.parentNode === target : row.parentNode === target && !row.nextElementSibling)) {
+					flip(function () { if (before) target.insertBefore(row, before); else target.appendChild(row); });
+					tree.querySelectorAll('.ogrp').forEach(function (g) { g.classList.toggle('hot', g.contains(row)); });
+				}
+				// keep the row under the pointer: layout top = visual top - current offset
+				var layoutTop = row.getBoundingClientRect().top - ty;
+				ty = y - grab - layoutTop;
+				row.style.transform = 'translateY(' + ty + 'px)';
+			};
+			var up = function () {
+				window.removeEventListener('pointermove', move);
+				window.removeEventListener('pointerup', up);
+				row.style.transition = 'transform .25s cubic-bezier(.3, 1.3, .5, 1)';
+				row.style.transform = '';
+				setTimeout(function () { row.style.transition = ''; }, 260);
+				row.classList.remove('drag');
+				tree.classList.remove('dragging');
+				tree.querySelectorAll('.ogrp.hot').forEach(function (g) { g.classList.remove('hot'); });
+				changed();
+			};
+			window.addEventListener('pointermove', move);
+			window.addEventListener('pointerup', up);
+		}
+
+		// header: count · new folder · reset (two clicks)
+		var count = h('span.cnt.mono');
+		var newGrp = h('button.chip', { title: 'nova pasta' }, '+ pasta');
+		newGrp.addEventListener('click', function () {
+			var g = groupEl({ name: 'NOVA PASTA', rows: [{ k: '', sub: '' }] }, 0);
+			tree.appendChild(g);
+			var n = g.querySelector('.ogn');
+			n.focus(); n.select();
+			tree.scrollTop = tree.scrollHeight;
+			mark();
+		});
 		var rst = h('button.rst', { title: 'restaurar a lista padrão' }, [UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.reset)]), h('span', { text: 'padrão' })]);
 		var armT;
 		rst.addEventListener('click', function () {
@@ -137,85 +337,20 @@
 			}
 			clearTimeout(armT); rst.classList.remove('arm'); rst.lastChild.textContent = 'padrão';
 			PGN.run('prefs.resetOrgFolders', {}).then(function (r) {
-				if (r.ok && r.data) { map = Object.assign({}, r.data.promoSubPath); P.folders.promoSubPath = Object.assign({}, map); count.textContent = Object.keys(map).length + ' siglas'; list(); }
+				if (r.ok && r.data) {
+					if (r.data.defaults) defs = r.data.defaults;
+					P.folders.promoSubPath = Object.assign({}, r.data.promoSubPath);
+					render(r.data.promoSubPath);
+				}
 				UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
 			});
 		});
-		var body = h('div.olist');
 
-		// add row
-		var nk = h('input.fld.sig', { type: 'text', placeholder: 'SIG', maxlength: 6, 'aria-label': 'Nova sigla', spellcheck: 'false' });
-		var nv = h('input.fld.pth', { type: 'text', placeholder: 'PASTA/subpasta', 'aria-label': 'Caminho da nova sigla', spellcheck: 'false' });
-		var add = h('button.mini.add', { title: 'adicionar sigla', 'aria-label': 'Adicionar sigla' }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 6v12M6 12h12')]));
-		nk.addEventListener('input', function () { nk.value = nk.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); });
-		function doAdd() {
-			var k = nk.value.trim(), v = nv.value.trim().replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
-			if (!k || !v) { (k ? nv : nk).focus(); nk.parentNode.classList.add('bad'); setTimeout(function () { nk.parentNode.classList.remove('bad'); }, 450); return; }
-			var existed = map[k] != null;
-			map[k] = v;
-			nk.value = ''; nv.value = '';
-			persist();
-			list(k);
-			UI.note(note, existed ? k + ' atualizada' : k + ' adicionada', true, version);
-			nk.focus();
-		}
-		add.addEventListener('click', doAdd);
-		[nk, nv].forEach(function (i) { i.addEventListener('keydown', function (e) { if (e.key === 'Enter') doAdd(); }); });
-
-		function item(k, d, flash) {
-			var isDef = defs[k] != null;
-			var changed = isDef && defs[k] !== map[k];
-			var v = h('input.fld.pth', { type: 'text', value: map[k], 'aria-label': 'Pasta da sigla ' + k, spellcheck: 'false' });
-			var row = h('div.oit' + (flash ? '.new' : ''), { style: { animationDelay: d + 'ms' } }, [
-				h('span.sig.mono' + (isDef ? '' : '.custom'), { text: k, title: isDef ? 'sigla padrão' : 'sigla adicionada' }),
-				v
-			]);
-			var act;
-			if (!isDef) {
-				act = h('button.mini.del', { title: 'remover ' + k, 'aria-label': 'Remover sigla ' + k }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.close)]));
-				act.addEventListener('click', function () {
-					row.classList.add('out');
-					setTimeout(function () { delete map[k]; persist(); list(); }, 220);
-				});
-			} else {
-				act = h('button.mini.rev' + (changed ? '' : '.hide'), { title: 'voltar ao padrão: ' + defs[k], 'aria-label': 'Voltar ' + k + ' ao padrão' }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.reset)]));
-				act.addEventListener('click', function () { map[k] = defs[k]; v.value = defs[k]; act.classList.add('hide'); row.classList.remove('mod'); persist(); });
-			}
-			if (changed) row.classList.add('mod');
-			v.addEventListener('change', function () {
-				var val = v.value.trim().replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
-				if (!val) { v.value = map[k]; return; }
-				map[k] = val; v.value = val;
-				if (isDef) { var c = defs[k] !== val; row.classList.toggle('mod', c); act.classList.toggle('hide', !c); }
-				persist();
-				if (cat(val) !== row.dataset.cat) list(k);
-			});
-			v.addEventListener('keydown', function (e) { if (e.key === 'Enter') v.blur(); });
-			row.dataset.cat = cat(map[k]);
-			row.appendChild(act);
-			return row;
-		}
-
-		function list(flashKey) {
-			body.textContent = '';
-			var keys = Object.keys(map).filter(function (k) { return !q || UI.strip((k + ' ' + map[k]).toLowerCase()).indexOf(q) >= 0; });
-			var groups = {};
-			keys.forEach(function (k) { var c = cat(map[k]); (groups[c] = groups[c] || []).push(k); });
-			var d = 0;
-			Object.keys(groups).sort().forEach(function (c) {
-				body.appendChild(h('div.ocat', { text: c.toLowerCase() }));
-				groups[c].sort().forEach(function (k) { body.appendChild(item(k, Math.min(d += 14, 360), k === flashKey)); });
-			});
-			if (!keys.length) body.appendChild(h('div.oempty', { text: 'nenhuma sigla' }));
-			count.textContent = Object.keys(map).length + ' siglas';
-		}
-
-		UI.add(inner, [
-			h('div.ohead', null, [count, filter, rst]),
-			body,
-			h('div.oadd', null, [nk, nv, add])
-		]);
-		ed.render = function () { map = Object.assign({}, (P.folders && P.folders.promoSubPath) || map); list(); };
+		UI.add(inner, [h('div.ohead', null, [count, h('span.grow'), newGrp, rst]), tree]);
+		ed.render = function () {
+			defs = (P.defaults && P.defaults.folders && P.defaults.folders.promoSubPath) || defs;
+			render((P.folders && P.folders.promoSubPath) || {});
+		};
 		return ed;
 	}
 
