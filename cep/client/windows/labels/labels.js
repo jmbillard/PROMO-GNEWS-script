@@ -178,6 +178,7 @@
 		setColor(hsvToHex(hueOf(i), satOf(i), Math.max(0, Math.min(100, Math.round(v)))), 'picker');
 	}
 
+	var wheelSet = false;
 	function updatePicker() {
 		var i = S.sel, c = S.colors[i], hsv = hexToHsv(c), hh = hueOf(i), v = Math.round(hsv.v);
 		mk.style.setProperty('--c', c);
@@ -189,10 +190,14 @@
 		vs.setAttribute('aria-valuenow', String(v));
 		vs.style.setProperty('--track', 'linear-gradient(to top, #000, ' + hsvToHex(hh, satOf(i), 100) + ')');
 		// the inner wheel at the current brightness: hues around, grey in the middle
-		var stops = [];
-		for (var a = 0; a <= 360; a += 30) stops.push(hsvToHex(a % 360, 100, hsv.v));
-		var gray = hsvToHex(0, 0, hsv.v), gv = parseInt(gray.substr(1, 2), 16);
-		tile.style.setProperty('--wheel', 'radial-gradient(circle at center, ' + gray + ' 0, ' + gray + ' 6%, rgba(' + gv + ',' + gv + ',' + gv + ',0) 72%), conic-gradient(' + stops.join(', ') + ')');
+		// (built once at full brightness; the brightness itself is a black veil on top)
+		if (!wheelSet) {
+			var stops = [];
+			for (var a = 0; a <= 360; a += 30) stops.push(hsvToHex(a % 360, 100, 100));
+			tile.style.setProperty('--wheel', 'radial-gradient(circle at center, #FFFFFF 0, #FFFFFF 6%, rgba(255,255,255,0) 72%), conic-gradient(' + stops.join(', ') + ')');
+			wheelSet = true;
+		}
+		tile.style.setProperty('--dim', (1 - hsv.v / 100).toFixed(3));
 		if (S.saved) { was.style.background = S.saved.colors[i]; was.style.setProperty('--ink', ink(S.saved.colors[i])); }
 		now.style.background = c;
 		was.classList.toggle('same', !S.saved || S.saved.colors[i] === c);
@@ -217,8 +222,14 @@
 			if (e.button !== 0) return;
 			e.preventDefault();
 			el.classList.add('drag');
-			var move = function (ev) { onMove(ev); };
+			// one update per frame, however many mousemoves arrive
+			var last = null, raf = 0;
+			var move = function (ev) {
+				last = ev;
+				if (!raf) raf = requestAnimationFrame(function () { raf = 0; onMove(last); });
+			};
 			var up = function () {
+				if (raf) { cancelAnimationFrame(raf); raf = 0; onMove(last); }
 				el.classList.remove('drag');
 				document.removeEventListener('mousemove', move);
 				document.removeEventListener('mouseup', up);

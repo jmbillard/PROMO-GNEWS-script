@@ -31,9 +31,12 @@
 /* the color tile (adapted from O PADEIRO): hue = angle, saturation = square distance */
 .pk-tile { position: relative; flex: 1; min-width: 0; aspect-ratio: 1 / 1; border-radius: 10px; cursor: crosshair; overflow: hidden;
 	background: conic-gradient(hsl(0, 95%, 60%), hsl(60, 95%, 55%), hsl(120, 80%, 52%), hsl(180, 90%, 52%), hsl(240, 95%, 64%), hsl(300, 90%, 62%), hsl(360, 95%, 60%)); }
-.pk-tile::before { content: ''; position: absolute; inset: 6px; border-radius: 6px; background: var(--wheel, transparent); transition: background .12s linear; }
+.pk-tile::before { content: ''; position: absolute; inset: 6px; border-radius: 6px; background: var(--wheel, transparent); }
 .pk-tile::after { content: ''; position: absolute; inset: 6px; border-radius: 6px; background: rgba(27, 27, 30, .16); backdrop-filter: blur(18px); }
 .pk-tile .mk { position: absolute; z-index: 2; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; background: var(--c, #fff); box-shadow: 0 0 0 2px #F2F2F4, 0 0 0 3px rgba(0, 0, 0, .45); cursor: grab; transition: transform .2s var(--spring); }
+/* brightness = a black veil over the (static, full-brightness) wheel: only its opacity changes,
+   so dragging the slider never repaints the gradient or the blur */
+.pk-tile .dim { position: absolute; z-index: 1; inset: 6px; border-radius: 6px; background: #000; opacity: var(--dim, 0); pointer-events: none; }
 .pk-tile .gx, .pk-tile .gy { position: absolute; z-index: 1; background: #F2F2F4; opacity: .5; transition: opacity .2s; pointer-events: none; mix-blend-mode: difference; }
 .pk-tile .gx { left: 6px; right: 6px; height: 1px; margin-top: -.5px; }
 .pk-tile .gy { top: 6px; bottom: 6px; width: 1px; margin-left: -.5px; }
@@ -43,7 +46,7 @@
 .pk-tile.drag { cursor: grabbing; }
 
 /* floating readouts (RGB on the tile, brightness on the slider) */
-.ftag { position: absolute; z-index: 3; left: 0; top: 0; padding: 4px 6px; border-radius: 5px; background: rgba(20, 20, 22, .84); color: var(--tx); font-size: 9px; line-height: 1.35; white-space: nowrap; pointer-events: none; transition: left .08s linear, top .08s linear, opacity .2s; }
+.ftag { position: absolute; z-index: 3; left: 0; top: 0; padding: 4px 6px; border-radius: 5px; background: rgba(20, 20, 22, .84); color: var(--tx); font-size: 9px; line-height: 1.35; white-space: nowrap; pointer-events: none; transition: opacity .2s; }
 .ftag i { font-style: normal; color: var(--faint); margin-right: 5px; }
 .ftag b { display: block; font-weight: 500; }
 
@@ -53,7 +56,7 @@
 .pk-vs .thumb { position: absolute; left: 0; right: 0; height: 8px; margin-top: -4px; top: 50%; border-radius: 3px; background: #18181B; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); transition: transform .2s var(--spring); }
 .pk-vs:hover .thumb, .pk-vs.drag .thumb { transform: scale(1.15, 1.25); }
 .pk-vs:focus-visible .thumb { outline: var(--line-acc); outline-offset: 2px; }
-.vtag { left: auto; right: calc(100% + 6px); opacity: 0; transform: translateY(-50%); transition: top .08s linear, opacity .2s; }
+.vtag { left: auto; right: calc(100% + 6px); opacity: 0; transform: translateY(-50%); transition: opacity .2s; }
 .pk-vs:hover .vtag, .pk-vs.drag .vtag, .pk-vs:focus-visible .vtag { opacity: 1; }
 
 /* saved vs new: its own block under the hex */
