@@ -62,7 +62,9 @@
 	function select(i) {
 		S.sel = i;
 		$('swatches').querySelectorAll('.sw').forEach(function (b, j) {
+			b.style.setProperty('--d', Math.abs(j - i) * 28 + 'ms');
 			b.classList.toggle('on', j === i);
+			b.classList.remove('wave'); void b.offsetWidth; b.classList.add('wave');
 			b.setAttribute('aria-checked', String(j === i));
 		});
 		editor();
