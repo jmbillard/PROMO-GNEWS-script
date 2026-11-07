@@ -60,16 +60,16 @@
 			set(which, which === 'out' ? (x - 20) / 2.4 : (260 - x) / 2.4);
 		};
 		var up = function () {
-			window.removeEventListener('pointermove', mv);
-			window.removeEventListener('pointerup', up);
+			window.removeEventListener('mousemove', mv);
+			window.removeEventListener('mouseup', up);
 			plot.classList.remove('drag-' + which);
 			s.drag = null;
 		};
-		window.addEventListener('pointermove', mv);
-		window.addEventListener('pointerup', up);
+		window.addEventListener('mousemove', mv);
+		window.addEventListener('mouseup', up);
 	}
-	hit1.addEventListener('pointerdown', function (e) { startDrag('out', e); });
-	hit2.addEventListener('pointerdown', function (e) { startDrag('in', e); });
+	hit1.addEventListener('mousedown', function (e) { startDrag('out', e); });
+	hit2.addEventListener('mousedown', function (e) { startDrag('in', e); });
 	$('out').addEventListener('input', function () { set('out', +this.value); });
 	$('in').addEventListener('input', function () { set('in', +this.value); });
 

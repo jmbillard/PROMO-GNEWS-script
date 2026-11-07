@@ -189,7 +189,7 @@
 			sig.addEventListener('input', function () { sig.value = sig.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); changed(); });
 			pth.addEventListener('change', function () { pth.value = clean(pth.value); changed(); });
 			[sig, pth].forEach(function (i) { i.addEventListener('keydown', function (e) { if (e.key === 'Enter') i.blur(); }); });
-			handle.addEventListener('pointerdown', function (e) { startDrag(row, e); });
+			handle.addEventListener('mousedown', function (e) { startDrag(row, e); });
 			handle.addEventListener('keydown', function (e) {
 				if (!e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
 				e.preventDefault();
@@ -302,8 +302,8 @@
 				row.style.transform = 'translateY(' + ty + 'px)';
 			};
 			var up = function () {
-				window.removeEventListener('pointermove', move);
-				window.removeEventListener('pointerup', up);
+				window.removeEventListener('mousemove', move);
+				window.removeEventListener('mouseup', up);
 				row.style.transition = 'transform .25s cubic-bezier(.3, 1.3, .5, 1)';
 				row.style.transform = '';
 				setTimeout(function () { row.style.transition = ''; }, 260);
@@ -312,8 +312,8 @@
 				tree.querySelectorAll('.ogrp.hot').forEach(function (g) { g.classList.remove('hot'); });
 				changed();
 			};
-			window.addEventListener('pointermove', move);
-			window.addEventListener('pointerup', up);
+			window.addEventListener('mousemove', move);
+			window.addEventListener('mouseup', up);
 		}
 
 		// header: count · new folder · reset (two clicks)

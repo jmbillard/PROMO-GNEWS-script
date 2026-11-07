@@ -216,9 +216,9 @@
 		function hold(d) {
 			var t, i;
 			return {
-				onpointerdown: function () { step(d); t = setTimeout(function () { i = setInterval(function () { step(d * 5); }, 90); }, 380); },
-				onpointerup: function () { clearTimeout(t); clearInterval(i); },
-				onpointerleave: function () { clearTimeout(t); clearInterval(i); }
+				onmousedown: function () { step(d); t = setTimeout(function () { i = setInterval(function () { step(d * 5); }, 90); }, 380); },
+				onmouseup: function () { clearTimeout(t); clearInterval(i); },
+				onmouseleave: function () { clearTimeout(t); clearInterval(i); }
 			};
 		}
 		var box = h('div.param', { 'data-tool': tool.id, title: tool.name + ' · ' + p.name }, [

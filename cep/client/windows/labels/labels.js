@@ -8,8 +8,8 @@
 
   layout: 16 swatches on top · the selected label (name, hex and the
   color control) below · presets + apply in the footer.
-  the color control is a slot (renderPicker) meant for the control
-  adapted from O PADEIRO.
+  the color control is adapted from O PADEIRO (aparência): hue and
+  saturation on a square wheel, brightness on a slider.
 */
 (function () {
 	'use strict';
@@ -76,8 +76,8 @@
 		sw.style.background = v;
 		sw.title = (i + 1) + ' · ' + S.names[i] + ' · ' + v;
 		if (from !== 'hex') $('edHex').value = v;
-		if (from !== 'picker') renderPicker();
-		else updatePicker();
+		if (from !== 'picker') { hueMem[S.sel] = null; satMem[S.sel] = null; }
+		updatePicker();
 		sync();
 	}
 
@@ -103,22 +103,131 @@
 	$('edHex').addEventListener('blur', function () { this.value = S.colors[S.sel]; this.classList.remove('bad'); });
 	[$('edHex'), $('edName')].forEach(function (el) { el.addEventListener('keydown', function (e) { if (e.key === 'Enter') el.blur(); }); });
 
-	/* ---------- color control slot (provisional: system picker) ---------- */
+	/* ---------- color control (adapted from O PADEIRO · aparência) ----------
+	   the tile: hue is the angle around the center (0° on top = red, clockwise),
+	   saturation is the distance from the center measured "square" (the larger of
+	   x and y), so the whole edge, corners included, is full saturation.
+	   brightness has its own slider. CEP doesn't deliver pointer events: mouse events. */
 
-	var pick, big, lbl;
+	var SPAN = 40; // center → where the dot touches the edge of the inner tile
+	var hueMem = {}, satMem = {};
+
+	function hexToHsv(hex) {
+		var r = parseInt(hex.substr(1, 2), 16) / 255, g = parseInt(hex.substr(3, 2), 16) / 255, b = parseInt(hex.substr(5, 2), 16) / 255;
+		var max = Math.max(r, g, b), d = max - Math.min(r, g, b), hh = 0;
+		if (d) {
+			if (max === r) hh = ((g - b) / d) % 6;
+			else if (max === g) hh = (b - r) / d + 2;
+			else hh = (r - g) / d + 4;
+			hh = (hh * 60 + 360) % 360;
+		}
+		return { h: hh, s: max ? d / max * 100 : 0, v: max * 100 };
+	}
+
+	function hsvToHex(hh, sat, val) {
+		var s = sat / 100, v = val / 100, c = v * s, x = c * (1 - Math.abs(((hh / 60) % 2) - 1)), m = v - c, rgb;
+		if (hh < 60) rgb = [c, x, 0];
+		else if (hh < 120) rgb = [x, c, 0];
+		else if (hh < 180) rgb = [0, c, x];
+		else if (hh < 240) rgb = [0, x, c];
+		else if (hh < 300) rgb = [x, 0, c];
+		else rgb = [c, 0, x];
+		return '#' + rgb.map(function (n) { var t = Math.round((n + m) * 255); return (t < 16 ? '0' : '') + t.toString(16); }).join('').toUpperCase();
+	}
+
+	// grey / black colors have no hue (or saturation): keep the last one per label
+	function hueOf(i) {
+		var hsv = hexToHsv(S.colors[i]);
+		if (hsv.s > 0 && hsv.v > 0) hueMem[i] = hsv.h;
+		return hueMem[i] != null ? hueMem[i] : hsv.h;
+	}
+	function satOf(i) {
+		var hsv = hexToHsv(S.colors[i]);
+		if (hsv.v > 0) satMem[i] = hsv.s;
+		return satMem[i] != null ? satMem[i] : hsv.s;
+	}
+
+	var tile, dot, bright, brightVal, was, now;
+
 	function renderPicker() {
 		var box = $('picker');
 		box.textContent = '';
-		pick = h('input', { type: 'color', value: S.colors[S.sel].toLowerCase(), 'aria-label': 'Escolher cor' });
-		lbl = h('span', { text: 'clique para escolher' });
-		big = h('label.big', null, [pick, lbl]);
-		pick.addEventListener('input', function () { setColor(pick.value.toUpperCase(), 'picker'); });
-		box.appendChild(big);
+		dot = h('span.pk-dot');
+		tile = h('div.pk-tile', { title: 'arraste para escolher matiz e saturação' }, [dot]);
+		bright = h('input.pk-range', { type: 'range', min: 0, max: 100, step: 1, 'aria-label': 'Brilho' });
+		brightVal = h('span.pk-val.mono');
+		was = h('button.pk-was', { title: 'voltar para a cor gravada', 'aria-label': 'Voltar para a cor gravada' });
+		now = h('i.pk-now');
+		box.appendChild(tile);
+		box.appendChild(h('div.pk-side', null, [
+			h('div.pk-cmp', null, [was, now]),
+			h('label.pk-row', null, [h('span', { text: 'brilho' }), brightVal]),
+			bright
+		]));
+		bright.addEventListener('input', function () {
+			setColor(hsvToHex(hueOf(S.sel), satOf(S.sel), +bright.value), 'picker');
+		});
+		was.addEventListener('click', function () { if (S.saved) setColor(S.saved.colors[S.sel], 'revert'); });
+		bindDrag();
 		updatePicker();
 	}
+
+	function placeDot(hh, sat) {
+		var a = hh * Math.PI / 180, sx = Math.sin(a), sy = -Math.cos(a);
+		var k = SPAN * Math.max(0, Math.min(100, sat)) / 100 / Math.max(Math.abs(sx), Math.abs(sy), 1e-6);
+		dot.style.left = 'calc(50% + ' + (k * sx).toFixed(1) + 'px)';
+		dot.style.top = 'calc(50% + ' + (k * sy).toFixed(1) + 'px)';
+	}
+
 	function updatePicker() {
-		big.style.background = S.colors[S.sel];
-		lbl.style.color = ink(S.colors[S.sel]);
+		var i = S.sel, c = S.colors[i], hsv = hexToHsv(c), hh = hueOf(i);
+		dot.style.background = c;
+		placeDot(hh, satOf(i));
+		if (document.activeElement !== bright) bright.value = Math.round(hsv.v);
+		brightVal.textContent = Math.round(hsv.v);
+		bright.style.setProperty('--track', 'linear-gradient(to right, #000, ' + hsvToHex(hh, satOf(i), 100) + ')');
+		// the inner wheel at the current brightness: hues around, grey in the middle
+		var stops = [];
+		for (var a = 0; a <= 360; a += 30) stops.push(hsvToHex(a % 360, 100, hsv.v));
+		var gray = hsvToHex(0, 0, hsv.v), gv = parseInt(gray.substr(1, 2), 16);
+		tile.style.setProperty('--wheel', 'radial-gradient(circle at center, ' + gray + ' 0, ' + gray + ' 6%, rgba(' + gv + ',' + gv + ',' + gv + ',0) 72%), conic-gradient(' + stops.join(', ') + ')');
+		if (S.saved) { was.style.background = S.saved.colors[i]; was.style.setProperty('--ink', ink(S.saved.colors[i])); }
+		now.style.background = c;
+		was.classList.toggle('same', !S.saved || S.saved.colors[i] === c);
+	}
+
+	function bindDrag() {
+		var drag = false;
+		function at(e) {
+			var b = tile.getBoundingClientRect();
+			var dx = Math.max(-SPAN, Math.min(SPAN, e.clientX - (b.left + b.width / 2)));
+			var dy = Math.max(-SPAN, Math.min(SPAN, e.clientY - (b.top + b.height / 2)));
+			return { h: dx || dy ? (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360 : null, s: Math.max(Math.abs(dx), Math.abs(dy)) / SPAN * 100 };
+		}
+		function apply(e) {
+			var i = S.sel, hsv = hexToHsv(S.colors[i]), p = at(e);
+			var hh = p.h == null ? hueOf(i) : p.h;
+			hueMem[i] = hh;
+			satMem[i] = p.s;
+			// no brightness = no color: bring some back
+			setColor(hsvToHex(hh, p.s, hsv.v < 8 ? 80 : hsv.v), 'picker');
+		}
+		function move(e) { if (drag) apply(e); }
+		function up() {
+			drag = false;
+			tile.classList.remove('drag');
+			document.removeEventListener('mousemove', move);
+			document.removeEventListener('mouseup', up);
+		}
+		tile.addEventListener('mousedown', function (e) {
+			if (e.button !== 0) return;
+			e.preventDefault();
+			drag = true;
+			tile.classList.add('drag');
+			document.addEventListener('mousemove', move);
+			document.addEventListener('mouseup', up);
+			apply(e);
+		});
 	}
 
 	/* ---------- presets ---------- */
