@@ -186,7 +186,32 @@
 		if (S.saved) { was.style.background = S.saved.colors[i]; was.style.setProperty('--ink', ink(S.saved.colors[i])); }
 		now.style.background = c;
 		was.classList.toggle('same', !S.saved || S.saved.colors[i] === c);
+		// RGB fields follow the color (not the one being typed)
+		var n = parseInt(c.slice(1), 16), rgb = [n >> 16 & 255, n >> 8 & 255, n & 255];
+		['r', 'g', 'b'].forEach(function (id, k) { if (document.activeElement !== $(id)) $(id).value = rgb[k]; });
 	}
+
+	// RGB: type, scroll or use the arrows (shift = 10)
+	['r', 'g', 'b'].forEach(function (id, k) {
+		var el = $(id);
+		function put(v) {
+			var n = parseInt(S.colors[S.sel].slice(1), 16), rgb = [n >> 16 & 255, n >> 8 & 255, n & 255];
+			rgb[k] = Math.max(0, Math.min(255, Math.round(v)));
+			setColor('#' + rgb.map(function (x) { return (x < 16 ? '0' : '') + x.toString(16); }).join('').toUpperCase(), 'rgb');
+		}
+		el.addEventListener('input', function () {
+			el.value = el.value.replace(/[^0-9]/g, '');
+			if (el.value !== '') put(+el.value);
+		});
+		el.addEventListener('blur', function () { updatePicker(); });
+		el.addEventListener('keydown', function (e) {
+			var step = e.shiftKey ? 10 : 1;
+			if (e.key === 'ArrowUp') { e.preventDefault(); put((+el.value || 0) + step); el.value = Math.min(255, (+el.value || 0) + step); }
+			if (e.key === 'ArrowDown') { e.preventDefault(); put((+el.value || 0) - step); el.value = Math.max(0, (+el.value || 0) - step); }
+			if (e.key === 'Enter') el.blur();
+		});
+		el.addEventListener('wheel', function (e) { e.preventDefault(); put((+el.value || 0) + (e.deltaY < 0 ? 1 : -1)); el.value = $(id).value; });
+	});
 
 	// CEP doesn't deliver pointer events: mouse events
 	function dragOn(el, onMove) {

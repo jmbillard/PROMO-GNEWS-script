@@ -10,10 +10,10 @@
 .sw.mod::after { transform: rotate(45deg) scale(1); }
 
 /* editor: [nº / brightness] [name / tile] [hex / saved vs new] */
-.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 8px; background: #26262B; border-radius: 12px; padding: 10px; }
+.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto auto; gap: 8px 8px; background: #26262B; border-radius: 12px; padding: 10px; }
 .editor .ix { align-self: center; font-size: 11px; color: var(--faint); text-align: center; }
 .editor .nm { height: 30px; font-size: 12px; }
-.editor .hx { height: 30px; font-size: 11px; text-transform: uppercase; text-align: center; padding: 0 4px; }
+.editor .hx { height: 30px; font-size: 11px; text-transform: uppercase; text-align: center; padding: 0 4px; border-radius: 10px 10px 0 0; position: relative; z-index: 1; }
 
 /* the color tile (adapted from O PADEIRO): hue = angle, saturation = square distance */
 .pk-tile { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; cursor: crosshair; overflow: hidden;
@@ -32,15 +32,15 @@
 
 /* vertical brightness: black at the bottom, full color on top; the value rides on the thumb */
 .pk-vs { position: relative; cursor: ns-resize; outline: none; }
-.pk-vs .trk { position: absolute; left: 50%; top: 0; bottom: 0; width: 8px; margin-left: -4px; border-radius: 4px; background: var(--track, #34343A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
-.pk-vs .thumb { position: absolute; left: 0; right: 0; height: 18px; margin-top: -9px; top: 50%; border-radius: 4px; background: #F2F2F4; color: #141416; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); transition: transform .2s var(--spring); }
-.pk-vs:hover .thumb, .pk-vs.drag .thumb { transform: scaleX(1.12); }
+.pk-vs .trk { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; border-radius: 2px; background: var(--track, #34343A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.pk-vs .thumb { position: absolute; left: 0; right: 0; height: 16px; margin-top: -8px; top: 50%; border-radius: 4px; background: #18181B; color: var(--tx-2); font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); transition: transform .2s var(--spring), color .2s; }
+.pk-vs:hover .thumb, .pk-vs.drag .thumb { color: var(--tx); transform: scaleX(1.08); }
 .pk-vs:focus-visible .thumb { outline: var(--line-acc); outline-offset: 2px; }
 
 /* saved vs new, stacked to the tile height */
-.pk-cmp { display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.pk-cmp { display: flex; flex-direction: column; margin-top: -8px; border-radius: 0 0 10px 10px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
 .pk-cmp .was { flex: 1; position: relative; cursor: pointer; transition: flex .35s var(--spring); }
-.pk-cmp .was span { position: absolute; left: 6px; top: 5px; font: 9px var(--mono); color: var(--ink, #F2F2F4); opacity: .8; transition: opacity .2s; }
+.pk-cmp .was span { position: absolute; left: 6px; bottom: 5px; font: 9px var(--mono); color: var(--ink, #F2F2F4); opacity: .8; transition: opacity .2s; }
 .pk-cmp .was.same { flex: 0; }
 .pk-cmp .was.same span { opacity: 0; }
 .pk-cmp .now { flex: 1.6; display: block; }
@@ -52,3 +52,10 @@ select.fld option { background: #1F1F23; color: var(--tx); }
 
 .foot { flex: none; display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--line); }
 .status { border-top: 0; }
+
+/* RGB under the tile, three equal fields across its width */
+.pk-rgb { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.pk-rgb label { display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 8px; border-radius: 7px; background: var(--sunk); border: 1px solid rgba(255, 255, 255, .07); transition: border-color .2s; }
+.pk-rgb label:focus-within { border-color: var(--acc); }
+.pk-rgb span { font: 700 9px var(--mono); color: var(--faint); }
+.pk-rgb input { flex: 1; min-width: 0; width: 100%; background: none; border: 0; color: var(--tx-2); font: 11px var(--mono); text-align: right; outline: none; }
