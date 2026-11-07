@@ -162,7 +162,7 @@
 				],
 				[
 					T('psetup', 'Setup do projeto', 'spin', 'M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6', 'M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1'),
-					T('labels', 'Cores de label', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z'),
+					T('labels', 'Cores de label', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z', { win: 'labels', alt: 'aplicar o padrão PROMO direto', altRun: true }),
 					T('csetup', 'Setup da comp', 'grow', 'M3 6h18v12H3z', 'M9 9v6M15 9v6', { sel: 'comp', alt: 'vertical' }),
 					T('batch', 'Batch nunca desliga', 'slide', 'M4 6h12v9H4z', 'M8 18h12V9', { job: true })
 				]

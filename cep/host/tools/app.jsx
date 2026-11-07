@@ -169,44 +169,7 @@ PGN.register('psetup', function (args) {
 
 //---------------------------------------------------------
 
-// setupLabsBtn.onClick...
-PGN.register('labels', function (args) {
-	var prefFile = PREFType.PREF_Type_MACHINE_INDEPENDENT;
-
-	app.beginUndoGroup('setup layer labels');
-
-	for (var i = 1; i < 17; i++) {
-		var color = labelsObj['l' + i].color;
-		var name = labelsObj['l' + i].name;
-
-		var sectionName = 'Label Preference Color Section 5';
-		var keyName = 'Label Color ID 2 # ' + i;
-		app.preferences.savePrefAsString(sectionName, keyName, color, prefFile);
-
-		sectionName = 'Label Preference Text Section 7';
-		keyName = 'Label Text ID 2 # ' + i;
-		app.preferences.savePrefAsString(sectionName, keyName, name, prefFile);
-	}
-	app.preferences.saveToDisk();
-	app.preferences.reload();
-
-	app.endUndoGroup();
-
-	// refresh UI ?!...
-	var aItem = app.project.activeItem;
-
-	if (aItem instanceof CompItem) {
-		var st = aItem.workAreaStart;
-		aItem.workAreaStart = st;
-
-		for (var l = 1; l <= aItem.numLayers; l++) {
-			var aLayer = aItem.layer(l);
-			var sl = aLayer.selected;
-			aLayer.selected = sl;
-		}
-	}
-	return 'Labels configurados';
-});
+// label colors / names: tools/labels.jsx (editor window + PROMO preset)
 
 //---------------------------------------------------------
 

@@ -8,4 +8,5 @@
 	<Extension Id="com.promognews.cep.settings"><HostList><Host Name="AEFT" Port="8096" /></HostList></Extension>
 	<Extension Id="com.promognews.cep.tags"><HostList><Host Name="AEFT" Port="8097" /></HostList></Extension>
 	<Extension Id="com.promognews.cep.endpage"><HostList><Host Name="AEFT" Port="8098" /></HostList></Extension>
+	<Extension Id="com.promognews.cep.labels"><HostList><Host Name="AEFT" Port="8099" /></HostList></Extension>
 </ExtensionList>

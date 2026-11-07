@@ -5,7 +5,7 @@ Versão em painel HTML do script, para **After Effects 2022 ou mais recente**, n
 ```
 INSTALAR PROMO GNEWS.jsx     instalador da equipe (rodar de dentro do After Effects)
 cep/
-  CSXS/manifest.xml          painel + 7 janelas (curvas, busca, templates, fontes, preferências, tags, end page)
+  CSXS/manifest.xml          painel + 8 janelas (curvas, busca, templates, fontes, preferências, tags, end page, labels)
   loader/stub.html           página instalada na máquina: abre a página de verdade na rede
   host/loader.jsx            confere se o host mudou na rede e manda recarregar
   host/index.jsx             carrega source/ (globals + libraries), platform.jsx, core.jsx e os tools (nenhuma janela ScriptUI)
@@ -45,7 +45,7 @@ Depois de editar:
 - **`.jsx`:** reabra o painel. O carregador percebe a mudança e recarrega o host, sem reiniciar o After Effects.
 - **`manifest.xml`:** reinicie o After Effects.
 
-Para depurar, abra o DevTools no Chrome em `localhost:8091` (painel) ou nas portas 8092 a 8098 (janelas). As portas estão em `cep/.debug`.
+Para depurar, abra o DevTools no Chrome em `localhost:8091` (painel) ou nas portas 8092 a 8099 (janelas). As portas estão em `cep/.debug`.
 
 As páginas também abrem direto no navegador, sem o After Effects. Nesse caso, toda chamada é simulada (`PGN.mock`), o que serve para ajustar o visual.
 

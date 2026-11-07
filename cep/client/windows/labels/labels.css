@@ -1,0 +1,28 @@
+/* 16 labels: preview strip · presets · editable rows */
+
+.strip { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 3px; height: 26px; }
+.strip i { display: block; border-radius: 4px; transition: background .3s, transform .3s var(--spring); }
+.strip i.hot { transform: scaleY(1.25); }
+
+.presets { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.lr { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 6px 0 4px; border-radius: 9px; position: relative; transition: background .15s; animation: rowIn .3s var(--out) backwards; }
+.lr:hover, .lr:focus-within { background: #26262B; }
+.lr .ix { width: 16px; font: 10px var(--mono); color: var(--faint); text-align: right; flex: none; }
+/* modified row: the same small yellow keyframe used for selection */
+.lr::before { content: ''; position: absolute; left: -2px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 1px; background: var(--acc); transform: rotate(45deg) scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
+.lr.mod::before { transform: rotate(45deg) scale(1); }
+
+.sw { width: 26px; height: 22px; flex: none; position: relative; border-radius: 6px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); cursor: pointer; }
+.sw i { position: absolute; inset: 0; display: block; }
+.sw input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
+
+.lr .nm { flex: 1; min-width: 0; height: 26px; padding: 0 8px; border-radius: 7px; border: 1px solid transparent; background: transparent; color: var(--tx-2); font-size: 12px; }
+.lr .hx { width: 74px; flex: none; height: 26px; padding: 0 6px; border-radius: 7px; border: 1px solid transparent; background: transparent; color: var(--faint); font: 11px var(--mono); text-transform: uppercase; text-align: center; }
+.lr .nm:hover, .lr .hx:hover { background: var(--sunk); }
+.lr .nm:focus, .lr .hx:focus { outline: none; background: var(--sunk); border-color: var(--acc); color: var(--tx); }
+.lr .hx.bad { border-color: var(--err); }
+
+.foot { flex: none; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-top: 1px solid var(--line); }
+.foot .meta { flex: 1; min-width: 0; }
+.foot .sub { font: 10px var(--mono); color: var(--faint); min-height: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

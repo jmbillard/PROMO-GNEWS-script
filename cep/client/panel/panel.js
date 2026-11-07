@@ -282,7 +282,7 @@
 			t.setAttribute('aria-pressed', String(state.toggles[tool.toggle]));
 			return;
 		}
-		if (tool.win) { PGN.open(tool.win); return; }
+		if (tool.win && !(alt && tool.altRun)) { PGN.open(tool.win); return; }
 		if (alt && tool.altWin) { PGN.open(tool.altWin); return; }
 		// clicking a running job again cancels it
 		if (state.job && state.job.id === tool.id) { state.job.p.cancel(); return; }
