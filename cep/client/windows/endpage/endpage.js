@@ -214,7 +214,9 @@
 						colors.classList.toggle('dim', t !== 5);
 						changed();
 					}
-				}, h('span', { text: th.name }));
+				}, t === 5
+					? [h('b.dots', null, [h('i', { style: { background: '#E53131' } }), h('i', { style: { background: '#ECFF8C' } }), h('i', { style: { background: '#F2F2F2' } })]), h('span', { text: th.name })]
+					: h('span', { text: th.name }));
 				themes.appendChild(b);
 			});
 			parts.push(section('aparência', [themes, colors], 120));
