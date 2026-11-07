@@ -60,11 +60,15 @@
 	}
 
 	function select(i) {
+		var prev = S.sel;
 		S.sel = i;
 		$('swatches').querySelectorAll('.sw').forEach(function (b, j) {
-			b.style.setProperty('--d', Math.abs(j - i) * 28 + 'ms');
+			// the one that was selected just shrinks back (no wave on top of it, no delay)
+			var was = j === prev && j !== i;
+			b.style.setProperty('--d', was ? '0ms' : Math.abs(j - i) * 28 + 'ms');
 			b.classList.toggle('on', j === i);
-			b.classList.remove('wave'); void b.offsetWidth; b.classList.add('wave');
+			b.classList.remove('wave');
+			if (!was && j !== i) { void b.offsetWidth; b.classList.add('wave'); }
 			b.setAttribute('aria-checked', String(j === i));
 		});
 		editor();
