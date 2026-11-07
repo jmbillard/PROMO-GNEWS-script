@@ -45,12 +45,6 @@ var vStr = 'v3.0';
 	} finally {
 		try { $.global.alert = bootAlert; } catch (e) { }
 	}
-	// ScriptUI helpers still used by the classic dialogs (end page presets, tags, input, progress)...
-	$.evalFile(srcFolder.fsName + '/layout/main ui functions.js');
-	$.evalFile(srcFolder.fsName + '/layout/utils/input ui.js');
-	$.evalFile(srcFolder.fsName + '/layout/utils/progress ui.js');
-	$.evalFile(srcFolder.fsName + '/layout/utils/tag ui.js');
-	$.evalFile(srcFolder.fsName + '/layout/utils/endPagePreset ui.js');
 
 	// Windows + macOS: network shares, shell commands and Windows-only classic helpers...
 	$.evalFile(hostFolder.fsName + '/platform.jsx');

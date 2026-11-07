@@ -152,7 +152,7 @@
 		var n = function (name, folder) { return { path: '/t/' + name + '.aep', name: name, fileName: name + '.aep', folder: folder, ext: 'aep', preview: null, updated: 'atualizado 03 nov', info: null }; };
 		return { data: { updated: '03 nov 2026', items: [n('End page', 'end page'), n('End page vertical', 'end page'), n('Nunca desliga', 'vinhetas'), n('História ao vivo', 'vinhetas'), n('Lettering simples', 'letterings'), n('Tarja ao vivo', 'marca')] } };
 	}, 300);
-	PGN.mock('tpl.download', function () { return { msg: 'Templates atualizados', data: PGN._lastTpl }; }, 1200);
+	PGN.mock('tpl.download', function () { return { msg: 'Templates atualizados' }; }, 1200);
 	PGN.mock('tpl.import', function (a) { return { msg: 'Template importado' }; }, 1100);
 
 	load('tpl.list');

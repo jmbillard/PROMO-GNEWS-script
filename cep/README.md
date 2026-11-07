@@ -8,7 +8,7 @@ cep/
   CSXS/manifest.xml          painel + 7 janelas (curvas, busca, templates, fontes, preferências, tags, end page)
   loader/stub.html           página instalada na máquina: abre a página de verdade na rede
   host/loader.jsx            confere se o host mudou na rede e manda recarregar
-  host/index.jsx             carrega source/ (globals + libraries), platform.jsx, core.jsx e os tools
+  host/index.jsx             carrega source/ (globals + libraries), platform.jsx, core.jsx e os tools (nenhuma janela ScriptUI)
   host/platform.jsx          macOS × Windows: caminhos de rede, montagem de volumes, zip, fontes, clipboard
   host/core.jsx              PGN.register / PGN.run / PGN.fail · tarefas em passos (PGN.registerJob)
   host/tools/*.jsx           uma ferramenta por id (porte das abas do script)

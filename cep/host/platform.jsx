@@ -488,7 +488,6 @@ PGN.net.needs = {
 	'tpl.import': ['templates'],
 	'tpl.openFolder': ['templates'],
 	// end page presets (templatesPath)...
-	endp: ['templates'],
 	'endp.state': ['templates'],
 	'endp.read': ['templates'],
 	'endp.apply': ['templates'],

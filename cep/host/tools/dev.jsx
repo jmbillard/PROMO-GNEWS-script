@@ -7,7 +7,6 @@
 ---------------------------------------------------------------
 
   port of 'source/layout/contents/dev tab.js'.
-    dev.bin       → classic binary converter dialog (bin_ui, ScriptUI, dev only)
     dev.dark      → convert .png icons to the dark theme (import dialog)
     dev.zipTpl    → zip the templates folder
     dev.zipFonts  → zip the fonts folder
@@ -64,12 +63,6 @@
 
 	PGN.register('dev.zipTpl', zipTool(function () { return templatesFolder; }, 'templates'));
 	PGN.register('dev.zipFonts', zipTool(function () { return fontsFolder; }, 'fonts'));
-
-	PGN.register('dev.bin', function (args) {
-		if (typeof bin_ui != 'function') $.evalFile(PGN_SRC + '/layout/utils/bin ui.js');
-		bin_ui();
-		return '';
-	});
 
 	PGN.register('dev.dark', function (args) {
 		var iconArray = app.project.importFileWithDialog();

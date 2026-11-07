@@ -231,14 +231,7 @@ PGN.registerJob('org', {
 
 //---------------------------------------------------------
 
-// endPagePresetBtn.onClick...
-PGN.register('endp', function (args) {
-	if (hardNews) PGN.fail('indispon\u00edvel no modo hard news');
-	PGN.proj.netFail();
-
-	endPagePresetDialog();
-	return '';
-});
+// end page presets: the panel opens the end page window (tools/endpage.jsx)
 
 //---------------------------------------------------------
 

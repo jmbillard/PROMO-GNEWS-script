@@ -24,7 +24,7 @@ const ROOT = path.resolve(__dirname, '..');
 const CEP = path.join(ROOT, 'cep');
 const SRC = path.join(ROOT, 'source');
 const ID = 'com.promognews.cep';
-const SRC_PARTS = ['globals.js', 'libraries', 'layout'];
+const SRC_PARTS = ['globals.js', 'libraries'];
 
 function copy(from, to) {
 	const st = fs.statSync(from);

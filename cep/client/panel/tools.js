@@ -174,7 +174,6 @@
 	SECTIONS.push({
 		id: 'dev', name: 'Dev', acc: '#F4FAFF', dev: true, d: 'M9 7l-5 5 5 5', a: 'M15 7l5 5-5 5',
 		groups: [[
-			T('dev.bin', 'Conversor binário', 'pop', 'M5 5h14v14H5z', 'M9 10v4M12 10v4M15 10v4'),
 			T('dev.dark', 'Ícones .png → tema escuro', 'pulse', 'M12 3a9 9 0 1 0 0 18', 'M12 3a9 9 0 0 1 0 18'),
 			T('dev.zipTpl', 'Zipar templates', 'down', 'M6 3h9l3 3v15H6z', 'M11 7h2M11 10h2M11 13h2'),
 			T('dev.zipFonts', 'Zipar fontes', 'down', 'M5 19l5-14h1l5 14M7 14h7', 'M18 14v5')
