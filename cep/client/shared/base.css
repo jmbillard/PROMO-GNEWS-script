@@ -129,8 +129,8 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 	border: 1px solid rgba(255, 255, 255, .07); color: var(--tx); padding: 0 10px; font-size: 13px;
 	transition: border-color .2s, box-shadow .2s;
 }
-.fld:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px rgba(143, 184, 255, .15); }
-.fld.bad { border-color: var(--err); box-shadow: 0 0 0 3px rgba(255, 107, 107, .15); }
+.fld:focus { outline: none; border-color: var(--focus); }
+.fld.bad { border-color: var(--err); }
 .fld-wrap { position: relative; }
 .fld-wrap > svg { position: absolute; left: 10px; top: 50%; margin-top: -8px; width: 16px; height: 16px; fill: none; stroke: #8E8E98; stroke-width: 2; stroke-linecap: round; pointer-events: none; }
 .fld-wrap .fld { padding-left: 34px; }

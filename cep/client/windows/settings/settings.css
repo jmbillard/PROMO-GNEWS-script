@@ -95,7 +95,7 @@
 .orows { margin-left: 9px; padding-left: 8px; border-left: 1px solid var(--line-2); }
 .oit { display: flex; align-items: center; gap: 6px; padding: 2px 0; position: relative; animation: rowIn .3s var(--out) backwards; transition: opacity .2s; }
 .oit.out { opacity: 0; transform: translateX(10px); transition: opacity .2s, transform .2s; }
-.oit.drag { z-index: 3; background: #2E2E34; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); transition: none !important; }
+.oit.drag { z-index: 3; background: #2E2E34; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--acc); transition: none !important; }
 .oh { width: 12px; height: 26px; flex: none; display: flex; align-items: center; justify-content: center; cursor: grab; border-radius: 4px; touch-action: none; }
 .oh i { width: 2px; height: 14px; border-radius: 2px; background: #45454D; transition: background .2s, height .2s var(--spring); }
 .oit:hover .oh i, .oh:focus-visible i { background: #8E8E98; height: 18px; }
