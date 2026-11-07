@@ -167,7 +167,7 @@
 			var patSel = field('pattern', select(o.patterns || [NO], l.pattern_layer, function (x) { l.pattern_layer = x; changed(); }, 'Layer do pattern'), l.pattern ? null : { class: 'f off' });
 			parts.push(section('layout', [
 				seg(o.modelos || [{ value: 1, name: 'livre' }, { value: 2, name: 'programa' }, { value: 3, name: 'jornal' }], l.modelo, function (x) { l.modelo = +x; changed(); }, 'Modelo'),
-				h('div.chips', null, [
+				h('div.chips.fill', null, [
 					toggle('subtítulo', function () { return l.subtitulo; }, function (x) { l.subtitulo = x; subRow.classList.toggle('off', !x); }),
 					toggle('foto', function () { return l.foto; }, function (x) { l.foto = x; fotoSel.classList.toggle('off', !x); }),
 					toggle('footage', function () { return l.footage; }, function (x) { l.footage = x; }),

@@ -75,3 +75,7 @@ textarea.fld { height: 52px; padding: 7px 10px; resize: none; line-height: 1.3; 
 .foot .nm { font-size: 12px; font-weight: 600; color: #D8D8DE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .foot .sub { font: 10px var(--mono); color: var(--faint); min-height: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .btn-1 { color: #141416; }
+
+/* layout toggles share the row evenly (more air, better balance) */
+.chips.fill { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.chips.fill .tg { justify-content: center; padding: 0 6px; min-width: 0; }
