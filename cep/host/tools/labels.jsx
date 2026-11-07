@@ -24,6 +24,11 @@
 
     labels.get                      → { colors, names, presets }
     labels.set   { colors, names }  → writes the 16 labels (read back to verify)
+    labels.savePreset   { name, colors, names } → adds / replaces a user preset
+    labels.deletePreset { name }                → removes a user preset
+      user presets live in '<script prefs>/labels presets.json'
+      ([{ name, colors, names }, ...]); they come after the built-in ones
+      in 'presets', flagged  user: true
     labels       (panel button)     → PROMO preset, same as before
 
 */
@@ -141,10 +146,95 @@ PGN.labels = {
 	}
 };
 
+// user presets file...
+PGN.labels.userFile = function () {
+	var folder = new Folder(scriptPreferencesPath);
+
+	if (!folder.exists) folder.create();
+	return new File(scriptPreferencesPath + '/labels presets.json');
+};
+
+PGN.labels.userPresets = function () {
+	var f = PGN.labels.userFile();
+	var list = [];
+
+	if (!f.exists) return list;
+	try {
+		f.encoding = 'UTF-8';
+		var arr = JSON.parse(readFileContent(f));
+
+		for (var i = 0; i < arr.length; i++) {
+			var p = arr[i];
+
+			if (!p || !p.name || !(p.colors instanceof Array) || p.colors.length != 16) continue;
+			list.push({ name: String(p.name), colors: p.colors, names: p.names instanceof Array ? p.names : [], user: true });
+		}
+	} catch (e) { }
+	return list;
+};
+
+PGN.labels.writeUserPresets = function (list) {
+	var out = [];
+
+	for (var i = 0; i < list.length; i++) out.push({ name: list[i].name, colors: list[i].colors, names: list[i].names });
+	var f = PGN.labels.userFile();
+
+	f.encoding = 'UTF-8';
+	writeFileContent(f, JSON.stringify(out, null, '\t'));
+	if (!f.exists) PGN.fail('n\u00E3o consegui gravar ' + f.fsName);
+};
+
+PGN.labels.allPresets = function () {
+	return [PGN.labels.promo(), PGN.labels.adobe()].concat(PGN.labels.userPresets());
+};
+
+PGN.labels.cleanName = function (name) {
+	return String(name || '').replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+};
+
 PGN.register('labels.get', function (args) {
 	var cur = PGN.labels.read();
 
-	return { msg: '', data: { colors: cur.colors, names: cur.names, presets: [PGN.labels.promo(), PGN.labels.adobe()] } };
+	return { msg: '', data: { colors: cur.colors, names: cur.names, presets: PGN.labels.allPresets() } };
+});
+
+PGN.register('labels.savePreset', function (args) {
+	var name = PGN.labels.cleanName(args.name);
+	var colors = args.colors, names = args.names;
+
+	if (!name) PGN.fail('d\u00EA um nome ao preset');
+	if (!(colors instanceof Array) || colors.length != 16) PGN.fail('s\u00E3o 16 cores');
+	if (name.toLowerCase() == 'promo gnews' || name.toLowerCase() == 'after effects') PGN.fail('esse nome j\u00E1 \u00E9 de um preset padr\u00E3o');
+
+	var list = PGN.labels.userPresets();
+	var found = false;
+
+	for (var i = 0; i < list.length; i++) {
+		if (list[i].name.toLowerCase() != name.toLowerCase()) continue;
+		list[i] = { name: name, colors: colors, names: names };
+		found = true;
+	}
+	if (!found) list.push({ name: name, colors: colors, names: names });
+	PGN.labels.writeUserPresets(list);
+
+	var msg = 'Preset salvo';
+
+	if (found) msg = 'Preset substitu\u00EDdo';
+	return { msg: msg, data: { name: name, presets: PGN.labels.allPresets() } };
+});
+
+PGN.register('labels.deletePreset', function (args) {
+	var name = PGN.labels.cleanName(args.name).toLowerCase();
+	var list = PGN.labels.userPresets();
+	var keep = [];
+
+	for (var i = 0; i < list.length; i++) {
+		if (list[i].name.toLowerCase() != name) keep.push(list[i]);
+	}
+	if (keep.length == list.length) PGN.fail('preset n\u00E3o encontrado');
+	PGN.labels.writeUserPresets(keep);
+
+	return { msg: 'Preset removido', data: { presets: PGN.labels.allPresets() } };
 });
 
 PGN.register('labels.set', function (args) {
