@@ -107,38 +107,6 @@ PGN.proj = {
 			if (sel[i] instanceof CompItem) count++;
 		}
 		return count;
-	},
-
-	// ScriptUI progress window clone (used by organize/collect)...
-	runOrganize: function () {
-		var done = false;
-		var progressWindow = progressDialog('organize project...');
-		var enterBtn = progressWindow.children[2].children[0];
-		var cancelBtn = progressWindow.children[2].children[1];
-
-		app.beginUndoGroup('organize project');
-
-		progressWindow.onShow = enterBtn.onClick = progressWindow.onEnterKey = function () {
-			if (done) return;
-			done = true;
-			deleteProjectFolders();
-			populateProjectFolders(progressWindow);
-			deleteEmptyProjectFolders();
-
-			app.endUndoGroup();
-			progressWindow.close();
-		};
-
-		cancelBtn.onClick = function () {
-			progressWindow.close();
-			app.endUndoGroup();
-
-			alert('escaping...');
-			executeCommandID('Undo organize project');
-		};
-
-		progressWindow.show();
-		return done;
 	}
 };
 

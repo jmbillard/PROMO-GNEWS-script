@@ -29,6 +29,7 @@
 		status: null,          // { comp, layers } from host polling
 		busy: null,            // running tool id
 		labels: UI.store('labels') !== false,
+		dev: !!UI.store('dev'),
 		reduced: !!UI.store('reduced'),
 		width: 0
 	};
@@ -58,6 +59,7 @@
 		nav.textContent = '';
 		tileById = {};
 		SECTIONS.forEach(function (sec) {
+			if (sec.dev && !state.dev) return;
 			var isOpen = state.open === sec.id;
 			var head = h('button.k', {
 				title: sec.name,
@@ -134,6 +136,67 @@
 			var el = nav.querySelector('.sec.open');
 			if (el && el.scrollIntoView) setTimeout(function () { el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }, 60);
 		}
+	}
+
+	/* ---------- long tasks: progress embedded in the bar ---------- */
+
+	var jobBar = h('div.jobbar', null, [h('i')]);
+
+	function runJob(tool, sec, entry, args) {
+		state.busy = tool.id;
+		var el = entry.el;
+		var C = 2 * Math.PI * 15;
+		var ring = UI.svg('0 0 36 36', { class: 'pring', 'aria-hidden': 'true' }, [
+			UI.svgEl('circle', { cx: 18, cy: 18, r: 15, class: 'track' }),
+			UI.svgEl('circle', { cx: 18, cy: 18, r: 15, class: 'bar', 'stroke-dasharray': C, 'stroke-dashoffset': C })
+		]);
+		el.classList.add('is-job');
+		el.appendChild(ring);
+		el.setAttribute('aria-busy', 'true');
+		var oldTitle = el.title;
+		el.title = tool.name + '\nclique para cancelar';
+
+		app.classList.add('jobbing');
+		foot.appendChild(jobBar);
+		jobBar.style.setProperty('--acc', sec.acc);
+		selBtn.classList.remove('err');
+		selBtn.textContent = '';
+		var pctEl = h('span.pct.mono', { text: '' });
+		selBtn.appendChild(pctEl);
+		msgLine.textContent = '';
+		var lbl = h('span.joblbl', { text: tool.name });
+		msgLine.appendChild(lbl);
+
+		function progress(r) {
+			var total = r.total || 0, done = r.done || 0;
+			var f = total ? Math.min(1, done / total) : null;
+			app.classList.toggle('indet', f === null);
+			if (f !== null) {
+				ring.lastChild.setAttribute('stroke-dashoffset', String(C * (1 - f)));
+				jobBar.firstChild.style.transform = 'scaleX(' + f + ')';
+				pctEl.textContent = Math.round(f * 100) + '%';
+			} else {
+				pctEl.textContent = '…';
+			}
+			if (r.label) { lbl.textContent = r.label; selBtn.title = r.label; }
+		}
+
+		var p = PGN.job(tool.hostId || tool.id, args, progress);
+		state.job = { id: tool.id, p: p };
+		p.then(function (res) {
+			state.job = null;
+			state.busy = null;
+			el.classList.remove('is-job');
+			el.removeAttribute('aria-busy');
+			el.title = oldTitle;
+			if (ring.parentNode) ring.remove();
+			app.classList.remove('jobbing', 'indet');
+			if (res.ok) jobBar.firstChild.style.transform = 'scaleX(1)';
+			setTimeout(function () { if (!state.job && jobBar.parentNode) jobBar.remove(); jobBar.firstChild.style.transform = ''; }, 500);
+			var ringStub = h('span');
+			if (res.cancelled) { feedback('cancelado', false); renderSel(); return; }
+			finish(entry, ringStub, res, sec);
+		});
 	}
 
 	/* ---------- inline parameter (right-click on tools with 'param') ---------- */
@@ -220,6 +283,9 @@
 			return;
 		}
 		if (tool.win) { PGN.open(tool.win); return; }
+		if (alt && tool.altWin) { PGN.open(tool.altWin); return; }
+		// clicking a running job again cancels it
+		if (state.job && state.job.id === tool.id) { state.job.p.cancel(); return; }
 		if (state.busy) return;
 
 		var entry = tileById[tool.id];
@@ -230,6 +296,7 @@
 		}
 		var args = tool.args ? tool.args(state) : {};
 		if (alt) args.alt = true;
+		if (tool.job) { runJob(tool, sec, entry, args); return; }
 
 		state.busy = tool.id;
 		entry.el.classList.add('is-run');
@@ -389,6 +456,7 @@
 		if (!p) return;
 		if (p.showLabels != null) { state.labels = !!p.showLabels; UI.store('labels', state.labels); }
 		if (p.reduced != null) { state.reduced = !!p.reduced; UI.store('reduced', state.reduced); }
+		if (p.devMode != null) { state.dev = !!p.devMode; UI.store('dev', state.dev); render(); }
 		metrics();
 	});
 
@@ -401,9 +469,15 @@
 
 	// read the real 'show labels' preference once the host is up
 	PGN.run('prefs.get', {}).then(function (r) {
-		if (r && r.ok && r.data && r.data.showLabels != null && UI.store('labels') === undefined) {
+		if (!r || !r.ok || !r.data) return;
+		if (r.data.showLabels != null && UI.store('labels') === undefined) {
 			state.labels = !!r.data.showLabels;
 			metrics();
+		}
+		if (!!r.data.devMode !== state.dev) {
+			state.dev = !!r.data.devMode;
+			UI.store('dev', state.dev);
+			render();
 		}
 	});
 

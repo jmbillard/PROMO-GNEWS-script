@@ -128,13 +128,13 @@
 				[
 					T('id', 'Inserir usuário e ID nas comps', 'pop', 'M8 8a3 3 0 1 0 6 0a3 3 0 1 0-6 0M5 19c0-3 3-5 6-5', 'M17 14v6M14 17h6'),
 					T('rename', 'Renomear comps', 'slide', 'M4 7h10M4 12h7', 'M14 17l6-6-2-2-6 6v2z'),
-					T('org', 'Organizar projeto', 'up', F, 'M8 14h8', { alt: 'tags de organização' }),
-					T('endp', 'Presets de end page', 'draw', 'M4 5h16v14H4z', 'M8 15h8M8 11h5')
+					T('org', 'Organizar projeto', 'up', F, 'M8 14h8', { job: true, alt: 'tags de organização', altWin: 'tags' }),
+					T('endp', 'Presets de end page', 'draw', 'M4 5h16v14H4z', 'M8 15h8M8 11h5', { win: 'endpage' })
 				],
 				[
 					T('save', 'Salvar projeto', 'down', 'M5 4h11l3 3v13H5z', 'M8 20v-6h8v6', { alt: 'salvar em outra pasta' }),
-					T('collect', 'Coletar arquivos', 'down', 'M4 14v6h16v-6', 'M12 4v10M8 10l4 4 4-4'),
-					T('cfonts', 'Coletar fontes', 'pop', 'M5 19l5-14h1l5 14M7 14h7', 'M18 14v5'),
+					T('collect', 'Coletar arquivos', 'down', 'M4 14v6h16v-6', 'M12 4v10M8 10l4 4 4-4', { job: true }),
+					T('cfonts', 'Coletar fontes', 'pop', 'M5 19l5-14h1l5 14M7 14h7', 'M18 14v5', { job: true }),
 					T('open', 'Abrir pasta do projeto', 'lift', F, 'M3 18l3-7h15')
 				]
 			]
@@ -164,11 +164,22 @@
 					T('psetup', 'Setup do projeto', 'spin', 'M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6', 'M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1'),
 					T('labels', 'Cores de label', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z'),
 					T('csetup', 'Setup da comp', 'grow', 'M3 6h18v12H3z', 'M9 9v6M15 9v6', { sel: 'comp', alt: 'vertical' }),
-					T('batch', 'Batch nunca desliga', 'slide', 'M4 6h12v9H4z', 'M8 18h12V9')
+					T('batch', 'Batch nunca desliga', 'slide', 'M4 6h12v9H4z', 'M8 18h12V9', { job: true })
 				]
 			]
 		}
 	];
+
+	// only when 'ferramentas de dev' is on in the preferences
+	SECTIONS.push({
+		id: 'dev', name: 'Dev', acc: '#F4FAFF', dev: true, d: 'M9 7l-5 5 5 5', a: 'M15 7l5 5-5 5',
+		groups: [[
+			T('dev.bin', 'Conversor binário', 'pop', 'M5 5h14v14H5z', 'M9 10v4M12 10v4M15 10v4'),
+			T('dev.dark', 'Ícones .png → tema escuro', 'pulse', 'M12 3a9 9 0 1 0 0 18', 'M12 3a9 9 0 0 1 0 18'),
+			T('dev.zipTpl', 'Zipar templates', 'down', 'M6 3h9l3 3v15H6z', 'M11 7h2M11 10h2M11 13h2'),
+			T('dev.zipFonts', 'Zipar fontes', 'down', 'M5 19l5-14h1l5 14M7 14h7', 'M18 14v5')
+		]]
+	});
 
 	window.FOOTER = [
 		{ name: 'Templates', win: 'templates', d: 'M4 4h7v7H4zM4 13h7v7H4zM13 13h7v7h-7z', a: 'M13 4h7v7h-7z', anim: 'pop' },

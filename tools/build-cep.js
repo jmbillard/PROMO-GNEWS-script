@@ -78,6 +78,7 @@ copy(CEP, out);
 // never ship the dev link
 fs.rmSync(path.join(out, 'host', 'src'), { recursive: true, force: true });
 fs.rmSync(path.join(out, 'README.md'), { force: true });
+fs.rmSync(path.join(out, 'scripts'), { recursive: true, force: true });
 for (const part of SRC_PARTS) copy(path.join(SRC, part), path.join(out, 'host', 'src', part));
 console.log('built → ' + path.relative(ROOT, out));
 console.log('sign with ZXPSignCmd to distribute as .zxp, or copy the folder to the CEP extensions folder (needs PlayerDebugMode).');

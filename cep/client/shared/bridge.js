@@ -24,12 +24,6 @@
 	var EV = 'com.promognews.';
 	var mocks = {};
 
-	function extensionPath() {
-		if (!inHost) return '';
-		var p = decodeURI(cep.getSystemPath('extension'));
-		return /^win/i.test(navigator.platform) ? p.replace(/^file:\/\/\//, '') : p.replace(/^file:\/\//, '');
-	}
-
 	function jsStr(s) {
 		return JSON.stringify(String(s)).replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 	}
@@ -41,19 +35,33 @@
 		});
 	}
 
+	// pasta 'host' ao lado da pasta 'client' desta página (no uso normal a página abre direto da rede)
+	function hostFolder() {
+		var path = decodeURIComponent(location.pathname).replace(/\/client\/.*$/, '/host');
+		if (location.host) return '//' + location.host + path;           // Windows: \\servidor\share
+		if (/^\/[A-Za-z]:\//.test(path)) return path.slice(1);          // Windows: C:/...
+		return path;
+	}
+
 	var hostReady = null;
 
-	// the panel loads the host through the manifest; windows make sure it is there...
+	// carrega o host na primeira chamada da página, e de novo se algum arquivo dele mudou (host/loader.jsx)
 	function ensureHost() {
 		if (!inHost) return Promise.resolve(true);
 		if (hostReady) return hostReady;
-		var file = extensionPath() + '/host/index.jsx';
-		var script = '(function(){ if (typeof PGN != "undefined" && PGN.ready) return "ok";' +
-			' $.evalFile(new File(' + jsStr(file) + ')); return (typeof PGN != "undefined" && PGN.ready) ? "ok" : "fail"; })()';
-		hostReady = evalScript(script).then(function (r) {
-			if (r !== 'ok') hostReady = null;
-			return r === 'ok';
-		});
+		var host = jsStr(hostFolder());
+		hostReady = evalScript('try{$.evalFile(new File(' + host + '+"/loader.jsx"));PGN_hostState(' + host + ')}catch(e){"erro: "+e}')
+			.then(function (state) {
+				if (state === 'load') return evalScript('try{$.evalFile(new File(' + host + '+"/index.jsx"));PGN_hostLoaded()}catch(e){"erro: "+e+" (linha "+e.line+")"}');
+				return state;
+			})
+			.then(function (state) {
+				if (state !== 'ok' && state !== 'loaded') {
+					hostReady = null; // tenta de novo na próxima chamada (a rede pode voltar)
+					throw new Error(String(state || 'o host do After Effects não carregou').replace(/^erro: /, ''));
+				}
+				return true;
+			});
 		return hostReady;
 	}
 
@@ -75,13 +83,51 @@
 		}
 		return ensureHost().then(function () {
 			return evalScript('PGN.run(' + jsStr(id) + ',' + jsStr(JSON.stringify(args || {})) + ')');
-		}).then(function (res) {
-			try {
-				return JSON.parse(res);
-			} catch (e) {
-				return { ok: false, error: res && res !== 'EvalScript error.' ? String(res) : 'falha na comunicação com o After Effects' };
-			}
-		});
+		}).then(parse, function (err) { return { ok: false, error: err.message }; });
+	}
+
+	function parse(res) {
+		try {
+			return JSON.parse(res);
+		} catch (e) {
+			return { ok: false, error: res && res !== 'EvalScript error.' ? String(res) : 'falha na comunicação com o After Effects' };
+		}
+	}
+
+	/*
+	  long tasks: begin + steps, so the page can animate between calls.
+	  onProgress({ done, total, label }) after every step; resolves like run().
+	  job.cancel() asks the host to stop after the current step.
+	*/
+	function job(id, args, onProgress) {
+		var cancelled = false;
+		var p;
+		if (!inHost) {
+			var m = mocks['job:' + id];
+			var total = m ? m.total : 12, done = 0;
+			p = new Promise(function (resolve) {
+				(function tick() {
+					if (cancelled) { resolve({ ok: false, error: 'cancelado', cancelled: true }); return; }
+					if (onProgress) onProgress({ done: done, total: total, label: (m && m.label ? m.label : id) + ' ' + done + '/' + total });
+					if (done >= total) { resolve({ ok: true, msg: m && m.msg ? m.msg : 'simulado · ' + id }); return; }
+					done++;
+					setTimeout(tick, 160);
+				})();
+			});
+		} else {
+			p = ensureHost().then(function () {
+				return evalScript('PGN.jobStart(' + jsStr(id) + ',' + jsStr(JSON.stringify(args || {})) + ')').then(parse);
+			}).then(function loop(r) {
+				if (!r.ok) return r;
+				if (onProgress) onProgress(r);
+				if (r.finished && r.msg !== undefined) return r;
+				if (cancelled) return evalScript('PGN.jobCancel()').then(function () { return { ok: false, error: 'cancelado', cancelled: true }; });
+				// a frame for the page to paint before the host gets busy again
+				return delay(16).then(function () { return evalScript('PGN.jobStep()'); }).then(parse).then(loop);
+			}, function (err) { return { ok: false, error: err.message }; });
+		}
+		p.cancel = function () { cancelled = true; };
+		return p;
 	}
 
 	function status() {
@@ -145,6 +191,7 @@
 	window.PGN = {
 		inHost: inHost,
 		run: run,
+		job: job,
 		eval: evalScript,
 		status: status,
 		emit: emit,
@@ -154,6 +201,7 @@
 		openURL: openURL,
 		ensureHost: ensureHost,
 		notify: function (msg, ok, acc) { emit('toast', { msg: msg, ok: ok !== false, acc: acc || null }); },
-		mock: function (id, fn, ms) { mocks[id] = { fn: fn, ms: ms }; }
+		mock: function (id, fn, ms) { mocks[id] = typeof fn === 'function' ? { fn: fn, ms: ms } : fn; },
+		hostFolder: hostFolder
 	};
 })();

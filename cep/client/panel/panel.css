@@ -74,3 +74,21 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 .fields { display: none; flex-direction: column; gap: 6px; padding: 4px 4px 8px; }
 .roomy .fields { display: flex; }
 .fields .fld { height: 30px; font-size: 12px; }
+
+/* long task progress: ring on the tile, line on the footer, % on the selection chip */
+.t.is-job .ico { opacity: .55; transform: scale(.78); }
+.t .pring { position: absolute; left: 0; top: 0; width: 36px; height: 36px; transform: rotate(-90deg); pointer-events: none; }
+.list .t .pring { left: 0; }
+.pring circle { fill: none; stroke-width: 2.4; }
+.pring .track { stroke: rgba(255, 255, 255, .1); }
+.pring .bar { stroke: currentColor; stroke-linecap: round; transition: stroke-dashoffset .35s cubic-bezier(.3, 1.1, .5, 1); }
+.indet .t.is-job .pring { animation: spin 1s linear infinite; }
+.indet .t.is-job .pring .bar { stroke-dashoffset: 70 !important; }
+
+footer { position: relative; }
+.jobbar { position: absolute; left: 0; right: 0; top: -1px; height: 2px; overflow: hidden; background: rgba(255, 255, 255, .06); }
+.jobbar i { display: block; height: 100%; background: var(--acc); transform: scaleX(0); transform-origin: left center; transition: transform .35s cubic-bezier(.3, 1.1, .5, 1); }
+.indet .jobbar i { width: 40%; transform: none !important; animation: scan .9s ease-in-out infinite; }
+.sel .pct { font-size: 10px; color: var(--tx); animation: pop .4s cubic-bezier(.3, 1.6, .5, 1); }
+.jobbing .sel { background: #26262B; }
+.joblbl { display: block; padding: 6px 0 2px; font: 11px var(--mono); color: var(--tx-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: hintIn .3s ease backwards; }

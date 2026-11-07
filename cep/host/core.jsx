@@ -96,6 +96,106 @@ PGN.run = function (id, jsonArgs) {
 	return JSON.stringify(out);
 };
 
+/*
+
+  long operations (organize, collect, batch...) run as JOBS:
+  the panel calls begin once and step repeatedly, animating its
+  progress bar between the calls (a busy AE freezes the panel).
+
+    PGN.registerJob('org', {
+      begin:  function (args)  { return { total: n, done: 0, label: '...' }; },
+      step:   function (state) { ...one short slice (~0.2–0.5 s)...; state.done++; if (...) state.finished = true; },
+      finish: function (state) { return 'Projeto organizado'; },   // optional, same contract as a tool
+      cancel: function (state) { }                                   // optional cleanup
+    });
+
+  state: total (0 = indeterminate) · done · label (short pt-BR) · finished
+  any other field is private to the job. PGN.fail works inside every callback.
+  PGN.run(id) on a job runs every step in one go (fallback).
+
+*/
+
+PGN.jobs = {};
+PGN._job = null;
+
+PGN.registerJob = function (id, job) {
+	PGN.jobs[id] = job;
+	PGN.tools[id] = function (args) {
+		var st = job.begin(args) || {};
+
+		while (!st.finished) st = job.step(st) || st;
+		return job.finish ? job.finish(st) : '';
+	};
+};
+
+function PGN_jobOut(st, extra) {
+	var o = { ok: true, done: st.done || 0, total: st.total || 0, label: st.label || '', finished: !!st.finished };
+
+	if (extra) for (var k in extra) o[k] = extra[k];
+	return JSON.stringify(o);
+}
+
+function PGN_jobFail(err) {
+	try { app.endUndoGroup(); } catch (e) { }
+	if (PGN._job) {
+		try { if (PGN._job.job.cancel) PGN._job.job.cancel(PGN._job.state); } catch (e) { }
+	}
+	PGN._job = null;
+	var msg = err && err.pgn ? err.message : 'erro: ' + (err && err.message ? err.message : String(err)) + (err && err.line ? ' (linha ' + err.line + ')' : '');
+	try { clearOutput(); write(msg); } catch (e) { }
+	return JSON.stringify({ ok: false, error: msg });
+}
+
+PGN.jobStart = function (id, jsonArgs) {
+	try {
+		var job = PGN.jobs[id];
+
+		if (!job) PGN.fail('tarefa desconhecida: ' + id);
+		if (PGN._job) {
+			try { if (PGN._job.job.cancel) PGN._job.job.cancel(PGN._job.state); } catch (e) { }
+		}
+		var st = job.begin(jsonArgs ? JSON.parse(jsonArgs) : {}) || {};
+
+		st.done = st.done || 0;
+		PGN._job = { id: id, job: job, state: st };
+		return PGN_jobOut(st, { id: id });
+	} catch (err) {
+		return PGN_jobFail(err);
+	}
+};
+
+PGN.jobStep = function () {
+	try {
+		var cur = PGN._job;
+
+		if (!cur) PGN.fail('nenhuma tarefa em andamento');
+		if (!cur.state.finished) cur.state = cur.job.step(cur.state) || cur.state;
+		if (!cur.state.finished) return PGN_jobOut(cur.state);
+
+		var r = cur.job.finish ? cur.job.finish(cur.state) : '';
+
+		PGN._job = null;
+		if (r == null) r = '';
+		var msg = typeof r == 'string' ? r : (r.msg || '');
+
+		try { clearOutput(); write(msg); } catch (e) { }
+		return PGN_jobOut(cur.state, { msg: msg, data: typeof r == 'string' ? undefined : r.data });
+	} catch (err) {
+		return PGN_jobFail(err);
+	}
+};
+
+PGN.jobCancel = function () {
+	var cur = PGN._job;
+
+	PGN._job = null;
+	if (cur && cur.job.cancel) {
+		try { cur.job.cancel(cur.state); } catch (e) { }
+	}
+	try { app.endUndoGroup(); } catch (e) { }
+	return JSON.stringify({ ok: true, msg: 'cancelado' });
+};
+
 // lightweight status polled by the panel (selection indicator)...
 PGN.status = function () {
 	var aItem = app.project.activeItem;

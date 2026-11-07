@@ -9,18 +9,20 @@
 		<Extension Id="com.promognews.cep.templates" Version="3.0.0" />
 		<Extension Id="com.promognews.cep.fonts" Version="3.0.0" />
 		<Extension Id="com.promognews.cep.settings" Version="3.0.0" />
+		<Extension Id="com.promognews.cep.tags" Version="3.0.0" />
+		<Extension Id="com.promognews.cep.endpage" Version="3.0.0" />
 	</ExtensionList>
 
 	<ExecutionEnvironment>
 		<HostList>
-			<!-- After Effects 2022+ (CEP 11 · Chromium 88) -->
+			<!-- After Effects 2022+ · CSXS 7.0 + nodejs/mixed-context: no AE 2025 (macOS) painéis abertos com o AE rodando ficavam pretos com CSXS 8+ (mesma correção do O PADEIRO) -->
 			<Host Name="AEFT" Version="[22.0,99.9]" />
 		</HostList>
 		<LocaleList>
 			<Locale Code="All" />
 		</LocaleList>
 		<RequiredRuntimeList>
-			<RequiredRuntime Name="CSXS" Version="11.0" />
+			<RequiredRuntime Name="CSXS" Version="7.0" />
 		</RequiredRuntimeList>
 	</ExecutionEnvironment>
 
@@ -31,9 +33,11 @@
 			<DispatchInfo>
 				<Resources>
 					<MainPath>./client/panel/index.html</MainPath>
-					<ScriptPath>./host/index.jsx</ScriptPath>
 					<CEFCommandLine>
 						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
 					</CEFCommandLine>
 				</Resources>
 				<Lifecycle>
@@ -54,7 +58,15 @@
 		<!-- modeless windows (opened from the panel) -->
 		<Extension Id="com.promognews.cep.curves">
 			<DispatchInfo>
-				<Resources><MainPath>./client/windows/curves/index.html</MainPath></Resources>
+				<Resources>
+					<MainPath>./client/windows/curves/index.html</MainPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
+					</CEFCommandLine>
+				</Resources>
 				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
 				<UI>
 					<Type>Modeless</Type>
@@ -65,7 +77,15 @@
 
 		<Extension Id="com.promognews.cep.search">
 			<DispatchInfo>
-				<Resources><MainPath>./client/windows/search/index.html</MainPath></Resources>
+				<Resources>
+					<MainPath>./client/windows/search/index.html</MainPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
+					</CEFCommandLine>
+				</Resources>
 				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
 				<UI>
 					<Type>Modeless</Type>
@@ -79,7 +99,15 @@
 
 		<Extension Id="com.promognews.cep.templates">
 			<DispatchInfo>
-				<Resources><MainPath>./client/windows/templates/index.html</MainPath></Resources>
+				<Resources>
+					<MainPath>./client/windows/templates/index.html</MainPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
+					</CEFCommandLine>
+				</Resources>
 				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
 				<UI>
 					<Type>Modeless</Type>
@@ -93,7 +121,15 @@
 
 		<Extension Id="com.promognews.cep.fonts">
 			<DispatchInfo>
-				<Resources><MainPath>./client/windows/fonts/index.html</MainPath></Resources>
+				<Resources>
+					<MainPath>./client/windows/fonts/index.html</MainPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
+					</CEFCommandLine>
+				</Resources>
 				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
 				<UI>
 					<Type>Modeless</Type>
@@ -107,11 +143,63 @@
 
 		<Extension Id="com.promognews.cep.settings">
 			<DispatchInfo>
-				<Resources><MainPath>./client/windows/settings/index.html</MainPath></Resources>
+				<Resources>
+					<MainPath>./client/windows/settings/index.html</MainPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
+					</CEFCommandLine>
+				</Resources>
 				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
 				<UI>
 					<Type>Modeless</Type>
 					<Geometry><Size><Width>360</Width><Height>560</Height></Size></Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+		<Extension Id="com.promognews.cep.tags">
+			<DispatchInfo>
+				<Resources>
+					<MainPath>./client/windows/tags/index.html</MainPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
+					</CEFCommandLine>
+				</Resources>
+				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
+				<UI>
+					<Type>Modeless</Type>
+					<Geometry>
+						<Size><Width>320</Width><Height>520</Height></Size>
+						<MinSize><Width>280</Width><Height>320</Height></MinSize>
+					</Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+		<Extension Id="com.promognews.cep.endpage">
+			<DispatchInfo>
+				<Resources>
+					<MainPath>./client/windows/endpage/index.html</MainPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+						<Parameter>--allow-file-access</Parameter>
+						<Parameter>--enable-nodejs</Parameter>
+						<Parameter>--mixed-context</Parameter>
+					</CEFCommandLine>
+				</Resources>
+				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
+				<UI>
+					<Type>Modeless</Type>
+					<Geometry>
+						<Size><Width>380</Width><Height>640</Height></Size>
+						<MinSize><Width>340</Width><Height>420</Height></MinSize>
+					</Geometry>
 				</UI>
 			</DispatchInfo>
 		</Extension>
