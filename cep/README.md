@@ -25,7 +25,7 @@ cep/
 2. Libere extensões sem assinatura:
    - **Windows:** `reg add HKCU\Software\Adobe\CSXS.11 /v PlayerDebugMode /t REG_SZ /d 1 /f`
    - **Mac:** `defaults write com.adobe.CSXS.11 PlayerDebugMode 1`
-3. Abra o After Effects e vá em *Window › Extensions › PROMO GNEWS*. A opção *Scripting & Expressions › Allow Scripts to Write Files and Access Network* precisa estar ligado.
+3. Abra o After Effects e vá em *Window › Extensions › PROMO GNEWS*. A opção *Scripting & Expressions › Allow Scripts to Write Files and Access Network* precisa estar ligada.
 
 Depois de editar:
 - **HTML/CSS/JS:** feche e abra o painel, ou recarregue pelo DevTools.
