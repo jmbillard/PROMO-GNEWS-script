@@ -12,7 +12,7 @@
 
 	var h = UI.h, I = UI.I;
 	var $ = function (id) { return document.getElementById(id); };
-	var ACC = '#7CC6FE';
+	var ACC = '#ECFF8C';
 	var form = $('form'), note = $('note'), preview = $('preview');
 	var S = { cur: null, livre: '', opt: null, presets: [], target: null, mode: UI.store('endp.mode') || 'simple', busy: false };
 

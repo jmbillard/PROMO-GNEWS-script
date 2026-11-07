@@ -9,7 +9,7 @@
 
 	var h = UI.h, I = UI.I;
 	var $ = function (id) { return document.getElementById(id); };
-	var ACC = '#E52F2E';
+	var ACC = '#ECFF8C';
 	var list = $('list'), foot = $('foot'), prog = $('prog');
 	var s = { items: [], cat: 'todos', q: '', sel: null, busy: false, updated: '' };
 

@@ -1,6 +1,6 @@
 .fam { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: 10px; text-align: left; transition: background .15s, transform .2s; animation: rowIn .3s var(--out) backwards; }
 .fam:hover { background: #26262B; transform: translateX(2px); }
-.fam.on { background: rgba(255, 175, 183, .1); }
+.fam.on { background: #26262B; box-shadow: inset 1px 0 0 var(--acc); }
 .box { width: 18px; height: 18px; border-radius: 6px; flex: none; box-shadow: inset 0 0 0 1.5px #4A4A52; display: flex; align-items: center; justify-content: center; transition: background .2s, box-shadow .2s, transform .25s cubic-bezier(.3, 1.6, .5, 1); }
 .fam.on .box { background: var(--acc); box-shadow: none; transform: scale(1.06); }
 .box svg { width: 12px; height: 12px; fill: none; stroke: var(--bg); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
@@ -9,5 +9,5 @@
 .fam .sample { font-size: 18px; line-height: 1.25; color: var(--tx); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .3s; }
 .fam .sample.loading { opacity: .35; }
 .fam .sub { font: 10px var(--mono); color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fam .n { font: 10px var(--mono); color: var(--acc); background: rgba(255, 175, 183, .12); padding: 1px 6px; border-radius: 6px; flex: none; }
+.fam .n { font: 10px var(--mono); color: var(--faint); background: #26262B; padding: 1px 6px; border-radius: 6px; flex: none; }
 .btn-1 { color: #141416; }

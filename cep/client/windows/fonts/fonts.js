@@ -10,7 +10,7 @@
 
 	var h = UI.h, I = UI.I;
 	var $ = function (id) { return document.getElementById(id); };
-	var ACC = '#FFAFB7';
+	var ACC = '#ECFF8C';
 	var list = $('list'), foot = $('foot'), prog = $('prog'), sample = $('sample');
 	var s = { items: [], picked: {}, q: '', canInstall: true, busy: false };
 	var faces = {};

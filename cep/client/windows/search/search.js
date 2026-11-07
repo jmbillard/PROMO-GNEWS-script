@@ -149,7 +149,7 @@
 		PGN.run('find.select', { items: items }).then(function (r) {
 			if (r.ok) mark([].slice.call(res.querySelectorAll('.r')));
 			UI.note(info, r.ok ? r.msg : r.error, r.ok);
-			if (r.ok) PGN.notify(r.msg, true, '#8FB8FF');
+			if (r.ok) PGN.notify(r.msg, true, '#ECFF8C');
 		});
 	});
 

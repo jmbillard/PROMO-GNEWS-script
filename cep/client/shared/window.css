@@ -6,3 +6,16 @@ body { background: var(--bg-2); }
 .pad { padding: 12px; }
 .row-flex { display: flex; align-items: center; gap: 6px; }
 .grow { flex: 1; min-width: 0; }
+
+/*
+  windows: GNEWS yellow is the only highlight.
+  no glows, no halos, no gradients: a selected / focused thing gets a thin line.
+*/
+:root { --acc: #ECFF8C; --focus: #ECFF8C; --line-acc: 1px solid #ECFF8C; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: var(--line-acc); outline-offset: 2px; }
+.fld:focus { border-color: var(--acc); box-shadow: none; }
+.fld.bad { box-shadow: none; }
+.op.on { background: transparent; color: var(--acc); box-shadow: inset 0 0 0 1px var(--acc); }
+.btn-1 { background: var(--acc); color: #141416; }
+.prog i { background: var(--acc); }
+.note i { background: var(--acc); }

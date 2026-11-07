@@ -22,7 +22,7 @@
 .sw.on .rail { background: #34343A; }
 .sw.on .rail i { width: 100%; }
 .sw.on .d.a { background: #ECFF8C; }
-.sw.on .d.b { opacity: 1; transform: rotate(45deg) scale(1); box-shadow: 0 0 10px rgba(236, 255, 140, .6); animation: kpop .45s cubic-bezier(.3, 1.6, .5, 1); }
+.sw.on .d.b { opacity: 1; transform: rotate(45deg) scale(1); animation: kpop .45s cubic-bezier(.3, 1.6, .5, 1); }
 @keyframes kpop { 0% { transform: rotate(45deg) scale(.5); } 60% { transform: rotate(45deg) scale(1.35); } 100% { transform: rotate(45deg) scale(1); } }
 
 /* segmented */

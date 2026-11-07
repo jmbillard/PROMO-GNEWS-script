@@ -9,7 +9,7 @@
 
 	var $ = function (id) { return document.getElementById(id); };
 	var el = UI.svgEl;
-	var ACC = '#B7B5E4';
+	var ACC = '#ECFF8C';
 	var plot = $('plot'), ball = $('ball'), note = $('note');
 	var s = { out: UI.store('inf.out') || 33, in: UI.store('inf.in') || 66, linked: false, drag: null, busy: false };
 

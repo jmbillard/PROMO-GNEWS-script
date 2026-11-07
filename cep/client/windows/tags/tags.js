@@ -10,7 +10,7 @@
 
 	var h = UI.h, I = UI.I;
 	var $ = function (id) { return document.getElementById(id); };
-	var ACC = '#7CC6FE';
+	var ACC = '#ECFF8C';
 	var box = $('groups'), note = $('note'), sel = $('sel'), custom = $('custom');
 	var count = 0;
 

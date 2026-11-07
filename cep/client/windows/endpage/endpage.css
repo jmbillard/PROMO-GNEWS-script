@@ -1,7 +1,7 @@
 /* live preview (schematic, not the real template) */
 .preview { height: 132px; border-radius: 12px; position: relative; overflow: hidden; background: var(--p-fundo, #E53131); transition: background .4s; flex: none; }
 .preview .pv-pat { position: absolute; inset: 0; opacity: .14; background-image: repeating-linear-gradient(135deg, var(--p-pattern) 0 2px, transparent 2px 12px); transition: opacity .3s; }
-.preview .pv-foto { position: absolute; right: 0; top: 0; bottom: 0; width: 38%; background: linear-gradient(180deg, rgba(0, 0, 0, .05), rgba(0, 0, 0, .25)), repeating-linear-gradient(45deg, rgba(255, 255, 255, .08) 0 6px, transparent 6px 12px); transition: width .45s var(--spring-soft), opacity .3s; }
+.preview .pv-foto { position: absolute; right: 0; top: 0; bottom: 0; width: 38%; background: rgba(0, 0, 0, .18); transition: width .45s var(--spring-soft), opacity .3s; }
 .preview .pv-foto::after { content: ''; position: absolute; left: 50%; top: 26%; width: 34px; height: 34px; margin-left: -17px; border-radius: 50%; background: rgba(255, 255, 255, .22); box-shadow: 0 46px 0 14px rgba(255, 255, 255, .16); }
 .preview .pv-txt { position: absolute; left: 14px; right: 40%; top: 18px; bottom: 14px; display: flex; flex-direction: column; justify-content: center; gap: 4px; transition: right .45s var(--spring-soft); }
 .preview.nofoto .pv-txt { right: 14px; }
@@ -39,6 +39,7 @@ textarea.fld { height: 52px; padding: 7px 10px; resize: none; line-height: 1.3; 
 .tg { height: 28px; padding: 0 10px; border-radius: 8px; font-size: 11px; font-weight: 600; color: #8E8E98; background: var(--sunk); display: inline-flex; align-items: center; gap: 6px; transition: background .2s, color .2s, transform .25s cubic-bezier(.3, 1.6, .5, 1); }
 .tg i { width: 8px; height: 8px; border-radius: 3px; box-shadow: inset 0 0 0 1.5px currentColor; display: block; transition: background .2s, border-radius .25s; }
 .tg.on { color: var(--tx); background: #34343B; }
+.tg.on { box-shadow: inset 0 0 0 1px var(--acc); }
 .tg.on i { background: var(--acc); box-shadow: none; border-radius: 50%; }
 .tg:active { transform: scale(.92); }
 
@@ -53,7 +54,7 @@ textarea.fld { height: 52px; padding: 7px 10px; resize: none; line-height: 1.3; 
 .themes { display: flex; gap: 6px; }
 .th { flex: 1; height: 34px; border-radius: 9px; position: relative; transition: transform .25s var(--spring), box-shadow .25s; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
 .th:hover { transform: translateY(-2px); }
-.th.on { box-shadow: 0 0 0 2px var(--bg-2), 0 0 0 4px var(--acc); }
+.th.on { outline: var(--line-acc); outline-offset: 3px; }
 .th span { position: absolute; left: 0; right: 0; bottom: -16px; font-size: 9px; color: var(--faint); text-align: center; }
 .th.free { background: none; border: 1.5px dashed #5A5A63; box-shadow: none; display: flex; align-items: center; justify-content: center; transition: border-color .25s, transform .25s var(--spring), box-shadow .25s; }
 .th.free:hover { border-color: #8E8E98; }
@@ -63,7 +64,7 @@ textarea.fld { height: 52px; padding: 7px 10px; resize: none; line-height: 1.3; 
 .th.free:hover .dots i { transform: translateY(-2px); }
 .th.free:hover .dots i:nth-child(2) { transition-delay: .05s; }
 .th.free:hover .dots i:nth-child(3) { transition-delay: .1s; }
-.th.free.on { border-style: solid; border-color: #3A3A42; box-shadow: 0 0 0 2px var(--bg-2), 0 0 0 4px var(--acc); }
+.th.free.on { border-style: solid; border-color: #3A3A42; outline: var(--line-acc); outline-offset: 3px; }
 .colors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 14px; transition: opacity .3s; }
 .colors.dim { opacity: .35; }
 .cl { display: flex; align-items: center; gap: 6px; padding: 4px; border-radius: 8px; background: var(--sunk); font-size: 10px; color: var(--mute); cursor: pointer; overflow: hidden; }
