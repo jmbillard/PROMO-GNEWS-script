@@ -220,8 +220,8 @@
 				<UI>
 					<Type>Modeless</Type>
 					<Geometry>
-						<Size><Width>340</Width><Height>720</Height></Size>
-						<MinSize><Width>300</Width><Height>360</Height></MinSize>
+						<Size><Width>340</Width><Height>420</Height></Size>
+						<MinSize><Width>300</Width><Height>380</Height></MinSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>

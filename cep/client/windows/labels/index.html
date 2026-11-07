@@ -9,15 +9,28 @@
 </head>
 <body>
 	<div class="win">
-		<div class="pad" style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 8px">
-			<div id="strip" class="strip" aria-hidden="true"></div>
-			<div id="presets" class="presets" role="group" aria-label="Presets de labels"></div>
+		<div class="pad" style="display: flex; flex-direction: column; gap: 12px">
+			<!-- the 16 labels: click one to edit it below -->
+			<div id="swatches" class="swatches" role="radiogroup" aria-label="Labels"></div>
+
+			<!-- selected label -->
+			<div id="editor" class="editor">
+				<div class="ed-head">
+					<span id="edIx" class="ix mono"></span>
+					<input id="edName" class="fld nm" type="text" aria-label="Nome do label" spellcheck="false">
+					<input id="edHex" class="fld hx mono" type="text" maxlength="7" aria-label="Cor em hex" spellcheck="false">
+				</div>
+				<!-- color control slot (adapted from O PADEIRO's control) -->
+				<div id="picker" class="picker"></div>
+			</div>
 		</div>
-		<div id="list" class="scroll grow" style="flex: 1; padding: 0 8px 10px"></div>
 		<div class="foot">
-			<div class="meta"><div id="note" class="sub"></div></div>
+			<div class="sel-wrap grow">
+				<select id="preset" class="fld" aria-label="Carregar preset de labels"></select>
+			</div>
 			<button id="apply" class="btn btn-1" disabled><span>aplicar</span></button>
 		</div>
+		<div class="status"><span id="note"></span></div>
 	</div>
 	<script src="../../shared/bridge.js"></script>
 	<script src="../../shared/ui.js"></script>
