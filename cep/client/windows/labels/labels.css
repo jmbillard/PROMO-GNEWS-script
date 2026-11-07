@@ -1,13 +1,13 @@
 /* labels: 16 swatches on top · the selected one edited below */
 
-.swatches { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px; padding-bottom: 8px; }
+.swatches { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px; margin-bottom: -12px; }
 .sw { height: 34px; border-radius: 5px; position: relative; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); transition: transform .25s var(--spring); animation: tIn .35s var(--out) backwards; }
 .sw:hover { transform: translateY(-2px); }
 .sw:active { transform: scale(.9); }
 /* selected: the swatch stretches down to the editor and ends in the lower half of a
    keyframe (diamond) that sits over the editor's edge — no outline, no extra marker */
 .sw.on { z-index: 2; transform: none; border-radius: 5px 5px 0 0; box-shadow: none; }
-.sw.on::before { content: ''; position: absolute; left: 0; right: 0; top: calc(100% - 1px); height: 34px; background: inherit;
+.sw.on::before { content: ''; position: absolute; left: 0; right: 0; top: calc(100% - 1px); height: 22px; background: inherit;
 	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), 50% 100%, 0 calc(100% - 9px));
 	transform-origin: top center; animation: drop .35s cubic-bezier(.3, 1.3, .45, 1) both; }
 .sw.on::after { display: none; }
@@ -17,7 +17,7 @@
 .sw.mod::after { transform: rotate(45deg) scale(1); }
 
 /* editor: [icon + big nº] [name / tile + brightness] [hex / saved vs new] */
-.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 12px 10px 10px; }
+.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 24px 10px 10px; }
 .idcol { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 7px; color: var(--faint); }
 .lic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 .lic circle { fill: currentColor; stroke: none; }
