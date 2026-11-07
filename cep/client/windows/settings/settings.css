@@ -49,3 +49,40 @@
 .lb.pick small { transition: color .2s; }
 .lb.pick:hover small { color: var(--focus); text-decoration: underline; text-underline-offset: 2px; }
 .lb.pick:active { transform: scale(.98); }
+
+/* org folders: expand chevron + inline editor */
+.mini.exp svg { transition: transform .35s cubic-bezier(.3, 1.5, .5, 1); }
+.row.open .mini.exp svg { transform: rotate(180deg); }
+.row.open { border-bottom-color: transparent; }
+.orged { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.3, 1.1, .45, 1); }
+.orged.open { grid-template-rows: 1fr; border-bottom: 1px solid var(--line); }
+.orged .oi { overflow: hidden; min-height: 0; }
+.orged.open .oi { padding: 2px 0 10px; }
+.ohead { display: flex; align-items: center; gap: 6px; padding: 4px 0 8px; }
+.ohead .cnt { font-size: 10px; color: var(--faint); white-space: nowrap; }
+.mini-fld { height: 26px; font-size: 11px; flex: 1; min-width: 0; padding: 0 8px; }
+.olist { max-height: 300px; overflow-y: auto; margin: 0 -4px; padding: 0 4px; scrollbar-width: thin; }
+.olist::-webkit-scrollbar { width: 6px; }
+.olist::-webkit-scrollbar-thumb { background: #36363C; border-radius: 6px; }
+.ocat { font: 9px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin: 8px 2px 4px; }
+.oit { display: flex; align-items: center; gap: 6px; padding: 2px 0; animation: rowIn .3s var(--out) backwards; transition: opacity .2s, transform .2s; }
+.oit.out { opacity: 0; transform: translateX(10px); }
+.oit.new .sig { animation: pop .5s cubic-bezier(.3, 1.6, .5, 1); box-shadow: 0 0 0 1.5px #ECFF8C; }
+.sig { width: 44px; height: 26px; flex: none; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--tx); background: #34343B; }
+.sig.custom { background: rgba(236, 255, 140, .14); color: #ECFF8C; }
+input.sig { padding: 0; text-align: center; font-family: var(--mono); text-transform: uppercase; background: var(--sunk); }
+.oit .pth, .oadd .pth { height: 26px; font: 11px var(--mono); padding: 0 8px; flex: 1; min-width: 0; background: transparent; border-color: transparent; color: var(--tx-2); }
+.oit .pth:hover { background: var(--sunk); }
+.oit .pth:focus, .oadd .pth { background: var(--sunk); border-color: rgba(255, 255, 255, .07); }
+.oit .pth:focus { border-color: var(--focus); }
+.oit.mod .pth { color: #ECFF8C; }
+.oit .mini { width: 24px; height: 24px; }
+.oit .mini svg { width: 13px; height: 13px; }
+.oit .mini.hide { visibility: hidden; }
+.oit .mini.del { opacity: 0; transition: opacity .2s, background .2s; }
+.oit:hover .mini.del, .oit .mini.del:focus-visible { opacity: 1; }
+.oadd { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-2); }
+.oadd.bad { animation: nope .42s ease; }
+.oadd .mini.add { width: 26px; height: 26px; background: #ECFF8C; color: #141416; border-radius: 7px; }
+.oadd .mini.add:hover { filter: brightness(1.08); }
+.oempty { font: 11px var(--mono); color: var(--faint); padding: 14px 2px; }

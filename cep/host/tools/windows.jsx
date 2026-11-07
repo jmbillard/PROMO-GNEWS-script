@@ -720,14 +720,39 @@ PGN.register('prefs.resetFolder', function (args) {
 
 // resetOrgFoldersBtn...
 PGN.register('prefs.resetOrgFolders', function (args) {
-	PGN.win.netFail();
 
 	PGN.prefs.detach();
 	JSONPrefsObj.folders.promoSubPath = PGN.win.clone(defPrefsObj.folders.promoSubPath);
 	savePrefs(); // → save preferences.json
 	promoSubPath = JSONPrefsObj.folders.promoSubPath;
 
-	return { msg: 'Pastas de organização restauradas', data: { promoSubPath: PGN.win.clone(promoSubPath) } };
+	return { msg: 'Pastas de organiza\u00E7\u00E3o restauradas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defPrefsObj.folders.promoSubPath) } };
+});
+
+// org. folders editor (settings window): replaces the whole sigla → sub path map...
+// (loadDefaultPrefs puts back any missing default sigla, so defaults can be edited but not removed)
+PGN.register('prefs.setOrgFolders', function (args) {
+	var map = args.map;
+	var clean = {};
+	var n = 0;
+
+	if (map == null || typeof map != 'object') PGN.fail('lista inv\u00E1lida');
+
+	for (var k in map) {
+		if (!map.hasOwnProperty(k)) continue;
+		var key = String(k).toUpperCase().replace(/[^A-Z0-9]/g, '');
+		var val = String(map[k]).replace(/\\/g, '/').replace(/^\/+|\/+$/g, '').replace(/\/{2,}/g, '/');
+
+		if (key == '' || val == '') continue;
+		clean[key] = val;
+		n++;
+	}
+	PGN.prefs.detach();
+	JSONPrefsObj.folders.promoSubPath = clean;
+	savePrefs(); // → save preferences.json
+	loadDefaultPrefs(); // → adds back any missing default sigla
+
+	return { msg: 'Pastas de organiza\u00E7\u00E3o salvas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defPrefsObj.folders.promoSubPath) } };
 });
 
 // updateBtn: left click → download the latest release | right click → open the github repo...
