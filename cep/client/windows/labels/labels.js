@@ -150,6 +150,7 @@
 	var vs = $('vs'), thumb = vs.querySelector('.thumb');
 	var was = $('was'), now = $('now');
 	var INSET = 6, MARK = 8; // tile inner margin · half the marker
+	var markXY = { x: 0, y: 0 };
 
 	// from the center to where the marker touches the inner edge (depends on the window width)
 	function span() { return tile.clientWidth / 2 - INSET - MARK; }
@@ -160,6 +161,7 @@
 		var a = hh * Math.PI / 180, sx = Math.sin(a), sy = -Math.cos(a);
 		var k = span() * Math.max(0, Math.min(100, sat)) / 100 / Math.max(Math.abs(sx), Math.abs(sy), 1e-6);
 		var x = (k * sx).toFixed(1), y = (k * sy).toFixed(1);
+		markXY = { x: k * sx, y: k * sy };
 		mk.style.left = gy.style.left = 'calc(50% + ' + x + 'px)';
 		mk.style.top = gx.style.top = 'calc(50% + ' + y + 'px)';
 	}
@@ -186,32 +188,20 @@
 		if (S.saved) { was.style.background = S.saved.colors[i]; was.style.setProperty('--ink', ink(S.saved.colors[i])); }
 		now.style.background = c;
 		was.classList.toggle('same', !S.saved || S.saved.colors[i] === c);
-		// RGB fields follow the color (not the one being typed)
-		var n = parseInt(c.slice(1), 16), rgb = [n >> 16 & 255, n >> 8 & 255, n & 255];
-		['r', 'g', 'b'].forEach(function (id, k) { if (document.activeElement !== $(id)) $(id).value = rgb[k]; });
+		// RGB readout follows the marker
+		var n = parseInt(c.slice(1), 16);
+		var tag = $('rgb');
+		tag.innerHTML = '<i>R</i>' + (n >> 16 & 255) + '<i>G</i>' + (n >> 8 & 255) + '<i>B</i>' + (n & 255);
+		// diagonal to the marker (clear of both guides), on the side with room
+		var W = tile.clientWidth, Hh = tile.clientHeight, px = W / 2 + markXY.x, py = Hh / 2 + markXY.y;
+		var tw = tag.offsetWidth, th = tag.offsetHeight, gap = MARK + 6;
+		var lx = px + gap + tw <= W - INSET ? px + gap : px - gap - tw;
+		var ly = py + gap + th <= Hh - INSET ? py + gap : py - gap - th;
+		lx = Math.max(INSET + 2, Math.min(W - INSET - 2 - tw, lx));
+		ly = Math.max(INSET + 2, Math.min(Hh - INSET - 2 - th, ly));
+		tag.style.left = Math.round(lx) + 'px';
+		tag.style.top = Math.round(ly) + 'px';
 	}
-
-	// RGB: type, scroll or use the arrows (shift = 10)
-	['r', 'g', 'b'].forEach(function (id, k) {
-		var el = $(id);
-		function put(v) {
-			var n = parseInt(S.colors[S.sel].slice(1), 16), rgb = [n >> 16 & 255, n >> 8 & 255, n & 255];
-			rgb[k] = Math.max(0, Math.min(255, Math.round(v)));
-			setColor('#' + rgb.map(function (x) { return (x < 16 ? '0' : '') + x.toString(16); }).join('').toUpperCase(), 'rgb');
-		}
-		el.addEventListener('input', function () {
-			el.value = el.value.replace(/[^0-9]/g, '');
-			if (el.value !== '') put(+el.value);
-		});
-		el.addEventListener('blur', function () { updatePicker(); });
-		el.addEventListener('keydown', function (e) {
-			var step = e.shiftKey ? 10 : 1;
-			if (e.key === 'ArrowUp') { e.preventDefault(); put((+el.value || 0) + step); el.value = Math.min(255, (+el.value || 0) + step); }
-			if (e.key === 'ArrowDown') { e.preventDefault(); put((+el.value || 0) - step); el.value = Math.max(0, (+el.value || 0) - step); }
-			if (e.key === 'Enter') el.blur();
-		});
-		el.addEventListener('wheel', function (e) { e.preventDefault(); put((+el.value || 0) + (e.deltaY < 0 ? 1 : -1)); el.value = $(id).value; });
-	});
 
 	// CEP doesn't deliver pointer events: mouse events
 	function dragOn(el, onMove) {
