@@ -90,8 +90,8 @@
 		}
 		return h('div.row', { title: P.folders[key] || '' }, [
 			rowIcon(icon),
-			h('div.lb', null, [label, small]),
-			h('button.mini', { title: 'escolher pasta', 'aria-label': 'Escolher pasta: ' + label, onclick: function () { PGN.run('prefs.pickFolder', { key: key }).then(upd); } }, rowIcon(I.folder + I.folderOpen)),
+			// the path itself picks a new folder
+			h('button.lb.pick', { title: 'escolher pasta', 'aria-label': 'Escolher pasta: ' + label, onclick: function () { PGN.run('prefs.pickFolder', { key: key }).then(upd); } }, [label, small]),
 			h('button.mini', { title: 'restaurar', 'aria-label': 'Restaurar pasta: ' + label, onclick: function () { PGN.run('prefs.resetFolder', { key: key }).then(upd); } }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.reset, 'spinme')]))
 		]);
 	}

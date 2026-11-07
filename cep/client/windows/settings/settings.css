@@ -42,3 +42,10 @@
 .rst:hover { background: #2A2A2F; color: var(--tx); }
 .rst svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .rst.arm { background: rgba(255, 107, 107, .16); color: #FFB3B2; animation: nope .4s ease; }
+
+/* clickable path (picks a folder) */
+.lb.pick { text-align: left; margin: 0 -6px; padding: 5px 6px; border-radius: 8px; transition: background .2s; }
+.lb.pick:hover { background: #2E2E34; }
+.lb.pick small { transition: color .2s; }
+.lb.pick:hover small { color: var(--focus); text-decoration: underline; text-underline-offset: 2px; }
+.lb.pick:active { transform: scale(.98); }
