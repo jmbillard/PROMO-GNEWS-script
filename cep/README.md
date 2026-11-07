@@ -69,3 +69,12 @@ As páginas também abrem direto no navegador, sem o After Effects. Nesse caso, 
 - **Manifest:** usa `RequiredRuntime` CSXS **7.0** e os parâmetros `--enable-nodejs --mixed-context`. Sem isso, no After Effects 2025 para macOS, as janelas abertas com o After Effects já rodando ficam pretas.
 - **ExtendScript é ES3:** nada de `let`, `const`, *arrow functions* ou template strings. Ternários encadeados (`a ? b : c ? d : e`) são avaliados como `(a ? b : c) ? d : e`, então use `if`/`else`.
 - **Codificação:** os `.jsx` do host usam UTF-8 com BOM. Acentos em strings ficam como `\uXXXX`.
+
+### macOS: o que saber
+
+- **Caminhos de rede:** caminhos UNC (`//servidor/share/...`), letras de drive (`T:`) e `smb://` viram `/Volumes/<share>/...`, com os sufixos `-1` a `-5` resolvidos. Os mapas ficam em `host/platform.jsx` (`PGN.net.SHARES`, `DRIVE_MAP`).
+- **Montagem:** nada é montado ao abrir o painel. As ferramentas que precisam da rede (atalhos, templates, fontes, end page, salvar/coletar) montam o volume na hora, com `mount volume "smb://corp\usuário@servidor/share"`. Se o login do Mac não for o da rede, o Finder pede a senha.
+- **Rede fora do ar:** o aviso que o script clássico mostrava ao iniciar ("drive N: is not available…") vira uma mensagem no painel, sem bloquear.
+- **Fontes:** são instaladas em `~/Library/Fonts`. O After Effects só lista as novas fontes depois de reiniciar.
+- **Zip:** usa `ditto`/`zip`, e os templates zipados no Windows (com `\` nos nomes) são reorganizados em pastas.
+- **Download:** usa `curl`. Se a rede da empresa exigir proxy, o download pode falhar.

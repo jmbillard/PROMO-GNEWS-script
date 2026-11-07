@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+﻿/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /*
 
@@ -90,9 +90,7 @@ PGN.proj = {
 
 	// creator / date metadata stamp used by most project buttons...
 	stamp: function () {
-		var dateStr = system
-			.callSystem('cmd.exe /c date /t')
-			.trim();
+		var dateStr = PGN.sys.today();
 
 		setXMPdata('creator', system.userName);
 		setXMPdata('date', dateStr);
@@ -334,7 +332,8 @@ PGN.proj.saveJob = {
 		app.project.save(projFile);
 
 		openFolder(savePath);
-		setClipboard(savePath.replace(/^~\//, '').replace(/\//g, '\\'));
+		if (appOs == 'Win') setClipboard(savePath.replace(/^~\//, '').replace(/\//g, '\\'));
+		else setClipboard(new Folder(savePath).fsName);
 
 		if (!st.alt && appV > 22 && saveAsV22) {
 			executeCommandID('Save a Copy As 22.x...');

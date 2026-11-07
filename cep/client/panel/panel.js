@@ -469,7 +469,10 @@
 
 	// read the real 'show labels' preference once the host is up
 	PGN.run('prefs.get', {}).then(function (r) {
-		if (!r || !r.ok || !r.data) return;
+		if (!r || !r.ok) { if (r && r.error) feedback(r.error, false); return; }
+		if (!r.data) return;
+		// network share offline (home office suggested): warn once, without blocking
+		if (r.data.netOffline) feedback(r.data.netOffline, false);
 		if (r.data.showLabels != null && UI.store('labels') === undefined) {
 			state.labels = !!r.data.showLabels;
 			metrics();

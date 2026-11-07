@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+﻿/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /*
 
@@ -124,7 +124,7 @@ PGN.register('ame', function (args) {
 	var tmpFolder = new Folder(tmpPath);
 	var amePath = '~/Documents/Adobe/Adobe Media Encoder';
 	var ameFolder = new Folder(amePath);
-	var vFolders = ameFolder.getFiles();
+	var vFolders = ameFolder.exists ? ameFolder.getFiles() : [];
 	var zipPath = tmpPath + '/AME.zip';
 	var installed = 0;
 

@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+﻿/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /*
 
@@ -541,6 +541,7 @@ PGN.jk.colInit = function (st, projName) {
 		hn: hardNews,
 		projName: projName,
 		savePath: savePath,
+		mounts: PGN.net && PGN.net.mounts ? PGN.net.mounts() : null,
 		sc: { i: 1, n: app.project.numItems },
 		items: [],
 		k: 0,
@@ -610,7 +611,7 @@ PGN.jk.colHN = function (st, aItem) {
 	// local drives C:, D:, F:, I: | local user folders...
 	var regExp = /^\/(c|d|f|i)\/|^~\//;
 
-	if (!filePath.match(savePath) && !filePath.match(regExp)) return;
+	if (!filePath.match(savePath) && !filePath.match(regExp) && !(PGN.sys && PGN.sys.isLocalFile && PGN.sys.isLocalFile(filePath, c.mounts))) return;
 
 	copyFile(filePath, newFilePath);
 	var newFile = new File([newFilePath, fileName].join('/'));

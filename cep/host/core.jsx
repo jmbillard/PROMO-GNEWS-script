@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+﻿/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /*
 
@@ -72,8 +72,11 @@ PGN.run = function (id, jsonArgs) {
 		var fn = PGN.tools[id];
 
 		if (typeof fn != 'function') PGN.fail('ferramenta desconhecida: ' + id);
-		var args = jsonArgs ? JSON.parse(jsonArgs) : {};
-		var r = fn(args || {});
+		var args = jsonArgs ? JSON.parse(jsonArgs) || {} : {};
+
+		// network shares needed by this tool (mounts them on macOS)...
+		if (PGN.net && PGN.net.before) PGN.net.before(id, args);
+		var r = fn(args);
 
 		if (r == null) r = '';
 		out = typeof r == 'string' ? { ok: true, msg: r } : { ok: true, msg: r.msg || '', data: r.data };
@@ -154,7 +157,10 @@ PGN.jobStart = function (id, jsonArgs) {
 		if (PGN._job) {
 			try { if (PGN._job.job.cancel) PGN._job.job.cancel(PGN._job.state); } catch (e) { }
 		}
-		var st = job.begin(jsonArgs ? JSON.parse(jsonArgs) : {}) || {};
+		var args = jsonArgs ? JSON.parse(jsonArgs) || {} : {};
+
+		if (PGN.net && PGN.net.before) PGN.net.before(id, args);
+		var st = job.begin(args) || {};
 
 		st.done = st.done || 0;
 		PGN._job = { id: id, job: job, state: st };
