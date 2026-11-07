@@ -1,0 +1,169 @@
+/*
+---------------------------------------------------------------
+> PROMO GNEWS · keyframe influence window
+---------------------------------------------------------------
+  host: inf.stats (poll) · inf.read (copiar) · inf.apply { out, in }
+*/
+(function () {
+	'use strict';
+
+	var $ = function (id) { return document.getElementById(id); };
+	var el = UI.svgEl;
+	var ACC = '#B7B5E4';
+	var plot = $('plot'), ball = $('ball'), note = $('note');
+	var s = { out: UI.store('inf.out') || 33, in: UI.store('inf.in') || 66, linked: false, drag: null, busy: false };
+
+	// ---- plot ---------------------------------------------------
+	for (var i = 1; i < 10; i++) plot.appendChild(el('line', { x1: 20 + i * 24, y1: 16, x2: 20 + i * 24, y2: 144, stroke: '#232328', 'stroke-width': 1 }));
+	plot.appendChild(el('line', { x1: 20, y1: 144, x2: 260, y2: 144, stroke: '#34343A' }));
+	plot.appendChild(el('line', { x1: 20, y1: 16, x2: 260, y2: 16, stroke: '#34343A', 'stroke-dasharray': '2 4' }));
+	plot.appendChild(el('path', { d: 'M20 144L260 16', stroke: '#34343A', 'stroke-dasharray': '3 5', fill: 'none' }));
+	var h1 = plot.appendChild(el('line', { y1: 144, y2: 144, x1: 20, stroke: '#6A6A74', 'stroke-width': 1.4 }));
+	var h2 = plot.appendChild(el('line', { y1: 16, y2: 16, x1: 260, stroke: '#6A6A74', 'stroke-width': 1.4 }));
+	var curve = plot.appendChild(el('path', { fill: 'none', stroke: 'currentColor', 'stroke-width': 3, 'stroke-linecap': 'round' }));
+	plot.appendChild(el('circle', { cx: 20, cy: 144, r: 4, fill: '#D8D8DE' }));
+	plot.appendChild(el('circle', { cx: 260, cy: 16, r: 4, fill: '#D8D8DE' }));
+	var hit1 = plot.appendChild(el('circle', { class: 'hit', cy: 144, r: 16 }));
+	var hit2 = plot.appendChild(el('circle', { class: 'hit', cy: 16, r: 16 }));
+	var k1 = plot.appendChild(el('circle', { class: 'knob k-out', cy: 144, r: 6, fill: '#1F1F23', stroke: 'currentColor', 'stroke-width': 2.4 }));
+	var k2 = plot.appendChild(el('circle', { class: 'knob k-in', cy: 16, r: 6, fill: '#1F1F23', stroke: 'currentColor', 'stroke-width': 2.4 }));
+
+	function draw() {
+		var p1 = +(20 + s.out * 2.4).toFixed(1), p2 = +(260 - s.in * 2.4).toFixed(1);
+		h1.setAttribute('x2', p1); h2.setAttribute('x2', p2);
+		[hit1, k1].forEach(function (c) { c.setAttribute('cx', p1); });
+		[hit2, k2].forEach(function (c) { c.setAttribute('cx', p2); });
+		curve.setAttribute('d', 'M20 144C' + p1 + ' 144 ' + p2 + ' 16 260 16');
+		ball.style.animationTimingFunction = 'cubic-bezier(' + (s.out / 100).toFixed(2) + ', 0, ' + (1 - s.in / 100).toFixed(2) + ', 1)';
+		$('out').value = s.out; $('in').value = s.in;
+		$('outV').textContent = s.out + '%'; $('inV').textContent = s.in + '%';
+		plot.setAttribute('aria-label', 'Curva de influência: saída ' + s.out + '%, entrada ' + s.in + '%');
+		document.querySelectorAll('.pre').forEach(function (b) {
+			b.classList.toggle('on', +b.dataset.o === s.out && +b.dataset.i === s.in);
+		});
+		UI.store('inf.out', s.out); UI.store('inf.in', s.in);
+	}
+
+	function set(which, v) {
+		v = Math.max(1, Math.min(100, Math.round(v)));
+		if (s.linked) { s.out = v; s.in = v; } else s[which] = v;
+		draw();
+	}
+
+	function startDrag(which, e) {
+		e.preventDefault();
+		s.drag = which;
+		plot.classList.add('drag-' + which);
+		var mv = function (ev) {
+			var r = plot.getBoundingClientRect();
+			var x = (ev.clientX - r.left) / r.width * 280;
+			set(which, which === 'out' ? (x - 20) / 2.4 : (260 - x) / 2.4);
+		};
+		var up = function () {
+			window.removeEventListener('pointermove', mv);
+			window.removeEventListener('pointerup', up);
+			plot.classList.remove('drag-' + which);
+			s.drag = null;
+		};
+		window.addEventListener('pointermove', mv);
+		window.addEventListener('pointerup', up);
+	}
+	hit1.addEventListener('pointerdown', function (e) { startDrag('out', e); });
+	hit2.addEventListener('pointerdown', function (e) { startDrag('in', e); });
+	$('out').addEventListener('input', function () { set('out', +this.value); });
+	$('in').addEventListener('input', function () { set('in', +this.value); });
+
+	$('link').addEventListener('click', function () {
+		s.linked = !s.linked;
+		this.classList.toggle('on', s.linked);
+		this.setAttribute('aria-pressed', String(s.linked));
+		if (s.linked) { s.in = s.out; draw(); }
+	});
+
+	// ---- presets ------------------------------------------------
+	var pd = 40;
+	[[33, 33], [66, 66], [90, 90], [85, 15], [15, 85], [100, 50]].forEach(function (p) {
+		var d = 'M3 19C' + (3 + p[0] * .3).toFixed(1) + ' 19 ' + (33 - p[1] * .3).toFixed(1) + ' 3 33 3';
+		var b = UI.h('button.pre', {
+			title: p[0] + ' / ' + p[1], 'aria-label': 'Preset ' + p[0] + '% / ' + p[1] + '%',
+			'data-o': p[0], 'data-i': p[1],
+			style: { animationDelay: (pd += 30) + 'ms' },
+			onclick: function () { s.linked = false; $('link').classList.remove('on'); s.out = p[0]; s.in = p[1]; draw(); }
+		}, UI.svg('0 0 36 22', { 'aria-hidden': 'true' }, [UI.path(d)]));
+		$('presets').appendChild(b);
+	});
+
+	// ---- keyframe stats -------------------------------------------
+	var KEY = 'M12 4l8 8-8 8-8-8z', EASE = 'M4 18c4 0 6-12 16-12';
+	var lastStats = '';
+
+	function stat(d, txt) {
+		return UI.h('span.stat', null, [UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(d)]), txt]);
+	}
+
+	function pollStats() {
+		if (document.hidden || s.busy || s.drag) return;
+		PGN.run('inf.stats', {}).then(function (r) {
+			if (!r.ok || !r.data) return;
+			var d = r.data;
+			var key = JSON.stringify(d);
+			if (key === lastStats) return;
+			lastStats = key;
+			var box = $('stats');
+			box.textContent = '';
+			box.appendChild(stat(KEY, (d.keys || 0) + ' kf'));
+			if (d.out != null) box.appendChild(stat(EASE, Math.round(d.out) + ' · ' + Math.round(d['in'])));
+			if (d.outSpeed != null) box.appendChild(stat('M4 12h12M12 8l4 4-4 4', (+d.outSpeed).toFixed(1)));
+			$('apply').disabled = !d.keys;
+		});
+	}
+
+	// ---- actions ------------------------------------------------
+	function busy(btn, on) {
+		s.busy = on;
+		btn.disabled = on;
+		var sp = btn.querySelector('.spin');
+		if (on && !sp) btn.insertBefore(UI.h('span.spin'), btn.firstChild);
+		if (!on && sp) sp.remove();
+	}
+
+	function report(r) {
+		UI.note(note, r.ok ? r.msg : r.error, r.ok);
+		PGN.notify(r.ok ? r.msg : r.error, r.ok, ACC);
+	}
+
+	$('copy').addEventListener('click', function () {
+		var btn = this;
+		busy(btn, true);
+		PGN.run('inf.read', {}).then(function (r) {
+			busy(btn, false);
+			if (r.ok && r.data && r.data.out != null) {
+				s.linked = false; $('link').classList.remove('on');
+				s.out = Math.max(1, Math.round(r.data.out));
+				s.in = Math.max(1, Math.round(r.data['in']));
+				draw();
+			}
+			UI.note(note, r.ok ? r.msg : r.error, r.ok);
+		});
+	});
+
+	$('apply').addEventListener('click', function () {
+		var btn = this;
+		busy(btn, true);
+		PGN.run('inf.apply', { out: s.out, 'in': s.in }).then(function (r) {
+			busy(btn, false);
+			report(r);
+			lastStats = '';
+			pollStats();
+		});
+	});
+
+	// browser preview data
+	PGN.mock('inf.stats', function () { return { data: { keys: 2, out: 33, 'in': 66, outSpeed: 0 } }; }, 80);
+	PGN.mock('inf.read', function () { return { msg: 'Influência copiada', data: { out: 75, 'in': 40, keys: 1 } }; });
+	PGN.mock('inf.apply', function (a) { return { msg: 'Influência aplicada em 2 keyframes' }; });
+
+	draw();
+	pollStats();
+	setInterval(pollStats, 1500);
+})();

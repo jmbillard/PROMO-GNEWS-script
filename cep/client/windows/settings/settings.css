@@ -1,0 +1,38 @@
+.grp { margin-top: 12px; animation: rowIn .35s var(--out) backwards; }
+.glbl { font: 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin: 0 2px 6px; display: flex; align-items: center; gap: 8px; }
+.glbl::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.card { background: #26262B; border-radius: 12px; padding: 2px 10px; }
+
+.row { display: flex; align-items: center; gap: 10px; min-height: 44px; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row > svg { width: 16px; height: 16px; flex: none; fill: none; stroke: #8E8E98; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.row .lb { flex: 1; min-width: 0; font-size: 12px; color: var(--tx-2); }
+.row .lb small { display: block; font: 10px var(--mono); color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row.off { opacity: .4; pointer-events: none; }
+.row .fld { width: 92px; height: 30px; text-align: center; font: 700 12px var(--mono); text-transform: uppercase; }
+
+/* switch */
+.sw { width: 36px; height: 22px; border-radius: 11px; background: #3A3A42; position: relative; flex: none; transition: background .25s; }
+.sw::after { content: ''; position: absolute; left: 3px; top: 3px; width: 16px; height: 16px; border-radius: 50%; background: #D8D8DE; transition: transform .35s cubic-bezier(.3, 1.5, .5, 1), background .25s, width .2s; }
+.sw:active::after { width: 20px; }
+.sw.on { background: var(--acc); }
+.sw.on::after { transform: translateX(14px); background: #141416; }
+.sw.on:active::after { transform: translateX(10px); }
+
+/* segmented */
+.seg { display: flex; background: var(--sunk); border-radius: 9px; padding: 3px; gap: 3px; position: relative; flex: none; }
+.seg button { height: 26px; padding: 0 10px; border-radius: 7px; font-size: 11px; color: #8E8E98; position: relative; z-index: 1; transition: color .25s; }
+.seg button.on { color: var(--tx); }
+.seg .ind { position: absolute; top: 3px; bottom: 3px; border-radius: 7px; background: #3A3A42; transition: left .35s cubic-bezier(.3, 1.3, .45, 1), width .35s cubic-bezier(.3, 1.3, .45, 1); }
+
+/* folder pickers */
+.mini { width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #A9A9B2; flex: none; transition: background .2s, color .2s, transform .2s; }
+.mini:hover { background: #33333A; color: var(--tx); }
+.mini:active { transform: scale(.88); }
+.mini svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.mini:hover .spinme { animation: spin .6s cubic-bezier(.5, 0, .3, 1); transform-origin: center; transform-box: fill-box; }
+
+.rst { height: 26px; padding: 0 9px; border-radius: 8px; font: 10px var(--mono); color: #A9A9B2; display: inline-flex; align-items: center; gap: 5px; transition: background .2s, color .2s; }
+.rst:hover { background: #2A2A2F; color: var(--tx); }
+.rst svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rst.arm { background: rgba(255, 107, 107, .16); color: #FFB3B2; animation: nope .4s ease; }

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="7.0" ExtensionBundleId="com.promognews.cep" ExtensionBundleVersion="3.0.0" ExtensionBundleName="PROMO GNEWS"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<ExtensionList>
+		<Extension Id="com.promognews.cep.panel" Version="3.0.0" />
+		<Extension Id="com.promognews.cep.curves" Version="3.0.0" />
+		<Extension Id="com.promognews.cep.search" Version="3.0.0" />
+		<Extension Id="com.promognews.cep.templates" Version="3.0.0" />
+		<Extension Id="com.promognews.cep.fonts" Version="3.0.0" />
+		<Extension Id="com.promognews.cep.settings" Version="3.0.0" />
+	</ExtensionList>
+
+	<ExecutionEnvironment>
+		<HostList>
+			<!-- After Effects 2022+ (CEP 11 · Chromium 88) -->
+			<Host Name="AEFT" Version="[22.0,99.9]" />
+		</HostList>
+		<LocaleList>
+			<Locale Code="All" />
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="11.0" />
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+
+	<DispatchInfoList>
+
+		<!-- main panel: accordion bar -->
+		<Extension Id="com.promognews.cep.panel">
+			<DispatchInfo>
+				<Resources>
+					<MainPath>./client/panel/index.html</MainPath>
+					<ScriptPath>./host/index.jsx</ScriptPath>
+					<CEFCommandLine>
+						<Parameter>--allow-file-access-from-files</Parameter>
+					</CEFCommandLine>
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu>PROMO GNEWS</Menu>
+					<Geometry>
+						<Size><Width>56</Width><Height>640</Height></Size>
+						<MinSize><Width>48</Width><Height>220</Height></MinSize>
+						<MaxSize><Width>480</Width><Height>4000</Height></MaxSize>
+					</Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+		<!-- modeless windows (opened from the panel) -->
+		<Extension Id="com.promognews.cep.curves">
+			<DispatchInfo>
+				<Resources><MainPath>./client/windows/curves/index.html</MainPath></Resources>
+				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
+				<UI>
+					<Type>Modeless</Type>
+					<Geometry><Size><Width>320</Width><Height>400</Height></Size></Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+		<Extension Id="com.promognews.cep.search">
+			<DispatchInfo>
+				<Resources><MainPath>./client/windows/search/index.html</MainPath></Resources>
+				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
+				<UI>
+					<Type>Modeless</Type>
+					<Geometry>
+						<Size><Width>320</Width><Height>460</Height></Size>
+						<MinSize><Width>260</Width><Height>300</Height></MinSize>
+					</Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+		<Extension Id="com.promognews.cep.templates">
+			<DispatchInfo>
+				<Resources><MainPath>./client/windows/templates/index.html</MainPath></Resources>
+				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
+				<UI>
+					<Type>Modeless</Type>
+					<Geometry>
+						<Size><Width>380</Width><Height>500</Height></Size>
+						<MinSize><Width>300</Width><Height>320</Height></MinSize>
+					</Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+		<Extension Id="com.promognews.cep.fonts">
+			<DispatchInfo>
+				<Resources><MainPath>./client/windows/fonts/index.html</MainPath></Resources>
+				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
+				<UI>
+					<Type>Modeless</Type>
+					<Geometry>
+						<Size><Width>340</Width><Height>480</Height></Size>
+						<MinSize><Width>280</Width><Height>300</Height></MinSize>
+					</Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+		<Extension Id="com.promognews.cep.settings">
+			<DispatchInfo>
+				<Resources><MainPath>./client/windows/settings/index.html</MainPath></Resources>
+				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
+				<UI>
+					<Type>Modeless</Type>
+					<Geometry><Size><Width>360</Width><Height>560</Height></Size></Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+
+	</DispatchInfoList>
+</ExtensionManifest>

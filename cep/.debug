@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionList>
+	<Extension Id="com.promognews.cep.panel"><HostList><Host Name="AEFT" Port="8091" /></HostList></Extension>
+	<Extension Id="com.promognews.cep.curves"><HostList><Host Name="AEFT" Port="8092" /></HostList></Extension>
+	<Extension Id="com.promognews.cep.search"><HostList><Host Name="AEFT" Port="8093" /></HostList></Extension>
+	<Extension Id="com.promognews.cep.templates"><HostList><Host Name="AEFT" Port="8094" /></HostList></Extension>
+	<Extension Id="com.promognews.cep.fonts"><HostList><Host Name="AEFT" Port="8095" /></HostList></Extension>
+	<Extension Id="com.promognews.cep.settings"><HostList><Host Name="AEFT" Port="8096" /></HostList></Extension>
+</ExtensionList>

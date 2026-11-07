@@ -2,3 +2,5 @@ images/icons/Thumbs.db
 images/icons/@eaDir/Thumbs.db@SynoEAStream
 jsconfig.json
 .vscode
+dist/
+cep/host/src

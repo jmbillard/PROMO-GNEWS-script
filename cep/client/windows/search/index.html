@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<title>Busca</title>
+	<link rel="stylesheet" href="../../shared/base.css">
+	<link rel="stylesheet" href="../../shared/window.css">
+	<link rel="stylesheet" href="search.css">
+</head>
+<body>
+	<div class="win">
+		<div class="pad" style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 8px">
+			<div class="fld-wrap">
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14a7 7 0 1 0 0-14M20 20l-4-4"></path></svg>
+				<input id="q" class="fld big" type="text" placeholder="texto dos layers" aria-label="Buscar texto nos layers" autofocus spellcheck="false">
+				<button id="clr" class="clr" aria-label="Limpar busca" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"></path></svg></button>
+			</div>
+			<div id="opts" class="row-flex" style="gap: 4px"></div>
+			<div class="prog" id="prog" style="opacity: 0"></div>
+		</div>
+		<div id="res" class="scroll grow" style="padding: 0 8px 8px; flex: 1"></div>
+		<div class="status">
+			<span id="info">digite e pressione enter</span>
+			<button id="all" class="mono linkish" hidden>selecionar todos</button>
+		</div>
+	</div>
+	<script src="../../shared/bridge.js"></script>
+	<script src="../../shared/ui.js"></script>
+	<script src="search.js"></script>
+</body>
+</html>

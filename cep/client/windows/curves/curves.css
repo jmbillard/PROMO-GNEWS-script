@@ -1,0 +1,32 @@
+.plot { display: block; width: 100%; height: auto; border-radius: 12px; background: var(--sunk); touch-action: none; color: var(--acc); }
+.plot .hit { cursor: ew-resize; fill: transparent; }
+.plot .knob { pointer-events: none; transition: r .2s; }
+.plot.drag-out .k-out, .plot.drag-in .k-in { r: 8; }
+
+.track { position: relative; height: 24px; border-radius: 12px; background: var(--sunk); overflow: hidden; }
+.ball { position: absolute; top: 5px; left: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--acc); animation: travel 1.5s infinite alternate; }
+.ball.ghost { background: var(--tx); opacity: .18; animation-timing-function: linear; }
+@keyframes travel { from { left: 6px; } to { left: calc(100% - 20px); } }
+
+.lab { width: 14px; height: 14px; flex: none; fill: none; stroke: #8E8E98; stroke-width: 2; stroke-linecap: round; }
+.val { font: 11px var(--mono); color: #D8D8DE; width: 34px; text-align: right; }
+
+.link { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--faint); transition: background .2s, color .2s, transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+.link:hover { background: #2A2A2F; color: var(--tx); }
+.link:active { transform: scale(.88); }
+.link.on { background: var(--acc); color: var(--bg); }
+.link svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.presets { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.pre { height: 34px; border-radius: 9px; background: #26262B; display: flex; align-items: center; justify-content: center; color: var(--acc); transition: background .2s, transform .25s var(--spring), box-shadow .25s; animation: tIn .4s var(--out) backwards; }
+.pre:hover { background: #2E2E34; transform: translateY(-2px); }
+.pre:active { transform: scale(.92); }
+.pre svg { width: 36px; height: 22px; fill: none; stroke-width: 1.8; stroke-linecap: round; }
+.pre path { stroke: #9A9AA4; transition: stroke .2s; }
+.pre.on { box-shadow: inset 0 0 0 1.5px currentColor; }
+.pre.on path, .pre:hover path { stroke: currentColor; }
+
+.stat { height: 24px; padding: 0 8px; border-radius: 7px; background: #26262B; display: inline-flex; align-items: center; gap: 5px; font: 10px var(--mono); color: #A9A9B2; animation: rowIn .3s ease backwards; }
+.stat svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px; margin-top: auto; }

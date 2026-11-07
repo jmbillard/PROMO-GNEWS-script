@@ -1,0 +1,8 @@
+/* shared layout for the modeless windows (OS draws the title bar) */
+
+body { background: var(--bg-2); }
+.win { height: 100%; display: flex; flex-direction: column; }
+.win-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.pad { padding: 12px; }
+.row-flex { display: flex; align-items: center; gap: 6px; }
+.grow { flex: 1; min-width: 0; }

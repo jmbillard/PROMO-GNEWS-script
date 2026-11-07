@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<title>Influência</title>
+	<link rel="stylesheet" href="../../shared/base.css">
+	<link rel="stylesheet" href="../../shared/window.css">
+	<link rel="stylesheet" href="curves.css">
+</head>
+<body>
+	<div class="win" style="--acc: #B7B5E4">
+		<div class="win-body pad" style="gap: 10px">
+			<svg id="plot" class="plot" viewBox="0 0 280 160" role="img" aria-label="Curva de influência"></svg>
+			<div class="track" aria-hidden="true"><span class="ball ghost"></span><span id="ball" class="ball"></span></div>
+
+			<div class="row-flex" style="gap: 6px">
+				<div class="grow" style="display: flex; flex-direction: column; gap: 10px">
+					<label class="row-flex" style="gap: 8px">
+						<svg class="lab" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h10M11 8l4 4-4 4M19 5v14"></path></svg>
+						<input id="out" class="rng" type="range" min="1" max="100" value="33" aria-label="Influência de saída">
+						<span id="outV" class="val">33%</span>
+					</label>
+					<label class="row-flex" style="gap: 8px">
+						<svg class="lab" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5v14M9 12h10M13 8l-4 4 4 4"></path></svg>
+						<input id="in" class="rng" type="range" min="1" max="100" value="66" aria-label="Influência de entrada">
+						<span id="inV" class="val">66%</span>
+					</label>
+				</div>
+				<button id="link" class="link" aria-label="Espelhar entrada e saída" aria-pressed="false" title="espelhar entrada e saída">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.6 0l3-3a4 4 0 0 0-5.6-5.6l-1 1M14 10a4 4 0 0 0-5.6 0l-3 3a4 4 0 0 0 5.6 5.6l1-1"></path></svg>
+				</button>
+			</div>
+
+			<div id="presets" class="presets"></div>
+
+			<div id="stats" class="row-flex" style="gap: 6px; min-height: 24px"></div>
+
+			<div class="actions">
+				<button id="copy" class="btn btn-2" title="ler a influência de 1 keyframe selecionado">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8zM5 15V5h10"></path></svg><span>copiar</span>
+				</button>
+				<button id="apply" class="btn btn-1" title="aplicar nos keyframes selecionados">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18C10 18 11 6 20 6"></path></svg><span>aplicar</span>
+				</button>
+			</div>
+		</div>
+		<div id="status" class="status"><span id="note"></span></div>
+	</div>
+	<script src="../../shared/bridge.js"></script>
+	<script src="../../shared/ui.js"></script>
+	<script src="curves.js"></script>
+</body>
+</html>

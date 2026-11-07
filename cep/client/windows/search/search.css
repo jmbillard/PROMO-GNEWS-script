@@ -1,0 +1,28 @@
+.fld.big { height: 38px; font-size: 14px; padding-right: 34px; }
+.clr { position: absolute; right: 6px; top: 7px; width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center; animation: pop .3s cubic-bezier(.3, 1.6, .5, 1); }
+.clr:hover { background: #2A2A2F; }
+.clr svg { width: 12px; height: 12px; fill: none; stroke: #8E8E98; stroke-width: 2.4; stroke-linecap: round; }
+
+.grp { animation: rowIn .35s var(--out) backwards; margin-bottom: 2px; }
+.ghead { display: flex; align-items: center; gap: 7px; width: 100%; height: 30px; padding: 0 6px; border-radius: 8px; font-size: 11px; font-weight: 700; color: var(--tx-2); letter-spacing: .02em; text-align: left; transition: background .15s; }
+.ghead:hover { background: #26262B; }
+.ghead .chev { width: 12px; height: 12px; fill: none; stroke: var(--faint); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--spring); flex: none; }
+.grp.shut .chev { transform: rotate(-90deg); }
+.grp.shut .rows { display: none; }
+.ghead .ci { width: 14px; height: 14px; fill: none; stroke: #8E8E98; stroke-width: 1.8; stroke-linejoin: round; flex: none; }
+.ghead .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cnt { margin-left: auto; font: 10px var(--mono); color: var(--focus); background: rgba(143, 184, 255, .12); padding: 1px 6px; border-radius: 6px; }
+
+.r { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 34px; padding: 0 8px 0 26px; border-radius: 8px; text-align: left; font-size: 13px; color: #D8D8DE; transition: background .15s, transform .2s; animation: rowIn .3s var(--out) backwards; }
+.r:hover { background: #26262B; transform: translateX(2px); }
+.r.on { background: rgba(143, 184, 255, .12); }
+.r .tx { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.r mark { background: rgba(143, 184, 255, .25); color: #fff; border-radius: 3px; padding: 0 1px; }
+.r .ly { font: 10px var(--mono); color: var(--faint); flex: none; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.r svg { width: 13px; height: 13px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.r .hid { stroke: #5A5A63; }
+.r .pk { stroke: var(--focus); stroke-width: 2.6; }
+.r .pk path { stroke-dasharray: 24; animation: draw .35s ease backwards; }
+.dim { opacity: .4; transition: opacity .2s; }
+.linkish { font-size: 10px; color: var(--focus); }
+.linkish:hover { text-decoration: underline; }

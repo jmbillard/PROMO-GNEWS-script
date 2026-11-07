@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<title>Fontes</title>
+	<link rel="stylesheet" href="../../shared/base.css">
+	<link rel="stylesheet" href="../../shared/window.css">
+	<link rel="stylesheet" href="../../shared/library.css">
+	<link rel="stylesheet" href="fonts.css">
+</head>
+<body>
+	<div class="win" style="--acc: #FFAFB7">
+		<div class="pad" style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 8px">
+			<div class="bar">
+				<div class="fld-wrap grow">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14a7 7 0 1 0 0-14M20 20l-4-4"></path></svg>
+					<input id="q" class="fld" type="text" placeholder="filtrar" aria-label="Filtrar fontes" spellcheck="false">
+				</div>
+				<button id="dl" class="ib" title="baixar fontes mais recentes" aria-label="Baixar fontes mais recentes"></button>
+				<button id="rf" class="ib" title="recarregar" aria-label="Recarregar lista"></button>
+				<button id="fo" class="ib" title="abrir pasta" aria-label="Abrir pasta de fontes"></button>
+			</div>
+			<input id="sample" class="fld" type="text" value="GLOBONEWS AO VIVO" aria-label="Texto de amostra" spellcheck="false">
+		</div>
+		<div id="prog" class="prog" style="opacity: 0"></div>
+		<div id="list" class="scroll grow" style="flex: 1; padding: 6px 8px 10px"></div>
+		<div id="foot"></div>
+	</div>
+	<script src="../../shared/bridge.js"></script>
+	<script src="../../shared/ui.js"></script>
+	<script src="fonts.js"></script>
+</body>
+</html>
