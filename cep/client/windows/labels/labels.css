@@ -1,17 +1,17 @@
 /* labels: 16 swatches on top · the selected one edited below */
 
 .swatches { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px; padding-bottom: 8px; }
-/* every swatch the same size: the others show a bit less than half of their color at the top,
+/* every swatch the same size: the others show a bit less than half of their color at the bottom of a dark track (almost a vertical toggle),
    the selected one fills up; on change the fill runs in a cascade out from the selected one */
 .sw { --fill: 14px; height: 34px; border-radius: 5px; position: relative; background: #2A2A30;
-	box-shadow: inset 0 var(--fill) 0 var(--c), inset 0 0 0 1px rgba(255, 255, 255, .06);
+	box-shadow: inset 0 calc(var(--fill) * -1) 0 var(--c), inset 0 0 0 1px rgba(255, 255, 255, .06);
 	transition: box-shadow .32s var(--spring), transform .2s var(--spring); transition-delay: var(--d, 0ms), 0ms; animation: tIn .35s var(--out) backwards; }
 .sw:hover { --fill: 17px; }
 .sw:active { transform: scale(.92); }
 .sw.on { --fill: 34px; }
 /* the wave: each one swells a little as the cascade passes it */
 .sw.wave:not(.on) { animation: wave .42s var(--out) var(--d, 0ms) both; }
-@keyframes wave { 45% { box-shadow: inset 0 22px 0 var(--c), inset 0 0 0 1px rgba(255, 255, 255, .06); } }
+@keyframes wave { 45% { box-shadow: inset 0 -22px 0 var(--c), inset 0 0 0 1px rgba(255, 255, 255, .06); } }
 /* modified (not saved yet): the small yellow keyframe */
 .sw::after { content: ''; position: absolute; left: 50%; bottom: -10px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 1px; background: var(--acc); transform: rotate(45deg) scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
 .sw.mod::after { transform: rotate(45deg) scale(1); }
