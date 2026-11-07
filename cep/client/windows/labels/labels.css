@@ -10,11 +10,11 @@
 .sw.mod::after { transform: rotate(45deg) scale(1); }
 
 /* editor: [icon + big nº] [name / tile + brightness] [hex / saved vs new] */
-.editor { display: grid; grid-template-columns: 52px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 12px 10px 10px; }
-.idcol { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 4px; }
-.lic { width: 22px; height: 22px; fill: none; stroke: var(--lc, #8E8E98); stroke-width: 1.8; stroke-linejoin: round; transition: stroke .25s; }
-.lic circle { fill: var(--lc, #8E8E98); stroke: none; }
-.idcol .ix { font: 800 36px/1 var(--mono); color: var(--tx); letter-spacing: -.04em; }
+.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 12px 10px 10px; }
+.idcol { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 7px; color: var(--faint); }
+.lic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+.lic circle { fill: currentColor; stroke: none; }
+.idcol .ix { font: 11px/1 var(--mono); color: currentColor; }
 .editor .nm { height: 30px; font-size: 12px; }
 .editor .hx { height: 30px; font-size: 11px; text-transform: uppercase; text-align: center; padding: 0 4px; }
 

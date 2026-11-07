@@ -179,8 +179,6 @@
 		thumb.style.top = (100 - v) + '%';
 		$('vtag').style.top = (100 - v) + '%';
 		$('vtag').innerHTML = '<i>brilho</i>' + v;
-		// the label icon takes the label color
-		document.querySelector('.idcol').style.setProperty('--lc', c);
 		vs.setAttribute('aria-valuenow', String(v));
 		vs.style.setProperty('--track', 'linear-gradient(to top, #000, ' + hsvToHex(hh, satOf(i), 100) + ')');
 		// the inner wheel at the current brightness: hues around, grey in the middle
