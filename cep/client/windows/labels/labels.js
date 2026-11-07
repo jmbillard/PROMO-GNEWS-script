@@ -149,7 +149,7 @@
 	var tile = $('tile'), mk = tile.querySelector('.mk'), gx = tile.querySelector('.gx'), gy = tile.querySelector('.gy');
 	var vs = $('vs'), thumb = vs.querySelector('.thumb');
 	var was = $('was'), now = $('now');
-	var INSET = 6, MARK = 8; // tile inner margin · half the marker
+	var INSET = 6, MARK = 7; // tile inner margin · half the marker
 	var markXY = { x: 0, y: 0 };
 
 	// from the center to where the marker touches the inner edge (depends on the window width)
@@ -175,9 +175,12 @@
 		var i = S.sel, c = S.colors[i], hsv = hexToHsv(c), hh = hueOf(i), v = Math.round(hsv.v);
 		mk.style.setProperty('--c', c);
 		placeMarker(hh, satOf(i));
-		// brightness: the thumb rides the track (top = 100)
+		// brightness: the thumb rides the track (top = 100); its value floats beside it
 		thumb.style.top = (100 - v) + '%';
-		thumb.textContent = v;
+		$('vtag').style.top = (100 - v) + '%';
+		$('vtag').innerHTML = '<i>brilho</i>' + v;
+		// the label icon takes the label color
+		document.querySelector('.idcol').style.setProperty('--lc', c);
 		vs.setAttribute('aria-valuenow', String(v));
 		vs.style.setProperty('--track', 'linear-gradient(to top, #000, ' + hsvToHex(hh, satOf(i), 100) + ')');
 		// the inner wheel at the current brightness: hues around, grey in the middle
@@ -191,7 +194,7 @@
 		// RGB readout follows the marker
 		var n = parseInt(c.slice(1), 16);
 		var tag = $('rgb');
-		tag.innerHTML = '<i>R</i>' + (n >> 16 & 255) + '<i>G</i>' + (n >> 8 & 255) + '<i>B</i>' + (n & 255);
+		tag.innerHTML = '<b><i>R</i>' + (n >> 16 & 255) + '</b><b><i>G</i>' + (n >> 8 & 255) + '</b><b><i>B</i>' + (n & 255) + '</b>';
 		// diagonal to the marker (clear of both guides), on the side with room
 		var W = tile.clientWidth, Hh = tile.clientHeight, px = W / 2 + markXY.x, py = Hh / 2 + markXY.y;
 		var tw = tag.offsetWidth, th = tag.offsetHeight, gap = MARK + 6;

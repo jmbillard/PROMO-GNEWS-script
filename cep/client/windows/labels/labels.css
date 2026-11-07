@@ -9,19 +9,23 @@
 .sw::after { content: ''; position: absolute; left: 50%; bottom: -10px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 1px; background: var(--acc); transform: rotate(45deg) scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
 .sw.mod::after { transform: rotate(45deg) scale(1); }
 
-/* editor: [nº / brightness] [name / tile] [hex / saved vs new] */
-.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 8px; background: #26262B; border-radius: 12px; padding: 10px; }
-.editor .ix { align-self: center; font-size: 11px; color: var(--faint); text-align: center; }
+/* editor: [icon + big nº] [name / tile + brightness] [hex / saved vs new] */
+.editor { display: grid; grid-template-columns: 52px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 12px 10px 10px; }
+.idcol { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 4px; }
+.lic { width: 22px; height: 22px; fill: none; stroke: var(--lc, #8E8E98); stroke-width: 1.8; stroke-linejoin: round; transition: stroke .25s; }
+.lic circle { fill: var(--lc, #8E8E98); stroke: none; }
+.idcol .ix { font: 800 36px/1 var(--mono); color: var(--tx); letter-spacing: -.04em; }
 .editor .nm { height: 30px; font-size: 12px; }
-.editor .hx { height: 30px; font-size: 11px; text-transform: uppercase; text-align: center; padding: 0 4px; border-radius: 10px 10px 0 0; position: relative; z-index: 1; }
+.editor .hx { height: 30px; font-size: 11px; text-transform: uppercase; text-align: center; padding: 0 4px; }
+
+.pick { display: flex; gap: 8px; align-items: stretch; }
 
 /* the color tile (adapted from O PADEIRO): hue = angle, saturation = square distance */
-.pk-tile { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; cursor: crosshair; overflow: hidden;
+.pk-tile { position: relative; flex: 1; min-width: 0; aspect-ratio: 1 / 1; border-radius: 10px; cursor: crosshair; overflow: hidden;
 	background: conic-gradient(hsl(0, 95%, 60%), hsl(60, 95%, 55%), hsl(120, 80%, 52%), hsl(180, 90%, 52%), hsl(240, 95%, 64%), hsl(300, 90%, 62%), hsl(360, 95%, 60%)); }
 .pk-tile::before { content: ''; position: absolute; inset: 6px; border-radius: 6px; background: var(--wheel, transparent); transition: background .12s linear; }
 .pk-tile::after { content: ''; position: absolute; inset: 6px; border-radius: 6px; background: rgba(27, 27, 30, .16); backdrop-filter: blur(18px); }
-/* the marker: a plain square; guides cross the tile while it moves (like AE guides) */
-.pk-tile .mk { position: absolute; z-index: 2; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; background: var(--c, #fff); box-shadow: 0 0 0 2px #F2F2F4, 0 0 0 3px rgba(0, 0, 0, .45); cursor: grab; transition: transform .2s var(--spring); }
+.pk-tile .mk { position: absolute; z-index: 2; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; background: var(--c, #fff); box-shadow: 0 0 0 2px #F2F2F4, 0 0 0 3px rgba(0, 0, 0, .45); cursor: grab; transition: transform .2s var(--spring); }
 .pk-tile .gx, .pk-tile .gy { position: absolute; z-index: 1; background: #F2F2F4; opacity: .5; transition: opacity .2s; pointer-events: none; mix-blend-mode: difference; }
 .pk-tile .gx { left: 6px; right: 6px; height: 1px; margin-top: -.5px; }
 .pk-tile .gy { top: 6px; bottom: 6px; width: 1px; margin-left: -.5px; }
@@ -30,20 +34,27 @@
 .pk-tile.drag .mk { transform: scale(1.15); cursor: grabbing; }
 .pk-tile.drag { cursor: grabbing; }
 
-/* vertical brightness: black at the bottom, full color on top; the value rides on the thumb */
-.pk-vs { position: relative; cursor: ns-resize; outline: none; }
-.pk-vs .trk { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; border-radius: 2px; background: var(--track, #34343A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
-.pk-vs .thumb { position: absolute; left: 0; right: 0; height: 16px; margin-top: -8px; top: 50%; border-radius: 4px; background: #18181B; color: var(--tx-2); font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); transition: transform .2s var(--spring), color .2s; }
-.pk-vs:hover .thumb, .pk-vs.drag .thumb { color: var(--tx); transform: scaleX(1.08); }
-.pk-vs:focus-visible .thumb { outline: var(--line-acc); outline-offset: 2px; }
+/* floating readouts (RGB on the tile, brightness on the slider) */
+.ftag { position: absolute; z-index: 3; left: 0; top: 0; padding: 4px 6px; border-radius: 5px; background: rgba(20, 20, 22, .84); color: var(--tx); font-size: 9px; line-height: 1.35; white-space: nowrap; pointer-events: none; transition: left .08s linear, top .08s linear, opacity .2s; }
+.ftag i { font-style: normal; color: var(--faint); margin-right: 5px; }
+.ftag b { display: block; font-weight: 500; }
 
-/* saved vs new, stacked to the tile height */
-.pk-cmp { display: flex; flex-direction: column; margin-top: -8px; border-radius: 0 0 10px 10px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+/* vertical brightness: thin track, small dark thumb, value floating beside it */
+.pk-vs { position: relative; width: 14px; flex: none; cursor: ns-resize; outline: none; }
+.pk-vs .trk { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; border-radius: 2px; background: var(--track, #34343A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.pk-vs .thumb { position: absolute; left: 0; right: 0; height: 8px; margin-top: -4px; top: 50%; border-radius: 3px; background: #18181B; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); transition: transform .2s var(--spring); }
+.pk-vs:hover .thumb, .pk-vs.drag .thumb { transform: scale(1.15, 1.25); }
+.pk-vs:focus-visible .thumb { outline: var(--line-acc); outline-offset: 2px; }
+.vtag { left: auto; right: calc(100% + 6px); opacity: 0; transform: translateY(-50%); transition: top .08s linear, opacity .2s; }
+.pk-vs:hover .vtag, .pk-vs.drag .vtag, .pk-vs:focus-visible .vtag { opacity: 1; }
+
+/* saved vs new: its own block under the hex */
+.pk-cmp { display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.pk-cmp .now { flex: 1.6; display: block; }
 .pk-cmp .was { flex: 1; position: relative; cursor: pointer; transition: flex .35s var(--spring); }
 .pk-cmp .was span { position: absolute; left: 6px; bottom: 5px; font: 9px var(--mono); color: var(--ink, #F2F2F4); opacity: .8; transition: opacity .2s; }
 .pk-cmp .was.same { flex: 0; }
 .pk-cmp .was.same span { opacity: 0; }
-.pk-cmp .now { flex: 1.6; display: block; }
 
 .sel-wrap { position: relative; }
 .sel-wrap::after { content: ''; position: absolute; right: 10px; top: 50%; width: 12px; height: 12px; margin-top: -6px; background: #8E8E98; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; pointer-events: none; }
@@ -54,7 +65,3 @@ select.fld option { background: #1F1F23; color: var(--tx); }
 .status { border-top: 0; }
 
 
-/* RGB readout riding next to the marker (flips side near the edges) */
-.rgbtag { position: absolute; z-index: 3; left: 0; top: 0; transition: left .08s linear, top .08s linear; padding: 3px 6px; border-radius: 5px; background: rgba(20, 20, 22, .82); color: var(--tx); font-size: 9px; letter-spacing: .02em; white-space: nowrap; pointer-events: none; transition: opacity .2s; }
-.rgbtag i { font-style: normal; color: var(--faint); margin: 0 3px 0 6px; }
-.rgbtag i:first-child { margin-left: 0; }
