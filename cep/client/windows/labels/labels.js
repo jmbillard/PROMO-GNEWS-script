@@ -52,9 +52,10 @@
 			box.appendChild(h('button.sw' + (i === S.sel ? '.on' : ''), {
 				role: 'radio', 'aria-checked': String(i === S.sel), 'aria-label': (i + 1) + ' · ' + S.names[i],
 				title: (i + 1) + ' · ' + S.names[i] + ' · ' + c,
-				style: { background: c, animationDelay: i * 16 + 'ms' },
+				style: { animationDelay: i * 16 + 'ms' },
 				onclick: function () { select(i); }
 			}));
+			box.lastChild.style.setProperty('--c', c);
 		});
 	}
 
@@ -73,7 +74,7 @@
 		var i = S.sel;
 		S.colors[i] = v;
 		var sw = $('swatches').children[i];
-		sw.style.background = v;
+		sw.style.setProperty('--c', v);
 		sw.title = (i + 1) + ' · ' + S.names[i] + ' · ' + v;
 		if (from !== 'hex') $('edHex').value = v;
 		if (from !== 'picker') { hueMem[S.sel] = null; satMem[S.sel] = null; }

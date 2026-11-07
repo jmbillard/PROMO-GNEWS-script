@@ -1,23 +1,20 @@
 /* labels: 16 swatches on top · the selected one edited below */
 
-.swatches { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px; margin-bottom: -12px; }
-.sw { height: 34px; border-radius: 5px; position: relative; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); transition: transform .25s var(--spring); animation: tIn .35s var(--out) backwards; }
-.sw:hover { transform: translateY(-2px); }
-.sw:active { transform: scale(.9); }
-/* selected: the swatch stretches down to the editor and ends in the lower half of a
-   keyframe (diamond) that sits over the editor's edge — no outline, no extra marker */
-.sw.on { z-index: 2; transform: none; border-radius: 5px 5px 0 0; box-shadow: none; }
-.sw.on::before { content: ''; position: absolute; left: 0; right: 0; top: calc(100% - 1px); height: 22px; background: inherit;
-	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), 50% 100%, 0 calc(100% - 9px));
-	transform-origin: top center; animation: drop .35s cubic-bezier(.3, 1.3, .45, 1) both; }
-.sw.on::after { display: none; }
-@keyframes drop { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.swatches { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px; align-items: end; height: 38px; margin-bottom: 8px; }
+/* the others sit lowered and dark, their color only as a thin line across the top;
+   the selected one rises a little and shows its full color — no outline */
+.sw { height: 30px; border-radius: 5px; position: relative; background: #2A2A30; box-shadow: inset 0 3px 0 var(--c), inset 0 0 0 1px rgba(255, 255, 255, .06);
+	transition: height .3s var(--spring), background-color .25s, box-shadow .25s, transform .2s var(--spring); animation: tIn .35s var(--out) backwards; }
+.sw:hover { box-shadow: inset 0 5px 0 var(--c), inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.sw:active { transform: scale(.92); }
+.sw.on { height: 38px; background: var(--c); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
 /* modified (not saved yet): the small yellow keyframe */
 .sw::after { content: ''; position: absolute; left: 50%; bottom: -10px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 1px; background: var(--acc); transform: rotate(45deg) scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
 .sw.mod::after { transform: rotate(45deg) scale(1); }
+.sw.on::after { display: none; }
 
 /* editor: [icon + big nº] [name / tile + brightness] [hex / saved vs new] */
-.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 24px 10px 10px; }
+.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 12px 10px 10px; }
 .idcol { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 7px; color: var(--faint); }
 .lic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 .lic circle { fill: currentColor; stroke: none; }
