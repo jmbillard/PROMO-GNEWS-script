@@ -84,3 +84,6 @@ textarea.fld { height: 52px; padding: 7px 10px; resize: none; line-height: 1.3; 
 
 /* the multiline title keeps its two lines inside .f rows */
 .f textarea.fld { height: 52px; }
+
+/* auto-growing title: no manual resize, no scrollbar until the max height */
+.f textarea.fld { overflow-y: hidden; }

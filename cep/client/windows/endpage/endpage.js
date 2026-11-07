@@ -154,7 +154,8 @@
 		// título / subtítulo stay visible in both modes (they change every time)
 		var titulo = h('textarea.fld', { 'aria-label': 'Título', spellcheck: 'false' });
 		titulo.value = v.titulo || '';
-		titulo.addEventListener('input', function () { v.titulo = titulo.value; changed(true); });
+		titulo.addEventListener('input', function () { v.titulo = titulo.value; grow(titulo, true); changed(true); });
+		requestAnimationFrame(function () { grow(titulo, false); });
 		var sub = h('input.fld', { type: 'text', value: v.subtitulo || '', 'aria-label': 'Subtítulo', spellcheck: 'false' });
 		sub.addEventListener('input', function () { v.subtitulo = sub.value; changed(true); });
 		var subRow = field('subtítulo', sub, l.subtitulo ? null : { class: 'f off' });
@@ -222,6 +223,21 @@
 			parts.push(section('aparência', [themes, colors], 120));
 		}
 		UI.add(form, parts);
+	}
+
+	// textarea that grows with its lines; the height change is animated so
+	// everything below slides down (or up) smoothly instead of jumping
+	var GROW_MIN = 52, GROW_MAX = 168;
+	function grow(ta, animate) {
+		var from = ta.offsetHeight;
+		ta.style.transition = 'none';
+		ta.style.height = 'auto';
+		var to = Math.max(GROW_MIN, Math.min(GROW_MAX, ta.scrollHeight + 2));
+		ta.style.overflowY = ta.scrollHeight + 2 > GROW_MAX ? 'auto' : 'hidden';
+		ta.style.height = from + 'px';
+		void ta.offsetHeight; // commit the start height before animating
+		ta.style.transition = animate ? 'height .28s cubic-bezier(.3, 1.15, .45, 1)' : 'none';
+		ta.style.height = to + 'px';
 	}
 
 	function wrapOff(el, on) { if (!on) el.style.opacity = '.35'; return el; }
