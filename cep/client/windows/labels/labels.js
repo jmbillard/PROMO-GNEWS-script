@@ -18,7 +18,42 @@
 	var h = UI.h;
 	var $ = function (id) { return document.getElementById(id); };
 	var note = $('note'), apply = $('apply');
-	var S = { colors: [], names: [], saved: null, presets: [], sel: 0, loaded: '' };
+	var S = { colors: [], names: [], saved: null, presets: [], sel: 0, loaded: '', manual: {} };
+
+	/* ---------- color names ----------
+	   nearest name in CIE Lab (ΔE 76) from a short list of plain, recognizable names,
+	   in English like After Effects' own labels */
+	var NAMES = [
+		['red', '#E53935'], ['dark red', '#8B1A1A'], ['crimson', '#C8143C'], ['rose', '#FF5C8A'], ['pink', '#E91E63'], ['light pink', '#F8A5C2'],
+		['fuchsia', '#D81BAA'], ['magenta', '#E040FB'], ['purple', '#9C27B0'], ['deep purple', '#673AB7'], ['violet', '#8F5CE0'], ['lavender', '#B39DDB'],
+		['plum', '#8E4585'], ['mauve', '#C8A2C8'], ['indigo', '#3F51B5'], ['navy', '#1F2A6B'], ['royal blue', '#3A5FE0'], ['blue', '#2196F3'],
+		['steel blue', '#4682B4'], ['light blue', '#4FC3F7'], ['sky blue', '#87CEEB'], ['cyan', '#00BCD4'], ['turquoise', '#40E0D0'], ['aqua', '#7FDBDA'],
+		['teal', '#009688'], ['dark teal', '#0B5E58'], ['sea foam', '#A3D9C0'], ['mint', '#98E8B4'], ['green', '#4CAF50'], ['forest green', '#2E7D32'],
+		['dark green', '#1E401E'], ['light green', '#8BC34A'], ['chartreuse', '#A8E01A'], ['lime', '#CDDC39'], ['olive', '#808000'], ['lemon', '#FFF176'],
+		['yellow', '#FFEB3B'], ['gold', '#E5B80B'], ['amber', '#FFC107'], ['orange', '#FF9800'], ['deep orange', '#FF5722'], ['coral', '#FF7F50'],
+		['salmon', '#FA8072'], ['peach', '#F7C59F'], ['tan', '#D2B48C'], ['sandstone', '#A89677'], ['beige', '#E8DCC4'], ['brown', '#795548'],
+		['dark brown', '#4E342E'], ['rust', '#B7410E'], ['maroon', '#800000'], ['burgundy', '#800020'], ['slate', '#607D8B'], ['black', '#141414'],
+		['pale aqua', '#A9CBC7'], ['pale pink', '#EBC0CC'], ['periwinkle', '#A3A8D6'], ['cornflower', '#6F87E3'], ['straw', '#EAD27F'],
+		['dark gray', '#424242'], ['gray', '#808080'], ['light gray', '#BDBDBD'], ['white', '#F5F5F5']
+	];
+	function lab(c) {
+		var n = parseInt(c.slice(1), 16);
+		var rgb = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v > 0.04045 ? Math.pow((v + 0.055) / 1.055, 2.4) : v / 12.92; });
+		var x = (rgb[0] * 0.4124 + rgb[1] * 0.3576 + rgb[2] * 0.1805) / 0.95047;
+		var y = rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
+		var z = (rgb[0] * 0.0193 + rgb[1] * 0.1192 + rgb[2] * 0.9505) / 1.08883;
+		var f = function (t) { return t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116; };
+		return [116 * f(y) - 16, 500 * (f(x) - f(y)), 200 * (f(y) - f(z))];
+	}
+	NAMES.forEach(function (e) { e.push(lab(e[1])); });
+	function colorName(c) {
+		var L = lab(c), best = '', d = Infinity;
+		NAMES.forEach(function (e) {
+			var k = Math.pow(L[0] - e[2][0], 2) + Math.pow(L[1] - e[2][1], 2) + Math.pow(L[2] - e[2][2], 2);
+			if (k < d) { d = k; best = e[0]; }
+		});
+		return best;
+	}
 
 	apply.insertBefore(UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(UI.I.check)]), apply.firstChild);
 
@@ -85,22 +120,54 @@
 		sw.title = (i + 1) + ' · ' + S.names[i] + ' · ' + v;
 		if (from !== 'hex') $('edHex').value = v;
 		if (from !== 'picker') { hueMem[S.sel] = null; satMem[S.sel] = null; }
+		if (!S.manual[i] && from !== 'revert') {
+			var nm = colorName(v);
+			if (nm !== S.names[i]) setName(nm, true);
+		}
+		if (from === 'revert' && S.saved) setName(S.saved.names[i], true);
 		updatePicker();
 		sync();
+	}
+
+	function setName(v, animate) {
+		var i = S.sel, el = $('edName');
+		S.names[i] = v;
+		$('swatches').children[i].title = (i + 1) + ' · ' + v + ' · ' + S.colors[i];
+		if (el.value !== v) {
+			el.value = v;
+			if (animate) { el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
+		}
+	}
+	function wandState() {
+		var on = !S.manual[S.sel];
+		$('autoName').classList.toggle('on', on);
+		$('autoName').setAttribute('aria-pressed', String(on));
 	}
 
 	function editor() {
 		var i = S.sel;
 		$('edIx').textContent = i + 1;
 		$('edName').value = S.names[i];
+		wandState();
 		$('edHex').value = S.colors[i];
 		$('edHex').classList.remove('bad');
 		renderPicker();
 	}
 
+	// typing takes the name over; the wand gives it back to the color
 	$('edName').addEventListener('input', function () {
-		S.names[S.sel] = this.value;
-		$('swatches').children[S.sel].title = (S.sel + 1) + ' · ' + this.value + ' · ' + S.colors[S.sel];
+		S.manual[S.sel] = true;
+		wandState();
+		setName(this.value);
+		sync();
+	});
+	UI.add($('autoName'), UI.icon('M4 20L14 10', 'M17 3v4M15 5h4M19 11v2M18 12h2', null));
+	$('autoName').addEventListener('click', function () {
+		var b = this;
+		S.manual[S.sel] = false;
+		wandState();
+		b.classList.remove('go'); void b.offsetWidth; b.classList.add('go');
+		setName(colorName(S.colors[S.sel]), true);
 		sync();
 	});
 	$('edHex').addEventListener('input', function () {
@@ -295,6 +362,7 @@
 		S.colors = p.colors.slice(0);
 		S.names = p.names.slice(0);
 		while (S.names.length < 16) S.names.push(S.saved ? S.saved.names[S.names.length] : '');
+		S.manual = {};
 		S.loaded = v === 'saved' ? '' : p.name;
 		swatches();
 		editor();
@@ -367,6 +435,7 @@
 
 	function adopt(d) {
 		S.saved = { colors: d.colors.slice(0), names: d.names.slice(0) };
+		S.manual = {};
 		S.colors = d.colors.slice(0);
 		S.names = d.names.slice(0);
 		swatches();

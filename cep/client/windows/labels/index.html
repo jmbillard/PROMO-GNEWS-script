@@ -20,7 +20,11 @@
 					<svg class="lic" viewBox="0 0 24 24"><path d="M7 3h10a1 1 0 0 1 1 1v12.5l-6 4.5-6-4.5V4a1 1 0 0 1 1-1z"></path><circle cx="12" cy="8" r="1.6"></circle></svg>
 					<span id="edIx" class="ix mono"></span>
 				</div>
-				<input id="edName" class="fld nm" type="text" aria-label="Nome do label" spellcheck="false">
+				<!-- name: generated from the color (wand on) until typed by hand; the wand brings it back -->
+				<div class="nmw">
+					<input id="edName" class="fld nm" type="text" aria-label="Nome do label" spellcheck="false">
+					<button id="autoName" class="wand" title="nome automático pela cor" aria-label="Nome automático pela cor" aria-pressed="true"></button>
+				</div>
 				<input id="edHex" class="fld hx mono" type="text" maxlength="7" aria-label="Cor em hex" spellcheck="false">
 				<div class="pick">
 					<div id="tile" class="pk-tile" title="arraste para escolher matiz e saturação">

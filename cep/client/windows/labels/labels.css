@@ -25,7 +25,19 @@
 .lic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 .lic circle { fill: currentColor; stroke: none; }
 .idcol .ix { font: 11px/1 var(--mono); color: currentColor; }
-.editor .nm { height: 30px; font-size: 12px; }
+.editor .nm { height: 30px; font-size: 12px; padding-right: 32px; }
+.nmw { position: relative; min-width: 0; }
+.nm.swap { animation: nmIn .32s var(--out); }
+@keyframes nmIn { from { opacity: 0; transform: translateY(3px); } }
+/* auto name: a small wand inside the field, yellow while the name follows the color */
+.wand { position: absolute; right: 5px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #6E6E78; transition: color .2s, background .2s, transform .25s var(--spring); }
+.wand:hover { color: var(--tx); background: #2A2A2F; }
+.wand:active { transform: scale(.88); }
+.wand.on { color: var(--acc); }
+.wand svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.wand svg .a { transform-box: fill-box; transform-origin: center; }
+.wand.go svg .a { animation: twinkle .45s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes twinkle { 40% { transform: scale(1.5) rotate(45deg); } }
 .editor .hx { height: 30px; font-size: 11px; text-transform: uppercase; text-align: center; padding: 0 4px; }
 
 .pick { display: flex; gap: 8px; align-items: stretch; }
