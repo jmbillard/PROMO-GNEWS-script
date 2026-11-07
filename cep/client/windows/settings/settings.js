@@ -51,7 +51,9 @@
 	// ---- controls ----
 	function switchRow(icon, label, sub, get, set, extra) {
 		var on = !!get();
-		var sw = h('button.sw' + (on ? '.on' : ''), { role: 'switch', 'aria-checked': String(on), 'aria-label': label });
+		var sw = h('button.sw' + (on ? '.on' : ''), { role: 'switch', 'aria-checked': String(on), 'aria-label': label }, [
+			h('span.rail', null, h('i')), h('span.d.a'), h('span.d.b')
+		]);
 		sw.addEventListener('click', function () {
 			var v = !sw.classList.contains('on');
 			sw.classList.toggle('on', v);
