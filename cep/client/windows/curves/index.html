@@ -35,6 +35,14 @@
 
 			<div id="stats" class="row-flex" style="gap: 6px; min-height: 24px"></div>
 
+			<div class="mode-row">
+				<div id="mode" class="seg" role="radiogroup" aria-label="Aplicar como">
+					<span class="ind"></span>
+					<button data-m="keys" role="radio" title="influência dos keyframes (o After Effects interpola)">keyframes</button>
+					<button data-m="expr" role="radio" title="expressão que reproduz exatamente esta curva entre os keyframes">expressão</button>
+				</div>
+				<button id="unexpr" class="ib" title="remover a expressão de curva das propriedades selecionadas" aria-label="Remover expressão de curva" hidden></button>
+			</div>
 			<div class="actions">
 				<button id="copy" class="btn btn-2" title="ler a influência de 1 keyframe selecionado">
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8zM5 15V5h10"></path></svg><span>copiar</span>

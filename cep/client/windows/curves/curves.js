@@ -114,7 +114,8 @@
 			box.appendChild(stat(KEY, (d.keys || 0) + ' kf'));
 			if (d.out != null) box.appendChild(stat(EASE, Math.round(d.out) + ' · ' + Math.round(d['in'])));
 			if (d.outSpeed != null) box.appendChild(stat('M4 12h12M12 8l4 4-4 4', (+d.outSpeed).toFixed(1)));
-			$('apply').disabled = !d.keys;
+			$('apply').dataset.nokeys = d.keys ? '0' : '1';
+			$('apply').disabled = mode === 'keys' && !d.keys;
 		});
 	}
 
@@ -147,10 +148,35 @@
 		});
 	});
 
+	// ---- apply as keyframe influence or as an expression (same curve, computed per frame) ----
+	var mode = UI.store('inf.mode') || 'keys';
+	var seg = $('mode'), ind = seg.querySelector('.ind');
+	function setMode(m, animate) {
+		mode = m;
+		UI.store('inf.mode', m);
+		// show / hide the remove button first: it changes the segment width
+		$('unexpr').hidden = m !== 'expr';
+		seg.querySelectorAll('button').forEach(function (b) {
+			var on = b.dataset.m === m;
+			b.classList.toggle('on', on);
+			b.setAttribute('aria-checked', String(on));
+			if (on) { ind.style.left = b.offsetLeft + 'px'; ind.style.width = b.offsetWidth + 'px'; }
+		});
+		$('apply').title = m === 'expr' ? 'aplicar a curva como expressão nas propriedades selecionadas (2+ keyframes)' : 'aplicar nos keyframes selecionados';
+		$('apply').disabled = m === 'keys' && $('apply').dataset.nokeys === '1';
+	}
+	seg.querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.m); }); });
+	requestAnimationFrame(function () { setMode(mode); });
+
+	UI.add($('unexpr'), UI.icon(UI.I.close));
+	$('unexpr').addEventListener('click', function () {
+		PGN.run('inf.exprRemove', {}).then(report);
+	});
+
 	$('apply').addEventListener('click', function () {
 		var btn = this;
 		busy(btn, true);
-		PGN.run('inf.apply', { out: s.out, 'in': s.in }).then(function (r) {
+		PGN.run(mode === 'expr' ? 'inf.expr' : 'inf.apply', { out: s.out, 'in': s.in }).then(function (r) {
 			busy(btn, false);
 			report(r);
 			lastStats = '';
@@ -162,6 +188,8 @@
 	PGN.mock('inf.stats', function () { return { data: { keys: 2, out: 33, 'in': 66, outSpeed: 0 } }; }, 80);
 	PGN.mock('inf.read', function () { return { msg: 'Influência copiada', data: { out: 75, 'in': 40, keys: 1 } }; });
 	PGN.mock('inf.apply', function (a) { return { msg: 'Influência aplicada em 2 keyframes' }; });
+	PGN.mock('inf.expr', function (a) { return { msg: '2 curvas aplicadas como expressão' }; });
+	PGN.mock('inf.exprRemove', function () { return { msg: '2 expressões removidas' }; });
 
 	draw();
 	pollStats();
