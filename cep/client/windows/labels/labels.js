@@ -109,7 +109,6 @@
 	   x and y), so the whole edge, corners included, is full saturation.
 	   brightness has its own slider. CEP doesn't deliver pointer events: mouse events. */
 
-	var SPAN = 40; // center → where the dot touches the edge of the inner tile
 	var hueMem = {}, satMem = {};
 
 	function hexToHsv(hex) {
@@ -147,45 +146,38 @@
 		return satMem[i] != null ? satMem[i] : hsv.s;
 	}
 
-	var tile, dot, bright, brightVal, was, now;
+	var tile = $('tile'), mk = tile.querySelector('.mk'), gx = tile.querySelector('.gx'), gy = tile.querySelector('.gy');
+	var vs = $('vs'), thumb = vs.querySelector('.thumb');
+	var was = $('was'), now = $('now');
+	var INSET = 6, MARK = 8; // tile inner margin · half the marker
 
-	function renderPicker() {
-		var box = $('picker');
-		box.textContent = '';
-		dot = h('span.pk-dot');
-		tile = h('div.pk-tile', { title: 'arraste para escolher matiz e saturação' }, [dot]);
-		bright = h('input.pk-range', { type: 'range', min: 0, max: 100, step: 1, 'aria-label': 'Brilho' });
-		brightVal = h('span.pk-val.mono');
-		was = h('button.pk-was', { title: 'voltar para a cor gravada', 'aria-label': 'Voltar para a cor gravada' });
-		now = h('i.pk-now');
-		box.appendChild(tile);
-		box.appendChild(h('div.pk-side', null, [
-			h('div.pk-cmp', null, [was, now]),
-			h('label.pk-row', null, [h('span', { text: 'brilho' }), brightVal]),
-			bright
-		]));
-		bright.addEventListener('input', function () {
-			setColor(hsvToHex(hueOf(S.sel), satOf(S.sel), +bright.value), 'picker');
-		});
-		was.addEventListener('click', function () { if (S.saved) setColor(S.saved.colors[S.sel], 'revert'); });
-		bindDrag();
-		updatePicker();
+	// from the center to where the marker touches the inner edge (depends on the window width)
+	function span() { return tile.clientWidth / 2 - INSET - MARK; }
+
+	function renderPicker() { updatePicker(); }
+
+	function placeMarker(hh, sat) {
+		var a = hh * Math.PI / 180, sx = Math.sin(a), sy = -Math.cos(a);
+		var k = span() * Math.max(0, Math.min(100, sat)) / 100 / Math.max(Math.abs(sx), Math.abs(sy), 1e-6);
+		var x = (k * sx).toFixed(1), y = (k * sy).toFixed(1);
+		mk.style.left = gy.style.left = 'calc(50% + ' + x + 'px)';
+		mk.style.top = gx.style.top = 'calc(50% + ' + y + 'px)';
 	}
 
-	function placeDot(hh, sat) {
-		var a = hh * Math.PI / 180, sx = Math.sin(a), sy = -Math.cos(a);
-		var k = SPAN * Math.max(0, Math.min(100, sat)) / 100 / Math.max(Math.abs(sx), Math.abs(sy), 1e-6);
-		dot.style.left = 'calc(50% + ' + (k * sx).toFixed(1) + 'px)';
-		dot.style.top = 'calc(50% + ' + (k * sy).toFixed(1) + 'px)';
+	function brightness(v) {
+		var i = S.sel;
+		setColor(hsvToHex(hueOf(i), satOf(i), Math.max(0, Math.min(100, Math.round(v)))), 'picker');
 	}
 
 	function updatePicker() {
-		var i = S.sel, c = S.colors[i], hsv = hexToHsv(c), hh = hueOf(i);
-		dot.style.background = c;
-		placeDot(hh, satOf(i));
-		if (document.activeElement !== bright) bright.value = Math.round(hsv.v);
-		brightVal.textContent = Math.round(hsv.v);
-		bright.style.setProperty('--track', 'linear-gradient(to right, #000, ' + hsvToHex(hh, satOf(i), 100) + ')');
+		var i = S.sel, c = S.colors[i], hsv = hexToHsv(c), hh = hueOf(i), v = Math.round(hsv.v);
+		mk.style.setProperty('--c', c);
+		placeMarker(hh, satOf(i));
+		// brightness: the thumb rides the track (top = 100)
+		thumb.style.top = (100 - v) + '%';
+		thumb.textContent = v;
+		vs.setAttribute('aria-valuenow', String(v));
+		vs.style.setProperty('--track', 'linear-gradient(to top, #000, ' + hsvToHex(hh, satOf(i), 100) + ')');
 		// the inner wheel at the current brightness: hues around, grey in the middle
 		var stops = [];
 		for (var a = 0; a <= 360; a += 30) stops.push(hsvToHex(a % 360, 100, hsv.v));
@@ -196,39 +188,55 @@
 		was.classList.toggle('same', !S.saved || S.saved.colors[i] === c);
 	}
 
-	function bindDrag() {
-		var drag = false;
-		function at(e) {
-			var b = tile.getBoundingClientRect();
-			var dx = Math.max(-SPAN, Math.min(SPAN, e.clientX - (b.left + b.width / 2)));
-			var dy = Math.max(-SPAN, Math.min(SPAN, e.clientY - (b.top + b.height / 2)));
-			return { h: dx || dy ? (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360 : null, s: Math.max(Math.abs(dx), Math.abs(dy)) / SPAN * 100 };
-		}
-		function apply(e) {
-			var i = S.sel, hsv = hexToHsv(S.colors[i]), p = at(e);
-			var hh = p.h == null ? hueOf(i) : p.h;
-			hueMem[i] = hh;
-			satMem[i] = p.s;
-			// no brightness = no color: bring some back
-			setColor(hsvToHex(hh, p.s, hsv.v < 8 ? 80 : hsv.v), 'picker');
-		}
-		function move(e) { if (drag) apply(e); }
-		function up() {
-			drag = false;
-			tile.classList.remove('drag');
-			document.removeEventListener('mousemove', move);
-			document.removeEventListener('mouseup', up);
-		}
-		tile.addEventListener('mousedown', function (e) {
+	// CEP doesn't deliver pointer events: mouse events
+	function dragOn(el, onMove) {
+		el.addEventListener('mousedown', function (e) {
 			if (e.button !== 0) return;
 			e.preventDefault();
-			drag = true;
-			tile.classList.add('drag');
+			el.classList.add('drag');
+			var move = function (ev) { onMove(ev); };
+			var up = function () {
+				el.classList.remove('drag');
+				document.removeEventListener('mousemove', move);
+				document.removeEventListener('mouseup', up);
+			};
 			document.addEventListener('mousemove', move);
 			document.addEventListener('mouseup', up);
-			apply(e);
+			onMove(e);
 		});
 	}
+
+	// tile: hue = angle around the center (0° on top = red, clockwise), saturation = square distance
+	dragOn(tile, function (e) {
+		var b = tile.getBoundingClientRect(), sp = span();
+		var dx = Math.max(-sp, Math.min(sp, e.clientX - (b.left + b.width / 2)));
+		var dy = Math.max(-sp, Math.min(sp, e.clientY - (b.top + b.height / 2)));
+		var i = S.sel, hsv = hexToHsv(S.colors[i]);
+		var hh = dx || dy ? (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360 : hueOf(i);
+		var sat = Math.max(Math.abs(dx), Math.abs(dy)) / sp * 100;
+		hueMem[i] = hh;
+		satMem[i] = sat;
+		// no brightness = no color: bring some back
+		setColor(hsvToHex(hh, sat, hsv.v < 8 ? 80 : hsv.v), 'picker');
+	});
+
+	// vertical brightness slider
+	dragOn(vs, function (e) {
+		var b = vs.getBoundingClientRect();
+		brightness(100 - (e.clientY - b.top) / b.height * 100);
+	});
+	vs.addEventListener('keydown', function (e) {
+		var v = Math.round(hexToHsv(S.colors[S.sel]).v), step = e.shiftKey ? 10 : 1;
+		if (e.key === 'ArrowUp' || e.key === 'ArrowRight') { e.preventDefault(); brightness(v + step); }
+		if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') { e.preventDefault(); brightness(v - step); }
+	});
+	vs.addEventListener('wheel', function (e) {
+		e.preventDefault();
+		brightness(Math.round(hexToHsv(S.colors[S.sel]).v) + (e.deltaY < 0 ? 2 : -2));
+	});
+
+	was.addEventListener('click', function () { if (S.saved) setColor(S.saved.colors[S.sel], 'revert'); });
+	window.addEventListener('resize', function () { if (S.colors.length) updatePicker(); });
 
 	/* ---------- presets ---------- */
 

@@ -13,15 +13,22 @@
 			<!-- the 16 labels: click one to edit it below -->
 			<div id="swatches" class="swatches" role="radiogroup" aria-label="Labels"></div>
 
-			<!-- selected label -->
+			<!-- selected label: one grid, three columns
+			     [nº / brightness] [name / color tile] [hex / saved vs new] -->
 			<div id="editor" class="editor">
-				<div class="ed-head">
-					<span id="edIx" class="ix mono"></span>
-					<input id="edName" class="fld nm" type="text" aria-label="Nome do label" spellcheck="false">
-					<input id="edHex" class="fld hx mono" type="text" maxlength="7" aria-label="Cor em hex" spellcheck="false">
+				<span id="edIx" class="ix mono"></span>
+				<input id="edName" class="fld nm" type="text" aria-label="Nome do label" spellcheck="false">
+				<input id="edHex" class="fld hx mono" type="text" maxlength="7" aria-label="Cor em hex" spellcheck="false">
+				<div id="vs" class="pk-vs" role="slider" tabindex="0" aria-label="Brilho" aria-valuemin="0" aria-valuemax="100" title="brilho">
+					<i class="trk"></i><b class="thumb mono"></b>
 				</div>
-				<!-- color control slot (adapted from O PADEIRO's control) -->
-				<div id="picker" class="picker"></div>
+				<div id="tile" class="pk-tile" title="arraste para escolher matiz e saturação">
+					<i class="gx"></i><i class="gy"></i><b class="mk"></b>
+				</div>
+				<div class="pk-cmp">
+					<button id="was" class="was" title="voltar para a cor gravada" aria-label="Voltar para a cor gravada"><span>gravada</span></button>
+					<i id="now" class="now"></i>
+				</div>
 			</div>
 		</div>
 		<div class="foot">
