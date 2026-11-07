@@ -35,11 +35,11 @@ PGN.endp = {
 
 	formatos: [
 		'- formato livre -',
-		'[dia]  [mes]  —  [hora]  [min]',
-		'DIA  [dia]  —  [hora]  [min]',
-		'[semana]  —  [hora]  [min]',
-		'MAIS  TARDE  —  [hora]  [min]',
-		'TODA  [semana]  —  [hora]  [min]',
+		'[dia]  [mes]  \u2014  [hora]  [min]',
+		'DIA  [dia]  \u2014  [hora]  [min]',
+		'[semana]  \u2014  [hora]  [min]',
+		'MAIS  TARDE  \u2014  [hora]  [min]',
+		'TODA  [semana]  \u2014  [hora]  [min]',
 		'EM  [mes]'
 	],
 
@@ -55,11 +55,11 @@ PGN.endp = {
 
 	colorLabels: {
 		logo: 'logo',
-		titulo: 'título',
-		subtitulo: 'subtítulo',
+		titulo: 't\u00EDtulo',
+		subtitulo: 'subt\u00EDtulo',
 		apoio: 'apoio',
-		horario: 'horário',
-		horario_base: 'horário base',
+		horario: 'hor\u00E1rio',
+		horario_base: 'hor\u00E1rio base',
 		footage: 'footage',
 		pattern: 'pattern',
 		fundo: 'fundo'
@@ -79,6 +79,10 @@ PGN.endp = {
 	},
 
 	noLayer: '-------',
+
+	clone: function (obj) {
+		return JSON.parse(JSON.stringify(obj));
+	},
 	livreDefault: 'DIGITE O TEXTO',
 
 	// same values as defaultEndPageObj (FUNC lib)...
@@ -99,8 +103,8 @@ PGN.endp = {
 				pattern_layer: '-------'
 			},
 			servico_end_page: {
-				titulo: 'Digite O Título Aqui',
-				subtitulo: 'SUBTÍTULO',
+				titulo: 'Digite O T\u00EDtulo Aqui',
+				subtitulo: 'SUBT\u00CDTULO',
 				formato: 4,
 				semana: 8,
 				dia: 10,
@@ -130,8 +134,8 @@ PGN.endp = {
 	  · netAccess() required (project tab)
 	*/
 	check: function () {
-		if (hardNews) PGN.fail('indisponível no modo hard news');
-		if (!netAccess()) PGN.fail(netConfigName + ' desativado nas preferências do AE');
+		if (hardNews) PGN.fail('indispon\u00EDvel no modo hard news');
+		if (!netAccess()) PGN.fail(netConfigName + ' desativado nas prefer\u00EAncias do AE');
 	},
 
 	presetPath: function () {
@@ -280,7 +284,7 @@ PGN.endp = {
 
 	// preset object → JSON file content (classic format)...
 	toFile: function (obj) {
-		var out = PGN.win_clone(obj);
+		var out = PGN.endp.clone(obj);
 
 		out.servico_end_page.titulo = PGN.endp.txtOut(out.servico_end_page.titulo);
 		out.servico_end_page.subtitulo = PGN.endp.txtOut(out.servico_end_page.subtitulo);
@@ -530,7 +534,7 @@ PGN.endp = {
 	},
 
 	readFile: function (file) {
-		if (!file.exists) PGN.fail('preset não encontrado');
+		if (!file.exists) PGN.fail('preset n\u00E3o encontrado');
 
 		file.encoding = 'UTF-8';
 		var str = readFileContent(file);
@@ -539,7 +543,7 @@ PGN.endp = {
 		try {
 			obj = JSON.parse(str);
 		} catch (err) {
-			PGN.fail('preset inválido: ' + deleteFileExt(file.displayName));
+			PGN.fail('preset inv\u00E1lido: ' + deleteFileExt(file.displayName));
 		}
 		return PGN.endp.normalize(obj);
 	},
@@ -604,7 +608,7 @@ PGN.endp = {
 				{
 					id: 'layout', label: 'layout', fields: [
 						{ key: 'layout_end_page.modelo', label: 'modelo', type: 'select', options: 'modelos' },
-						{ key: 'layout_end_page.subtitulo', label: 'subtítulo', type: 'checkbox' },
+						{ key: 'layout_end_page.subtitulo', label: 'subt\u00EDtulo', type: 'checkbox' },
 						{ key: 'layout_end_page.foto', label: 'foto', type: 'checkbox' },
 						{ key: 'layout_end_page.footage', label: 'footage', type: 'checkbox' },
 						{ key: 'layout_end_page.pattern', label: 'pattern', type: 'checkbox' },
@@ -613,12 +617,12 @@ PGN.endp = {
 					]
 				},
 				{
-					id: 'servico', label: 'serviço', fields: [
-						{ key: 'servico_end_page.titulo', label: 'título', type: 'textarea' },
-						{ key: 'servico_end_page.subtitulo', label: 'subtítulo', type: 'text', enabledIf: 'layout_end_page.subtitulo' },
+					id: 'servico', label: 'servi\u00E7o', fields: [
+						{ key: 'servico_end_page.titulo', label: 't\u00EDtulo', type: 'textarea' },
+						{ key: 'servico_end_page.subtitulo', label: 'subt\u00EDtulo', type: 'text', enabledIf: 'layout_end_page.subtitulo' },
 						{ key: 'servico_end_page.formato', label: 'formato', type: 'select', options: 'formatos' },
 						{ key: 'servico_end_page.semana', label: 'semana', type: 'select', options: 'semanas', visibleIn: [4, 6] },
-						{ key: 'servico_end_page.mes', label: 'mês', type: 'select', options: 'meses', visibleIn: [2, 7] },
+						{ key: 'servico_end_page.mes', label: 'm\u00EAs', type: 'select', options: 'meses', visibleIn: [2, 7] },
 						{ key: 'livre', label: 'texto livre', type: 'text', visibleIn: [1] },
 						{ key: 'servico_end_page.dia', label: 'dia', type: 'number', min: 1, max: 31, visibleIn: [2, 3, 4, 5, 6], enabledIn: [2, 3] },
 						{ key: 'servico_end_page.hora', label: 'hora', type: 'number', min: 0, max: 23, visibleIn: [2, 3, 4, 5, 6], enabledIn: [2, 3, 4, 5, 6] },
@@ -627,7 +631,7 @@ PGN.endp = {
 					]
 				},
 				{
-					id: 'aparencia', label: 'aparência', fields: [
+					id: 'aparencia', label: 'apar\u00EAncia', fields: [
 						{ key: 'aparencia_end_page.tema', label: 'tema', type: 'select', options: 'temas' },
 						{ key: 'aparencia_end_page.*', label: 'cores', type: 'colors', options: 'colors', usedWhen: { 'aparencia_end_page.tema': 5 } }
 					]
@@ -652,10 +656,6 @@ PGN.endp = {
 			targetId: comp ? comp.id : null
 		};
 	}
-};
-
-PGN.win_clone = function (obj) {
-	return JSON.parse(JSON.stringify(obj));
 };
 
 //---------------------------------------------------------
@@ -692,8 +692,10 @@ PGN.register('endp.read', function (args) {
 PGN.register('endp.apply', function (args) {
 	PGN.endp.check();
 
+	if (!args.preset || typeof args.preset != 'object') PGN.fail('nenhum preset para aplicar');
+
 	var comp = PGN.endp.targetOrFail();
-	var obj = PGN.endp.normalize(PGN.win_clone(args.preset || {}));
+	var obj = PGN.endp.normalize(PGN.endp.clone(args.preset));
 	var livre = args.livre != null ? String(args.livre) : null;
 
 	app.beginUndoGroup('apply end page preset');
@@ -742,7 +744,7 @@ PGN.register('endp.save', function (args) {
 	var obj;
 
 	if (args.preset) {
-		obj = PGN.endp.normalize(PGN.win_clone(args.preset));
+		obj = PGN.endp.normalize(PGN.endp.clone(args.preset));
 	} else {
 		obj = PGN.endp.readComp(PGN.endp.targetOrFail());
 	}
@@ -758,12 +760,12 @@ PGN.register('endp.save', function (args) {
 
 	var folder = PGN.endp.presetFolder();
 
-	if (!folder.exists) PGN.fail('pasta de presets indisponível');
+	if (!folder.exists) PGN.fail('pasta de presets indispon\u00EDvel');
 
 	var filePath = folder.fsName + '/' + name + '.json';
 	var saved = saveTextFile(PGN.endp.toFile(obj), filePath);
 
-	if (!saved || !saved.exists) PGN.fail('não foi possível salvar o preset');
+	if (!saved || !saved.exists) PGN.fail('n\u00E3o foi poss\u00EDvel salvar o preset');
 
 	return {
 		msg: 'preset ' + name + ' salvo',

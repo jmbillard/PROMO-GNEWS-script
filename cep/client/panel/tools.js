@@ -132,7 +132,7 @@
 					T('endp', 'Presets de end page', 'draw', 'M4 5h16v14H4z', 'M8 15h8M8 11h5', { win: 'endpage' })
 				],
 				[
-					T('save', 'Salvar projeto', 'down', 'M5 4h11l3 3v13H5z', 'M8 20v-6h8v6', { alt: 'salvar em outra pasta' }),
+					T('save', 'Salvar projeto', 'down', 'M5 4h11l3 3v13H5z', 'M8 20v-6h8v6', { job: true, alt: 'salvar em outra pasta' }),
 					T('collect', 'Coletar arquivos', 'down', 'M4 14v6h16v-6', 'M12 4v10M8 10l4 4 4-4', { job: true }),
 					T('cfonts', 'Coletar fontes', 'pop', 'M5 19l5-14h1l5 14M7 14h7', 'M18 14v5', { job: true }),
 					T('open', 'Abrir pasta do projeto', 'lift', F, 'M3 18l3-7h15')

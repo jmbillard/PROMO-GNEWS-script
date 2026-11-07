@@ -50,7 +50,8 @@
 			if (homeOffice) PGN.fail('indispon\u00EDvel no modo home office');
 			checkNet();
 
-			var path = getPath();
+			// macOS: //server/share → /Volumes/share (mounted on demand)...
+			var path = PGN.net.local(getPath(), true);
 			var fld = new Folder(path);
 
 			if (!fld.exists) PGN.fail('pasta inacess\u00EDvel');

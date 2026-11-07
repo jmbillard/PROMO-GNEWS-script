@@ -39,6 +39,9 @@ var vStr = 'v3.0';
 	$.evalFile(srcFolder.fsName + '/layout/utils/tag ui.js');
 	$.evalFile(srcFolder.fsName + '/layout/utils/endPagePreset ui.js');
 
+	// Windows + macOS: network shares, shell commands and Windows-only classic helpers...
+	$.evalFile(hostFolder.fsName + '/platform.jsx');
+
 	// CEP core + tools...
 	$.evalFile(hostFolder.fsName + '/core.jsx');
 

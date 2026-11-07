@@ -1,0 +1,20 @@
+.grp { margin-top: 12px; animation: rowIn .35s var(--out) backwards; }
+.glbl { white-space: nowrap; font: 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin: 0 2px 6px; display: flex; align-items: center; gap: 8px; }
+.glbl i { width: 6px; height: 6px; border-radius: 50%; display: block; background: var(--c); flex: none; }
+.glbl::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.glbl small { font-size: 10px; letter-spacing: 0; text-transform: none; color: #6E6E78; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55%; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.tag { height: 32px; padding: 0 11px 0 8px; border-radius: 10px; display: inline-flex; align-items: center; gap: 7px; background: #26262B; color: var(--tx-2); font-size: 12px; font-weight: 600; position: relative; overflow: hidden; transition: background .2s, transform .25s var(--spring), color .2s; animation: tIn .35s var(--out) backwards; }
+.tag:hover { background: #2E2E34; color: var(--tx); transform: translateY(-2px); }
+.tag:active { transform: scale(.93); }
+.tag svg { width: 15px; height: 15px; fill: none; stroke: var(--c); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
+.tag:hover svg { transform: rotate(-10deg) scale(1.12); }
+.tag::after { content: ''; position: absolute; inset: 0; background: var(--c); opacity: 0; transform: scaleX(0); transform-origin: left; transition: opacity .3s; pointer-events: none; }
+.tag.ok::after { animation: sweep .6s cubic-bezier(.5, 0, .2, 1); }
+.tag.bad { animation: nope .42s ease; }
+@keyframes sweep { 0% { opacity: .35; transform: scaleX(0); } 70% { opacity: .25; transform: scaleX(1); } 100% { opacity: 0; transform: scaleX(1); } }
+
+.selinfo { display: inline-flex; align-items: center; gap: 6px; }
+.selinfo i { width: 7px; height: 7px; border-radius: 50%; background: #55555E; display: block; }
+.selinfo.live i { background: var(--ok); }

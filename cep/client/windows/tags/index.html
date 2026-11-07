@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<title>Tags</title>
+	<link rel="stylesheet" href="../../shared/base.css">
+	<link rel="stylesheet" href="../../shared/window.css">
+	<link rel="stylesheet" href="tags.css">
+</head>
+<body>
+	<div class="win" style="--acc: #7CC6FE">
+		<div class="pad" style="padding-bottom: 6px">
+			<div class="row-flex">
+				<div class="fld-wrap grow">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12V5h7l9 9-7 7-9-9zM8 8h.01"></path></svg>
+					<input id="custom" class="fld" type="text" placeholder="tag personalizada" aria-label="Tag personalizada" spellcheck="false">
+				</div>
+				<button id="customBtn" class="ib" title="aplicar tag personalizada (vazio = remover)" aria-label="Aplicar tag personalizada"></button>
+			</div>
+		</div>
+		<div id="groups" class="scroll grow" style="flex: 1; padding: 4px 12px 12px"></div>
+		<div class="status"><span id="note"></span><span id="sel" class="selinfo"></span></div>
+	</div>
+	<script src="../../shared/bridge.js"></script>
+	<script src="../../shared/ui.js"></script>
+	<script src="tags.js"></script>
+</body>
+</html>

@@ -11,57 +11,103 @@
 
 */
 
-// batchVNDBtn.onClick → 'vinheta nunca desliga' batch...
-PGN.register('batch', function (args) {
-	var footageArray = app.project.importFileWithDialog();
+/*
 
-	if (footageArray == null || footageArray.length == 0) return 'nenhum arquivo importado';
+  batchVNDBtn.onClick → 'vinheta nunca desliga' batch (job):
+    begin → import dialog (app.project.importFileWithDialog)
+    steps → one vinheta comp per imported item (time-boxed slices),
+            then the organize machine (projOrgBtn.notify() → jobs.jsx)
 
-	var count = 0;
-	var errArray = [];
+*/
+PGN.registerJob('batch', {
+	begin: function (args) {
+		var footageArray = app.project.importFileWithDialog();
+		var n = footageArray == null ? 0 : footageArray.length;
+		var st = { total: n, done: 0, label: 'criando vinhetas 0/' + n, phase: 'comps', files: footageArray, i: 0, count: 0, errs: [] };
 
-	app.beginUndoGroup('batch...');
-
-	for (var i = 0; i < footageArray.length; i++) {
-		try {
-			var footage = footageArray[i];
-
-			var compN = 'vinheta nunca desliga ' + (i + 1);
-			var compW = 1920;
-			var compH = 1080;
-			var compAspect = 1;
-			var compDuration = 6;
-			var compFPS = 29.97;
-
-			var comp = app.project.items.addComp(compN, compW, compH, compAspect, compDuration, compFPS);
-			comp.layers.add(footage);
-
-			layersVND(comp);
-			comp.bgColor = [0, 0, 0];
-			comp.hideShyLayers = true;
-			comp.comment = 'export';
-			count++;
-
-		} catch (err) {
-			errArray.push(err.message);
+		if (n == 0) {
+			st.none = true;
+			st.finished = true;
 		}
+		return st;
+	},
+
+	step: function (st) {
+		if (st.phase == 'org') {
+			PGN.jk.orgStep(st);
+			if (st.org.finished) st.finished = true;
+			return st;
+		}
+		var t0 = PGN.jk.now();
+
+		try {
+			while (st.i < st.files.length) {
+				var i = st.i;
+
+				st.i++;
+				try {
+					var footage = st.files[i];
+
+					var compN = 'vinheta nunca desliga ' + (i + 1);
+					var compW = 1920;
+					var compH = 1080;
+					var compAspect = 1;
+					var compDuration = 6;
+					var compFPS = 29.97;
+
+					PGN.jk.touch(st, 'batch...');
+
+					var comp = app.project.items.addComp(compN, compW, compH, compAspect, compDuration, compFPS);
+
+					comp.layers.add(footage);
+
+					layersVND(comp);
+					comp.bgColor = [0, 0, 0];
+					comp.hideShyLayers = true;
+					comp.comment = 'export';
+					st.count++;
+
+				} catch (err) {
+					st.errs.push(err.message);
+				}
+				st.done = st.i;
+				st.label = 'criando vinhetas ' + st.i + '/' + st.total;
+				if (!PGN.jk.more(t0)) break;
+			}
+		} finally {
+			PGN.jk.close(st);
+		}
+		// projOrgBtn.notify() → organize project...
+		if (st.i >= st.files.length) {
+			st.files = [];
+			st.phase = 'org';
+			PGN.jk.orgInit(st);
+		}
+		return st;
+	},
+
+	finish: function (st) {
+		if (st.none) return 'nenhum arquivo importado';
+
+		var org = PGN.jk.orgMsg(st);
+		var msg = PGN.n(st.count, 'vinheta criada', 'vinhetas criadas');
+
+		if (st.errs.length > 0) msg += ' \u00b7 ' + PGN.n(st.errs.length, 'erro') + ': ' + st.errs[0];
+		if (org.data.missing.length > 0 && org.msg != 'Projeto organizado') msg += org.msg.replace('Projeto organizado', '');
+		return { msg: msg, data: { count: st.count, errors: st.errs, missing: org.data.missing } };
+	},
+
+	// undo the organize groups, then the 'batch...' ones...
+	cancel: function (st) {
+		PGN.jk.rollback(st);
 	}
-	app.endUndoGroup();
-
-	// projOrgBtn.notify() → organize project...
-	if (typeof PGN.tools.org == 'function') PGN.tools.org({});
-
-	var msg = PGN.n(count, 'vinheta criada', 'vinhetas criadas');
-
-	if (errArray.length > 0) msg += ' · ' + PGN.n(errArray.length, 'erro') + ': ' + errArray[0];
-	return msg;
 });
 
 //---------------------------------------------------------
 
 // copyAMEPresetsBtn: left click → install | right click → open presets folder...
 PGN.register('ame', function (args) {
-	if (!netAccess()) PGN.fail(netConfigName + ' desativado nas preferências do AE');
+	if (!netAccess()) PGN.fail(netConfigName + ' desativado nas prefer\u00eancias do AE');
 
 	var unzipPath = scriptPreferencesPath + '/AME presets';
 
@@ -100,7 +146,7 @@ PGN.register('ame', function (args) {
 	}
 	removeFolder(tmpFolder); // → delete temp folder
 
-	if (installed == 0) PGN.fail('nenhuma versão do Media Encoder encontrada');
+	if (installed == 0) PGN.fail('nenhuma vers\u00e3o do Media Encoder encontrada');
 	return 'Presets do AME instalados';
 });
 

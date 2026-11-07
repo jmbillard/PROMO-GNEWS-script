@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<title>End page</title>
+	<link rel="stylesheet" href="../../shared/base.css">
+	<link rel="stylesheet" href="../../shared/window.css">
+	<link rel="stylesheet" href="endpage.css">
+</head>
+<body>
+	<div class="win" style="--acc: #7CC6FE">
+		<div class="pad" style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 8px">
+			<div id="preview" class="preview" aria-label="Prévia da end page"></div>
+			<div class="row-flex">
+				<div class="sel-wrap grow">
+					<select id="preset" class="fld" aria-label="Preset de end page"></select>
+				</div>
+				<button id="read" class="ib" title="ler da end page selecionada" aria-label="Ler valores da end page"></button>
+				<button id="folder" class="ib" title="abrir pasta de presets" aria-label="Abrir pasta de presets"></button>
+			</div>
+			<div class="seg wide" id="mode" role="radiogroup" aria-label="Modo">
+				<span class="ind"></span>
+				<button data-m="simple" role="radio">simples</button>
+				<button data-m="extended" role="radio">completo</button>
+			</div>
+		</div>
+		<div id="form" class="scroll grow" style="flex: 1; padding: 0 12px 12px"></div>
+		<div class="foot">
+			<div class="meta"><div id="target" class="nm"></div><div id="note" class="sub"></div></div>
+			<button id="save" class="ib" title="salvar como preset" aria-label="Salvar como preset"></button>
+			<button id="apply" class="btn btn-1"><span>aplicar</span></button>
+		</div>
+	</div>
+	<script src="../../shared/bridge.js"></script>
+	<script src="../../shared/ui.js"></script>
+	<script src="endpage.js"></script>
+</body>
+</html>

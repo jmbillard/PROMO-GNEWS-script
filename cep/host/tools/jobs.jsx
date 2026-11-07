@@ -504,7 +504,7 @@ PGN.jk.orgMsg = function (st) {
 	var msg = 'Projeto organizado';
 
 	if (!ignoreMissing && miss.length > 0) {
-		msg += ' · ' + PGN.n(miss.length, 'arquivo ausente', 'arquivos ausentes') + ': ' + miss.slice(0, 3).join(', ');
+		msg += ' \u00b7 ' + PGN.n(miss.length, 'arquivo ausente', 'arquivos ausentes') + ': ' + miss.slice(0, 3).join(', ');
 		if (miss.length > 3) msg += '...';
 	}
 	return { msg: msg, data: { missing: miss } };

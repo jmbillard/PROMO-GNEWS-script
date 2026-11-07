@@ -510,7 +510,7 @@ PGN.fonts = {
 		return {
 			root: fontsFolder.fsName,
 			homeOffice: homeOffice,
-			canInstall: appOs == 'Win',
+			canInstall: true, // Win → Fonts namespace | Mac → ~/Library/Fonts (platform.jsx installFonts)
 			items: items
 		};
 	}
@@ -532,7 +532,6 @@ PGN.register('fonts.install', function (args) {
 	var count = 0;
 
 	if (paths.length == 0) PGN.fail('nenhuma fonte selecionada');
-	if (appOs != 'Win') PGN.fail('instalação de fontes disponível apenas no Windows');
 
 	for (var i = 0; i < paths.length; i++) {
 		var p = String(paths[i]);
@@ -616,9 +615,11 @@ PGN.prefs = {
 	},
 
 	setFolder: function (key, path) {
-		if (key == 'projPath') projPath = path;
-		if (key == 'magazinePath') magazinePath = path;
-		if (key == 'artePath') artePath = path;
+		var localPath = PGN.net.local(path); // macOS: //server/share → /Volumes/share
+
+		if (key == 'projPath') projPath = localPath;
+		if (key == 'magazinePath') magazinePath = localPath;
+		if (key == 'artePath') artePath = localPath;
 		JSONPrefsObj.folders[key] = path;
 		savePrefs();
 	}
@@ -637,6 +638,7 @@ PGN.register('prefs.get', function (args) {
 	data.fontsPath = new Folder(fontsPath).fsName;
 	data.netAccess = netAccess() ? true : false;
 	data.os = appOs;
+	data.netOffline = PGN.net.offline || '';
 
 	return { msg: '', data: data };
 });
@@ -709,7 +711,7 @@ PGN.register('prefs.resetFolder', function (args) {
 	PGN.prefs.detach();
 	PGN.prefs.setFolder(args.key, path);
 
-	return { msg: 'Pasta restaurada', data: { path: path, fsName: new Folder(path).fsName } };
+	return { msg: 'Pasta restaurada', data: { path: path, fsName: new Folder(PGN.net.local(path)).fsName } };
 });
 
 // resetOrgFoldersBtn...
@@ -740,7 +742,7 @@ PGN.register('prefs.update', function (args) {
 	}
 	var uiFolder = new Folder(uiPath);
 	// the classic panel lived in 'Scripts/ScriptUI Panels' ($.fileName is this extension here)...
-	var scriptUIPath = Folder.appPackage.fsName + '/Scripts/ScriptUI Panels';
+	var scriptUIPath = PGN.sys.scriptUIFolder(); // Win: Support Files/Scripts · Mac: next to the .app
 	var destPathArray = [
 		scriptUIPath, // → Scripts/Script UiPanels
 		promoArcPath + '/scripts', // → /arquivamento/GLOBONEWS/On Air 2022/Promo/scripts
@@ -762,4 +764,9 @@ PGN.register('prefs.update', function (args) {
 		}
 	}
 	return 'Script atualizado · reinicie o After Effects';
+});
+
+// network status (platform.jsx): offline message, OS, home office...
+PGN.register('net.status', function (args) {
+	return { msg: PGN.net.offline || '', data: PGN.net.status() };
 });

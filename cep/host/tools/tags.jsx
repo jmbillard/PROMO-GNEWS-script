@@ -28,13 +28,13 @@
 PGN.tags = {
 	// pt-BR labels + text colors (GNEWS_secColors index) per group...
 	groupInfo: {
-		compCommentTags:       { label: 'comentário de comp', color: 10, kind: 'comentário nas comps' },
-		multiTags:             { label: 'itens', color: 9, kind: 'template nas comps · comentário nos footages' },
-		hardNewsTags:          { label: 'hard news', color: 1, kind: 'template nas comps · comentário nos footages' },
+		compCommentTags:       { label: 'coment\u00E1rio de comp', color: 10, kind: 'coment\u00E1rio nas comps' },
+		multiTags:             { label: 'itens', color: 9, kind: 'template nas comps \u00B7 coment\u00E1rio nos footages' },
+		hardNewsTags:          { label: 'hard news', color: 1, kind: 'template nas comps \u00B7 coment\u00E1rio nos footages' },
 		compTemplatePromoTags: { label: 'template de comp', color: 8, kind: 'nome de template nas comps' }
 	},
 
-	altKind: 'limpa comentários dos itens',
+	altKind: 'limpa coment\u00E1rios dos itens',
 
 	iconNames: ['ftgTogIcon', 'compTogIcon', 'solTogIcon', 'imgTogIcon', 'shpTogIcon', 'matteTogIcon', 'txtTogIcon', 'sonoTogIcon'],
 
@@ -89,7 +89,7 @@ PGN.tags = {
 		}
 		app.endUndoGroup();
 
-		return 'comentários removidos de ' + PGN.n(sel.length, 'item', 'itens');
+		return 'coment\u00E1rios removidos de ' + PGN.n(sel.length, 'item', 'itens');
 	},
 
 	// multiTags behavior: comps → template name | footage → comment...
@@ -158,7 +158,7 @@ PGN.register('tags.list', function (args) {
 PGN.register('tags.apply', function (args) {
 	var tag = args.tag != null ? String(args.tag) : '';
 
-	if (tag == '') PGN.fail('tag inválida');
+	if (tag == '') PGN.fail('tag inv\u00E1lida');
 	if (args.alt === true) return PGN.tags.clearComments();
 
 	var group = PGN.tags.findGroup(tag, args.group);

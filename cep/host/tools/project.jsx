@@ -27,7 +27,7 @@ PGN.proj = {
 	},
 
 	netFail: function () {
-		if (!netAccess()) PGN.fail(netConfigName + ' desativado nas preferências do AE');
+		if (!netAccess()) PGN.fail(netConfigName + ' desativado nas prefer\u00eancias do AE');
 	},
 
 	emptyFail: function () {
@@ -203,24 +203,39 @@ PGN.register('rename', function (args) {
 
 //---------------------------------------------------------
 
-// projOrgBtn: left click → organize | right click → tags dialog...
-PGN.register('org', function (args) {
-	PGN.proj.emptyFail();
+// projOrgBtn: left click → organize (job) | right click → tags window (panel side)...
+PGN.registerJob('org', {
+	begin: function (args) {
+		args = args || {};
+		PGN.proj.emptyFail();
 
-	if (args.alt === true) {
-		tagDialog();
-		return '';
+		// the panel opens its own tags window (tags.jsx)...
+		if (args.alt === true) PGN.fail('use a janela de tags');
+
+		return PGN.jk.orgInit({});
+	},
+
+	step: function (st) {
+		PGN.jk.orgStep(st);
+		if (st.org.finished) st.finished = true;
+		return st;
+	},
+
+	finish: function (st) {
+		return PGN.jk.orgMsg(st);
+	},
+
+	// classic cancel → 'Undo organize project'...
+	cancel: function (st) {
+		PGN.jk.rollback(st);
 	}
-	var done = PGN.proj.runOrganize();
-
-	return done ? 'Projeto organizado' : 'organização cancelada';
 });
 
 //---------------------------------------------------------
 
 // endPagePresetBtn.onClick...
 PGN.register('endp', function (args) {
-	if (hardNews) PGN.fail('indisponível no modo hard news');
+	if (hardNews) PGN.fail('indispon\u00edvel no modo hard news');
 	PGN.proj.netFail();
 
 	endPagePresetDialog();
@@ -231,117 +246,148 @@ PGN.register('endp', function (args) {
 
 /*
 
-  saveBtn
+  saveBtn  (job: see jobs.jsx)
     · left click  → save inside the project folder
                     (projPath | 'PRODUCAO DIA-A-DIA' on hard news)
                     args.collect → collect files (collectTogBtn)
                     args.fonts   → collect fonts (collectFontsTogBtn)
     · right click → args.alt: save on the desktop (custom folder)
 
+  plain / alt saves have no steps (begin returns finished, finish
+  saves), so PGN.run('save') and PGN.jobStart('save') both work.
+  collect / fonts run step by step, then finish saves the project.
+
 */
-PGN.register('save', function (args) {
-	PGN.proj.emptyFail();
-	PGN.proj.load(args);
+PGN.proj.saveJob = {
+	begin: function (args) {
+		args = args || {};
+		PGN.proj.emptyFail();
+		PGN.proj.load(args);
 
-	var projFile;
-	var savePath;
-	var projFullName;
-	var promoProjectName = [projId, projName].join(' '); // ex: 'COB110423 historia ao vivo'
-	var hnProjectName;
+		var st = { total: 0, done: 0, label: 'salvando', alt: args.alt === true };
 
-	// right click...
-	if (args.alt === true) {
+		st.promoProjectName = [projId, projName].join(' '); // ex: 'COB110423 historia ao vivo'
 		PGN.proj.stamp();
-		app.beginUndoGroup('save project');
 
-		savePath = '~/Desktop';
-		hnProjectName = [userPrefix, '- GNEWS', projName].join(' '); // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
-		projFullName = hardNews ? hnProjectName : promoProjectName; // final project name
+		// right click...
+		if (st.alt) {
+			st.savePath = '~/Desktop';
+			st.projFullName = hardNews ? [userPrefix, '- GNEWS', projName].join(' ') : st.promoProjectName; // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
+			st.finished = true;
+			return st;
+		}
 
-		projFile = new File(savePath + '/' + projFullName);
+		// left click...
+		var saveFolder = hardNews ? new Folder(PRODUCAO_DIA_A_DIA()) : new Folder(projPath);
+
+		if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
+
+		st.savePath = decodeURI(saveFolder.fullName);
+		st.projFullName = hardNews ? [userPrefix, '- GNEWS', projName, '-', projId].join(' ') : st.promoProjectName; // ex: 'JBI - GNEWS TWITTER PRESIDENTE - cassia'
+		st.fonts = args.fonts === true;
+
+		if (args.collect === true) {
+			st.phase = 'collect';
+			PGN.jk.colInit(st, hardNews ? projName : st.promoProjectName);
+
+		} else if (st.fonts) {
+			st.phase = 'fonts';
+			PGN.jk.fntInit(st, st.savePath);
+
+		} else {
+			st.finished = true;
+		}
+		return st;
+	},
+
+	step: function (st) {
+		if (st.phase == 'collect') {
+			PGN.jk.colStep(st);
+			if (!st.col.finished) return st;
+
+			// filesCollectPROMO returns the collect folder (HN keeps the day folder)...
+			if (!st.col.hn) st.savePath = st.col.savePath;
+
+			if (st.fonts) {
+				st.phase = 'fonts';
+				PGN.jk.fntInit(st, st.savePath);
+			} else {
+				st.finished = true;
+			}
+			return st;
+		}
+		if (st.phase == 'fonts') {
+			PGN.jk.fntStep(st);
+			if (st.fnt.finished) st.finished = true;
+			return st;
+		}
+		st.finished = true;
+		return st;
+	},
+
+	finish: function (st) {
+		var savePath = st.savePath;
+		var projFile = new File(savePath + '/' + st.projFullName);
+		var data = {};
+		var msg = 'Projeto salvo';
+
 		app.project.save(projFile);
-		app.endUndoGroup();
 
 		openFolder(savePath);
 		setClipboard(savePath.replace(/^~\//, '').replace(/\//g, '\\'));
 
-		return { msg: 'Projeto salvo', data: { path: app.project.file ? app.project.file.fsName : projFile.fsName } };
+		if (!st.alt && appV > 22 && saveAsV22) {
+			executeCommandID('Save a Copy As 22.x...');
+		}
+		data.path = app.project.file ? app.project.file.fsName : projFile.fsName;
+
+		if (st.col) {
+			data.collected = st.col.copied;
+			msg += ' \u00b7 ' + PGN.n(st.col.copied, 'arquivo coletado', 'arquivos coletados');
+		}
+		if (st.fnt) {
+			data.fonts = st.fnt.fonts;
+			data.fontsFailed = st.fnt.fail;
+			msg += ' \u00b7 ' + PGN.n(st.fnt.fonts.length, 'fonte coletada', 'fontes coletadas');
+
+			// classic: alert(fails + ' cant be copied')...
+			if (st.fnt.fail.length > 0) msg += ' (' + PGN.n(st.fnt.fail.length, 'falha', 'falhas') + ': ' + st.fnt.fail.join(', ') + ')';
+		}
+		return { msg: msg, data: data };
+	},
+
+	// classic cancel → 'Undo save project' (footage replaced by the collect)...
+	cancel: function (st) {
+		PGN.jk.rollback(st);
 	}
+};
 
-	// left click...
-	var escape = false;
-	var collected = false;
-	var todayPath = PRODUCAO_DIA_A_DIA();
-	var saveFolder = hardNews ? new Folder(todayPath) : new Folder(projPath);
-
-	PGN.proj.stamp();
-	app.beginUndoGroup('save project');
-
-	if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
-
-	savePath = decodeURI(saveFolder.fullName);
-	hnProjectName = [userPrefix, '- GNEWS', projName, '-', projId].join(' '); // ex: 'JBI - GNEWS TWITTER PRESIDENTE - cassia'
-	projFullName = hardNews ? hnProjectName : promoProjectName; // final project name
-
-	if (args.collect === true) {
-		var progressWindow = progressDialog('collecting files to \'' + saveFolder.name + '\'');
-		var enterBtn = progressWindow.children[2].children[0];
-		var cancelBtn = progressWindow.children[2].children[1];
-
-		enterBtn.onClick = progressWindow.onEnterKey = function () {
-			if (hardNews) {
-				filesCollectHN(projName, progressWindow);
-
-			} else {
-				savePath = filesCollectPROMO(promoProjectName, progressWindow);
-			}
-			collected = true;
-			progressWindow.close();
-
-			app.endUndoGroup();
-		};
-
-		cancelBtn.onClick = function () {
-			progressWindow.close();
-			app.endUndoGroup();
-
-			alert('escaping...');
-			executeCommandID('Undo save project');
-			escape = true;
-		};
-		progressWindow.show();
-	}
-	if (escape) return 'salvamento cancelado';
-
-	if (args.fonts === true) fontCollect(savePath);
-
-	projFile = new File(savePath + '/' + projFullName);
-	app.project.save(projFile);
-
-	if (!collected) {
-		try { app.endUndoGroup(); } catch (e) { }
-	}
-	openFolder(savePath);
-	setClipboard(savePath.replace(/^~\//, '').replace(/\//g, '\\'));
-
-	if (appV > 22 && saveAsV22) {
-		executeCommandID('Save a Copy As 22.x...');
-	}
-	return { msg: 'Projeto salvo', data: { path: app.project.file ? app.project.file.fsName : projFile.fsName } };
-});
+PGN.registerJob('save', PGN.proj.saveJob);
 
 // collect files toggle → save with collect...
-PGN.register('collect', function (args) {
-	args.collect = true;
-	args.alt = false;
-	return PGN.tools.save(args);
+PGN.registerJob('collect', {
+	begin: function (args) {
+		args = args || {};
+		args.collect = true;
+		args.alt = false;
+		return PGN.proj.saveJob.begin(args);
+	},
+	step: PGN.proj.saveJob.step,
+	finish: PGN.proj.saveJob.finish,
+	cancel: PGN.proj.saveJob.cancel
 });
 
 // collect fonts toggle → save with fonts...
-PGN.register('cfonts', function (args) {
-	args.fonts = true;
-	args.alt = false;
-	return PGN.tools.save(args);
+PGN.registerJob('cfonts', {
+	begin: function (args) {
+		args = args || {};
+		args.fonts = true;
+		args.alt = false;
+		return PGN.proj.saveJob.begin(args);
+	},
+	step: PGN.proj.saveJob.step,
+	finish: PGN.proj.saveJob.finish,
+	cancel: PGN.proj.saveJob.cancel
 });
 
 //---------------------------------------------------------
@@ -355,7 +401,7 @@ PGN.register('open', function (args) {
 	var currentProjPath = currentProj != null ? decodeURI(currentProj.path) : projPath;
 	var fld = hardNews ? new Folder(todayPath) : new Folder(currentProjPath);
 
-	if (!fld.exists) PGN.fail('pasta inacessível');
+	if (!fld.exists) PGN.fail('pasta inacess\u00edvel');
 
 	openFolder(decodeURI(fld.fullName));
 	return { msg: 'Pasta aberta', data: { path: fld.fsName } };
