@@ -535,7 +535,7 @@ PGN.register('fonts.install', function (args) {
 
 	for (var i = 0; i < paths.length; i++) {
 		var p = String(paths[i]);
-		var fontFamilyFolder = new Folder(p);
+		var fontFamilyFolder = new Folder(PGN.net.local(p));
 
 		// a bare family name → fonts folder sub folder (as the original)...
 		if (!fontFamilyFolder.exists) fontFamilyFolder = new Folder(fontsPath + '/' + p);
@@ -546,7 +546,11 @@ PGN.register('fonts.install', function (args) {
 	}
 	if (count == 0) PGN.fail('pasta da fonte não encontrada');
 
-	return PGN.n(count, 'família instalada', 'famílias instaladas');
+	var msg = PGN.n(count, 'família instalada', 'famílias instaladas');
+
+	// macOS: copied to ~/Library/Fonts → AE lists them after a restart...
+	if (appOs != 'Win') msg += ' em ~/Library/Fonts \u00B7 reinicie o After Effects';
+	return msg;
 });
 
 // downloadBtn...
