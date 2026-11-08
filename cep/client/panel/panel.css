@@ -6,9 +6,9 @@
 
 /* GNEWS logo (from the script's own shape layer): the globe alone in the narrow bar,
    the full logo when there is room */
-.logo { position: relative; height: 36px; display: flex; align-items: center; padding: 0 7px; color: var(--tx); border-radius: var(--r); }
-.logo .gl { display: block; height: 22px; width: auto; fill: currentColor; }
-.logo .gl-full { display: none; height: 20px; }
+.logo { position: relative; height: 36px; display: flex; align-items: center; padding: 0 5px; color: var(--tx); border-radius: var(--r); overflow: visible; }
+.logo .gl { display: block; flex: none; fill: currentColor; overflow: visible; }  /* size: width/height set on the svg (logo.js) */
+.logo .gl-full { display: none; }
 .wide .logo .gl-full, .horiz .logo .gl-full { display: block; }
 .wide .logo .gl-globo, .horiz .logo .gl-globo { display: none; }
 /* hover: the official animation, its frame following the mouse across the logo (scrub) */
@@ -172,6 +172,19 @@ footer { position: relative; }
 .list .t .lbl { flex: 1; min-width: 0; text-align: left; }
 .sec .head .name { flex: 1; min-width: 0; padding-right: 8px; }
 /* logo: a little air around it */
-.logo { height: 40px; }
+.logo { height: 44px; }
 /* horizontal keeps its chip (icon only) */
 .horiz .sec.open > .head { background: transparent; border-radius: 0; filter: none; }
+
+/* compact vertical bar (134–170px): names fit — smaller type, up to two lines */
+.compact .sec .name { font-size: 11px; }
+.compact #scroll { padding-left: 6px; padding-right: 4px; }
+.compact .sec.open { padding-bottom: 4px; }
+.compact.list .grid:not(.swatches) { padding: 2px 0 0; }
+.compact.list .t { height: auto; min-height: 34px; padding: 3px 2px 3px 2px; gap: 5px; }
+.compact.list .t .ico { flex: none; width: 26px; justify-content: center; }
+.compact.list .t:hover { transform: none; background: #2A2A2F; }
+.compact.list .t .lbl { font-size: 11px; line-height: 1.2; white-space: normal; overflow: hidden; text-overflow: clip;
+	display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-word; }
+.compact .fields .fld { font-size: 11px; padding: 0 8px; }
+.compact .logo .gl-full { width: auto; max-width: 100%; }

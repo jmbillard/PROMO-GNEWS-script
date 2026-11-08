@@ -104,7 +104,7 @@
 					T('words', 'Palavras', 'slide', 'M4 8h6M4 12h10M4 16h4', 'M12 8h8M10 16h10', COMP),
 					T('box', 'Tarja simples', 'wipe', 'M3 9h18v6H3z', 'M6 12h10', COMP),
 					T('wig', 'Wiggle', 'wiggle', 'M3 19h18', 'M3 12c2-4 4 4 6 0s4 4 6 0 4 4 6 0', LAY),
-					T('ik', 'IK simples (3 layers em ordem)', 'swing', 'M4 20h6', 'M7 20l4-8 7-3M11 12h.01M18 9h.01', { sel: 'layers', min: 3 })
+					T('ik', 'IK (3 layers)', 'swing', 'M4 20h6', 'M7 20l4-8 7-3M11 12h.01M18 9h.01', { sel: 'layers', min: 3 })
 				]
 			]
 		},

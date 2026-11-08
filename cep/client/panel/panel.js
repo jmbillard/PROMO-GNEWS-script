@@ -46,9 +46,12 @@
 		var horiz = hgt < 260 && w > hgt * 1.4;
 		state.width = w;
 		app.classList.toggle('horiz', horiz);
-		app.classList.toggle('wide', !horiz && w >= 150);
+		// the vertical bar is at least 134px (manifest): names always shown; under 170px it is
+		// 'compact' — smaller type, long names on two lines instead of cut
+		app.classList.toggle('wide', !horiz && w >= 120);
 		app.classList.toggle('roomy', !horiz && w >= 110);
-		app.classList.toggle('list', !horiz && state.labels && w >= 150);
+		app.classList.toggle('list', !horiz && state.labels && w >= 120);
+		app.classList.toggle('compact', !horiz && w < 170);
 		app.classList.toggle('reduced', state.reduced);
 		var cols = Math.max(1, Math.floor((w - 20 + 2) / 38));
 		var rows = hgt >= 100 ? 2 : 1;   // horizontal: one or two rows of tools
@@ -502,7 +505,7 @@
 		logoBtn.appendChild(cv);
 		function setup() {
 			var svg = logoBtn.querySelector('.gl-full').getBoundingClientRect().width ? logoBtn.querySelector('.gl-full') : logoBtn.querySelector('.gl-globo');
-			var full = svg.classList.contains('gl-full'), box = full ? PGN_LOGO.box : PGN_LOGO.gbox;
+			var vb = svg.viewBox.baseVal, box = [vb.x, vb.y, vb.width, vb.height];
 			var b = logoBtn.getBoundingClientRect(), r = svg.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
 			var k = r.height / box[3];
 			cv.width = Math.round(b.width * dpr); cv.height = Math.round(b.height * dpr);

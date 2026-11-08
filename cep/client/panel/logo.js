@@ -115,9 +115,16 @@
 		var b = part === 'globo' ? L.gbox : L.box;
 		var NS = 'http://www.w3.org/2000/svg';
 		var svg = document.createElementNS(NS, 'svg');
-		// a small margin: antialiased edges are not clipped
-		var m = Math.round(b[3] * 0.04);
-		svg.setAttribute('viewBox', [b[0] - m, b[1] - m, b[2] + 2 * m, b[3] + 2 * m].join(' '));
+		// a margin around the drawing, explicit pixel size from the proportion and overflow visible:
+		// the After Effects browser (older Chromium) sized 'width: auto' SVGs differently and clipped it
+		var m = Math.round(b[3] * 0.08);
+		var vb = [b[0] - m, b[1] - m, b[2] + 2 * m, b[3] + 2 * m];
+		var hpx = part === 'globo' ? 26 : 24;
+		svg.setAttribute('viewBox', vb.join(' '));
+		svg.setAttribute('width', String(Math.round(hpx * vb[2] / vb[3])));
+		svg.setAttribute('height', String(hpx));
+		svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+		svg.style.overflow = 'visible';
 		svg.setAttribute('aria-hidden', 'true');
 		svg.setAttribute('class', 'gl gl-' + part);
 		var g = document.createElementNS(NS, 'path');

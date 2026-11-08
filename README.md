@@ -80,7 +80,7 @@ na horizontal, quando o painel é baixo e largo:
 | <img src="images/doc/icons/anim-words.png" width="32" alt="Palavras"> | **Palavras** | lettering com animação palavra por palavra. | comp ativa |  |
 | <img src="images/doc/icons/anim-box.png" width="32" alt="Tarja simples"> | **Tarja simples** | cria uma tarja simples. | comp ativa |  |
 | <img src="images/doc/icons/anim-wig.png" width="32" alt="Wig"> | **Wig** | rig de *wiggle* na posição dos layers selecionados, com controles. | layers |  |
-| <img src="images/doc/icons/anim-ik.png" width="32" alt="IK simples (3 layers em ordem)"> | **IK simples (3 layers em ordem)** | IK simples com 3 layers selecionados **em ordem** (ex.: coxa → canela → pé). | 3+ layers |  |
+| <img src="images/doc/icons/anim-ik.png" width="32" alt="IK (3 layers)"> | **IK (3 layers)** | IK simples com 3 layers selecionados **em ordem** (ex.: coxa → canela → pé). | 3+ layers |  |
 
 ### <img src="images/doc/icons/fx.png" width="32" alt="Efeitos"> Efeitos
 
