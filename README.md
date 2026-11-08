@@ -185,7 +185,7 @@ sites e pastas de uso diário — **editáveis** nas preferências (ícone ou 2 
 | curvas | busca | templates | fontes |
 | :---: | :---: | :---: | :---: |
 | <img src="images/cep/curves.png" width="200"> | <img src="images/cep/search.png" width="200"> | <img src="images/cep/templates.png" width="200"> | <img src="images/cep/fonts.png" width="200"> |
-| influência dos keyframes; aplica por **keyframes** ou por **expressão** (a mesma curva) | busca no conteúdo dos layers de texto (sem comp selecionada: em todas) | baixa, lista e importa os templates de PROMO, com filtro | baixa e instala as fontes do on-air |
+| influência dos keyframes; aplica por **keyframes** ou por **expressão** (a mesma curva) | busca no conteúdo dos layers de texto (sem comp selecionada: em todas) | baixa, lista e importa os templates de PROMO, com filtro | famílias em grupos com o preview de cada estilo; baixa e instala as fontes do on-air |
 
 | tags | end page | labels | preferências |
 | :---: | :---: | :---: | :---: |
@@ -200,9 +200,16 @@ sites e pastas de uso diário — **editáveis** nas preferências (ícone ou 2 
 
 ![dropdown](images/doc/gifs/dropdown.gif)
 
-**atalhos** nas preferências — ícone ou letras, nome, destino, arraste para reordenar:
+**fontes** — cada família (pasta) abre os seus estilos, cada um no próprio arquivo; edite o texto de preview no campo ou direto numa amostra (× limpa), tamanho P / M / G:
 
-![atalhos](images/doc/gifs/atalhos.gif)
+![fontes](images/doc/gifs/fontes.gif)
+
+**preferências** — o que a barra mostra é editável:
+
+| atalhos | paleta | efeitos |
+| :---: | :---: | :---: |
+| <img src="images/doc/gifs/atalhos.gif" width="260" alt="atalhos"> | <img src="images/doc/gifs/paleta.gif" width="260" alt="paleta"> | <img src="images/doc/gifs/efeitos.gif" width="260" alt="efeitos"> |
+| ícone ou letras, nome, destino, arraste para reordenar | grupos de cores em hex, + cor, nomes automáticos | qualquer efeito instalado, numa lista pesquisável |
 
 ---
 

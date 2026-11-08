@@ -47,6 +47,19 @@ async function center(p, sel) {
 	const b = await el.boundingBox();
 	return [b.x + b.width / 2, b.y + b.height / 2];
 }
+// a click that re-reads the target right before clicking (layouts move while sections open / scroll)
+async function tap(p, from, get) {
+	const el0 = await get();
+	await el0.evaluate((e) => e.scrollIntoView({ block: 'nearest' }));
+	await p.waitForTimeout(150);
+	let to = await center(p, await get());
+	await glide(p, from, to, 420);
+	await p.waitForTimeout(120);
+	to = await center(p, await get());
+	await p.mouse.move(to[0], to[1]);
+	await p.mouse.down(); await p.mouse.up();
+	return to;
+}
 async function sec(p, name) {
 	for (const s of await p.$$('#sections .sec .k')) if ((await s.getAttribute('aria-label')) === name) return s;
 }
@@ -69,14 +82,11 @@ const SCENES = {
 		await p.waitForTimeout(2700);
 		let m = [200, 440];
 		for (const name of ['Controles', 'Texto', 'Projeto']) {
-			m = await glide(p, m, await center(p, await sec(p, name)), 450);
-			await p.mouse.down(); await p.mouse.up();
-			await p.waitForTimeout(1000);
+			m = await tap(p, m, () => sec(p, name));
+			await p.waitForTimeout(1100);
 		}
 		// a long task: progress on the tile, footer line and selection chip
-		const org = (await p.$$('#sections .sec.open .t'))[2];
-		m = await glide(p, m, await center(p, org), 400);
-		await p.mouse.down(); await p.mouse.up();
+		m = await tap(p, m, async () => (await p.$$('#sections .sec.open .t'))[2]);
 		await p.waitForTimeout(2600);
 	} },
 	// hover on the logo: the official animation follows the mouse
@@ -124,6 +134,71 @@ const SCENES = {
 		await p.waitForTimeout(500);
 		await p.keyboard.press('ArrowDown'); await p.waitForTimeout(300);
 		await p.keyboard.press('Enter'); await p.waitForTimeout(900);
+	} },
+	// fonts: families as groups, styles previewed, editable preview text
+	fontes: { w: 380, h: 560, url: 'windows/fonts/index.html', async run(p) {
+		// real font files of this machine in place of the network fonts (after the page's own first load)
+		await p.waitForTimeout(700);
+		await p.evaluate(() => {
+			const F = [
+				['Inter', '/usr/share/fonts/opentype/inter', ['Inter-Light.otf', 'Inter-Medium.otf', 'Inter-BoldItalic.otf', 'Inter-Black.otf']],
+				['JetBrains Mono', '/usr/share/fonts/truetype/jetbrains-mono', ['JetBrainsMono-Light.ttf', 'JetBrainsMono-Bold.ttf']],
+				['Carlito', '/usr/share/fonts/truetype/crosextra', ['Carlito-Regular.ttf', 'Carlito-Italic.ttf', 'Carlito-Bold.ttf']],
+				['Caladea', '/usr/share/fonts/truetype/crosextra', ['Caladea-Regular.ttf', 'Caladea-BoldItalic.ttf']]
+			];
+			PGN.mock('fonts.list', () => ({ data: { canInstall: true, items: F.map((f) => ({ path: f[1], name: f[0], family: f[0], folder: '', files: f[2] })) } }), 200);
+			document.getElementById('rf').click();
+		});
+		await p.waitForTimeout(900);
+		let m = await glide(p, [350, 520], await center(p, '.fam:nth-child(1) .fh .nm'), 450);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(800);
+		// type right in a sample: all follow
+		m = await glide(p, m, await center(p, '.fam.open .st:nth-child(2) .s'), 400);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(200);
+		await p.keyboard.press('Control+A');
+		for (const ch of 'Jornal das Dez') { await p.keyboard.type(ch); await p.waitForTimeout(70); }
+		await p.keyboard.press('Enter'); await p.waitForTimeout(500);
+		m = await glide(p, m, await center(p, '#sizes button[data-s="l"]'), 400);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(800);
+		m = await glide(p, m, await center(p, '#sizes button[data-s="s"]'), 300);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(500);
+		m = await glide(p, m, await center(p, '.fam:nth-child(3) .fh .nm'), 400);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(700);
+		m = await glide(p, m, await center(p, '.fam:nth-child(3) .box'), 300);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(500);
+		m = await glide(p, m, await center(p, '#clr'), 400);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(1100);
+	} },
+	// palette in the preferences: hex as text, + cor
+	paleta: { w: 420, h: 520, url: 'windows/settings/index.html', async run(p) {
+		await p.waitForTimeout(1300);
+		await p.evaluate(() => { const b = document.getElementById('body'); b.scrollTop = b.querySelector('.paled').offsetTop - 50; });
+		await p.waitForTimeout(400);
+		let m = await glide(p, [380, 500], await center(p, '.paled .pgrp:nth-child(1) .padd'), 500);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(300);
+		for (const ch of '#2996EF') { await p.keyboard.type(ch); await p.waitForTimeout(90); }
+		await p.keyboard.press('Enter'); await p.waitForTimeout(300);
+		for (const ch of '#5CE6A1') { await p.keyboard.type(ch); await p.waitForTimeout(90); }
+		await p.waitForTimeout(700);
+		m = await glide(p, m, await center(p, '.paled .pgrp:nth-child(2) .pc:nth-child(2) .phx'), 450);
+		await p.mouse.down(); await p.mouse.up(); await p.keyboard.press('Control+A');
+		for (const ch of '#3A3A42') { await p.keyboard.type(ch); await p.waitForTimeout(90); }
+		await p.waitForTimeout(1100);
+	} },
+	// effects in the preferences: pick from the installed effects
+	efeitos: { w: 420, h: 520, url: 'windows/settings/index.html', async run(p) {
+		await p.waitForTimeout(1300);
+		await p.evaluate(() => { const b = document.getElementById('body'); b.scrollTop = b.querySelector('.fxed').offsetTop - 50; });
+		await p.waitForTimeout(400);
+		let m = await glide(p, [380, 500], await center(p, '.fxed .pgrp:nth-child(2) .padd'), 500);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(500);
+		for (const ch of 'radial') { await p.keyboard.type(ch); await p.waitForTimeout(110); }
+		await p.waitForTimeout(500);
+		await p.keyboard.press('Enter'); await p.waitForTimeout(600);
+		m = await glide(p, m, await center(p, '.fxed .pgrp:nth-child(2) .fxr:last-of-type .ic'), 450);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(600);
+		m = await glide(p, m, await center(p, '.fxed .lpick .grid button:nth-child(13)'), 400);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(1100);
 	} },
 	// shortcuts editor in the preferences
 	atalhos: { w: 360, h: 470, url: 'windows/settings/index.html', async run(p) {
