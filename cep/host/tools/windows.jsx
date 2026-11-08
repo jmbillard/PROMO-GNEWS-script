@@ -328,6 +328,15 @@ PGN.tpl = {
 			if (!PGN.win.inArray(PGN.tpl.fileFilter, ext)) continue;
 
 			var previewFile = new File(f.parent.fsName + '/' + name.replace(/\.[\w]+$/i, ' preview.png'));
+			// a preview video next to the template: '<name> preview.mp4' (or .webm / .mov), or '<name>.mp4'
+			var videoFile = null;
+			var vNames = [' preview.mp4', ' preview.webm', ' preview.mov', '.mp4'];
+
+			for (var v = 0; v < vNames.length && videoFile == null; v++) {
+				var vf = new File(f.parent.fsName + '/' + name.replace(/\.[\w]+$/i, vNames[v]));
+
+				if (vf.exists) videoFile = vf;
+			}
 			var infoFile = new File(f.parent.fsName + '/' + name.replace(/\.[\w]+$/i, ' info.txt'));
 			var info = null;
 
@@ -343,6 +352,7 @@ PGN.tpl = {
 				folder: rel,
 				ext: ext,
 				preview: previewFile.exists ? previewFile.fsName : null,
+				video: videoFile != null ? videoFile.fsName : null,
 				updated: PGN.win.dateStr(f.created),
 				displayPath: decodeURI(f.fullName),
 				info: info

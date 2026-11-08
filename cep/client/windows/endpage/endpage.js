@@ -67,10 +67,13 @@
 		COLOR_KEYS.forEach(function (c) { preview.style.setProperty('--p-' + c[0], col(c[0])); });
 		var modelo = +l.modelo;
 		var foto = l.foto && modelo !== 3;
-		preview.classList.toggle('nofoto', !foto);
+		preview.classList.toggle('nofoto', !foto && !(l.footage && modelo !== 2));
 		preview.textContent = '';
 		UI.add(preview, [
 			l.pattern && modelo !== 3 ? h('div.pv-pat') : null,
+			// as in the real end page: the footage is the dark rectangle on the right,
+			// the photo a light square on top of it
+			l.footage && modelo !== 2 ? h('div.pv-foot') : null,
 			foto ? h('div.pv-foto') : null,
 			h('div.pv-logo'),
 			h('div.pv-txt', null, [
@@ -78,7 +81,6 @@
 				l.subtitulo ? h('div.pv-s', { text: v.subtitulo || '' }) : null,
 				h('div.pv-h', { text: dateLine() })
 			]),
-			l.footage && modelo !== 2 ? h('div.pv-foot') : null,
 			h('span.pv-tag', { text: (['', 'livre', 'programa', 'jornal'][modelo] || '') + ' · ' + (th.name || '') })
 		]);
 	}

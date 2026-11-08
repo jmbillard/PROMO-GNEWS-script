@@ -13,3 +13,14 @@
 .card .tag { font: 10px var(--mono); color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .info { font-size: 11px; color: var(--mute); white-space: pre-wrap; max-height: 64px; overflow: auto; margin-top: 4px; }
 .btn-1 { color: #141416; }
+
+/* preview video (mouse picks the frame; no autoplay) */
+.thumb video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .15s; pointer-events: none; }
+.thumb.has-video.ready video { opacity: 1; }
+.thumb.has-video.scrub img { transform: none !important; }
+.vbar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(0, 0, 0, .35); opacity: 0; transition: opacity .2s; }
+.vbar b { display: block; height: 100%; width: 0; background: var(--acc); }
+.thumb.scrub .vbar { opacity: 1; }
+.vbadge { position: absolute; right: 5px; top: 5px; width: 18px; height: 18px; border-radius: var(--r-s); background: rgba(20, 20, 22, .72); display: flex; align-items: center; justify-content: center; color: #F2F2F4; transition: opacity .2s; }
+.vbadge svg { width: 9px; height: 9px; fill: currentColor; stroke: none; }
+.thumb.scrub .vbadge { opacity: 0; }

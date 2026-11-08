@@ -72,6 +72,44 @@
 		return t;
 	}
 
+	/* preview video: never plays by itself — the mouse position across the thumbnail picks the frame
+	   (like the logo of the bar). Without a preview image, a frame from the middle is the poster. */
+	function videoScrub(thumb, url, poster) {
+		var v = h('video', { muted: true, preload: poster ? 'none' : 'metadata', playsinline: true, tabindex: '-1', 'aria-hidden': 'true' });
+		v.muted = true;
+		v.src = url;
+		var bar = h('i.vbar', null, h('b'));
+		thumb.classList.add('has-video');
+		thumb.appendChild(v);
+		thumb.appendChild(bar);
+		thumb.appendChild(h('span.vbadge', { title: 'preview em vídeo · passe o mouse' }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M8 5v14l11-7z')])));
+		var want = null, busy = false;
+		function seek() {
+			if (want == null || busy || !v.duration) return;
+			busy = true;
+			v.currentTime = want;
+			want = null;
+		}
+		v.addEventListener('seeked', function () { busy = false; thumb.classList.add('ready'); seek(); });
+		v.addEventListener('loadedmetadata', function () {
+			// no image: show a frame from the middle (unless the mouse is already picking one)
+			if (!poster && !thumb.classList.contains('scrub')) { want = v.duration * .5; seek(); }
+			else seek();
+		});
+		v.addEventListener('error', function () { thumb.classList.remove('has-video', 'scrub'); });
+		thumb.addEventListener('mouseenter', function () {
+			if (v.readyState < 1 && v.preload !== 'auto') { v.preload = 'auto'; v.load(); }
+			thumb.classList.add('scrub');
+		});
+		thumb.addEventListener('mousemove', function (e) {
+			var r = thumb.getBoundingClientRect();
+			var p = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+			bar.firstChild.style.width = (p * 100) + '%';
+			if (v.duration) { want = Math.min(v.duration - 0.04, p * v.duration); seek(); }
+		});
+		thumb.addEventListener('mouseleave', function () { thumb.classList.remove('scrub'); if (poster) thumb.classList.remove('ready'); });
+	}
+
 	function render() {
 		// categories
 		var cats = ['todos'];
@@ -100,8 +138,9 @@
 			var thumb;
 			if (it.preview) {
 				thumb = h('div.thumb', null, h('img', { src: fileURL(it.preview), alt: '', loading: 'lazy' }));
-				thumb.firstChild.addEventListener('error', function () { thumb.replaceWith(fakeThumb(it.name)); });
-			} else thumb = fakeThumb(it.name);
+				thumb.firstChild.addEventListener('error', function () { if (!it.video) thumb.replaceWith(fakeThumb(it.name)); });
+			} else thumb = it.video ? h('div.thumb') : fakeThumb(it.name);
+			if (it.video) videoScrub(thumb, fileURL(it.video), !!it.preview);
 			var card = h('button.card' + (s.sel === it ? '.on' : ''), {
 				'aria-label': it.name, 'aria-pressed': String(s.sel === it),
 				title: it.displayPath || it.fileName || it.name,
