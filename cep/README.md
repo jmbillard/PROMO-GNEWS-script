@@ -20,6 +20,7 @@ source/                      globals + bibliotecas usadas pelo host (funções, 
 downloads/                   templates, fontes e presets do AME baixados pelo host quando faltam
 tools/                       build-cep.js (pacote / instalação de dev) · gnews-logo.js (logo animada do painel)
                              diagnostico.jsx (lista as cópias instaladas e quais ainda têm código antigo)
+                             doc-icons.js · doc-gifs.js (ícones e gifs do README, gerados da própria interface)
 ```
 
 ## Interface
@@ -37,7 +38,8 @@ tools/                       build-cep.js (pacote / instalação de dev) · gnew
   ![barra horizontal](../images/cep/panel-horizontal.png)
 - **Curvas:** edita a curva de easing e aplica com keyframes ou por expressão (mesma curva).
 - **Busca, templates, fontes:** listas com filtro. A seleção é marcada pelo keyframe amarelo.
-- **Preferências:** usuário, layers, projeto (pastas de organização num editor de árvore) e modos.
+- **Menus:** todo `select.fld` das janelas vira um dropdown pesquisável (`UI.dropdown`, em `shared/ui.js`).
+- **Preferências:** usuário, layers, projeto (pastas de organização num editor de árvore), modos e **atalhos** (salvos em `shortcuts.json`).
 - **Tags:** marca layers e comps para a organização do projeto.
 - **End page:** presets, layout e textos da end page.
 - **Labels:** as 16 cores dos labels de layer, com seletor de cor, nome automático pela cor e presets próprios (salvos em `labels presets.json`, na pasta de preferências do script).
