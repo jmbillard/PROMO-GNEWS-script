@@ -524,7 +524,8 @@
 		}
 		function draw(e) {
 			if (!geo) setup();
-			var p = Math.max(0, Math.min(1, (e.clientX - geo.left) / geo.w));
+			// the start of the animation is reached 30px before the right edge
+			var p = Math.max(0, Math.min(1, (e.clientX - geo.left) / Math.max(1, geo.w - 30)));
 			// mouse to the right → back towards the start: the logo moves with the hand, not against it
 			var f = Math.round((1 - p) * Math.ceil(window.PGN_LOGO_END * 30));
 			if (f === last) return;
