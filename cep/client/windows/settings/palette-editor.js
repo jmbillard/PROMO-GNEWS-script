@@ -121,15 +121,13 @@
 		function focus(f) {
 			if (!f) return;
 			if (!ready) { pending = f; return; }
-			var row = root.querySelector('.pc[data-hex="' + String(f.hex).toUpperCase() + '"]');
+			var row = root.querySelector('.pc[data-hex="' + String(f.key || f.hex).toUpperCase() + '"]');
 			if (!row) return;
 			row.scrollIntoView({ block: 'center', behavior: 'smooth' });
 			row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash');
 			setTimeout(function () { var i = row.querySelector('.phx'); i.focus(); i.select(); }, 450);
 		}
-		PGN.on('paletteFocus', focus);
-		var stored = UI.store('paletteFocus');
-		if (stored && Date.now() - stored.at < 15000) { pending = stored; UI.store('paletteFocus', null); }
+		root.focusItem = focus;   // called by settings.js (focusRouter)
 
 		PGN.run('palette.get', {}).then(function (r) {
 			if (!r.ok || !r.data) { UI.note(note, r.error || 'paleta indisponível', false, version); return; }

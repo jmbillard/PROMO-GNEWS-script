@@ -191,17 +191,14 @@
 		function focus(f) {
 			if (!f) return;
 			if (!ready) { pending = f; return; }
-			var row = root.querySelector('.lk[data-list="' + f.list + '"][data-id="' + String(f.id).replace(/"/g, '') + '"]');
+			var row = root.querySelector('.lk[data-list="' + f.list + '"][data-id="' + String(f.key || f.id).replace(/"/g, '') + '"]');
 			if (!row) return;
 			row.closest('.ogrp').classList.remove('shut');
 			row.scrollIntoView({ block: 'center', behavior: 'smooth' });
 			row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash');
 			setTimeout(function () { var nm = row.querySelector('.nm'); if (nm) { nm.focus(); nm.select(); } }, 450);
 		}
-		root.focusLink = focus;
-		PGN.on('linkFocus', focus);
-		var stored = UI.store('linkFocus');
-		if (stored && Date.now() - stored.at < 15000) { pending = stored; UI.store('linkFocus', null); }
+		root.focusItem = focus;   // called by settings.js (focusRouter)
 
 		PGN.run('links.get', {}).then(function (r) {
 			if (!r.ok || !r.data) { UI.note(note, r.error || 'atalhos indisponíveis', false, version); return; }

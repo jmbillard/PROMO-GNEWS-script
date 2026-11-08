@@ -142,4 +142,115 @@
 		return addFx('VISINF Grain Implant', 'add grain', 'Add Grain');
 	});
 
+	//---------------------------------------------------------
+	// editable 'Efeitos' (preferences): groups of effects, saved in '<script prefs>/effects.json'
+	//   [{ name, items: [{ m: matchName, name, icon | glyph }] }]
+	//   fx.list   → effects installed in this After Effects (for the editor's search)
+	//   fx.get / fx.set { groups } / fx.reset · fx.apply { m, name }
+
+	var FX_DEFAULTS = [
+		{ name: 'cor', items: [
+			{ m: 'ADBE CurvesCustom', name: 'Curves', icon: 'curves' },
+			{ m: 'ADBE Pro Levels2', name: 'Levels', icon: 'levels' },
+			{ m: 'ADBE Lumetri', name: 'Lumetri Color', icon: 'lumetri' }] },
+		{ name: 'blur', items: [
+			{ m: 'ADBE Gaussian Blur 2', name: 'Gaussian Blur', icon: 'gauss' },
+			{ m: 'ADBE Compound Blur', name: 'Compound Blur', icon: 'compound' },
+			{ m: 'ADBE Camera Lens Blur', name: 'Lens Blur', icon: 'lens' }] },
+		{ name: 'outros', items: [
+			{ m: 'ADBE Fill', name: 'Fill', icon: 'fill' },
+			{ m: 'ADBE 3D Glasses2', name: '3D Glasses', icon: '3d' },
+			{ m: 'ADBE Fractal Noise', name: 'Fractal Noise', icon: 'fractal' },
+			{ m: 'VISINF Grain Implant', name: 'Add Grain', icon: 'grain' }] }
+	];
+	// effects that need a little setup after being added (same as the classic buttons)
+	var FX_SETUP = {
+		'ADBE Fill': function (effect, layer) { effect.property(3).setValue(randomColor(labelColors)); },
+		'ADBE 3D Glasses2': function (effect, layer) { effect.property(1).setValue(layer.index); effect.property(2).setValue(layer.index); effect.property(7).setValue(12); }
+	};
+
+	function fxFile() {
+		var folder = new Folder(scriptPreferencesPath);
+
+		if (!folder.exists) folder.create();
+		return new File(scriptPreferencesPath + '/effects.json');
+	}
+	function fxClean(groups) {
+		var out = [];
+
+		if (!(groups instanceof Array)) return out;
+		for (var g = 0; g < groups.length; g++) {
+			var gr = groups[g];
+
+			if (!gr || !(gr.items instanceof Array)) continue;
+			var items = [];
+
+			for (var i = 0; i < gr.items.length; i++) {
+				var it = gr.items[i];
+
+				if (!it || !it.m) continue;
+				var o = { m: String(it.m), name: String(it.name || it.m).substr(0, 60) };
+
+				if (it.glyph) o.glyph = String(it.glyph).toUpperCase().substr(0, 2);
+				else o.icon = String(it.icon || 'fx');
+				items.push(o);
+			}
+			out.push({ name: String(gr.name || 'grupo').substr(0, 30), items: items });
+		}
+		return out;
+	}
+	function fxLoad() {
+		var f = fxFile();
+
+		if (f.exists) {
+			try {
+				f.encoding = 'UTF-8';
+				var o = fxClean(JSON.parse(readFileContent(f)));
+
+				if (o.length) return o;
+			} catch (e) { }
+		}
+		return JSON.parse(JSON.stringify(FX_DEFAULTS));
+	}
+
+	PGN.register('fx.list', function (args) {
+		var list = [];
+
+		for (var i = 0; i < app.effects.length; i++) {
+			var e = app.effects[i];
+
+			if (!e.displayName || !e.matchName) continue;
+			list.push({ n: e.displayName, m: e.matchName, c: e.category || '' });
+		}
+		list.sort(function (a, b) {
+			if (a.c != b.c) return a.c < b.c ? -1 : 1;
+			return a.n.toLowerCase() < b.n.toLowerCase() ? -1 : 1;
+		});
+		return { msg: '', data: { effects: list } };
+	});
+
+	PGN.register('fx.get', function (args) {
+		return { msg: '', data: { groups: fxLoad() } };
+	});
+
+	PGN.register('fx.set', function (args) {
+		var groups = fxClean(args.groups);
+		var f = fxFile();
+
+		f.encoding = 'UTF-8';
+		writeFileContent(f, JSON.stringify(groups, null, '\t'));
+		return { msg: 'Efeitos salvos', data: { groups: groups } };
+	});
+
+	PGN.register('fx.reset', function (args) {
+		var f = fxFile();
+
+		if (f.exists) f.remove();
+		return { msg: 'Efeitos padrão', data: { groups: JSON.parse(JSON.stringify(FX_DEFAULTS)) } };
+	});
+
+	PGN.register('fx.apply', function (args) {
+		if (!args.m) PGN.fail('efeito não definido');
+		return addFx(String(args.m), String(args.name || args.m).toLowerCase(), String(args.name || args.m), FX_SETUP[args.m]);
+	});
 })();

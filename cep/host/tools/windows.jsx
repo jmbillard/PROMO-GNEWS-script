@@ -793,6 +793,21 @@ PGN.register('prefs.setOrgFolders', function (args) {
 	return { msg: 'Pastas de organiza\u00E7\u00E3o salvas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defs) } };
 });
 
+// 'go to this item' between windows: the bar asks the preferences to scroll to a link, a color or an
+// effect. Kept here in the host (every window shares it) — localStorage is not shared between the
+// extension's windows. set: { kind, key } · take: returns it once (within 20 s) and clears it.
+PGN.register('ui.focus', function (args) {
+	if (args.set) {
+		$.global.PGN_UI_FOCUS = { kind: String(args.set.kind || ''), key: String(args.set.key || ''), list: String(args.set.list || ''), at: new Date().getTime() };
+		return { msg: '', data: null };
+	}
+	var f = $.global.PGN_UI_FOCUS || null;
+
+	$.global.PGN_UI_FOCUS = null;
+	if (f && new Date().getTime() - f.at > 20000) f = null;
+	return { msg: '', data: f };
+});
+
 // network status (platform.jsx): offline message, OS, home office...
 PGN.register('net.status', function (args) {
 	return { msg: PGN.net.offline || '', data: PGN.net.status() };

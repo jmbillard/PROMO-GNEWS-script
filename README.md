@@ -84,6 +84,8 @@ na horizontal, quando o painel é baixo e largo:
 
 ### <img src="images/doc/icons/fx.png" width="32" alt="Efeitos"> Efeitos
 
+a camada de ajuste é fixa; os **efeitos e seus grupos são editáveis** nas preferências — escolha qualquer efeito instalado numa lista pesquisável e um ícone (ou 2 letras). botão direito num efeito abre as preferências já nele. padrão:
+
 | | ferramenta | o que faz | precisa de | botão direito |
 | :---: | --- | --- | --- | --- |
 | <img src="images/doc/icons/fx-adj.png" width="32" alt="Adjustment layer"> | **Adjustment layer** | adjustment layer do tamanho da comp (solid ou shape, nas preferências). | comp ativa |  |

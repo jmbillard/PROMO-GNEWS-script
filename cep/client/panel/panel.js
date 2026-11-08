@@ -564,6 +564,13 @@
 	}
 
 	// browser preview data (outside After Effects)
+	PGN.mock('fx.get', function () {
+		return { data: { groups: [
+			{ name: 'cor', items: [{ m: 'ADBE CurvesCustom', name: 'Curves', icon: 'curves' }, { m: 'ADBE Pro Levels2', name: 'Levels', icon: 'levels' }, { m: 'ADBE Lumetri', name: 'Lumetri Color', icon: 'lumetri' }] },
+			{ name: 'blur', items: [{ m: 'ADBE Gaussian Blur 2', name: 'Gaussian Blur', icon: 'gauss' }, { m: 'ADBE Compound Blur', name: 'Compound Blur', icon: 'compound' }, { m: 'ADBE Camera Lens Blur', name: 'Lens Blur', icon: 'lens' }] },
+			{ name: 'outros', items: [{ m: 'ADBE Fill', name: 'Fill', icon: 'fill' }, { m: 'ADBE 3D Glasses2', name: '3D Glasses', icon: '3d' }, { m: 'ADBE Fractal Noise', name: 'Fractal Noise', icon: 'fractal' }, { m: 'VISINF Grain Implant', name: 'Add Grain', icon: 'grain' }] }
+		] } };
+	}, 60);
 	PGN.mock('palette.get', function () {
 		return { data: { groups: [
 			{ name: 'marca', colors: ['#E53131', '#EEFF8C', '#231E1E'] },
@@ -599,10 +606,22 @@
 	}
 	PGN.on('palette', function (d) { loadPalette(d && d.groups ? d : null); });
 
+	// 'Efeitos': the adjustment layer + the effect groups from the preferences
+	function loadFx(data) {
+		var sec = SECTIONS.filter(function (s) { return s.fx; })[0];
+		if (!sec) return;
+		if (!sec.baseGroups) sec.baseGroups = sec.groups.slice(0);
+		function apply(d) { sec.groups = sec.baseGroups.concat(window.fxGroups(d)); render(); }
+		if (data) { apply(data); return; }
+		PGN.run('fx.get', {}).then(function (r) { if (r.ok && r.data) apply(r.data); });
+	}
+	PGN.on('fx', function (d) { loadFx(d && d.groups ? d : null); });
+
 	buildFooter();
 	render();
 	loadLinks();
 	loadPalette();
+	loadFx();
 	intro();
 
 	// read the real 'show labels' preference once the host is up

@@ -420,8 +420,9 @@
 				folderRow(I.folder, 'PAM magazine', 'magazinePath'),
 				folderRow(I.folder, 'PAM para arte', 'artePath')
 			], d += 40),
-			group('atalhos', [LinksEditor(note, version)], d += 40),
-			group('paleta', [PaletteEditor(note, version)], d += 40),
+			group('efeitos', [EDS.fx = FxEditor(note, version)], d += 40),
+			group('atalhos', [EDS.link = LinksEditor(note, version)], d += 40),
+			group('paleta', [EDS.color = PaletteEditor(note, version)], d += 40),
 			group('painel', [
 				switchRow(IC.labels, 'Rótulos', 'no painel largo', function () { return P.showLabels; }, function (v) { save({ showLabels: v }); }),
 				switchRow(IC.motion, 'Movimento reduzido', null, function () { return !!UI.store('reduced'); }, function (v) {
@@ -437,6 +438,18 @@
 		note.appendChild(version());
 	}
 
+	// 'go to this item' (right click 'editar…' in the bar): fx / link / color
+	var EDS = {};
+	function focusRouter(f) {
+		if (!f || !f.kind) return;
+		var ed = EDS[f.kind];
+		if (ed && ed.focusItem) ed.focusItem(f);
+	}
+	PGN.on('uiFocus', function (f) {
+		focusRouter(f);
+		PGN.run('ui.focus', { take: true });   // consumed
+	});
+
 	function load() {
 		PGN.run('prefs.get', {}).then(function (r) {
 			if (!r.ok) { UI.failState($('body'), r.error, load); return; }
@@ -444,6 +457,8 @@
 			P.folders = P.folders || {};
 			P.selection = P.selection || { nullType: 0, adjType: 0, projectMode: 0 };
 			build();
+			// a request the bar left in the host before opening this window
+			PGN.run('ui.focus', { take: true }).then(function (r) { if (r.ok && r.data) focusRouter(r.data); });
 		});
 	}
 
@@ -475,6 +490,16 @@
 	var MOCK_ORG = { INS: 'CANAL/institucional', DIG: 'CANAL/digital', PIL: 'CANAL/pilula', MKT: 'CANAL/marketing', NDL: 'VINHETAS/nunca desliga', BIP: 'VINHETAS/bip', ASE: 'VINHETAS/a seguir', EMN: 'JORNAIS/edicao da meia noite', EMP: 'JORNAIS/em ponto', CON: 'JORNAIS/conexao', JDE: 'JORNAIS/jornal das dez', ELE: 'FACTUAIS/eleicoes brasil', MUN: 'FACTUAIS/mundo', INT: 'PROGRAMAS/internacional', DOC: 'PROGRAMAS/documentario', MAC: 'MARCA E COMUNICACAO' };
 	PGN.mock('prefs.setOrgFolders', function (a) { var m = Object.assign({}, a.map); Object.keys(MOCK_ORG).forEach(function (k) { if (m[k] == null) m[k] = MOCK_ORG[k]; }); return { msg: 'Pastas de organização salvas', data: { promoSubPath: m, defaults: MOCK_ORG } }; }, 150);
 	PGN.mock('prefs.resetOrgFolders', function () { return { msg: 'Pastas de organização restauradas', data: { promoSubPath: Object.assign({}, MOCK_ORG), defaults: MOCK_ORG } }; }, 150);
+	// 'efeitos' (browser preview)
+	var FXL = [['Blur & Sharpen', ['Camera Lens Blur:ADBE Camera Lens Blur', 'Compound Blur:ADBE Compound Blur', 'Gaussian Blur:ADBE Gaussian Blur 2', 'Directional Blur:ADBE Motion Blur', 'Radial Blur:ADBE Radial Blur']], ['Color Correction', ['Curves:ADBE CurvesCustom', 'Hue/Saturation:ADBE HUE SATURATION', 'Levels:ADBE Pro Levels2', 'Lumetri Color:ADBE Lumetri', 'Tint:ADBE Tint']], ['Generate', ['Fill:ADBE Fill', 'Gradient Ramp:ADBE Ramp', 'Stroke:ADBE Paint']], ['Noise & Grain', ['Add Grain:VISINF Grain Implant', 'Fractal Noise:ADBE Fractal Noise']], ['Perspective', ['3D Glasses:ADBE 3D Glasses2', 'Drop Shadow:ADBE Drop Shadow']], ['Stylize', ['Glow:ADBE Glo2', 'Mosaic:ADBE Mosaic']]];
+	var FX_ALL = []; FXL.forEach(function (c) { c[1].forEach(function (e) { var p = e.split(':'); FX_ALL.push({ n: p[0], m: p[1], c: c[0] }); }); });
+	var FXG = [{ name: 'cor', items: [{ m: 'ADBE CurvesCustom', name: 'Curves', icon: 'curves' }, { m: 'ADBE Pro Levels2', name: 'Levels', icon: 'levels' }, { m: 'ADBE Lumetri', name: 'Lumetri Color', icon: 'lumetri' }] }, { name: 'blur', items: [{ m: 'ADBE Gaussian Blur 2', name: 'Gaussian Blur', icon: 'gauss' }, { m: 'ADBE Compound Blur', name: 'Compound Blur', icon: 'compound' }, { m: 'ADBE Camera Lens Blur', name: 'Lens Blur', icon: 'lens' }] }, { name: 'outros', items: [{ m: 'ADBE Fill', name: 'Fill', icon: 'fill' }, { m: 'ADBE 3D Glasses2', name: '3D Glasses', icon: '3d' }, { m: 'ADBE Fractal Noise', name: 'Fractal Noise', icon: 'fractal' }, { m: 'VISINF Grain Implant', name: 'Add Grain', icon: 'grain' }] }];
+	PGN.mock('fx.list', function () { return { data: { effects: FX_ALL } }; }, 120);
+	PGN.mock('fx.get', function () { return { data: { groups: JSON.parse(JSON.stringify(FXG)) } }; }, 120);
+	PGN.mock('fx.set', function (a) { return { msg: 'Efeitos salvos', data: { groups: a.groups } }; }, 120);
+	PGN.mock('fx.reset', function () { return { msg: 'Efeitos padrão', data: { groups: JSON.parse(JSON.stringify(FXG)) } }; }, 120);
+	PGN.mock('ui.focus', function (a) { var f = window.__pgnFocus || null; if (a.set) { window.__pgnFocus = a.set; return { data: null }; } window.__pgnFocus = null; return { data: f }; }, 30);
+
 	// 'paleta' (browser preview)
 	var PAL = [{ name: 'marca', colors: ['#E53131', '#EEFF8C', '#231E1E'] }, { name: 'neutros', colors: ['#141414', '#333333', '#4A4A4A', '#B2B2B2', '#F2F2F2'] }, { name: 'apoio', colors: ['#F23333', '#FF4D4D', '#FF674D', '#FF8F4D', '#FFC44E', '#FF5A67', '#FF739A', '#FF8CCD', '#B5ADFF', '#80C0FF', '#5CE6A1'] }];
 	PGN.mock('palette.get', function () { return { data: { groups: JSON.parse(JSON.stringify(PAL)) } }; }, 120);

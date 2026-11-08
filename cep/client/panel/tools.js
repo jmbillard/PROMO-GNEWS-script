@@ -17,18 +17,36 @@
 	function G(id, name, glyph, extra) {
 		return Object.assign({ id: id, name: name, glyph: glyph, anim: 'pop' }, extra || {});
 	}
+	// right click 'editar…': the preferences open scrolled to that item. The request goes through the
+	// host (shared by every window; localStorage is not) and as an event for an already open window.
+	window.focusPrefs = function (f) {
+		PGN.run('ui.focus', { set: f }).then(function () {
+			PGN.open('settings');
+			setTimeout(function () { PGN.emit('uiFocus', f); }, 250);
+		});
+	};
+
+	// 'Efeitos': groups from the preferences (host fx.get) → tiles
+	window.fxGroups = function (data) {
+		return (data.groups || []).filter(function (g) { return g.items && g.items.length; }).map(function (g) {
+			return g.items.map(function (it, i) {
+				var base = { id: 'fx:' + it.m, hostId: 'fx.apply', name: it.name, sel: 'layers', alt: 'editar efeito',
+					args: function () { return { m: it.m, name: it.name }; },
+					onAlt: function () { window.focusPrefs({ kind: 'fx', key: it.m }); } };
+				if (it.glyph) return Object.assign(base, { glyph: it.glyph, anim: 'pop' });
+				var ic = (window.FX_ICONS || {})[it.icon] || FX_ICONS.fx;
+				return Object.assign(base, { d: ic[0], a: ic[1], anim: ic[2] });
+			});
+		});
+	};
+
 	// 'Atalhos': sites + folders from the preferences (host links.get) → tiles
 	window.linksGroups = function (data) {
 		function tile(kind, it) {
 			var base = { id: 'link:' + kind + ':' + it.id, hostId: 'links.open', name: it.name, alt: 'editar atalho', args: function () { return { kind: kind, id: it.id }; },
 				// right click: the preferences open scrolled to this link (pending focus for a window
 				// that is still loading + an event for one already open)
-				onAlt: function () {
-					var f = { list: kind === 'site' ? 'sites' : 'dirs', id: it.id, at: Date.now() };
-					UI.store('linkFocus', f);
-					PGN.open('settings');
-					PGN.emit('linkFocus', f);
-				} };
+				onAlt: function () { window.focusPrefs({ kind: 'link', list: kind === 'site' ? 'sites' : 'dirs', key: it.id }); } };
 			if (it.glyph) return Object.assign(base, { glyph: it.glyph, anim: 'pop' });
 			var ic = LINK_ICONS[it.icon] || LINK_ICONS[kind === 'site' ? 'globe' : 'up'];
 			return Object.assign(base, { d: ic[0], a: ic[1], anim: ic[2] });
@@ -39,7 +57,7 @@
 
 	function S(hex, name) {
 		return { id: 'color:' + hex, hostId: 'color', name: name ? name + ' · ' + hex : hex, label: name || '', hex: hex, swatch: true, sel: 'layers', alt: 'editar paleta', args: function () { return { hex: hex }; },
-			onAlt: function () { UI.store('paletteFocus', { hex: hex, at: Date.now() }); PGN.open('settings'); PGN.emit('paletteFocus', { hex: hex }); } };
+			onAlt: function () { window.focusPrefs({ kind: 'color', key: hex }); } };
 	}
 
 	// 'Marca': the palette groups from the preferences (host palette.get) → swatches, named in pt-BR
@@ -110,25 +128,13 @@
 		},
 		{
 			id: 'fx', name: 'Efeitos', acc: '#ACCDEC', d: 'M12 3v4M12 17v4M3 12h4M17 12h4', a: 'M12 9l1.2 1.8L15 12l-1.8 1.2L12 15l-1.2-1.8L9 12l1.8-1.2z',
+			// the adjustment layer stays; the effects come from the preferences (fx.get) — see fxGroups()
 			groups: [
 				[
-					T('adj', 'Camada de ajuste', 'draw', 'M4 4h16v16H4z', 'M4 20L20 4', COMP),
-					T('curves', 'Curves', 'draw', 'M4 20h16M4 20V4', 'M4 20C11 20 12 4 20 4', LAY),
-					T('levels', 'Levels', 'grow', 'M4 20h16', 'M7 18v-5M11 18V7M15 18v-8M19 18v-3', LAY),
-					T('lumetri', 'Lumetri Color', 'spin', 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18', 'M12 12V5M12 12l5 5', LAY)
-				],
-				[
-					T('gauss', 'Gaussian Blur', 'pulse', 'M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z', 'M9.5 14a2.5 2.5 0 0 0 2.5 2.5', LAY),
-					T('compound', 'Compound Blur', 'slide', 'M9 6a6 6 0 1 0 0 12a6 6 0 1 0 0-12', 'M15 6a6 6 0 1 0 0 12a6 6 0 1 0 0-12', LAY),
-					T('lens', 'Lens Blur', 'spin', 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16', 'M12 4l3 8M20 12l-8 3M12 20l-3-8M4 12l8-3', LAY)
-				],
-				[
-					T('fill', 'Fill', 'pop', 'M5 11l6-6 7 7-6 6z', 'M19 15c1 1.5 1.5 2.3 1.5 3a1.5 1.5 0 0 1-3 0c0-.7.5-1.5 1.5-3z', LAY),
-					T('3d', '3D Glasses', 'slide', 'M3 10h18M6 10v5h5v-5', 'M13 10v5h5v-5', LAY),
-					T('fractal', 'Fractal Noise', 'wiggle', 'M4 4h16v16H4z', 'M4 14c3-3 5 2 8-1s5-4 8-1', LAY),
-					T('grain', 'Add Grain', 'blink', 'M4 4h16v16H4z', 'M8 8h.01M12 10h.01M16 8h.01M9 14h.01M15 13h.01M12 17h.01M7 18h.01M17 17h.01', LAY)
+					T('adj', 'Camada de ajuste', 'draw', 'M4 4h16v16H4z', 'M4 20L20 4', COMP)
 				]
-			]
+			],
+			fx: true
 		},
 		{
 			id: 'txt', name: 'Texto', acc: '#F4E76E', d: 'M5 6h14M12 6v13', a: 'M9 19h6',
