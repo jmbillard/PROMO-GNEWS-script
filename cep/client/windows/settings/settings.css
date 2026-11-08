@@ -153,3 +153,32 @@
 .lpick .txt small { font: 10px var(--mono); color: var(--faint); }
 .lk.flash { animation: lkFlash 1.6s ease; border-radius: var(--r); }
 @keyframes lkFlash { 0%, 60% { box-shadow: inset 0 0 0 1px var(--acc); background: #2E2E34; } 100% { box-shadow: inset 0 0 0 1px transparent; background: transparent; } }
+
+/* ---- 'paleta' editor: groups of hex codes as text, small preview + automatic name ---- */
+.paled { padding: 6px 0 8px; }
+.pgrp { padding: 4px 0 8px; border-bottom: 1px solid var(--line); animation: rowIn .3s var(--out) backwards; }
+.pgrp:last-child { border-bottom: 0; }
+.pgh { display: flex; align-items: center; gap: 6px; height: 28px; }
+.pgn { flex: 1; min-width: 0; height: 24px; padding: 0 6px; border-radius: var(--r); border: 1px solid transparent; background: none; color: var(--tx); font: 700 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.pgn:hover { background: var(--sunk); }
+.pgn:focus { outline: none; background: var(--sunk); border-color: var(--focus); }
+.pgrp .ox { opacity: 0; }
+.pgh:hover .ox, .pc:hover .ox, .pgrp .ox:focus-visible { opacity: 1; }
+.pgrp.arm > .pgh .ox { opacity: 1; color: var(--err); background: rgba(255, 107, 107, .16); animation: nope .4s ease; }
+.prows { display: flex; flex-direction: column; gap: 2px; margin: 2px 0 2px 6px; }
+.pc { display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 2px; border-radius: var(--r); animation: rowIn .25s var(--out) backwards; }
+.pc.flash { animation: lkFlash 1.6s ease; }
+.ppv { width: 18px; height: 18px; flex: none; border-radius: var(--r-s); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); background-image: none; }
+.pc.bad .ppv { box-shadow: inset 0 0 0 1px var(--err); }
+.phx { width: 84px; flex: none; height: 24px; padding: 0 6px; border-radius: var(--r); border: 1px solid transparent; background: transparent; color: var(--tx); font: 12px var(--mono); text-transform: uppercase; }
+.phx:hover { background: var(--sunk); }
+.phx:focus { outline: none; background: var(--sunk); border-color: var(--focus); }
+.pc.bad .phx { color: #FFB3B2; }
+.pnm { flex: 1; min-width: 0; font-size: 11px; color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pc.bad .pnm { color: var(--err); font: 10px var(--mono); }
+.padd { display: inline-flex; align-items: center; gap: 4px; height: 24px; margin-left: 6px; padding: 0 8px 0 4px; border-radius: var(--r); font: 10px var(--mono); color: var(--faint); transition: background .2s, color .2s; }
+.padd:hover { background: #ECFF8C; color: #141416; }
+.padd svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.pfoot { display: flex; align-items: center; gap: 6px; padding-top: 6px; }
+.pfoot .grow { flex: 1; }
+.pnew { margin-left: 0; }

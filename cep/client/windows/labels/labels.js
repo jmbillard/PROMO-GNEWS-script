@@ -21,38 +21,11 @@
 	var S = { colors: [], names: [], saved: null, presets: [], sel: 0, loaded: '', manual: {} };
 
 	/* ---------- color names ----------
-	   nearest name in CIE Lab (ΔE 76) from a short list of plain, recognizable names,
-	   in English like After Effects' own labels */
-	var NAMES = [
-		['red', '#E53935'], ['dark red', '#8B1A1A'], ['crimson', '#C8143C'], ['rose', '#FF5C8A'], ['pink', '#E91E63'], ['light pink', '#F8A5C2'],
-		['fuchsia', '#D81BAA'], ['magenta', '#E040FB'], ['purple', '#9C27B0'], ['deep purple', '#673AB7'], ['violet', '#8F5CE0'], ['lavender', '#B39DDB'],
-		['plum', '#8E4585'], ['mauve', '#C8A2C8'], ['indigo', '#3F51B5'], ['navy', '#1F2A6B'], ['royal blue', '#3A5FE0'], ['blue', '#2196F3'],
-		['steel blue', '#4682B4'], ['light blue', '#4FC3F7'], ['sky blue', '#87CEEB'], ['cyan', '#00BCD4'], ['turquoise', '#40E0D0'], ['aqua', '#7FDBDA'],
-		['teal', '#009688'], ['dark teal', '#0B5E58'], ['sea foam', '#A3D9C0'], ['mint', '#98E8B4'], ['green', '#4CAF50'], ['forest green', '#2E7D32'],
-		['dark green', '#1E401E'], ['light green', '#8BC34A'], ['chartreuse', '#A8E01A'], ['lime', '#CDDC39'], ['olive', '#808000'], ['lemon', '#FFF176'],
-		['yellow', '#FFEB3B'], ['gold', '#E5B80B'], ['amber', '#FFC107'], ['orange', '#FF9800'], ['deep orange', '#FF5722'], ['coral', '#FF7F50'],
-		['salmon', '#FA8072'], ['peach', '#F7C59F'], ['tan', '#D2B48C'], ['sandstone', '#A89677'], ['beige', '#E8DCC4'], ['brown', '#795548'],
-		['dark brown', '#4E342E'], ['rust', '#B7410E'], ['maroon', '#800000'], ['burgundy', '#800020'], ['slate', '#607D8B'], ['black', '#141414'],
-		['pale aqua', '#A9CBC7'], ['pale pink', '#EBC0CC'], ['periwinkle', '#A3A8D6'], ['cornflower', '#6F87E3'], ['straw', '#EAD27F'],
-		['dark gray', '#424242'], ['gray', '#808080'], ['light gray', '#BDBDBD'], ['white', '#F5F5F5']
-	];
-	function lab(c) {
-		var n = parseInt(c.slice(1), 16);
-		var rgb = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v > 0.04045 ? Math.pow((v + 0.055) / 1.055, 2.4) : v / 12.92; });
-		var x = (rgb[0] * 0.4124 + rgb[1] * 0.3576 + rgb[2] * 0.1805) / 0.95047;
-		var y = rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
-		var z = (rgb[0] * 0.0193 + rgb[1] * 0.1192 + rgb[2] * 0.9505) / 1.08883;
-		var f = function (t) { return t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116; };
-		return [116 * f(y) - 16, 500 * (f(x) - f(y)), 200 * (f(y) - f(z))];
-	}
-	NAMES.forEach(function (e) { e.push(lab(e[1])); });
+	   always pt-BR: El Palletero's list (shared/pal-names.js), nearest in CIELAB and never
+	   repeating a name already used by another label */
 	function colorName(c) {
-		var L = lab(c), best = '', d = Infinity;
-		NAMES.forEach(function (e) {
-			var k = Math.pow(L[0] - e[2][0], 2) + Math.pow(L[1] - e[2][1], 2) + Math.pow(L[2] - e[2][2], 2);
-			if (k < d) { d = k; best = e[0]; }
-		});
-		return best;
+		var taken = S.names.filter(function (n, j) { return j !== S.sel; });
+		return window.PalNames ? PalNames.pick(c, taken) : '';
 	}
 
 	apply.insertBefore(UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(UI.I.check)]), apply.firstChild);
@@ -465,8 +438,8 @@
 	});
 
 	// browser preview data
-	var PROMO = { name: 'PROMO GNEWS', colors: ['#F13D3B', '#E71363', '#9A28AE', '#643CB3', '#3F51B3', '#2996EF', '#1BA9F1', '#1EBCD3', '#169688', '#4FAF54', '#8CC351', '#CCDA47', '#FDE94C', '#FBBF2B', '#FD9623', '#FB532D'], names: ['red', 'pink', 'purple', 'deep purple', 'indigo', 'blue', 'light blue', 'cyan', 'teal', 'green', 'light green', 'lime', 'yellow', 'amber', 'orange', 'deep orange'] };
-	var ADOBE = { name: 'After Effects', colors: ['#B53838', '#E4D84C', '#A9CBC7', '#E5BCC9', '#A9A9CA', '#E7C19E', '#B3C7B3', '#677DE0', '#4AA44C', '#8E2C9A', '#E8920D', '#7F452A', '#F46DD6', '#3DA2A5', '#A89677', '#1E401E'], names: ['Red', 'Yellow', 'Aqua', 'Pink', 'Lavender', 'Peach', 'Sea Foam', 'Blue', 'Green', 'Purple', 'Orange', 'Brown', 'Fuchsia', 'Cyan', 'Sandstone', 'Dark Green'] };
+	var PROMO = { name: 'PROMO GNEWS', colors: ['#F13D3B', '#E71363', '#9A28AE', '#643CB3', '#3F51B3', '#2996EF', '#1BA9F1', '#1EBCD3', '#169688', '#4FAF54', '#8CC351', '#CCDA47', '#FDE94C', '#FBBF2B', '#FD9623', '#FB532D'], names: ['vermelho', 'morango', 'púrpura', 'uva', 'cobalto', 'denim', 'céu', 'piscina', 'lagoa', 'bandeira', 'pistache', 'limão', 'banana', 'gema', 'tangerina', 'tomate'] };
+	var ADOBE = { name: 'After Effects', colors: ['#B53838', '#E4D84C', '#A9CBC7', '#E5BCC9', '#A9A9CA', '#E7C19E', '#B3C7B3', '#677DE0', '#4AA44C', '#8E2C9A', '#E8920D', '#7F452A', '#F46DD6', '#3DA2A5', '#A89677', '#1E401E'], names: ['Vermelho', 'Amarelo', 'Água', 'Rosa', 'Lavanda', 'Pêssego', 'Verde-mar', 'Azul', 'Verde', 'Roxo', 'Laranja', 'Marrom', 'Fúcsia', 'Ciano', 'Arenito', 'Verde-escuro'] };
 	PGN.mock('labels.get', function () { return { data: { colors: PROMO.colors, names: PROMO.names, presets: [PROMO, ADOBE] } }; }, 150);
 	var MINE = [];
 	function mockList() { return [PROMO, ADOBE].concat(MINE.map(function (p) { return { name: p.name, colors: p.colors, names: p.names, user: true }; })); }

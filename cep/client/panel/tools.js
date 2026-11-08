@@ -37,9 +37,22 @@
 			.filter(function (g) { return g.length; });
 	};
 
-	function S(hex) {
-		return { id: 'color:' + hex, hostId: 'color', name: hex, hex: hex, swatch: true, sel: 'layers', args: function () { return { hex: hex }; } };
+	function S(hex, name) {
+		return { id: 'color:' + hex, hostId: 'color', name: name ? name + ' · ' + hex : hex, label: name || '', hex: hex, swatch: true, sel: 'layers', alt: 'editar paleta', args: function () { return { hex: hex }; },
+			onAlt: function () { UI.store('paletteFocus', { hex: hex, at: Date.now() }); PGN.open('settings'); PGN.emit('paletteFocus', { hex: hex }); } };
 	}
+
+	// 'Marca': the palette groups from the preferences (host palette.get) → swatches, named in pt-BR
+	window.paletteGroups = function (data) {
+		var taken = [];
+		return (data.groups || []).filter(function (g) { return g.colors && g.colors.length; }).map(function (g) {
+			return g.colors.map(function (hex) {
+				var n = window.PalNames ? PalNames.pick(hex, taken) : '';
+				taken.push(n);
+				return S(hex, n);
+			});
+		});
+	};
 	function P(key) {
 		// value of an inline parameter (right-click stepper)
 		return function () { var o = {}; o[key] = PARAMS[key].get(); return o; };
@@ -63,10 +76,10 @@
 			id: 'ctrl', name: 'Controles', acc: '#DA6877', d: 'M5 5h14v14H5z', a: 'M12 9v6M9 12h6',
 			groups: [
 				[
-					T('null', 'Null parent', 'spin', 'M5 5h14v14H5z', 'M12 8.5v7M8.5 12h7', Object.assign({ args: function (s) { return { keys: !!s.toggles.keys, exp: !!s.toggles.exp }; } }, COMP)),
+					T('null', 'Null pai', 'spin', 'M5 5h14v14H5z', 'M12 8.5v7M8.5 12h7', Object.assign({ args: function (s) { return { keys: !!s.toggles.keys, exp: !!s.toggles.exp }; } }, COMP)),
 					T('nullc', 'Null centralizado', 'pulse', 'M4 4h16v16H4z', 'M12 10a2 2 0 1 0 0 4a2 2 0 1 0 0-4', { sel: 'layers', min: 2 }),
-					T('parent', 'Selecionar parent', 'up', 'M5 15h4v4H5zM15 15h4v4h-4zM7 15v-2h10v2M12 13v-3', 'M9 4h6v6H9z', COMP),
-					T('child', 'Selecionar children', 'down', 'M9 4h6v6H9zM12 10v3M7 15v-2h10v2', 'M5 15h4v4H5zM15 15h4v4h-4z', COMP)
+					T('parent', 'Selecionar pai', 'up', 'M5 15h4v4H5zM15 15h4v4h-4zM7 15v-2h10v2M12 13v-3', 'M9 4h6v6H9z', COMP),
+					T('child', 'Selecionar filhos', 'down', 'M9 4h6v6H9zM12 10v3M7 15v-2h10v2', 'M5 15h4v4H5zM15 15h4v4h-4z', COMP)
 				],
 				[
 					T('tg.keys', 'Null: copiar animação', 'pop', 'M12 5l7 7-7 7-7-7z', '', { toggle: 'keys' }),
@@ -87,10 +100,10 @@
 					T('cols', 'Guia de colunas', 'grow', 'M4 4h16v16H4z', 'M9 6v12M15 6v12', COMP),
 					T('arrow', 'Seta', 'diag', 'M5 19L19 5', 'M10 5h9v9', COMP),
 					T('count', 'Contador', 'blink', 'M3 7h18v10H3z', 'M8 10v4M12 10v4M16 10v4', COMP),
-					T('type', 'Typewriter', 'blink', 'M5 6h10M10 6v12', 'M18 13v6', COMP),
+					T('type', 'Digitação', 'blink', 'M5 6h10M10 6v12', 'M18 13v6', COMP),
 					T('words', 'Palavras', 'slide', 'M4 8h6M4 12h10M4 16h4', 'M12 8h8M10 16h10', COMP),
 					T('box', 'Tarja simples', 'wipe', 'M3 9h18v6H3z', 'M6 12h10', COMP),
-					T('wig', 'Wig', 'wiggle', 'M3 19h18', 'M3 12c2-4 4 4 6 0s4 4 6 0 4 4 6 0', LAY),
+					T('wig', 'Wiggle', 'wiggle', 'M3 19h18', 'M3 12c2-4 4 4 6 0s4 4 6 0 4 4 6 0', LAY),
 					T('ik', 'IK simples (3 layers em ordem)', 'swing', 'M4 20h6', 'M7 20l4-8 7-3M11 12h.01M18 9h.01', { sel: 'layers', min: 3 })
 				]
 			]
@@ -99,7 +112,7 @@
 			id: 'fx', name: 'Efeitos', acc: '#ACCDEC', d: 'M12 3v4M12 17v4M3 12h4M17 12h4', a: 'M12 9l1.2 1.8L15 12l-1.8 1.2L12 15l-1.2-1.8L9 12l1.8-1.2z',
 			groups: [
 				[
-					T('adj', 'Adjustment layer', 'draw', 'M4 4h16v16H4z', 'M4 20L20 4', COMP),
+					T('adj', 'Camada de ajuste', 'draw', 'M4 4h16v16H4z', 'M4 20L20 4', COMP),
 					T('curves', 'Curves', 'draw', 'M4 20h16M4 20V4', 'M4 20C11 20 12 4 20 4', LAY),
 					T('levels', 'Levels', 'grow', 'M4 20h16', 'M7 18v-5M11 18V7M15 18v-8M19 18v-3', LAY),
 					T('lumetri', 'Lumetri Color', 'spin', 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18', 'M12 12V5M12 12l5 5', LAY)
@@ -120,7 +133,7 @@
 		{
 			id: 'txt', name: 'Texto', acc: '#F4E76E', d: 'M5 6h14M12 6v13', a: 'M9 19h6',
 			groups: [
-				[G('up', 'Caixa alta', 'AA', LAY), G('low', 'Caixa baixa', 'aa', LAY), G('tit', 'Title case', 'Aa', LAY)],
+				[G('up', 'Caixa alta', 'AA', LAY), G('low', 'Caixa baixa', 'aa', LAY), G('tit', 'Primeiras maiúsculas', 'Aa', LAY)],
 				[
 					T('clean', 'Limpar espaços e quebras', 'pop', 'M4 7h16M4 12h10M4 17h7', 'M15 15l5 5M20 15l-5 5', LAY),
 					T('split', 'Separar colunas', 'slide', 'M4 6h6M4 10h6M4 14h6M4 18h6', 'M14 6h6M14 10h6M14 14h6M14 18h6', LAY),
@@ -134,13 +147,12 @@
 				[
 					T('pal', 'Paleta em shape layer', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z', COMP),
 					T('onair', 'Seta on-air', 'diag', 'M5 12h11', 'M12 6l6 6-6 6', COMP),
-					T('logo', 'Logo estático', 'pulse', 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16', 'M12 8.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7', COMP),
-					T('logoa', 'Logo animado 3s', 'spin', 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16', 'M12 4a8 8 0 0 1 8 8', COMP)
+					T('logo', 'Logo estática', 'pulse', 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16', 'M12 8.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7', COMP),
+					T('logoa', 'Logo animada 3s', 'spin', 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16', 'M12 4a8 8 0 0 1 8 8', COMP)
 				],
-				['#E53131', '#EEFF8C', '#231E1E'].map(S),
-				['#141414', '#333333', '#4A4A4A', '#B2B2B2', '#F2F2F2'].map(S),
-				['#F23333', '#FF4D4D', '#FF674D', '#FF8F4D', '#FFC44E', '#FF5A67', '#FF739A', '#FF8CCD', '#B5ADFF', '#80C0FF', '#5CE6A1'].map(S)
-			]
+				// + the palette groups (palette.get) — see paletteGroups()
+			],
+			palette: true
 		},
 		{
 			id: 'proj', name: 'Projeto', acc: '#7CC6FE', d: F, a: 'M3 11h18', fields: true,
@@ -176,7 +188,7 @@
 					T('psetup', 'Setup do projeto', 'spin', 'M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6', 'M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1'),
 					T('labels', 'Cores de label', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z', { win: 'labels', alt: 'aplicar o padrão PROMO direto', altRun: true }),
 					T('csetup', 'Setup da comp', 'grow', 'M3 6h18v12H3z', 'M9 9v6M15 9v6', { sel: 'comp', alt: 'vertical' }),
-					T('batch', 'Batch nunca desliga', 'slide', 'M4 6h12v9H4z', 'M8 18h12V9', { job: true })
+					T('batch', 'Lote nunca desliga', 'slide', 'M4 6h12v9H4z', 'M8 18h12V9', { job: true })
 				]
 			]
 		}

@@ -130,7 +130,10 @@
 			'aria-label': tool.name,
 			onclick: function () { activate(tool, sec, false); },
 			oncontextmenu: function (e) { e.preventDefault(); if (tool.alt) activate(tool, sec, true); }
-		}, h('i', { style: { background: tool.hex } }));
+		}, [h('i', { style: { background: tool.hex } }), h('span.snm', { text: tool.label || '' }), h('span.shx', { text: tool.hex })]);
+		// El Palletero look where there is room: the color itself, name + hex inside
+		el.style.setProperty('--c', tool.hex);
+		el.style.setProperty('--ink', window.PalColor ? PalColor.ink(tool.hex) : '#141416');
 		tileById[tool.id] = { el: el, tool: tool };
 		return el;
 	}
@@ -570,6 +573,13 @@
 	}
 
 	// browser preview data (outside After Effects)
+	PGN.mock('palette.get', function () {
+		return { data: { groups: [
+			{ name: 'marca', colors: ['#E53131', '#EEFF8C', '#231E1E'] },
+			{ name: 'neutros', colors: ['#141414', '#333333', '#4A4A4A', '#B2B2B2', '#F2F2F2'] },
+			{ name: 'apoio', colors: ['#F23333', '#FF4D4D', '#FF674D', '#FF8F4D', '#FFC44E', '#FF5A67', '#FF739A', '#FF8CCD', '#B5ADFF', '#80C0FF', '#5CE6A1'] }
+		] } };
+	}, 60);
 	PGN.mock('links.get', function () {
 		return { data: {
 			sites: [{ id: 'od', name: 'OneDrive', glyph: 'OD' }, { id: 'tr', name: 'Trello promo', glyph: 'TR' }, { id: 'ap', name: 'Apontamento', glyph: 'AP' }, { id: 'pl', name: 'Planner', glyph: 'PL' }],
@@ -587,9 +597,21 @@
 	}
 	PGN.on('links', function (d) { loadLinks(d && d.sites ? d : null); });
 
+	// 'Marca': its tools + the palette groups from the preferences
+	function loadPalette(data) {
+		var sec = SECTIONS.filter(function (s) { return s.palette; })[0];
+		if (!sec) return;
+		if (!sec.baseGroups) sec.baseGroups = sec.groups.slice(0);
+		function apply(d) { sec.groups = sec.baseGroups.concat(window.paletteGroups(d)); render(); }
+		if (data) { apply(data); return; }
+		PGN.run('palette.get', {}).then(function (r) { if (r.ok && r.data) apply(r.data); });
+	}
+	PGN.on('palette', function (d) { loadPalette(d && d.groups ? d : null); });
+
 	buildFooter();
 	render();
 	loadLinks();
+	loadPalette();
 	intro();
 
 	// read the real 'show labels' preference once the host is up

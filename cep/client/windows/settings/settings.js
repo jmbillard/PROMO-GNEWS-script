@@ -421,6 +421,7 @@
 				folderRow(I.folder, 'PAM para arte', 'artePath')
 			], d += 40),
 			group('atalhos', [LinksEditor(note, version)], d += 40),
+			group('paleta', [PaletteEditor(note, version)], d += 40),
 			group('painel', [
 				switchRow(IC.labels, 'Rótulos', 'no painel largo', function () { return P.showLabels; }, function (v) { save({ showLabels: v }); }),
 				switchRow(IC.motion, 'Movimento reduzido', null, function () { return !!UI.store('reduced'); }, function (v) {
@@ -474,6 +475,12 @@
 	var MOCK_ORG = { INS: 'CANAL/institucional', DIG: 'CANAL/digital', PIL: 'CANAL/pilula', MKT: 'CANAL/marketing', NDL: 'VINHETAS/nunca desliga', BIP: 'VINHETAS/bip', ASE: 'VINHETAS/a seguir', EMN: 'JORNAIS/edicao da meia noite', EMP: 'JORNAIS/em ponto', CON: 'JORNAIS/conexao', JDE: 'JORNAIS/jornal das dez', ELE: 'FACTUAIS/eleicoes brasil', MUN: 'FACTUAIS/mundo', INT: 'PROGRAMAS/internacional', DOC: 'PROGRAMAS/documentario', MAC: 'MARCA E COMUNICACAO' };
 	PGN.mock('prefs.setOrgFolders', function (a) { var m = Object.assign({}, a.map); Object.keys(MOCK_ORG).forEach(function (k) { if (m[k] == null) m[k] = MOCK_ORG[k]; }); return { msg: 'Pastas de organização salvas', data: { promoSubPath: m, defaults: MOCK_ORG } }; }, 150);
 	PGN.mock('prefs.resetOrgFolders', function () { return { msg: 'Pastas de organização restauradas', data: { promoSubPath: Object.assign({}, MOCK_ORG), defaults: MOCK_ORG } }; }, 150);
+	// 'paleta' (browser preview)
+	var PAL = [{ name: 'marca', colors: ['#E53131', '#EEFF8C', '#231E1E'] }, { name: 'neutros', colors: ['#141414', '#333333', '#4A4A4A', '#B2B2B2', '#F2F2F2'] }, { name: 'apoio', colors: ['#F23333', '#FF4D4D', '#FF674D', '#FF8F4D', '#FFC44E', '#FF5A67', '#FF739A', '#FF8CCD', '#B5ADFF', '#80C0FF', '#5CE6A1'] }];
+	PGN.mock('palette.get', function () { return { data: { groups: JSON.parse(JSON.stringify(PAL)) } }; }, 120);
+	PGN.mock('palette.set', function (a) { return { msg: 'Paleta salva', data: { groups: a.groups } }; }, 120);
+	PGN.mock('palette.reset', function () { return { msg: 'Paleta padrão', data: { groups: JSON.parse(JSON.stringify(PAL)) } }; }, 120);
+
 	// 'atalhos' (browser preview)
 	var LINKS = {
 		sites: [{ id: 'od', name: 'OneDrive', url: 'https://tvglobocorp-my.sharepoint.com/', glyph: 'OD' }, { id: 'tr', name: 'Trello promo', url: 'https://trello.com/promo126/home', glyph: 'TR' }, { id: 'ap', name: 'Apontamento', url: 'https://gglobo-pea-hdg-prd.web.app/#card_view', glyph: 'AP' }, { id: 'pl', name: 'Planner', url: 'https://tasks.office.com/…/Planner', glyph: 'PL' }],

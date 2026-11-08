@@ -129,9 +129,12 @@ PGN.labels = {
 	promo: function () {
 		var colors = [], names = [];
 
+		// names always in pt-BR (the classic set had them in English)
+		var PT = ['vermelho', 'morango', 'p\u00FArpura', 'uva', 'cobalto', 'denim', 'c\u00E9u', 'piscina', 'lagoa', 'bandeira', 'pistache', 'lim\u00E3o', 'banana', 'gema', 'tangerina', 'tomate'];
+
 		for (var i = 1; i <= 16; i++) {
 			colors.push(PGN.labels.decode(labelsObj['l' + i].color));
-			names.push(labelsObj['l' + i].name);
+			names.push(PT[i - 1]);
 		}
 		return { name: 'PROMO GNEWS', colors: colors, names: names };
 	},
@@ -141,7 +144,7 @@ PGN.labels = {
 		return {
 			name: 'After Effects',
 			colors: ['#B53838', '#E4D84C', '#A9CBC7', '#E5BCC9', '#A9A9CA', '#E7C19E', '#B3C7B3', '#677DE0', '#4AA44C', '#8E2C9A', '#E8920D', '#7F452A', '#F46DD6', '#3DA2A5', '#A89677', '#1E401E'],
-			names: ['Red', 'Yellow', 'Aqua', 'Pink', 'Lavender', 'Peach', 'Sea Foam', 'Blue', 'Green', 'Purple', 'Orange', 'Brown', 'Fuchsia', 'Cyan', 'Sandstone', 'Dark Green']
+			names: ['Vermelho', 'Amarelo', '\u00C1gua', 'Rosa', 'Lavanda', 'P\u00EAssego', 'Verde-mar', 'Azul', 'Verde', 'Roxo', 'Laranja', 'Marrom', 'F\u00FAcsia', 'Ciano', 'Arenito', 'Verde-escuro']
 		};
 	}
 };
