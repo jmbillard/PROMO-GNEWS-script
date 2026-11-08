@@ -19,50 +19,52 @@
 
 var vStr = 'v3.0';
 
-(function () {
-	// host folder: given by the loader (PGN_hostState); $.fileName as a fallback
-	var hostFolder = $.global.PGN_HOST_PATH ? new Folder($.global.PGN_HOST_PATH) : new File($.fileName).parent;
-	// sources: <root>/source (network / repository) first, host/src only for a packaged build —
-	// a stale host/src copy must never win over the live source folder
-	var srcFolder = new Folder(hostFolder.fsName + '/../../source');
+// everything runs at the top level, on purpose: ExtendScript's $.evalFile evaluates in the
+// CALLER's scope, so loading the sources from inside a function kept PGN and the classic
+// globals local to it (the loader then saw no PGN, or an old global one)
+var PGN_hostDir = $.global.PGN_HOST_PATH ? new Folder($.global.PGN_HOST_PATH) : new File($.fileName).parent;
+// sources: <root>/source (network / repository) first, host/src only for a packaged build —
+// a stale host/src copy must never win over the live source folder
+var PGN_srcDir = new Folder(PGN_hostDir.fsName + '/../../source');
 
-	if (!new File(srcFolder.fsName + '/globals.js').exists) srcFolder = new Folder(hostFolder.fsName + '/src');
-	if (!new File(srcFolder.fsName + '/globals.js').exists) {
-		// no popup: the page shows it
-		$.global.PGN_BOOT_ERR = 'fontes do script n\u00E3o encontrados: ' + new Folder(hostFolder.fsName + '/../../source').fsName;
-		return;
-	}
-	$.global.PGN_SRC = srcFolder.fsName;
-	$.global.PGN_HOST = hostFolder.fsName;
+if (!new File(PGN_srcDir.fsName + '/globals.js').exists) PGN_srcDir = new Folder(PGN_hostDir.fsName + '/src');
+
+if (!new File(PGN_srcDir.fsName + '/globals.js').exists) {
+	// no popup: the page shows it
+	$.global.PGN_BOOT_ERR = 'fontes do script n\u00E3o encontrados: ' + new Folder(PGN_hostDir.fsName + '/../../source').fsName;
+} else {
+	$.global.PGN_SRC = PGN_srcDir.fsName;
+	$.global.PGN_HOST = PGN_hostDir.fsName;
 
 	// no modal popup while the host loads: globals.js keeps its network warning in PGN_BOOT_MSG
 	// (the panel turns the selection dot red); alert() is also muted as a fallback
-	var bootAlert = $.global.alert;
+	var PGN_bootAlert = $.global.alert;
 
 	try {
 		$.global.alert = function (m) { $.global.PGN_BOOT_MSG = String(m); };
 	} catch (e) { }
 	try {
 		// classic globals + every library (json, functions, expressions, icons, shape templates)...
-		$.evalFile(srcFolder.fsName + '/globals.js');
+		$.evalFile(PGN_srcDir.fsName + '/globals.js');
 
 		// Windows + macOS: network shares, shell commands and Windows-only classic helpers...
-		$.evalFile(hostFolder.fsName + '/platform.jsx');
+		$.evalFile(PGN_hostDir.fsName + '/platform.jsx');
 
 		// CEP core + tools...
-		$.evalFile(hostFolder.fsName + '/core.jsx');
+		$.evalFile(PGN_hostDir.fsName + '/core.jsx');
 
-		var toolFiles = new Folder(hostFolder.fsName + '/tools').getFiles('*.jsx');
+		var PGN_toolFiles = new Folder(PGN_hostDir.fsName + '/tools').getFiles('*.jsx');
 
-		for (var t = 0; t < toolFiles.length; t++) {
+		for (var PGN_t = 0; PGN_t < PGN_toolFiles.length; PGN_t++) {
 			try {
-				$.evalFile(toolFiles[t]);
+				$.evalFile(PGN_toolFiles[PGN_t]);
 			} catch (err) {
-				$.writeln('PGN: failed to load ' + toolFiles[t].name + ' \u2192 ' + err.toString() + ' (line ' + err.line + ')');
+				$.writeln('PGN: failed to load ' + PGN_toolFiles[PGN_t].name + ' \u2192 ' + err.toString() + ' (line ' + err.line + ')');
 			}
 		}
 	} finally {
-		try { $.global.alert = bootAlert; } catch (e) { }
+		try { $.global.alert = PGN_bootAlert; } catch (e) { }
 	}
 	PGN.ready = true;
-})();
+	$.global.PGN = PGN;
+}

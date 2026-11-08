@@ -511,7 +511,8 @@
 		function draw(e) {
 			if (!geo) setup();
 			var p = Math.max(0, Math.min(1, (e.clientX - geo.left) / geo.w));
-			var f = Math.round(p * Math.ceil(window.PGN_LOGO_END * 30));
+			// mouse to the right → back towards the start: the logo moves with the hand, not against it
+			var f = Math.round((1 - p) * Math.ceil(window.PGN_LOGO_END * 30));
 			if (f === last) return;
 			last = f;
 			PGN_LOGO_DRAW(ctx, f / 30, getComputedStyle(logoBtn).color, { cx: geo.cx, cy: geo.cy, scale: geo.k });
