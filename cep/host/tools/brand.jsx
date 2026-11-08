@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · brand
 ---------------------------------------------------------------
 
-  ported from 'source/layout/contents/brand tab.js'.
+  ported from the classic ScriptUI 'brand' tab.
 
     palettes  returns the GNEWS palettes as hex strings
                 data: { main: [...], mono: [...], sec: [...] }

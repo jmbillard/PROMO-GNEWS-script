@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · animation tab (+ tools sub tab)
 ---------------------------------------------------------------
 
-  ported from 'source/layout/contents/animation tab.js'
+  ported from the classic ScriptUI 'animation' tab
 
     inf.read   → copy keyframe influence (stores keyData / ease globals)
     inf.stats  → read-only stats of the selected keyframes

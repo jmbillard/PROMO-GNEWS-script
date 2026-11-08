@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · project tab
 ---------------------------------------------------------------
 
-  port of 'source/layout/contents/project tab.js'.
+  port of the classic ScriptUI 'project' tab.
 
   the classic tab kept the project id / name in two edittext
   widgets (globals projId / projName, mirrored in the project

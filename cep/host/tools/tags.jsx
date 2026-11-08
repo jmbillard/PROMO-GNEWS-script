@@ -7,7 +7,7 @@
 ---------------------------------------------------------------
 
   data backend for the HTML window that replaces the classic
-  'org. tags' dialog ('source/layout/utils/tag ui.js' → tagDialog)
+  'org. tags' dialog (the classic ScriptUI 'tag' dialog → tagDialog)
   with the tag list from 'tagsObj' ('source/globals.js').
 
     tags.list    → groups / tags / what each click does

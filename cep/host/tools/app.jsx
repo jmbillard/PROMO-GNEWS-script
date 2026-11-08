@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · app tab
 ---------------------------------------------------------------
 
-  port of 'source/layout/contents/app tab.js'.
+  port of the classic ScriptUI 'app' tab.
   ('install fonts' is now the fonts window → windows.jsx fonts.*)
 
 */

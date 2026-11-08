@@ -7,7 +7,7 @@
 ---------------------------------------------------------------
 
   data backend for the HTML window that replaces the classic
-  'end page preset' dialog ('source/layout/utils/endPagePreset ui.js'
+  'end page preset' dialog (the classic ScriptUI 'endPagePreset' dialog
   → endPagePresetDialog, + defaultEndPageObj / buildFxObj in FUNC lib).
 
     endp.state       → presets, current, livre, options, schema, target

@@ -1,6 +1,6 @@
 # PROMO GNEWS · extensão CEP
 
-Versão em painel HTML do script, para **After Effects 2022 ou mais recente**, no **Windows e no macOS**. A lógica é a mesma do script ScriptUI (`source/`). A extensão só troca a interface.
+Extensão para **After Effects 2022 ou mais recente**, no **Windows e no macOS**. A interface é HTML (`cep/client`); a lógica roda no After Effects (`cep/host`) e usa as bibliotecas de `source/` (globals, funções, expressões, shape templates e rigs).
 
 ```
 INSTALAR PROMO GNEWS.jsx     instalador da equipe (rodar de dentro do After Effects)
@@ -16,7 +16,9 @@ cep/
   client/panel/              barra em sanfona (tools.js = registro das ferramentas)
   client/windows/*/          janelas próprias
   scripts/                   instaladores de desenvolvimento (macOS / Windows)
-source/                      fontes do script clássico (usados pelo host)
+source/                      globals + bibliotecas usadas pelo host (funções, expressões, shape templates, rigs)
+downloads/                   templates, fontes e presets do AME baixados pelo host quando faltam
+tools/                       build-cep.js (pacote / instalação de dev) · gnews-logo.js (logo animada do painel)
 ```
 
 ## Interface

@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · dev tab (devMode)
 ---------------------------------------------------------------
 
-  port of 'source/layout/contents/dev tab.js'.
+  port of the classic ScriptUI 'dev' tab.
     dev.dark      → convert .png icons to the dark theme (import dialog)
     dev.zipTpl    → zip the templates folder
     dev.zipFonts  → zip the fonts folder

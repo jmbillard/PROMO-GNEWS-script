@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · png preview
 ---------------------------------------------------------------
 
-  port of the 'pngPreviewBtn' handlers ('source/layout/main ui.js').
+  port of the 'pngPreviewBtn' handlers (the classic ScriptUI main window).
 
     · left click  → choose a folder, save '<comp> preview.png', open the folder
     · right click → args.alt: save next to the current project

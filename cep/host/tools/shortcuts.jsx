@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · shortcuts
 ---------------------------------------------------------------
 
-  ported from 'source/layout/contents/shortcuts tab.js'.
+  ported from the classic ScriptUI 'shortcuts' tab.
 
   every tool requires the AE preference
   "Allow Scripts to Write Files and Access Network" (netAccess).

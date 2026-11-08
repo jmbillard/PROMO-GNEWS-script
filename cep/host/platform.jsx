@@ -507,9 +507,7 @@ PGN.net.needs = {
 	collect: ['today', 'proj'],
 	cfonts: ['today', 'proj'],
 	open: ['today', 'proj'],
-	preview: ['todayAlt'],
-	// preferences...
-	'prefs.update': ['archive']
+	preview: ['todayAlt']
 };
 
 PGN.net.need = function (key, args) {

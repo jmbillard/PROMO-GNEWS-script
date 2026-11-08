@@ -32,11 +32,8 @@ var vStr = 'v3.0';
 	$.global.PGN_SRC = srcFolder.fsName;
 	$.global.PGN_HOST = hostFolder.fsName;
 
-	// no modal popup while the host loads: the classic globals.js checks the network share and
-	// would alert 'drive N: is not available' (freezing After Effects over the panel). With
-	// PGN_CEP set it keeps the message in PGN_BOOT_MSG instead, and the panel turns the
-	// selection dot red. (Replacing the global alert() is not honoured by ExtendScript.)
-	$.global.PGN_CEP = true;
+	// no modal popup while the host loads: globals.js keeps its network warning in PGN_BOOT_MSG
+	// (the panel turns the selection dot red); alert() is also muted as a fallback
 	var bootAlert = $.global.alert;
 
 	try {

@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · effects
 ---------------------------------------------------------------
 
-  ported from 'source/layout/contents/effects tab.js'.
+  ported from the classic ScriptUI 'effects' tab.
 
     adj       adjustment layer (shape or solid → global 'adjType' pref)
     curves    ADBE CurvesCustom

@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · text
 ---------------------------------------------------------------
 
-  ported from 'source/layout/contents/text tab.js'.
+  ported from the classic ScriptUI 'text' tab.
 
     up      UPPER CASE
     low     lower case

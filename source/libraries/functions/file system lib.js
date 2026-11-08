@@ -198,7 +198,6 @@ function createPath(path) {
 	return true;
 }
 
-
 function removeFolder(folder) {
 	if (!folder.exists) return;
 
@@ -333,21 +332,6 @@ function saveTextFile(fileContent, filePath) {
 	return writeFileContent(newFile, fileContent);
 }
 
-function fileToBinary(aFile) {
-	aFile.open('r');
-	aFile.encoding = 'binary';
-
-	var bin = aFile.read();
-	var strCode = bin.toSource().toString();
-
-	strCode = strCode.substring(13, strCode.length - 3);
-	aFile.close();
-
-	return '\'' + strCode
-		.replace(/'/g, '\\\'')
-		.replace(/\\"/g, '"') + '\'';
-}
-
 function writeFileContent(newFile, fileContent) {
 	newFile.open('w');
 	newFile.write(fileContent);
@@ -365,48 +349,6 @@ function createPresetFile(tempFolder, fileName, strCode) {
 
 		return aFile;
 	} catch (err) { }
-}
-
-// copy all fonts used in the project...
-function fontCollect(savePath) {
-	savePath += '/fonts'; // collect folder path...
-	var saveFolder = new Folder(savePath); // collect folder...
-	var fontArray = []; // copied fonts array...
-	var failArray = []; // failed copy array...
-	var compArray = getComps(); // all project comps...
-
-	if (!saveFolder.exists) saveFolder.create();
-
-	for (var c = 0; c < compArray.length; c++) {
-		var comp = compArray[c]; // current comp...
-
-		for (var l = 1; l <= comp.numLayers; l++) {
-			var aLayer = comp.layer(l); // current layer...
-
-			if (!(aLayer instanceof TextLayer)) continue;
-			// current text layer...
-			var textDoc = aLayer
-				.property('ADBE Text Properties')
-				.property('ADBE Text Document').value;
-			var fontName = textDoc.font; // font name...
-			var fontSrcFile = new File(decodeURI(textDoc.fontLocation)); // font file...
-
-			if (!fontSrcFile.exists) {
-				if (failArray.indexOf(fontName) < 0) failArray.push(fontName); // no font file...
-				continue;
-			}
-			if (fontArray.indexOf(fontName) > 0) continue; // already copied...
-
-			var fontCopyFile = new File(savePath + '/' + fontSrcFile.displayName);
-
-			fontArray.push(fontName);
-
-			fontSrcFile.copy(fontCopyFile);
-		}
-	}
-	if (saveFolder.getFiles().length == 0) saveFolder.remove();
-
-	if (failArray.length > 0) alert(failArray.toString() + ' cant be copied');
 }
 
 // copy all local files used in the project to PRODUCAO DIA-A-DIA...
@@ -445,48 +387,3 @@ function filesCollectHN(projName, progressWindow) {
 	return savePath;
 }
 
-// copy all files used in the project to the project folder...
-function filesCollectPROMO(projName, progressWindow) {
-	var progressLabel = progressWindow.children[0];
-	var progressBar = progressWindow.children[1];
-
-	progressBar.maxvalue = app.project.numItems;
-
-	if (orgFolders) {
-		var objId = projId.substring(0, 3);
-
-		if (promoSubPath.hasOwnProperty(objId)) projName = promoSubPath[objId] + '/' + projName;
-	}
-	var savePath = projPath + '/' + projName; // collect folder path...
-	var saveFolder = createPathFolders(savePath);
-
-	for (var i = 1; i <= app.project.numItems; i++) {
-		var aItem = app.project.item(i);
-		progressBar.value = i;
-
-		if (!(aItem instanceof FootageItem)) continue;
-		if (aItem.file == null) continue;
-		if (!aItem.file.exists) continue;
-
-		progressLabel.text = 'collecting: ' + aItem.name;
-		progressWindow.update();
-
-		var itemPath = '';
-		var itemFolder = aItem.parentFolder;
-
-		while (itemFolder != app.project.rootFolder) {
-			itemPath = itemFolder.name + '/' + itemPath;
-			itemFolder = itemFolder.parentFolder;
-		}
-		var fileName = decodeURI(aItem.file.name);
-		var filePath = decodeURI(aItem.file.fullName);
-		var newFilePath = [savePath, 'project files', itemPath].join('/');
-
-		if (filePath.match(savePath)) continue;
-
-		copyFile(filePath, newFilePath);
-		var newFile = new File([newFilePath, fileName].join('/'));
-		aItem.replace(newFile);
-	}
-	return savePath;
-}

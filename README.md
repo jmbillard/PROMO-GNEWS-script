@@ -1,13 +1,11 @@
 <!--  linter settings:
 //  jshint -W061 -->
 
-# PROMO GNEWS *script*
+# PROMO GNEWS
 
-**pt-BR** ⚡ algumas ferramentas para melhorar o workflow da equipe de motion em PROMO na ![logo](/images/GNEWS_LOGO%20dark.png)
+**pt-BR** ⚡ extensão do After Effects com as ferramentas da equipe de motion em PROMO na ![logo](/images/GNEWS_LOGO%20dark.png)
 
-## ✨ nova interface · extensão CEP
-
-a barra agora também existe como **extensão do After Effects** (2022 ou mais novo, Windows e macOS): uma barra em sanfona com as mesmas ferramentas e janelas próprias para as tarefas maiores.
+After Effects 2022 ou mais novo, no Windows e no macOS: uma barra em sanfona (vertical ou horizontal) com as ferramentas e janelas próprias para as tarefas maiores.
 
 | barra | curvas | busca | templates | fontes |
 | :---: | :---: | :---: | :---: | :---: |
@@ -17,40 +15,31 @@ a barra agora também existe como **extensão do After Effects** (2022 ou mais n
 | :---: | :---: | :---: | :---: |
 | ![preferências](/images/cep/settings.png) | ![tags](/images/cep/tags.png) | ![end page](/images/cep/endpage.png) | ![labels](/images/cep/labels.png) |
 
-a barra também fica **na horizontal** quando o painel é baixo e largo:
+na horizontal, quando o painel é baixo e largo:
 
 ![barra horizontal](/images/cep/panel-horizontal.png)
 
-para instalar, rode `INSTALAR PROMO GNEWS.jsx` em *File › Scripts › Run Script File…* a partir da pasta do PROMO GNEWS na rede. detalhes em [cep/README.md](/cep/README.md).
+## instalar
 
-> a documentação abaixo ainda descreve o script clássico (ScriptUI). as ferramentas são as mesmas; a nova interface será documentada aos poucos.
+na pasta do PROMO GNEWS na rede, rode `INSTALAR PROMO GNEWS.jsx` em *File › Scripts › Run Script File…*. detalhes, desenvolvimento e estrutura do código em [cep/README.md](/cep/README.md).
 
----
-
-## 📟 layout e interface
-
-![menu](/images/menu.png)
-
-a barra pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.
-a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **ferramentas**...
+## seções
 
 ```markdown
-    - [controles]         →   hierarquias, nulls e afins...
+    - [controles]   →   hierarquias, nulls e afins...
     - [animação]
     - [efeitos]
-    - [texto]             →   manipulação de layers de texto...
-    - [marca]             →   logos, cores e elementos do on-air atual...
-    - [projeto]           →   organiza tudo em pastinhas...
+    - [texto]       →   manipulação de layers de texto...
+    - [marca]       →   logos, cores e elementos do on-air atual...
+    - [projeto]     →   organiza tudo em pastinhas...
     - [atalhos]
-    - templates
-    - busca
-    - preview
-    - [programa]          →   configurações do after, media encoder, fonts, etc...
-    - [dev]               →   ferramentas de desenvolvimento...
-    - [preferencias]      →   preferencias do script...
+    - [programa]    →   configurações do after, media encoder, fontes...
+    - [dev]         →   ferramentas de desenvolvimento...
+    rodapé          →   templates, busca, preview, preferências e seleção atual
 ```
 
-> a *'cor'* da tela inicial e suas seções podem ser alteradas nas *'preferências do script'*...
+> as seções abaixo descrevem cada ferramenta. os ícones são os da primeira versão do script; a ferramenta é a mesma na barra nova.
+
 ---
 
 <br /><br />

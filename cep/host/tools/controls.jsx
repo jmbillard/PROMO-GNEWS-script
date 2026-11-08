@@ -6,7 +6,7 @@
 > PROMO GNEWS · CEP tools · controls tab
 ---------------------------------------------------------------
 
-  ported from 'source/layout/contents/controls tab.js'
+  ported from the classic ScriptUI 'controls' tab
 
     null    → create parent null   (args.keys, args.exp)
     nullc   → centered null

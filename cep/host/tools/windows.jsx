@@ -9,12 +9,12 @@
   data backends for the HTML windows that replace the classic
   ScriptUI dialogs:
 
-    find.*   → 'source/layout/utils/find ui.js'     + buildFindTree
-    tpl.*    → 'source/layout/utils/template ui.js' + buildTree
+    find.*   → the classic ScriptUI 'find' dialog     + buildFindTree
+    tpl.*    → the classic ScriptUI 'template' dialog + buildTree
                (+ importAetBtn bootstrap in 'main ui.js')
-    fonts.*  → 'source/layout/utils/fonts ui.js'    + buildFontTree
+    fonts.*  → the classic ScriptUI 'fonts' dialog    + buildFontTree
                (+ installFontsBtn bootstrap in 'app tab.js')
-    prefs.*  → 'source/layout/utils/prefs ui.js'
+    prefs.*  → the classic ScriptUI 'prefs' dialog
 
 */
 
@@ -789,46 +789,6 @@ PGN.register('prefs.setOrgFolders', function (args) {
 	loadDefaultPrefs(); // → defaults back, then the removed ones dropped again
 
 	return { msg: 'Pastas de organiza\u00E7\u00E3o salvas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defs) } };
-});
-
-// updateBtn: left click → download the latest release | right click → open the github repo...
-PGN.register('prefs.update', function (args) {
-	PGN.win.netFail();
-
-	if (args.alt === true) {
-		openWebSite(repoURL); // → launch internet browser
-		return 'Repositório aberto';
-	}
-	var uiPath = scriptPreferencesPath + '/ScriptUI Panels';
-	var pathArray = [];
-
-	for (var i = 0; i < codeURLArray.length; i++) {
-		pathArray.push(uiPath);
-	}
-	var uiFolder = new Folder(uiPath);
-	// the classic panel lived in 'Scripts/ScriptUI Panels' ($.fileName is this extension here)...
-	var scriptUIPath = PGN.sys.scriptUIFolder(); // Win: Support Files/Scripts · Mac: next to the .app
-	var destPathArray = [
-		scriptUIPath, // → Scripts/Script UiPanels
-		promoArcPath + '/scripts', // → /arquivamento/GLOBONEWS/On Air 2022/Promo/scripts
-		promoInsPath + '/BARRA UTILIDADES PROMO PARA SCRIPT'
-	];
-	removeFolder(uiFolder); // → delete previous download folder
-	uiFolder.create(); // → create new download folder
-
-	getURLContent(codeURLArray, pathArray); // → download files on codeURLArray
-
-	if (homeOffice) copyFolderContentContent(uiPath, destPathArray[0]);
-
-	if (!homeOffice) {
-		try {
-			copyFolderContentContent(uiPath, destPathArray[1]);
-
-		} catch (err) {
-			copyFolderContentContent(uiPath, destPathArray[0]);
-		}
-	}
-	return 'Script atualizado · reinicie o After Effects';
 });
 
 // network status (platform.jsx): offline message, OS, home office...
