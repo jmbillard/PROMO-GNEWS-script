@@ -77,6 +77,9 @@
 		return clone(DEFAULTS);
 	}
 
+	// the saved palette, for other tools (brand.jsx · pal)
+	PGN.palette = { load: load, clean: clean };
+
 	PGN.register('palette.get', function (args) {
 		return { msg: '', data: { groups: load(), defaults: clone(DEFAULTS) } };
 	});

@@ -160,7 +160,7 @@ Selecione layers de texto. Os outros layers da seleção são ignorados.
 
 | | ferramenta | como usar | precisa de |
 | :---: | --- | --- | :---: |
-| <img src="images/doc/icons/brand-pal.png" width="32" alt="Paleta em shape layer"> | **Paleta em shape layer** | Cria um shape layer com as amostras da paleta. Ele entra como guide e travado, só para referência. | comp |
+| <img src="images/doc/icons/brand-pal.png" width="32" alt="Paleta em shape layer"> | **Paleta em shape layer** | Cria um shape layer com a paleta das [preferências](#preferências): uma coluna por grupo, na borda esquerda da comp, e cada amostra com o nome e o hex que aparecem na barra. Ele entra como guide e travado, só para referência. | comp |
 | <img src="images/doc/icons/brand-onair.png" width="32" alt="Seta on-air"> | **Seta on-air** | Cria um shape layer com a seta do on-air. | comp |
 | <img src="images/doc/icons/brand-logo.png" width="32" alt="Logo estática"> | **Logo estática** | Cria a logo GNEWS em shape layer, editável e sem perda de resolução. | comp |
 | <img src="images/doc/icons/brand-logoa.png" width="32" alt="Logo animada 3s"> | **Logo animada 3s** | Cria a logo GNEWS com a animação oficial de 3 s, a partir do tempo atual da comp. | comp |

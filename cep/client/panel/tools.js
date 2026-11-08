@@ -61,16 +61,24 @@
 	}
 
 	// 'Marca': the palette groups from the preferences (host palette.get) → swatches, named in pt-BR
+	// the palette as the bar shows it (names resolved), sent to 'pal'
+	window.PALETTE_NAMED = null;
 	window.paletteGroups = function (data) {
 		var taken = [];
-		return (data.groups || []).filter(function (g) { return g.colors && g.colors.length; }).map(function (g) {
+		var named = [];
+		var out = (data.groups || []).filter(function (g) { return g.colors && g.colors.length; }).map(function (g) {
+			var cols = [];
+			named.push({ name: g.name, colors: cols });
 			return g.colors.map(function (hex, i) {
 				// a name given in the preferences, else the automatic one
 				var n = (g.names && g.names[i]) || (window.PalNames ? PalNames.pick(hex, taken) : '');
 				taken.push(n);
+				cols.push({ hex: hex, name: n });
 				return S(hex, n);
 			});
 		});
+		window.PALETTE_NAMED = named;
+		return out;
 	};
 	function P(key) {
 		// value of an inline parameter (right-click stepper)
@@ -152,7 +160,8 @@
 			id: 'brand', name: 'Marca', acc: '#BBBBBD', d: 'M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-1.5-1-2.5 1-1.5 2-1.5h2a4 4 0 0 0 4-4c0-4.5-4-8-9-8z', a: 'M8 10h.01M12 7h.01M16 10h.01',
 			groups: [
 				[
-					T('pal', 'Paleta em shape layer', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z', COMP),
+					// the palette of the preferences (the same groups, colors and names as the bar)
+					T('pal', 'Paleta em shape layer', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z', { sel: 'comp', args: function () { return window.PALETTE_NAMED ? { groups: window.PALETTE_NAMED } : {}; } }),
 					T('onair', 'Seta on-air', 'diag', 'M5 12h11', 'M12 6l6 6-6 6', COMP),
 					// GNEWS: the globe (circle) and 'news' (rectangle)
 					T('logo', 'Logo estática', '', 'M6.5 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8', 'M13 9.5h8v5h-8z', COMP),
