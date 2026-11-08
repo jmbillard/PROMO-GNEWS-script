@@ -160,8 +160,12 @@ footer { position: relative; }
 .wide .sec:not(.open) .head:hover .k { background: transparent; color: #F2F2F4; }
 .wide .sec:not(.open) .head:hover .name { color: var(--tx); }
 /* the open section's icon: a solid chip in the section color (as in the horizontal bar) */
-.sec.open > .head .k { background: var(--sa); color: var(--sa-ink); }
-.sec.open > .head .k:hover { background: var(--sa); filter: brightness(1.08); }
+/* vertical: the whole head row of the open section in the section color (icon + name, dark ink),
+   square at the bottom where the tools begin */
+.sec.open > .head { background: var(--sa); color: var(--sa-ink); border-radius: var(--r-l) var(--r-l) 0 0; }
+.sec.open > .head .k, .sec.open > .head .k:hover { background: transparent; color: var(--sa-ink); }
+.sec.open > .head .name { color: var(--sa-ink); }
+.sec.open > .head:hover { filter: brightness(1.06); }
 .sec.open { border-radius: var(--r-l); }
 /* long names end with … instead of being cut */
 .list .t { min-width: 0; }
@@ -169,3 +173,5 @@ footer { position: relative; }
 .sec .head .name { flex: 1; min-width: 0; padding-right: 8px; }
 /* logo: a little air around it */
 .logo { height: 40px; }
+/* horizontal keeps its chip (icon only) */
+.horiz .sec.open > .head { background: transparent; border-radius: 0; filter: none; }
