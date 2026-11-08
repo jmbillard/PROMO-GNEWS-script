@@ -64,10 +64,13 @@ if (process.argv.includes('--dev')) {
 	link(CEP, dest);
 	console.log('linked  source → cep/host/src');
 	console.log('linked  cep    → ' + dest);
-	console.log('\nenable unsigned extensions once (CSXS 11):');
-	console.log(process.platform === 'win32'
-		? '  reg add HKCU\\Software\\Adobe\\CSXS.11 /v PlayerDebugMode /t REG_SZ /d 1 /f'
-		: '  defaults write com.adobe.CSXS.11 PlayerDebugMode 1');
+	// AE 2022–2024 read CSXS 11, AE 2025+ CSXS 12 (same range as the installer: 7 to 13)
+	console.log('\nenable unsigned extensions once (CSXS 7 to 13):');
+	for (let v = 7; v <= 13; v++) {
+		console.log(process.platform === 'win32'
+			? '  reg add HKCU\\Software\\Adobe\\CSXS.' + v + ' /v PlayerDebugMode /t REG_SZ /d 1 /f'
+			: '  defaults write com.adobe.CSXS.' + v + ' PlayerDebugMode 1');
+	}
 	console.log('then restart After Effects → Window › Extensions › PROMO GNEWS');
 	process.exit(0);
 }
