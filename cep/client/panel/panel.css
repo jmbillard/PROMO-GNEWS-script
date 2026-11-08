@@ -24,6 +24,8 @@
 .wide .logo .ver { display: inline; }
 
 .hsep { display: block; width: 24px; height: 1px; background: var(--line); margin: 6px 6px; }
+/* with names shown: the separator spans the bar, like the ones between groups */
+.wide .hsep { width: auto; margin: 6px 4px 8px; }
 
 #sections { display: flex; flex-direction: column; gap: 4px; }
 
