@@ -501,7 +501,8 @@
 		oldCkb.enabled = installRdo.value && olds.length > 0;
 	};
 
-	showPage(0);
+	// tudo ok nas checagens? vai direto para instalar / atualizar (‹anterior› ainda mostra a checagem)
+	showPage(runChecks() ? 2 : 0);
 	win.center();
 	win.show();
 })();
