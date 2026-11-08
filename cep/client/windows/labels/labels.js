@@ -7,10 +7,11 @@
   colors are plain '#RRGGBB' here; the host converts them to the
   4-byte string After Effects keeps in its preferences.
 
-  layout: 16 swatches on top · the selected label (name, hex and the
-  color control) below · presets + apply in the footer.
-  the color control is adapted from O PADEIRO (aparência): hue and
-  saturation on a square wheel, brightness on a slider.
+  layout (El Palletero): the 16 labels as swatches (color, number, name,
+  hex); a click opens the editor over the window — saved color | new
+  color with its name, saturation × brightness square, hue bar, hex,
+  × / ✓. Changed labels get the yellow keyframe until 'aplicar'.
+  presets + apply in the footer.
 */
 (function () {
 	'use strict';
@@ -43,7 +44,7 @@
 
 	function sync() {
 		var any = false;
-		$('swatches').querySelectorAll('.sw').forEach(function (b, i) {
+		$('grid').querySelectorAll('.sw').forEach(function (b, i) {
 			var m = modified(i);
 			any = any || m;
 			b.classList.toggle('mod', m);
@@ -52,266 +53,133 @@
 		if (any) note.textContent = 'alterado · aplique para gravar no After Effects';
 	}
 
-	/* ---------- swatches ---------- */
+	/* ---------- grid: the 16 labels as El Palletero swatches (color, number, name, hex) ---------- */
 
 	function swatches() {
-		var box = $('swatches');
-		box.textContent = '';
+		var g = $('grid');
+		g.textContent = '';
 		S.colors.forEach(function (c, i) {
-			box.appendChild(h('button.sw' + (i === S.sel ? '.on' : ''), {
-				role: 'radio', 'aria-checked': String(i === S.sel), 'aria-label': (i + 1) + ' · ' + S.names[i],
-				title: (i + 1) + ' · ' + S.names[i] + ' · ' + c,
-				style: { animationDelay: i * 16 + 'ms' },
-				onclick: function () { select(i); }
-			}));
-			box.lastChild.style.setProperty('--c', c);
+			var b = h('button.sw', {
+				'aria-label': 'Editar label ' + (i + 1) + ' · ' + S.names[i],
+				style: { animationDelay: i * 18 + 'ms' },
+				onclick: function () { open(i); }
+			}, [h('span.ix', { text: i + 1 }), h('span.nm', { text: S.names[i] || '' }), h('span.hx', { text: c }), h('i.kf')]);
+			b.style.setProperty('--c', c);
+			b.style.setProperty('--ink', ink(c));
+			g.appendChild(b);
 		});
+		sync();
 	}
 
-	function select(i) {
-		var prev = S.sel;
+	/* ---------- editor: takes the window (old color | new color + name, SV square, hue bar) ---------- */
+
+	var lw = $('lw'), sv = $('sv'), ring = $('ring'), hue = $('hue'), knob = $('knob'), edHex = $('edHex'), edName = $('edName');
+	var draft = null, hsb = [0, 0, 0];
+
+	function C() { return window.PalColor; }
+	function open(i) {
 		S.sel = i;
-		$('swatches').querySelectorAll('.sw').forEach(function (b, j) {
-			// the one that was selected just shrinks back (no wave on top of it, no delay)
-			var was = j === prev && j !== i;
-			b.style.setProperty('--d', was ? '0ms' : Math.abs(j - i) * 28 + 'ms');
-			b.classList.toggle('on', j === i);
-			b.classList.remove('wave');
-			if (!was && j !== i) { void b.offsetWidth; b.classList.add('wave'); }
-			b.setAttribute('aria-checked', String(j === i));
-		});
+		draft = { hex: S.colors[i], name: S.names[i], manual: !!S.manual[i] };
+		hsb = C().rgbToHsb(C().hexToRgb(draft.hex));
+		var was = S.saved ? S.saved.colors[i] : draft.hex;
+		$('was').style.background = was;
+		$('was').style.color = ink(was);
+		$('edIx').textContent = i + 1;
+		lw.classList.add('editing');
+		editor();
+		setTimeout(function () { $('ok').focus(); }, 30);
+	}
+	function close() {
+		lw.classList.remove('editing');
+		draft = null;
+	}
+	function editor() {
+		if (!draft) return;
+		var c = draft.hex;
+		var now = $('now');
+		now.style.background = c;
+		now.style.color = ink(c);
+		$('ed').style.setProperty('--c', c);
+		$('ed').style.setProperty('--ink', ink(c));
+		if (document.activeElement !== edName) edName.value = draft.name;
+		if (document.activeElement !== edHex) edHex.value = c;
+		$('wand').classList.toggle('on', !draft.manual);
+		sv.style.setProperty('--hue', 'hsl(' + hsb[0] + ',100%,50%)');
+		ring.style.left = hsb[1] + '%';
+		ring.style.top = (100 - hsb[2]) + '%';
+		knob.style.left = (hsb[0] / 360 * 100) + '%';
+	}
+	// a new color: the name follows it unless it was typed by hand
+	function setHex(v) {
+		draft.hex = v;
+		if (!draft.manual) draft.name = colorName(v);
 		editor();
 	}
+	function fromHsb() { setHex(C().rgbToHex(C().hsbToRgb(hsb))); }
 
-	/* ---------- selected label ---------- */
-
-	function setColor(v, from) {
-		var i = S.sel;
-		S.colors[i] = v;
-		var sw = $('swatches').children[i];
-		sw.style.setProperty('--c', v);
-		sw.title = (i + 1) + ' · ' + S.names[i] + ' · ' + v;
-		if (from !== 'hex') $('edHex').value = v;
-		if (from !== 'picker') { hueMem[S.sel] = null; satMem[S.sel] = null; }
-		if (!S.manual[i] && from !== 'revert') {
-			var nm = colorName(v);
-			if (nm !== S.names[i]) setName(nm, true);
-		}
-		if (from === 'revert' && S.saved) setName(S.saved.names[i], true);
-		updatePicker();
-		sync();
-	}
-
-	function setName(v, animate) {
-		var i = S.sel, el = $('edName');
-		S.names[i] = v;
-		$('swatches').children[i].title = (i + 1) + ' · ' + v + ' · ' + S.colors[i];
-		if (el.value !== v) {
-			el.value = v;
-			if (animate) { el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
-		}
-	}
-	function wandState() {
-		var on = !S.manual[S.sel];
-		$('autoName').classList.toggle('on', on);
-		$('autoName').setAttribute('aria-pressed', String(on));
-	}
-
-	function editor() {
-		var i = S.sel;
-		$('edIx').textContent = i + 1;
-		$('edName').value = S.names[i];
-		wandState();
-		$('edHex').value = S.colors[i];
-		$('edHex').classList.remove('bad');
-		renderPicker();
-	}
-
-	// typing takes the name over; the wand gives it back to the color
-	$('edName').addEventListener('input', function () {
-		S.manual[S.sel] = true;
-		wandState();
-		setName(this.value);
-		sync();
-	});
-	UI.add($('autoName'), UI.icon('M4 20L14 10', 'M17 3v4M15 5h4M19 11v2M18 12h2', null));
-	$('autoName').addEventListener('click', function () {
-		var b = this;
-		S.manual[S.sel] = false;
-		wandState();
-		b.classList.remove('go'); void b.offsetWidth; b.classList.add('go');
-		setName(colorName(S.colors[S.sel]), true);
-		sync();
-	});
-	$('edHex').addEventListener('input', function () {
-		var v = hex(this.value);
-		this.classList.toggle('bad', !v && this.value.length >= 4);
-		if (v) setColor(v, 'hex');
-	});
-	$('edHex').addEventListener('blur', function () { this.value = S.colors[S.sel]; this.classList.remove('bad'); });
-	[$('edHex'), $('edName')].forEach(function (el) { el.addEventListener('keydown', function (e) { if (e.key === 'Enter') el.blur(); }); });
-
-	/* ---------- color control (adapted from O PADEIRO · aparência) ----------
-	   the tile: hue is the angle around the center (0° on top = red, clockwise),
-	   saturation is the distance from the center measured "square" (the larger of
-	   x and y), so the whole edge, corners included, is full saturation.
-	   brightness has its own slider. CEP doesn't deliver pointer events: mouse events. */
-
-	var hueMem = {}, satMem = {};
-
-	function hexToHsv(hex) {
-		var r = parseInt(hex.substr(1, 2), 16) / 255, g = parseInt(hex.substr(3, 2), 16) / 255, b = parseInt(hex.substr(5, 2), 16) / 255;
-		var max = Math.max(r, g, b), d = max - Math.min(r, g, b), hh = 0;
-		if (d) {
-			if (max === r) hh = ((g - b) / d) % 6;
-			else if (max === g) hh = (b - r) / d + 2;
-			else hh = (r - g) / d + 4;
-			hh = (hh * 60 + 360) % 360;
-		}
-		return { h: hh, s: max ? d / max * 100 : 0, v: max * 100 };
-	}
-
-	function hsvToHex(hh, sat, val) {
-		var s = sat / 100, v = val / 100, c = v * s, x = c * (1 - Math.abs(((hh / 60) % 2) - 1)), m = v - c, rgb;
-		if (hh < 60) rgb = [c, x, 0];
-		else if (hh < 120) rgb = [x, c, 0];
-		else if (hh < 180) rgb = [0, c, x];
-		else if (hh < 240) rgb = [0, x, c];
-		else if (hh < 300) rgb = [x, 0, c];
-		else rgb = [c, 0, x];
-		return '#' + rgb.map(function (n) { var t = Math.round((n + m) * 255); return (t < 16 ? '0' : '') + t.toString(16); }).join('').toUpperCase();
-	}
-
-	// grey / black colors have no hue (or saturation): keep the last one per label
-	function hueOf(i) {
-		var hsv = hexToHsv(S.colors[i]);
-		if (hsv.s > 0 && hsv.v > 0) hueMem[i] = hsv.h;
-		return hueMem[i] != null ? hueMem[i] : hsv.h;
-	}
-	function satOf(i) {
-		var hsv = hexToHsv(S.colors[i]);
-		if (hsv.v > 0) satMem[i] = hsv.s;
-		return satMem[i] != null ? satMem[i] : hsv.s;
-	}
-
-	var tile = $('tile'), mk = tile.querySelector('.mk'), gx = tile.querySelector('.gx'), gy = tile.querySelector('.gy');
-	var vs = $('vs'), thumb = vs.querySelector('.thumb');
-	var was = $('was'), now = $('now');
-	var INSET = 6, MARK = 7; // tile inner margin · half the marker
-	var markXY = { x: 0, y: 0 };
-
-	// from the center to where the marker touches the inner edge (depends on the window width)
-	function span() { return tile.clientWidth / 2 - INSET - MARK; }
-
-	function renderPicker() { updatePicker(); }
-
-	function placeMarker(hh, sat) {
-		var a = hh * Math.PI / 180, sx = Math.sin(a), sy = -Math.cos(a);
-		var k = span() * Math.max(0, Math.min(100, sat)) / 100 / Math.max(Math.abs(sx), Math.abs(sy), 1e-6);
-		var x = (k * sx).toFixed(1), y = (k * sy).toFixed(1);
-		markXY = { x: k * sx, y: k * sy };
-		mk.style.left = gy.style.left = 'calc(50% + ' + x + 'px)';
-		mk.style.top = gx.style.top = 'calc(50% + ' + y + 'px)';
-	}
-
-	function brightness(v) {
-		var i = S.sel;
-		setColor(hsvToHex(hueOf(i), satOf(i), Math.max(0, Math.min(100, Math.round(v)))), 'picker');
-	}
-
-	var wheelSet = false;
-	function updatePicker() {
-		var i = S.sel, c = S.colors[i], hsv = hexToHsv(c), hh = hueOf(i), v = Math.round(hsv.v);
-		mk.style.setProperty('--c', c);
-		placeMarker(hh, satOf(i));
-		// brightness: the thumb rides the track (top = 100); its value floats beside it
-		thumb.style.top = (100 - v) + '%';
-		$('vtag').style.top = (100 - v) + '%';
-		$('vtag').innerHTML = '<i>brilho</i>' + v;
-		vs.setAttribute('aria-valuenow', String(v));
-		vs.style.setProperty('--track', 'linear-gradient(to top, #000, ' + hsvToHex(hh, satOf(i), 100) + ')');
-		// the inner wheel at the current brightness: hues around, grey in the middle
-		// (built once at full brightness; the brightness itself is a black veil on top)
-		if (!wheelSet) {
-			var stops = [];
-			for (var a = 0; a <= 360; a += 30) stops.push(hsvToHex(a % 360, 100, 100));
-			tile.style.setProperty('--wheel', 'radial-gradient(circle at center, #FFFFFF 0, #FFFFFF 6%, rgba(255,255,255,0) 72%), conic-gradient(' + stops.join(', ') + ')');
-			wheelSet = true;
-		}
-		tile.style.setProperty('--dim', (1 - hsv.v / 100).toFixed(3));
-		if (S.saved) { was.style.background = S.saved.colors[i]; was.style.setProperty('--ink', ink(S.saved.colors[i])); }
-		now.style.background = c;
-		was.classList.toggle('same', !S.saved || S.saved.colors[i] === c);
-		// RGB readout follows the marker
-		var n = parseInt(c.slice(1), 16);
-		var tag = $('rgb');
-		tag.innerHTML = '<b><i>R</i>' + (n >> 16 & 255) + '</b><b><i>G</i>' + (n >> 8 & 255) + '</b><b><i>B</i>' + (n & 255) + '</b>';
-		// diagonal to the marker (clear of both guides), on the side with room
-		var W = tile.clientWidth, Hh = tile.clientHeight, px = W / 2 + markXY.x, py = Hh / 2 + markXY.y;
-		var tw = tag.offsetWidth, th = tag.offsetHeight, gap = MARK + 6;
-		var lx = px + gap + tw <= W - INSET ? px + gap : px - gap - tw;
-		var ly = py + gap + th <= Hh - INSET ? py + gap : py - gap - th;
-		lx = Math.max(INSET + 2, Math.min(W - INSET - 2 - tw, lx));
-		ly = Math.max(INSET + 2, Math.min(Hh - INSET - 2 - th, ly));
-		tag.style.left = Math.round(lx) + 'px';
-		tag.style.top = Math.round(ly) + 'px';
-	}
-
-	// CEP doesn't deliver pointer events: mouse events
+	// CEP doesn't deliver pointer events: mouse events, one update per frame
 	function dragOn(el, onMove) {
 		el.addEventListener('mousedown', function (e) {
 			if (e.button !== 0) return;
 			e.preventDefault();
 			el.classList.add('drag');
-			// one update per frame, however many mousemoves arrive
-			var last = null, raf = 0;
-			var move = function (ev) {
-				last = ev;
-				if (!raf) raf = requestAnimationFrame(function () { raf = 0; onMove(last); });
-			};
+			var last = e, raf = 0;
+			var go = function () { raf = 0; var r = el.getBoundingClientRect(); onMove(Math.max(0, Math.min(1, (last.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (last.clientY - r.top) / r.height))); };
+			var move = function (ev) { last = ev; if (!raf) raf = requestAnimationFrame(go); };
 			var up = function () {
-				if (raf) { cancelAnimationFrame(raf); raf = 0; onMove(last); }
+				if (raf) { cancelAnimationFrame(raf); go(); }
 				el.classList.remove('drag');
 				document.removeEventListener('mousemove', move);
 				document.removeEventListener('mouseup', up);
 			};
 			document.addEventListener('mousemove', move);
 			document.addEventListener('mouseup', up);
-			onMove(e);
+			go();
 		});
 	}
+	dragOn(sv, function (x, y) { hsb[1] = x * 100; hsb[2] = (1 - y) * 100; fromHsb(); });
+	dragOn(hue, function (x) { hsb[0] = x * 360; fromHsb(); });
 
-	// tile: hue = angle around the center (0° on top = red, clockwise), saturation = square distance
-	dragOn(tile, function (e) {
-		var b = tile.getBoundingClientRect(), sp = span();
-		var dx = Math.max(-sp, Math.min(sp, e.clientX - (b.left + b.width / 2)));
-		var dy = Math.max(-sp, Math.min(sp, e.clientY - (b.top + b.height / 2)));
-		var i = S.sel, hsv = hexToHsv(S.colors[i]);
-		var hh = dx || dy ? (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360 : hueOf(i);
-		var sat = Math.max(Math.abs(dx), Math.abs(dy)) / sp * 100;
-		hueMem[i] = hh;
-		satMem[i] = sat;
-		// no brightness = no color: bring some back
-		setColor(hsvToHex(hh, sat, hsv.v < 8 ? 80 : hsv.v), 'picker');
+	edHex.addEventListener('input', function () {
+		var v = hex(this.value);
+		this.classList.toggle('bad', !v && this.value.length >= 4);
+		if (v) { hsb = C().rgbToHsb(C().hexToRgb(v)); setHex(v); }
 	});
-
-	// vertical brightness slider
-	dragOn(vs, function (e) {
-		var b = vs.getBoundingClientRect();
-		brightness(100 - (e.clientY - b.top) / b.height * 100);
+	edHex.addEventListener('blur', function () { if (draft) { this.value = draft.hex; this.classList.remove('bad'); } });
+	// typing takes the name over; the wand gives it back to the color
+	edName.addEventListener('input', function () { draft.manual = true; draft.name = this.value; $('wand').classList.remove('on'); });
+	[edHex, edName].forEach(function (el) { el.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('ok').click(); } if (e.key === 'Escape') close(); }); });
+	UI.add($('wand'), UI.icon('M4 20L14 10', 'M17 3v4M15 5h4M19 11v2M18 12h2', null));
+	$('wand').addEventListener('click', function () {
+		draft.manual = false;
+		draft.name = colorName(draft.hex);
+		var b = this; b.classList.remove('go'); void b.offsetWidth; b.classList.add('go');
+		editor();
 	});
-	vs.addEventListener('keydown', function (e) {
-		var v = Math.round(hexToHsv(S.colors[S.sel]).v), step = e.shiftKey ? 10 : 1;
-		if (e.key === 'ArrowUp' || e.key === 'ArrowRight') { e.preventDefault(); brightness(v + step); }
-		if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') { e.preventDefault(); brightness(v - step); }
+	// the saved color (left): back to it
+	$('was').addEventListener('click', function () {
+		if (!S.saved) return;
+		var i = S.sel;
+		hsb = C().rgbToHsb(C().hexToRgb(S.saved.colors[i]));
+		draft.hex = S.saved.colors[i];
+		draft.name = S.saved.names[i];
+		draft.manual = false;
+		edName.value = draft.name;
+		editor();
 	});
-	vs.addEventListener('wheel', function (e) {
-		e.preventDefault();
-		brightness(Math.round(hexToHsv(S.colors[S.sel]).v) + (e.deltaY < 0 ? 2 : -2));
+	UI.add($('cancel'), UI.icon(UI.I.close));
+	UI.add($('ok'), UI.icon(UI.I.check));
+	$('cancel').addEventListener('click', close);
+	$('ok').addEventListener('click', function () {
+		if (!draft) return;
+		var i = S.sel;
+		S.colors[i] = draft.hex;
+		S.names[i] = draft.name;
+		S.manual[i] = draft.manual;
+		close();
+		swatches();
 	});
-
-	was.addEventListener('click', function () { if (S.saved) setColor(S.saved.colors[S.sel], 'revert'); });
-	window.addEventListener('resize', function () { if (S.colors.length) updatePicker(); });
+	document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lw.classList.contains('editing')) close(); });
 
 	/* ---------- presets ---------- */
 

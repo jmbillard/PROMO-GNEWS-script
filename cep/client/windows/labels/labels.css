@@ -1,85 +1,55 @@
-/* labels: 16 swatches on top · the selected one edited below */
+/* labels (El Palletero): the 16 labels as swatches; the editor takes the window */
 
-.swatches { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px; padding-bottom: 8px; }
-/* almost a vertical toggle: a dark track with the label's color as a rounded block on top,
-   a bit less than half its height; the selected one fills the whole track. On change the
-   fill runs in a cascade out from the selected one */
-.sw { height: 34px; border-radius: var(--r); position: relative; background: #1E1E22; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
-	transition: transform .2s var(--spring); animation: tIn .35s var(--out) backwards; }
-.sw::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 14px; border-radius: var(--r); background: var(--c);
-	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); transition: height .32s var(--spring) var(--d, 0ms); }
-.sw:hover::before { height: 17px; }
-.sw:active { transform: scale(.92); }
-.sw.on::before { height: 100%; }
-/* the wave: each block swells a little as the cascade passes it */
-.sw.wave:not(.on)::before { animation: wave .42s var(--out) var(--d, 0ms) both; }
-@keyframes wave { 45% { height: 22px; } }
-/* modified (not saved yet): the small yellow keyframe */
-.sw::after { content: ''; position: absolute; left: 50%; bottom: -10px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 1px; background: var(--acc); transform: rotate(45deg) scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
-.sw.mod::after { transform: rotate(45deg) scale(1); }
-.sw.on::after { display: none; }
+.lw { flex: 1; min-height: 0; position: relative; }
+.grid4 { position: absolute; inset: 0; padding: 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: 6px; transition: opacity .25s, transform .3s var(--out); }
+.lw.editing .grid4 { opacity: 0; transform: scale(.97); pointer-events: none; }
 
-/* editor: [icon + big nº] [name / tile + brightness] [hex / saved vs new] */
-.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: var(--r-l); padding: 12px 10px 10px; }
-.idcol { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 7px; color: var(--faint); }
-.lic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
-.lic circle { fill: currentColor; stroke: none; }
-.idcol .ix { font: 11px/1 var(--mono); color: currentColor; }
-.editor .nm { height: 30px; font-size: 12px; padding-right: 32px; }
-.nmw { position: relative; min-width: 0; }
-.nm.swap { animation: nmIn .32s var(--out); }
-@keyframes nmIn { from { opacity: 0; transform: translateY(3px); } }
-/* auto name: a small wand inside the field, yellow while the name follows the color */
-.wand { position: absolute; right: 5px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #6E6E78; transition: color .2s, background .2s, transform .25s var(--spring); }
-.wand:hover { color: var(--tx); background: #2A2A2F; }
-.wand:active { transform: scale(.88); }
-.wand.on { color: var(--acc); }
-.wand svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* swatch: the color itself, number + name + hex inside (ink follows the color) */
+.sw { position: relative; min-height: 0; border-radius: var(--r); background: var(--c); color: var(--ink); overflow: hidden; text-align: left;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); transition: transform .25s var(--spring); animation: tIn .35s var(--out) backwards; }
+.sw:hover { transform: translateY(-2px); }
+.sw:active { transform: scale(.96); }
+.sw .ix { position: absolute; right: 6px; top: 5px; font: 9px var(--mono); opacity: .6; }
+.sw .nm { position: absolute; left: 7px; right: 6px; bottom: 17px; font: 700 11px/1.1 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sw .hx { position: absolute; left: 7px; bottom: 5px; font: 9px var(--mono); opacity: .78; }
+/* changed, not applied yet: the small yellow keyframe */
+.sw .kf { position: absolute; right: 6px; bottom: 7px; width: 6px; height: 6px; border-radius: 1px; background: var(--acc); transform: rotate(45deg) scale(0); box-shadow: 0 0 0 1.5px rgba(0, 0, 0, .35); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
+.sw.mod .kf { transform: rotate(45deg) scale(1); }
+
+/* editor */
+.ed { position: absolute; inset: 0; padding: 12px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .25s, transform .3s var(--out); }
+.lw.editing .ed { opacity: 1; transform: none; pointer-events: auto; }
+.ed-head { display: flex; height: 40px; flex: none; border-radius: var(--r); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.ed-was { width: 46px; flex: none; position: relative; }
+.ed-was::after { content: ''; position: absolute; left: 50%; top: 50%; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; background: currentColor; opacity: 0; transition: opacity .2s;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat; }
+.ed-was:hover::after { opacity: .9; }
+.ed-now { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; padding: 0 6px 0 10px; }
+.ed-now .ix { font-size: 10px; opacity: .65; }
+.ed-now input { flex: 1; min-width: 0; height: 28px; border: 0; background: transparent; color: inherit; font: italic 700 13px var(--sans); }
+.ed-now input:focus { outline: none; }
+.wand { width: 24px; height: 24px; flex: none; border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; color: inherit; opacity: .5; transition: opacity .2s, background .2s; }
+.wand.on { opacity: 1; }
+.wand:hover { background: rgba(0, 0, 0, .14); }
+.wand svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 .wand svg .a { transform-box: fill-box; transform-origin: center; }
 .wand.go svg .a { animation: twinkle .45s cubic-bezier(.3, 1.6, .5, 1); }
 @keyframes twinkle { 40% { transform: scale(1.5) rotate(45deg); } }
-.editor .hx { height: 30px; font-size: 11px; text-transform: uppercase; text-align: center; padding: 0 4px; }
-
-.pick { display: flex; gap: 8px; align-items: stretch; }
-
-/* the color tile (adapted from O PADEIRO): hue = angle, saturation = square distance */
-.pk-tile { position: relative; flex: 1; min-width: 0; aspect-ratio: 1 / 1; border-radius: var(--r); cursor: crosshair; overflow: hidden;
-	background: conic-gradient(hsl(0, 95%, 60%), hsl(60, 95%, 55%), hsl(120, 80%, 52%), hsl(180, 90%, 52%), hsl(240, 95%, 64%), hsl(300, 90%, 62%), hsl(360, 95%, 60%)); }
-.pk-tile::before { content: ''; position: absolute; inset: 6px; border-radius: var(--r); background: var(--wheel, transparent); }
-.pk-tile::after { content: ''; position: absolute; inset: 6px; border-radius: var(--r); background: rgba(27, 27, 30, .16); backdrop-filter: blur(18px); }
-.pk-tile .mk { position: absolute; z-index: 2; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; background: var(--c, #fff); box-shadow: 0 0 0 2px #F2F2F4, 0 0 0 3px rgba(0, 0, 0, .45); cursor: grab; transition: transform .2s var(--spring); }
-/* brightness = a black veil over the (static, full-brightness) wheel: only its opacity changes,
-   so dragging the slider never repaints the gradient or the blur */
-.pk-tile .dim { position: absolute; z-index: 1; inset: 6px; border-radius: var(--r); background: #000; opacity: var(--dim, 0); pointer-events: none; }
-.pk-tile .gx, .pk-tile .gy { position: absolute; z-index: 1; background: #F2F2F4; opacity: .5; transition: opacity .2s; pointer-events: none; mix-blend-mode: difference; }
-.pk-tile .gx { left: 6px; right: 6px; height: 1px; margin-top: -.5px; }
-.pk-tile .gy { top: 6px; bottom: 6px; width: 1px; margin-left: -.5px; }
-.pk-tile:hover .gx, .pk-tile:hover .gy { opacity: .75; }
-.pk-tile.drag .gx, .pk-tile.drag .gy { opacity: 1; }
-.pk-tile.drag .mk { transform: scale(1.15); cursor: grabbing; }
-.pk-tile.drag { cursor: grabbing; }
-
-/* floating readouts (RGB on the tile, brightness on the slider) */
-.ftag { position: absolute; z-index: 3; left: 0; top: 0; padding: 4px 6px; border-radius: var(--r); background: rgba(20, 20, 22, .84); color: var(--tx); font-size: 9px; line-height: 1.35; white-space: nowrap; pointer-events: none; transition: opacity .2s; }
-.ftag i { font-style: normal; color: var(--faint); margin-right: 5px; }
-.ftag b { display: block; font-weight: 500; }
-
-/* vertical brightness: thin track, small dark thumb, value floating beside it */
-.pk-vs { position: relative; width: 14px; flex: none; cursor: ns-resize; outline: none; }
-.pk-vs .trk { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; border-radius: var(--r-s); background: var(--track, #34343A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
-.pk-vs .thumb { position: absolute; left: 0; right: 0; height: 8px; margin-top: -4px; top: 50%; border-radius: var(--r-s); background: #18181B; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); transition: transform .2s var(--spring); }
-.pk-vs:hover .thumb, .pk-vs.drag .thumb { transform: scale(1.15, 1.25); }
-.pk-vs:focus-visible .thumb { outline: var(--line-acc); outline-offset: 2px; }
-.vtag { left: auto; right: calc(100% + 6px); opacity: 0; transform: translateY(-50%); transition: opacity .2s; }
-.pk-vs:hover .vtag, .pk-vs.drag .vtag, .pk-vs:focus-visible .vtag { opacity: 1; }
-
-/* saved vs new: its own block under the hex */
-.pk-cmp { display: flex; flex-direction: column; border-radius: var(--r); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
-.pk-cmp .now { flex: 1.6; display: block; }
-.pk-cmp .was { flex: 1; position: relative; cursor: pointer; transition: flex .35s var(--spring); }
-.pk-cmp .was span { position: absolute; left: 6px; bottom: 5px; font: 9px var(--mono); color: var(--ink, #F2F2F4); opacity: .8; transition: opacity .2s; }
-.pk-cmp .was.same { flex: 0; }
-.pk-cmp .was.same span { opacity: 0; }
+.sv { position: relative; flex: 1; min-height: 0; border-radius: var(--r); cursor: crosshair; background: linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, transparent), var(--hue, red); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.sv .ring { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; box-shadow: 0 0 0 2px #F2F2F4, 0 0 0 3px rgba(0, 0, 0, .4); pointer-events: none; }
+.sv.drag .ring { transform: scale(1.15); }
+.hue { position: relative; height: 12px; flex: none; border-radius: 6px; cursor: ew-resize; background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
+.hue .knob { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px #F2F2F4, 0 0 0 3px rgba(0, 0, 0, .4); pointer-events: none; }
+.ed-foot { display: flex; align-items: center; gap: 6px; flex: none; }
+.ed-foot .lbh { font-size: 9px; color: var(--faint); letter-spacing: .1em; }
+.ed-foot .hexf { width: 92px; height: 30px; font-size: 12px; text-transform: uppercase; text-align: center; }
+.ed-foot .hexf.bad { border-color: var(--err); }
+.ed-btn { width: 32px; height: 30px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #A9A9B2; transition: background .2s, color .2s, transform .2s var(--spring), filter .2s; }
+.ed-btn:hover { background: #2A2A2F; color: var(--tx); }
+.ed-btn:active { transform: scale(.9); }
+.ed-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ed-ok, .ed-ok:hover { background: var(--c); color: var(--ink); }
+.ed-ok:hover { filter: brightness(1.08); }
 
 .sel-wrap { position: relative; }
 .sel-wrap::after { content: ''; position: absolute; right: 10px; top: 50%; width: 12px; height: 12px; margin-top: -6px; background: #8E8E98; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; pointer-events: none; }

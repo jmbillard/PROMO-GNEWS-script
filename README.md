@@ -192,7 +192,7 @@ sites e pastas de uso diário — **editáveis** nas preferências (ícone ou 2 
 | <img src="images/cep/tags.png" width="200"> | <img src="images/cep/endpage.png" width="200"> | <img src="images/cep/labels.png" width="200"> | <img src="images/cep/settings.png" width="200"> |
 | tags de organização nos itens do projeto | presets, layout e textos da assinatura | as 16 cores de label, com nome automático e presets próprios | usuário, layers, projeto, pastas, **atalhos** e painel |
 
-**labels** — trocar de cor em cascata, escolher matiz/saturação no quadrado e o brilho no slider:
+**labels** — as 16 cores como amostras (número, nome, hex); clique numa delas e o editor toma a janela: cor gravada à esquerda (clique para voltar a ela), a nova com o nome automático, quadrado de saturação × brilho e barra de matiz. as alteradas ganham o keyframe amarelo até **aplicar**:
 
 ![labels](images/doc/gifs/labels.gif)
 

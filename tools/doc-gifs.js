@@ -101,30 +101,43 @@ const SCENES = {
 		await p.waitForTimeout(500);
 	} },
 	// labels: cascade between swatches, color tile and brightness
-	labels: { w: 340, h: 390, url: 'windows/labels/index.html', async run(p) {
-		await p.waitForTimeout(900);
-		const sw = await p.$$('.sw');
-		let m = [300, 380];
-		for (const i of [5, 11, 2]) { m = await glide(p, m, await center(p, sw[i]), 380); await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(650); }
-		const t = await (await p.$('#tile')).boundingBox();
-		m = await glide(p, m, [t.x + t.width / 2, t.y + t.height / 2], 350);
+	labels: { w: 360, h: 470, url: 'windows/labels/index.html', fps: 15, colors: 128, async run(p) {
+		await p.waitForTimeout(1000);
+		let m = [330, 450];
+		// open label 6: the editor takes the window
+		m = await tap(p, m, () => p.$('#grid .sw:nth-child(6)'));
+		await p.waitForTimeout(600);
+		const sv = await (await p.$('#sv')).boundingBox();
+		m = await glide(p, m, [sv.x + sv.width * .55, sv.y + sv.height * .5], 350);
 		await p.mouse.down();
-		m = await glide(p, m, [t.x + t.width * .8, t.y + t.height * .25], 700);
-		m = await glide(p, m, [t.x + t.width * .3, t.y + t.height * .2], 600);
+		m = await glide(p, m, [sv.x + sv.width * .85, sv.y + sv.height * .2], 600);
 		await p.mouse.up();
-		const v = await (await p.$('#vs')).boundingBox();
-		m = await glide(p, m, [v.x + v.width / 2, v.y + v.height * .3], 350);
+		const hu = await (await p.$('#hue')).boundingBox();
+		m = await glide(p, m, [hu.x + hu.width * .6, hu.y + 6], 350);
 		await p.mouse.down();
-		m = await glide(p, m, [v.x + v.width / 2, v.y + v.height * .7], 700);
+		m = await glide(p, m, [hu.x + hu.width * .1, hu.y + 6], 900);
 		await p.mouse.up();
+		await p.waitForTimeout(400);
+		m = await tap(p, m, () => p.$('#ok'));
 		await p.waitForTimeout(700);
+		// label 12, saved color back with a click on the left
+		m = await tap(p, m, () => p.$('#grid .sw:nth-child(12)'));
+		await p.waitForTimeout(500);
+		const sv2 = await (await p.$('#sv')).boundingBox();
+		m = await glide(p, m, [sv2.x + sv2.width * .3, sv2.y + sv2.height * .6], 400);
+		await p.mouse.down(); m = await glide(p, m, [sv2.x + sv2.width * .5, sv2.y + sv2.height * .35], 500); await p.mouse.up();
+		await p.waitForTimeout(400);
+		m = await tap(p, m, () => p.$('#ok'));
+		await p.waitForTimeout(1200);
 	} },
 	// searchable dropdown (end page)
-	dropdown: { w: 380, h: 330, url: 'windows/endpage/index.html', async run(p) {
+	dropdown: { w: 380, h: 560, url: 'windows/endpage/index.html', async run(p) {
 		await p.waitForTimeout(900);
 		await p.click('#mode button[data-m="extended"]');
 		await p.waitForTimeout(600);
-		const dd = (await p.$$('#form .dd'))[0];
+		// the 'formato' list of the service (its options have [hora])
+		const idx = await p.$$eval('#form .dd', (all) => all.findIndex((d) => [...d.querySelectorAll('option')].some((o) => /hora/.test(o.textContent))));
+		const dd = (await p.$$('#form .dd'))[Math.max(0, idx)];
 		await dd.scrollIntoViewIfNeeded();
 		await p.waitForTimeout(300);
 		let m = await glide(p, [360, 300], await center(p, await dd.$('.dd-btn')), 450);
@@ -249,7 +262,7 @@ const SCENES = {
 		const gif = path.join(OUT, name + '.gif');
 		const start = Math.max(0, (await probe(video)) - dur);
 		// (the recorder captures CSS pixels: the gif keeps the real size)
-		const vf = 'fps=24,split[a][b];[a]palettegen=max_colors=256:stats_mode=diff[p];[b][p]paletteuse=dither=sierra2_4a:diff_mode=rectangle';
+		const vf = 'fps=' + (s.fps || 24) + ',split[a][b];[a]palettegen=max_colors=' + (s.colors || 256) + ':stats_mode=diff[p];[b][p]paletteuse=dither=sierra2_4a:diff_mode=rectangle';
 		execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', String(start), '-i', video, '-vf', vf, '-loop', '0', gif]);
 		console.log(name.padEnd(9), (fs.statSync(gif).size / 1024).toFixed(0) + ' KB', dur.toFixed(1) + 's', errs.length ? errs.join(' | ') : '');
 	}
