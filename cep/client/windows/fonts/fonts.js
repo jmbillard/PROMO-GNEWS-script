@@ -3,7 +3,9 @@
 > PROMO GNEWS · fonts window
 ---------------------------------------------------------------
   host: fonts.list · fonts.install { paths } · fonts.download · fonts.openFolder
-  every family is previewed with its own font file (FontFace + file://)
+  every family (folder) is a group; open it to see each style previewed with its own file
+  (FontFace + file://). The preview text is edited in the field on top or right in any
+  sample (all follow; empty = the style's name), size S/M/L; both are remembered.
 */
 (function () {
 	'use strict';
@@ -12,8 +14,11 @@
 	var $ = function (id) { return document.getElementById(id); };
 	var ACC = '#ECFF8C';
 	var list = $('list'), foot = $('foot'), prog = $('prog'), sample = $('sample');
-	var s = { items: [], picked: {}, q: '', canInstall: true, busy: false };
+	var s = { items: [], picked: {}, open: UI.store('fonts.open') || {}, q: '', canInstall: true, busy: false };
 	var faces = {};
+	var text = UI.store('fonts.text');
+	if (text == null) text = 'GLOBONEWS AO VIVO';
+	sample.value = text;
 
 	UI.add($('dl'), UI.icon(I.cloud, I.cloudDown, 'down'));
 	UI.add($('rf'), UI.icon(I.refresh));
@@ -52,27 +57,57 @@
 		PGN.run('fonts.openFolder', {}).then(function (r) { footer(r.ok ? { msg: r.msg } : { err: r.error }); });
 	});
 	$('q').addEventListener('input', function () { s.q = this.value; render(); });
-	sample.addEventListener('input', function () {
-		list.querySelectorAll('.sample').forEach(function (el) { el.textContent = sample.value || el.dataset.name; });
-	});
+	/* ---------- preview text + size ---------- */
+
+	// the same text everywhere: from the field or typed in any sample
+	function setText(v, from) {
+		text = v;
+		UI.store('fonts.text', v);
+		if (from !== sample) sample.value = v;
+		$('clr').classList.toggle('on', !!v);
+		list.querySelectorAll('.st .s').forEach(function (el) { if (el !== from) el.textContent = v || el.dataset.st; });
+	}
+	sample.addEventListener('input', function () { setText(sample.value, sample); });
+	UI.add($('clr'), UI.icon(I.close));
+	$('clr').addEventListener('click', function () { setText('', null); sample.focus(); });
+	$('clr').classList.toggle('on', !!text);
+	list.addEventListener('input', function (e) { if (e.target.classList.contains('s')) setText(e.target.textContent, e.target); });
+	list.addEventListener('keydown', function (e) { if (e.target.classList.contains('s') && e.key === 'Enter') { e.preventDefault(); e.target.blur(); } });
+	function size(v) {
+		list.classList.remove('size-s', 'size-m', 'size-l');
+		list.classList.add('size-' + v);
+		$('sizes').querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.dataset.s === v); b.setAttribute('aria-checked', String(b.dataset.s === v)); });
+		UI.store('fonts.size', v);
+	}
+	$('sizes').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { size(b.dataset.s); }); });
+	size(UI.store('fonts.size') || 'm');
 
 	function fileURL(p) {
 		return encodeURI('file:///' + String(p).replace(/\\/g, '/').replace(/^\/+/, '')).replace(/#/g, '%23');
 	}
 
-	// load the family's first font file so the row previews itself
-	function preview(it, el) {
-		var file = (it.files || [])[0];
-		if (!file || !window.FontFace) return;
-		var fam = 'pgn-' + it.name.replace(/[^a-z0-9]/gi, '');
+	// 'Degular-BoldItalic.otf' → 'Bold Italic' (the family's own name is dropped)
+	function styleName(file, family) {
+		var n = String(file).replace(/\.[^.]+$/, '');
+		var fam = String(family || '').replace(/[\s_-]+/g, '').toLowerCase();
+		if (n.indexOf('-') >= 0) n = n.slice(n.lastIndexOf('-') + 1);
+		else if (fam && n.replace(/[\s_-]+/g, '').toLowerCase().indexOf(fam) === 0) n = n.slice(fam.length);
+		n = n.replace(/[_]+/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').trim();
+		return n || 'Regular';
+	}
+
+	// one FontFace per file: each sample is drawn with its own file
+	function face(it, file, el) {
+		if (!window.FontFace) return;
+		var fam = 'pgn-' + (it.name + '-' + file).replace(/[^a-z0-9]/gi, '');
 		el.style.fontFamily = '"' + fam + '", var(--sans)';
-		if (faces[fam]) return;
+		if (faces[fam]) { if (faces[fam] === 'err') el.classList.add('miss'); return; }
 		el.classList.add('loading');
 		faces[fam] = new FontFace(fam, 'url("' + fileURL(it.path + '/' + file) + '")');
 		faces[fam].load().then(function (f) {
 			document.fonts.add(f);
 			el.classList.remove('loading');
-		}).catch(function () { el.classList.remove('loading'); });
+		}).catch(function () { faces[fam] = 'err'; el.classList.remove('loading'); el.classList.add('miss'); });
 	}
 
 	function render() {
@@ -85,22 +120,45 @@
 		}
 		var d = 0;
 		items.forEach(function (it) {
-			var on = !!s.picked[it.path];
-			var smp = h('div.sample', { text: sample.value || it.name, 'data-name': it.name });
-			var row = h('button.fam' + (on ? '.on' : ''), {
-				'aria-pressed': String(on), title: it.path,
-				style: { animationDelay: Math.min(d += 25, 500) + 'ms' },
-				onclick: function () {
-					if (s.picked[it.path]) delete s.picked[it.path]; else s.picked[it.path] = true;
-					render(); footer();
-				}
-			}, [
-				h('span.box', null, on ? UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.check)]) : null),
-				h('div.meta', null, [smp, h('div.sub', { text: it.name })]),
-				h('span.n', { text: (it.files || []).length })
+			var on = !!s.picked[it.path], isOpen = !!s.open[it.name];
+			var files = it.files || [];
+			var nm = h('div.nm', { text: it.name });
+			var box = h('span.box', { title: 'selecionar para instalar', role: 'checkbox', 'aria-checked': String(on), 'aria-label': 'Selecionar ' + it.name });
+			var head = h('div.fh', { title: it.path }, [
+				box,
+				h('div.meta', null, [nm, h('div.sub', { text: files.length + (files.length === 1 ? ' estilo' : ' estilos') })]),
+				h('span.n', { text: files.length }),
+				UI.svg('0 0 24 24', { 'aria-hidden': 'true', 'class': 'chev' }, [UI.path('M6 9l6 6 6-6')])
 			]);
-			list.appendChild(row);
-			preview(it, smp);
+			var inner = h('div');
+			var grp = h('div.fam' + (on ? '.on' : '') + (isOpen ? '.open' : ''), { style: { animationDelay: Math.min(d += 25, 500) + 'ms' } }, [head, h('div.styles', null, inner)]);
+			function fill() {
+				if (inner.childNodes.length) return;
+				files.forEach(function (f) {
+					var st = styleName(f, it.name);
+					var smp = h('div.s', { contenteditable: 'true', spellcheck: 'false', text: text || st, 'data-st': st, 'aria-label': 'Texto de preview · ' + st });
+					inner.appendChild(h('div.st', null, [h('div.lb', null, [h('span', { text: st }), h('span.file', { text: f })]), smp]));
+					face(it, f, smp);
+				});
+			}
+			head.addEventListener('click', function (e) {
+				if (e.target === box) {
+					if (s.picked[it.path]) delete s.picked[it.path]; else s.picked[it.path] = true;
+					grp.classList.toggle('on', !!s.picked[it.path]);
+					box.setAttribute('aria-checked', String(!!s.picked[it.path]));
+					footer();
+					return;
+				}
+				s.open[it.name] = !s.open[it.name];
+				if (!s.open[it.name]) delete s.open[it.name];
+				UI.store('fonts.open', s.open);
+				if (s.open[it.name]) fill();
+				grp.classList.toggle('open', !!s.open[it.name]);
+			});
+			if (isOpen) fill();
+			list.appendChild(grp);
+			// the family name in its first file
+			if (files[0]) face(it, files[0], nm);
 		});
 	}
 
@@ -112,15 +170,17 @@
 				UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.download)]), h('span', { text: 'instalar' })
 			]);
 			UI.add(foot, h('div.foot', null, [
-				h('div.meta', null, [h('div.nm', { text: paths.length + (paths.length === 1 ? ' família' : ' famílias') }), h('div.sub', { text: s.canInstall ? 'selecionadas' : 'só no Windows' })]),
+				h('div.meta', null, [h('div.nm', { text: paths.length + (paths.length === 1 ? ' família' : ' famílias') }), h('div.sub', { text: s.canInstall ? (paths.length === 1 ? 'selecionada' : 'selecionadas') : 'só no Windows' })]),
 				h('button.ib', { title: 'limpar seleção', 'aria-label': 'Limpar seleção', onclick: function () { s.picked = {}; render(); footer(); } }, UI.icon(I.close)),
 				btn
 			]));
 			return;
 		}
-		var st = h('div.status', null, h('span', { text: s.items.length + ' famílias' }));
+		var nStyles = s.items.reduce(function (a, it) { return a + (it.files || []).length; }, 0);
+		var label = s.items.length + ' famílias · ' + nStyles + ' estilos';
+		var st = h('div.status', null, h('span', { text: label }));
 		foot.appendChild(st);
-		if (note) UI.note(st.firstChild, note.err || note.msg, !note.err, s.items.length + ' famílias');
+		if (note) UI.note(st.firstChild, note.err || note.msg, !note.err, label);
 	}
 
 	function install() {
@@ -139,7 +199,13 @@
 
 	// browser preview data
 	PGN.mock('fonts.list', function () {
-		return { data: { canInstall: true, items: ['GLOBO TEXTO', 'GLOBO TITULO', 'GLOBONEWS SANS', 'Inter', 'JetBrains Mono'].map(function (n) { return { path: '/f/' + n, name: n, family: n, folder: '', files: ['Regular.otf', 'Bold.otf'] }; }) } };
+		return { data: { canInstall: true, items: [
+			{ n: 'GLOBO TEXTO', f: ['GloboTexto-Regular.otf', 'GloboTexto-Italic.otf', 'GloboTexto-Bold.otf'] },
+			{ n: 'GLOBO TITULO', f: ['GloboTitulo-Light.otf', 'GloboTitulo-Regular.otf', 'GloboTitulo-Black.otf'] },
+			{ n: 'GLOBONEWS SANS', f: ['GlobonewsSans-Regular.otf', 'GlobonewsSans-SemiBold.otf', 'GlobonewsSans-ExtraBoldItalic.otf'] },
+			{ n: 'Inter', f: ['Inter-Regular.ttf', 'Inter-Bold.ttf'] },
+			{ n: 'JetBrains Mono', f: ['JetBrainsMono-Regular.ttf'] }
+		].map(function (x) { return { path: '/f/' + x.n, name: x.n, family: x.n, folder: '', files: x.f }; }) } };
 	}, 300);
 	PGN.mock('fonts.install', function (a) { return { msg: a.paths.length + ' famílias instaladas' }; }, 1400);
 

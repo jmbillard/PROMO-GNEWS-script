@@ -20,10 +20,16 @@
 				<button id="rf" class="ib" title="recarregar" aria-label="Recarregar lista"></button>
 				<button id="fo" class="ib" title="abrir pasta" aria-label="Abrir pasta de fontes"></button>
 			</div>
-			<input id="sample" class="fld" type="text" value="GLOBONEWS AO VIVO" aria-label="Texto de amostra" spellcheck="false">
+			<div class="pv">
+				<div class="pv-in grow">
+					<input id="sample" class="fld" type="text" value="GLOBONEWS AO VIVO" placeholder="texto de preview (vazio: nome do estilo)" aria-label="Texto de preview" spellcheck="false">
+					<button id="clr" class="clr" title="limpar o texto" aria-label="Limpar o texto do preview"></button>
+				</div>
+				<div class="sizes" id="sizes" role="radiogroup" aria-label="Tamanho do preview"><button data-s="s" role="radio" title="pequeno">A</button><button data-s="m" role="radio" title="médio">A</button><button data-s="l" role="radio" title="grande">A</button></div>
+			</div>
 		</div>
 		<div id="prog" class="prog" style="opacity: 0"></div>
-		<div id="list" class="scroll grow" style="flex: 1; padding: 6px 8px 10px"></div>
+		<div id="list" class="scroll grow" style="flex: 1; padding: 4px 8px 10px"></div>
 		<div id="foot"></div>
 	</div>
 	<script src="../../shared/bridge.js"></script>

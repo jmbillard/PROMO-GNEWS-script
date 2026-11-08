@@ -1,16 +1,44 @@
-.fam { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: var(--r); text-align: left; transition: background .15s, transform .2s; animation: rowIn .3s var(--out) backwards; }
-.fam:hover { background: #26262B; transform: translateX(2px); }
-.fam.on { background: #26262B; }
-.box { width: 18px; height: 18px; flex: none; position: relative; }
-.box::before { content: ''; position: absolute; left: 4px; top: 4px; width: 10px; height: 10px; border-radius: var(--r-s); transform: rotate(45deg); box-shadow: inset 0 0 0 1.5px #5A5A63; transition: background .2s, box-shadow .2s; }
-.fam:hover .box::before { box-shadow: inset 0 0 0 1.5px #8E8E98; }
+/* preview text (+ clear ×) and size */
+.pv { display: flex; align-items: center; gap: 6px; }
+.pv-in { position: relative; min-width: 0; }
+.pv-in .fld { height: 32px; font-size: 12px; padding-right: 30px; }
+.pv-in .fld::placeholder { color: var(--faint); }
+.clr { position: absolute; right: 5px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; color: #8E8E98; opacity: 0; pointer-events: none; transform: scale(.7); transition: opacity .2s, transform .25s var(--spring), background .2s, color .2s; }
+.clr.on { opacity: 1; pointer-events: auto; transform: none; }
+.clr:hover { background: #2E2E34; color: var(--tx); }
+.clr svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.sizes { display: flex; background: var(--sunk); border-radius: var(--r); padding: 3px; gap: 2px; flex: none; }
+.sizes button { width: 26px; height: 24px; border-radius: var(--r-s); color: #8E8E98; font-weight: 700; transition: background .2s, color .2s; }
+.sizes button:nth-child(1) { font-size: 9px; } .sizes button:nth-child(2) { font-size: 11px; } .sizes button:nth-child(3) { font-size: 14px; }
+.sizes button.on { background: #3A3A42; color: var(--tx); }
+
+/* family = folder: a group, its styles inside */
+.fam { border-radius: var(--r); margin-bottom: 4px; animation: rowIn .3s var(--out) backwards; }
+.fam.open { background: #222227; }
+.fh { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 8px 8px 10px; border-radius: var(--r); cursor: pointer; transition: background .15s; }
+.fh:hover { background: #26262B; }
+/* selection to install: the keyframe */
+.box { width: 18px; height: 18px; flex: none; position: relative; cursor: pointer; }
+.box::before { content: ''; position: absolute; left: 4px; top: 4px; width: 10px; height: 10px; border-radius: var(--r-s); transform: rotate(45deg); box-shadow: inset 0 0 0 1.5px #5A5A63; transition: background .2s, box-shadow .2s; pointer-events: none; }
+.box:hover::before { box-shadow: inset 0 0 0 1.5px #8E8E98; }
 .fam.on .box::before { background: var(--acc); box-shadow: none; animation: kpop .45s cubic-bezier(.3, 1.6, .5, 1); }
-@keyframes kpop { 0% { transform: rotate(45deg) scale(.5); } 60% { transform: rotate(45deg) scale(1.35); } 100% { transform: rotate(45deg) scale(1); } }
-.box svg { display: none; }
-.box svg path { stroke-dasharray: 24; animation: draw .3s ease backwards; }
-.fam .meta { flex: 1; min-width: 0; }
-.fam .sample { font-size: 18px; line-height: 1.25; color: var(--tx); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .3s; }
-.fam .sample.loading { opacity: .35; }
-.fam .sub { font: 10px var(--mono); color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fam .n { font: 10px var(--mono); color: var(--faint); background: #26262B; padding: 1px 6px; border-radius: var(--r); flex: none; }
+.fh .meta { flex: 1; min-width: 0; }
+.fh .nm { font-size: 18px; line-height: 1.2; color: var(--tx); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .3s; }
+.fh .sub { font: 10px var(--mono); color: var(--faint); margin-top: 1px; }
+.fh .n { font: 10px var(--mono); color: var(--faint); background: #2A2A30; padding: 1px 6px; border-radius: var(--r-s); flex: none; }
+.chev { width: 14px; height: 14px; flex: none; fill: none; stroke: #8E8E98; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--spring); }
+.fam.open .chev { transform: rotate(180deg); }
+.styles { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s cubic-bezier(.3, 1.1, .45, 1); }
+.fam.open .styles { grid-template-rows: 1fr; }
+.styles > div { overflow: hidden; min-height: 0; }
+.st { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px 9px 38px; border-top: 1px solid var(--line); }
+.st .lb { display: flex; align-items: center; gap: 6px; font: 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+.st .lb .file { margin-left: auto; letter-spacing: 0; text-transform: none; opacity: .7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60%; }
+/* the sample: editable right there (the same text for every font) */
+.st .s { color: var(--tx); line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: var(--r-s); outline: none; cursor: text; padding: 1px 2px; margin: 0 -2px; transition: background .15s, opacity .3s; }
+.st .s:hover { background: rgba(255, 255, 255, .04); }
+.st .s:focus { background: var(--sunk); box-shadow: inset 0 0 0 1px var(--focus); white-space: normal; text-overflow: clip; }
+.st .s.loading, .fh .nm.loading { opacity: .35; }
+.st .s.miss { opacity: .5; font-style: italic; }
+.size-s .st .s { font-size: 15px; } .size-m .st .s { font-size: 22px; } .size-l .st .s { font-size: 34px; }
 .btn-1 { color: #141416; }
