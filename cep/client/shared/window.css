@@ -19,3 +19,37 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .btn-1 { background: var(--acc); color: #141416; }
 .prog i { background: var(--acc); }
 .note i { background: var(--acc); }
+
+/* ---------- dropdown (shared/ui.js · UI.dropdown) ---------- */
+.dd { position: relative; width: 100%; }
+.dd-native { position: absolute !important; opacity: 0; pointer-events: none; width: 1px !important; height: 1px !important; left: 0; top: 0; }
+.has-dd::after { display: none !important; }
+.dd-btn { width: 100%; height: 34px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-radius: 4px; background: var(--sunk); border: 1px solid rgba(255, 255, 255, .07); color: var(--tx); font-size: 12px; text-align: left; transition: border-color .2s; }
+.dd-btn:hover { border-color: rgba(255, 255, 255, .16); }
+.dd.ph .dd-lbl { color: var(--faint); }
+.dd-lbl { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dd-chev { width: 12px; height: 12px; flex: none; background: #8E8E98; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1), background .2s; }
+.dd-q { position: absolute; left: 1px; right: 28px; top: 1px; height: 32px; padding: 0 9px; border: 0; background: transparent; color: var(--tx); font-size: 12px; opacity: 0; pointer-events: none; }
+.dd-q:focus { outline: none; }
+.dd-q::placeholder { color: var(--faint); }
+/* the list: the same box stretching down (or up) */
+.dd-pop { position: absolute; left: 0; right: 0; top: calc(100% - 1px); z-index: 30; max-height: 232px; overflow-y: auto; padding: 4px; background: #1E1E22; border: 1px solid var(--acc); border-top: 0; border-radius: 0 0 4px 4px; scrollbar-width: thin;
+	clip-path: inset(0 0 100% 0); visibility: hidden; transition: clip-path .28s cubic-bezier(.3, 1.1, .45, 1), visibility 0s .28s; }
+.dd-pop::-webkit-scrollbar { width: 6px; }
+.dd-pop::-webkit-scrollbar-thumb { background: #36363C; border-radius: 3px; }
+.dd.open { z-index: 30; }
+.dd.open .dd-btn { border-color: var(--acc); border-bottom-color: transparent; border-radius: 4px 4px 0 0; }
+.dd.open .dd-lbl { visibility: hidden; }
+.dd.open .dd-q { opacity: 1; pointer-events: auto; }
+.dd.open .dd-chev { transform: rotate(180deg); background: var(--acc); }
+.dd.open .dd-pop { clip-path: inset(0 0 0 0); visibility: visible; transition: clip-path .28s cubic-bezier(.3, 1.1, .45, 1), visibility 0s; }
+.dd.up .dd-pop { top: auto; bottom: calc(100% - 1px); border-top: 1px solid var(--acc); border-bottom: 0; border-radius: 4px 4px 0 0; clip-path: inset(100% 0 0 0); }
+.dd.up.open .dd-pop { clip-path: inset(0 0 0 0); }
+.dd.up.open .dd-btn { border-radius: 0 0 4px 4px; border-bottom-color: var(--acc); border-top-color: transparent; }
+.dd-it { position: relative; padding: 6px 8px 6px 20px; border-radius: 3px; font-size: 12px; color: var(--tx-2); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dd-it.act { background: #2E2E34; color: var(--tx); }
+/* the current one: GNEWS yellow text + a small keyframe */
+.dd-it.sel { color: var(--acc); }
+.dd-it.sel::before { content: ''; position: absolute; left: 8px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 1px; background: var(--acc); transform: rotate(45deg); }
+.dd-grp { padding: 8px 8px 3px; font: 9px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.dd-none { padding: 8px; font: 10px var(--mono); color: var(--faint); }

@@ -241,5 +241,142 @@
 		]));
 	}
 
-	window.UI = { failState: failState, h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
+	/* ---------- dropdown ----------
+	   every <select class="fld"> in the windows becomes this: the field stretches down
+	   (up when there is no room) into a list, and typing filters it (accent-insensitive).
+	   The native select stays underneath as the source of truth: picking sets its value and
+	   fires 'change', so the pages keep their code. Options/value changed by code are
+	   picked up (MutationObserver + a check on open). Keys: ↑ ↓ Enter Esc. */
+	function dropdown(sel) {
+		if (sel._dd) return;
+		var wrap = sel.parentNode.classList.contains('sel-wrap') ? sel.parentNode : null;
+		var box = h('div.dd');
+		var btn = h('button.dd-btn', { type: 'button', 'aria-haspopup': 'listbox', 'aria-label': sel.getAttribute('aria-label') || '' });
+		var lbl = h('span.dd-lbl');
+		var q = h('input.dd-q', { type: 'text', spellcheck: 'false', 'aria-label': 'buscar', placeholder: 'buscar…' });
+		var pop = h('div.dd-pop', { role: 'listbox' });
+		btn.appendChild(lbl);
+		btn.appendChild(h('i.dd-chev'));
+		box.appendChild(btn);
+		box.appendChild(q);
+		box.appendChild(pop);
+		sel.parentNode.insertBefore(box, sel);
+		box.appendChild(sel);
+		sel.classList.add('dd-native');
+		sel.tabIndex = -1;
+		if (wrap) wrap.classList.add('has-dd');
+		sel._dd = box;
+
+		var items = [], act = -1;
+		function label() {
+			var o = sel.options[sel.selectedIndex];
+			var empty = !o || o.value === '';
+			lbl.textContent = o ? o.text : '';
+			if (empty) { var ph = [].filter.call(sel.options, function (x) { return x.value === ''; })[0]; lbl.textContent = ph ? ph.text : ''; }
+			box.classList.toggle('ph', empty);
+		}
+		function build(filter) {
+			pop.textContent = '';
+			items = [];
+			var f = strip(filter || '').toLowerCase().trim();
+			[].forEach.call(sel.children, function (node) {
+				var group = node.tagName === 'OPTGROUP' ? node : null;
+				var opts = group ? [].slice.call(node.children) : [node];
+				var shown = opts.filter(function (o) { return o.value !== '' && !o.disabled && (!f || strip(o.text).toLowerCase().indexOf(f) >= 0); });
+				if (!shown.length) return;
+				if (group) pop.appendChild(h('div.dd-grp', { text: group.label }));
+				shown.forEach(function (o) {
+					var it = h('div.dd-it' + (o.selected && o.value !== '' ? '.sel' : ''), { role: 'option', text: o.text });
+					it.addEventListener('mousedown', function (e) { e.preventDefault(); pick(o); });
+					it.addEventListener('mousemove', function () { focusItem(items.indexOf(it)); });
+					it._o = o;
+					items.push(it);
+					pop.appendChild(it);
+				});
+			});
+			if (!items.length) pop.appendChild(h('div.dd-none', { text: 'nada encontrado' }));
+			focusItem(Math.max(0, items.findIndex(function (x) { return x.classList.contains('sel'); })));
+		}
+		function focusItem(i) {
+			if (act >= 0 && items[act]) items[act].classList.remove('act');
+			act = i;
+			var it = items[act];
+			if (!it) return;
+			it.classList.add('act');
+			var top = it.offsetTop, bottom = top + it.offsetHeight;
+			if (top < pop.scrollTop) pop.scrollTop = top - 4;
+			else if (bottom > pop.scrollTop + pop.clientHeight) pop.scrollTop = bottom - pop.clientHeight + 4;
+		}
+		function pick(o) {
+			sel.value = o.value;
+			label();
+			close();
+			sel.dispatchEvent(new Event('change', { bubbles: true }));
+		}
+		function openIt() {
+			if (box.classList.contains('open')) return;
+			label();
+			q.value = '';
+			build('');
+			// down by default — the scroll area scrolls to show it; up only when not even scrolling
+			// gives the room (e.g. a fixed footer)
+			var r = box.getBoundingClientRect(), need = Math.min(232, items.length * 26 + 12) + 8;
+			var sc = box.parentNode, room = window.innerHeight - r.bottom, top = r.top;
+			while (sc && sc !== document.body) {
+				var ov = getComputedStyle(sc).overflowY;
+				if (ov === 'auto' || ov === 'scroll') {
+					var sr = sc.getBoundingClientRect();
+					room = sr.bottom - r.bottom + (sc.scrollHeight - sc.scrollTop - sc.clientHeight);
+					top = r.top - sr.top + sc.scrollTop;
+					break;
+				}
+				sc = sc.parentNode;
+			}
+			box.classList.toggle('up', room < need && top > room);
+			box.classList.add('open');
+			setTimeout(function () {
+				q.focus();
+				if (!box.classList.contains('up') && pop.scrollIntoView) pop.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+			}, 30);
+			document.addEventListener('mousedown', outside, true);
+		}
+		function close() {
+			box.classList.remove('open');
+			document.removeEventListener('mousedown', outside, true);
+		}
+		function outside(e) { if (!box.contains(e.target)) close(); }
+
+		btn.addEventListener('click', function () { if (box.classList.contains('open')) close(); else openIt(); });
+		btn.addEventListener('keydown', function (e) {
+			if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openIt(); }
+			else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey) { openIt(); q.value = e.key; build(q.value); e.preventDefault(); }
+		});
+		q.addEventListener('input', function () { build(q.value); });
+		q.addEventListener('keydown', function (e) {
+			if (e.key === 'ArrowDown') { e.preventDefault(); focusItem(Math.min(items.length - 1, act + 1)); }
+			else if (e.key === 'ArrowUp') { e.preventDefault(); focusItem(Math.max(0, act - 1)); }
+			else if (e.key === 'Enter') { e.preventDefault(); if (items[act]) pick(items[act]._o); }
+			else if (e.key === 'Escape' || e.key === 'Tab') { close(); btn.focus(); }
+		});
+		new MutationObserver(function () { label(); if (box.classList.contains('open')) build(q.value); })
+			.observe(sel, { childList: true, subtree: true, attributes: true, attributeFilter: ['selected'] });
+		sel.addEventListener('change', label);
+		// value set by code (no event): keep the label honest
+		setInterval(function () { if (!box.classList.contains('open') && document.body.contains(sel)) label(); }, 600);
+		label();
+	}
+	function upgradeSelects(root) {
+		[].forEach.call((root || document).querySelectorAll('select.fld'), dropdown);
+	}
+	if (!document.body || !document.body.classList.contains('panel-page')) {
+		var startDD = function () {
+			upgradeSelects(document);
+			new MutationObserver(function (ms) {
+				ms.forEach(function (m) { [].forEach.call(m.addedNodes, function (n) { if (n.nodeType !== 1) return; if (n.matches && n.matches('select.fld')) dropdown(n); else if (n.querySelectorAll) upgradeSelects(n); }); });
+			}).observe(document.body, { childList: true, subtree: true });
+		};
+		if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startDD); else startDD();
+	}
+
+	window.UI = { dropdown: dropdown, failState: failState, h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
 })();
