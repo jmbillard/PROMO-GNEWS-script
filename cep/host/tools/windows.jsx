@@ -629,6 +629,34 @@ PGN.prefs = {
 	}
 };
 
+// the classic ScriptUI bar still installed? (it shows its own 'drive N' popup at every start)
+PGN.win.oldScripts = function () {
+	var names = ['PROMO GNEWS.jsxbin', 'PROMO GNEWS.jsx', 'PROMO GNEWS.js', 'PROMO GNEWS DEV.jsx', 'PROMO GNEWS DEV.js'];
+	var dirs = [Folder.appPackage.fsName + '/Scripts/ScriptUI Panels', Folder.appPackage.fsName + '/Scripts/Startup'];
+	var found = [];
+
+	try {
+		var base = Folder.userData.fsName;
+
+		if (appOs == 'Mac') base = base.replace(/Application Support$/, 'Preferences');
+		var ae = new Folder(base + '/Adobe/After Effects').getFiles();
+
+		for (var v = 0; v < ae.length; v++) {
+			if (!(ae[v] instanceof Folder)) continue;
+			dirs.push(ae[v].fsName + '/Scripts/ScriptUI Panels');
+			dirs.push(ae[v].fsName + '/Scripts/Startup');
+		}
+	} catch (e) { }
+	for (var d = 0; d < dirs.length; d++) {
+		for (var n = 0; n < names.length; n++) {
+			var f = new File(dirs[d] + '/' + names[n]);
+
+			if (f.exists) found.push(f.fsName);
+		}
+	}
+	return found;
+};
+
 PGN.register('prefs.get', function (args) {
 	var data = PGN.win.clone(JSONPrefsObj);
 
@@ -643,6 +671,7 @@ PGN.register('prefs.get', function (args) {
 	data.netAccess = netAccess() ? true : false;
 	data.os = appOs;
 	data.netOffline = PGN.net.offline || $.global.PGN_BOOT_MSG || '';
+	data.oldScripts = PGN.win.oldScripts();
 
 	return { msg: '', data: data };
 });

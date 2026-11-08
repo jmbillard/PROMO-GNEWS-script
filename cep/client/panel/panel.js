@@ -482,7 +482,8 @@
 	var logoBtn = document.getElementById('logo');
 	if (window.PGN_LOGO_SVG) { logoBtn.appendChild(PGN_LOGO_SVG('globo')); logoBtn.appendChild(PGN_LOGO_SVG('full')); }
 
-	// network share offline: the selection chip's dot turns red, the message goes in its tooltip
+	// warnings (network share offline, old ScriptUI bar installed): the selection chip's dot turns red,
+	// the message goes in its tooltip
 	// (no popup, no toast)
 	function netDot(msg) {
 		state.netOff = msg || '';
@@ -527,7 +528,11 @@
 		if (!r || !r.ok) { if (r && r.error) feedback(r.error, false); return; }
 		if (!r.data) return;
 		// network share offline (home office suggested): warn once, without blocking
-		netDot(r.data.netOffline);
+		var warn = [];
+		if (r.data.netOffline) warn.push(r.data.netOffline);
+		// the classic ScriptUI bar still installed: it pops 'drive N: is not available' by itself
+		if (r.data.oldScripts && r.data.oldScripts.length) warn.push('barra antiga (ScriptUI) ainda instalada · rode o instalador e marque \u201cremover o script antigo\u201d\n' + r.data.oldScripts.join('\n'));
+		netDot(warn.join('\n'));
 		if (r.data.showLabels != null && UI.store('labels') === undefined) {
 			state.labels = !!r.data.showLabels;
 			metrics();

@@ -40,7 +40,7 @@
 	var sources = new Folder(here.fsName + '/source');
 	var userData = Folder.userData.fsName; // macOS: ~/Library/Application Support | Windows: %APPDATA%
 	var dest = new Folder(userData + '/Adobe/CEP/extensions/' + EXT_ID);
-	var OLD_NAMES = ['PROMO GNEWS.jsxbin', 'PROMO GNEWS.jsx', 'PROMO GNEWS DEV.jsx'];
+	var OLD_NAMES = ['PROMO GNEWS.jsxbin', 'PROMO GNEWS.jsx', 'PROMO GNEWS.js', 'PROMO GNEWS DEV.jsx', 'PROMO GNEWS DEV.js'];
 
 	/* ---------------------------------------------------------------
 	   checagens
@@ -175,9 +175,9 @@
 		}
 	}
 
-	// o script antigo ficava nas pastas 'ScriptUI Panels' (do app e das preferências de cada versão)
+	// o script antigo ficava nas pastas 'ScriptUI Panels' ou 'Startup' (do app e das preferências de cada versão)
 	function oldScriptFolders() {
-		var list = [new Folder(Folder.appPackage.fsName + '/Scripts/ScriptUI Panels')];
+		var list = [new Folder(Folder.appPackage.fsName + '/Scripts/ScriptUI Panels'), new Folder(Folder.appPackage.fsName + '/Scripts/Startup')];
 		var prefsBase = IS_MAC ? userData.replace(/Application Support$/, 'Preferences') : userData;
 		var aeFolder = new Folder(prefsBase + '/Adobe/After Effects');
 
@@ -185,7 +185,9 @@
 			var versions = aeFolder.getFiles();
 
 			for (var i = 0; i < versions.length; i++) {
-				if (versions[i] instanceof Folder) list.push(new Folder(versions[i].fsName + '/Scripts/ScriptUI Panels'));
+				if (!(versions[i] instanceof Folder)) continue;
+				list.push(new Folder(versions[i].fsName + '/Scripts/ScriptUI Panels'));
+				list.push(new Folder(versions[i].fsName + '/Scripts/Startup'));
 			}
 		}
 		return list;
