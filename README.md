@@ -5,6 +5,24 @@
 
 **pt-BR** ⚡ algumas ferramentas para melhorar o workflow da equipe de motion em PROMO na ![logo](/images/GNEWS_LOGO%20dark.png)
 
+## ✨ nova interface · extensão CEP
+
+a barra agora também existe como **extensão do After Effects** (2022 ou mais novo, Windows e macOS): uma barra em sanfona com as mesmas ferramentas e janelas próprias para as tarefas maiores.
+
+| barra | curvas | busca | templates | fontes |
+| :---: | :---: | :---: | :---: | :---: |
+| ![barra](/images/cep/panel-wide.png) | ![curvas](/images/cep/curves.png) | ![busca](/images/cep/search.png) | ![templates](/images/cep/templates.png) | ![fontes](/images/cep/fonts.png) |
+
+| preferências | tags | end page | labels |
+| :---: | :---: | :---: | :---: |
+| ![preferências](/images/cep/settings.png) | ![tags](/images/cep/tags.png) | ![end page](/images/cep/endpage.png) | ![labels](/images/cep/labels.png) |
+
+para instalar, rode `INSTALAR PROMO GNEWS.jsx` em *File › Scripts › Run Script File…* a partir da pasta do PROMO GNEWS na rede. detalhes em [cep/README.md](/cep/README.md).
+
+> a documentação abaixo ainda descreve o script clássico (ScriptUI). as ferramentas são as mesmas; a nova interface será documentada aos poucos.
+
+---
+
 ## 📟 layout e interface
 
 ![menu](/images/menu.png)

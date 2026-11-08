@@ -19,10 +19,30 @@ cep/
 source/                      fontes do script clássico (usados pelo host)
 ```
 
+## Interface
+
+| barra (fechada · aberta) | | curvas | busca | templates |
+| :---: | :---: | :---: | :---: | :---: |
+| ![barra](../images/cep/panel.png) | ![barra aberta](../images/cep/panel-wide.png) | ![curvas](../images/cep/curves.png) | ![busca](../images/cep/search.png) | ![templates](../images/cep/templates.png) |
+
+| fontes | preferências | tags | end page | labels |
+| :---: | :---: | :---: | :---: | :---: |
+| ![fontes](../images/cep/fonts.png) | ![preferências](../images/cep/settings.png) | ![tags](../images/cep/tags.png) | ![end page](../images/cep/endpage.png) | ![labels](../images/cep/labels.png) |
+
+- **Barra:** sanfona vertical com as seções do script. Tarefas longas mostram o progresso na própria barra.
+- **Curvas:** edita a curva de easing e aplica com keyframes ou por expressão (mesma curva).
+- **Busca, templates, fontes:** listas com filtro. A seleção é marcada pelo keyframe amarelo.
+- **Preferências:** usuário, layers, projeto (pastas de organização num editor de árvore) e modos.
+- **Tags:** marca layers e comps para a organização do projeto.
+- **End page:** presets, layout e textos da end page.
+- **Labels:** as 16 cores dos labels de layer, com seletor de cor, nome automático pela cor e presets próprios (salvos em `labels presets.json`, na pasta de preferências do script).
+
+Visual: fundo escuro, amarelo GNEWS (`#ECFF8C`) como único destaque, seleção e foco em linhas finas, sem brilhos nem gradientes. Os prints acima foram tirados no navegador com dados simulados (`PGN.mock`).
+
 ## Instalar (equipe)
 
 1. Na pasta do PROMO GNEWS na rede (a mesma estrutura deste repositório, com `cep/` e `source/`), abra o After Effects e vá em *File › Scripts › Run Script File…*.
-2. Escolha `INSTALAR PROMO GNEWS.jsx` e siga o passo a passo.
+2. Escolha `INSTALAR PROMO GNEWS.jsx`. Se tudo estiver ok, ele abre direto em *instalar* / *atualizar*. Se não, mostra o que falta.
 3. Reinicie o After Effects e abra *Window › Extensions › PROMO GNEWS*.
 
 O instalador faz três coisas:
