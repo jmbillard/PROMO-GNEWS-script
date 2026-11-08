@@ -92,3 +92,19 @@ footer { position: relative; }
 .sel .pct { font-size: 10px; color: var(--tx); animation: pop .4s cubic-bezier(.3, 1.6, .5, 1); }
 .jobbing .sel { background: #26262B; }
 .joblbl { display: block; padding: 6px 0 2px; font: 11px var(--mono); color: var(--tx-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: hintIn .3s ease backwards; }
+
+/* ---------- horizontal bar (short and wide panel) ---------- */
+.horiz { flex-direction: row; }
+.horiz #scroll { display: flex; align-items: center; gap: 2px; overflow-x: auto; overflow-y: hidden; padding: 10px 6px 10px 10px; min-width: 0; }
+.horiz .hsep { width: 1px; height: 24px; margin: 0 6px; flex: none; }
+.horiz .logo { flex: none; }
+.horiz #sections { flex-direction: row; align-items: center; flex: none; }
+.horiz .sec { flex: none; }
+.horiz .sec.open { display: flex; align-items: center; padding: 0 6px 0 0; animation-name: accInX; }
+.horiz .groups { display: flex; align-items: center; }
+.horiz .grid { grid-auto-flow: column; grid-auto-columns: 36px; padding: 0 0 0 2px; }
+.horiz .sep { width: 1px; height: 24px; margin: 0 4px; flex: none; }
+.horiz .param { grid-column: auto; grid-row: 1 / -1; flex-direction: column; margin: 0 2px; }
+.horiz footer { flex-wrap: nowrap; align-items: center; padding: 10px 10px 10px 8px; border-top: 0; border-left: 1px solid var(--line); }
+.horiz .jobbar { top: auto; bottom: 0; }
+@keyframes accInX { from { max-width: 36px; } to { max-width: 1600px; } }

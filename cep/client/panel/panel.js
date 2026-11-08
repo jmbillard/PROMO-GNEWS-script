@@ -39,17 +39,23 @@
 
 	/* ---------- layout ---------- */
 
+	// short and wide (docked along the top or bottom of the workspace): everything in one row,
+	// the open section unfolds to the right in as many 36px rows as the height allows
 	function metrics() {
-		var w = window.innerWidth;
+		var w = window.innerWidth, hgt = window.innerHeight;
+		var horiz = hgt < 260 && w > hgt * 1.4;
 		state.width = w;
-		app.classList.toggle('wide', w >= 150);
-		app.classList.toggle('roomy', w >= 110);
-		app.classList.toggle('list', state.labels && w >= 150);
+		app.classList.toggle('horiz', horiz);
+		app.classList.toggle('wide', !horiz && w >= 150);
+		app.classList.toggle('roomy', !horiz && w >= 110);
+		app.classList.toggle('list', !horiz && state.labels && w >= 150);
 		app.classList.toggle('reduced', state.reduced);
 		var cols = Math.max(1, Math.floor((w - 20 + 2) / 38));
+		var rows = Math.max(1, Math.floor((hgt - 20 + 2) / 38));
 		nav.querySelectorAll('.grid').forEach(function (g) {
 			var list = app.classList.contains('list') && !g.classList.contains('swatches');
-			g.style.gridTemplateColumns = list ? '1fr' : 'repeat(' + cols + ', 36px)';
+			g.style.gridTemplateColumns = horiz ? '' : (list ? '1fr' : 'repeat(' + cols + ', 36px)');
+			g.style.gridTemplateRows = horiz ? 'repeat(' + rows + ', 36px)' : '';
 		});
 	}
 
@@ -134,7 +140,7 @@
 		// keep the opened block in view
 		if (state.open) {
 			var el = nav.querySelector('.sec.open');
-			if (el && el.scrollIntoView) setTimeout(function () { el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }, 60);
+			if (el && el.scrollIntoView) setTimeout(function () { el.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' }); }, 60);
 		}
 	}
 
@@ -461,6 +467,12 @@
 	});
 
 	window.addEventListener('resize', metrics);
+	// horizontal bar: the mouse wheel scrolls sideways
+	document.getElementById('scroll').addEventListener('wheel', function (e) {
+		if (!app.classList.contains('horiz') || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+		e.preventDefault();
+		this.scrollLeft += e.deltaY;
+	}, { passive: false });
 	document.addEventListener('visibilitychange', function () { if (!document.hidden) pollStatus(); });
 	document.getElementById('logo').addEventListener('click', function () { PGN.openURL('https://github.com/jmbillard/PROMO-GNEWS-script'); });
 

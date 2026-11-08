@@ -29,7 +29,9 @@ source/                      fontes do script clássico (usados pelo host)
 | :---: | :---: | :---: | :---: | :---: |
 | ![fontes](../images/cep/fonts.png) | ![preferências](../images/cep/settings.png) | ![tags](../images/cep/tags.png) | ![end page](../images/cep/endpage.png) | ![labels](../images/cep/labels.png) |
 
-- **Barra:** sanfona vertical com as seções do script. Tarefas longas mostram o progresso na própria barra.
+- **Barra:** sanfona com as seções do script. Fica na vertical ou, quando o painel é baixo e largo, na horizontal (a seção aberta se desdobra para a direita). Tarefas longas mostram o progresso na própria barra.
+
+  ![barra horizontal](../images/cep/panel-horizontal.png)
 - **Curvas:** edita a curva de easing e aplica com keyframes ou por expressão (mesma curva).
 - **Busca, templates, fontes:** listas com filtro. A seleção é marcada pelo keyframe amarelo.
 - **Preferências:** usuário, layers, projeto (pastas de organização num editor de árvore) e modos.
