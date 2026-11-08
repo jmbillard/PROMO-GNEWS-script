@@ -19,35 +19,6 @@
 
 var vStr = 'v3.0';
 
-// evaluates a classic source with its alert() calls turned into PGN_bootAlert() — the classic
-// globals.js alerts 'drive N: is not available' while loading, and replacing the global alert
-// function is not enough in ExtendScript. The patched text goes to a temp file with an
-// #includepath to the original folder, so its #include lines still resolve. If the temp copy
-// can't be written, the original file is evaluated as is.
-function PGN_evalQuiet(file, folder) {
-	var txt = null;
-
-	try {
-		file.open('r'); // a BOM sets the encoding (globals.js is UTF-16)
-		txt = file.read();
-		file.close();
-	} catch (e) { txt = null; }
-
-	var tmp = null;
-
-	if (txt) {
-		try {
-			tmp = new File(Folder.temp.fsName + '/pgn_boot_' + file.name.replace(/[^\w]/g, '_') + '.jsx');
-			tmp.encoding = 'UTF-8';
-			if (!tmp.open('w')) throw new Error('temp');
-			tmp.write('\uFEFF\n#includepath "' + folder.fsName.replace(/\\/g, '/') + '"\n' + txt.replace(/\balert\s*\(/g, 'PGN_bootAlert('));
-			tmp.close();
-		} catch (e) { tmp = null; }
-	}
-	// errors inside the classic code propagate as usual (no second run of the original)
-	$.evalFile(tmp || file);
-}
-
 (function () {
 	var hostFolder = new File($.fileName).parent;
 	// classic sources: host/src (package or dev link) or <root>/source (network / repository)...
@@ -61,18 +32,19 @@ function PGN_evalQuiet(file, folder) {
 	$.global.PGN_SRC = srcFolder.fsName;
 	$.global.PGN_HOST = hostFolder.fsName;
 
-	// no modal popup while the host loads (classic network checks, 'drive N: is not available'…):
-	// a popup would freeze After Effects over the panel's opening animation. The message is kept
-	// for the panel, which shows a small red dot on the logo instead (PGN.net.offline / PGN_BOOT_MSG)
+	// no modal popup while the host loads: the classic globals.js checks the network share and
+	// would alert 'drive N: is not available' (freezing After Effects over the panel). With
+	// PGN_CEP set it keeps the message in PGN_BOOT_MSG instead, and the panel turns the
+	// selection dot red. (Replacing the global alert() is not honoured by ExtendScript.)
+	$.global.PGN_CEP = true;
 	var bootAlert = $.global.alert;
 
-	$.global.PGN_bootAlert = function (m) { $.global.PGN_BOOT_MSG = String(m); };
 	try {
-		$.global.alert = $.global.PGN_bootAlert;   // not honoured everywhere by ExtendScript: see PGN_evalQuiet
+		$.global.alert = function (m) { $.global.PGN_BOOT_MSG = String(m); };
 	} catch (e) { }
 	try {
 		// classic globals + every library (json, functions, expressions, icons, shape templates)...
-		PGN_evalQuiet(new File(srcFolder.fsName + '/globals.js'), srcFolder);
+		$.evalFile(srcFolder.fsName + '/globals.js');
 
 		// Windows + macOS: network shares, shell commands and Windows-only classic helpers...
 		$.evalFile(hostFolder.fsName + '/platform.jsx');
