@@ -53,8 +53,6 @@
 		var compact = !horiz && w < 170;
 		app.classList.toggle('list', !horiz && state.labels && w >= 170);
 		app.classList.toggle('compact', compact);
-		// names are written in the bar: no tooltips over the sections
-		if (compact) nav.setAttribute('data-notip', ''); else nav.removeAttribute('data-notip');
 		app.classList.toggle('reduced', state.reduced);
 		var cols = Math.max(1, Math.floor((w - 20 + 2) / 38));
 		var rows = hgt >= 100 ? 2 : 1;   // horizontal: one or two rows of tools
@@ -87,8 +85,6 @@
 
 			if (isOpen && sec.fields) block.appendChild(buildFields(sec));
 			if (isOpen) block.appendChild(buildGrid(sec));
-			// compact bar: the name of the tool under the mouse, written at the foot of the section
-			if (isOpen) block.appendChild(h('div.cap', { 'aria-hidden': 'true' }, h('span', { text: sec.name })));
 			nav.appendChild(block);
 		});
 		metrics();
@@ -590,18 +586,6 @@
 		if (data) { apply(data); return; }
 		PGN.run('links.get', {}).then(function (r) { if (r.ok && r.data) apply(r.data); });
 	}
-	// caption of the compact bar: follows the tool under the mouse (back to the section name)
-	nav.addEventListener('mouseover', function (e) {
-		var t = e.target.closest && e.target.closest('.sec.open .t, .sec.open .sw');
-		var cap = nav.querySelector('.sec.open .cap span');
-		if (!cap) return;
-		var txt = t ? (t.getAttribute('aria-label') || '') : (nav.querySelector('.sec.open .name') || {}).textContent;
-		if (cap.textContent === txt) return;
-		cap.textContent = txt;
-		cap.parentNode.classList.toggle('on', !!t);
-		cap.classList.remove('in'); void cap.offsetWidth; cap.classList.add('in');
-	});
-
 	PGN.on('links', function (d) { loadLinks(d && d.sites ? d : null); });
 
 	// 'Marca': its tools + the palette groups from the preferences
