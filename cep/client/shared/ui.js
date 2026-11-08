@@ -217,6 +217,7 @@
 	}
 	document.addEventListener('mouseover', function (e) {
 		var el = e.target.closest && e.target.closest('[title], [data-tip]');
+		if (el && el.closest('[data-notip]')) { tipText(el); el = null; }   // the page shows the name itself
 		if (el === tipFor) return;
 		hideTip();
 		if (!el) return;

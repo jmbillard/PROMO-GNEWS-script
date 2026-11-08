@@ -176,15 +176,12 @@ footer { position: relative; }
 /* horizontal keeps its chip (icon only) */
 .horiz .sec.open > .head { background: transparent; border-radius: 0; filter: none; }
 
-/* compact vertical bar (134–170px): names fit — smaller type, up to two lines */
+/* compact vertical bar (134–170px): icons 3 per row, section names on the heads,
+   and the name of the tool under the mouse written at the foot of the section */
 .compact .sec .name { font-size: 11px; }
-.compact #scroll { padding-left: 6px; padding-right: 4px; }
-.compact .sec.open { padding-bottom: 4px; }
-.compact.list .grid:not(.swatches) { padding: 2px 0 0; }
-.compact.list .t { height: auto; min-height: 34px; padding: 3px 2px 3px 2px; gap: 5px; }
-.compact.list .t .ico { flex: none; width: 26px; justify-content: center; }
-.compact.list .t:hover { transform: none; background: #2A2A2F; }
-.compact.list .t .lbl { font-size: 11px; line-height: 1.2; white-space: normal; overflow: hidden; text-overflow: clip;
-	display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-word; }
 .compact .fields .fld { font-size: 11px; padding: 0 8px; }
-.compact .logo .gl-full { width: auto; max-width: 100%; }
+.cap { display: none; }
+.compact .sec.open .cap { display: block; margin: 4px 6px 0; padding: 5px 2px 1px; border-top: 1px solid var(--line-2); min-height: 26px; font-size: 11px; line-height: 1.25; color: var(--faint); }
+.compact .sec.open .cap.on { color: var(--tx); }
+.compact .sec.open .cap span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+.compact .sec.open .cap span.in { animation: hintIn .2s ease; }
