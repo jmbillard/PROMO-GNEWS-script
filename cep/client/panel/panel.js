@@ -51,6 +51,9 @@
 		app.classList.toggle('wide', !horiz && w >= 120);
 		app.classList.toggle('roomy', !horiz && w >= 110);
 		var compact = !horiz && w < 170;
+		// horizontal with little room for the logo: the globe alone (the logo is never clipped)
+		var sc = document.getElementById('scroll');
+		app.classList.toggle('tight', horiz && sc && sc.clientWidth < 300);
 		app.classList.toggle('list', !horiz && state.labels && w >= 170);
 		app.classList.toggle('compact', compact);
 		app.classList.toggle('reduced', state.reduced);

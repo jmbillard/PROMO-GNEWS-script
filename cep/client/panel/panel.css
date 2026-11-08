@@ -181,3 +181,8 @@ footer { position: relative; }
 /* compact vertical bar (134–170px): icons 3 per row, section names on the heads, tool names in the tooltips */
 .compact .sec .name { font-size: 11px; }
 .compact .fields .fld { font-size: 11px; padding: 0 8px; }
+
+/* horizontal: the logo stays put while the sections scroll under it; with little room, the globe alone */
+.horiz .logo { position: sticky; left: 0; z-index: 2; background: var(--bg); box-shadow: 6px 0 6px -2px var(--bg); }
+.horiz.tight .logo .gl-full { display: none; }
+.horiz.tight .logo .gl-globo { display: block; }

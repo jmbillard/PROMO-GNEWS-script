@@ -80,7 +80,7 @@ const SCENES = {
 		await p.waitForTimeout(2600);
 	} },
 	// hover on the logo: the official animation follows the mouse
-	logo: { w: 300, h: 56, url: 'panel/index.html', async run(p) {
+	logo: { w: 560, h: 56, url: 'panel/index.html', async run(p) {
 		await p.waitForTimeout(2700);
 		const b = await (await p.$('#logo')).boundingBox();
 		const y = b.y + b.height / 2;
