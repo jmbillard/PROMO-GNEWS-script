@@ -7,12 +7,14 @@
 /* GNEWS logo (from the script's own shape layer): the globe alone in the narrow bar,
    the full logo when there is room */
 .logo { position: relative; height: 36px; display: flex; align-items: center; padding: 0 7px; color: var(--tx); border-radius: 4px; }
-.logo .gl { display: block; height: 22px; width: auto; fill: currentColor; transition: transform .3s var(--spring); }
+.logo .gl { display: block; height: 22px; width: auto; fill: currentColor; }
 .logo .gl-full { display: none; height: 20px; }
 .wide .logo .gl-full, .horiz .logo .gl-full { display: block; }
 .wide .logo .gl-globo, .horiz .logo .gl-globo { display: none; }
-.logo:hover .gl { transform: scale(1.06); }
-.logo:active .gl { transform: scale(.94); }
+/* hover: the official animation, its frame following the mouse across the logo (scrub) */
+.logo .scrub { position: absolute; left: 0; top: 0; pointer-events: none; display: none; }
+.logo.scrubbing .scrub { display: block; }
+.logo.scrubbing .gl { visibility: hidden; }
 
 /* opening: the GNEWS logo animation over the whole panel, then the bar shows up */
 .intro { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity .35s ease; }

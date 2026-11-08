@@ -209,6 +209,8 @@
 		openURL: openURL,
 		ensureHost: ensureHost,
 		notify: function (msg, ok, acc) { emit('toast', { msg: msg, ok: ok !== false, acc: acc || null }); },
+		// 'try again' buttons: forget a recent host failure so the next call reloads it now
+		retryHost: function () { hostFail = null; hostReady = null; },
 		mock: function (id, fn, ms) { mocks[id] = typeof fn === 'function' ? { fn: fn, ms: ms } : fn; },
 		hostFolder: hostFolder
 	};

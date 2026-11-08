@@ -20,14 +20,16 @@
 var vStr = 'v3.0';
 
 (function () {
-	var hostFolder = new File($.fileName).parent;
+	// host folder: given by the loader (PGN_hostState); $.fileName as a fallback
+	var hostFolder = $.global.PGN_HOST_PATH ? new Folder($.global.PGN_HOST_PATH) : new File($.fileName).parent;
 	// sources: <root>/source (network / repository) first, host/src only for a packaged build —
 	// a stale host/src copy must never win over the live source folder
 	var srcFolder = new Folder(hostFolder.fsName + '/../../source');
 
 	if (!new File(srcFolder.fsName + '/globals.js').exists) srcFolder = new Folder(hostFolder.fsName + '/src');
 	if (!new File(srcFolder.fsName + '/globals.js').exists) {
-		alert('PROMO GNEWS: fontes do script n\u00E3o encontrados (source/)');
+		// no popup: the page shows it
+		$.global.PGN_BOOT_ERR = 'fontes do script n\u00E3o encontrados: ' + new Folder(hostFolder.fsName + '/../../source').fsName;
 		return;
 	}
 	$.global.PGN_SRC = srcFolder.fsName;

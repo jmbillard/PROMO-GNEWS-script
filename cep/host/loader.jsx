@@ -45,6 +45,10 @@ function PGN_hostState(hostPath) {
 
 	if (!folder.exists) return 'erro: pasta do host inacessível (' + hostPath + ')';
 
+	// index.jsx usa este caminho (o $.fileName nem sempre vem certo no contexto das janelas)
+	$.global.PGN_HOST_PATH = folder.fsName;
+	$.global.PGN_BOOT_ERR = '';
+
 	var src = PGN_sourceFolder(hostPath);
 
 	if (src == null) return 'erro: fontes do script não encontrados (source/)';
@@ -57,7 +61,8 @@ function PGN_hostState(hostPath) {
 
 // chamado logo depois de avaliar index.jsx...
 function PGN_hostLoaded() {
-	if (typeof PGN == 'undefined' || !PGN.ready) return 'erro: o host não carregou';
+	if ($.global.PGN_BOOT_ERR) return 'erro: ' + $.global.PGN_BOOT_ERR;
+	if (typeof PGN == 'undefined' || !PGN.ready) return 'erro: o host não carregou (' + ($.global.PGN_HOST_PATH || '?') + ')';
 
 	$.global.PGN_HOST_SIG = $.global.PGN_PENDING_SIG;
 	return 'loaded';

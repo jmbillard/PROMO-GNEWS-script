@@ -236,3 +236,9 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .tip.s2 { clip-path: inset(0 round 3px); background: #141416; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
 .tip.out { opacity: 0; transition: opacity .1s; }
 .tip .tx { display: block; min-height: 1.35em; }
+
+/* window that could not load its data */
+.fail { min-height: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 16px; text-align: center; animation: hintIn .3s ease backwards; }
+.fail > i { width: 26px; height: 26px; border-radius: 3px; display: flex; align-items: center; justify-content: center; background: rgba(255, 107, 107, .16); color: #FFB3B2; }
+.fail > i svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.fail p { margin: 0; max-width: 280px; font: 11px/1.45 var(--mono); color: var(--tx-2); word-break: break-word; }

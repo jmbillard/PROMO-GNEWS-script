@@ -230,5 +230,16 @@
 	document.addEventListener('keydown', hideTip, true);
 	window.addEventListener('blur', hideTip);
 
-	window.UI = { h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
+	// a window that could not load its data: the error in the middle, plus 'tentar de novo'
+	// (instead of an empty window once the footer note fades)
+	function failState(holder, msg, retry) {
+		holder.textContent = '';
+		holder.appendChild(h('div.fail', null, [
+			h('i', null, icon('M12 7v6M12 17h.01')),
+			h('p', { text: msg || 'falha ao falar com o After Effects' }),
+			h('button.btn.btn-2', { onclick: function () { if (window.PGN && PGN.retryHost) PGN.retryHost(); holder.textContent = ''; retry(); } }, h('span', { text: 'tentar de novo' }))
+		]));
+	}
+
+	window.UI = { failState: failState, h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
 })();

@@ -490,6 +490,38 @@
 		renderSel();
 	}
 
+	// hover on the logo: the official animation, the mouse position picks the frame
+	// (like a Premiere thumbnail). Same scale as the static logo, so the last frame matches it.
+	(function scrub() {
+		if (!window.PGN_LOGO_DRAW || !window.PGN_LOGO) return;
+		var cv = h('canvas.scrub'), ctx = cv.getContext('2d'), last = -1, geo = null;
+		logoBtn.appendChild(cv);
+		function setup() {
+			var svg = logoBtn.querySelector('.gl-full').getBoundingClientRect().width ? logoBtn.querySelector('.gl-full') : logoBtn.querySelector('.gl-globo');
+			var full = svg.classList.contains('gl-full'), box = full ? PGN_LOGO.box : PGN_LOGO.gbox;
+			var b = logoBtn.getBoundingClientRect(), r = svg.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+			var k = r.height / box[3];
+			cv.width = Math.round(b.width * dpr); cv.height = Math.round(b.height * dpr);
+			cv.style.width = b.width + 'px'; cv.style.height = b.height + 'px';
+			// logo units at the canvas center ↔ the svg center in the button
+			var sx = (r.left - b.left) + r.width / 2, sy = (r.top - b.top) + r.height / 2;
+			geo = { k: k * dpr, cx: box[0] + box[2] / 2 - (sx - b.width / 2) / k, cy: box[1] + box[3] / 2 - (sy - b.height / 2) / k, w: b.width, left: b.left };
+			last = -1;
+		}
+		function draw(e) {
+			if (!geo) setup();
+			var p = Math.max(0, Math.min(1, (e.clientX - geo.left) / geo.w));
+			var f = Math.round(p * Math.ceil(window.PGN_LOGO_END * 30));
+			if (f === last) return;
+			last = f;
+			PGN_LOGO_DRAW(ctx, f / 30, getComputedStyle(logoBtn).color, { cx: geo.cx, cy: geo.cy, scale: geo.k });
+		}
+		logoBtn.addEventListener('mouseenter', function (e) { geo = null; logoBtn.classList.add('scrubbing'); draw(e); });
+		logoBtn.addEventListener('mousemove', draw);
+		logoBtn.addEventListener('mouseleave', function () { logoBtn.classList.remove('scrubbing'); });
+		window.addEventListener('resize', function () { geo = null; });
+	})();
+
 	function intro() {
 		if (!window.PGN_LOGO_DRAW || state.reduced || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
 		var W = window.innerWidth, H = window.innerHeight, dpr = window.devicePixelRatio || 1;
@@ -506,12 +538,14 @@
 		box.appendChild(cv);
 		document.body.appendChild(box);
 		var ctx = cv.getContext('2d'), color = getComputedStyle(document.documentElement).getPropertyValue('--tx').trim() || '#ECECEF';
-		var t0 = 0, last = -1, end = window.PGN_LOGO_END;
+		var t0 = 0, last = -1, end = window.PGN_LOGO_END, HOLD = 4;
 		(function frame(now) {
 			if (!t0) t0 = now;
-			var t = (now - t0) / 1000, f = Math.min(Math.floor(t * 30), Math.ceil(end * 30));
-			if (f !== last) { last = f; PGN_LOGO_DRAW(ctx, f / 30, color, { cx: view.cx, cy: view.cy, scale: k * dpr }); }
-			if (t < end + 0.3) { requestAnimationFrame(frame); return; }
+			// the first visible frame (the square, frame 4) holds HOLD frames longer before the move
+			var t = (now - t0) / 1000, f = Math.floor(t * 30);
+			var fa = Math.min(f < 4 ? f : (f < 4 + HOLD ? 4 : f - HOLD), Math.ceil(end * 30));
+			if (fa !== last) { last = fa; PGN_LOGO_DRAW(ctx, fa / 30, color, { cx: view.cx, cy: view.cy, scale: k * dpr }); }
+			if (t < end + HOLD / 30 + 0.3) { requestAnimationFrame(frame); return; }
 			box.classList.add('out');
 			setTimeout(function () { box.remove(); }, 400);
 		})(performance.now());

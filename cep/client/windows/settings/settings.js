@@ -437,7 +437,7 @@
 
 	function load() {
 		PGN.run('prefs.get', {}).then(function (r) {
-			if (!r.ok) { UI.note(note, r.error, false); return; }
+			if (!r.ok) { UI.failState($('body'), r.error, load); return; }
 			P = r.data;
 			P.folders = P.folders || {};
 			P.selection = P.selection || { nullType: 0, adjType: 0, projectMode: 0 };
