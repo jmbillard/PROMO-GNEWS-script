@@ -782,7 +782,7 @@ PGN_override('updateFolderPaths', function () {
 	fontsPath = !homeOffice ? fontsArchPath : fontsLocalPath;
 
 	if (!homeOffice && !PGN.net.exists(tAdd)) {
-		PGN.net.offline = 'rede cdesign (T:) indispon\u00EDvel \u00B7 usando templates e fontes locais (modo home office recomendado)';
+		PGN.net.offline = 'rede indispon\u00EDvel \u00B7 drive T: (cdesign) fora do ar \u00B7 usando templates e fontes locais \u00B7 em casa: ligue o modo home office nas prefer\u00EAncias';
 		templatesPath = templatesLocalPath;
 		fontsPath = fontsLocalPath;
 	}
@@ -845,6 +845,6 @@ PGN_dropRemovedSubPaths();
 		PGN.net.refresh();
 	} else if (!homeOffice && templatesPath == templatesLocalPath) {
 		// the classic updateFolderPaths already checked the share (and alerted)...
-		PGN.net.offline = 'rede cdesign (T:) indispon\u00EDvel \u00B7 usando templates e fontes locais (modo home office recomendado)';
+		PGN.net.offline = 'rede indispon\u00EDvel \u00B7 drive T: (cdesign) fora do ar \u00B7 usando templates e fontes locais \u00B7 em casa: ligue o modo home office nas prefer\u00EAncias';
 	}
 })();

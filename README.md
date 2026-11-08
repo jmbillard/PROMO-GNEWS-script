@@ -57,7 +57,7 @@ Clique no botão de novo para **cancelar**.
 **Indicador de seleção** (canto da barra):
 - mostra quantos layers estão selecionados;
 - fica verde quando há uma comp ativa;
-- a **bolinha vermelha** avisa que a rede está fora ou que a barra antiga ainda está instalada. O motivo aparece no tooltip.
+- a **bolinha vermelha** avisa que a rede está fora ou que a barra antiga ainda está instalada. Pare o mouse sobre o indicador: o tooltip mostra cada aviso (⚠), o detalhe e o que fazer.
 
 **Formato da barra.** Redimensione o painel e o layout acompanha:
 

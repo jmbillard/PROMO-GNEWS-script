@@ -408,7 +408,15 @@
 		var n = st ? st.layers : 0;
 		selBtn.appendChild(h('span.dot' + (state.netOff ? '.off' : (st && st.comp && n > 0 ? '.live' : ''))));
 		selBtn.appendChild(h('span', { text: st && st.comp ? String(n) : '–' }));
-		selBtn.title = (st && st.comp ? st.comp + ' · ' + n + (n === 1 ? ' layer' : ' layers') : 'nenhuma comp ativa') + (state.netOff ? '\n' + state.netOff : '');
+		// the tooltip: the selection, then each warning — what happened on the first line,
+		// the details and what to do below ('·' parts become lines)
+		var tip = st && st.comp ? st.comp + ' · ' + n + (n === 1 ? ' layer' : ' layers') : 'nenhuma comp ativa';
+		(state.warn || []).forEach(function (w) {
+			var parts = String(w).split(/\s*·\s*|\n/).filter(Boolean);
+			tip += '\n\n⚠ ' + parts[0] + parts.slice(1).map(function (x) { return '\n› ' + x; }).join('');
+		});
+		selBtn.title = tip;
+		selBtn.setAttribute('aria-label', 'Seleção atual' + (state.warn && state.warn.length ? ' · ' + state.warn.length + (state.warn.length === 1 ? ' aviso' : ' avisos') : ''));
 	}
 
 	function pollStatus() {
@@ -496,8 +504,9 @@
 	// warnings (network share offline, old ScriptUI bar installed): the selection chip's dot turns red,
 	// the message goes in its tooltip
 	// (no popup, no toast)
-	function netDot(msg) {
-		state.netOff = msg || '';
+	function netDot(list) {
+		state.warn = list || [];
+		state.netOff = state.warn.join('\n');
 		renderSel();
 	}
 
@@ -635,8 +644,11 @@
 		var warn = [];
 		if (r.data.netOffline) warn.push(r.data.netOffline);
 		// the classic ScriptUI bar still installed: it pops 'drive N: is not available' by itself
-		if (r.data.oldScripts && r.data.oldScripts.length) warn.push('barra antiga (ScriptUI) ainda instalada · rode o instalador e marque \u201cremover o script antigo\u201d\n' + r.data.oldScripts.join('\n'));
-		netDot(warn.join('\n'));
+		if (r.data.oldScripts && r.data.oldScripts.length) {
+			warn.push('barra antiga (ScriptUI) instalada · rode o instalador e marque \u201cremover o script antigo\u201d · ' +
+				r.data.oldScripts.map(function (f) { return 'arquivo: ' + String(f).split(/[\\/]/).pop(); }).join(' · '));
+		}
+		netDot(warn);
 		if (r.data.showLabels != null && UI.store('labels') === undefined) {
 			state.labels = !!r.data.showLabels;
 			metrics();
