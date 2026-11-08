@@ -174,8 +174,12 @@
 .phx:hover { background: var(--sunk); }
 .phx:focus { outline: none; background: var(--sunk); border-color: var(--focus); }
 .pc.bad .phx { color: #FFB3B2; }
-.pnm { flex: 1; min-width: 0; font-size: 11px; color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pc.bad .pnm { color: var(--err); font: 10px var(--mono); }
+/* name: automatic (placeholder, faint) until typed (normal text) */
+.pnm { flex: 1; min-width: 0; height: 24px; padding: 0 6px; border-radius: var(--r); border: 1px solid transparent; background: transparent; color: var(--tx); font: 11px var(--sans); text-overflow: ellipsis; }
+.pnm::placeholder { color: var(--faint); opacity: 1; }
+.pnm:hover { background: var(--sunk); }
+.pnm:focus { outline: none; background: var(--sunk); border-color: var(--focus); }
+.pc.bad .pnm::placeholder { color: var(--err); font: 10px var(--mono); }
 .padd { display: inline-flex; align-items: center; gap: 4px; height: 24px; margin-left: 6px; padding: 0 8px 0 4px; border-radius: var(--r); font: 10px var(--mono); color: var(--faint); transition: background .2s, color .2s; }
 .padd:hover { background: #ECFF8C; color: #141416; }
 .padd svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }

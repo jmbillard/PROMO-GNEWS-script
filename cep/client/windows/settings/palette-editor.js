@@ -4,8 +4,9 @@
 ---------------------------------------------------------------
   the color groups of the bar's 'Marca' section, kept simple:
   each group has a name and a list of hex codes typed as text, with a
-  small preview of the color and its automatic name (pt-BR) beside it.
-  + cor / + grupo / × to remove. Every change saves (debounced) and
+  small preview of the color and its name beside it: automatic (pt-BR,
+  shown as the placeholder) until the user types one; clearing the
+  field brings the automatic name back. + cor / + grupo / × to remove. Every change saves (debounced) and
   tells the bar (PGN.emit('palette')).
   host: palette.get · palette.set { groups } · palette.reset
 */
@@ -27,21 +28,29 @@
 		var list = h('div.plist');
 
 		var push = UI.debounce(function () {
-			var groups = G.map(function (g) { return { name: g.name, colors: g.colors.filter(norm).map(norm) }; });
+			var groups = G.map(function (g) {
+				var colors = [], nm = [];
+				g.colors.forEach(function (c, i) { if (norm(c)) { colors.push(norm(c)); nm.push(String(g.names[i] || '').trim()); } });
+				return { name: g.name, colors: colors, names: nm };
+			});
 			PGN.run('palette.set', { groups: groups }).then(function (r) {
 				if (r.ok && r.data) PGN.emit('palette', r.data);
 				UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
 			});
 		}, 500);
 
-		// automatic names, unique in the whole palette (same as the bar)
+		// automatic names, unique in the whole palette (same as the bar);
+		// they are the placeholder of the name field, a typed name wins
 		function names() {
 			var taken = [];
 			root.querySelectorAll('.pc').forEach(function (row) {
 				var hex = norm(row.querySelector('.phx').value);
-				var n = hex && window.PalNames ? PalNames.pick(hex, taken) : '';
+				var fld = row.querySelector('.pnm');
+				var own = fld.value.trim();
+				var n = own || (hex && window.PalNames ? PalNames.pick(hex, taken) : '');
 				if (n) taken.push(n);
-				row.querySelector('.pnm').textContent = hex ? n : 'hex inválido';
+				fld.placeholder = hex ? (own ? '' : n) : 'hex inválido';
+				if (!own) fld.dataset.auto = hex ? n : '';
 			});
 		}
 
@@ -49,8 +58,16 @@
 			var hex = g.colors[i];
 			var pv = h('i.ppv');
 			var inp = h('input.phx', { type: 'text', value: hex, maxlength: 7, spellcheck: 'false', 'aria-label': 'Cor em hex', placeholder: '#RRGGBB' });
-			var row = h('div.pc', { 'data-hex': hex }, [pv, inp, h('span.pnm'), h('button.ox', { title: 'remover cor', 'aria-label': 'Remover cor', onclick: function () {
+			var nm = h('input.pnm', { type: 'text', value: g.names[i] || '', maxlength: 40, spellcheck: 'false', 'aria-label': 'Nome da cor', title: 'nome da cor · vazio = automático' });
+			nm.addEventListener('input', function () { g.names[i] = nm.value; row.classList.toggle('own', !!nm.value.trim()); names(); push(); });
+			nm.addEventListener('keydown', function (e) {
+				if (e.key === 'Enter') nm.blur();
+				// Esc: back to the automatic name
+				if (e.key === 'Escape' && nm.value) { nm.value = ''; g.names[i] = ''; row.classList.remove('own'); names(); push(); }
+			});
+			var row = h('div.pc', { 'data-hex': hex }, [pv, inp, nm, h('button.ox', { title: 'remover cor', 'aria-label': 'Remover cor', onclick: function () {
 				g.colors.splice(i, 1);
+				g.names.splice(i, 1);
 				render(); push();
 			} }, X())]);
 			function show() {
@@ -64,9 +81,10 @@
 			inp.addEventListener('keydown', function (e) {
 				if (e.key !== 'Enter') return;
 				// Enter on the last color adds the next one
-				if (i === g.colors.length - 1 && norm(inp.value)) { g.colors.push(''); render(); var all = root.querySelectorAll('.pgrp')[G.indexOf(g)].querySelectorAll('.phx'); all[all.length - 1].focus(); }
+				if (i === g.colors.length - 1 && norm(inp.value)) { g.colors.push(''); g.names.push(''); render(); var all = root.querySelectorAll('.pgrp')[G.indexOf(g)].querySelectorAll('.phx'); all[all.length - 1].focus(); }
 				else inp.blur();
 			});
+			row.classList.toggle('own', !!(g.names[i] || '').trim());
 			show();
 			return row;
 		}
@@ -85,6 +103,7 @@
 			g.colors.forEach(function (c, i) { rows.appendChild(colorRow(g, i)); });
 			var add = h('button.padd', { onclick: function () {
 				g.colors.push('');
+				g.names.push('');
 				render();
 				var all = root.querySelectorAll('.pgrp')[G.indexOf(g)].querySelectorAll('.phx');
 				all[all.length - 1].focus();
@@ -94,6 +113,8 @@
 		}
 
 		function render() {
+			// names[] follows colors[] ('' = automatic)
+			G.forEach(function (g) { g.names = g.colors.map(function (c, i) { return (g.names && g.names[i]) || ''; }); });
 			list.textContent = '';
 			G.forEach(function (g) { list.appendChild(groupEl(g)); });
 			names();

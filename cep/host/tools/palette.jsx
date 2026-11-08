@@ -9,9 +9,10 @@
   the color swatches of the bar's 'Marca' section, editable in the
   preferences. saved per user in '<script prefs>/palette.json':
 
-    [{ name: 'marca', colors: ['#E53131', ...] }, ...]
+    [{ name: 'marca', colors: ['#E53131', ...], names: ['', ...] }, ...]
 
-  names shown in the bar come from the client (automatic, pt-BR).
+  names[i] is the name the user gave to colors[i]; '' (or no 'names')
+  means automatic: the client names it from the hex (pt-BR).
 
     palette.get                → { groups, defaults }
     palette.set  { groups }    → saves (only valid #RRGGBB kept)
@@ -45,15 +46,19 @@
 
 			if (!gr || typeof gr != 'object') continue;
 			var colors = [];
+			var names = [];
 			var list = gr.colors instanceof Array ? gr.colors : [];
+			var given = gr.names instanceof Array ? gr.names : [];
 
 			for (var c = 0; c < list.length; c++) {
 				var hex = String(list[c] || '').replace(/^\s+|\s+$/g, '').replace(/^#/, '').toUpperCase();
 
 				if (/^[0-9A-F]{3}$/.test(hex)) hex = hex.replace(/(.)/g, '$1$1');
-				if (/^[0-9A-F]{6}$/.test(hex)) colors.push('#' + hex);
+				if (!/^[0-9A-F]{6}$/.test(hex)) continue;
+				colors.push('#' + hex);
+				names.push(String(given[c] || '').replace(/^\s+|\s+$/g, '').substr(0, 40));
 			}
-			out.push({ name: String(gr.name || 'grupo').substr(0, 30), colors: colors });
+			out.push({ name: String(gr.name || 'grupo').substr(0, 30), colors: colors, names: names });
 		}
 		return out;
 	}

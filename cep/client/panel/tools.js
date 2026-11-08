@@ -64,8 +64,9 @@
 	window.paletteGroups = function (data) {
 		var taken = [];
 		return (data.groups || []).filter(function (g) { return g.colors && g.colors.length; }).map(function (g) {
-			return g.colors.map(function (hex) {
-				var n = window.PalNames ? PalNames.pick(hex, taken) : '';
+			return g.colors.map(function (hex, i) {
+				// a name given in the preferences, else the automatic one
+				var n = (g.names && g.names[i]) || (window.PalNames ? PalNames.pick(hex, taken) : '');
 				taken.push(n);
 				return S(hex, n);
 			});

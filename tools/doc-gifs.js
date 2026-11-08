@@ -196,7 +196,13 @@ const SCENES = {
 		m = await glide(p, m, await center(p, '.paled .pgrp:nth-child(2) .pc:nth-child(2) .phx'), 450);
 		await p.mouse.down(); await p.mouse.up(); await p.keyboard.press('Control+A');
 		for (const ch of '#3A3A42') { await p.keyboard.type(ch); await p.waitForTimeout(90); }
-		await p.waitForTimeout(1100);
+		await p.waitForTimeout(700);
+		// rename: the automatic name is the placeholder, a typed one wins
+		m = await glide(p, m, await center(p, '.paled .pgrp:nth-child(1) .pc:nth-child(2) .pnm'), 450);
+		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(200);
+		for (const ch of 'amarelo GNEWS') { await p.keyboard.type(ch); await p.waitForTimeout(80); }
+		await p.keyboard.press('Enter');
+		await p.waitForTimeout(1200);
 	} },
 	// effects in the preferences: pick from the installed effects
 	efeitos: { w: 420, h: 520, url: 'windows/settings/index.html', async run(p) {

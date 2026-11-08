@@ -165,7 +165,7 @@ Selecione layers de texto. Os outros layers da seleção são ignorados.
 | <img src="images/doc/icons/brand-logo.png" width="32" alt="Logo estática"> | **Logo estática** | Cria a logo GNEWS em shape layer, editável e sem perda de resolução. | comp |
 | <img src="images/doc/icons/brand-logoa.png" width="32" alt="Logo animada 3s"> | **Logo animada 3s** | Cria a logo GNEWS com a animação oficial de 3 s, a partir do tempo atual da comp. | comp |
 
-**Paleta GNEWS.** Clique numa cor para aplicar um *Fill* com ela nos layers selecionados. Na barra larga, cada cor aparece com o nome e o hex. Os grupos e as cores são **editáveis** nas [preferências](#preferências), e os nomes são gerados automaticamente, em português. Com o **botão direito** numa cor, a paleta abre nas preferências.
+**Paleta GNEWS.** Clique numa cor para aplicar um *Fill* com ela nos layers selecionados. Na barra larga, cada cor aparece com o nome e o hex. Os grupos e as cores são **editáveis** nas [preferências](#preferências), e os nomes são gerados automaticamente, em português. Dá para renomear qualquer cor. Com o **botão direito** numa cor, a paleta abre nas preferências.
 
 <br clear="right">
 
@@ -383,7 +383,7 @@ Clique com o **botão direito** num atalho, numa cor ou num efeito da barra: as 
 | atalhos | paleta | efeitos |
 | :---: | :---: | :---: |
 | <img src="images/doc/gifs/atalhos.gif" width="260" alt="atalhos"> | <img src="images/doc/gifs/paleta.gif" width="260" alt="paleta"> | <img src="images/doc/gifs/efeitos.gif" width="260" alt="efeitos"> |
-| Ícone ou 2 letras, nome e destino (site ou pasta). Arraste para reordenar. | Grupos de cores em hex, com prévia ao lado. Use **+ cor** e **+ grupo**; os nomes são automáticos. | Grupos de efeitos. Escolha qualquer efeito instalado numa lista pesquisável e dê um ícone a ele. |
+| Ícone ou 2 letras, nome e destino (site ou pasta). Arraste para reordenar. | Grupos de cores em hex, com prévia ao lado. Use **+ cor** e **+ grupo**. O nome é automático (em cinza): clique nele para renomear; apague, ou use Esc, para voltar ao automático. | Grupos de efeitos. Escolha qualquer efeito instalado numa lista pesquisável e dê um ícone a ele. |
 
 Cada lista tem **restaurar** para voltar ao padrão.
 
