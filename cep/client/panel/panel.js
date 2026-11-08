@@ -52,6 +52,7 @@
 		app.classList.toggle('reduced', state.reduced);
 		var cols = Math.max(1, Math.floor((w - 20 + 2) / 38));
 		var rows = hgt >= 100 ? 2 : 1;   // horizontal: one or two rows of tools
+		app.classList.toggle('one', horiz && rows === 1);
 		nav.querySelectorAll('.grid').forEach(function (g) {
 			var list = app.classList.contains('list') && !g.classList.contains('swatches');
 			g.style.gridTemplateColumns = horiz ? '' : (list ? '1fr' : 'repeat(' + cols + ', 36px)');
@@ -240,7 +241,18 @@
 	/* ---------- project id / name (only when the panel is roomy) ---------- */
 
 	function buildFields(sec) {
-		var idF = h('input.fld.mono', { type: 'text', placeholder: 'ID', 'aria-label': 'ID do projeto', spellcheck: 'false' });
+		// user prefix (few letters): shown in the horizontal bar next to the ID, saved in the preferences
+		var userF = h('input.fld.mono.usr', { type: 'text', placeholder: 'USR', maxlength: 3, title: 'usuário', 'aria-label': 'Prefixo do usuário', spellcheck: 'false' });
+		userF.addEventListener('change', function () {
+			var v = userF.value.toUpperCase();
+			userF.value = v;
+			PGN.run('prefs.set', { patch: { userPrefix: v } }).then(function (r) {
+				feedback(r.ok ? 'usuário ' + v : r.error, r.ok, sec.acc);
+				if (r.ok) PGN.emit('prefs', { userPrefix: v });
+			});
+		});
+		userF.addEventListener('keydown', function (e) { if (e.key === 'Enter') userF.blur(); });
+		var idF = h('input.fld.mono.pid', { type: 'text', placeholder: 'ID', title: 'ID do projeto', 'aria-label': 'ID do projeto', spellcheck: 'false' });
 		var nameF = h('input.fld', { type: 'text', placeholder: 'retranca', 'aria-label': 'Nome do projeto', spellcheck: 'false' });
 		function bind(input, id, key) {
 			input.addEventListener('change', function () {
@@ -259,9 +271,10 @@
 			idF.value = r.data.id || '';
 			nameF.value = r.data.name || '';
 			idF.placeholder = r.data.idLabel || 'ID';
-			if (r.data.user) idF.title = 'usuário: ' + r.data.user;
+			userF.value = r.data.user || '';
 		});
-		return h('div.fields', null, [idF, nameF]);
+		nameF.classList.add('ret');
+		return h('div.fields', null, [userF, idF, nameF]);
 	}
 
 	/* ---------- running tools ---------- */

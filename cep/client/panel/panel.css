@@ -87,6 +87,13 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 .fields { display: none; flex-direction: column; gap: 6px; padding: 4px 4px 8px; }
 .roomy .fields { display: flex; }
 .fields .fld { height: 30px; font-size: 12px; }
+.fields .usr { display: none; }
+/* horizontal bar: user + ID, tiny, right after the section chip (stacked on two rows, side by side on one) */
+.horiz .fields { display: flex; flex: none; flex-direction: column; justify-content: center; gap: 4px; padding: 0 6px 0 2px; align-self: stretch; }
+.horiz .fields .ret { display: none; }
+.horiz .fields .usr { display: block; }
+.horiz .fields .fld { width: 46px; height: 24px; padding: 0 4px; border-radius: 3px; font-size: 10px; text-align: center; text-transform: uppercase; }
+.horiz.one .fields { flex-direction: row; align-items: center; }
 
 /* long task progress: ring on the tile, line on the footer, % on the selection chip */
 .t.is-job .ico { opacity: .55; transform: scale(.78); }
