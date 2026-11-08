@@ -476,8 +476,43 @@
 	document.addEventListener('visibilitychange', function () { if (!document.hidden) pollStatus(); });
 	document.getElementById('logo').addEventListener('click', function () { PGN.openURL('https://github.com/jmbillard/PROMO-GNEWS-script'); });
 
+	/* ---------- GNEWS logo + opening animation ---------- */
+
+	var logoBtn = document.getElementById('logo');
+	if (window.PGN_LOGO_SVG) { logoBtn.appendChild(PGN_LOGO_SVG('globo')); logoBtn.appendChild(PGN_LOGO_SVG('full')); }
+
+	function intro() {
+		if (!window.PGN_LOGO_DRAW || state.reduced || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+		var W = window.innerWidth, H = window.innerHeight, dpr = window.devicePixelRatio || 1;
+		var horiz = app.classList.contains('horiz'), narrow = !horiz && W < 150;
+		// logo units: the whole move spans x −694…324, y ±202; the final logo is centered at x ≈ −21.
+		// The narrow bar only frames the globe (the lettering would be a few pixels tall)
+		var view = narrow ? { cx: -287, cy: 13, w: 560, h: 420 } : { cx: -21, cy: 13, w: 1380, h: 420 };
+		var k = Math.min((W - 16) / view.w, (H - 16) / view.h, 0.34);
+		var cw = Math.round(view.w * k), ch = Math.round(view.h * k);
+		var box = h('div.intro', { 'aria-hidden': 'true' });
+		var cv = h('canvas');
+		cv.width = Math.round(cw * dpr); cv.height = Math.round(ch * dpr);
+		cv.style.width = cw + 'px'; cv.style.height = ch + 'px';
+		box.appendChild(cv);
+		document.body.appendChild(box);
+		var ctx = cv.getContext('2d'), color = getComputedStyle(document.documentElement).getPropertyValue('--tx').trim() || '#ECECEF';
+		var t0 = 0, last = -1, end = window.PGN_LOGO_END;
+		(function frame(now) {
+			if (!t0) t0 = now;
+			var t = (now - t0) / 1000, f = Math.min(Math.floor(t * 30), Math.ceil(end * 30));
+			if (f !== last) { last = f; PGN_LOGO_DRAW(ctx, f / 30, color, { cx: view.cx, cy: view.cy, scale: k * dpr }); }
+			if (t < end + 0.3) { requestAnimationFrame(frame); return; }
+			box.classList.add('out');
+			setTimeout(function () { box.remove(); }, 400);
+		})(performance.now());
+		// in case requestAnimationFrame is throttled (panel hidden): never leave the cover on
+		setTimeout(function () { if (box.parentNode) { box.classList.add('out'); setTimeout(function () { box.remove(); }, 400); } }, 4000);
+	}
+
 	buildFooter();
 	render();
+	intro();
 
 	// read the real 'show labels' preference once the host is up
 	PGN.run('prefs.get', {}).then(function (r) {

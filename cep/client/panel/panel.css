@@ -4,11 +4,20 @@
 
 #scroll { flex: 1; padding: 10px 10px 6px; }
 
-.logo { height: 36px; display: flex; align-items: center; gap: 6px; padding: 0 7px; color: var(--brand); border-radius: 10px; }
-.logo .rg { transform-origin: 12px 12px; transition: transform .8s cubic-bezier(.3, 1.3, .4, 1); }
-.logo:hover .rg { transform: rotate(300deg); }
-.logo .word { display: none; font-weight: 800; font-size: 16px; letter-spacing: -.03em; color: var(--tx); }
-.wide .logo .word { display: inline; }
+/* GNEWS logo (from the script's own shape layer): the globe alone in the narrow bar,
+   the full logo when there is room */
+.logo { height: 36px; display: flex; align-items: center; padding: 0 7px; color: var(--tx); border-radius: 4px; }
+.logo .gl { display: block; height: 22px; width: auto; fill: currentColor; transition: transform .3s var(--spring); }
+.logo .gl-full { display: none; height: 20px; }
+.wide .logo .gl-full, .horiz .logo .gl-full { display: block; }
+.wide .logo .gl-globo, .horiz .logo .gl-globo { display: none; }
+.logo:hover .gl { transform: scale(1.06); }
+.logo:active .gl { transform: scale(.94); }
+
+/* opening: the GNEWS logo animation over the whole panel, then the bar shows up */
+.intro { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity .35s ease; }
+.intro canvas { display: block; }
+.intro.out { opacity: 0; }
 .logo .ver { font: 10px var(--mono); color: var(--faint); padding: 2px 6px; border-radius: 6px; background: #26262B; display: none; }
 .wide .logo .ver { display: inline; }
 
@@ -96,14 +105,14 @@ footer { position: relative; }
 /* ---------- horizontal bar (short and wide panel) ---------- */
 .horiz { flex-direction: row; }
 .horiz #scroll { display: flex; align-items: center; gap: 2px; overflow-x: auto; overflow-y: hidden; padding: 10px 6px 10px 10px; min-width: 0; }
-.horiz .hsep { width: 1px; height: 24px; margin: 0 6px; flex: none; }
+.horiz .hsep { display: none; }
 .horiz .logo { flex: none; }
 .horiz #sections { flex-direction: row; align-items: center; flex: none; }
 .horiz .sec { flex: none; }
-.horiz .sec.open { display: flex; align-items: center; padding: 0 6px 0 0; animation-name: accInX; }
+.horiz .sec.open { display: flex; align-items: center; padding: 0 6px 0 0; border-radius: 4px 12px 12px 4px; animation-name: accInX; }
 /* the open section's own icon: a solid chip in the section color, then a thin divider — the tools follow */
 .horiz .sec.open > .head { flex: none; align-self: stretch; display: flex; align-items: center; padding-right: 6px; margin-right: 4px; border-right: 1px solid var(--line-2); }
-.horiz .sec.open > .head .k { background: var(--sa); color: var(--sa-ink); }
+.horiz .sec.open > .head .k { background: var(--sa); color: var(--sa-ink); border-radius: 4px 0 0 4px; }
 .horiz .sec.open > .head .k:hover { background: var(--sa); filter: brightness(1.08); }
 .horiz .groups { display: flex; align-items: center; }
 .horiz .grid { grid-auto-flow: column; grid-auto-columns: 36px; padding: 0 0 0 2px; }
