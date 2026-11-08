@@ -420,6 +420,7 @@
 				folderRow(I.folder, 'PAM magazine', 'magazinePath'),
 				folderRow(I.folder, 'PAM para arte', 'artePath')
 			], d += 40),
+			group('atalhos', [LinksEditor(note, version)], d += 40),
 			group('painel', [
 				switchRow(IC.labels, 'Rótulos', 'no painel largo', function () { return P.showLabels; }, function (v) { save({ showLabels: v }); }),
 				switchRow(IC.motion, 'Movimento reduzido', null, function () { return !!UI.store('reduced'); }, function (v) {
@@ -473,6 +474,16 @@
 	var MOCK_ORG = { INS: 'CANAL/institucional', DIG: 'CANAL/digital', PIL: 'CANAL/pilula', MKT: 'CANAL/marketing', NDL: 'VINHETAS/nunca desliga', BIP: 'VINHETAS/bip', ASE: 'VINHETAS/a seguir', EMN: 'JORNAIS/edicao da meia noite', EMP: 'JORNAIS/em ponto', CON: 'JORNAIS/conexao', JDE: 'JORNAIS/jornal das dez', ELE: 'FACTUAIS/eleicoes brasil', MUN: 'FACTUAIS/mundo', INT: 'PROGRAMAS/internacional', DOC: 'PROGRAMAS/documentario', MAC: 'MARCA E COMUNICACAO' };
 	PGN.mock('prefs.setOrgFolders', function (a) { var m = Object.assign({}, a.map); Object.keys(MOCK_ORG).forEach(function (k) { if (m[k] == null) m[k] = MOCK_ORG[k]; }); return { msg: 'Pastas de organização salvas', data: { promoSubPath: m, defaults: MOCK_ORG } }; }, 150);
 	PGN.mock('prefs.resetOrgFolders', function () { return { msg: 'Pastas de organização restauradas', data: { promoSubPath: Object.assign({}, MOCK_ORG), defaults: MOCK_ORG } }; }, 150);
+	// 'atalhos' (browser preview)
+	var LINKS = {
+		sites: [{ id: 'od', name: 'OneDrive', url: 'https://tvglobocorp-my.sharepoint.com/', glyph: 'OD' }, { id: 'tr', name: 'Trello promo', url: 'https://trello.com/promo126/home', glyph: 'TR' }, { id: 'ap', name: 'Apontamento', url: 'https://gglobo-pea-hdg-prd.web.app/#card_view', glyph: 'AP' }, { id: 'pl', name: 'Planner', url: 'https://tasks.office.com/…/Planner', glyph: 'PL' }],
+		dirs: [{ id: 'arte', name: 'PAM para arte', path: '@artePath', shown: '//pamjb/…/PARA_ARTE', icon: 'up' }, { id: 'mag', name: 'PAM magazine', path: '@magazinePath', shown: '//pamjb/…/MAGAZINE', icon: 'slide' }, { id: 'hn', name: 'PAM hard news', path: '@hnPath', shown: '//pamjb/…/01_ENTRADA', net: true, icon: 'bolt' }, { id: 'uti', name: 'T: utilidades', path: '@utiPath', shown: 'T:/UTILIDADES', net: true, icon: 'star' }, { id: 'pec', name: 'peças gráficas', path: '@basesPath', shown: 'T:/…/_PECAS_GRAFICAS', net: true, icon: 'bars' }, { id: 'hoje', name: 'diários · hoje', path: '@hoje', shown: 'pasta do dia (automático)', net: true, auto: true, icon: 'dot' }]
+	};
+	PGN.mock('links.get', function () { return { data: JSON.parse(JSON.stringify(LINKS)) }; }, 120);
+	PGN.mock('links.set', function (a) { return { msg: 'Atalhos salvos', data: { sites: a.sites, dirs: a.dirs } }; }, 120);
+	PGN.mock('links.reset', function () { return { msg: 'Atalhos padrão', data: JSON.parse(JSON.stringify(LINKS)) }; }, 120);
+	PGN.mock('links.pick', function () { return { data: { path: '/Users/voce/Desktop/projetos' } }; }, 200);
+
 	PGN.mock('prefs.get', function () {
 		return { data: { version: 'v3.0', userPrefix: 'JMB', selection: { nullType: 0, adjType: 1, projectMode: 0 }, orgFolders: true, ignoreMissing: false, saveAsV22: true, homeOffice: false, hardNews: false, showLabels: true, devMode: false, folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE', artePath: '//pamjb/PARA_ARTE', promoSubPath: Object.assign({}, MOCK_ORG, { JDE: 'JORNAIS/jornal das 10', XYZ: 'CANAL/especiais' }) }, defaults: { folders: { promoSubPath: MOCK_ORG } }, layerTypes: ['shape layer', 'solid layer'], projectModes: ['PROMO', 'custom'] } };
 	}, 200);

@@ -131,6 +131,8 @@ footer { position: relative; }
 .horiz .groups { display: flex; align-items: center; }
 .horiz .grid { grid-auto-flow: column; grid-auto-columns: 36px; padding: 0 0 0 2px; }
 .horiz .sep { width: 1px; height: 24px; margin: 0 4px; flex: none; }
+/* two rows: the divider spans both */
+.horiz:not(.one) .sep { height: 60px; }
 .horiz .param { grid-column: auto; grid-row: 1 / -1; flex-direction: column; margin: 0 2px; }
 .horiz footer { flex-wrap: nowrap; align-items: center; padding: 10px 10px 10px 8px; border-top: 0; border-left: 1px solid var(--line); }
 .horiz .jobbar { top: auto; bottom: 0; }

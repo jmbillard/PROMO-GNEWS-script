@@ -17,6 +17,18 @@
 	function G(id, name, glyph, extra) {
 		return Object.assign({ id: id, name: name, glyph: glyph, anim: 'pop' }, extra || {});
 	}
+	// 'Atalhos': sites + folders from the preferences (host links.get) → tiles
+	window.linksGroups = function (data) {
+		function tile(kind, it) {
+			var base = { id: 'link:' + kind + ':' + it.id, hostId: 'links.open', name: it.name, alt: 'editar atalhos', altWin: 'settings', args: function () { return { kind: kind, id: it.id }; } };
+			if (it.glyph) return Object.assign(base, { glyph: it.glyph, anim: 'pop' });
+			var ic = LINK_ICONS[it.icon] || LINK_ICONS[kind === 'site' ? 'globe' : 'up'];
+			return Object.assign(base, { d: ic[0], a: ic[1], anim: ic[2] });
+		}
+		return [(data.sites || []).map(function (s) { return tile('site', s); }), (data.dirs || []).map(function (d) { return tile('dir', d); })]
+			.filter(function (g) { return g.length; });
+	};
+
 	function S(hex) {
 		return { id: 'color:' + hex, hostId: 'color', name: hex, hex: hex, swatch: true, sel: 'layers', args: function () { return { hex: hex }; } };
 	}
@@ -141,17 +153,9 @@
 		},
 		{
 			id: 'links', name: 'Atalhos', acc: '#FFB398', d: 'M10 14a4 4 0 0 0 5.6 0l3-3a4 4 0 0 0-5.6-5.6l-1 1', a: 'M14 10a4 4 0 0 0-5.6 0l-3 3a4 4 0 0 0 5.6 5.6l1-1',
-			groups: [
-				[G('od', 'OneDrive', 'OD'), G('tr', 'Trello promo', 'TR'), G('ap', 'Apontamento', 'AP'), G('pl', 'Planner', 'PL')],
-				[
-					T('arte', 'PAM para arte', 'up', F, 'M12 16v-5M9.5 13.5L12 11l2.5 2.5', { alt: 'definir pasta' }),
-					T('mag', 'Upload PAM magazine', 'slide', F, 'M8 13h8M8 16h5', { alt: 'definir pasta' }),
-					T('hn', 'Upload PAM hard news', 'pulse', F, 'M13 10l-3 4h4l-3 4'),
-					T('uti', 'T: utilidades', 'spin', F, 'M12 11.5l1 2 2 .3-1.5 1.4.4 2.1-1.9-1-1.9 1 .4-2.1-1.5-1.4 2-.3z'),
-					T('pec', '_PECAS_GRAFICAS', 'grow', F, 'M9 17v-3M12 17v-5M15 17v-2'),
-					T('hoje', 'Diários · hoje', 'pulse', F, 'M12 12.5a2 2 0 1 0 0 4a2 2 0 1 0 0-4')
-				]
-			]
+			// filled from the user's shortcuts (links.get) — see linksGroups()
+			links: true,
+			groups: []
 		},
 		{
 			id: 'app', name: 'Programa', acc: '#FFAFB7', d: 'M4 7l8-4 8 4v10l-8 4-8-4z', a: 'M4 7l8 4 8-4M12 11v10',

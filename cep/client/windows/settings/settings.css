@@ -111,3 +111,43 @@
 .oit .pth:hover { background: var(--sunk); }
 .oit .pth:focus { outline: none; background: var(--sunk); border-color: var(--focus); }
 .oit.mod .pth { color: #ECFF8C; }
+
+/* ---- 'atalhos' editor ---- */
+.lked { padding: 4px 0 8px; }
+.lprow { display: flex; align-items: center; gap: 6px; padding: 6px 0 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.lprev { flex: 1; min-width: 0; display: flex; align-items: center; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.lprev::-webkit-scrollbar { display: none; }
+.lprev .t { flex: none; width: 30px; height: 30px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #A9A9B2; transition: background .2s, box-shadow .2s; }
+.lprev .t.hot { background: #2E2E34; box-shadow: inset 0 0 0 1px var(--acc); color: var(--tx); }
+.lprev .vs { width: 1px; height: 20px; background: var(--line-2); margin: 0 4px; flex: none; }
+.lprev svg, .lk .ic svg, .lpick .grid svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.glyph { font: 700 10px var(--mono); letter-spacing: .02em; }
+.lked .ogn.lbl { display: flex; align-items: center; pointer-events: none; }
+.lked .oc { background: none; }
+.lk { display: flex; align-items: center; gap: 6px; padding: 2px 0; position: relative; animation: rowIn .3s var(--out) backwards; }
+.lk.drag { z-index: 3; background: #2E2E34; border-radius: 4px; box-shadow: inset 0 0 0 1px var(--acc); }
+.lk.drag .oh i { background: #ECFF8C; height: 20px; }
+.lk:hover .oh i { background: #8E8E98; height: 18px; }
+.lk .ic { width: 30px; height: 26px; flex: none; border-radius: 4px; display: flex; align-items: center; justify-content: center; background: #34343B; color: var(--tx); transition: background .2s, box-shadow .2s; }
+.lk .ic:hover { background: #3C3C44; }
+.lk .ic.on { box-shadow: inset 0 0 0 1px var(--acc); background: #2E2E34; }
+.lk .nm { width: 96px; flex: none; height: 26px; padding: 0 7px; border-radius: 4px; border: 1px solid transparent; background: transparent; color: var(--tx); font: 11px var(--sans); text-overflow: ellipsis; }
+.lk .tg { flex: 1; min-width: 0; height: 26px; padding: 0 8px; border-radius: 4px; border: 1px solid transparent; background: transparent; color: var(--tx-2); font: 11px var(--mono); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lk .nm:hover, .lk .tg:hover { background: var(--sunk); }
+.lk .nm:focus, .lk .tg:focus { outline: none; background: var(--sunk); border-color: var(--focus); }
+.lk .tg.dir { cursor: pointer; }
+.lk .tg.dir:hover { color: var(--focus); text-decoration: underline; text-underline-offset: 2px; }
+.lk .ox { opacity: 0; }
+.lk:hover .ox, .lk .ox:focus-visible { opacity: 1; }
+.lk .flag { font: 9px var(--mono); color: var(--faint); padding: 2px 5px; border-radius: 3px; background: #2A2A30; flex: none; }
+.lpick { margin: 2px 0 8px 20px; padding: 8px; border-radius: 4px; background: #1E1E22; box-shadow: inset 0 0 0 1px var(--line-2); animation: hintIn .25s ease backwards; }
+.lpick .tabs { display: flex; gap: 3px; margin-bottom: 8px; }
+.lpick .tabs button { height: 22px; padding: 0 8px; border-radius: 3px; font: 10px var(--mono); color: #8E8E98; }
+.lpick .tabs button.on { color: var(--tx); background: #34343B; }
+.lpick .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; }
+.lpick .grid button { height: 28px; border-radius: 3px; display: flex; align-items: center; justify-content: center; color: #A9A9B2; transition: background .15s, color .15s; }
+.lpick .grid button:hover { background: #2E2E34; color: var(--tx); }
+.lpick .grid button.on { color: var(--acc); box-shadow: inset 0 0 0 1px var(--acc); }
+.lpick .txt { display: flex; align-items: center; gap: 8px; }
+.lpick .txt input { width: 56px; height: 28px; text-align: center; font: 700 12px var(--mono); text-transform: uppercase; }
+.lpick .txt small { font: 10px var(--mono); color: var(--faint); }

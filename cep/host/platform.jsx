@@ -475,13 +475,7 @@ PGN.net.getters = {
 };
 
 PGN.net.needs = {
-	// shortcuts...
-	hn: ['hn'],
-	uti: ['cdesign'],
-	pec: ['cdesign'],
-	hoje: ['cdesign'],
-	arte: ['arte'],
-	mag: ['mag'],
+	// 'Atalhos' (links.open) adds its own entry in tools/links.jsx
 	// templates window...
 	'tpl.list': ['templates'],
 	'tpl.download': ['templates'],

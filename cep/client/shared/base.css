@@ -93,7 +93,11 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .t.is-done { box-shadow: inset 0 0 0 1.5px currentColor; }
 .t.is-done .ico { opacity: 0; transform: scale(.5); }
 .t.is-err { box-shadow: inset 0 0 0 1.5px var(--err); }
-.t.tg-on { background: currentColor; }
+/* toggle on: a small solid square behind the icon (not the whole tile) */
+.t::before { content: ''; position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 3px; background: currentColor; transform: scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); pointer-events: none; }
+.t .ico { position: relative; }
+.t.tg-on::before { transform: scale(1); }
+.list .t.tg-on::before { left: 18px; }
 .t.tg-on svg.i .b, .t.tg-on svg.i .a { stroke: var(--bg); }
 .t .ring { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin .7s linear infinite; }
 .t .chk { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }

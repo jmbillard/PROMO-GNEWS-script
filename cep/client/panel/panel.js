@@ -567,8 +567,27 @@
 		setTimeout(function () { if (box.parentNode) { box.classList.add('out'); setTimeout(function () { box.remove(); }, 400); } }, 4000);
 	}
 
+	// browser preview data (outside After Effects)
+	PGN.mock('links.get', function () {
+		return { data: {
+			sites: [{ id: 'od', name: 'OneDrive', glyph: 'OD' }, { id: 'tr', name: 'Trello promo', glyph: 'TR' }, { id: 'ap', name: 'Apontamento', glyph: 'AP' }, { id: 'pl', name: 'Planner', glyph: 'PL' }],
+			dirs: [{ id: 'arte', name: 'PAM para arte', icon: 'up' }, { id: 'mag', name: 'PAM magazine', icon: 'slide' }, { id: 'hn', name: 'PAM hard news', icon: 'bolt' }, { id: 'uti', name: 'T: utilidades', icon: 'star' }, { id: 'pec', name: 'peças gráficas', icon: 'bars' }, { id: 'hoje', name: 'diários · hoje', icon: 'dot' }]
+		} };
+	}, 60);
+
+	// 'Atalhos' comes from the user's shortcuts; the preferences window announces changes
+	function loadLinks(data) {
+		var sec = SECTIONS.filter(function (s) { return s.links; })[0];
+		if (!sec) return;
+		function apply(d) { sec.groups = window.linksGroups(d); render(); }
+		if (data) { apply(data); return; }
+		PGN.run('links.get', {}).then(function (r) { if (r.ok && r.data) apply(r.data); });
+	}
+	PGN.on('links', function (d) { loadLinks(d && d.sites ? d : null); });
+
 	buildFooter();
 	render();
+	loadLinks();
 	intro();
 
 	// read the real 'show labels' preference once the host is up
@@ -591,6 +610,7 @@
 			render();
 		}
 	});
+
 
 	pollStatus();
 	selTimer = setInterval(function () { if (!document.hidden && !state.busy) pollStatus(); }, 1200);
