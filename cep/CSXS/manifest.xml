@@ -156,7 +156,10 @@
 				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
 				<UI>
 					<Type>Modeless</Type>
-					<Geometry><Size><Width>360</Width><Height>560</Height></Size></Geometry>
+					<Geometry>
+						<Size><Width>420</Width><Height>860</Height></Size>
+						<MinSize><Width>380</Width><Height>520</Height></MinSize>
+					</Geometry>
 				</UI>
 			</DispatchInfo>
 		</Extension>
