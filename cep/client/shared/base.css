@@ -228,11 +228,11 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 @keyframes rowIn { from { opacity: 0; transform: translateY(5px); } }
 
 /* tooltip: a little yellow square rises, opens into the dark box, the text types in */
-.tip { position: fixed; z-index: 9999; max-width: min(240px, calc(100vw - 8px)); padding: 5px 8px; box-sizing: border-box; border-radius: 6px;
+.tip { position: fixed; z-index: 9999; max-width: min(240px, calc(100vw - 8px)); padding: 5px 8px; box-sizing: border-box; border-radius: 3px;
 	background: #ECFF8C; color: #E6E6EA; font: 500 11px/1.35 var(--sans); white-space: pre-line; pointer-events: none;
-	opacity: 0; transform: translateY(7px); clip-path: inset(calc(50% - 3.5px) calc(50% - 3.5px) round 1.5px);
+	opacity: 0; transform: translateY(7px); clip-path: inset(calc(50% - 3.5px) calc(50% - 3.5px) round 1px);
 	transition: opacity .11s ease-out, transform .16s cubic-bezier(.3, 1.4, .5, 1), clip-path .17s cubic-bezier(.5, 0, .2, 1), background-color .17s; }
 .tip.s1 { opacity: 1; transform: none; }
-.tip.s2 { clip-path: inset(0 round 6px); background: #141416; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.tip.s2 { clip-path: inset(0 round 3px); background: #141416; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
 .tip.out { opacity: 0; transition: opacity .1s; }
 .tip .tx { display: block; min-height: 1.35em; }
