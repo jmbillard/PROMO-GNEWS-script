@@ -46,9 +46,14 @@
 	var hostReady = null;
 
 	// carrega o host na primeira chamada da página, e de novo se algum arquivo dele mudou (host/loader.jsx)
+	var hostFail = null;
+
 	function ensureHost() {
 		if (!inHost) return Promise.resolve(true);
 		if (hostReady) return hostReady;
+		// a host that failed to load is not retried for a while: the status poll runs every 1.2 s
+		// and every retry re-evaluates the classic sources (and whatever they pop up)
+		if (hostFail && Date.now() - hostFail.at < 20000) return Promise.reject(hostFail.err);
 		var host = jsStr(hostFolder());
 		hostReady = evalScript('try{$.evalFile(new File(' + host + '+"/loader.jsx"));PGN_hostState(' + host + ')}catch(e){"erro: "+e}')
 			.then(function (state) {
@@ -57,9 +62,12 @@
 			})
 			.then(function (state) {
 				if (state !== 'ok' && state !== 'loaded') {
-					hostReady = null; // tenta de novo na próxima chamada (a rede pode voltar)
-					throw new Error(String(state || 'o host do After Effects não carregou').replace(/^erro: /, ''));
+					hostReady = null; // tenta de novo mais tarde (a rede pode voltar)
+					var err = new Error(String(state || 'o host do After Effects não carregou').replace(/^erro: /, ''));
+					hostFail = { at: Date.now(), err: err };
+					throw err;
 				}
+				hostFail = null;
 				return true;
 			});
 		return hostReady;
