@@ -1,8 +1,8 @@
-.fam { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: 10px; text-align: left; transition: background .15s, transform .2s; animation: rowIn .3s var(--out) backwards; }
+.fam { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: var(--r); text-align: left; transition: background .15s, transform .2s; animation: rowIn .3s var(--out) backwards; }
 .fam:hover { background: #26262B; transform: translateX(2px); }
 .fam.on { background: #26262B; }
 .box { width: 18px; height: 18px; flex: none; position: relative; }
-.box::before { content: ''; position: absolute; left: 4px; top: 4px; width: 10px; height: 10px; border-radius: 2px; transform: rotate(45deg); box-shadow: inset 0 0 0 1.5px #5A5A63; transition: background .2s, box-shadow .2s; }
+.box::before { content: ''; position: absolute; left: 4px; top: 4px; width: 10px; height: 10px; border-radius: var(--r-s); transform: rotate(45deg); box-shadow: inset 0 0 0 1.5px #5A5A63; transition: background .2s, box-shadow .2s; }
 .fam:hover .box::before { box-shadow: inset 0 0 0 1.5px #8E8E98; }
 .fam.on .box::before { background: var(--acc); box-shadow: none; animation: kpop .45s cubic-bezier(.3, 1.6, .5, 1); }
 @keyframes kpop { 0% { transform: rotate(45deg) scale(.5); } 60% { transform: rotate(45deg) scale(1.35); } 100% { transform: rotate(45deg) scale(1); } }
@@ -12,5 +12,5 @@
 .fam .sample { font-size: 18px; line-height: 1.25; color: var(--tx); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .3s; }
 .fam .sample.loading { opacity: .35; }
 .fam .sub { font: 10px var(--mono); color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fam .n { font: 10px var(--mono); color: var(--faint); background: #26262B; padding: 1px 6px; border-radius: 6px; flex: none; }
+.fam .n { font: 10px var(--mono); color: var(--faint); background: #26262B; padding: 1px 6px; border-radius: var(--r); flex: none; }
 .btn-1 { color: #141416; }

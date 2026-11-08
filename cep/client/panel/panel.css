@@ -6,7 +6,7 @@
 
 /* GNEWS logo (from the script's own shape layer): the globe alone in the narrow bar,
    the full logo when there is room */
-.logo { position: relative; height: 36px; display: flex; align-items: center; padding: 0 7px; color: var(--tx); border-radius: 4px; }
+.logo { position: relative; height: 36px; display: flex; align-items: center; padding: 0 7px; color: var(--tx); border-radius: var(--r); }
 .logo .gl { display: block; height: 22px; width: auto; fill: currentColor; }
 .logo .gl-full { display: none; height: 20px; }
 .wide .logo .gl-full, .horiz .logo .gl-full { display: block; }
@@ -20,7 +20,7 @@
 .intro { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity .35s ease; }
 .intro canvas { display: block; }
 .intro.out { opacity: 0; }
-.logo .ver { font: 10px var(--mono); color: var(--faint); padding: 2px 6px; border-radius: 6px; background: #26262B; display: none; }
+.logo .ver { font: 10px var(--mono); color: var(--faint); padding: 2px 6px; border-radius: var(--r); background: #26262B; display: none; }
 .wide .logo .ver { display: inline; }
 
 .hsep { display: block; width: 24px; height: 1px; background: var(--line); margin: 6px 6px; }
@@ -28,7 +28,7 @@
 #sections { display: flex; flex-direction: column; gap: 4px; }
 
 /* closed section = icon button; open section = tinted block */
-.sec { border-radius: 12px; transition: background .35s; }
+.sec { border-radius: var(--r-l); transition: background .35s; }
 .sec > .k { color: #8A8A94; }
 .sec.open { padding-bottom: 6px; overflow: hidden; animation: accIn .55s var(--out) backwards; }
 .sec.open > .k { color: inherit; }
@@ -44,8 +44,8 @@
 .sep { display: block; height: 1px; background: var(--line-2); margin: 4px 6px; animation: tIn .4s backwards; }
 
 /* swatches (brand) */
-.sw { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); animation: tIn .4s var(--out) backwards; }
-.sw i { width: 20px; height: 20px; border-radius: 6px; display: block; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); transition: transform .25s cubic-bezier(.3, 1.6, .5, 1), border-radius .25s; }
+.sw { width: 36px; height: 36px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); animation: tIn .4s var(--out) backwards; }
+.sw i { width: 20px; height: 20px; border-radius: var(--r); display: block; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); transition: transform .25s cubic-bezier(.3, 1.6, .5, 1), border-radius .25s; }
 .sw:hover i { transform: scale(1.18); border-radius: 50%; }
 .sw:active i { transform: scale(.85); }
 .sw svg { position: absolute; width: 14px; height: 14px; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
@@ -54,7 +54,7 @@
 
 /* footer */
 footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px 10px; border-top: 1px solid var(--line); }
-.sel { width: 36px; height: 36px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 10px var(--mono); color: #B4B4BC; transition: background .2s, color .2s; }
+.sel { width: 36px; height: 36px; border-radius: var(--r); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 10px var(--mono); color: #B4B4BC; transition: background .2s, color .2s; }
 .sel:hover { background: #2A2A2F; }
 .sel.nudge { animation: nope .42s ease; background: rgba(229, 47, 46, .2); color: #FFB3B2; }
 .sel.err { background: rgba(255, 107, 107, .16); color: #FFB3B2; }
@@ -74,8 +74,8 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 @keyframes accIn { from { max-height: 36px; } to { max-height: 900px; } }
 
 /* inline parameter stepper */
-.param { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 2px; margin: 2px 2px 4px; padding: 2px; border-radius: 10px; background: rgba(0, 0, 0, .22); animation: tIn .35s var(--out) backwards; }
-.param .pb { width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--tx-2); transition: background .2s, transform .2s var(--spring); }
+.param { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 2px; margin: 2px 2px 4px; padding: 2px; border-radius: var(--r); background: rgba(0, 0, 0, .22); animation: tIn .35s var(--out) backwards; }
+.param .pb { width: 26px; height: 26px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: var(--tx-2); transition: background .2s, transform .2s var(--spring); }
 .param .pb:hover { background: rgba(255, 255, 255, .08); }
 .param .pb:active { transform: scale(.85); }
 .param .pb svg.i { width: 14px; height: 14px; }
@@ -92,7 +92,7 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 .horiz .fields { display: flex; flex: none; flex-direction: column; justify-content: center; gap: 4px; padding: 0 6px 0 2px; align-self: stretch; }
 .horiz .fields .ret { display: none; }
 .horiz .fields .usr { display: block; }
-.horiz .fields .fld { width: 46px; height: 24px; padding: 0 4px; border-radius: 3px; font-size: 10px; text-align: center; text-transform: uppercase; }
+.horiz .fields .fld { width: 46px; height: 24px; padding: 0 4px; border-radius: var(--r-s); font-size: 10px; text-align: center; text-transform: uppercase; }
 .horiz.one .fields { flex-direction: row; align-items: center; }
 
 /* long task progress: ring on the tile, line on the footer, % on the selection chip */
@@ -120,12 +120,12 @@ footer { position: relative; }
 .horiz .logo { flex: none; }
 .horiz #sections { flex-direction: row; align-items: center; flex: none; }
 .horiz .sec { flex: none; }
-.horiz .sec.open { display: flex; align-items: center; padding: 2px 2px 2px 0; border-radius: 4px; animation-name: accInX; }
+.horiz .sec.open { display: flex; align-items: center; padding: 2px 2px 2px 0; border-radius: var(--r); animation-name: accInX; }
 /* the open section's own icon: a solid chip in the section color, full height of the block — the tools follow */
 .horiz .sec.open > .head { flex: none; align-self: stretch; display: flex; align-items: center; margin: -2px 4px -2px 0; }
-.horiz .sec.open > .head .k { align-self: stretch; height: auto; background: var(--sa); color: var(--sa-ink); border-radius: 4px 0 0 4px; }
+.horiz .sec.open > .head .k { align-self: stretch; height: auto; background: var(--sa); color: var(--sa-ink); border-radius: var(--r) 0 0 var(--r); }
 /* inside the horizontal section: square-ish hovers, groups split by a thin line */
-.horiz .sec.open .t, .horiz .sec.open .sw { border-radius: 4px; }
+.horiz .sec.open .t, .horiz .sec.open .sw { border-radius: var(--r); }
 .horiz .sec.open .groups { align-self: center; }
 .horiz .sec.open > .head .k:hover { background: var(--sa); filter: brightness(1.08); }
 .horiz .groups { display: flex; align-items: center; }

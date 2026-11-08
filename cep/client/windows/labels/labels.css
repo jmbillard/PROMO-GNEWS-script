@@ -4,9 +4,9 @@
 /* almost a vertical toggle: a dark track with the label's color as a rounded block on top,
    a bit less than half its height; the selected one fills the whole track. On change the
    fill runs in a cascade out from the selected one */
-.sw { height: 34px; border-radius: 5px; position: relative; background: #1E1E22; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+.sw { height: 34px; border-radius: var(--r); position: relative; background: #1E1E22; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
 	transition: transform .2s var(--spring); animation: tIn .35s var(--out) backwards; }
-.sw::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 14px; border-radius: 5px; background: var(--c);
+.sw::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 14px; border-radius: var(--r); background: var(--c);
 	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); transition: height .32s var(--spring) var(--d, 0ms); }
 .sw:hover::before { height: 17px; }
 .sw:active { transform: scale(.92); }
@@ -20,7 +20,7 @@
 .sw.on::after { display: none; }
 
 /* editor: [icon + big nº] [name / tile + brightness] [hex / saved vs new] */
-.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: 12px; padding: 12px 10px 10px; }
+.editor { display: grid; grid-template-columns: 24px minmax(0, 1fr) 82px; grid-template-rows: 30px auto; gap: 8px 10px; background: #26262B; border-radius: var(--r-l); padding: 12px 10px 10px; }
 .idcol { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 7px; color: var(--faint); }
 .lic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 .lic circle { fill: currentColor; stroke: none; }
@@ -30,7 +30,7 @@
 .nm.swap { animation: nmIn .32s var(--out); }
 @keyframes nmIn { from { opacity: 0; transform: translateY(3px); } }
 /* auto name: a small wand inside the field, yellow while the name follows the color */
-.wand { position: absolute; right: 5px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #6E6E78; transition: color .2s, background .2s, transform .25s var(--spring); }
+.wand { position: absolute; right: 5px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #6E6E78; transition: color .2s, background .2s, transform .25s var(--spring); }
 .wand:hover { color: var(--tx); background: #2A2A2F; }
 .wand:active { transform: scale(.88); }
 .wand.on { color: var(--acc); }
@@ -43,14 +43,14 @@
 .pick { display: flex; gap: 8px; align-items: stretch; }
 
 /* the color tile (adapted from O PADEIRO): hue = angle, saturation = square distance */
-.pk-tile { position: relative; flex: 1; min-width: 0; aspect-ratio: 1 / 1; border-radius: 10px; cursor: crosshair; overflow: hidden;
+.pk-tile { position: relative; flex: 1; min-width: 0; aspect-ratio: 1 / 1; border-radius: var(--r); cursor: crosshair; overflow: hidden;
 	background: conic-gradient(hsl(0, 95%, 60%), hsl(60, 95%, 55%), hsl(120, 80%, 52%), hsl(180, 90%, 52%), hsl(240, 95%, 64%), hsl(300, 90%, 62%), hsl(360, 95%, 60%)); }
-.pk-tile::before { content: ''; position: absolute; inset: 6px; border-radius: 6px; background: var(--wheel, transparent); }
-.pk-tile::after { content: ''; position: absolute; inset: 6px; border-radius: 6px; background: rgba(27, 27, 30, .16); backdrop-filter: blur(18px); }
+.pk-tile::before { content: ''; position: absolute; inset: 6px; border-radius: var(--r); background: var(--wheel, transparent); }
+.pk-tile::after { content: ''; position: absolute; inset: 6px; border-radius: var(--r); background: rgba(27, 27, 30, .16); backdrop-filter: blur(18px); }
 .pk-tile .mk { position: absolute; z-index: 2; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; background: var(--c, #fff); box-shadow: 0 0 0 2px #F2F2F4, 0 0 0 3px rgba(0, 0, 0, .45); cursor: grab; transition: transform .2s var(--spring); }
 /* brightness = a black veil over the (static, full-brightness) wheel: only its opacity changes,
    so dragging the slider never repaints the gradient or the blur */
-.pk-tile .dim { position: absolute; z-index: 1; inset: 6px; border-radius: 6px; background: #000; opacity: var(--dim, 0); pointer-events: none; }
+.pk-tile .dim { position: absolute; z-index: 1; inset: 6px; border-radius: var(--r); background: #000; opacity: var(--dim, 0); pointer-events: none; }
 .pk-tile .gx, .pk-tile .gy { position: absolute; z-index: 1; background: #F2F2F4; opacity: .5; transition: opacity .2s; pointer-events: none; mix-blend-mode: difference; }
 .pk-tile .gx { left: 6px; right: 6px; height: 1px; margin-top: -.5px; }
 .pk-tile .gy { top: 6px; bottom: 6px; width: 1px; margin-left: -.5px; }
@@ -60,21 +60,21 @@
 .pk-tile.drag { cursor: grabbing; }
 
 /* floating readouts (RGB on the tile, brightness on the slider) */
-.ftag { position: absolute; z-index: 3; left: 0; top: 0; padding: 4px 6px; border-radius: 5px; background: rgba(20, 20, 22, .84); color: var(--tx); font-size: 9px; line-height: 1.35; white-space: nowrap; pointer-events: none; transition: opacity .2s; }
+.ftag { position: absolute; z-index: 3; left: 0; top: 0; padding: 4px 6px; border-radius: var(--r); background: rgba(20, 20, 22, .84); color: var(--tx); font-size: 9px; line-height: 1.35; white-space: nowrap; pointer-events: none; transition: opacity .2s; }
 .ftag i { font-style: normal; color: var(--faint); margin-right: 5px; }
 .ftag b { display: block; font-weight: 500; }
 
 /* vertical brightness: thin track, small dark thumb, value floating beside it */
 .pk-vs { position: relative; width: 14px; flex: none; cursor: ns-resize; outline: none; }
-.pk-vs .trk { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; border-radius: 2px; background: var(--track, #34343A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
-.pk-vs .thumb { position: absolute; left: 0; right: 0; height: 8px; margin-top: -4px; top: 50%; border-radius: 3px; background: #18181B; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); transition: transform .2s var(--spring); }
+.pk-vs .trk { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; border-radius: var(--r-s); background: var(--track, #34343A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.pk-vs .thumb { position: absolute; left: 0; right: 0; height: 8px; margin-top: -4px; top: 50%; border-radius: var(--r-s); background: #18181B; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); transition: transform .2s var(--spring); }
 .pk-vs:hover .thumb, .pk-vs.drag .thumb { transform: scale(1.15, 1.25); }
 .pk-vs:focus-visible .thumb { outline: var(--line-acc); outline-offset: 2px; }
 .vtag { left: auto; right: calc(100% + 6px); opacity: 0; transform: translateY(-50%); transition: opacity .2s; }
 .pk-vs:hover .vtag, .pk-vs.drag .vtag, .pk-vs:focus-visible .vtag { opacity: 1; }
 
 /* saved vs new: its own block under the hex */
-.pk-cmp { display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.pk-cmp { display: flex; flex-direction: column; border-radius: var(--r); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
 .pk-cmp .now { flex: 1.6; display: block; }
 .pk-cmp .was { flex: 1; position: relative; cursor: pointer; transition: flex .35s var(--spring); }
 .pk-cmp .was span { position: absolute; left: 6px; bottom: 5px; font: 9px var(--mono); color: var(--ink, #F2F2F4); opacity: .8; transition: opacity .2s; }
@@ -89,7 +89,7 @@ select.fld option, select.fld optgroup { background: #1F1F23; color: var(--tx); 
 /* naming a preset (replaces the select) */
 .namer { position: relative; animation: tIn .3s var(--out); }
 .namer .fld { height: 34px; font-size: 12px; padding-right: 30px; }
-.pdel { position: absolute; right: 6px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #8E8E98; transition: color .2s, background .2s, transform .2s var(--spring); }
+.pdel { position: absolute; right: 6px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #8E8E98; transition: color .2s, background .2s, transform .2s var(--spring); }
 .pdel[hidden], .namer[hidden], .sel-wrap[hidden] { display: none; }
 .pdel:hover { color: var(--tx); background: #2A2A2F; }
 .pdel:active { transform: scale(.88); }

@@ -8,6 +8,10 @@
 */
 
 :root {
+	/* corner radius scale (GNEWS: square, right angles · keep to these three) */
+	--r-s: 2px;   /* small details: tags, markers, scrollbars */
+	--r: 4px;     /* controls: buttons, fields, tiles, hovers, dropdowns */
+	--r-l: 6px;   /* containers: cards, section blocks, editors, previews */
 	--bg: #1B1B1E;
 	--bg-2: #1F1F23;
 	--sunk: #18181B;
@@ -53,7 +57,7 @@ input, select { font: inherit; user-select: text; }
 /* scroll areas */
 .scroll { overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
 .scroll::-webkit-scrollbar { width: 6px; }
-.scroll::-webkit-scrollbar-thumb { background: #36363C; border-radius: 6px; }
+.scroll::-webkit-scrollbar-thumb { background: #36363C; border-radius: var(--r); }
 .scroll::-webkit-scrollbar-track { background: transparent; }
 .scroll.bare::-webkit-scrollbar { display: none; }
 
@@ -64,7 +68,7 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 
 /* icon button (navigation / actions) */
 .k {
-	width: 36px; height: 36px; flex: none; border-radius: 10px;
+	width: 36px; height: 36px; flex: none; border-radius: var(--r);
 	display: flex; align-items: center; justify-content: center;
 	color: #8A8A94; position: relative;
 	transition: background .2s, color .3s, transform .25s var(--spring);
@@ -75,7 +79,7 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 
 /* tool tile */
 .t {
-	width: 36px; height: 36px; position: relative; border-radius: 10px;
+	width: 36px; height: 36px; position: relative; border-radius: var(--r);
 	display: flex; align-items: center; justify-content: center; gap: 10px;
 	transition: background .2s, transform .25s var(--spring), box-shadow .3s, opacity .25s;
 	animation: tIn .4s var(--out) backwards;
@@ -94,7 +98,7 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .t.is-done .ico { opacity: 0; transform: scale(.5); }
 .t.is-err { box-shadow: inset 0 0 0 1.5px var(--err); }
 /* toggle on: a small solid square behind the icon (not the whole tile) */
-.t::before { content: ''; position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 3px; background: currentColor; transform: scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); pointer-events: none; }
+.t::before { content: ''; position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: var(--r-s); background: currentColor; transform: scale(0); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); pointer-events: none; }
 .t .ico { position: relative; }
 .t.tg-on::before { transform: scale(1); }
 .list .t.tg-on::before { left: 18px; }
@@ -129,7 +133,7 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 
 /* fields */
 .fld {
-	height: 34px; width: 100%; border-radius: 9px; background: var(--sunk);
+	height: 34px; width: 100%; border-radius: var(--r); background: var(--sunk);
 	border: 1px solid rgba(255, 255, 255, .07); color: var(--tx); padding: 0 10px; font-size: 13px;
 	transition: border-color .2s, box-shadow .2s;
 }
@@ -140,25 +144,25 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .fld-wrap .fld { padding-left: 34px; }
 
 /* range */
-.rng { -webkit-appearance: none; appearance: none; flex: 1; height: 4px; border-radius: 4px; background: #34343A; outline: none; margin: 0; color: var(--acc); }
+.rng { -webkit-appearance: none; appearance: none; flex: 1; height: 4px; border-radius: var(--r); background: #34343A; outline: none; margin: 0; color: var(--acc); }
 .rng::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: currentColor; border: 3px solid var(--bg-2); box-shadow: 0 0 0 1px currentColor; cursor: pointer; transition: transform .2s cubic-bezier(.3, 1.6, .5, 1); }
 .rng::-webkit-slider-thumb:hover { transform: scale(1.25); }
 
 /* chips / pills */
-.chip { height: 26px; padding: 0 10px; border-radius: 13px; font-size: 11px; font-weight: 600; color: var(--mute); background: #26262B; white-space: nowrap; transition: background .25s, color .25s, transform .2s; }
+.chip { height: 26px; padding: 0 10px; border-radius: var(--r-l); font-size: 11px; font-weight: 600; color: var(--mute); background: #26262B; white-space: nowrap; transition: background .25s, color .25s, transform .2s; }
 .chip:hover { color: var(--tx); }
 .chip:active { transform: scale(.93); }
 .chip.on { background: var(--tx); color: #141416; }
 
 /* option toggle (square) */
-.op { height: 28px; min-width: 34px; padding: 0 7px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font: 700 11px var(--mono); color: var(--faint); background: #26262B; transition: background .2s, color .2s, transform .25s cubic-bezier(.3, 1.6, .5, 1), box-shadow .2s; }
+.op { height: 28px; min-width: 34px; padding: 0 7px; border-radius: var(--r); display: inline-flex; align-items: center; justify-content: center; font: 700 11px var(--mono); color: var(--faint); background: #26262B; transition: background .2s, color .2s, transform .25s cubic-bezier(.3, 1.6, .5, 1), box-shadow .2s; }
 .op:hover { color: var(--tx); }
 .op:active { transform: scale(.88); }
 .op.on { background: rgba(143, 184, 255, .16); color: var(--focus); box-shadow: inset 0 0 0 1px rgba(143, 184, 255, .35); }
 .op svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 
 /* buttons */
-.btn { height: 36px; padding: 0 16px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 12px; font-weight: 700; position: relative; overflow: hidden; transition: background .2s, transform .2s, filter .2s, opacity .2s; }
+.btn { height: 36px; padding: 0 16px; border-radius: var(--r); display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 12px; font-weight: 700; position: relative; overflow: hidden; transition: background .2s, transform .2s, filter .2s, opacity .2s; }
 .btn:active { transform: scale(.96); }
 .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; position: relative; flex: none; }
 .btn span { position: relative; }
@@ -170,7 +174,7 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .btn .pf { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: rgba(255, 255, 255, .25); transform-origin: left center; animation: fill 1.6s cubic-bezier(.6, 0, .2, 1) both; }
 
 /* small icon button used inside windows */
-.ib { width: 32px; height: 32px; flex: none; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; color: #A9A9B2; transition: background .2s, color .2s, transform .2s; }
+.ib { width: 32px; height: 32px; flex: none; border-radius: var(--r); display: inline-flex; align-items: center; justify-content: center; color: #A9A9B2; transition: background .2s, color .2s, transform .2s; }
 .ib:hover { background: #2A2A2F; color: #F2F2F4; }
 .ib:active { transform: scale(.9); }
 .ib svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -182,15 +186,15 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .ib .go { animation: spin .7s cubic-bezier(.5, 0, .3, 1); }
 
 /* progress */
-.prog { height: 2px; background: #26262B; overflow: hidden; border-radius: 2px; }
-.prog i { display: block; height: 100%; width: 40%; background: var(--acc); border-radius: 2px; animation: scan .8s ease-in-out infinite; }
+.prog { height: 2px; background: #26262B; overflow: hidden; border-radius: var(--r-s); }
+.prog i { display: block; height: 100%; width: 40%; background: var(--acc); border-radius: var(--r-s); animation: scan .8s ease-in-out infinite; }
 .spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin .7s linear infinite; flex: none; }
 .ok-ico path { stroke-dasharray: 24; animation: draw .4s ease backwards; }
 
 /* inline status line (windows' footer) */
 .status { height: 30px; flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; border-top: 1px solid var(--line); font: 10px var(--mono); color: #8B8B95; }
 .note { display: inline-flex; align-items: center; gap: 6px; color: var(--tx); animation: hintIn .3s var(--spring) backwards; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.note i { width: 16px; height: 16px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; flex: none; background: var(--acc); }
+.note i { width: 16px; height: 16px; border-radius: var(--r); display: inline-flex; align-items: center; justify-content: center; flex: none; background: var(--acc); }
 .note i svg, .note i svg .b { width: 11px; height: 11px; fill: none; stroke: #141416; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .note i svg path { stroke-dasharray: 24; animation: draw .4s .1s ease backwards; }
 .note.err { color: #FFB3B2; }
@@ -232,17 +236,17 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 @keyframes rowIn { from { opacity: 0; transform: translateY(5px); } }
 
 /* tooltip: a little yellow square rises, opens into the dark box, the text types in */
-.tip { position: fixed; z-index: 9999; max-width: min(240px, calc(100vw - 8px)); padding: 5px 8px; box-sizing: border-box; border-radius: 3px;
+.tip { position: fixed; z-index: 9999; max-width: min(240px, calc(100vw - 8px)); padding: 5px 8px; box-sizing: border-box; border-radius: var(--r-s);
 	background: #ECFF8C; color: #E6E6EA; font: 500 11px/1.35 var(--sans); white-space: pre-line; pointer-events: none;
 	opacity: 0; transform: translateY(7px); clip-path: inset(calc(50% - 3.5px) calc(50% - 3.5px) round 1px);
 	transition: opacity .11s ease-out, transform .16s cubic-bezier(.3, 1.4, .5, 1), clip-path .17s cubic-bezier(.5, 0, .2, 1), background-color .17s; }
 .tip.s1 { opacity: 1; transform: none; }
-.tip.s2 { clip-path: inset(0 round 3px); background: #141416; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.tip.s2 { clip-path: inset(0 round var(--r)); background: #141416; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
 .tip.out { opacity: 0; transition: opacity .1s; }
 .tip .tx { display: block; min-height: 1.35em; }
 
 /* window that could not load its data */
 .fail { min-height: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 16px; text-align: center; animation: hintIn .3s ease backwards; }
-.fail > i { width: 26px; height: 26px; border-radius: 3px; display: flex; align-items: center; justify-content: center; background: rgba(255, 107, 107, .16); color: #FFB3B2; }
+.fail > i { width: 26px; height: 26px; border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; background: rgba(255, 107, 107, .16); color: #FFB3B2; }
 .fail > i svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
 .fail p { margin: 0; max-width: 280px; font: 11px/1.45 var(--mono); color: var(--tx-2); word-break: break-word; }
