@@ -78,7 +78,7 @@ const SCENES = {
 		await p.waitForTimeout(1100);
 	} },
 	// the accordion, vertical bar with labels
-	sanfona: { w: 230, h: 470, url: 'panel/index.html', async run(p) {
+	sanfona: { w: 230, h: 800, url: 'panel/index.html', async run(p) {
 		await p.waitForTimeout(2700);
 		let m = [200, 440];
 		for (const name of ['Controles', 'Texto', 'Projeto']) {
@@ -131,7 +131,7 @@ const SCENES = {
 		await p.waitForTimeout(1200);
 	} },
 	// searchable dropdown (end page)
-	dropdown: { w: 380, h: 560, url: 'windows/endpage/index.html', async run(p) {
+	dropdown: { w: 380, h: 1110, url: 'windows/endpage/index.html', async run(p) {
 		await p.waitForTimeout(900);
 		await p.click('#mode button[data-m="extended"]');
 		await p.waitForTimeout(600);
@@ -149,7 +149,7 @@ const SCENES = {
 		await p.keyboard.press('Enter'); await p.waitForTimeout(900);
 	} },
 	// fonts: families as groups, styles previewed, editable preview text
-	fontes: { w: 380, h: 560, url: 'windows/fonts/index.html', async run(p) {
+	fontes: { w: 380, h: 760, url: 'windows/fonts/index.html', async run(p) {
 		// real font files of this machine in place of the network fonts (after the page's own first load)
 		await p.waitForTimeout(700);
 		await p.evaluate(() => {

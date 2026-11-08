@@ -232,11 +232,18 @@ Esta seção só aparece com **ferramentas de dev** ligado nas preferências.
 
 ## janelas
 
+<img src="images/doc/gifs/dropdown.gif" width="300" align="right" alt="lista pesquisável">
+
 As janelas abrem pela barra e podem ficar abertas ao lado do After Effects.
 
-Todos os menus delas abrem uma lista para baixo, **pesquisável**: digite para filtrar e use ↑ ↓ e Enter para escolher.
+**Listas pesquisáveis.** Todos os menus das janelas abrem uma lista para baixo:
+1. Clique no menu.
+2. Digite para filtrar (no exemplo, `hora` no formato da [end page](#end-page)).
+3. Use ↑ ↓ e **Enter** para escolher, ou clique na opção. **Esc** fecha sem mudar.
 
-![dropdown](images/doc/gifs/dropdown.gif)
+A opção atual fica marcada com o losango amarelo.
+
+<br clear="right">
 
 ### curvas
 
