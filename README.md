@@ -299,7 +299,7 @@ Abra pelo primeiro botão do rodapé.
 Abra pelo botão **Fontes**, na seção Programa.
 
 1. Cada família (pasta) é um grupo. Clique no nome para ver os estilos, cada um desenhado com o próprio arquivo.
-2. Para mudar o texto de exemplo, escreva no campo do topo ou direto numa amostra. O **×** limpa o campo.
+2. Para mudar o texto de exemplo, escreva no campo do topo: todas as amostras acompanham. O **×** limpa o campo e volta a mostrar o nome de cada estilo.
 3. Escolha o tamanho do exemplo: **P**, **M** ou **G**.
 4. **Instalar** copia a família para as fontes do sistema.
 

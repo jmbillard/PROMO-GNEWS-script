@@ -165,8 +165,8 @@ const SCENES = {
 		await p.waitForTimeout(900);
 		let m = await glide(p, [350, 520], await center(p, '.fam:nth-child(1) .fh .nm'), 450);
 		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(800);
-		// type right in a sample: all follow
-		m = await glide(p, m, await center(p, '.fam.open .st:nth-child(2) .s'), 400);
+		// the preview text field on top: every sample follows
+		m = await glide(p, m, await center(p, '#sample'), 400);
 		await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(200);
 		await p.keyboard.press('Control+A');
 		for (const ch of 'Jornal das Dez') { await p.keyboard.type(ch); await p.waitForTimeout(70); }
