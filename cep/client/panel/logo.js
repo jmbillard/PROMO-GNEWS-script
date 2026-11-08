@@ -115,7 +115,9 @@
 		var b = part === 'globo' ? L.gbox : L.box;
 		var NS = 'http://www.w3.org/2000/svg';
 		var svg = document.createElementNS(NS, 'svg');
-		svg.setAttribute('viewBox', b.join(' '));
+		// a small margin: antialiased edges are not clipped
+		var m = Math.round(b[3] * 0.04);
+		svg.setAttribute('viewBox', [b[0] - m, b[1] - m, b[2] + 2 * m, b[3] + 2 * m].join(' '));
 		svg.setAttribute('aria-hidden', 'true');
 		svg.setAttribute('class', 'gl gl-' + part);
 		var g = document.createElementNS(NS, 'path');

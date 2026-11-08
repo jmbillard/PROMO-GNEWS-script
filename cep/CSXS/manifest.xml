@@ -48,8 +48,8 @@
 					<Type>Panel</Type>
 					<Menu>PROMO GNEWS</Menu>
 					<Geometry>
-						<Size><Width>56</Width><Height>640</Height></Size>
-						<MinSize><Width>48</Width><Height>48</Height></MinSize>
+						<Size><Width>134</Width><Height>640</Height></Size>
+						<MinSize><Width>134</Width><Height>48</Height></MinSize>
 						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>

@@ -55,7 +55,7 @@
 		app.classList.toggle('one', horiz && rows === 1);
 		nav.querySelectorAll('.grid').forEach(function (g) {
 			var list = app.classList.contains('list') && !g.classList.contains('swatches');
-			g.style.gridTemplateColumns = horiz ? '' : (list ? '1fr' : 'repeat(' + cols + ', 36px)');
+			g.style.gridTemplateColumns = horiz ? '' : (list ? 'minmax(0, 1fr)' : 'repeat(' + cols + ', 36px)');
 			g.style.gridTemplateRows = horiz ? 'repeat(' + rows + ', 36px)' : '';
 		});
 	}
@@ -68,15 +68,15 @@
 		SECTIONS.forEach(function (sec) {
 			if (sec.dev && !state.dev) return;
 			var isOpen = state.open === sec.id;
+			// the whole head (icon + name) opens / closes the section
 			var head = h('button.k', {
 				title: sec.name,
 				'aria-label': sec.name,
-				'aria-expanded': String(isOpen),
-				onclick: function () { toggleSection(sec.id); }
+				'aria-expanded': String(isOpen)
 			}, icon(sec.d, sec.a));
 			var block = h('div.sec' + (isOpen ? '.open' : ''), {
 				style: isOpen ? { background: rgba(sec.acc, .12), color: sec.acc } : null
-			}, h('div.head', null, [head, h('span.name', { text: sec.name })]));
+			}, h('div.head', { onclick: function () { toggleSection(sec.id); } }, [head, h('span.name', { text: sec.name })]));
 			if (isOpen) { block.style.setProperty('--sa', sec.acc); block.style.setProperty('--sa-ink', ink(sec.acc)); }
 
 			if (isOpen && sec.fields) block.appendChild(buildFields(sec));
@@ -244,19 +244,8 @@
 	/* ---------- project id / name (only when the panel is roomy) ---------- */
 
 	function buildFields(sec) {
-		// user prefix (few letters): shown in the horizontal bar next to the ID, saved in the preferences
-		var userF = h('input.fld.mono.usr', { type: 'text', placeholder: 'USR', maxlength: 3, title: 'usuário', 'aria-label': 'Prefixo do usuário', spellcheck: 'false' });
-		userF.addEventListener('change', function () {
-			var v = userF.value.toUpperCase();
-			userF.value = v;
-			PGN.run('prefs.set', { patch: { userPrefix: v } }).then(function (r) {
-				feedback(r.ok ? 'usuário ' + v : r.error, r.ok, sec.acc);
-				if (r.ok) PGN.emit('prefs', { userPrefix: v });
-			});
-		});
-		userF.addEventListener('keydown', function (e) { if (e.key === 'Enter') userF.blur(); });
 		var idF = h('input.fld.mono.pid', { type: 'text', placeholder: 'ID', title: 'ID do projeto', 'aria-label': 'ID do projeto', spellcheck: 'false' });
-		var nameF = h('input.fld', { type: 'text', placeholder: 'retranca', 'aria-label': 'Nome do projeto', spellcheck: 'false' });
+		var nameF = h('input.fld.pnm', { type: 'text', placeholder: 'nome do projeto', title: 'nome do projeto', 'aria-label': 'Nome do projeto', spellcheck: 'false' });
 		function bind(input, id, key) {
 			input.addEventListener('change', function () {
 				var a = {}; a[key] = input.value;
@@ -274,10 +263,8 @@
 			idF.value = r.data.id || '';
 			nameF.value = r.data.name || '';
 			idF.placeholder = r.data.idLabel || 'ID';
-			userF.value = r.data.user || '';
 		});
-		nameF.classList.add('ret');
-		return h('div.fields', null, [userF, idF, nameF]);
+		return h('div.fields', null, [idF, nameF]);
 	}
 
 	/* ---------- running tools ---------- */

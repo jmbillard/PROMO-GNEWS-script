@@ -103,12 +103,11 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 .fields { display: none; flex-direction: column; gap: 6px; padding: 4px 4px 8px; }
 .roomy .fields { display: flex; }
 .fields .fld { height: 30px; font-size: 12px; }
-.fields .usr { display: none; }
-/* horizontal bar: user + ID, tiny, right after the section chip (stacked on two rows, side by side on one) */
+/* horizontal bar: ID + project name, small, right after the section chip (stacked on two rows, side by side on one) */
 .horiz .fields { display: flex; flex: none; flex-direction: column; justify-content: center; gap: 4px; padding: 0 6px 0 2px; align-self: stretch; }
-.horiz .fields .ret { display: none; }
-.horiz .fields .usr { display: block; }
-.horiz .fields .fld { width: 46px; height: 24px; padding: 0 4px; border-radius: var(--r-s); font-size: 10px; text-align: center; text-transform: uppercase; }
+.horiz .fields .fld { height: 24px; padding: 0 6px; border-radius: var(--r); font-size: 10px; }
+.horiz .fields .pid { width: 104px; text-transform: uppercase; }
+.horiz .fields .pnm { width: 104px; }
 .horiz.one .fields { flex-direction: row; align-items: center; }
 
 /* long task progress: ring on the tile, line on the footer, % on the selection chip */
@@ -153,3 +152,20 @@ footer { position: relative; }
 .horiz footer { flex-wrap: nowrap; align-items: center; padding: 10px 10px 10px 8px; border-top: 0; border-left: 1px solid var(--line); }
 .horiz .jobbar { top: auto; bottom: 0; }
 @keyframes accInX { from { max-width: 36px; } to { max-width: 1600px; } }
+
+/* ---- vertical bar ---- */
+/* the head (icon + name) is one target */
+.sec .head { cursor: pointer; border-radius: var(--r); gap: 10px; }
+.wide .sec:not(.open) .head:hover { background: #26262B; }
+.wide .sec:not(.open) .head:hover .k { background: transparent; color: #F2F2F4; }
+.wide .sec:not(.open) .head:hover .name { color: var(--tx); }
+/* the open section's icon: a solid chip in the section color (as in the horizontal bar) */
+.sec.open > .head .k { background: var(--sa); color: var(--sa-ink); }
+.sec.open > .head .k:hover { background: var(--sa); filter: brightness(1.08); }
+.sec.open { border-radius: var(--r-l); }
+/* long names end with … instead of being cut */
+.list .t { min-width: 0; }
+.list .t .lbl { flex: 1; min-width: 0; text-align: left; }
+.sec .head .name { flex: 1; min-width: 0; padding-right: 8px; }
+/* logo: a little air around it */
+.logo { height: 40px; }
