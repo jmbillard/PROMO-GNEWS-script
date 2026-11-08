@@ -3,6 +3,7 @@
 > PROMO GNEWS · keyframe influence window
 ---------------------------------------------------------------
   host: inf.stats (poll) · inf.read (copiar) · inf.apply { out, in }
+        inf.presets.get / .set { presets } / .reset (+ salva a curva atual, × exclui)
 */
 (function () {
 	'use strict';
@@ -38,9 +39,14 @@
 		$('out').value = s.out; $('in').value = s.in;
 		$('outV').textContent = s.out + '%'; $('inV').textContent = s.in + '%';
 		plot.setAttribute('aria-label', 'Curva de influência: saída ' + s.out + '%, entrada ' + s.in + '%');
-		document.querySelectorAll('.pre').forEach(function (b) {
-			b.classList.toggle('on', +b.dataset.o === s.out && +b.dataset.i === s.in);
+		var saved = false;
+		document.querySelectorAll('.pre[data-o]').forEach(function (b) {
+			var on = +b.dataset.o === s.out && +b.dataset.i === s.in;
+			b.classList.toggle('on', on);
+			if (on) saved = true;
 		});
+		var add = $('preAdd');
+		if (add) add.classList.toggle('dim', saved);
 		UI.store('inf.out', s.out); UI.store('inf.in', s.in);
 	}
 
@@ -81,17 +87,67 @@
 	});
 
 	// ---- presets ------------------------------------------------
-	var pd = 40;
-	[[33, 33], [66, 66], [90, 90], [85, 15], [15, 85], [100, 50]].forEach(function (p) {
-		var d = 'M3 19C' + (3 + p[0] * .3).toFixed(1) + ' 19 ' + (33 - p[1] * .3).toFixed(1) + ' 3 33 3';
-		var b = UI.h('button.pre', {
-			title: p[0] + ' / ' + p[1], 'aria-label': 'Preset ' + p[0] + '% / ' + p[1] + '%',
-			'data-o': p[0], 'data-i': p[1],
-			style: { animationDelay: (pd += 30) + 'ms' },
-			onclick: function () { s.linked = false; $('link').classList.remove('on'); s.out = p[0]; s.in = p[1]; draw(); }
-		}, UI.svg('0 0 36 22', { 'aria-hidden': 'true' }, [UI.path(d)]));
-		$('presets').appendChild(b);
-	});
+	// saved on the host (curves.json): + saves the current curve, × (on hover) deletes,
+	// right click on + brings the default presets back
+	var PRE = [];
+
+	function preIcon(o, i) {
+		var d = 'M3 19C' + (3 + o * .3).toFixed(1) + ' 19 ' + (33 - i * .3).toFixed(1) + ' 3 33 3';
+		return UI.svg('0 0 36 22', { 'aria-hidden': 'true' }, [UI.path(d)]);
+	}
+	function savePresets(list, msg) {
+		PGN.run('inf.presets.set', { presets: list, msg: msg }).then(function (r) {
+			if (r.ok && r.data) { PRE = r.data.presets; renderPresets(); }
+			UI.note(note, r.ok ? r.msg : r.error, r.ok);
+		});
+	}
+	function renderPresets(animate) {
+		var box = $('presets');
+		box.textContent = '';
+		var pd = 40;
+		PRE.forEach(function (p, idx) {
+			var b = UI.h('button.pre', {
+				title: p[0] + ' / ' + p[1], 'aria-label': 'Preset ' + p[0] + '% / ' + p[1] + '%',
+				'data-o': p[0], 'data-i': p[1],
+				style: animate ? { animationDelay: (pd += 30) + 'ms' } : { animation: 'none' },
+				onclick: function () { s.linked = false; $('link').classList.remove('on'); s.out = p[0]; s.in = p[1]; draw(); }
+			}, preIcon(p[0], p[1]));
+			var del = UI.h('span.pdel', {
+				role: 'button', title: 'excluir preset', 'aria-label': 'Excluir preset ' + p[0] + ' / ' + p[1],
+				onclick: function (e) {
+					e.stopPropagation();
+					var list = PRE.slice(); list.splice(idx, 1);
+					b.classList.add('gone');
+					setTimeout(function () { savePresets(list, 'Preset ' + p[0] + ' / ' + p[1] + ' exclu\u00EDdo'); }, 160);
+				}
+			}, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M7 7l10 10M17 7L7 17')]));
+			b.appendChild(del);
+			box.appendChild(b);
+		});
+		var add = UI.h('button.pre.padd', {
+			id: 'preAdd', title: 'salvar a curva atual como preset\n\u25D7 bot\u00E3o direito: presets padr\u00E3o', 'aria-label': 'Salvar a curva atual como preset',
+			style: animate ? { animationDelay: (pd += 30) + 'ms' } : { animation: 'none' },
+			onclick: function () {
+				if (PRE.length >= 24) { UI.note(note, 'at\u00E9 24 presets', false); return; }
+				savePresets(PRE.concat([[s.out, s.in]]), 'Preset ' + s.out + ' / ' + s.in + ' salvo');
+			},
+			oncontextmenu: function (e) {
+				e.preventDefault();
+				PGN.run('inf.presets.reset', {}).then(function (r) {
+					if (r.ok && r.data) { PRE = r.data.presets; renderPresets(true); }
+					UI.note(note, r.ok ? r.msg : r.error, r.ok);
+				});
+			}
+		}, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 6v12M6 12h12')]));
+		box.appendChild(add);
+		draw();
+	}
+	function loadPresets() {
+		PGN.run('inf.presets.get', {}).then(function (r) {
+			PRE = r.ok && r.data ? r.data.presets : [];
+			renderPresets(true);
+		});
+	}
 
 	// ---- keyframe stats -------------------------------------------
 	var KEY = 'M12 4l8 8-8 8-8-8z', EASE = 'M4 18c4 0 6-12 16-12';
@@ -185,6 +241,10 @@
 	});
 
 	// browser preview data
+	var MOCKPRE = [[33, 33], [66, 66], [90, 90], [85, 15], [15, 85], [100, 50]];
+	PGN.mock('inf.presets.get', function () { return { data: { presets: MOCKPRE.slice() } }; }, 60);
+	PGN.mock('inf.presets.set', function (a) { MOCKPRE = a.presets; return { msg: a.msg || 'Presets salvos', data: { presets: a.presets } }; }, 60);
+	PGN.mock('inf.presets.reset', function () { MOCKPRE = [[33, 33], [66, 66], [90, 90], [85, 15], [15, 85], [100, 50]]; return { msg: 'Presets padr\u00E3o', data: { presets: MOCKPRE.slice() } }; }, 60);
 	PGN.mock('inf.stats', function () { return { data: { keys: 2, out: 33, 'in': 66, outSpeed: 0 } }; }, 80);
 	PGN.mock('inf.read', function () { return { msg: 'Influência copiada', data: { out: 75, 'in': 40, keys: 1 } }; });
 	PGN.mock('inf.apply', function (a) { return { msg: 'Influência aplicada em 2 keyframes' }; });
@@ -192,6 +252,7 @@
 	PGN.mock('inf.exprRemove', function () { return { msg: '2 expressões removidas' }; });
 
 	draw();
+	loadPresets();
 	pollStats();
 	setInterval(pollStats, 1500);
 })();

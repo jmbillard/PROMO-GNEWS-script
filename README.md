@@ -260,6 +260,13 @@ Abra pelo botão **Influência dos keyframes**, na seção Animação.
 
 Para tirar a expressão de curva, use o botão de remover com as propriedades selecionadas.
 
+**Presets:** clique num preset para usar a curva dele.
+- **+** salva a curva atual como preset. Ele fica apagado quando a curva já é um preset.
+- Passe o mouse sobre um preset e clique no **×** para excluí-lo.
+- Botão direito no **+** volta aos presets padrão.
+
+Os presets ficam nas preferências do usuário (`curves.json`).
+
 <br clear="right">
 
 ### busca

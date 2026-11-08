@@ -21,6 +21,12 @@
     inf.expr        { out, in }  → selected properties with 2+ keys
     inf.exprRemove                → removes only this script's expression
 
+  the window's curve presets, saved per user in '<script prefs>/curves.json':
+
+    inf.presets.get               → { presets: [[out, in], ...] }
+    inf.presets.set { presets }   → saves (1..100, no repeats, max 24)
+    inf.presets.reset             → back to the defaults
+
 */
 
 (function () {
@@ -133,6 +139,74 @@
 
 		if (!count) PGN.fail('nenhuma curva por expressão nas propriedades selecionadas');
 		return PGN.n(count, 'expressão removida', 'expressões removidas');
+	});
+
+	//---------------------------------------------------------
+
+	// curve presets of the window ([out, in] influence pairs)
+	var PRESETS = [[33, 33], [66, 66], [90, 90], [85, 15], [15, 85], [100, 50]];
+
+	function presetFile() {
+		var folder = new Folder(scriptPreferencesPath);
+
+		if (!folder.exists) folder.create();
+		return new File(scriptPreferencesPath + '/curves.json');
+	}
+
+	function cleanPresets(list) {
+		var out = [];
+		var seen = {};
+
+		if (list == null || typeof list != 'object' || typeof list.length != 'number') return out;
+		for (var i = 0; i < list.length && out.length < 24; i++) {
+			var p = list[i];
+
+			if (p == null || typeof p != 'object' || !(p.length >= 2)) continue;
+			var o = Math.round(num(p[0], 33));
+			var n = Math.round(num(p[1], 33));
+
+			if (o < 1) o = 1;
+			if (n < 1) n = 1;
+			if (seen[o + '/' + n]) continue;
+			seen[o + '/' + n] = true;
+			out.push([o, n]);
+		}
+		return out;
+	}
+
+	function loadPresets() {
+		var f = presetFile();
+
+		if (f.exists) {
+			try {
+				f.encoding = 'UTF-8';
+				var o = JSON.parse(readFileContent(f));
+
+				// an empty list is a choice too (all deleted)
+				if (o != null && typeof o == 'object' && typeof o.length == 'number') return cleanPresets(o);
+			} catch (e) { }
+		}
+		return cleanPresets(PRESETS);
+	}
+
+	PGN.register('inf.presets.get', function (args) {
+		return { msg: '', data: { presets: loadPresets(), defaults: cleanPresets(PRESETS) } };
+	});
+
+	PGN.register('inf.presets.set', function (args) {
+		var list = cleanPresets(args.presets);
+		var f = presetFile();
+
+		f.encoding = 'UTF-8';
+		writeFileContent(f, JSON.stringify(list));
+		return { msg: args.msg ? String(args.msg) : 'Presets salvos', data: { presets: list } };
+	});
+
+	PGN.register('inf.presets.reset', function (args) {
+		var f = presetFile();
+
+		if (f.exists) f.remove();
+		return { msg: 'Presets padr\u00E3o', data: { presets: cleanPresets(PRESETS) } };
 	});
 
 })();
