@@ -211,29 +211,24 @@ function applyEase(sLayer) {
 		var aProp = selProps[p];
 		var selKeys = aProp.selectedKeys;
 
+		// groups (an effect, 'Transform'...) come in the selection too: no keys there
+		if (selKeys == undefined || selKeys.length == 0) continue;
+
 		for (var k = 0; k < selKeys.length; k++) {
 			var aKey = selKeys[k];
-
 			var easeOut = new KeyframeEase(0, easeOutInfluence);
 			var easeIn = new KeyframeEase(0, easeInInfluence);
-			var easeInArray = [easeIn];
-			var easeOutArray = [easeOut];
+			// one ease per dimension, as many as the key already has
+			// (1 for spatial or 1D properties, 2-3 for scale and other arrays)
+			var dims = aProp.keyInTemporalEase(aKey).length;
+			var easeInArray = [];
+			var easeOutArray = [];
 
-			try {
-				aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-
-			} catch (err) {
-
-				if (Array.isArray(aProp.value)) {
-
-					for (var e = 1; e < aProp.value.length; e++) {
-						easeOutArray.push(easeOut);
-						easeInArray.push(easeIn);
-					}
-				}
-
-				aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+			for (var e = 0; e < dims; e++) {
+				easeInArray.push(easeIn);
+				easeOutArray.push(easeOut);
 			}
+			aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
 		}
 	}
 }

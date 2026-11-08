@@ -168,12 +168,20 @@
 
 	PGN.register('inf.read', function (args) {
 		var comp = PGN.comp();
-		var selLayer = comp.selectedLayers[0];
-		var aProp = selLayer != null ? selLayer.selectedProperties[0] : null;
+		var selLayers = comp.selectedLayers;
+		var selLayer = null;
+		var aProp = null;
 
-		if (aProp == null || aProp.selectedKeys == undefined || aProp.selectedKeys.length != 1) {
-			PGN.fail('selecione 1 keyframe');
+		// the property that holds the selected key (groups like an effect come in the selection too)
+		if (countSelKeys(selLayers) != 1) PGN.fail('selecione 1 keyframe');
+		for (var l = 0; l < selLayers.length && !aProp; l++) {
+			var selProps = selLayers[l].selectedProperties;
+
+			for (var p = 0; p < selProps.length; p++) {
+				if (hasKeys(selProps[p])) { selLayer = selLayers[l]; aProp = selProps[p]; break; }
+			}
 		}
+		if (aProp == null) PGN.fail('selecione 1 keyframe');
 		var k = aProp.selectedKeys[0];
 		var stats = keyStats(selLayer, aProp, k, 1);
 
