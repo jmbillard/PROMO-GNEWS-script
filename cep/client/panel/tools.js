@@ -154,8 +154,10 @@
 				[
 					T('pal', 'Paleta em shape layer', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z', COMP),
 					T('onair', 'Seta on-air', 'diag', 'M5 12h11', 'M12 6l6 6-6 6', COMP),
-					T('logo', 'Logo estática', 'pulse', 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16', 'M12 8.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7', COMP),
-					T('logoa', 'Logo animada 3s', 'spin', 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16', 'M12 4a8 8 0 0 1 8 8', COMP)
+					// the globe: circle, 'screen' and center dot
+					T('logo', 'Logo estática', 'pulse', 'M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17', 'M7.2 8.9q4.8-.8 9.6 0q.5 3.1 0 6.2q-4.8.8-9.6 0q-.5-3.1 0-6.2zM12 12h.01', COMP),
+					// the globe and the bar the opening animation starts from (hover: the bar slides in)
+					T('logoa', 'Logo animada 3s', 'slide', 'M14.5 5a7 7 0 1 1 0 14a7 7 0 1 1 0-14M10.8 9.9q3.7-.6 7.4 0q.4 2.1 0 4.2q-3.7.6-7.4 0q-.4-2.1 0-4.2zM14.5 12h.01', 'M3.5 7.5v9', COMP)
 				],
 				// + the palette groups (palette.get) — see paletteGroups()
 			],
