@@ -155,7 +155,7 @@
 					T('pal', 'Paleta em shape layer', 'pop', 'M4 4h7v7H4zM13 13h7v7h-7z', 'M13 4h7v7h-7zM4 13h7v7H4z', COMP),
 					T('onair', 'Seta on-air', 'diag', 'M5 12h11', 'M12 6l6 6-6 6', COMP),
 					// GNEWS: the globe (circle) and 'news' (rectangle)
-					T('logo', 'Logo estática', 'pulse', 'M6.5 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8', 'M13 9.5h8v5h-8z', COMP),
+					T('logo', 'Logo estática', '', 'M6.5 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8', 'M13 9.5h8v5h-8z', COMP),
 					// the opening: a square passes over 'news' revealing it (hover: the square slides on)
 					T('logoa', 'Logo animada 3s', 'slide', 'M11 9.5h10v5H11', 'M3 7h8v10H3z', COMP)
 				],
