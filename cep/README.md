@@ -19,6 +19,7 @@ cep/
 source/                      globals + bibliotecas usadas pelo host (funções, expressões, shape templates, rigs)
 downloads/                   templates, fontes e presets do AME baixados pelo host quando faltam
 tools/                       build-cep.js (pacote / instalação de dev) · gnews-logo.js (logo animada do painel)
+                             diagnostico.jsx (lista as cópias instaladas e quais ainda têm código antigo)
 ```
 
 ## Interface

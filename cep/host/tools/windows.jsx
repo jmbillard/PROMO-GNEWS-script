@@ -632,7 +632,9 @@ PGN.prefs = {
 // the classic ScriptUI bar still installed? (it shows its own 'drive N' popup at every start)
 PGN.win.oldScripts = function () {
 	var names = ['PROMO GNEWS.jsxbin', 'PROMO GNEWS.jsx', 'PROMO GNEWS.js', 'PROMO GNEWS DEV.jsx', 'PROMO GNEWS DEV.js'];
-	var dirs = [Folder.appPackage.fsName + '/Scripts/ScriptUI Panels', Folder.appPackage.fsName + '/Scripts/Startup'];
+	// Windows: Support Files/Scripts · macOS: Scripts sits next to the .app, not inside it
+	var appDir = appOs == 'Mac' ? Folder.appPackage.parent.fsName : Folder.appPackage.fsName;
+	var dirs = [appDir + '/Scripts/ScriptUI Panels', appDir + '/Scripts/Startup'];
 	var found = [];
 
 	try {

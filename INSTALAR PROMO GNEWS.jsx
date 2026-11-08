@@ -177,7 +177,9 @@
 
 	// o script antigo ficava nas pastas 'ScriptUI Panels' ou 'Startup' (do app e das preferências de cada versão)
 	function oldScriptFolders() {
-		var list = [new Folder(Folder.appPackage.fsName + '/Scripts/ScriptUI Panels'), new Folder(Folder.appPackage.fsName + '/Scripts/Startup')];
+		// Windows: Support Files/Scripts · macOS: a pasta Scripts fica ao lado do .app (não dentro)
+		var appDir = IS_MAC ? Folder.appPackage.parent.fsName : Folder.appPackage.fsName;
+		var list = [new Folder(appDir + '/Scripts/ScriptUI Panels'), new Folder(appDir + '/Scripts/Startup')];
 		var prefsBase = IS_MAC ? userData.replace(/Application Support$/, 'Preferences') : userData;
 		var aeFolder = new Folder(prefsBase + '/Adobe/After Effects');
 

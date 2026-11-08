@@ -33,8 +33,9 @@ function PGN_sourceFolder(hostPath) {
 	var a = new Folder(hostPath + '/src');
 	var b = new Folder(hostPath + '/../../source');
 
-	if (new File(a.fsName + '/globals.js').exists) return a;
+	// <raiz>/source primeiro: uma cópia velha em host/src nunca vence os fontes atuais
 	if (new File(b.fsName + '/globals.js').exists) return b;
+	if (new File(a.fsName + '/globals.js').exists) return a;
 	return null;
 }
 

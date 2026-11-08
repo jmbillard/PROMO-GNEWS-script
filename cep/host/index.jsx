@@ -21,10 +21,11 @@ var vStr = 'v3.0';
 
 (function () {
 	var hostFolder = new File($.fileName).parent;
-	// classic sources: host/src (package or dev link) or <root>/source (network / repository)...
-	var srcFolder = new Folder(hostFolder.fsName + '/src');
+	// sources: <root>/source (network / repository) first, host/src only for a packaged build —
+	// a stale host/src copy must never win over the live source folder
+	var srcFolder = new Folder(hostFolder.fsName + '/../../source');
 
-	if (!new File(srcFolder.fsName + '/globals.js').exists) srcFolder = new Folder(hostFolder.fsName + '/../../source');
+	if (!new File(srcFolder.fsName + '/globals.js').exists) srcFolder = new Folder(hostFolder.fsName + '/src');
 	if (!new File(srcFolder.fsName + '/globals.js').exists) {
 		alert('PROMO GNEWS: fontes do script n\u00E3o encontrados (source/)');
 		return;
