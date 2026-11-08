@@ -17,7 +17,7 @@
 
 */
 
-var vStr = 'v3.0';
+var vStr = 'v3 beta 1';
 
 // everything runs at the top level, on purpose: ExtendScript's $.evalFile evaluates in the
 // CALLER's scope, so loading the sources from inside a function kept PGN and the classic

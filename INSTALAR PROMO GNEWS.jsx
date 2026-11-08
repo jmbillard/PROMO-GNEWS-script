@@ -259,8 +259,12 @@
 		return t;
 	}
 
+	// release name shown to the team (the manifest keeps numbers only: CEP needs x.y.z)
+	var RELEASE = 'v3 beta 1';
 	var ver = version();
-	var win = new Window('window', 'PROMO GNEWS' + (ver ? ' v' + ver : '') + ' · instalador', undefined, { closeButton: false });
+	var win = new Window('window', 'PROMO GNEWS ' + RELEASE + ' · instalador', undefined, { closeButton: false });
+
+	win.helpTip = ver ? 'extensão ' + ver : '';
 
 	win.orientation = 'column';
 	win.alignChildren = ['center', 'top'];

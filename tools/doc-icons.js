@@ -12,6 +12,8 @@
     images/doc/icons/<section>-<tool>.png   tool tile
     images/doc/icons/foot-<n>.png           footer buttons
     images/doc/icons/link-<key>.png         icons offered for 'Atalhos'
+    images/doc/icons/fxi-<key>.png          icons offered for 'Efeitos'
+    images/doc/icons/cor-<hex>.png          default palette swatches (host/tools/palette.jsx)
 
   usage:  node tools/doc-icons.js        (needs playwright)
 */
@@ -22,6 +24,9 @@ const { chromium } = require('playwright');
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'images/doc/icons');
 const CLIENT = 'file://' + path.join(ROOT, 'cep/client');
+
+// default palette, read from the host (one source of truth)
+const PALETTE = JSON.stringify((fs.readFileSync(path.join(ROOT, 'cep/host/tools/palette.jsx'), 'utf8').match(/#[0-9A-F]{6}/g) || []).filter((v, i, a) => a.indexOf(v) === i));
 
 const PAGE = `<!doctype html><meta charset="utf-8">
 <style>
@@ -37,7 +42,9 @@ const PAGE = `<!doctype html><meta charset="utf-8">
 <div id="out"></div>
 <script>window.UI = { store: function () {} };</script>
 <script src="${CLIENT}/shared/link-icons.js"></script>
+<script src="${CLIENT}/shared/fx-icons.js"></script>
 <script src="${CLIENT}/panel/tools.js"></script>
+<script>window.PALETTE_DEFAULT = ${PALETTE};</script>
 <script>
 	var out = document.getElementById('out');
 	function svg(d, a) {
@@ -65,6 +72,8 @@ const PAGE = `<!doctype html><meta charset="utf-8">
 	FOOTER.forEach(function (f, i) { tile('foot-' + i, '#ECFF8C', svg(f.d, f.a)); });
 	Object.keys(LINK_ICONS).forEach(function (k) { tile('link-' + k, '#FFB398', svg(LINK_ICONS[k][0], LINK_ICONS[k][1])); });
 	['OD', 'TR', 'AP', 'PL'].forEach(function (g) { tile('link-' + g.toLowerCase(), '#FFB398', '<span class="g">' + g + '</span>'); });
+	Object.keys(FX_ICONS).forEach(function (k) { tile('fxi-' + k, '#ACCDEC', svg(FX_ICONS[k][0], FX_ICONS[k][1])); });
+	PALETTE_DEFAULT.forEach(function (hex) { tile('cor-' + hex.slice(1), '#BBBBBD', '<i class="sw" style="background:' + hex + '"></i>'); });
 </script>`;
 
 (async () => {

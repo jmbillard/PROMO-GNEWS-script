@@ -20,7 +20,7 @@ source/                      globals + bibliotecas usadas pelo host (funções, 
 downloads/                   templates, fontes e presets do AME baixados pelo host quando faltam
 tools/                       build-cep.js (pacote / instalação de dev) · gnews-logo.js (logo animada do painel)
                              diagnostico.jsx (lista as cópias instaladas e quais ainda têm código antigo)
-                             doc-icons.js · doc-gifs.js (ícones e gifs do README, gerados da própria interface)
+                             doc-icons.js · doc-shots.js · doc-gifs.js (ícones, capturas e gifs do README, gerados da própria interface)
 ```
 
 ## Interface
