@@ -131,5 +131,104 @@
 		return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '');
 	}
 
+	/* ---------- tooltips ----------
+	   every [title] becomes a custom tip: a small yellow square rises from below,
+	   opens into the dark box and the text types in. The title moves to data-tip so
+	   the native one stays quiet; code may set .title again, it is picked up on the
+	   next hover. When the page is too small for any placement (the narrow vertical
+	   bar), the native tooltip is kept: it can leave the panel, ours can't. */
+	var tip = null, tipT = 0, typeT = 0, tipFor = null, lastHide = 0;
+	var REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	function tipText(el) {
+		if (el.hasAttribute('title')) {
+			var t = el.getAttribute('title');
+			if (t) el.setAttribute('data-tip', t);
+			el.removeAttribute('title');
+		}
+		return el.getAttribute('data-tip') || '';
+	}
+	function hideTip() {
+		clearTimeout(tipT); clearTimeout(typeT);
+		if (tipFor) { lastHide = Date.now(); tipFor = null; }
+		if (!tip) return;
+		var old = tip;
+		tip = null;
+		old.classList.add('out');
+		setTimeout(function () { old.remove(); }, 120);
+	}
+	function placeTip(box, r, w, ht) {
+		var W = window.innerWidth, H = window.innerHeight, m = 4, gap = 6;
+		var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+		var spots = [
+			{ x: cx - w / 2, y: r.top - gap - ht },
+			{ x: cx - w / 2, y: r.bottom + gap },
+			{ x: r.right + gap, y: cy - ht / 2 },
+			{ x: r.left - gap - w, y: cy - ht / 2 }
+		];
+		for (var i = 0; i < spots.length; i++) {
+			var s = spots[i];
+			if (i < 2) s.x = Math.max(m, Math.min(W - m - w, s.x));
+			else s.y = Math.max(m, Math.min(H - m - ht, s.y));
+			if (s.x >= m && s.y >= m && s.x + w <= W - m && s.y + ht <= H - m) {
+				box.style.left = Math.round(s.x) + 'px';
+				box.style.top = Math.round(s.y) + 'px';
+				return true;
+			}
+		}
+		return false;
+	}
+	function showTip(el) {
+		var text = tipText(el);
+		if (!text) return;
+		var box = h('div.tip', { role: 'tooltip' }, h('span.tx'));
+		var tx = box.firstChild;
+		tx.textContent = text;
+		document.body.appendChild(box);
+		// measured at the corner, rounded up: a rounded-down width would wrap the last word
+		box.style.left = '0px'; box.style.top = '0px';
+		var rb = box.getBoundingClientRect(), w = Math.ceil(rb.width) + 1, ht = Math.ceil(rb.height);
+		if (!placeTip(box, el.getBoundingClientRect(), w, ht)) {
+			// no room anywhere: give the native tooltip back
+			box.remove();
+			el.setAttribute('title', text);
+			return;
+		}
+		box.style.width = w + 'px';
+		box.style.height = ht + 'px';
+		tx.textContent = '';
+		tip = box;
+		if (REDUCED) { box.classList.add('s1', 's2'); tx.textContent = text; return; }
+		// square rises → opens → text types (≈ 0.45s in all)
+		requestAnimationFrame(function () {
+			box.classList.add('s1');
+			typeT = setTimeout(function () {
+				if (tip !== box) return;
+				box.classList.add('s2');
+				var i = 0, step = Math.max(1, Math.ceil(text.length / 22));
+				typeT = setTimeout(function type() {
+					if (tip !== box) return;
+					i = Math.min(text.length, i + step);
+					tx.textContent = text.slice(0, i);
+					if (i < text.length) typeT = setTimeout(type, 11);
+				}, 150);
+			}, 110);
+		});
+	}
+	document.addEventListener('mouseover', function (e) {
+		var el = e.target.closest && e.target.closest('[title], [data-tip]');
+		if (el === tipFor) return;
+		hideTip();
+		if (!el) return;
+		tipFor = el;
+		tipText(el);
+		// right after another tip: no wait, it reads as one moving tip
+		tipT = setTimeout(function () { if (tipFor === el) showTip(el); }, Date.now() - lastHide < 400 ? 60 : 420);
+	});
+	document.addEventListener('mousedown', hideTip, true);
+	document.addEventListener('wheel', hideTip, { passive: true, capture: true });
+	document.addEventListener('keydown', hideTip, true);
+	window.addEventListener('blur', hideTip);
+
 	window.UI = { h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
 })();

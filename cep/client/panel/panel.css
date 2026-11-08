@@ -101,6 +101,10 @@ footer { position: relative; }
 .horiz #sections { flex-direction: row; align-items: center; flex: none; }
 .horiz .sec { flex: none; }
 .horiz .sec.open { display: flex; align-items: center; padding: 0 6px 0 0; animation-name: accInX; }
+/* the open section's own icon: a solid chip in the section color, then a thin divider — the tools follow */
+.horiz .sec.open > .head { flex: none; align-self: stretch; display: flex; align-items: center; padding-right: 6px; margin-right: 4px; border-right: 1px solid var(--line-2); }
+.horiz .sec.open > .head .k { background: var(--sa); color: var(--sa-ink); }
+.horiz .sec.open > .head .k:hover { background: var(--sa); filter: brightness(1.08); }
 .horiz .groups { display: flex; align-items: center; }
 .horiz .grid { grid-auto-flow: column; grid-auto-columns: 36px; padding: 0 0 0 2px; }
 .horiz .sep { width: 1px; height: 24px; margin: 0 4px; flex: none; }

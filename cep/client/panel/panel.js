@@ -40,7 +40,7 @@
 	/* ---------- layout ---------- */
 
 	// short and wide (docked along the top or bottom of the workspace): everything in one row,
-	// the open section unfolds to the right in as many 36px rows as the height allows
+	// the open section unfolds to the right, its tools in a single row
 	function metrics() {
 		var w = window.innerWidth, hgt = window.innerHeight;
 		var horiz = hgt < 260 && w > hgt * 1.4;
@@ -51,11 +51,10 @@
 		app.classList.toggle('list', !horiz && state.labels && w >= 150);
 		app.classList.toggle('reduced', state.reduced);
 		var cols = Math.max(1, Math.floor((w - 20 + 2) / 38));
-		var rows = Math.max(1, Math.floor((hgt - 20 + 2) / 38));
 		nav.querySelectorAll('.grid').forEach(function (g) {
 			var list = app.classList.contains('list') && !g.classList.contains('swatches');
 			g.style.gridTemplateColumns = horiz ? '' : (list ? '1fr' : 'repeat(' + cols + ', 36px)');
-			g.style.gridTemplateRows = horiz ? 'repeat(' + rows + ', 36px)' : '';
+			g.style.gridTemplateRows = horiz ? '36px' : '';
 		});
 	}
 
@@ -76,6 +75,7 @@
 			var block = h('div.sec' + (isOpen ? '.open' : ''), {
 				style: isOpen ? { background: rgba(sec.acc, .12), color: sec.acc } : null
 			}, h('div.head', null, [head, h('span.name', { text: sec.name })]));
+			if (isOpen) { block.style.setProperty('--sa', sec.acc); block.style.setProperty('--sa-ink', ink(sec.acc)); }
 
 			if (isOpen && sec.fields) block.appendChild(buildFields(sec));
 			if (isOpen) block.appendChild(buildGrid(sec));
