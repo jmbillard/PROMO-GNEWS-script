@@ -35,9 +35,15 @@
 	var IS_MAC = $.os.indexOf('Win') < 0;
 	var WIDTH = 340;
 
-	var here = new File($.fileName).parent;
-	var src = new Folder(here.fsName + '/cep');
-	var sources = new Folder(here.fsName + '/source');
+	// pasta do PROMO GNEWS: a do instalador ou a escolhida em '› escolher a pasta…'
+	var here, src, sources;
+
+	function setRoot(folder) {
+		here = folder;
+		src = new Folder(here.fsName + '/cep');
+		sources = new Folder(here.fsName + '/source');
+	}
+	setRoot(new File($.fileName).parent);
 	var userData = Folder.userData.fsName; // macOS: ~/Library/Application Support | Windows: %APPDATA%
 	var dest = new Folder(userData + '/Adobe/CEP/extensions/' + EXT_ID);
 	var OLD_NAMES = ['PROMO GNEWS.jsxbin', 'PROMO GNEWS.jsx', 'PROMO GNEWS.js', 'PROMO GNEWS DEV.jsx', 'PROMO GNEWS DEV.js'];
@@ -302,8 +308,8 @@
 	var checks = [
 		{ label: 'After Effects 2022 ou mais novo', test: aeVersionOk, required: true, help: 'a barra precisa do After Effects 2022 (22.0) ou mais novo.' },
 		{ label: 'acesso à rede e escrita de arquivos', test: canWriteFiles, required: true, help: 'habilite "Allow Scripts to Write Files and Access Network" nas preferências de scripts e expressões.' },
-		{ label: 'pasta "cep" ao lado do instalador', test: extensionOk, required: true, help: 'rode o instalador direto da pasta do PROMO GNEWS na rede (a que tem as pastas "cep" e "source").' },
-		{ label: 'pasta "source" ao lado do instalador', test: sourcesOk, required: true, help: 'a pasta "source" (fontes do script) precisa estar ao lado da pasta "cep".' }
+		{ label: 'pasta "cep" ao lado do instalador', test: extensionOk, required: true, help: function () { return 'n\u00E3o encontrei "cep" em: ' + here.fsName; } },
+		{ label: 'pasta "source" ao lado do instalador', test: sourcesOk, required: true, help: function () { return 'n\u00E3o encontrei "source" em: ' + here.fsName + '\nescolha a pasta do PROMO GNEWS (a que tem "cep" e "source"). no macOS, isso tamb\u00E9m libera o acesso do After Effects \u00E0 pasta (Documentos, Mesa...).'; } }
 	];
 
 	for (var c = 0; c < checks.length; c++) {
@@ -327,13 +333,25 @@
 		checks[c].text.preferredSize.width = WIDTH - 24;
 	}
 
-	var helpText = text(p1, '', 46);
+	var helpText = text(p1, '', 78);
 	var prefsLink = link(p1, '› abrir preferências de scripts e expressões', function () {
 		app.executeCommand(3131); // Preferences > Scripting & Expressions
 		runChecks();
 	});
 
-	link(p1, '› verificar de novo', function () { runChecks(); });
+	var pickLink = link(p1, '\u203A escolher a pasta do PROMO GNEWS\u2026', function () {
+		var f = Folder.selectDialog('pasta do PROMO GNEWS (a que tem "cep" e "source")', here);
+
+		if (!f) return;
+		// escolheu a pr\u00F3pria "cep" ou "source"? sobe um n\u00EDvel
+		if (/^(cep|source)$/i.test(f.name)) f = f.parent;
+		setRoot(f);
+		srcText.text = 'origem: ' + src.fsName;
+		srcText.helpTip = src.fsName;
+		runChecks();
+	});
+
+	link(p1, '\u203A verificar de novo', function () { runChecks(); });
 
 	// 2 · ação
 	var p2 = page();
@@ -412,11 +430,12 @@
 
 			if (!pass) state = checks[i].required ? 'bad' : 'warn';
 			for (var d in checks[i].dots) checks[i].dots[d].visible = d === state;
-			if (!pass) help.push(checks[i].help);
+			if (!pass) help.push(typeof checks[i].help == 'function' ? checks[i].help() : checks[i].help);
 			if (!pass && checks[i].required) ok = false;
 		}
 		helpText.text = help.length ? help.join('\n') : 'tudo certo!';
 		prefsLink.visible = !canWriteFiles();
+		pickLink.visible = !extensionOk() || !sourcesOk();
 		nextBtn.enabled = ok;
 		return ok;
 	}
