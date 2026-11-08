@@ -187,7 +187,8 @@
 		document.body.appendChild(box);
 		// measured at the corner, rounded up: a rounded-down width would wrap the last word
 		box.style.left = '0px'; box.style.top = '0px';
-		var rb = box.getBoundingClientRect(), w = Math.ceil(rb.width) + 1, ht = Math.ceil(rb.height);
+		// (never wider than the window: a long name in the narrow bar wraps, see .tip max-width)
+		var rb = box.getBoundingClientRect(), w = Math.min(Math.ceil(rb.width) + 1, window.innerWidth - 8), ht = Math.ceil(rb.height);
 		if (!placeTip(box, el.getBoundingClientRect(), w, ht)) {
 			// no room anywhere: give the native tooltip back
 			box.remove();
