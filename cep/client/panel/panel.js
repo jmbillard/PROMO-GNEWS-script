@@ -524,10 +524,10 @@
 		}
 		function draw(e) {
 			if (!geo) setup();
-			// the start of the animation is reached 30px before the right edge
-			var p = Math.max(0, Math.min(1, (e.clientX - geo.left) / Math.max(1, geo.w - 30)));
-			// mouse to the right → back towards the start: the logo moves with the hand, not against it
-			var f = Math.round((1 - p) * Math.ceil(window.PGN_LOGO_END * 30));
+			// the last 30px on the right keep the formed logo; from there to the left the animation
+			// runs from its start (at that point) to the formed logo (left edge)
+			var x = e.clientX - geo.left, edge = Math.max(1, geo.w - 30), N = Math.ceil(window.PGN_LOGO_END * 30);
+			var f = x >= edge ? N : Math.round((1 - Math.max(0, x) / edge) * N);
 			if (f === last) return;
 			last = f;
 			PGN_LOGO_DRAW(ctx, f / 30, getComputedStyle(logoBtn).color, { cx: geo.cx, cy: geo.cy, scale: geo.k });
