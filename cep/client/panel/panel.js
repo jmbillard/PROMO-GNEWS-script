@@ -304,6 +304,7 @@
 		}
 		if (tool.win && !(alt && tool.altRun)) { PGN.open(tool.win); return; }
 		if (alt && tool.altWin) { PGN.open(tool.altWin); return; }
+		if (alt && tool.onAlt) { tool.onAlt(); return; }
 		// clicking a running job again cancels it
 		if (state.job && state.job.id === tool.id) { state.job.p.cancel(); return; }
 		if (state.busy) return;

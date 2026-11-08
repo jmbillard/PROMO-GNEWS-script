@@ -110,7 +110,7 @@
 				renderList(list); preview(); push();
 			} }, X());
 			var handle = h('span.oh', { title: 'arrastar' }, h('i'));
-			var row = h('div.lk', { 'data-list': list, 'data-i': i }, [handle, ic, nm, tg, flag, del].filter(Boolean));
+			var row = h('div.lk', { 'data-list': list, 'data-i': i, 'data-id': it.id }, [handle, ic, nm, tg, flag, del].filter(Boolean));
 			handle.addEventListener('mousedown', function (e) { drag(list, row, e); });
 			return row;
 		}
@@ -186,10 +186,29 @@
 		root.appendChild(groupEl('sites', 'SITES'));
 		root.appendChild(groupEl('dirs', 'PASTAS'));
 
+		// scroll to one link and flash it (right click on it in the bar)
+		var ready = false, pending = null;
+		function focus(f) {
+			if (!f) return;
+			if (!ready) { pending = f; return; }
+			var row = root.querySelector('.lk[data-list="' + f.list + '"][data-id="' + String(f.id).replace(/"/g, '') + '"]');
+			if (!row) return;
+			row.closest('.ogrp').classList.remove('shut');
+			row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+			row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash');
+			setTimeout(function () { var nm = row.querySelector('.nm'); if (nm) { nm.focus(); nm.select(); } }, 450);
+		}
+		root.focusLink = focus;
+		PGN.on('linkFocus', focus);
+		var stored = UI.store('linkFocus');
+		if (stored && Date.now() - stored.at < 15000) { pending = stored; UI.store('linkFocus', null); }
+
 		PGN.run('links.get', {}).then(function (r) {
 			if (!r.ok || !r.data) { UI.note(note, r.error || 'atalhos indisponíveis', false, version); return; }
 			S = { sites: r.data.sites || [], dirs: r.data.dirs || [] };
 			renderList('sites'); renderList('dirs');
+			ready = true;
+			if (pending) { var p = pending; pending = null; setTimeout(function () { focus(p); }, 350); }
 		});
 		return root;
 	};

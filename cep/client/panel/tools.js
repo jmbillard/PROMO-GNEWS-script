@@ -20,7 +20,15 @@
 	// 'Atalhos': sites + folders from the preferences (host links.get) → tiles
 	window.linksGroups = function (data) {
 		function tile(kind, it) {
-			var base = { id: 'link:' + kind + ':' + it.id, hostId: 'links.open', name: it.name, alt: 'editar atalhos', altWin: 'settings', args: function () { return { kind: kind, id: it.id }; } };
+			var base = { id: 'link:' + kind + ':' + it.id, hostId: 'links.open', name: it.name, alt: 'editar atalho', args: function () { return { kind: kind, id: it.id }; },
+				// right click: the preferences open scrolled to this link (pending focus for a window
+				// that is still loading + an event for one already open)
+				onAlt: function () {
+					var f = { list: kind === 'site' ? 'sites' : 'dirs', id: it.id, at: Date.now() };
+					UI.store('linkFocus', f);
+					PGN.open('settings');
+					PGN.emit('linkFocus', f);
+				} };
 			if (it.glyph) return Object.assign(base, { glyph: it.glyph, anim: 'pop' });
 			var ic = LINK_ICONS[it.icon] || LINK_ICONS[kind === 'site' ? 'globe' : 'up'];
 			return Object.assign(base, { d: ic[0], a: ic[1], anim: ic[2] });
