@@ -6,7 +6,7 @@
 
 /* GNEWS logo (from the script's own shape layer): the globe alone in the narrow bar,
    the full logo when there is room */
-.logo { height: 36px; display: flex; align-items: center; padding: 0 7px; color: var(--tx); border-radius: 4px; }
+.logo { position: relative; height: 36px; display: flex; align-items: center; padding: 0 7px; color: var(--tx); border-radius: 4px; }
 .logo .gl { display: block; height: 22px; width: auto; fill: currentColor; transition: transform .3s var(--spring); }
 .logo .gl-full { display: none; height: 20px; }
 .wide .logo .gl-full, .horiz .logo .gl-full { display: block; }
@@ -58,6 +58,8 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 .sel.err { background: rgba(255, 107, 107, .16); color: #FFB3B2; }
 .sel .dot { width: 8px; height: 8px; border-radius: 50%; position: relative; background: #55555E; transition: background .3s; }
 .sel .dot.live { background: var(--ok); }
+/* network share offline (message in the tooltip) */
+.sel .dot.off { background: #FF4D4D; }
 .sel .dot.live::after { content: ''; position: absolute; left: -4px; top: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 1.5px solid var(--ok); animation: ping 1.8s ease-out infinite; }
 .sel svg { width: 16px; height: 16px; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
 .sel svg path { stroke-dasharray: 24; animation: draw .4s ease backwards; }
@@ -109,10 +111,13 @@ footer { position: relative; }
 .horiz .logo { flex: none; }
 .horiz #sections { flex-direction: row; align-items: center; flex: none; }
 .horiz .sec { flex: none; }
-.horiz .sec.open { display: flex; align-items: center; padding: 0 6px 0 0; border-radius: 4px 12px 12px 4px; animation-name: accInX; }
-/* the open section's own icon: a solid chip in the section color, then a thin divider — the tools follow */
-.horiz .sec.open > .head { flex: none; align-self: stretch; display: flex; align-items: center; padding-right: 6px; margin-right: 4px; border-right: 1px solid var(--line-2); }
-.horiz .sec.open > .head .k { background: var(--sa); color: var(--sa-ink); border-radius: 4px 0 0 4px; }
+.horiz .sec.open { display: flex; align-items: center; padding: 2px 2px 2px 0; border-radius: 4px; animation-name: accInX; }
+/* the open section's own icon: a solid chip in the section color, full height of the block — the tools follow */
+.horiz .sec.open > .head { flex: none; align-self: stretch; display: flex; align-items: center; margin: -2px 4px -2px 0; }
+.horiz .sec.open > .head .k { align-self: stretch; height: auto; background: var(--sa); color: var(--sa-ink); border-radius: 4px 0 0 4px; }
+/* inside the horizontal section: square-ish hovers, groups split by a thin line */
+.horiz .sec.open .t, .horiz .sec.open .sw { border-radius: 4px; }
+.horiz .sec.open .groups { align-self: center; }
 .horiz .sec.open > .head .k:hover { background: var(--sa); filter: brightness(1.08); }
 .horiz .groups { display: flex; align-items: center; }
 .horiz .grid { grid-auto-flow: column; grid-auto-columns: 36px; padding: 0 0 0 2px; }

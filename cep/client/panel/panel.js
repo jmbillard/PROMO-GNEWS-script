@@ -40,7 +40,7 @@
 	/* ---------- layout ---------- */
 
 	// short and wide (docked along the top or bottom of the workspace): everything in one row,
-	// the open section unfolds to the right, its tools in a single row
+	// the open section unfolds to the right, its tools in one row (two when the bar is tall enough)
 	function metrics() {
 		var w = window.innerWidth, hgt = window.innerHeight;
 		var horiz = hgt < 260 && w > hgt * 1.4;
@@ -51,10 +51,11 @@
 		app.classList.toggle('list', !horiz && state.labels && w >= 150);
 		app.classList.toggle('reduced', state.reduced);
 		var cols = Math.max(1, Math.floor((w - 20 + 2) / 38));
+		var rows = hgt >= 100 ? 2 : 1;   // horizontal: one or two rows of tools
 		nav.querySelectorAll('.grid').forEach(function (g) {
 			var list = app.classList.contains('list') && !g.classList.contains('swatches');
 			g.style.gridTemplateColumns = horiz ? '' : (list ? '1fr' : 'repeat(' + cols + ', 36px)');
-			g.style.gridTemplateRows = horiz ? '36px' : '';
+			g.style.gridTemplateRows = horiz ? 'repeat(' + rows + ', 36px)' : '';
 		});
 	}
 
@@ -394,9 +395,9 @@
 		selBtn.classList.remove('err');
 		selBtn.textContent = '';
 		var n = st ? st.layers : 0;
-		selBtn.appendChild(h('span.dot' + (st && st.comp && n > 0 ? '.live' : '')));
+		selBtn.appendChild(h('span.dot' + (state.netOff ? '.off' : (st && st.comp && n > 0 ? '.live' : ''))));
 		selBtn.appendChild(h('span', { text: st && st.comp ? String(n) : '–' }));
-		selBtn.title = st && st.comp ? st.comp + ' · ' + n + (n === 1 ? ' layer' : ' layers') : 'nenhuma comp ativa';
+		selBtn.title = (st && st.comp ? st.comp + ' · ' + n + (n === 1 ? ' layer' : ' layers') : 'nenhuma comp ativa') + (state.netOff ? '\n' + state.netOff : '');
 	}
 
 	function pollStatus() {
@@ -481,6 +482,13 @@
 	var logoBtn = document.getElementById('logo');
 	if (window.PGN_LOGO_SVG) { logoBtn.appendChild(PGN_LOGO_SVG('globo')); logoBtn.appendChild(PGN_LOGO_SVG('full')); }
 
+	// network share offline: the selection chip's dot turns red, the message goes in its tooltip
+	// (no popup, no toast)
+	function netDot(msg) {
+		state.netOff = msg || '';
+		renderSel();
+	}
+
 	function intro() {
 		if (!window.PGN_LOGO_DRAW || state.reduced || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
 		var W = window.innerWidth, H = window.innerHeight, dpr = window.devicePixelRatio || 1;
@@ -519,7 +527,7 @@
 		if (!r || !r.ok) { if (r && r.error) feedback(r.error, false); return; }
 		if (!r.data) return;
 		// network share offline (home office suggested): warn once, without blocking
-		if (r.data.netOffline) feedback(r.data.netOffline, false);
+		netDot(r.data.netOffline);
 		if (r.data.showLabels != null && UI.store('labels') === undefined) {
 			state.labels = !!r.data.showLabels;
 			metrics();

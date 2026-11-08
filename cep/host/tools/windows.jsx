@@ -642,7 +642,7 @@ PGN.register('prefs.get', function (args) {
 	data.fontsPath = new Folder(fontsPath).fsName;
 	data.netAccess = netAccess() ? true : false;
 	data.os = appOs;
-	data.netOffline = PGN.net.offline || '';
+	data.netOffline = PGN.net.offline || $.global.PGN_BOOT_MSG || '';
 
 	return { msg: '', data: data };
 });
