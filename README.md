@@ -257,6 +257,8 @@ Abra pelo botão **Influência dos keyframes**, na seção Animação.
    - **keyframes** — o After Effects interpola com essa influência;
    - **expressão** — uma expressão reproduz exatamente a curva desenhada entre os keyframes.
 4. Selecione os keyframes na timeline e clique em **aplicar**.
+   - Com o **ao vivo** (⚡, ligado por padrão no modo keyframes), os keyframes selecionados acompanham a curva enquanto você arrasta as alças, mexe nos sliders ou escolhe um preset. Não precisa clicar em aplicar.
+   - Funciona em keyframes de qualquer propriedade (transformação, efeitos, cor, máscara, shape): lineares e hold viram bezier, como no *Easy Ease*. Propriedades que só aceitam hold, como o *Source Text*, ficam de fora e o rodapé diz quantos keyframes foram pulados.
 
 Para tirar a expressão de curva, use o botão de remover com as propriedades selecionadas.
 

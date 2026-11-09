@@ -48,3 +48,8 @@
 .padd path { stroke: currentColor; }
 .padd.dim { color: #55555E; }
 .win-body { overflow-y: auto; }
+#live[hidden] { display: none; }
+.track, .presets, #stats { flex-shrink: 0; }
+.plot { flex: 1 1 0; height: auto; min-height: 56px; max-height: 170px; }
+/* live: the bolt blinks once per update sent */
+#live.sending svg { animation: pulse .3s ease; }

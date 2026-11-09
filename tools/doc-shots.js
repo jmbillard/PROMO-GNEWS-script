@@ -30,7 +30,7 @@ const SHOTS = {
 	'panel-wide': { w: 240, h: 900, url: 'panel/index.html', wait: 2900, async run(p) { await openSection(p, 'Projeto'); } },
 	'panel-horizontal': { w: 980, h: 110, url: 'panel/index.html', wait: 2900, async run(p) { await openSection(p, 'Animação'); } },
 	'panel-marca': { w: 240, h: 1240, url: 'panel/index.html', wait: 2900, async run(p) { await openSection(p, 'Marca'); } },
-	curves: { w: 320, h: 420, url: 'windows/curves/index.html' },
+	curves: { w: 320, h: 450, url: 'windows/curves/index.html' },
 	search: { w: 320, h: 460, url: 'windows/search/index.html', async run(p) {
 		await p.fill('#q', 'ao vivo'); await p.keyboard.press('Enter'); await p.waitForTimeout(900);
 	} },

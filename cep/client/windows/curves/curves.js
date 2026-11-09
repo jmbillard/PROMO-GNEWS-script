@@ -4,6 +4,8 @@
 ---------------------------------------------------------------
   host: inf.stats (poll) · inf.read (copiar) · inf.apply { out, in }
         inf.presets.get / .set { presets } / .reset (+ salva a curva atual, × exclui)
+  ao vivo: with keys selected (mode 'keyframes'), every change of the curve is
+  applied right away (inf.apply { live }), one request at a time, always the latest values
 */
 (function () {
 	'use strict';
@@ -54,7 +56,34 @@
 		v = Math.max(1, Math.min(100, Math.round(v)));
 		if (s.linked) { s.out = v; s.in = v; } else s[which] = v;
 		draw();
+		liveApply();
 	}
+
+	// ---- ao vivo: the selected keys follow the curve -----------------
+	var live = { on: UI.store('inf.live') !== false, inflight: false, sent: '' };
+	function liveApply() {
+		if (!live.on || mode !== 'keys' || $('apply').dataset.nokeys !== '0') return;
+		var want = s.out + '/' + s.in;
+		if (live.inflight || want === live.sent) return;
+		live.inflight = true;
+		live.sent = want;
+		$('live').classList.remove('sending'); void $('live').offsetWidth; $('live').classList.add('sending');
+		PGN.run('inf.apply', { out: s.out, 'in': s.in, live: true }).then(function (r) {
+			live.inflight = false;
+			UI.note(note, r.ok ? r.msg : r.error, r.ok);
+			// the curve moved again while this one was running: send the latest
+			if (r.ok && s.out + '/' + s.in !== live.sent) liveApply();
+		});
+	}
+	function setLive(on) {
+		live.on = on;
+		UI.store('inf.live', on);
+		$('live').classList.toggle('on', on);
+		$('live').setAttribute('aria-pressed', String(on));
+		live.sent = '';
+		if (on) liveApply();
+	}
+	$('live').addEventListener('click', function () { setLive(!live.on); });
 
 	function startDrag(which, e) {
 		e.preventDefault();
@@ -83,7 +112,7 @@
 		s.linked = !s.linked;
 		this.classList.toggle('on', s.linked);
 		this.setAttribute('aria-pressed', String(s.linked));
-		if (s.linked) { s.in = s.out; draw(); }
+		if (s.linked) { s.in = s.out; draw(); liveApply(); }
 	});
 
 	// ---- presets ------------------------------------------------
@@ -110,7 +139,7 @@
 				title: p[0] + ' / ' + p[1], 'aria-label': 'Preset ' + p[0] + '% / ' + p[1] + '%',
 				'data-o': p[0], 'data-i': p[1],
 				style: animate ? { animationDelay: (pd += 30) + 'ms' } : { animation: 'none' },
-				onclick: function () { s.linked = false; $('link').classList.remove('on'); s.out = p[0]; s.in = p[1]; draw(); }
+				onclick: function () { s.linked = false; $('link').classList.remove('on'); s.out = p[0]; s.in = p[1]; draw(); liveApply(); }
 			}, preIcon(p[0], p[1]));
 			var del = UI.h('span.pdel', {
 				role: 'button', title: 'excluir preset', 'aria-label': 'Excluir preset ' + p[0] + ' / ' + p[1],
@@ -171,6 +200,7 @@
 			if (d.out != null) box.appendChild(stat(EASE, Math.round(d.out) + ' · ' + Math.round(d['in'])));
 			if (d.outSpeed != null) box.appendChild(stat('M4 12h12M12 8l4 4-4 4', (+d.outSpeed).toFixed(1)));
 			$('apply').dataset.nokeys = d.keys ? '0' : '1';
+			live.sent = '';
 			$('apply').disabled = mode === 'keys' && !d.keys;
 		});
 	}
@@ -212,6 +242,7 @@
 		UI.store('inf.mode', m);
 		// show / hide the remove button first: it changes the segment width
 		$('unexpr').hidden = m !== 'expr';
+		$('live').hidden = m === 'expr';
 		seg.querySelectorAll('button').forEach(function (b) {
 			var on = b.dataset.m === m;
 			b.classList.toggle('on', on);
@@ -252,6 +283,7 @@
 	PGN.mock('inf.exprRemove', function () { return { msg: '2 expressões removidas' }; });
 
 	draw();
+	setLive(live.on);
 	loadPresets();
 	pollStats();
 	setInterval(pollStats, 1500);

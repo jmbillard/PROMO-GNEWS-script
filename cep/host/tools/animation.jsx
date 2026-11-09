@@ -251,15 +251,69 @@
 		if (hasOut) easeOutInfluence = clampInf(args.out);
 		if (hasIn) easeInInfluence = clampInf(args['in']);
 
-		app.beginUndoGroup('apply ease');
-
-		for (var l = 0; l < selLayers.length; l++) {
-			applyEase(selLayers[l]);
-		}
+		app.beginUndoGroup(args.live ? 'influ\u00EAncia (ao vivo)' : 'apply ease');
+		var res = easeKeys(selLayers, easeOutInfluence, easeInInfluence);
 		app.endUndoGroup();
 
-		return 'Influência aplicada em ' + PGN.n(keyCount, 'keyframe');
+		if (!res.done) PGN.fail('estes keyframes n\u00E3o aceitam curva (s\u00F3 hold: texto e alguns efeitos)');
+		return 'Influ\u00EAncia aplicada em ' + PGN.n(res.done, 'keyframe') +
+			(res.skipped ? ' \u00B7 ' + res.skipped + ' sem curva (s\u00F3 hold)' : '');
 	});
+
+	/*
+	  every selected key of every selected property gets the influence, on any
+	  property type:
+	    · groups in the selection (an effect, 'Transform') are skipped
+	    · hold-only properties (Source Text, some effect values) can't take a
+	      curve: counted as skipped, the others still get it
+	    · linear / hold keys become bezier (like Easy Ease): the influence
+	      only shows on bezier keys
+	    · one ease per dimension, as many as the key has (1 for 1D, spatial,
+	      color, path; 2-3 for scale and other arrays)
+	    · speed 0 on both sides (the classic tool and Easy Ease do the same)
+	*/
+	function easeKeys(selLayers, outInf, inInf) {
+		var BEZ = KeyframeInterpolationType.BEZIER;
+		var res = { done: 0, skipped: 0 };
+
+		for (var l = 0; l < selLayers.length; l++) {
+			var selProps = selLayers[l].selectedProperties;
+
+			for (var p = 0; p < selProps.length; p++) {
+				var aProp = selProps[p];
+
+				if (!hasKeys(aProp)) continue;
+				var keys = aProp.selectedKeys;
+				var bezOk = true;
+
+				try { bezOk = aProp.isInterpolationTypeValid(BEZ); } catch (e) { }
+				if (!bezOk) { res.skipped += keys.length; continue; }
+
+				for (var k = 0; k < keys.length; k++) {
+					var key = keys[k];
+
+					try {
+						if (aProp.keyInInterpolationType(key) != BEZ || aProp.keyOutInterpolationType(key) != BEZ) {
+							aProp.setInterpolationTypeAtKey(key, BEZ, BEZ);
+						}
+						var dims = aProp.keyInTemporalEase(key).length;
+						var easeIn = [];
+						var easeOut = [];
+
+						for (var d = 0; d < dims; d++) {
+							easeIn.push(new KeyframeEase(0, inInf));
+							easeOut.push(new KeyframeEase(0, outInf));
+						}
+						aProp.setTemporalEaseAtKey(key, easeIn, easeOut);
+						res.done++;
+					} catch (err) {
+						res.skipped++;
+					}
+				}
+			}
+		}
+		return res;
+	}
 
 	/*
 
