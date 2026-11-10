@@ -112,15 +112,13 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 .horiz .fields .pnm { width: 104px; }
 .horiz.one .fields { flex-direction: row; align-items: center; }
 
-/* long task progress: ring on the tile, line on the footer, % on the selection chip */
-.t.is-job .ico { opacity: .55; transform: scale(.78); }
-.t .pring { position: absolute; left: 0; top: 0; width: 36px; height: 36px; transform: rotate(-90deg); pointer-events: none; }
-.list .t .pring { left: 0; }
-.pring circle { fill: none; stroke-width: 2.4; }
-.pring .track { stroke: rgba(255, 255, 255, .1); }
-.pring .bar { stroke: currentColor; stroke-linecap: round; transition: stroke-dashoffset .35s cubic-bezier(.3, 1.1, .5, 1); }
-.indet .t.is-job .pring { animation: spin 1s linear infinite; }
-.indet .t.is-job .pring .bar { stroke-dashoffset: 70 !important; }
+/* long task progress: thin bar under the icon, line on the footer, % on the selection chip */
+.t.is-job .ico { opacity: .8; }
+.t .pbar { position: absolute; left: 50%; bottom: 4px; width: 20px; height: 2px; margin-left: -10px; border-radius: 1px; background: rgba(255, 255, 255, .12); overflow: hidden; pointer-events: none; animation: rowIn .25s ease; }
+.list .t .pbar { left: 8px; margin-left: 0; }
+.t .pbar b { display: block; height: 100%; background: currentColor; border-radius: 1px; transform: scaleX(0); transform-origin: left center; transition: transform .35s cubic-bezier(.3, 1.1, .5, 1); }
+/* no total known: a short piece runs back and forth */
+.indet .t.is-job .pbar b { width: 40%; animation: scan .8s ease-in-out infinite; }
 
 footer { position: relative; }
 .jobbar { position: absolute; left: 0; right: 0; top: -1px; height: 2px; overflow: hidden; background: rgba(255, 255, 255, .06); }

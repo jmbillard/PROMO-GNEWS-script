@@ -163,13 +163,10 @@
 	function runJob(tool, sec, entry, args) {
 		state.busy = tool.id;
 		var el = entry.el;
-		var C = 2 * Math.PI * 15;
-		var ring = UI.svg('0 0 36 36', { class: 'pring', 'aria-hidden': 'true' }, [
-			UI.svgEl('circle', { cx: 18, cy: 18, r: 15, class: 'track' }),
-			UI.svgEl('circle', { cx: 18, cy: 18, r: 15, class: 'bar', 'stroke-dasharray': C, 'stroke-dashoffset': C })
-		]);
+		// a thin bar under the icon (section color), filled as the task goes
+		var pbar = h('i.pbar', { 'aria-hidden': 'true' }, [h('b')]);
 		el.classList.add('is-job');
-		el.appendChild(ring);
+		el.appendChild(pbar);
 		el.setAttribute('aria-busy', 'true');
 		var oldTitle = el.title;
 		el.title = tool.name + '\nclique para cancelar';
@@ -190,7 +187,7 @@
 			var f = total ? Math.min(1, done / total) : null;
 			app.classList.toggle('indet', f === null);
 			if (f !== null) {
-				ring.lastChild.setAttribute('stroke-dashoffset', String(C * (1 - f)));
+				pbar.firstChild.style.transform = 'scaleX(' + f + ')';
 				jobBar.firstChild.style.transform = 'scaleX(' + f + ')';
 				pctEl.textContent = Math.round(f * 100) + '%';
 			} else {
@@ -207,7 +204,7 @@
 			el.classList.remove('is-job');
 			el.removeAttribute('aria-busy');
 			el.title = oldTitle;
-			if (ring.parentNode) ring.remove();
+			if (pbar.parentNode) pbar.remove();
 			app.classList.remove('jobbing', 'indet');
 			if (res.ok) jobBar.firstChild.style.transform = 'scaleX(1)';
 			setTimeout(function () { if (!state.job && jobBar.parentNode) jobBar.remove(); jobBar.firstChild.style.transform = ''; }, 500);
