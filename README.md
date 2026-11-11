@@ -1,4 +1,4 @@
-# PROMO GNEWS · v3 beta 1
+# PROMO GNEWS · v3 beta 2
 
 **pt-BR** ⚡ extensão do After Effects com as ferramentas da equipe de motion em PROMO na ![logo](images/GNEWS_LOGO%20dark.png)
 
@@ -7,6 +7,7 @@ Funciona no After Effects 2022 ou mais novo, no **Windows e no macOS**. É uma b
 ![abertura da barra](images/doc/gifs/abertura.gif)
 
 - [instalar](#instalar)
+- [novidades da v3 beta 2](#novidades-da-v3-beta-2)
 - [primeiros passos](#primeiros-passos)
 - [seções e ferramentas](#seções-e-ferramentas)
 - [janelas](#janelas)
@@ -24,8 +25,41 @@ Funciona no After Effects 2022 ou mais novo, no **Windows e no macOS**. É uma b
 
 O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. Enquanto ela estiver instalada, a bolinha do indicador fica vermelha.
 
-> O código fica na rede. Para atualizar, basta trocar os arquivos lá e reabrir o painel; o instalador só precisa rodar de novo quando a equipe avisar (**na v3 beta 1, rode de novo**).\
+> O código fica na rede. Para atualizar, basta trocar os arquivos lá e reabrir o painel; o instalador só precisa rodar de novo quando a equipe avisar (**na v3 beta 2, rode de novo**: a janela de curvas ficou mais alta).\
 > Se algo parecer antigo, rode `tools/diagnostico.jsx` (*Run Script File…*): ele lista as cópias instaladas e aponta as desatualizadas.
+
+---
+
+## novidades da v3 beta 2
+
+**Curvas**
+- **Ao vivo (⚡):** com keyframes selecionados, eles acompanham a curva enquanto você mexe nas alças, nos sliders ou nos presets.
+- Os presets de curva podem ser **salvos e excluídos**.
+- A influência funciona em keyframes de **qualquer propriedade**: lineares e hold viram bezier, e as que só aceitam hold (como o *Source Text*) ficam de fora, com aviso.
+
+**Barra**
+- O progresso das tarefas longas virou uma **barra fina sob o ícone**.
+- Ao terminar uma tarefa longa, o **↶** no botão desfaz a tarefa inteira.
+- O tooltip do **indicador de seleção** explica cada aviso e o que fazer.
+- Ícones novos para a **logo estática** e a **logo animada**.
+- Tooltips de nomes longos não somem mais na barra estreita.
+
+**Marca e paleta**
+- As cores da paleta podem ser **renomeadas** nas preferências.
+- **Paleta em shape layer** usa a paleta das preferências, com os mesmos nomes da barra.
+
+**Projeto**
+- Salvar, renomear e inserir ID **pedem o ID e o nome** em vez de usar os textos de exemplo.
+- Salvar **não sobrescreve** outro projeto com o mesmo nome.
+- **Coletar** não sobrescreve arquivos de mesmo nome, copia **sequências de imagens inteiras** e avisa o que não conseguiu copiar.
+
+**Correções** de uma revisão geral das ferramentas. As principais:
+- Textos com linha em branco não são mais colados nas ferramentas de texto, e a caixa alta/baixa preserva o estilo e os keyframes do texto.
+- **Wiggle**, **Null pai**, **Null centralizado**, **Separar colunas**, **IK**, **Digitação** e **Palavras** em casos que davam erro ou resultado errado.
+- A cor da paleta funciona no After Effects em português e ignora câmeras e luzes.
+- Cancelar e desfazer as tarefas longas funcionam no After Effects em português.
+- A busca com regex respeita maiúsculas e minúsculas, e selecionar um resultado não esconde mais os outros layers.
+- Nas preferências, o que foi editado logo antes de fechar a janela não se perde mais, e erros de gravação são avisados.
 
 ---
 
@@ -46,7 +80,7 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 - Nos atalhos, cores e efeitos, o botão direito abre as preferências já no item, para editar.
 
 **5. Acompanhe as tarefas longas.** Organizar, salvar, coletar e o lote mostram o progresso:
-- no próprio botão;
+- numa barra fina sob o ícone do botão, na cor da seção;
 - numa linha no rodapé;
 - na porcentagem do indicador de seleção.
 

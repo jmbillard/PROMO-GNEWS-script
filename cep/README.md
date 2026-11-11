@@ -80,16 +80,17 @@ As páginas também abrem direto no navegador, sem o After Effects. Nesse caso, 
 
 - **Ferramentas:** cada botão chama `PGN.run(id, args)` no host. A resposta é `{ ok, msg, data }` ou `{ ok: false, error }`, e a mensagem também aparece no painel *Info* do After Effects.
 - **Tarefas longas** (organizar, coletar arquivos/fontes, batch): rodam em passos curtos (`PGN.registerJob`). O painel chama um passo de cada vez e anima o progresso entre as chamadas:
-  - anel no botão;
+  - barra fina sob o ícone do botão;
   - linha no rodapé;
   - porcentagem no indicador de seleção;
   - etapa em texto, quando o painel tem espaço.
 
-  Clicar de novo no botão cancela a tarefa.
+  Clicar de novo no botão cancela a tarefa. Cada passo que muda o projeto é um grupo de desfazer: o host guarda a lista (`PGN.lastJobUndo`), e o **↶** que aparece no botão chama `job.undo` para desfazer todos. Cancelar e desfazer procuram o menu como "Undo …" e "Desfazer …".
 - **Botão direito:** chama a variante da ferramenta (`args.alt`). Em organizar projeto, abre a janela de tags. Em randomizar, sequenciar e quebrar linhas, abre um ajuste de valor dentro da sanfona.
-- **Seleção:** o painel consulta a seleção (`PGN.status`) a cada 1,2 s e apaga as ferramentas que precisam de comp ou de layers.
+- **Seleção:** o painel consulta a seleção (`PGN.status`) a cada 1,2 s, uma consulta por vez, e apaga as ferramentas que precisam de comp ou de layers.
 - **Janelas:** são extensões `Modeless`. Elas reusam o mesmo engine do host e avisam o painel por eventos CEP (`com.promognews.toast`, `com.promognews.prefs`).
 - **Dev:** a seção *Dev* aparece quando *ferramentas de dev* está ligado nas preferências.
+- **Preferências próprias** (atalhos, paleta, efeitos, presets de curva, labels): JSON em UTF-8 na pasta de preferências do script, gravados com `PGN.writeJSON`, que avisa quando não consegue gravar. Uma lista vazia salva continua vazia (não volta ao padrão).
 
 ### Cuidados (os mesmos do O PADEIRO)
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="7.0" ExtensionBundleId="com.promognews.cep" ExtensionBundleVersion="3.0.1" ExtensionBundleName="PROMO GNEWS"
+<ExtensionManifest Version="7.0" ExtensionBundleId="com.promognews.cep" ExtensionBundleVersion="3.0.2" ExtensionBundleName="PROMO GNEWS"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<ExtensionList>
-		<Extension Id="com.promognews.cep.panel" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.curves" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.search" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.templates" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.fonts" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.settings" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.tags" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.endpage" Version="3.0.1" />
-		<Extension Id="com.promognews.cep.labels" Version="3.0.1" />
+		<Extension Id="com.promognews.cep.panel" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.curves" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.search" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.templates" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.fonts" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.settings" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.tags" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.endpage" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.labels" Version="3.0.2" />
 	</ExtensionList>
 
 	<ExecutionEnvironment>
