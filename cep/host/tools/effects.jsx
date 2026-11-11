@@ -205,7 +205,11 @@
 		if (f.exists) {
 			try {
 				f.encoding = 'UTF-8';
-				var o = fxClean(JSON.parse(readFileContent(f)));
+				var raw = JSON.parse(readFileContent(f));
+				var o = fxClean(raw);
+
+				// a saved empty list is a choice (every group deleted), not 'use the defaults'
+				if (raw != null && typeof raw == 'object' && typeof raw.length == 'number' && raw.length == 0) return o;
 
 				if (o.length) return o;
 			} catch (e) { }
@@ -238,7 +242,7 @@
 		var f = fxFile();
 
 		f.encoding = 'UTF-8';
-		writeFileContent(f, JSON.stringify(groups, null, '\t'));
+		PGN.writeJSON(f, groups, true);
 		return { msg: 'Efeitos salvos', data: { groups: groups } };
 	});
 

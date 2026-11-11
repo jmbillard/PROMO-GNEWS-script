@@ -416,8 +416,14 @@
 		selBtn.setAttribute('aria-label', 'Seleção atual' + (state.warn && state.warn.length ? ' · ' + state.warn.length + (state.warn.length === 1 ? ' aviso' : ' avisos') : ''));
 	}
 
+	// one status request at a time: while the host is busy (a download, a folder dialog,
+	// a long search in another window) the polls don't pile up behind it
+	var polling = false;
 	function pollStatus() {
+		if (polling) return;
+		polling = true;
 		PGN.status().then(function (st) {
+			polling = false;
 			if (!st) return;
 			var changed = !state.status || st.comp !== state.status.comp || st.layers !== state.status.layers;
 			state.status = st;
@@ -425,7 +431,7 @@
 				refreshGates();
 				if (!flashTimer || !selBtn.querySelector('svg, span:only-child')) renderSel();
 			}
-		});
+		}, function () { polling = false; });
 	}
 
 	/* ---------- footer ---------- */

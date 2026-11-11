@@ -102,12 +102,26 @@
 		} catch (e) { return undefined; }
 	}
 
+	// debounced calls still waiting run right away when the window closes or hides
+	// (a change typed just before closing the preferences would be lost otherwise)
+	var pending = [];
+	function flushPending() {
+		var list = pending.splice(0);
+		list.forEach(function (p) { clearTimeout(p.t); p.run(); });
+	}
+	window.addEventListener('beforeunload', flushPending);
+	window.addEventListener('pagehide', flushPending);
+	document.addEventListener('visibilitychange', function () { if (document.hidden) flushPending(); });
+
 	function debounce(fn, ms) {
-		var t;
+		var p = null;
 		return function () {
 			var a = arguments, self = this;
-			clearTimeout(t);
-			t = setTimeout(function () { fn.apply(self, a); }, ms);
+			if (p) { clearTimeout(p.t); pending.splice(pending.indexOf(p), 1); }
+			p = { run: function () { p = null; fn.apply(self, a); } };
+			var mine = p;
+			mine.t = setTimeout(function () { var i = pending.indexOf(mine); if (i >= 0) pending.splice(i, 1); mine.run(); }, ms);
+			pending.push(mine);
 		};
 	}
 

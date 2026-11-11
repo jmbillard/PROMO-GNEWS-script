@@ -97,10 +97,11 @@
 		var v = args.frames;
 
 		if (v == null || v === '') v = 30;
-		v = parseInt(String(v).replace(/\D/g, ''));
+		// a number as typed ('1.5' → 2, never 15): rounded, at least 0
+		v = Math.round(parseFloat(String(v).replace(',', '.')));
 
-		if (isNaN(v)) PGN.fail('número de frames inválido');
-		return v;
+		if (isNaN(v)) PGN.fail('n\u00FAmero de frames inv\u00E1lido');
+		return Math.max(0, v);
 	}
 
 	// influence → valid KeyframeEase range...
@@ -124,11 +125,17 @@
 			selLayers.push(comp.layers.addText('Lettering automático...'));
 		}
 
+		// only text layers with text: each keeps its own content (an empty one in the
+		// selection used to shift the texts of the others)
+		var txtLayers = [];
+
 		for (var l = 0; l < selLayers.length; l++) {
-			var content = textContent(selLayers[l]).replace(/[—\-\_\|]$/, '');
+			if (!(selLayers[l] instanceof TextLayer)) continue;
+			var content = textContent(selLayers[l]).replace(/[\u2014\-\_\|]$/, '');
 
 			if (content == '') continue;
 			txtArray.push(content);
+			txtLayers.push(selLayers[l]);
 		}
 		if (txtArray.length == 0) PGN.fail('nenhum texto encontrado');
 		// the pseudo effect is applied to all selected layers at once (ADOBE limitation);
@@ -136,10 +143,8 @@
 
 		// textArray index... the textArray length may not match selLayers length...
 		var t = 0;
-		for (var n = 0; n < selLayers.length; n++) {
-			var nLayer = selLayers[n];
-
-			if (!(nLayer instanceof TextLayer)) continue;
+		for (var n = 0; n < txtLayers.length; n++) {
+			var nLayer = txtLayers[n];
 			var textDoc2 = nLayer
 				.property('ADBE Text Properties')
 				.property('ADBE Text Document');
@@ -148,7 +153,7 @@
 			textDocVal2.text = txtArray[t];
 			textDoc2.setValue(textDocVal2);
 
-			selLayers[n].name =
+			nLayer.name =
 				txtPrefix + 'lettering ' + (txtArray.length - t); // → txt_lettering 1 ... txtArray.length
 			t += 1;
 		}
@@ -506,12 +511,13 @@
 
 		app.beginUndoGroup('wig rig');
 
+		// the preset goes to every selected layer at once: once, not once per layer
+		addPseudoEffect('wig', expFx);
 		for (var i = 0; i < selLayers.length; i++) {
 			var wProp = selLayers[i]
 				.property('ADBE Transform Group')
 				.property('ADBE Position');
 
-			addPseudoEffect('wig', expFx);
 			wProp.expression = expStr;
 		}
 		app.endUndoGroup();
@@ -527,6 +533,12 @@
 		var selLayers = comp.selectedLayers;
 
 		if (selLayers.length != 3) PGN.fail('selecione 3 layers em ordem');
+
+		// bone 1 can't already hang from bone 2 or 3 (that order would be a parenting loop)
+		for (var up = selLayers[0].parent; up != null; up = up.parent) {
+			if (up == selLayers[1] || up == selLayers[2]) PGN.fail('selecione os 3 layers em ordem: do primeiro osso (ex.: coxa) ao \u00FAltimo (p\u00E9)');
+		}
+		if (selLayers[1].parent == selLayers[2]) PGN.fail('selecione os 3 layers em ordem: do primeiro osso (ex.: coxa) ao \u00FAltimo (p\u00E9)');
 
 		app.beginUndoGroup('simple ik');
 

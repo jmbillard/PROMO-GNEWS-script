@@ -262,7 +262,8 @@ PGN.proj.saveJob = {
 
 		// right click...
 		if (st.alt) {
-			st.savePath = '~/Desktop';
+			// the real desktop (Folder.desktop follows a OneDrive-redirected one on Windows)
+			st.savePath = decodeURI(Folder.desktop.fullName);
 			st.projFullName = hardNews ? [userPrefix, '- GNEWS', projName].join(' ') : st.promoProjectName; // ex: 'JBI - GNEWS TWITTER PRESIDENTE'
 			st.finished = true;
 			return st;
@@ -271,7 +272,10 @@ PGN.proj.saveJob = {
 		// left click...
 		var saveFolder = hardNews ? new Folder(PRODUCAO_DIA_A_DIA()) : new Folder(projPath);
 
-		if (!saveFolder.exists) saveFolder = new Folder('~/Desktop');
+		// hard news: today's folder may not exist yet (first save of the day) — create it
+		// instead of falling back to the desktop
+		if (hardNews && !saveFolder.exists) createPath(saveFolder.fsName);
+		if (!saveFolder.exists) saveFolder = Folder.desktop;
 
 		st.savePath = decodeURI(saveFolder.fullName);
 		st.projFullName = hardNews ? [userPrefix, '- GNEWS', projName, '-', projId].join(' ') : st.promoProjectName; // ex: 'JBI - GNEWS TWITTER PRESIDENTE - cassia'
@@ -325,17 +329,19 @@ PGN.proj.saveJob = {
 		app.project.save(projFile);
 
 		openFolder(savePath);
-		if (appOs == 'Win') setClipboard(savePath.replace(/^~\//, '').replace(/\//g, '\\'));
-		else setClipboard(new Folder(savePath).fsName);
+		// the system form of the path on both systems ('~' and '/d/...' resolved)
+		setClipboard(new Folder(savePath).fsName);
 
+		// the copy for older versions: never turns a saved project into an error
 		if (!st.alt && appV > 22 && saveAsV22) {
-			executeCommandID('Save a Copy As 22.x...');
+			try { executeCommandID('Save a Copy As 22.x...'); } catch (e) { }
 		}
 		data.path = app.project.file ? app.project.file.fsName : projFile.fsName;
 
 		if (st.col) {
 			data.collected = st.col.copied;
 			msg += ' \u00b7 ' + PGN.n(st.col.copied, 'arquivo coletado', 'arquivos coletados');
+			if (st.col.failed) msg += ' \u00b7 ' + st.col.failed + ' n\u00E3o copiados (ficaram no lugar original)';
 		}
 		if (st.fnt) {
 			data.fonts = st.fnt.fonts;

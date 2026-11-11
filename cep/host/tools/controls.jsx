@@ -63,12 +63,12 @@
 		}
 		for (var l = 0; l < selLayers.length; l++) {
 			var selLayer = selLayers[l];
+			// before 2023 the matte is the layer right above: the null goes above the matte
+			// (read before moving the null, which takes that slot)
+			var matte = selLayer.hasTrackMatte && appV < 23 && selLayer.index > 1 ? comp.layer(selLayer.index - 1) : null;
 			var nullLayer = newNull(comp);
-			nullLayer.moveBefore(selLayer);
 
-			if (selLayer.hasTrackMatte && appV < 23) {
-				nullLayer.moveBefore(comp.layer(selLayer.index - 1));
-			}
+			nullLayer.moveBefore(matte || selLayer);
 
 			nullLayer.name += deletePrefix(selLayer.name)
 				.replaceSpecialCharacters();
@@ -92,19 +92,21 @@
 	PGN.register('nullc', function (args) {
 		var selLayers = PGN.layers(2);
 		var comp = PGN.comp();
-		var lIndex = comp.numLayers;
+		var top = selLayers[0];
 
+		// one undo step for everything (unparenting included)
+		app.beginUndoGroup('create centered null');
 		for (var i = 0; i < selLayers.length; i++) {
 			selLayers[i].parent = null;
 
-			if (selLayers[i].index < lIndex) lIndex = i;
+			// the null goes above the topmost selected layer
+			if (selLayers[i].index < top.index) top = selLayers[i];
 		}
-		app.beginUndoGroup('create centered null');
 
 		var nullLayer = newNull(comp);
 
 		nullLayer.name += 'center';
-		nullLayer.moveBefore(selLayers[lIndex]);
+		nullLayer.moveBefore(top);
 		nullLayer
 			.property('ADBE Transform Group')
 			.property('ADBE Position')

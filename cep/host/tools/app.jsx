@@ -131,6 +131,14 @@ PGN.register('ame', function (args) {
 	if (!tmpFolder.exists) tmpFolder.create();
 
 	getURLContent([url], [tmpPath]);
+
+	// a failed download must not report success (nor reinstall what an older run left)
+	var zip = new File(zipPath);
+
+	if (!zip.exists || zip.length <= 0) {
+		removeFolder(tmpFolder);
+		PGN.fail('n\u00E3o foi poss\u00EDvel baixar os presets (sem rede ou link indispon\u00EDvel)');
+	}
 	unzipContent(zipPath, unzipPath);
 
 	for (var i = 0; i < vFolders.length; i++) {

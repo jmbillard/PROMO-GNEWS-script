@@ -185,7 +185,7 @@ No alto da seção ficam dois campos: o **ID** e o **nome do projeto** (a retran
 | <img src="images/doc/icons/proj-rename.png" width="32" alt="Renomear comps"> | **Renomear comps** | Renomeia as comps selecionadas no padrão de promo (ID + retranca). Sem seleção, renomeia todas as comps de template e de assinatura. | — |
 | <img src="images/doc/icons/proj-org.png" width="32" alt="Organizar projeto"> | **Organizar projeto** | Cria as pastas do modelo das preferências e move cada item para a sua. Tarefa longa, com progresso. **Botão direito:** abre as [tags](#tags) para marcar itens à mão. | — |
 | <img src="images/doc/icons/proj-endp.png" width="32" alt="Presets de end page"> | **Presets de end page** | Abre a janela de [end page](#end-page). | — |
-| <img src="images/doc/icons/proj-save.png" width="32" alt="Salvar projeto"> | **Salvar projeto** | Salva o .aep com o nome no padrão (ID + retranca) na pasta de projetos. **Botão direito:** escolhe outra pasta. | — |
+| <img src="images/doc/icons/proj-save.png" width="32" alt="Salvar projeto"> | **Salvar projeto** | Salva o .aep com o nome no padrão (ID + retranca) na pasta de projetos. **Botão direito:** salva na área de trabalho. | — |
 | <img src="images/doc/icons/proj-collect.png" width="32" alt="Coletar arquivos"> | **Coletar arquivos** | Copia para junto do projeto os arquivos usados nele (footage, imagens, áudio). Tarefa longa. | — |
 | <img src="images/doc/icons/proj-cfonts.png" width="32" alt="Coletar fontes"> | **Coletar fontes** | Copia para junto do projeto as fontes usadas nos textos. Tarefa longa. | — |
 | <img src="images/doc/icons/proj-open.png" width="32" alt="Abrir pasta do projeto"> | **Abrir pasta do projeto** | Abre no Explorer / Finder a pasta onde o projeto está salvo. | — |

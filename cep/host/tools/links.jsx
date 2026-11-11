@@ -81,7 +81,7 @@
 		var f = file();
 
 		f.encoding = 'UTF-8';
-		writeFileContent(f, JSON.stringify(o, null, '\t'));
+		PGN.writeJSON(f, o, true);
 	}
 
 	function clean(list, key) {
@@ -190,9 +190,18 @@
 		if (!p) PGN.fail('pasta não definida');
 		// macOS: //server/share → /Volumes/share (mounted on demand)...
 		p = PGN.net.local(p, true);
-		if (!new Folder(p).exists) PGN.fail('pasta inacessível');
-		openFolder(p);
 
+		// a folder that doesn't exist yet (today's, early in the day) or was moved:
+		// open the nearest one that does, and say so
+		var fld = new Folder(p);
+		var near = fld;
+
+		while (near != null && !near.exists) near = near.parent;
+		// nothing found, or only a drive / share root: not worth opening
+		if (near == null || (near.fsName != fld.fsName && near.parent == null)) PGN.fail('pasta inacess\u00EDvel: ' + fld.fsName);
+		openFolder(near.fsName);
+
+		if (near.fsName != fld.fsName) return it.name + ': a pasta ainda n\u00E3o existe \u00B7 aberta ' + decodeURI(near.name);
 		return it.name + ' aberto';
 	});
 

@@ -70,10 +70,25 @@
 		hex = '#' + hex;
 
 		var selLayers = PGN.layers(1);
-		var count = selLayers.length;
+		var color = hexToRGB(hex);
+		var count = 0;
 
-		batchFill(hex, hexToRGB(hex));
+		// a Fill named after the hex on every layer that takes effects (cameras, lights
+		// and audio-only layers are skipped); the color by index, not by its localized name
+		app.beginUndoGroup('fill ' + hex);
+		for (var i = 0; i < selLayers.length; i++) {
+			var fxParade = selLayers[i].property('ADBE Effect Parade');
 
+			if (fxParade == null || !fxParade.canAddProperty('ADBE Fill')) continue;
+			var fill = fxParade.addProperty('ADBE Fill');
+
+			fill.name = hex;
+			fill.property(3).setValue(color);
+			count++;
+		}
+		app.endUndoGroup();
+
+		if (count == 0) PGN.fail('a cor n\u00E3o pode ser aplicada nos layers selecionados');
 		return 'Fill ' + hex + ' aplicado em ' + PGN.n(count, 'layer');
 	});
 

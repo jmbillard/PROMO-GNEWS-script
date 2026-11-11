@@ -77,7 +77,8 @@ PGN.register('find.search', function (args) {
 
 	if (regExp) {
 		try {
-			sKey = new RegExp(query);
+			// 'diferenciar mai\u00FAsculas' off: the 'i' flag (the regex text itself stays as typed)
+			sKey = new RegExp(query, matchCase ? '' : 'i');
 		} catch (err) {
 			PGN.fail('expressão regular inválida');
 		}

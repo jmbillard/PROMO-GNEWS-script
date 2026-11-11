@@ -31,7 +31,8 @@ String.prototype.toTitleCase = function () {
 // trim...
 if (!String.prototype.trim) {
 	String.prototype.trim = function () {
-		return this.replace(/^\s+|\s+$/gm, '');
+		// no 'm' flag: only the ends of the whole string (with it, blank lines in the middle went too)
+		return this.replace(/^\s+|\s+$/g, '');
 	};
 }
 

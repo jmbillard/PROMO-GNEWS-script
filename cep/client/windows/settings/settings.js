@@ -440,8 +440,12 @@
 
 	// 'go to this item' (right click 'editar…' in the bar): fx / link / color
 	var EDS = {};
+	// a request that arrives before the editors exist waits for them (the bar's event can
+	// beat 'prefs.get' when the window is just opening)
+	var built = false, waiting = null;
 	function focusRouter(f) {
 		if (!f || !f.kind) return;
+		if (!built) { waiting = f; return; }
 		var ed = EDS[f.kind];
 		if (ed && ed.focusItem) ed.focusItem(f);
 	}
@@ -457,8 +461,14 @@
 			P.folders = P.folders || {};
 			P.selection = P.selection || { nullType: 0, adjType: 0, projectMode: 0 };
 			build();
-			// a request the bar left in the host before opening this window
-			PGN.run('ui.focus', { take: true }).then(function (r) { if (r.ok && r.data) focusRouter(r.data); });
+			built = true;
+			// a request the bar left in the host before opening this window (or one that
+			// came by event while the window was still loading)
+			PGN.run('ui.focus', { take: true }).then(function (r) {
+				var f = r.ok && r.data ? r.data : waiting;
+				waiting = null;
+				focusRouter(f);
+			});
 		});
 	}
 

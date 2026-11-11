@@ -46,7 +46,8 @@
 		var src = q.value;
 		if (!src) return null;
 		try {
-			src = opts.regex ? norm(src) : norm(src).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+			// a regex keeps its own text (lowercasing it would turn \D into \d): only the flag
+			src = opts.regex ? src : norm(src).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 			return new RegExp(src, opts.matchCase ? '' : 'i');
 		} catch (e) { return false; }
 	}

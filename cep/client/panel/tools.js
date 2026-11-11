@@ -28,9 +28,10 @@
 
 	// 'Efeitos': groups from the preferences (host fx.get) → tiles
 	window.fxGroups = function (data) {
-		return (data.groups || []).filter(function (g) { return g.items && g.items.length; }).map(function (g) {
+		return (data.groups || []).filter(function (g) { return g.items && g.items.length; }).map(function (g, gi) {
 			return g.items.map(function (it, i) {
-				var base = { id: 'fx:' + it.m, hostId: 'fx.apply', name: it.name, sel: 'layers', alt: 'editar efeito',
+				// group and position in the id: the same effect twice still makes two tiles
+				var base = { id: 'fx:' + gi + '.' + i + ':' + it.m, hostId: 'fx.apply', name: it.name, sel: 'layers', alt: 'editar efeito',
 					args: function () { return { m: it.m, name: it.name }; },
 					onAlt: function () { window.focusPrefs({ kind: 'fx', key: it.m }); } };
 				if (it.glyph) return Object.assign(base, { glyph: it.glyph, anim: 'pop' });
@@ -55,8 +56,9 @@
 			.filter(function (g) { return g.length; });
 	};
 
-	function S(hex, name) {
-		return { id: 'color:' + hex, hostId: 'color', name: name ? name + ' · ' + hex : hex, label: name || '', hex: hex, swatch: true, sel: 'layers', alt: 'editar paleta', args: function () { return { hex: hex }; },
+	function S(hex, name, pos) {
+		// position in the id: the same color twice still makes two swatches
+		return { id: 'color:' + (pos || '') + hex, hostId: 'color', name: name ? name + ' · ' + hex : hex, label: name || '', hex: hex, swatch: true, sel: 'layers', alt: 'editar paleta', args: function () { return { hex: hex }; },
 			onAlt: function () { window.focusPrefs({ kind: 'color', key: hex }); } };
 	}
 
@@ -66,7 +68,7 @@
 	window.paletteGroups = function (data) {
 		var taken = [];
 		var named = [];
-		var out = (data.groups || []).filter(function (g) { return g.colors && g.colors.length; }).map(function (g) {
+		var out = (data.groups || []).filter(function (g) { return g.colors && g.colors.length; }).map(function (g, gi) {
 			var cols = [];
 			named.push({ name: g.name, colors: cols });
 			return g.colors.map(function (hex, i) {
@@ -74,7 +76,7 @@
 				var n = (g.names && g.names[i]) || (window.PalNames ? PalNames.pick(hex, taken) : '');
 				taken.push(n);
 				cols.push({ hex: hex, name: n });
-				return S(hex, n);
+				return S(hex, n, gi + '.' + i + ':');
 			});
 		});
 		window.PALETTE_NAMED = named;
@@ -182,7 +184,7 @@
 					T('endp', 'Presets de end page', 'draw', 'M4 5h16v14H4z', 'M8 15h8M8 11h5', { win: 'endpage' })
 				],
 				[
-					T('save', 'Salvar projeto', 'down', 'M5 4h11l3 3v13H5z', 'M8 20v-6h8v6', { job: true, alt: 'salvar em outra pasta' }),
+					T('save', 'Salvar projeto', 'down', 'M5 4h11l3 3v13H5z', 'M8 20v-6h8v6', { job: true, alt: 'salvar na área de trabalho' }),
 					T('collect', 'Coletar arquivos', 'down', 'M4 14v6h16v-6', 'M12 4v10M8 10l4 4 4-4', { job: true }),
 					T('cfonts', 'Coletar fontes', 'pop', 'M5 19l5-14h1l5 14M7 14h7', 'M18 14v5', { job: true }),
 					T('open', 'Abrir pasta do projeto', 'lift', F, 'M3 18l3-7h15')

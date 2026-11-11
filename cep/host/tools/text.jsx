@@ -37,6 +37,30 @@
 		return selLayers;
 	}
 
+	// changes the text of the document (keeps its style) — on every keyframe when
+	// Source Text is animated (setValue throws 'has keyframes' there)
+	function editText(layer, fn) {
+		var src = layer.property('ADBE Text Properties').property('ADBE Text Document');
+		var doc;
+
+		if (src.numKeys == 0) {
+			doc = src.value;
+			doc.text = fn(String(doc.text));
+			src.setValue(doc);
+			return;
+		}
+		for (var k = 1; k <= src.numKeys; k++) {
+			doc = src.keyValue(k);
+			doc.text = fn(String(doc.text));
+			src.setValueAtKey(k, doc);
+		}
+	}
+
+	// Source Text with keyframes: the classic routines (clean, break) only set one value
+	function animatedText(layer) {
+		return layer.property('ADBE Text Properties').property('ADBE Text Document').numKeys > 0;
+	}
+
 	function setCase(undoName, fn) {
 		var selLayers = textLayers();
 		var count = 0;
@@ -44,13 +68,9 @@
 		app.beginUndoGroup(undoName);
 
 		for (var i = 0; i < selLayers.length; i++) {
-			var txt = textContent(selLayers[i]);
-
-			if (txt == '') continue;
-			selLayers[i]
-				.property('ADBE Text Properties')
-				.property('ADBE Text Document')
-				.setValue(fn(txt));
+			if (!(selLayers[i] instanceof TextLayer)) continue;
+			if (textContent(selLayers[i]) == '' && !animatedText(selLayers[i])) continue;
+			editText(selLayers[i], fn);
 			count++;
 		}
 		app.endUndoGroup();
@@ -93,15 +113,18 @@
 
 		app.beginUndoGroup('clean text');
 
+		var skipped = 0;
+
 		for (var i = 0; i < selLayers.length; i++) {
 			if (!(selLayers[i] instanceof TextLayer)) continue;
+			if (animatedText(selLayers[i])) { skipped++; continue; }
 			cleanText(selLayers[i]);
 			count++;
 		}
 		app.endUndoGroup();
 
-		if (count == 0) PGN.fail('nenhum layer de texto selecionado');
-		return PGN.n(count, 'texto limpo', 'textos limpos');
+		if (count == 0) PGN.fail(skipped ? 'texto com keyframes: limpe sem os keyframes do Source Text' : 'nenhum layer de texto selecionado');
+		return PGN.n(count, 'texto limpo', 'textos limpos') + (skipped ? ' \u00B7 ' + skipped + ' com keyframes (pulados)' : '');
 	});
 
 	//---------------------------------------------------------
@@ -159,15 +182,18 @@
 
 		app.beginUndoGroup('break text');
 
+		var skipped = 0;
+
 		for (var i = 0; i < selLayers.length; i++) {
 			if (!(selLayers[i] instanceof TextLayer)) continue;
+			if (animatedText(selLayers[i])) { skipped++; continue; }
 			lineBreak(selLayers[i], chars);
 			count++;
 		}
 		app.endUndoGroup();
 
-		if (count == 0) PGN.fail('nenhum layer de texto selecionado');
-		return { msg: 'texto quebrado em ' + chars + ' caracteres', data: { chars: chars } };
+		if (count == 0) PGN.fail(skipped ? 'texto com keyframes: quebre sem os keyframes do Source Text' : 'nenhum layer de texto selecionado');
+		return { msg: 'texto quebrado em ' + chars + ' caracteres' + (skipped ? ' \u00B7 ' + skipped + ' com keyframes (pulados)' : ''), data: { chars: chars } };
 	});
 
 })();

@@ -60,6 +60,17 @@ PGN.layers = function (min) {
 };
 
 // plural helper → '1 layer' / '3 layers'
+// writes a preferences JSON file (UTF-8); a file that can't be written (read-only or
+// locked folder) is an error, never a silent 'saved'
+PGN.writeJSON = function (f, data, pretty) {
+	f.encoding = 'UTF-8';
+	if (!f.open('w')) PGN.fail('n\u00E3o foi poss\u00EDvel gravar ' + f.fsName);
+	var ok = f.write(pretty ? JSON.stringify(data, null, '\t') : JSON.stringify(data));
+
+	f.close();
+	if (!ok) PGN.fail('n\u00E3o foi poss\u00EDvel gravar ' + f.fsName);
+};
+
 PGN.n = function (count, one, many) {
 	return count + ' ' + (count == 1 ? one : (many || one + 's'));
 };

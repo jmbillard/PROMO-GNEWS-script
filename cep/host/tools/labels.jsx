@@ -183,7 +183,7 @@ PGN.labels.writeUserPresets = function (list) {
 	var f = PGN.labels.userFile();
 
 	f.encoding = 'UTF-8';
-	writeFileContent(f, JSON.stringify(out, null, '\t'));
+	PGN.writeJSON(f, out, true);
 	if (!f.exists) PGN.fail('n\u00E3o consegui gravar ' + f.fsName);
 };
 

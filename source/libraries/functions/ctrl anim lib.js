@@ -56,7 +56,7 @@ function cloneExpressions(sLayer, cLayer) {
 
 		cTrm.property(p).expression = expStr;
 
-		if (prop.matchName == 'ADBE Position') {
+		if (prop.matchName == 'ADBE Position' && prop.numKeys == 0) {
 			prop.setValue(cProp.value);
 		}
 	}
@@ -176,14 +176,14 @@ function setHierarchy(sLayer, cLayer) {
 
 // find center point...
 function findCenter(lArray) {
-	var maxY = 0;
-	var minY = 99999999999999999999;
-	var maxX = 0;
-	var minX = 99999999999999999999;
-	var maxZ = 0;
-	var minZ = 99999999999999999999;
+	var maxY = -Infinity;
+	var minY = Infinity;
+	var maxX = -Infinity;
+	var minX = Infinity;
+	var maxZ = -Infinity;
+	var minZ = Infinity;
 
-	for (i = 0; i < lArray.length; i++) {
+	for (var i = 0; i < lArray.length; i++) {
 		var lPos = lArray[i]
 			.property('ADBE Transform Group')
 			.property('ADBE Position');

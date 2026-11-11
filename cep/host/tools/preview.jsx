@@ -25,8 +25,8 @@ PGN.register('preview', function (args) {
 
 		savePath = hardNews ? todayPathPreview : currentProjPath;
 
-		var previewFld = new Folder(savePath);
-		if (!previewFld.exists) previewFld.create();
+		// with the missing parents (today's folder may not exist yet)
+		if (!createPath(savePath)) PGN.fail('n\u00E3o foi poss\u00EDvel criar a pasta ' + new Folder(savePath).fsName);
 
 	} else {
 		var saveFolder = Folder.selectDialog();
@@ -34,7 +34,9 @@ PGN.register('preview', function (args) {
 		if (saveFolder == null) return '';
 		savePath = saveFolder.fullName;
 	}
-	var previewFile = new File(savePath + '/' + aItem.name + ' preview.png');
+	// a comp name with '/' or ':' would become a path: those characters become '-'
+	var safeName = String(aItem.name).replace(/[\\\/:*?"<>|]/g, '-');
+	var previewFile = new File(savePath + '/' + safeName + ' preview.png');
 
 	aItem.saveFrameToPng(aItem.time, previewFile);
 	openFolder(savePath);

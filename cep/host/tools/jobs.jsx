@@ -535,6 +535,8 @@ PGN.jk.colInit = function (st, projName) {
 		savePath = projPath + '/' + projName; // collect folder path...
 	}
 	createPathFolders(savePath);
+	// the same form as the items' paths (decodeURI(fullName)): 'D:/x' and '/d/x' compare equal
+	savePath = decodeURI(new Folder(savePath).fullName);
 
 	st.col = {
 		phase: 'scan',
@@ -546,6 +548,7 @@ PGN.jk.colInit = function (st, projName) {
 		items: [],
 		k: 0,
 		copied: 0,
+		failed: 0,
 		finished: false
 	};
 	st.total = 0;
@@ -596,6 +599,31 @@ PGN.jk.colStep = function (st) {
 	return st;
 };
 
+// copies a file into a folder for the collect: returns the copy, or null when it failed
+// (the item is then left pointing at its original file). A file of the same name already
+// there is reused only when it is the same size (the same footage imported twice);
+// otherwise the copy gets a number ('logo 2.png') instead of overwriting it.
+PGN.jk.copyInto = function (srcPath, destDir) {
+	var src = new File(srcPath);
+
+	if (!src.exists || !createPath(destDir)) return null;
+
+	// a folder (bundle) — the classic copy, no renaming
+	if (src.length < 0) return copyFile(srcPath, destDir) ? new File(destDir + '/' + src.name) : null;
+
+	var name = decodeURI(src.name);
+	var dot = name.lastIndexOf('.');
+	var base = dot > 0 ? name.substring(0, dot) : name;
+	var ext = dot > 0 ? name.substring(dot) : '';
+	var target = new File(destDir + '/' + name);
+
+	for (var n = 2; target.exists && target.length != src.length && n < 1000; n++) {
+		target = new File(destDir + '/' + base + ' ' + n + ext);
+	}
+	if (!target.exists && !src.copy(target.fsName)) return null;
+	return target.exists ? target : null;
+};
+
 // filesCollectHN loop body...
 PGN.jk.colHN = function (st, aItem) {
 	var c = st.col;
@@ -611,11 +639,11 @@ PGN.jk.colHN = function (st, aItem) {
 	// local drives C:, D:, F:, I: | local user folders...
 	var regExp = /^\/(c|d|f|i)\/|^~\//;
 
-	if (!filePath.match(savePath) && !filePath.match(regExp) && !(PGN.sys && PGN.sys.isLocalFile && PGN.sys.isLocalFile(filePath, c.mounts))) return;
+	if (filePath.indexOf(savePath) != 0 && !filePath.match(regExp) && !(PGN.sys && PGN.sys.isLocalFile && PGN.sys.isLocalFile(filePath, c.mounts))) return;
 
-	copyFile(filePath, newFilePath);
-	var newFile = new File([newFilePath, fileName].join('/'));
+	var newFile = PGN.jk.copyInto(filePath, newFilePath);
 
+	if (!newFile) { c.failed++; return; }
 	PGN.jk.touch(st, 'save project');
 	aItem.replace(newFile);
 	c.copied++;
@@ -640,11 +668,11 @@ PGN.jk.colPROMO = function (st, aItem) {
 	var filePath = decodeURI(aItem.file.fullName);
 	var newFilePath = [savePath, 'project files', itemPath].join('/');
 
-	if (filePath.match(savePath)) return;
+	if (filePath.indexOf(savePath) == 0) return;
 
-	copyFile(filePath, newFilePath);
-	var newFile = new File([newFilePath, fileName].join('/'));
+	var newFile = PGN.jk.copyInto(filePath, newFilePath);
 
+	if (!newFile) { c.failed++; return; }
 	PGN.jk.touch(st, 'save project');
 	aItem.replace(newFile);
 	c.copied++;
@@ -665,7 +693,7 @@ PGN.jk.fntInit = function (st, savePath) {
 	savePath += '/fonts'; // collect folder path...
 	var saveFolder = new Folder(savePath); // collect folder...
 
-	if (!saveFolder.exists) saveFolder.create();
+	if (!saveFolder.exists) createPath(savePath);
 
 	st.fnt = {
 		phase: 'scan',
@@ -719,7 +747,9 @@ PGN.jk.fntStep = function (st) {
 		if (!PGN.jk.more(t0)) break;
 	}
 	if (f.c >= f.comps.length) {
-		if (f.folder.getFiles().length == 0) f.folder.remove();
+		var left = f.folder.exists ? f.folder.getFiles() : null;
+
+		if (left && left.length == 0) f.folder.remove();
 		f.comps = [];
 		f.finished = true;
 	}
@@ -742,6 +772,7 @@ PGN.jk.fntLayer = function (f, aLayer) {
 
 	var fontCopyFile = new File(f.savePath + '/' + fontSrcFile.displayName);
 
-	f.fonts.push(fontName);
-	fontSrcFile.copy(fontCopyFile);
+	// a font that could not be copied goes to the failed list, not to the collected one
+	if (fontCopyFile.exists || fontSrcFile.copy(fontCopyFile)) f.fonts.push(fontName);
+	else if (f.fail.indexOf(fontName) < 0) f.fail.push(fontName);
 };

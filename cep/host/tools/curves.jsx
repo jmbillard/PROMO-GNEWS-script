@@ -74,6 +74,13 @@
 		].join('\n');
 	}
 
+	function curveable(prop) {
+		var t = prop.propertyValueType;
+		var T = PropertyValueType;
+
+		return t == T.OneD || t == T.TwoD || t == T.TwoD_SPATIAL || t == T.ThreeD || t == T.ThreeD_SPATIAL || t == T.COLOR;
+	}
+
 	// selected properties (not groups) with at least 2 keyframes...
 	function targets(min) {
 		var comp = PGN.comp();
@@ -88,6 +95,8 @@
 
 				if (prop.propertyType != PropertyType.PROPERTY) continue;
 				if (!prop.canSetExpression) continue;
+				// linear() only blends numbers, arrays and colors (not text, paths, markers...)
+				if (!curveable(prop)) continue;
 				if (prop.numKeys < min) continue;
 				list.push(prop);
 			}
@@ -198,7 +207,7 @@
 		var f = presetFile();
 
 		f.encoding = 'UTF-8';
-		writeFileContent(f, JSON.stringify(list));
+		PGN.writeJSON(f, list);
 		return { msg: args.msg ? String(args.msg) : 'Presets salvos', data: { presets: list } };
 	});
 
