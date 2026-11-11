@@ -211,7 +211,25 @@
 			var ringStub = h('span');
 			if (res.cancelled) { feedback('cancelado', false); renderSel(); return; }
 			finish(entry, ringStub, res, sec);
+			// a long task is several undo steps: offer to undo all of it at once
+			if (res.ok && res.undoable > 1) offerUndo(el);
 		});
+	}
+
+	// ↶ on the tile for a few seconds after a long task: undoes every step of it
+	function offerUndo(el) {
+		var old = el.querySelector('.undo1');
+		if (old) old.remove();
+		var u = h('span.undo1', {
+			role: 'button', title: 'desfazer a tarefa inteira', 'aria-label': 'Desfazer a tarefa inteira',
+			onclick: function (e) {
+				e.stopPropagation();
+				u.remove();
+				PGN.run('job.undo', {}).then(function (r) { feedback(r.ok ? r.msg : r.error, r.ok); pollStatus(); });
+			}
+		}, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3')]));
+		el.appendChild(u);
+		setTimeout(function () { u.classList.add('out'); setTimeout(function () { u.remove(); }, 250); }, 8000);
 	}
 
 	/* ---------- inline parameter (right-click on tools with 'param') ---------- */

@@ -57,6 +57,35 @@ PGN.jk = {
 		app.endUndoGroup();
 	},
 
+	// the Edit menu item that undoes the group 'name', when it is the last one done
+	// (0 otherwise) — 'Undo …' in English, 'Desfazer …' in Portuguese
+	undoCmd: function (name) {
+		var labels = ['Undo ', 'Desfazer '];
+
+		for (var i = 0; i < labels.length; i++) {
+			var cmd = 0;
+
+			try { cmd = app.findMenuCommandId(labels[i] + name); } catch (e) { }
+			if (cmd) return cmd;
+		}
+		return 0;
+	},
+
+	// undoes the groups (newest first) while they are still on top of the undo list;
+	// stops at anything done after them. returns how many were undone
+	undoList: function (u) {
+		var n = 0;
+
+		for (var k = u.length - 1; k >= 0; k--) {
+			var cmd = PGN.jk.undoCmd(u[k]);
+
+			if (!cmd) break; // undo menu no longer shows our group...
+			app.executeCommand(cmd);
+			n++;
+		}
+		return n;
+	},
+
 	// undo every group this job created (newest first)...
 	rollback: function (st) {
 		if (!st) return;
@@ -64,15 +93,7 @@ PGN.jk = {
 			st._ug = null;
 			try { app.endUndoGroup(); } catch (e) { }
 		}
-		var u = st.undo || [];
-
-		for (var k = u.length - 1; k >= 0; k--) {
-			var cmd = 0;
-
-			try { cmd = app.findMenuCommandId('Undo ' + u[k]); } catch (e) { }
-			if (!cmd) break; // undo menu no longer shows our group...
-			app.executeCommand(cmd);
-		}
+		PGN.jk.undoList(st.undo || []);
 		st.undo = [];
 	},
 
@@ -134,6 +155,19 @@ PGN.jk = {
     clean2  → deleteEmptyProjectFolders
 
 */
+
+// undoes the whole last long task (every slice), while nothing else was done after it
+PGN.register('job.undo', function (args) {
+	var last = PGN.lastJobUndo;
+
+	if (!last || !last.undo.length) PGN.fail('nada para desfazer');
+	PGN.lastJobUndo = null;
+	var n = PGN.jk.undoList(last.undo);
+
+	if (n == 0) PGN.fail('n\u00E3o d\u00E1 mais para desfazer: houve outras altera\u00E7\u00F5es depois');
+	if (n < last.undo.length) return 'desfeito em parte (' + n + ' de ' + last.undo.length + ' passos) \u00B7 o resto j\u00E1 saiu da lista de desfazer';
+	return 'tarefa desfeita';
+});
 
 PGN.jk.orgInit = function (st) {
 	st.org = {
@@ -624,6 +658,62 @@ PGN.jk.copyInto = function (srcPath, destDir) {
 	return target.exists ? target : null;
 };
 
+// an image sequence (footage made of numbered frames): the whole sequence goes to a
+// subfolder named after it and the item is replaced as a sequence again — copying only
+// the first frame turned it into a still
+PGN.jk.isSequence = function (aItem) {
+	try {
+		var src = aItem.mainSource;
+
+		return src instanceof FileSource && !src.isStill && /\d+\.(png|jpe?g|tiff?|tga|exr|dpx|psd|bmp|gif|cin|hdr|iff|sgi|pic|webp)$/i.test(decodeURI(aItem.file.name));
+	} catch (e) { }
+	return false;
+};
+
+PGN.jk.copySequence = function (aItem, destDir) {
+	var first = aItem.file;
+	var name = decodeURI(first.name);
+	var m = /^(.*?)(\d+)(\.[^.]+)$/.exec(name);
+
+	if (!m) return null;
+	var prefix = m[1];
+	var ext = m[3].toLowerCase();
+	var seqName = (prefix.replace(/[\s._-]+$/, '') || 'sequencia');
+	var target = destDir + '/' + seqName;
+
+	if (!createPath(target)) return null;
+	var all = first.parent.getFiles();
+	var copied = 0;
+
+	for (var i = 0; i < all.length; i++) {
+		if (!(all[i] instanceof File)) continue;
+		var fn = decodeURI(all[i].name);
+		var fm = /^(.*?)(\d+)(\.[^.]+)$/.exec(fn);
+
+		if (!fm || fm[1] != prefix || fm[3].toLowerCase() != ext) continue;
+		var dest = new File(target + '/' + fn);
+
+		if (dest.exists || all[i].copy(dest.fsName)) copied++;
+		else return null;
+	}
+	var newFirst = new File(target + '/' + name);
+
+	return copied && newFirst.exists ? newFirst : null;
+};
+
+// collects one footage item into destDir: a sequence as a sequence, a file as a file.
+// returns false when the copy failed (the item keeps its original file)
+PGN.jk.collectItem = function (st, aItem, filePath, destDir) {
+	var seq = PGN.jk.isSequence(aItem);
+	var newFile = seq ? PGN.jk.copySequence(aItem, destDir) : PGN.jk.copyInto(filePath, destDir);
+
+	if (!newFile) return false;
+	PGN.jk.touch(st, 'save project');
+	if (seq) aItem.replaceWithSequence(newFile, false);
+	else aItem.replace(newFile);
+	return true;
+};
+
 // filesCollectHN loop body...
 PGN.jk.colHN = function (st, aItem) {
 	var c = st.col;
@@ -641,11 +731,7 @@ PGN.jk.colHN = function (st, aItem) {
 
 	if (filePath.indexOf(savePath) != 0 && !filePath.match(regExp) && !(PGN.sys && PGN.sys.isLocalFile && PGN.sys.isLocalFile(filePath, c.mounts))) return;
 
-	var newFile = PGN.jk.copyInto(filePath, newFilePath);
-
-	if (!newFile) { c.failed++; return; }
-	PGN.jk.touch(st, 'save project');
-	aItem.replace(newFile);
+	if (!PGN.jk.collectItem(st, aItem, filePath, newFilePath)) { c.failed++; return; }
 	c.copied++;
 };
 
@@ -670,11 +756,7 @@ PGN.jk.colPROMO = function (st, aItem) {
 
 	if (filePath.indexOf(savePath) == 0) return;
 
-	var newFile = PGN.jk.copyInto(filePath, newFilePath);
-
-	if (!newFile) { c.failed++; return; }
-	PGN.jk.touch(st, 'save project');
-	aItem.replace(newFile);
+	if (!PGN.jk.collectItem(st, aItem, filePath, newFilePath)) { c.failed++; return; }
 	c.copied++;
 };
 

@@ -207,13 +207,11 @@ PGN.register('find.select', function (args) {
 						break;
 					}
 				}
-				aLayer.shy = true;
-				aLayer.selected = false;
+				// only the selection changes (the classic tool also made every other layer
+				// shy and hid them, and never brought them back)
+				try { aLayer.selected = match != null; } catch (err) { }
 
 				if (match == null) continue;
-
-				aLayer.shy = false;
-				aLayer.selected = true;
 				selCount++;
 
 				if (!first) continue;
@@ -233,7 +231,6 @@ PGN.register('find.select', function (args) {
 				t = t < comp.duration ? t : comp.duration;
 				t = t < 0 ? 0 : t;
 			}
-			comp.hideShyLayers = true;
 		}
 		lastComp = comp;
 		lastTime = t;

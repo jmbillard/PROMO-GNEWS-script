@@ -555,7 +555,10 @@
 		var bone3Pos = bone3
 			.property('ADBE Transform Group')
 			.property('ADBE Position').value;
-		var k = ik(bone1.name, bone2.name, bone3.name);
+		// the names go inside '…' in the expressions: a quote or backslash in a layer name
+		// ('bone's arm') would break all of them
+		var q = function (n) { return String(n).replace(/\\/g, '\\\\').replace(/'/g, "\\'"); };
+		var k = ik(q(bone1.name), q(bone2.name), q(bone3.name));
 		var expFx = k[0];
 		var expStr1 = k[1];
 		var expStr2 = k[2];

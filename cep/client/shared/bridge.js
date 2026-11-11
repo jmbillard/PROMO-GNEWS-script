@@ -117,7 +117,7 @@
 				(function tick() {
 					if (cancelled) { resolve({ ok: false, error: 'cancelado', cancelled: true }); return; }
 					if (onProgress) onProgress({ done: done, total: total, label: (m && m.label ? m.label : id) + ' ' + done + '/' + total });
-					if (done >= total) { resolve({ ok: true, msg: m && m.msg ? m.msg : 'simulado · ' + id }); return; }
+					if (done >= total) { resolve({ ok: true, msg: m && m.msg ? m.msg : 'simulado · ' + id, undoable: 3 }); return; }
 					done++;
 					setTimeout(tick, 160);
 				})();

@@ -194,9 +194,13 @@ PGN.jobStep = function () {
 		PGN._job = null;
 		if (r == null) r = '';
 		var msg = typeof r == 'string' ? r : (r.msg || '');
+		// a long task leaves one undo step per slice: remember them all, so the panel
+		// can offer to undo the whole task at once (job.undo)
+		var u = cur.state.undo || [];
 
+		PGN.lastJobUndo = u.length ? { id: cur.id, undo: u.slice(0) } : null;
 		try { clearOutput(); write(msg); } catch (e) { }
-		return PGN_jobOut(cur.state, { msg: msg, data: typeof r == 'string' ? undefined : r.data });
+		return PGN_jobOut(cur.state, { msg: msg, data: typeof r == 'string' ? undefined : r.data, undoable: u.length });
 	} catch (err) {
 		return PGN_jobFail(err);
 	}

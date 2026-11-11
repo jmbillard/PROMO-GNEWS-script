@@ -184,3 +184,9 @@ footer { position: relative; }
 .horiz .logo { position: sticky; left: 0; z-index: 2; background: var(--bg); box-shadow: 6px 0 6px -2px var(--bg); }
 .horiz.tight .logo .gl-full { display: none; }
 .horiz.tight .logo .gl-globo { display: block; }
+
+/* ↶ undo the whole long task (a few seconds after it finished) */
+.t .undo1 { position: absolute; top: 1px; right: 1px; width: 15px; height: 15px; border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; background: var(--acc, #ECFF8C); color: #141416; cursor: pointer; z-index: 2; animation: pop .3s var(--spring); transition: opacity .25s; }
+.list .t .undo1 { top: 50%; right: 6px; margin-top: -8px; }
+.t .undo1.out { opacity: 0; }
+.t .undo1 svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }

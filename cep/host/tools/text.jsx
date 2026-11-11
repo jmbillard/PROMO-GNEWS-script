@@ -146,6 +146,8 @@
 			// nothing to split (classic handler stopped here)...
 			if (col.length < 2) continue;
 			selLayer.enabled = false;
+			// the source's position is in its parent's space: the columns share that parent
+			col[0].parent = selLayer.parent;
 			col[0].position.setValue(colPos);
 
 			for (var c = 1; c < col.length; c++) {
@@ -157,7 +159,7 @@
 
 				col[c].position.expression = '';
 				col[c].position.setValue(cPos);
-				col[c].parent = null;
+				col[c].parent = selLayer.parent; // keeps its place (AE compensates)
 			}
 			count += col.length;
 		}

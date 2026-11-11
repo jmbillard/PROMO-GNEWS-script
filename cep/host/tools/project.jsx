@@ -34,6 +34,17 @@ PGN.proj = {
 		if (app.project.numItems == 0) PGN.fail('projeto vazio');
 	},
 
+	// the fields still showing their placeholders would end up in file and comp names
+	// ('PROJ ID proj name'): ask for them instead (after load)
+	requireFields: function (needName) {
+		var noId = String(projId) == PGN.proj.label();
+		var noName = needName && String(projName) == PGN.proj.namePlaceholder;
+
+		if (noId && noName) PGN.fail('preencha o ID e o nome do projeto (se\u00E7\u00E3o Projeto)');
+		if (noId) PGN.fail('preencha o ID do projeto (se\u00E7\u00E3o Projeto)');
+		if (noName) PGN.fail('preencha o nome do projeto (se\u00E7\u00E3o Projeto)');
+	},
+
 	// same as projIdTxt.onChange...
 	cleanId: function (str) {
 		var s = String(str).replaceSpecialCharacters();
@@ -156,6 +167,7 @@ PGN.register('proj.setName', function (args) {
 PGN.register('id', function (args) {
 	PGN.proj.emptyFail();
 	PGN.proj.load(args);
+	PGN.proj.requireFields(false);
 
 	var count = PGN.proj.selectedComps();
 
@@ -180,6 +192,7 @@ PGN.register('id', function (args) {
 PGN.register('rename', function (args) {
 	PGN.proj.emptyFail();
 	PGN.proj.load(args);
+	PGN.proj.requireFields(true);
 
 	app.beginUndoGroup('rename comps');
 	PGN.proj.stamp();
@@ -254,6 +267,7 @@ PGN.proj.saveJob = {
 		args = args || {};
 		PGN.proj.emptyFail();
 		PGN.proj.load(args);
+		PGN.proj.requireFields(true);
 
 		var st = { total: 0, done: 0, label: 'salvando', alt: args.alt === true };
 
@@ -322,9 +336,18 @@ PGN.proj.saveJob = {
 
 	finish: function (st) {
 		var savePath = st.savePath;
-		var projFile = new File(savePath + '/' + st.projFullName);
+		var base = savePath + '/' + st.projFullName;
+		var projFile = new File(base + '.aep');
 		var data = {};
 		var msg = 'Projeto salvo';
+		var cur = app.project.file;
+
+		// another project with this name already there: a number instead of overwriting it
+		// (saving the open project again over its own file is fine)
+		for (var n = 2; projFile.exists && !(cur && cur.fsName == projFile.fsName) && n < 1000; n++) {
+			projFile = new File(base + ' ' + n + '.aep');
+		}
+		if (n > 2) msg += ' como ' + decodeURI(projFile.name) + ' (j\u00E1 havia um com esse nome)';
 
 		app.project.save(projFile);
 
