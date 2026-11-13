@@ -106,5 +106,7 @@
 	PGN.mock('tags.custom', function (a) { return { msg: a.text ? 'tag ' + a.text + ' aplicada em 3 itens' : 'tag removida de 3 itens' }; }, 200);
 
 	refresh();
-	setInterval(function () { if (!document.hidden && !first) refresh(); }, 1500);
+	// the selection count is a host call: only while the mouse is over this window
+	setInterval(function () { if (!document.hidden && !first && UI.here()) refresh(); }, 1500);
+	UI.onHere(function (v) { if (v && !first) refresh(); });
 })();

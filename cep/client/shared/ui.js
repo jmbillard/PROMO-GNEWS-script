@@ -383,10 +383,32 @@
 		new MutationObserver(function () { label(); if (box.classList.contains('open')) build(q.value); })
 			.observe(sel, { childList: true, subtree: true, attributes: true, attributeFilter: ['selected'] });
 		sel.addEventListener('change', label);
-		// value set by code (no event): keep the label honest
-		setInterval(function () { if (!box.classList.contains('open') && document.body.contains(sel)) label(); }, 600);
+		// value set by code (no event): keep the label honest — one shared timer for every
+		// dropdown, and only while the mouse is over this window (see 'presence' below)
+		ddSync.push(function () { if (!box.classList.contains('open') && document.body.contains(sel)) label(); });
 		label();
 	}
+	/* ---------- presence ----------
+	   is the mouse over this panel / window? Everything that runs by itself (polls to
+	   After Effects, looping animations, label sync) slows down or stops while it is away:
+	   each host call runs on After Effects' own UI thread, and a looping animation keeps the
+	   embedded browser repainting. html.away marks it for the CSS. */
+	var here = false, hereCbs = [], ddSync = [];
+	function setHere(v) {
+		if (v === here) return;
+		here = v;
+		document.documentElement.classList.toggle('away', !v);
+		hereCbs.forEach(function (fn) { fn(v); });
+	}
+	document.documentElement.classList.add('away');
+	document.documentElement.addEventListener('mouseenter', function () { setHere(true); });
+	document.documentElement.addEventListener('mouseleave', function () { setHere(false); });
+	document.addEventListener('mousemove', function () { setHere(true); }, true);
+	document.addEventListener('keydown', function () { setHere(true); }, true);
+	window.addEventListener('blur', function () { setHere(false); });
+	setInterval(function () { if (here) ddSync.forEach(function (fn) { fn(); }); }, 800);
+	hereCbs.push(function (v) { if (v) ddSync.forEach(function (fn) { fn(); }); });
+
 	function upgradeSelects(root) {
 		[].forEach.call((root || document).querySelectorAll('select.fld'), dropdown);
 	}
@@ -400,5 +422,5 @@
 		if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startDD); else startDD();
 	}
 
-	window.UI = { dropdown: dropdown, failState: failState, h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
+	window.UI = { here: function () { return here; }, onHere: function (fn) { hereCbs.push(fn); }, dropdown: dropdown, failState: failState, h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
 })();

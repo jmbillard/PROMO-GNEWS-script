@@ -80,7 +80,7 @@ footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px
 .sel .dot.live { background: var(--ok); }
 /* network share offline (message in the tooltip) */
 .sel .dot.off { background: #FF4D4D; }
-.sel .dot.live::after { content: ''; position: absolute; left: -4px; top: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 1.5px solid var(--ok); animation: ping 1.8s ease-out infinite; }
+.sel .dot.live::after { content: ''; position: absolute; left: -4px; top: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 1.5px solid var(--ok); animation: ping 1.8s ease-out 2; opacity: 0; }
 .sel svg { width: 16px; height: 16px; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
 .sel svg path { stroke-dasharray: 24; animation: draw .4s ease backwards; }
 

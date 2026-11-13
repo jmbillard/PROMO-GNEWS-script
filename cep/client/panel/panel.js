@@ -438,10 +438,11 @@
 
 	// one status request at a time: while the host is busy (a download, a folder dialog,
 	// a long search in another window) the polls don't pile up behind it
-	var polling = false;
+	var polling = false, lastPoll = 0;
 	function pollStatus() {
 		if (polling) return;
 		polling = true;
+		lastPoll = Date.now();
 		PGN.status().then(function (st) {
 			polling = false;
 			if (!st) return;
@@ -686,6 +687,14 @@
 	});
 
 
+	// the selection is asked to After Effects (its UI thread answers): often while the mouse
+	// is over the bar, seldom while it is away working in the timeline, and right away when
+	// it comes back — so the tools are up to date before the click
+	var POLL_HERE = 1500, POLL_AWAY = 6000;
 	pollStatus();
-	selTimer = setInterval(function () { if (!document.hidden && !state.busy) pollStatus(); }, 1200);
+	selTimer = setInterval(function () {
+		if (document.hidden || state.busy) return;
+		if (Date.now() - lastPoll >= (UI.here() ? POLL_HERE : POLL_AWAY)) pollStatus();
+	}, 500);
+	UI.onHere(function (v) { if (v && !document.hidden && !state.busy && Date.now() - lastPoll > 300) pollStatus(); });
 })();

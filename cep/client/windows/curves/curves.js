@@ -186,8 +186,10 @@
 		return UI.h('span.stat', null, [UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(d)]), txt]);
 	}
 
-	function pollStats() {
-		if (document.hidden || s.busy || s.drag) return;
+	function pollStats(force) {
+		// only while the mouse is over this window (and once when it comes in): the stats
+		// are a host call, and nobody reads them while working in the timeline
+		if (document.hidden || s.busy || s.drag || (!force && !UI.here())) return;
 		PGN.run('inf.stats', {}).then(function (r) {
 			if (!r.ok || !r.data) return;
 			var d = r.data;
@@ -267,7 +269,7 @@
 			busy(btn, false);
 			report(r);
 			lastStats = '';
-			pollStats();
+			pollStats(true);
 		});
 	});
 
@@ -285,6 +287,7 @@
 	draw();
 	setLive(live.on);
 	loadPresets();
-	pollStats();
-	setInterval(pollStats, 1500);
+	pollStats(true);   // first read, wherever the mouse is
+	setInterval(function () { pollStats(); }, 1500);
+	UI.onHere(function (v) { if (v) pollStats(); });
 })();
