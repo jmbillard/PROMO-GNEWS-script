@@ -190,3 +190,9 @@ footer { position: relative; }
 .list .t .undo1 { top: 50%; right: 6px; margin-top: -8px; }
 .t .undo1.out { opacity: 0; }
 .t .undo1 svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* short vertical bar: footer in a single row (buttons share the width) */
+.short footer { flex-wrap: nowrap; gap: 0; padding: 4px 6px 6px; }
+.short footer .k, .short footer .sel { flex: 1 1 0; min-width: 0; width: auto; }
+/* the inline stepper (right click) doesn't stretch across a wide bar */
+.list .param { max-width: 220px; }

@@ -241,7 +241,13 @@
 		// right after another tip: no wait, it reads as one moving tip
 		tipT = setTimeout(function () { if (tipFor === el) showTip(el); }, Date.now() - lastHide < 400 ? 60 : 420);
 	});
-	document.addEventListener('mousedown', hideTip, true);
+	// a click (either button) hides the tip, and it stays away until the mouse goes out and
+	// back: it would sit on top of what the click just opened (the inline stepper, a result)
+	document.addEventListener('mousedown', function () {
+		var keep = tipFor;
+		hideTip();
+		tipFor = keep;
+	}, true);
 	document.addEventListener('wheel', hideTip, { passive: true, capture: true });
 	document.addEventListener('keydown', hideTip, true);
 	window.addEventListener('blur', hideTip);

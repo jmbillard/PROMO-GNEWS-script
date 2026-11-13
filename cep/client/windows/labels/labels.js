@@ -38,7 +38,9 @@
 	}
 	function ink(c) {
 		var n = parseInt(c.slice(1), 16);
-		return (0.299 * (n >> 16 & 255) + 0.587 * (n >> 8 & 255) + 0.114 * (n & 255)) > 140 ? '#141416' : '#F2F2F4';
+		// relative luminance (WCAG): white ink while it keeps at least 3:1 on the color, dark from there on
+		var l = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+		return (0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2]) > 0.30 ? '#141416' : '#F2F2F4';
 	}
 	function modified(i) { return !!S.saved && (S.colors[i] !== S.saved.colors[i] || S.names[i] !== S.saved.names[i]); }
 
@@ -286,7 +288,7 @@
 
 	function load() {
 		PGN.run('labels.get', {}).then(function (r) {
-			if (!r.ok) { UI.note(note, r.error, false); return; }
+			if (!r.ok) { UI.failState($('grid'), r.error, load); UI.note(note, r.error, false); return; }
 			S.presets = r.data.presets || [];
 			presetsSelect();
 			adopt(r.data);

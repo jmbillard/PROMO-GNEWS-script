@@ -283,6 +283,7 @@
 	}
 
 	function adopt(d) {
+		if (!d) return;   // an answer without data changes nothing
 		if (d.current) S.cur = d.current;
 		if (d.livre != null) S.livre = d.livre;
 		if (d.options) S.opt = d.options;
@@ -300,7 +301,7 @@
 
 	function load() {
 		PGN.run('endp.state', {}).then(function (r) {
-			if (!r.ok) { UI.note(note, r.error, false); return; }
+			if (!r.ok) { UI.failState($('form'), r.error, load); UI.note(note, r.error, false); return; }
 			adopt(r.data);
 		});
 	}
@@ -308,7 +309,8 @@
 	$('preset').addEventListener('change', function () {
 		if (!this.value) return;
 		PGN.run('endp.load', { path: this.value }).then(function (r) {
-			if (r.ok) { adopt({ current: r.data.current }); changed(); note.textContent = 'preset ' + r.data.name + ' carregado · aplique para gravar'; }
+			if (r.ok && r.data && r.data.current) { adopt({ current: r.data.current }); changed(); note.textContent = 'preset ' + r.data.name + ' carregado · aplique para gravar'; }
+			else if (r.ok) UI.note(note, 'preset sem dados', false);
 			else msg(r);
 		});
 	});

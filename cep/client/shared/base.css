@@ -200,7 +200,8 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .note.err { color: #FFB3B2; }
 .note.err i { background: var(--err); }
 
-.empty { padding: 56px 0; display: flex; justify-content: center; animation: fade .3s ease backwards; }
+.empty { padding: 56px 0; display: flex; flex-direction: column; align-items: center; gap: 10px; animation: fade .3s ease backwards; }
+.empty p { margin: 0; font: 10px var(--mono); color: var(--tx-2); text-align: center; }
 .empty svg { width: 30px; height: 30px; fill: none; stroke: #45454D; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -246,7 +247,7 @@ svg.i .a { stroke: currentColor; transform-box: fill-box; transform-origin: cent
 .tip .tx { display: block; min-height: 1.35em; }
 
 /* window that could not load its data */
-.fail { min-height: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 16px; text-align: center; animation: hintIn .3s ease backwards; }
+.fail { grid-column: 1 / -1; min-height: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 16px; text-align: center; animation: hintIn .3s ease backwards; }
 .fail > i { width: 26px; height: 26px; border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; background: rgba(255, 107, 107, .16); color: #FFB3B2; }
 .fail > i svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
 .fail p { margin: 0; max-width: 280px; font: 11px/1.45 var(--mono); color: var(--tx-2); word-break: break-word; }

@@ -9,9 +9,9 @@
 	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); transition: transform .25s var(--spring); animation: tIn .35s var(--out) backwards; }
 .sw:hover { transform: translateY(-2px); }
 .sw:active { transform: scale(.96); }
-.sw .ix { position: absolute; right: 6px; top: 5px; font: 9px var(--mono); opacity: .6; }
+.sw .ix { position: absolute; right: 6px; top: 5px; font: 9px var(--mono); opacity: .8; }
 .sw .nm { position: absolute; left: 7px; right: 6px; bottom: 17px; font: 700 11px/1.1 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sw .hx { position: absolute; left: 7px; bottom: 5px; font: 9px var(--mono); opacity: .78; }
+.sw .hx { position: absolute; left: 7px; bottom: 5px; font: 9px var(--mono); opacity: .9; }
 /* changed, not applied yet: the small yellow keyframe */
 .sw .kf { position: absolute; right: 6px; bottom: 7px; width: 6px; height: 6px; border-radius: 1px; background: var(--acc); transform: rotate(45deg) scale(0); box-shadow: 0 0 0 1.5px rgba(0, 0, 0, .35); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
 .sw.mod .kf { transform: rotate(45deg) scale(1); }
@@ -25,7 +25,7 @@
 	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat; }
 .ed-was:hover::after { opacity: .9; }
 .ed-now { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; padding: 0 6px 0 10px; }
-.ed-now .ix { font-size: 10px; opacity: .65; }
+.ed-now .ix { font-size: 10px; opacity: .8; }
 .ed-now input { flex: 1; min-width: 0; height: 28px; border: 0; background: transparent; color: inherit; font: italic 700 13px var(--sans); }
 .ed-now input:focus { outline: none; }
 .wand { width: 24px; height: 24px; flex: none; border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; color: inherit; opacity: .5; transition: opacity .2s, background .2s; }

@@ -43,6 +43,7 @@
 				s.picked = {};
 				render();
 			}
+			if (!r.ok && !s.items.length) UI.failState(list, r.error, function () { load('fonts.list'); });
 			footer(r.ok ? (id === 'fonts.download' ? { msg: r.msg } : null) : { err: r.error });
 		});
 	}
@@ -114,8 +115,13 @@
 		var q = UI.strip(s.q.trim().toLowerCase());
 		var items = s.items.filter(function (it) { return !q || UI.strip((it.name + ' ' + (it.family || '')).toLowerCase()).indexOf(q) >= 0; });
 		list.textContent = '';
+		s.shown = items.length;
+		if (!Object.keys(s.picked).length) footer();
 		if (!items.length) {
-			list.appendChild(h('div.empty', null, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.font)])));
+			list.appendChild(h('div.empty', null, [
+				UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.font)]),
+				h('p', { text: s.items.length ? 'nada encontrado' : 'nenhuma fonte \u00B7 use baixar' })
+			]));
 			return;
 		}
 		var d = 0;
@@ -177,7 +183,7 @@
 			return;
 		}
 		var nStyles = s.items.reduce(function (a, it) { return a + (it.files || []).length; }, 0);
-		var label = s.items.length + ' famílias · ' + nStyles + ' estilos';
+		var label = (s.shown != null && s.shown < s.items.length ? s.shown + ' de ' : '') + s.items.length + ' famílias · ' + nStyles + ' estilos';
 		var st = h('div.status', null, h('span', { text: label }));
 		foot.appendChild(st);
 		if (note) UI.note(st.firstChild, note.err || note.msg, !note.err, label);

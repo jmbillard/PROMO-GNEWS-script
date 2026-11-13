@@ -36,6 +36,8 @@
 				s.updated = r.data.updated || '';
 				render();
 			}
+			// nothing to show yet and the host did not answer: say it in the window, with a retry
+			if (!r.ok && !s.items.length) UI.failState(list, r.error, function () { load('tpl.list'); });
 			footer(r.ok && id === 'tpl.download' ? { msg: r.msg } : (!r.ok ? { err: r.error } : null));
 		});
 	}
@@ -129,8 +131,13 @@
 			return (s.cat === 'todos' || cat(it) === s.cat) && (!q || UI.strip((it.name + ' ' + it.folder).toLowerCase()).indexOf(q) >= 0);
 		});
 		list.textContent = '';
+		s.shown = items.length;
+		if (!s.sel) footer();
 		if (!items.length) {
-			list.appendChild(h('div.empty', null, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.grid)])));
+			list.appendChild(h('div.empty', null, [
+				UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.grid)]),
+				h('p', { text: s.items.length ? 'nada encontrado' : 'nenhum template \u00B7 use baixar' })
+			]));
 			return;
 		}
 		var grid = h('div.cards'), d = 30;
@@ -166,9 +173,11 @@
 			UI.add(foot, h('div.foot', null, [meta, btn]));
 			return;
 		}
-		var st = h('div.status', null, h('span', { text: s.items.length + ' templates' + (s.updated ? ' · ' + s.updated : '') }));
+		// '2 de 6 templates' while a filter hides some
+		var count = (s.shown != null && s.shown < s.items.length ? s.shown + ' de ' : '') + s.items.length + ' templates';
+		var st = h('div.status', null, h('span', { text: count + (s.updated ? ' · ' + s.updated : '') }));
 		foot.appendChild(st);
-		if (note) UI.note(st.firstChild, note.err || note.msg, !note.err, s.items.length + ' templates');
+		if (note) UI.note(st.firstChild, note.err || note.msg, !note.err, count);
 	}
 
 	function doImport() {

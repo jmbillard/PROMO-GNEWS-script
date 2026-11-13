@@ -56,6 +56,8 @@
 		app.classList.toggle('tight', horiz && sc && sc.clientWidth < 300);
 		app.classList.toggle('list', !horiz && state.labels && w >= 170);
 		app.classList.toggle('compact', compact);
+		// a short vertical bar: the footer in one row, so the tools keep most of the height
+		app.classList.toggle('short', !horiz && hgt < 420);
 		app.classList.toggle('reduced', state.reduced);
 		var cols = Math.max(1, Math.floor((w - 20 + 2) / 38));
 		var rows = hgt >= 100 ? 2 : 1;   // horizontal: one or two rows of tools
@@ -491,7 +493,9 @@
 
 	function ink(hex) {
 		var n = parseInt(hex.slice(1), 16);
-		return (0.299 * (n >> 16 & 255) + 0.587 * (n >> 8 & 255) + 0.114 * (n & 255)) > 140 ? '#141416' : '#F2F2F4';
+		// relative luminance (WCAG): white ink while it keeps at least 3:1 on the color, dark from there on
+		var l = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+		return (0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2]) > 0.30 ? '#141416' : '#F2F2F4';
 	}
 
 	/* ---------- events ---------- */

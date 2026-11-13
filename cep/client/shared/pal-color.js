@@ -68,7 +68,7 @@
 	}
 
 	// cor de texto legível sobre a amostra
-	function ink(hex) { return luminance(hex) > 0.42 ? '#121316' : '#FFFFFF'; }
+	function ink(hex) { return luminance(hex) > 0.30 ? '#121316' : '#FFFFFF'; }
 
 	function format(hex, fmt) {
 		var rgb = hexToRgb(hex);

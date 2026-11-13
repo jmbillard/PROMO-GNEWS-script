@@ -76,11 +76,12 @@
 		sel.title = 'itens selecionados no painel Project';
 	}
 
-	var first = true;
+	var first = true, failed = false;
 	function refresh() {
 		PGN.run('tags.list', {}).then(function (r) {
-			if (!r.ok) { if (first) UI.note(note, r.error, false); return; }
-			if (first) { render(r.data); first = false; }
+			// first load failed: the reason in the window, with a retry (the poll keeps trying too)
+			if (!r.ok) { if (first && !failed) { failed = true; UI.failState($('groups'), r.error, function () { failed = false; refresh(); }); } return; }
+			if (first) { $('groups').textContent = ''; render(r.data); first = false; }
 			selection(r.data.selection || 0);
 		});
 	}
