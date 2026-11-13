@@ -122,7 +122,8 @@
 				[
 					T('inf', 'Influência dos keyframes', 'draw', 'M4 20h16', 'M4 18C10 18 11 6 20 6', { win: 'curves' }),
 					T('lock', 'Travar transformações', 'lift', 'M6 11h12v9H6z', 'M9 11V8a3 3 0 0 1 6 0v3', LAY),
-					T('rand', 'Randomizar layers', 'shake', 'M4 4h16v16H4z', 'M9 9h.01M15 15h.01M15 9h.01M9 15h.01M12 12h.01', { sel: 'layers', min: 2, param: 'frames', args: P('frames') }),
+					// layer bars scattered on the timeline (no staircase: that is 'Sequenciar')
+					T('rand', 'Randomizar layers', 'shake', 'M12 5h8M4 10h7M9 19h6', 'M14 14.5h6', { sel: 'layers', min: 2, param: 'frames', args: P('frames') }),
 					T('seq', 'Sequenciar layers', 'slide', 'M4 6h7', 'M7 12h9M10 18h10', { sel: 'layers', min: 2, param: 'frames', args: P('frames') })
 				],
 				[
