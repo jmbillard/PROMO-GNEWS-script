@@ -810,6 +810,7 @@ PGN_override('updateFolderPaths', function () {
 // preferences reload → folder paths in local form...
 PGN_override('loadDefaultPrefs', function () {
 	PGN.classic.loadDefaultPrefs();
+	PGN.cfg.dropOrgGone();
 	PGN_dropRemovedSubPaths();
 	PGN.net.localPrefs();
 	if (PGN_applyTemplatesPref()) updateFolderPaths();
@@ -838,8 +839,33 @@ function PGN_applyTemplatesPref() {
   for everybody (read at load; sent from the preferences with prefs.publishOrgFolders).
 */
 PGN.cfg = {
+	// <PROMO GNEWS folder>/config/<name>
+	file: function (name) {
+		return new File(PGN_srcDir.fsName + '/../config/' + name);
+	},
+
+	// parsed JSON of a shared file, or null (missing / unreadable)
+	readJSON: function (name) {
+		var f = PGN.cfg.file(name);
+
+		if (!f.exists) return null;
+		try {
+			f.encoding = 'UTF-8';
+			return JSON.parse(readFileContent(f));
+		} catch (err) { }
+		return null;
+	},
+
+	// writes a shared file (creates config/); fails with the reason when it can't
+	writeJSON: function (name, obj) {
+		var f = PGN.cfg.file(name);
+
+		if (!createPath(f.parent.fsName)) PGN.fail('n\u00E3o foi poss\u00EDvel criar a pasta da config geral: ' + f.parent.fsName);
+		PGN.writeJSON(f, obj, true);
+	},
+
 	orgFile: function () {
-		return new File(PGN_srcDir.fsName + '/../config/pastas-organizacao.json');
+		return PGN.cfg.file('pastas-organizacao.json');
 	},
 
 	readOrg: function () {
@@ -852,7 +878,7 @@ PGN.cfg = {
 			var o = JSON.parse(readFileContent(f));
 
 			for (var k in o) {
-				if (!o.hasOwnProperty(k)) continue;
+				if (!o.hasOwnProperty(k) || String(k).charAt(0) == '_') continue; // '_removidas'
 				var key = String(k).toUpperCase().replace(/[^A-Z0-9]/g, '');
 				var val = String(o[k]).replace(/\\/g, '/').replace(/^\/+|\/+$/g, '').replace(/\/{2,}/g, '/');
 
@@ -862,21 +888,114 @@ PGN.cfg = {
 		return out;
 	},
 
-	// shared siglas → defaults (the ones the code already has win), then into the user's
-	// list like any other default (the ones the user removed stay removed)
+	// siglas removed for everybody ('_removidas' in the shared file)
+	readOrgRemoved: function () {
+		var o = PGN.cfg.readJSON('pastas-organizacao.json');
+		var out = [];
+		var rm = o != null ? o._removidas : null;
+
+		if (rm != null && typeof rm == 'object' && typeof rm.length == 'number') {
+			for (var i = 0; i < rm.length; i++) out.push(String(rm[i]).toUpperCase());
+		}
+		return out;
+	},
+
+	writeOrg: function (map, removed) {
+		var o = {};
+
+		for (var k in map) {
+			if (map.hasOwnProperty(k)) o[k] = map[k];
+		}
+		if (removed.length) o._removidas = removed;
+		PGN.cfg.writeJSON('pastas-organizacao.json', o);
+	},
+
+	// the path as everybody can use it: drive letters and /Volumes/<share> → //server/share
+	portable: function (path) {
+		var p = PGN.net.slashes(path);
+		var unc = PGN.net.toUNC(p);
+
+		if (unc) return unc;
+		var m = p.match(/^\/Volumes\/([^\/]+)(\/.*)?$/);
+
+		if (m) {
+			var info = PGN.net.shareInfo(m[1]);
+
+			if (info) return '//' + info.server + '/' + info.share + (m[2] || '');
+		}
+		return path;
+	},
+
+	// siglas removed for everybody and the value each had: { SIGLA: old default or null }
+	orgGone: {},
+
+	// drops, from the user's list, the siglas removed for everybody (kept when the user
+	// gave it a path of their own)
+	dropOrgGone: function () {
+		try {
+			var mine = JSONPrefsObj.folders.promoSubPath;
+
+			for (var k in PGN.cfg.orgGone) {
+				if (!PGN.cfg.orgGone.hasOwnProperty(k) || !mine.hasOwnProperty(k)) continue;
+				var old = PGN.cfg.orgGone[k];
+
+				if (old == null || mine[k] == old) delete mine[k];
+			}
+			promoSubPath = mine;
+		} catch (err) { }
+	},
+
+	// shared siglas → defaults (the team's version wins), then into the user's list like any
+	// other default; the ones removed for everybody leave both
 	loadOrg: function () {
 		try {
 			var shared = PGN.cfg.readOrg();
+			var removed = PGN.cfg.readOrgRemoved();
 			var defs = defPrefsObj.folders.promoSubPath;
 			var mine = JSONPrefsObj.folders.promoSubPath;
 
 			for (var k in shared) {
 				if (!shared.hasOwnProperty(k)) continue;
-				if (!defs.hasOwnProperty(k)) defs[k] = shared[k];
+				// the user still had the old default: follows the team's
+				if (mine.hasOwnProperty(k) && defs.hasOwnProperty(k) && mine[k] == defs[k]) mine[k] = shared[k];
+				defs[k] = shared[k];
 				if (!mine.hasOwnProperty(k)) mine[k] = shared[k];
 			}
+			for (var r = 0; r < removed.length; r++) {
+				PGN.cfg.orgGone[removed[r]] = defs.hasOwnProperty(removed[r]) ? defs[removed[r]] : null;
+				if (defs.hasOwnProperty(removed[r])) delete defs[removed[r]];
+			}
 			promoSubPath = mine;
+			PGN.cfg.dropOrgGone();
 			PGN_dropRemovedSubPaths();
+		} catch (err) { }
+	},
+
+	// network paths saved for everybody (config/caminhos.json): they become the default of
+	// each key; whoever was on the previous default follows, a path of the user's own stays
+	pathKeys: ['magazinePath', 'artePath', 'templatesArchPath'],
+
+	loadPaths: function () {
+		try {
+			var shared = PGN.cfg.readJSON('caminhos.json') || {};
+			var f = JSONPrefsObj.folders;
+			var tp = f.teamPaths != null && typeof f.teamPaths == 'object' ? f.teamPaths : {};
+			var changed = false;
+
+			for (var i = 0; i < PGN.cfg.pathKeys.length; i++) {
+				var key = PGN.cfg.pathKeys[i];
+				var v = shared[key];
+
+				if (typeof v != 'string' || v == '') continue;
+				var codeDef = defPrefsObj.folders[key];
+				var prev = typeof tp[key] == 'string' ? tp[key] : codeDef;
+
+				defPrefsObj.folders[key] = v;
+				if ((f[key] == prev || f[key] == codeDef) && f[key] != v) { f[key] = v; changed = true; }
+				if (f[key] == v && tp[key] != v) { tp[key] = v; changed = true; }
+			}
+			f.teamPaths = tp;
+			if (changed) savePrefs();
 		} catch (err) { }
 	}
 };
@@ -919,7 +1038,6 @@ PGN_dropRemovedSubPaths();
 	if (typeof JSONPrefsObj.folders.templatesArchPath != 'string' || JSONPrefsObj.folders.templatesArchPath == '') JSONPrefsObj.folders.templatesArchPath = defPrefsObj.folders.templatesArchPath;
 	var tplChanged = JSONPrefsObj.folders.templatesArchPath != templatesArchPath;
 
-	templatesArchPath = JSONPrefsObj.folders.templatesArchPath;
 	PGN.cfg.loadOrg();
 
 	// PAM magazine: the upload folder is '01_ENTRADA' — whoever still has the old default
@@ -931,6 +1049,15 @@ PGN_dropRemovedSubPaths();
 			savePrefs();
 		}
 	} catch (err) { }
+
+	// the team's paths, then the globals follow what the user ended up with
+	PGN.cfg.loadPaths();
+	try {
+		magazinePath = PGN.net.local(JSONPrefsObj.folders.magazinePath);
+		artePath = PGN.net.local(JSONPrefsObj.folders.artePath);
+	} catch (err) { }
+	tplChanged = JSONPrefsObj.folders.templatesArchPath != templatesArchPath;
+	templatesArchPath = JSONPrefsObj.folders.templatesArchPath;
 
 	var names = ['tAdd', 'hnPath', 'utiPath', 'promoInsPath', 'basesPath', 'promoArcPath', 'templatesArchPath', 'fontsArchPath'];
 

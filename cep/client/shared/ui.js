@@ -411,6 +411,30 @@
 	setInterval(function () { if (here) ddSync.forEach(function (fn) { fn(); }); }, 800);
 	hereCbs.push(function (v) { if (v) ddSync.forEach(function (fn) { fn(); }); });
 
+	/* ---------- two-step button ----------
+	   for what changes the team's settings: the first click arms the button (a short label
+	   appears) for opts.ms (4 s); a second click inside that time confirms.
+	   opts: { label, ms, onFirst (return false: nothing to arm), onConfirm, onExpire } */
+	function twoStep(btn, opts) {
+		var t = 0, lab = null;
+		function disarm(expired) {
+			clearTimeout(t); t = 0;
+			btn.classList.remove('armed');
+			if (lab) { lab.remove(); lab = null; }
+			if (expired && opts.onExpire) opts.onExpire();
+		}
+		btn.addEventListener('click', function (e) {
+			e.stopPropagation();
+			if (btn.classList.contains('armed')) { disarm(false); opts.onConfirm(); return; }
+			if (opts.onFirst && opts.onFirst() === false) return;
+			btn.classList.add('armed');
+			lab = h('span.arm-l', { text: opts.label });
+			btn.appendChild(lab);
+			t = setTimeout(function () { disarm(true); }, opts.ms || 4000);
+		});
+		return { disarm: function () { disarm(false); } };
+	}
+
 	function upgradeSelects(root) {
 		[].forEach.call((root || document).querySelectorAll('select.fld'), dropdown);
 	}
@@ -424,5 +448,5 @@
 		if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startDD); else startDD();
 	}
 
-	window.UI = { here: function () { return here; }, onHere: function (fn) { hereCbs.push(fn); }, dropdown: dropdown, failState: failState, h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
+	window.UI = { twoStep: twoStep, here: function () { return here; }, onHere: function (fn) { hereCbs.push(fn); }, dropdown: dropdown, failState: failState, h: h, set: set, add: add, icon: icon, path: path, svg: svg, svgEl: svgEl, I: I, store: store, debounce: debounce, note: note, strip: strip };
 })();

@@ -795,29 +795,37 @@ PGN.register('prefs.resetOrgFolders', function (args) {
 	return { msg: 'Pastas de organiza\u00E7\u00E3o restauradas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defPrefsObj.folders.promoSubPath) } };
 });
 
-// publishOrgFoldersBtn (↑): the siglas the user created go to the shared settings
-// ('config geral'), and become defaults for everybody from their next start...
+// ↑ 'salvar para todos' (org. folders): the siglas this user created or changed go to the
+// shared settings and become defaults for everybody from their next start.
+// args.keys → only these siglas (the ↑ of one row); without it, every one of the user's own.
 PGN.register('prefs.publishOrgFolders', function (args) {
 	var defs = defPrefsObj.folders.promoSubPath;
 	var mine = JSONPrefsObj.folders.promoSubPath;
+	var only = args.keys != null && typeof args.keys == 'object' && typeof args.keys.length == 'number' ? args.keys : null;
 	var fresh = {};
 	var count = 0;
 
 	for (var k in mine) {
-		if (!mine.hasOwnProperty(k) || defs.hasOwnProperty(k)) continue;
+		if (!mine.hasOwnProperty(k)) continue;
+		if (defs.hasOwnProperty(k) && defs[k] == mine[k]) continue; // already the team's
+		if (only && !PGN.win.inArray(only, k)) continue;
 		fresh[k] = mine[k];
 		count++;
 	}
 	if (count == 0) return { msg: 'nenhuma pasta nova para salvar', data: { sent: 0, promoSubPath: PGN.win.clone(mine), defaults: PGN.win.clone(defs) } };
 
-	var f = PGN.cfg.orgFile();
 	var shared = PGN.cfg.readOrg(); // what others sent meanwhile is kept
+	var removed = PGN.cfg.readOrgRemoved();
 
 	for (var n in fresh) {
-		if (fresh.hasOwnProperty(n)) shared[n] = fresh[n];
+		if (!fresh.hasOwnProperty(n)) continue;
+		shared[n] = fresh[n];
+		for (var r = removed.length - 1; r >= 0; r--) {
+			if (removed[r] == n) removed.splice(r, 1);
+		}
+		delete PGN.cfg.orgGone[n];
 	}
-	if (!createPath(f.parent.fsName)) PGN.fail('n\u00E3o foi poss\u00EDvel criar a pasta da config geral: ' + f.parent.fsName);
-	PGN.writeJSON(f, shared, true);
+	PGN.cfg.writeOrg(shared, removed);
 
 	PGN.prefs.detach();
 	defs = defPrefsObj.folders.promoSubPath;
@@ -828,6 +836,68 @@ PGN.register('prefs.publishOrgFolders', function (args) {
 		msg: PGN.n(count, 'pasta salva', 'pastas salvas') + ' para todos',
 		data: { sent: count, promoSubPath: PGN.win.clone(JSONPrefsObj.folders.promoSubPath), defaults: PGN.win.clone(defs) }
 	};
+});
+
+// × twice (org. folders): one sigla removed for everybody
+PGN.register('prefs.unpublishOrgFolder', function (args) {
+	var key = String(args.key || '').toUpperCase();
+	var defs = defPrefsObj.folders.promoSubPath;
+
+	if (key == '' || !defs.hasOwnProperty(key)) PGN.fail('esta sigla n\u00E3o est\u00E1 na lista da equipe');
+
+	var shared = PGN.cfg.readOrg();
+	var removed = PGN.cfg.readOrgRemoved();
+
+	if (shared.hasOwnProperty(key)) delete shared[key];
+	if (!PGN.win.inArray(removed, key)) removed.push(key);
+	PGN.cfg.writeOrg(shared, removed);
+
+	PGN.prefs.detach();
+	defs = defPrefsObj.folders.promoSubPath;
+	PGN.cfg.orgGone[key] = defs[key];
+	delete defs[key];
+
+	var f = JSONPrefsObj.folders;
+
+	if (f.promoSubPath.hasOwnProperty(key)) delete f.promoSubPath[key];
+	if (f.removedSubPath instanceof Array) {
+		for (var i = f.removedSubPath.length - 1; i >= 0; i--) {
+			if (f.removedSubPath[i] == key) f.removedSubPath.splice(i, 1);
+		}
+	}
+	promoSubPath = f.promoSubPath;
+	savePrefs();
+
+	return { msg: 'sigla ' + key + ' exclu\u00EDda para todos', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defs) } };
+});
+
+// ↑ next to a network folder: this user's path becomes the default of everybody
+PGN.register('prefs.publishFolder', function (args) {
+	if (!PGN.win.inArray(PGN.cfg.pathKeys, args.key)) PGN.fail('pasta inv\u00E1lida: ' + args.key);
+
+	var path = PGN.cfg.portable(JSONPrefsObj.folders[args.key]);
+
+	if (path == defPrefsObj.folders[args.key]) return { msg: 'este caminho j\u00E1 \u00E9 o da equipe', data: { key: args.key, path: path, sent: 0 } };
+
+	var shared = PGN.cfg.readJSON('caminhos.json') || {};
+	var out = {};
+
+	for (var i = 0; i < PGN.cfg.pathKeys.length; i++) {
+		var k = PGN.cfg.pathKeys[i];
+
+		if (typeof shared[k] == 'string' && shared[k] != '') out[k] = shared[k];
+	}
+	out[args.key] = path;
+	PGN.cfg.writeJSON('caminhos.json', out);
+
+	PGN.prefs.detach();
+	defPrefsObj.folders[args.key] = path;
+	if (JSONPrefsObj.folders.teamPaths == null || typeof JSONPrefsObj.folders.teamPaths != 'object') JSONPrefsObj.folders.teamPaths = {};
+	JSONPrefsObj.folders.teamPaths[args.key] = path;
+	JSONPrefsObj.folders[args.key] = path;
+	savePrefs();
+
+	return { msg: 'caminho salvo para todos', data: { key: args.key, path: path, sent: 1 } };
 });
 
 // org. folders editor (settings window): replaces the whole sigla → sub path map...

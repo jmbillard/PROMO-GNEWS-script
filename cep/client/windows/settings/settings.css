@@ -200,3 +200,29 @@
 .fxr .dd-btn { height: 30px; font-size: 11px; }
 .fxr .ox { opacity: 0; }
 .fxr:hover .ox, .fxr .ox:focus-visible { opacity: 1; }
+
+/* ---------- 'salvar para todos' (shared settings) ----------
+   what is only this user's (new, or changed here) is outlined in yellow and gets an ↑;
+   ↑ and × are two-step buttons when they change the team's list (.armed) */
+.lk.mine .ic { color: var(--acc); box-shadow: inset 0 0 0 1px rgba(236, 255, 140, .45); }
+.upx { width: 22px; height: 22px; flex: none; border-radius: var(--r); display: none; align-items: center; justify-content: center; gap: 4px; color: #A9A9B2; opacity: 0; transition: opacity .15s, background .15s, color .15s; }
+.upx svg { width: 13px; height: 13px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.lk.mine .upx, .oit.custom .upx, .oit.mod .upx, .row .upx.show { display: inline-flex; }
+.lk:hover .upx, .oit:hover .upx, .upx:focus-visible, .row .upx.show { opacity: 1; }
+.upx:hover { background: #2A2A2F; color: var(--tx); }
+.upx.armed, .ox.armed { opacity: 1; width: auto; padding: 0 7px; font: 10px var(--mono); white-space: nowrap; }
+.upx.armed { display: inline-flex; background: var(--acc); color: var(--bg); }
+.ox.armed { background: rgba(255, 107, 107, .18); color: #FFB3B2; gap: 4px; }
+.ox.armed svg { flex: none; }
+/* removed from this user's list, still showing while × can remove it for everybody */
+.lk.gone > :not(.ox), .oit.gone > :not(.ox) { opacity: .35; pointer-events: none; }
+.lk.gone .nm, .oit.gone .sig { text-decoration: line-through; }
+.lk.gone .ox, .oit.gone .ox { opacity: 1; }
+.upall { height: 26px; padding: 0 9px; border-radius: var(--r); font: 10px var(--mono); color: #A9A9B2; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; transition: background .2s, color .2s; }
+.upall[hidden] { display: none; }
+.upall:hover { background: #2A2A2F; color: var(--tx); }
+.upall svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.upall b { font-weight: 400; color: var(--acc); }
+.upall.armed { background: var(--acc); color: var(--bg); }
+.upall.armed b, .upall.armed .txt { display: none; }
+.row .upx { margin-right: 2px; }

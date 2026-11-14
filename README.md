@@ -50,7 +50,7 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 
 **Preferências**
 - A pasta de **templates** é editável.
-- **↑ salvar para todos** grava as siglas novas das pastas de organização como padrão da equipe.
+- **↑ salvar para todos**: atalhos, caminhos da rede e siglas das pastas de organização podem ser gravados como padrão da equipe, todos de uma vez ou item por item. Também dá para excluir um item para todos.
 
 **Atalhos e pastas**
 - Trello e Apontamento saíram da lista padrão de atalhos.
@@ -460,6 +460,18 @@ Clique com o **botão direito** num atalho, numa cor ou num efeito da barra: as 
 | Ícone ou 2 letras, nome e destino (site ou pasta). Arraste para reordenar. | Grupos de cores em hex, com prévia ao lado. Use **+ cor** e **+ grupo**. O nome é automático (em cinza): clique nele para renomear; apague, ou use Esc, para voltar ao automático. | Grupos de efeitos. Escolha qualquer efeito instalado numa lista pesquisável e dê um ícone a ele. |
 
 Cada lista tem **restaurar** para voltar ao padrão.
+
+### salvar para todos
+
+Atalhos, caminhos da rede e siglas das pastas de organização têm uma configuração geral, compartilhada pela equipe. Ela fica na pasta `config`, dentro da pasta do PROMO GNEWS na rede.
+
+- **O que é só seu aparece em amarelo**: um atalho ou uma sigla que você criou, ou um item da equipe que você alterou.
+- **↑ num item** grava aquele item para todos. Aparece ao passar o mouse sobre um item seu. Nos caminhos da rede (PAM magazine, PAM para arte, Templates), a seta aparece quando o seu caminho é diferente do padrão da equipe.
+- **↑ salvar para todos**, no topo da lista, grava de uma vez tudo o que é só seu.
+- **× num item da equipe** tira o item da sua lista. Ele fica riscado por 4 segundos: clicar de novo no botão, que vira **para todos?**, exclui o item para a equipe inteira.
+- Toda ação que muda a configuração geral pede esse segundo clique.
+
+Cada pessoa recebe as mudanças ao abrir o After Effects de novo. O que alguém alterou ou removeu só para si continua como a pessoa deixou.
 
 ---
 

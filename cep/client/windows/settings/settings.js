@@ -82,18 +82,44 @@
 		return h('div.row', null, [rowIcon(icon), h('div.lb', { text: label }), seg]);
 	}
 
+	// network folders that can be saved for everybody (↑): the team's path is the default
+	var TEAM_PATHS = ['magazinePath', 'artePath', 'templatesArchPath'];
+	function UP() { return UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 19V5M6 11l6-6 6 6')]); }
+
 	function folderRow(icon, label, key) {
 		var small = h('small', { text: P.folders[key] || '' });
+		var shared = TEAM_PATHS.indexOf(key) >= 0;
+		var up = shared ? h('button.upx', { title: 'salvar este caminho para todos\n(passa a ser o padrão da equipe)', 'aria-label': 'Salvar este caminho para todos: ' + label }, UP()) : null;
+		// ↑ only while this user's path is not the team's
+		function mark() {
+			var def = P.defaults && P.defaults.folders ? P.defaults.folders[key] : null;
+			if (up) up.classList.toggle('show', !!P.folders[key] && def != null && P.folders[key] !== def);
+		}
 		function upd(r) {
 			if (r.ok && r.data && r.data.path) { P.folders[key] = r.data.path; small.textContent = r.data.path; }
+			mark();
 			UI.note(note, r.ok ? (r.data && r.data.cancelled ? 'nenhuma pasta escolhida' : 'Pasta definida') : r.error, r.ok && !(r.data && r.data.cancelled), version);
 		}
+		if (up) {
+			UI.twoStep(up, { label: 'para todos?', onConfirm: function () {
+				PGN.run('prefs.publishFolder', { key: key }).then(function (r) {
+					if (r.ok && r.data && r.data.path) {
+						P.folders[key] = r.data.path; small.textContent = r.data.path;
+						if (P.defaults && P.defaults.folders) P.defaults.folders[key] = r.data.path;
+					}
+					mark();
+					UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
+				});
+			} });
+		}
+		mark();
 		return h('div.row', { title: P.folders[key] || '' }, [
 			rowIcon(icon),
 			// the path itself picks a new folder
 			h('button.lb.pick', { title: 'escolher pasta', 'aria-label': 'Escolher pasta: ' + label, onclick: function () { PGN.run('prefs.pickFolder', { key: key }).then(upd); } }, [label, small]),
+			up,
 			h('button.mini', { title: 'restaurar', 'aria-label': 'Restaurar pasta: ' + label, onclick: function () { PGN.run('prefs.resetFolder', { key: key }).then(upd); } }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.reset, 'spinme')]))
-		]);
+		].filter(Boolean));
 	}
 
 	// ---- org folders editor: a small tree (pasta → sigla + subpasta) ----
@@ -128,7 +154,7 @@
 			var map = {}, seen = {};
 			tree.querySelectorAll('.ogrp').forEach(function (g) {
 				var name = clean(g.querySelector('.ogn').value);
-				g.querySelectorAll('.oit').forEach(function (r) {
+				g.querySelectorAll('.oit:not(.gone)').forEach(function (r) {
 					var k = r.querySelector('.sig').value.trim();
 					var sub = clean(r.querySelector('.pth').value);
 					r.classList.toggle('dup', !!(k && seen[k]));
@@ -157,20 +183,34 @@
 			count.textContent = Object.keys(toMap()).length + ' siglas';
 		}
 
+		// a save that lands right after a team action keeps quiet: the note of the action stays
+		var quietUntil = 0;
+		function saveNow() {
+			clearTimeout(saveT);
+			return PGN.run('prefs.setOrgFolders', { map: toMap() }).then(function (r) {
+				if (r.ok && r.data) {
+					if (r.data.defaults) defs = r.data.defaults;
+					P.folders.promoSubPath = Object.assign({}, r.data.promoSubPath);
+					mark();
+				}
+				if (!r.ok || Date.now() > quietUntil) UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
+				return r;
+			});
+		}
 		function changed() {
 			mark();
 			clearTimeout(saveT);
-			saveT = setTimeout(function () {
-				var map = toMap();
-				PGN.run('prefs.setOrgFolders', { map: map }).then(function (r) {
-					if (r.ok && r.data) {
-						if (r.data.defaults) defs = r.data.defaults;
-						P.folders.promoSubPath = Object.assign({}, r.data.promoSubPath);
-						mark();
-					}
-					UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
-				});
-			}, 500);
+			saveT = setTimeout(saveNow, 500);
+		}
+		// the team's list changed (↑ / × for everybody): new defaults, same rows
+		function teamChanged(r) {
+			if (r.ok && r.data) {
+				if (r.data.defaults) { defs = r.data.defaults; if (P.defaults && P.defaults.folders) P.defaults.folders.promoSubPath = r.data.defaults; }
+				P.folders.promoSubPath = Object.assign({}, r.data.promoSubPath);
+				mark();
+			}
+			quietUntil = Date.now() + 1500;
+			UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
 		}
 
 		function x(title, fn) {
@@ -182,10 +222,37 @@
 			var pth = h('input.pth', { type: 'text', value: r.sub, placeholder: '(raiz da pasta)', 'aria-label': 'Subpasta da sigla', spellcheck: 'false' });
 			var handle = h('button.oh', { title: 'arrastar para reordenar (Alt + ↑/↓)', 'aria-label': 'Reordenar ' + (r.k || 'linha') }, h('i'));
 			var row = h('div.oit', { style: { animationDelay: delay + 'ms' } }, [handle, sig, pth]);
-			row.appendChild(x('remover linha', function () {
+			// ↑ this sigla for everybody (shown on the ones this user created or changed)
+			var up = h('button.upx', { title: 'salvar esta sigla para todos', 'aria-label': 'Salvar esta sigla para todos' }, UP());
+			UI.twoStep(up, { label: 'para todos?', onConfirm: function () {
+				var k = sig.value.trim();
+				quietUntil = Date.now() + 1500;
+				saveNow().then(function () { return PGN.run('prefs.publishOrgFolders', { keys: [k] }); }).then(teamChanged);
+			} });
+			row.appendChild(up);
+			var del = x('remover linha', function () { });
+			var out = function () {
 				row.classList.add('out');
-				setTimeout(function () { row.remove(); changed(); }, 200);
-			}));
+				setTimeout(function () { row.remove(); mark(); }, 200);
+			};
+			UI.twoStep(del, {
+				label: 'para todos?',
+				// first click: out of this user's list. A sigla of the team stays on screen,
+				// struck out, while the second click can still remove it for everybody
+				onFirst: function () {
+					var k = sig.value.trim();
+					if (!k || defs[k] == null) { row.classList.add('out'); setTimeout(function () { row.remove(); changed(); }, 200); return false; }
+					row.classList.add('gone');
+					changed();
+				},
+				onExpire: out,
+				onConfirm: function () {
+					quietUntil = Date.now() + 1500;
+					PGN.run('prefs.unpublishOrgFolder', { key: sig.value.trim() }).then(function (r) { teamChanged(r); out(); });
+				}
+			});
+			del.title = 'remover linha\nnuma sigla da equipe, clique de novo em 4 s: excluir para todos';
+			row.appendChild(del);
 			sig.addEventListener('input', function () { sig.value = sig.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); changed(); });
 			pth.addEventListener('change', function () { pth.value = clean(pth.value); changed(); });
 			[sig, pth].forEach(function (i) { i.addEventListener('keydown', function (e) { if (e.key === 'Enter') i.blur(); }); });
@@ -338,14 +405,7 @@
 				return;
 			}
 			clearTimeout(armT); rst.classList.remove('arm'); rst.lastChild.textContent = 'salvar para todos';
-			PGN.run('prefs.publishOrgFolders', {}).then(function (r) {
-				if (r.ok && r.data) {
-					if (r.data.defaults) { defs = r.data.defaults; if (P.defaults && P.defaults.folders) P.defaults.folders.promoSubPath = r.data.defaults; }
-					P.folders.promoSubPath = Object.assign({}, r.data.promoSubPath);
-					render(r.data.promoSubPath);
-				}
-				UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
-			});
+			saveNow().then(function () { return PGN.run('prefs.publishOrgFolders', {}); }).then(teamChanged);
 		});
 
 		UI.add(inner, [h('div.ohead', null, [count, h('span.grow'), newGrp, rst]), tree]);
@@ -504,7 +564,8 @@
 	PGN.mock('prefs.setOrgFolders', function (a) { var m = Object.assign({}, a.map); Object.keys(MOCK_ORG).forEach(function (k) { if (m[k] == null) m[k] = MOCK_ORG[k]; }); return { msg: 'Pastas de organização salvas', data: { promoSubPath: m, defaults: MOCK_ORG } }; }, 150);
 	PGN.mock('prefs.publishOrgFolders', function () {
 		var mine = (P && P.folders && P.folders.promoSubPath) || {}, n = 0;
-		Object.keys(mine).forEach(function (k) { if (MOCK_ORG[k] == null) { MOCK_ORG[k] = mine[k]; n++; } });
+		var a = arguments[0] || {};
+		Object.keys(mine).forEach(function (k) { if (MOCK_ORG[k] !== mine[k] && (!a.keys || a.keys.indexOf(k) >= 0)) { MOCK_ORG[k] = mine[k]; n++; } });
 		return { msg: n ? n + (n === 1 ? ' pasta salva' : ' pastas salvas') + ' para todos' : 'nenhuma pasta nova para salvar', data: { sent: n, promoSubPath: Object.assign({}, mine), defaults: MOCK_ORG } };
 	}, 150);
 	// 'efeitos' (browser preview)
@@ -528,13 +589,53 @@
 		sites: [{ id: 'od', name: 'OneDrive', url: 'https://tvglobocorp-my.sharepoint.com/', glyph: 'OD' }, { id: 'pl', name: 'Planner', url: 'https://tasks.office.com/…/Planner', glyph: 'PL' }],
 		dirs: [{ id: 'arte', name: 'PAM para arte', path: '@artePath', shown: '//pamjb/…/PARA_ARTE', icon: 'up' }, { id: 'mag', name: 'PAM magazine', path: '@magazinePath', shown: '//pamjb/…/MAGAZINE', icon: 'slide' }, { id: 'hn', name: 'PAM hard news', path: '@hnPath', shown: '//pamjb/…/01_ENTRADA', net: true, icon: 'bolt' }, { id: 'uti', name: 'T: utilidades', path: '@utiPath', shown: 'T:/UTILIDADES', net: true, icon: 'star' }, { id: 'pec', name: 'peças gráficas', path: '@basesPath', shown: 'T:/…/_PECAS_GRAFICAS', net: true, icon: 'bars' }, { id: 'hoje', name: 'diários · hoje', path: '@hoje', shown: 'pasta do dia (automático)', net: true, auto: true, icon: 'dot' }]
 	};
-	PGN.mock('links.get', function () { return { data: JSON.parse(JSON.stringify(LINKS)) }; }, 120);
-	PGN.mock('links.set', function (a) { return { msg: 'Atalhos salvos', data: { sites: a.sites, dirs: a.dirs } }; }, 120);
-	PGN.mock('links.reset', function () { return { msg: 'Atalhos padrão', data: JSON.parse(JSON.stringify(LINKS)) }; }, 120);
+	// the team's list (browser preview): flags as the host gives them
+	var TEAM_LINKS = JSON.parse(JSON.stringify(LINKS));
+	function linkFlags(o) {
+		var r = JSON.parse(JSON.stringify(o));
+		['sites', 'dirs'].forEach(function (list) {
+			var key = list === 'sites' ? 'url' : 'path';
+			r[list].forEach(function (it) {
+				var t = TEAM_LINKS[list].filter(function (x) { return x.id === it.id; })[0];
+				it.team = !!t;
+				it.mine = !t || t.name !== it.name || (t[key] || '') !== (it[key] || '') || (t.glyph || '') !== (it.glyph || '') || (t.glyph ? '' : t.icon || '') !== (it.glyph ? '' : it.icon || '');
+			});
+		});
+		return r;
+	}
+	var MY_LINKS = JSON.parse(JSON.stringify(LINKS));
+	PGN.mock('links.get', function () { return { data: linkFlags(MY_LINKS) }; }, 120);
+	PGN.mock('links.set', function (a) { MY_LINKS = { sites: a.sites, dirs: a.dirs }; return { msg: 'Atalhos salvos', data: linkFlags(MY_LINKS) }; }, 120);
+	PGN.mock('links.reset', function () { MY_LINKS = JSON.parse(JSON.stringify(TEAM_LINKS)); return { msg: 'Atalhos padrão', data: linkFlags(MY_LINKS) }; }, 120);
+	PGN.mock('links.publish', function (a) {
+		var n = 0;
+		['sites', 'dirs'].forEach(function (list) {
+			if (a.kind && a.kind !== list) return;
+			linkFlags(MY_LINKS)[list].forEach(function (it) {
+				if (!it.mine || (a.id && a.id !== it.id)) return;
+				var copy = JSON.parse(JSON.stringify(it)); delete copy.mine; delete copy.team;
+				var at = -1; TEAM_LINKS[list].forEach(function (x, i) { if (x.id === it.id) at = i; });
+				if (at >= 0) TEAM_LINKS[list][at] = copy; else TEAM_LINKS[list].push(copy);
+				n++;
+			});
+		});
+		return { msg: n ? n + (n === 1 ? ' atalho salvo' : ' atalhos salvos') + ' para todos' : 'nenhum atalho novo para salvar', data: linkFlags(MY_LINKS) };
+	}, 150);
+	PGN.mock('links.unpublish', function (a) {
+		var drop = function (l) { return l.filter(function (x) { return x.id !== a.id; }); };
+		TEAM_LINKS[a.kind] = drop(TEAM_LINKS[a.kind]); MY_LINKS[a.kind] = drop(MY_LINKS[a.kind]);
+		return { msg: 'atalho excluído para todos', data: linkFlags(MY_LINKS) };
+	}, 150);
+	PGN.mock('prefs.publishFolder', function (a) { return { msg: 'caminho salvo para todos', data: { key: a.key, path: P.folders[a.key], sent: 1 } }; }, 150);
+	PGN.mock('prefs.unpublishOrgFolder', function (a) {
+		delete MOCK_ORG[a.key];
+		var mine = Object.assign({}, (P && P.folders && P.folders.promoSubPath) || {}); delete mine[a.key];
+		return { msg: 'sigla ' + a.key + ' excluída para todos', data: { promoSubPath: mine, defaults: MOCK_ORG } };
+	}, 150);
 	PGN.mock('links.pick', function () { return { data: { path: '/Users/voce/Desktop/projetos' } }; }, 200);
 
 	PGN.mock('prefs.get', function () {
-		return { data: { version: 'v3 beta 3', userPrefix: 'JMB', selection: { nullType: 0, adjType: 1, projectMode: 0 }, orgFolders: true, ignoreMissing: false, saveAsV22: true, homeOffice: false, hardNews: false, showLabels: true, devMode: false, folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE/01_ENTRADA', artePath: '//pamjb/PARA_ARTE', templatesArchPath: '//egcdesign01/cdesign/JORNALISMO/GLOBONEWS/PROMO/TEMPLATES', promoSubPath: Object.assign({}, MOCK_ORG, { JDE: 'JORNAIS/jornal das 10', XYZ: 'CANAL/especiais' }) }, defaults: { folders: { promoSubPath: MOCK_ORG } }, layerTypes: ['shape layer', 'solid layer'], projectModes: ['PROMO', 'custom'] } };
+		return { data: { version: 'v3 beta 3', userPrefix: 'JMB', selection: { nullType: 0, adjType: 1, projectMode: 0 }, orgFolders: true, ignoreMissing: false, saveAsV22: true, homeOffice: false, hardNews: false, showLabels: true, devMode: false, folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE/01_ENTRADA', artePath: '//pamjb/PARA_ARTE', templatesArchPath: '//egcdesign01/cdesign/JORNALISMO/GLOBONEWS/PROMO/TEMPLATES', promoSubPath: Object.assign({}, MOCK_ORG, { JDE: 'JORNAIS/jornal das 10', XYZ: 'CANAL/especiais' }) }, defaults: { folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE/01_ENTRADA', artePath: '//pamjb/PARA_ARTE', templatesArchPath: '//egcdesign01/cdesign/JORNALISMO/GLOBONEWS/PROMO/TEMPLATES', promoSubPath: MOCK_ORG } }, layerTypes: ['shape layer', 'solid layer'], projectModes: ['PROMO', 'custom'] } };
 	}, 200);
 	PGN.mock('prefs.set', function () { return { msg: 'Preferências salvas' }; }, 150);
 

@@ -5,7 +5,13 @@
   sites and folders of the bar's 'Atalhos' section: icon (or 2 letters),
   name and target; drag by the handle to reorder, + to add, × to remove.
   host: links.get · links.set { sites, dirs } · links.reset · links.pick
+        links.publish { kind, id } | {} · links.unpublish { kind, id }
   every change saves (debounced) and tells the bar (PGN.emit('links')).
+
+  'salvar para todos': a shortcut that is only this user's (it.mine: new, or changed
+  here) is outlined in yellow and gets an ↑ — it goes to the team's list. The ↑ on top
+  sends them all. × on a shortcut of the team (it.team) removes it here; clicked again
+  within 4 s, it is removed for everybody. Both are two-step buttons.
 */
 (function () {
 	'use strict';
@@ -22,6 +28,7 @@
 	function X() { return UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M7 7l10 10M17 7L7 17')]); }
 	function PLUS() { return UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 6v12M6 12h12')]); }
 	function CHEV() { return UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M6 9l6 6 6-6')]); }
+	function UP() { return UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 19V5M6 11l6-6 6 6')]); }
 
 	window.LinksEditor = function (note, version) {
 		var S = { sites: [], dirs: [] };
@@ -30,24 +37,64 @@
 		var prev = h('div.lprev', { 'aria-label': 'Prévia na barra' });
 		var lists = {};
 
-		var push = UI.debounce(function () {
-			PGN.run('links.set', { sites: S.sites, dirs: S.dirs }).then(function (r) {
+		// what is saved: without the items waiting for their second × (see rowEl)
+		function current() {
+			var keep = function (it) { return !it._gone; };
+			return { sites: S.sites.filter(keep), dirs: S.dirs.filter(keep) };
+		}
+		// a save that lands right after a team action keeps quiet: the note of the action stays
+		var quietUntil = 0;
+		function teamNote(r) { quietUntil = Date.now() + 1500; UI.note(note, r.ok ? r.msg : r.error, r.ok, version); }
+		function saveNow() {
+			return PGN.run('links.set', current()).then(function (r) {
 				if (r.ok && r.data) { mergeShown(r.data); PGN.emit('links', r.data); }
-				UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
+				if (!r.ok || Date.now() > quietUntil) UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
+				return r;
 			});
-		}, 450);
+		}
+		var push = UI.debounce(saveNow, 450);
 
+		// what the host resolved, by id: '@' folders (shown / net / auto) and whether each
+		// shortcut is only this user's (mine) or the team's (team) — no re-render, the
+		// user may be typing in a row
 		function mergeShown(d) {
-			// keep what the host resolved for '@' folders (shown / net / auto)
-			(d.dirs || []).forEach(function (x, i) { if (S.dirs[i] && S.dirs[i].id === x.id) { S.dirs[i].shown = x.shown; S.dirs[i].net = x.net; S.dirs[i].auto = x.auto; } });
-			renderList('dirs');
+			['sites', 'dirs'].forEach(function (list) {
+				var byId = {};
+				(d[list] || []).forEach(function (x) { byId[x.id] = x; });
+				S[list].forEach(function (it) {
+					var x = byId[it.id];
+					if (!x) return;
+					it.mine = x.mine; it.team = x.team;
+					if (list === 'dirs') { it.shown = x.shown; it.net = x.net; it.auto = x.auto; }
+					var row = root.querySelector('.lk[data-list="' + list + '"][data-id="' + String(it.id).replace(/"/g, '') + '"]');
+					if (row) row.classList.toggle('mine', !!it.mine);
+				});
+			});
+			upAll();
+		}
+
+		// the whole editor from a host answer
+		function adopt(d) {
+			S = { sites: d.sites || [], dirs: d.dirs || [] };
+			open = null;
+			renderList('sites'); renderList('dirs');
+			PGN.emit('links', d);
+		}
+
+		// ↑ one shortcut, or all of them (no args): the pending edits are saved first
+		function publish(args) {
+			quietUntil = Date.now() + 1500;
+			saveNow().then(function () { return PGN.run('links.publish', args || {}); }).then(function (r) {
+				if (r.ok && r.data) adopt(r.data);
+				teamNote(r);
+			});
 		}
 
 		function preview() {
 			prev.textContent = '';
-			S.sites.forEach(function (it, i) { prev.appendChild(h('span.t' + (open && open.list === 'sites' && open.idx === i ? '.hot' : ''), { title: it.name }, face(it))); });
+			S.sites.forEach(function (it, i) { if (!it._gone) prev.appendChild(h('span.t' + (open && open.list === 'sites' && open.idx === i ? '.hot' : ''), { title: it.name }, face(it))); });
 			if (S.sites.length && S.dirs.length) prev.appendChild(h('span.vs'));
-			S.dirs.forEach(function (it, i) { prev.appendChild(h('span.t' + (open && open.list === 'dirs' && open.idx === i ? '.hot' : ''), { title: it.name }, face(it))); });
+			S.dirs.forEach(function (it, i) { if (!it._gone) prev.appendChild(h('span.t' + (open && open.list === 'dirs' && open.idx === i ? '.hot' : ''), { title: it.name }, face(it))); });
 		}
 
 		function picker(list, idx) {
@@ -104,13 +151,37 @@
 				} });
 			}
 			var flag = list === 'dirs' && (it.auto || it.net) ? h('span.flag', { text: it.auto ? 'auto' : 'rede' }) : null;
-			var del = h('button.ox', { title: 'remover', 'aria-label': 'Remover', onclick: function () {
-				S[list].splice(i, 1);
+			// ↑ this shortcut for everybody (shown on the ones that are only this user's)
+			var up = h('button.upx', { title: 'salvar este atalho para todos', 'aria-label': 'Salvar este atalho para todos' }, UP());
+			UI.twoStep(up, { label: 'para todos?', onConfirm: function () { publish({ kind: list, id: it.id }); } });
+			var del = h('button.ox', { title: it.team ? 'remover\nclique de novo em 4 s: excluir para todos' : 'remover', 'aria-label': 'Remover' }, X());
+			var drop = function () {
+				var at = S[list].indexOf(it);
+				if (at >= 0) S[list].splice(at, 1);
 				if (open && open.list === list) open = null;
-				renderList(list); preview(); push();
-			} }, X());
+				renderList(list);
+			};
+			UI.twoStep(del, {
+				label: 'para todos?',
+				// first click: out of this user's list. A shortcut of the team stays on screen,
+				// struck out, while the second click can still remove it for everybody
+				onFirst: function () {
+					if (!it.team) { drop(); push(); return false; }
+					it._gone = true;
+					row.classList.add('gone');
+					preview(); push();
+				},
+				onExpire: drop,
+				onConfirm: function () {
+					quietUntil = Date.now() + 1500;
+					PGN.run('links.unpublish', { kind: list, id: it.id }).then(function (r) {
+						if (r.ok && r.data) adopt(r.data); else drop();
+						teamNote(r);
+					});
+				}
+			});
 			var handle = h('span.oh', { title: 'arrastar' }, h('i'));
-			var row = h('div.lk', { 'data-list': list, 'data-i': i, 'data-id': it.id }, [handle, ic, nm, tg, flag, del].filter(Boolean));
+			var row = h('div.lk' + (it.mine ? '.mine' : '') + (it._gone ? '.gone' : ''), { 'data-list': list, 'data-i': i, 'data-id': it.id }, [handle, ic, nm, tg, flag, up, del].filter(Boolean));
 			handle.addEventListener('mousedown', function (e) { drag(list, row, e); });
 			return row;
 		}
@@ -124,6 +195,7 @@
 			});
 			lists[list].count.textContent = S[list].length;
 			preview();
+			upAll();
 		}
 
 		function groupEl(list, title) {
@@ -131,7 +203,7 @@
 			var count = h('span.ogc');
 			var grp = h('div.ogrp');
 			var add = h('button.oa', { title: list === 'sites' ? 'novo site' : 'nova pasta', 'aria-label': list === 'sites' ? 'Novo site' : 'Nova pasta', onclick: function () {
-				var it = list === 'sites' ? { id: 's' + Date.now(), name: 'novo site', url: '', icon: 'globe' } : { id: 'd' + Date.now(), name: 'nova pasta', path: '', icon: 'up' };
+				var it = list === 'sites' ? { id: 's' + Date.now(), name: 'novo site', url: '', icon: 'globe', mine: true } : { id: 'd' + Date.now(), name: 'nova pasta', path: '', icon: 'up', mine: true };
 				S[list].push(it);
 				grp.classList.remove('shut');
 				open = null;
@@ -177,12 +249,22 @@
 
 		var reset = h('button.mini', { title: 'atalhos padrão', 'aria-label': 'Restaurar atalhos padrão', onclick: function () {
 			PGN.run('links.reset', {}).then(function (r) {
-				if (r.ok && r.data) { S = { sites: r.data.sites, dirs: r.data.dirs }; open = null; renderList('sites'); renderList('dirs'); PGN.emit('links', r.data); }
+				if (r.ok && r.data) adopt(r.data);
 				UI.note(note, r.ok ? r.msg : r.error, r.ok, version);
 			});
 		} }, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4', 'spinme')]));
 
-		root.appendChild(h('div.lprow', null, [prev, reset]));
+		// ↑ every shortcut that is only this user's (hidden when there is none)
+		var allCount = h('b');
+		var all = h('button.upall', { title: 'salvar para todos os atalhos que são só seus\n(passam a ser da equipe)', 'aria-label': 'Salvar os atalhos novos para todos', hidden: true }, [UP(), h('span.txt', { text: 'salvar para todos · ' }), allCount]);
+		UI.twoStep(all, { label: 'confirmar?', onConfirm: function () { publish(); } });
+		function upAll() {
+			var n = S.sites.concat(S.dirs).filter(function (it) { return it.mine && !it._gone; }).length;
+			all.hidden = !n;
+			allCount.textContent = n + (n === 1 ? ' novo' : ' novos');
+		}
+
+		root.appendChild(h('div.lprow', null, [prev, all, reset]));
 		root.appendChild(groupEl('sites', 'SITES'));
 		root.appendChild(groupEl('dirs', 'PASTAS'));
 
