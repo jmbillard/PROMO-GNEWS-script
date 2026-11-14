@@ -3,7 +3,7 @@
 > PROMO GNEWS · preferences window
 ---------------------------------------------------------------
   host: prefs.get · prefs.set { patch } · prefs.reset · prefs.openFolder
-        prefs.pickFolder { key } · prefs.resetFolder { key } · prefs.resetOrgFolders
+        prefs.pickFolder { key } · prefs.resetFolder { key } · prefs.publishOrgFolders
   every change is saved immediately; panel-only options
   (labels, reduced motion) are broadcast with PGN.emit('prefs').
 */
@@ -327,18 +327,20 @@
 			tree.scrollTop = tree.scrollHeight;
 			mark();
 		});
-		var rst = h('button.rst', { title: 'restaurar a lista padrão' }, [UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path(I.reset)]), h('span', { text: 'padrão' })]);
+		// ↑ sends the siglas this user created to the shared settings ('config geral'): they
+		// become defaults for everybody. Two clicks, since it changes what the others see
+		var rst = h('button.rst', { title: 'enviar as pastas novas para a config geral\n(passam a ser padrão para todos)', 'aria-label': 'Enviar as pastas novas para a config geral' }, [UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 19V5M6 11l6-6 6 6')]), h('span', { text: 'enviar' })]);
 		var armT;
 		rst.addEventListener('click', function () {
 			if (!rst.classList.contains('arm')) {
-				rst.classList.add('arm'); rst.lastChild.textContent = 'confirmar?';
-				armT = setTimeout(function () { rst.classList.remove('arm'); rst.lastChild.textContent = 'padrão'; }, 3000);
+				rst.classList.add('arm'); rst.lastChild.textContent = 'enviar para todos?';
+				armT = setTimeout(function () { rst.classList.remove('arm'); rst.lastChild.textContent = 'enviar'; }, 3000);
 				return;
 			}
-			clearTimeout(armT); rst.classList.remove('arm'); rst.lastChild.textContent = 'padrão';
-			PGN.run('prefs.resetOrgFolders', {}).then(function (r) {
+			clearTimeout(armT); rst.classList.remove('arm'); rst.lastChild.textContent = 'enviar';
+			PGN.run('prefs.publishOrgFolders', {}).then(function (r) {
 				if (r.ok && r.data) {
-					if (r.data.defaults) defs = r.data.defaults;
+					if (r.data.defaults) { defs = r.data.defaults; if (P.defaults && P.defaults.folders) P.defaults.folders.promoSubPath = r.data.defaults; }
 					P.folders.promoSubPath = Object.assign({}, r.data.promoSubPath);
 					render(r.data.promoSubPath);
 				}
@@ -418,7 +420,8 @@
 			group('modos', [hoRow, hnRow], d += 40),
 			group('rede', [
 				folderRow(I.folder, 'PAM magazine', 'magazinePath'),
-				folderRow(I.folder, 'PAM para arte', 'artePath')
+				folderRow(I.folder, 'PAM para arte', 'artePath'),
+				folderRow(I.folder, 'Templates', 'templatesArchPath')
 			], d += 40),
 			group('efeitos', [EDS.fx = FxEditor(note, version)], d += 40),
 			group('atalhos', [EDS.link = LinksEditor(note, version)], d += 40),
@@ -499,7 +502,11 @@
 	// browser preview data
 	var MOCK_ORG = { INS: 'CANAL/institucional', DIG: 'CANAL/digital', PIL: 'CANAL/pilula', MKT: 'CANAL/marketing', NDL: 'VINHETAS/nunca desliga', BIP: 'VINHETAS/bip', ASE: 'VINHETAS/a seguir', EMN: 'JORNAIS/edicao da meia noite', EMP: 'JORNAIS/em ponto', CON: 'JORNAIS/conexao', JDE: 'JORNAIS/jornal das dez', ELE: 'FACTUAIS/eleicoes brasil', MUN: 'FACTUAIS/mundo', INT: 'PROGRAMAS/internacional', DOC: 'PROGRAMAS/documentario', MAC: 'MARCA E COMUNICACAO' };
 	PGN.mock('prefs.setOrgFolders', function (a) { var m = Object.assign({}, a.map); Object.keys(MOCK_ORG).forEach(function (k) { if (m[k] == null) m[k] = MOCK_ORG[k]; }); return { msg: 'Pastas de organização salvas', data: { promoSubPath: m, defaults: MOCK_ORG } }; }, 150);
-	PGN.mock('prefs.resetOrgFolders', function () { return { msg: 'Pastas de organização restauradas', data: { promoSubPath: Object.assign({}, MOCK_ORG), defaults: MOCK_ORG } }; }, 150);
+	PGN.mock('prefs.publishOrgFolders', function () {
+		var mine = (P && P.folders && P.folders.promoSubPath) || {}, n = 0;
+		Object.keys(mine).forEach(function (k) { if (MOCK_ORG[k] == null) { MOCK_ORG[k] = mine[k]; n++; } });
+		return { msg: n ? n + (n === 1 ? ' pasta enviada' : ' pastas enviadas') + ' para a config geral' : 'nenhuma pasta nova para enviar', data: { sent: n, promoSubPath: Object.assign({}, mine), defaults: MOCK_ORG } };
+	}, 150);
 	// 'efeitos' (browser preview)
 	var FXL = [['Blur & Sharpen', ['Camera Lens Blur:ADBE Camera Lens Blur', 'Compound Blur:ADBE Compound Blur', 'Gaussian Blur:ADBE Gaussian Blur 2', 'Directional Blur:ADBE Motion Blur', 'Radial Blur:ADBE Radial Blur']], ['Color Correction', ['Curves:ADBE CurvesCustom', 'Hue/Saturation:ADBE HUE SATURATION', 'Levels:ADBE Pro Levels2', 'Lumetri Color:ADBE Lumetri', 'Tint:ADBE Tint']], ['Generate', ['Fill:ADBE Fill', 'Gradient Ramp:ADBE Ramp', 'Stroke:ADBE Paint']], ['Noise & Grain', ['Add Grain:VISINF Grain Implant', 'Fractal Noise:ADBE Fractal Noise']], ['Perspective', ['3D Glasses:ADBE 3D Glasses2', 'Drop Shadow:ADBE Drop Shadow']], ['Stylize', ['Glow:ADBE Glo2', 'Mosaic:ADBE Mosaic']]];
 	var FX_ALL = []; FXL.forEach(function (c) { c[1].forEach(function (e) { var p = e.split(':'); FX_ALL.push({ n: p[0], m: p[1], c: c[0] }); }); });
@@ -527,7 +534,7 @@
 	PGN.mock('links.pick', function () { return { data: { path: '/Users/voce/Desktop/projetos' } }; }, 200);
 
 	PGN.mock('prefs.get', function () {
-		return { data: { version: 'v3 beta 2', userPrefix: 'JMB', selection: { nullType: 0, adjType: 1, projectMode: 0 }, orgFolders: true, ignoreMissing: false, saveAsV22: true, homeOffice: false, hardNews: false, showLabels: true, devMode: false, folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE', artePath: '//pamjb/PARA_ARTE', promoSubPath: Object.assign({}, MOCK_ORG, { JDE: 'JORNAIS/jornal das 10', XYZ: 'CANAL/especiais' }) }, defaults: { folders: { promoSubPath: MOCK_ORG } }, layerTypes: ['shape layer', 'solid layer'], projectModes: ['PROMO', 'custom'] } };
+		return { data: { version: 'v3 beta 2', userPrefix: 'JMB', selection: { nullType: 0, adjType: 1, projectMode: 0 }, orgFolders: true, ignoreMissing: false, saveAsV22: true, homeOffice: false, hardNews: false, showLabels: true, devMode: false, folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE', artePath: '//pamjb/PARA_ARTE', templatesArchPath: '//egcdesign01/cdesign/JORNALISMO/GLOBONEWS/PROMO/TEMPLATES', promoSubPath: Object.assign({}, MOCK_ORG, { JDE: 'JORNAIS/jornal das 10', XYZ: 'CANAL/especiais' }) }, defaults: { folders: { promoSubPath: MOCK_ORG } }, layerTypes: ['shape layer', 'solid layer'], projectModes: ['PROMO', 'custom'] } };
 	}, 200);
 	PGN.mock('prefs.set', function () { return { msg: 'Preferências salvas' }; }, 150);
 

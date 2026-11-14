@@ -18,6 +18,7 @@ cep/
   scripts/                   instaladores de desenvolvimento (macOS / Windows)
 source/                      globals + bibliotecas usadas pelo host (funções, expressões, shape templates, rigs)
 downloads/                   templates, fontes e presets do AME baixados pelo host quando faltam
+config/                      configuração geral, compartilhada por todos (pastas-organizacao.json: siglas padrão enviadas pelas preferências)
 tools/                       build-cep.js (pacote / instalação de dev) · gnews-logo.js (logo animada do painel)
                              diagnostico.jsx (lista as cópias instaladas e quais ainda têm código antigo)
                              doc-icons.js · doc-shots.js · doc-gifs.js (ícones, capturas e gifs do README, gerados da própria interface)

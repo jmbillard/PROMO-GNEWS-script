@@ -591,7 +591,7 @@ PGN.register('fonts.openFolder', function (args) {
 PGN.prefs = {
 	layerTypes: ['shape layer', 'solid layer'],
 	projectModes: ['PROMO', 'custom'],
-	folderKeys: ['projPath', 'magazinePath', 'artePath'],
+	folderKeys: ['projPath', 'magazinePath', 'artePath', 'templatesArchPath'],
 
 	// recursive merge (arrays and values are replaced)...
 	merge: function (dst, src) {
@@ -634,6 +634,12 @@ PGN.prefs = {
 		if (key == 'artePath') artePath = localPath;
 		JSONPrefsObj.folders[key] = path;
 		savePrefs();
+		// the network templates folder: the windows list from the new place right away
+		if (key == 'templatesArchPath') {
+			PGN.net.unc.templatesArchPath = path;
+			templatesArchPath = localPath;
+			updateFolderPaths();
+		}
 	}
 };
 
@@ -767,6 +773,41 @@ PGN.register('prefs.resetOrgFolders', function (args) {
 	promoSubPath = JSONPrefsObj.folders.promoSubPath;
 
 	return { msg: 'Pastas de organiza\u00E7\u00E3o restauradas', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defPrefsObj.folders.promoSubPath) } };
+});
+
+// publishOrgFoldersBtn (↑): the siglas the user created go to the shared settings
+// ('config geral'), and become defaults for everybody from their next start...
+PGN.register('prefs.publishOrgFolders', function (args) {
+	var defs = defPrefsObj.folders.promoSubPath;
+	var mine = JSONPrefsObj.folders.promoSubPath;
+	var fresh = {};
+	var count = 0;
+
+	for (var k in mine) {
+		if (!mine.hasOwnProperty(k) || defs.hasOwnProperty(k)) continue;
+		fresh[k] = mine[k];
+		count++;
+	}
+	if (count == 0) return { msg: 'nenhuma pasta nova para enviar', data: { sent: 0, promoSubPath: PGN.win.clone(mine), defaults: PGN.win.clone(defs) } };
+
+	var f = PGN.cfg.orgFile();
+	var shared = PGN.cfg.readOrg(); // what others sent meanwhile is kept
+
+	for (var n in fresh) {
+		if (fresh.hasOwnProperty(n)) shared[n] = fresh[n];
+	}
+	if (!createPath(f.parent.fsName)) PGN.fail('n\u00E3o foi poss\u00EDvel criar a pasta da config geral: ' + f.parent.fsName);
+	PGN.writeJSON(f, shared, true);
+
+	PGN.prefs.detach();
+	defs = defPrefsObj.folders.promoSubPath;
+	for (var s in fresh) {
+		if (fresh.hasOwnProperty(s)) defs[s] = fresh[s];
+	}
+	return {
+		msg: PGN.n(count, 'pasta enviada', 'pastas enviadas') + ' para a config geral',
+		data: { sent: count, promoSubPath: PGN.win.clone(JSONPrefsObj.folders.promoSubPath), defaults: PGN.win.clone(defs) }
+	};
 });
 
 // org. folders editor (settings window): replaces the whole sigla → sub path map...

@@ -786,6 +786,15 @@ PGN_override('updateFolderPaths', function () {
 		templatesPath = templatesLocalPath;
 		fontsPath = fontsLocalPath;
 	}
+	// a templates folder chosen in the preferences doesn't depend on the cdesign share:
+	// it is used whenever it exists (local copy otherwise)
+	try {
+		var own = PGN.net.unc.templatesArchPath;
+
+		if (!homeOffice && own && own != defPrefsObj.folders.templatesArchPath) {
+			templatesPath = PGN.net.exists(own) ? templatesArchPath : templatesLocalPath;
+		}
+	} catch (err) { }
 	templatesFolder = new Folder(templatesPath);
 	tempFolder = new Folder(tempPath);
 	fontsFolder = new Folder(fontsPath);
@@ -796,7 +805,74 @@ PGN_override('loadDefaultPrefs', function () {
 	PGN.classic.loadDefaultPrefs();
 	PGN_dropRemovedSubPaths();
 	PGN.net.localPrefs();
+	if (PGN_applyTemplatesPref()) updateFolderPaths();
 });
+
+// the network templates folder is a preference (folders.templatesArchPath): the classic
+// global follows it. returns true when the path changed (the caller refreshes the folders)
+function PGN_applyTemplatesPref() {
+	try {
+		var tp = JSONPrefsObj.folders.templatesArchPath;
+
+		if (typeof tp != 'string' || tp == '') return false;
+		var loc = PGN.net.local(tp);
+		var changed = templatesArchPath != loc;
+
+		PGN.net.unc.templatesArchPath = tp;
+		templatesArchPath = loc;
+		return changed;
+	} catch (err) { }
+	return false;
+}
+
+/*
+  shared settings ('config geral'): <PROMO GNEWS folder>/config, next to cep/ and source/.
+  pastas-organizacao.json → { SIGLA: 'PASTA/subpasta' }: siglas added there become defaults
+  for everybody (read at load; sent from the preferences with prefs.publishOrgFolders).
+*/
+PGN.cfg = {
+	orgFile: function () {
+		return new File(PGN_srcDir.fsName + '/../config/pastas-organizacao.json');
+	},
+
+	readOrg: function () {
+		var f = PGN.cfg.orgFile();
+		var out = {};
+
+		if (!f.exists) return out;
+		try {
+			f.encoding = 'UTF-8';
+			var o = JSON.parse(readFileContent(f));
+
+			for (var k in o) {
+				if (!o.hasOwnProperty(k)) continue;
+				var key = String(k).toUpperCase().replace(/[^A-Z0-9]/g, '');
+				var val = String(o[k]).replace(/\\/g, '/').replace(/^\/+|\/+$/g, '').replace(/\/{2,}/g, '/');
+
+				if (key != '' && val != '') out[key] = val;
+			}
+		} catch (err) { }
+		return out;
+	},
+
+	// shared siglas → defaults (the ones the code already has win), then into the user's
+	// list like any other default (the ones the user removed stay removed)
+	loadOrg: function () {
+		try {
+			var shared = PGN.cfg.readOrg();
+			var defs = defPrefsObj.folders.promoSubPath;
+			var mine = JSONPrefsObj.folders.promoSubPath;
+
+			for (var k in shared) {
+				if (!shared.hasOwnProperty(k)) continue;
+				if (!defs.hasOwnProperty(k)) defs[k] = shared[k];
+				if (!mine.hasOwnProperty(k)) mine[k] = shared[k];
+			}
+			promoSubPath = mine;
+			PGN_dropRemovedSubPaths();
+		} catch (err) { }
+	}
+};
 
 // org. folders: the classic loader puts back every missing default sigla; the settings
 // window keeps the default siglas the user removed in folders.removedSubPath...
@@ -831,6 +907,14 @@ PGN_dropRemovedSubPaths();
 */
 
 (function () {
+	// the default of the templates folder preference is the classic network path
+	if (!defPrefsObj.folders.hasOwnProperty('templatesArchPath')) defPrefsObj.folders.templatesArchPath = templatesArchPath;
+	if (typeof JSONPrefsObj.folders.templatesArchPath != 'string' || JSONPrefsObj.folders.templatesArchPath == '') JSONPrefsObj.folders.templatesArchPath = defPrefsObj.folders.templatesArchPath;
+	var tplChanged = JSONPrefsObj.folders.templatesArchPath != templatesArchPath;
+
+	templatesArchPath = JSONPrefsObj.folders.templatesArchPath;
+	PGN.cfg.loadOrg();
+
 	var names = ['tAdd', 'hnPath', 'utiPath', 'promoInsPath', 'basesPath', 'promoArcPath', 'templatesArchPath', 'fontsArchPath'];
 
 	for (var i = 0; i < names.length; i++) {
@@ -843,6 +927,9 @@ PGN_dropRemovedSubPaths();
 	if (PGN.sys.isMac) {
 		// /Volumes form, no mounting (no login dialog at startup)...
 		PGN.net.refresh();
+	} else if (tplChanged) {
+		// a templates folder of the user's own: the classic paths were computed before it
+		updateFolderPaths();
 	} else if (!homeOffice && templatesPath == templatesLocalPath) {
 		// the classic updateFolderPaths already checked the share (and alerted)...
 		PGN.net.offline = 'rede indispon\u00EDvel \u00B7 drive T: (cdesign) fora do ar \u00B7 usando templates e fontes locais \u00B7 em casa: ligue o modo home office nas prefer\u00EAncias';

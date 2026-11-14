@@ -41,7 +41,7 @@
 .rst { height: 26px; padding: 0 9px; border-radius: var(--r); font: 10px var(--mono); color: #A9A9B2; display: inline-flex; align-items: center; gap: 5px; transition: background .2s, color .2s; }
 .rst:hover { background: #2A2A2F; color: var(--tx); }
 .rst svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.rst.arm { background: rgba(255, 107, 107, .16); color: #FFB3B2; animation: nope .4s ease; }
+.rst.arm { background: var(--acc); color: var(--bg); }
 
 /* clickable path (picks a folder) */
 .lb.pick { text-align: left; margin: 0 -6px; padding: 5px 6px; border-radius: var(--r); transition: background .2s; }

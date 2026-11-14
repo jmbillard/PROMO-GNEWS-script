@@ -410,8 +410,8 @@ Abra pelo último botão do rodapé. As mudanças valem na hora, sem botão de s
 - **usuário** — o prefixo usado nos IDs e nos nomes.
 - **modos** — **home office** usa templates e fontes locais e apaga os atalhos de rede; **hard news** troca IDs, pastas e previews para o padrão do HN.
 - **layers** — null e camada de ajuste em solid ou shape.
-- **projeto** — pastas de organização (siglas e pastas, editáveis), ignorar arquivos faltando ao coletar, pasta dos projetos.
-- **rede** — pastas do PAM (para arte, magazine).
+- **projeto** — pastas de organização (siglas e pastas, editáveis), ignorar arquivos faltando ao coletar, pasta dos projetos. No editor das pastas, a seta **↑ enviar** manda as siglas que você criou para a configuração geral: elas passam a ser padrão para toda a equipe (cada um recebe ao abrir o After Effects de novo).
+- **rede** — pastas do PAM (para arte, magazine) e a pasta de **templates**. Clique no caminho para escolher outra pasta; a seta ao lado volta ao padrão. Uma pasta de templates própria é usada sempre que existir; se não existir, vale a cópia local.
 - **efeitos**, **atalhos** e **paleta** — o que a barra mostra nessas seções.
 - **painel** — rótulos no painel largo, animações reduzidas, ferramentas de dev.
 
