@@ -74,7 +74,8 @@
 			l.pattern && modelo !== 3 ? h('div.pv-pat') : null,
 			// as in the real end page: the footage is the dark rectangle on the right,
 			// the photo a light square on top of it
-			l.footage && modelo !== 2 ? h('div.pv-foot') : null,
+			// (it is a cutout in the background, so without 'fundo' there is nothing to draw)
+			l.footage && modelo !== 2 && l.fundo !== false ? h('div.pv-foot') : null,
 			foto ? h('div.pv-foto') : null,
 			h('div.pv-logo'),
 			h('div.pv-txt', null, [
