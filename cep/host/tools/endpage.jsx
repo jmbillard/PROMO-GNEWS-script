@@ -470,6 +470,27 @@ PGN.endp = {
 	// layers hidden when the end page has no background ('fundo' off)
 	bgLayers: ['comp_pattern', 'matte_footage animation', 'adj_footage anim', 'adj_footage cc'],
 
+	// a background layer by name; tolerant to case, extra spaces and a renamed precomp layer
+	bgLayer: function (comp, name) {
+		var want = name.toLowerCase().replace(/\s+/g, ' ');
+
+		for (var l = 1; l <= comp.numLayers; l++) {
+			var lay = comp.layer(l);
+			var names = [lay.name];
+
+			try {
+				if (lay.source) names.push(lay.source.name);
+			} catch (err) { }
+
+			for (var n = 0; n < names.length; n++) {
+				var got = String(names[n]).toLowerCase().replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+
+				if (got == want) return lay;
+			}
+		}
+		return null;
+	},
+
 	// the background of the end page is a 'Solid Composite' effect named 'bg' (on the layer
 	// 'adj_footage anim' in the templates): off → no background, the end page comes out in alpha
 	bgFx: function (comp) {
@@ -498,7 +519,7 @@ PGN.endp = {
 		var obj = PGN.endp.normalize(PGN.endp.buildFxObj(comp));
 		var bg = PGN.endp.bgFx(comp);
 
-		var bgLayer = PGN.endp.layer(comp, 'adj_footage anim');
+		var bgLayer = PGN.endp.bgLayer(comp, 'adj_footage anim');
 
 		if (bgLayer != null) obj.layout_end_page.fundo = bgLayer.enabled !== false && (bg == null || bg.enabled !== false);
 		else if (bg != null) obj.layout_end_page.fundo = bg.enabled !== false;
@@ -540,17 +561,26 @@ PGN.endp = {
 		var on = lay.fundo !== false;
 		var bg = PGN.endp.bgFx(comp);
 
-		for (var i = 0; i < PGN.endp.bgLayers.length; i++) {
-			var bl = PGN.endp.layer(comp, PGN.endp.bgLayers[i]);
+		PGN.endp.bgDone = 0;
+		PGN.endp.bgMissing = [];
 
-			if (bl == null) continue;
+		for (var i = 0; i < PGN.endp.bgLayers.length; i++) {
+			var bl = PGN.endp.bgLayer(comp, PGN.endp.bgLayers[i]);
+
+			if (bl == null) {
+				PGN.endp.bgMissing.push(PGN.endp.bgLayers[i]);
+				continue;
+			}
 			try {
 				var wasLocked = bl.locked;
 
 				if (wasLocked) bl.locked = false;
 				bl.enabled = on;
 				if (wasLocked) bl.locked = true;
-			} catch (err) { }
+				PGN.endp.bgDone++;
+			} catch (err) {
+				PGN.endp.bgMissing.push(PGN.endp.bgLayers[i]);
+			}
 		}
 		if (bg != null) {
 			try { bg.enabled = true; } catch (err) { }
@@ -764,8 +794,16 @@ PGN.register('endp.apply', function (args) {
 	PGN.endp.writeComp(comp, obj, livre);
 	app.endUndoGroup();
 
+	var bgMsg = '';
+
+	if (PGN.endp.bgMissing && PGN.endp.bgMissing.length) {
+		bgMsg = ' \u00B7 fundo: n\u00E3o alterei ' + PGN.endp.bgMissing.join(', ');
+	} else if (obj.layout_end_page.fundo === false) {
+		bgMsg = ' \u00B7 sem fundo';
+	}
+
 	return {
-		msg: 'end page ' + comp.name + ' atualizada',
+		msg: 'end page ' + comp.name + ' atualizada' + bgMsg,
 		data: {
 			current: PGN.endp.readComp(comp),
 			livre: PGN.endp.readLivre(comp),
