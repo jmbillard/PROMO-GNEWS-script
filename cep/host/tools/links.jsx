@@ -31,8 +31,6 @@
 	var DEFAULTS = {
 		sites: [
 			{ id: 'od', name: 'OneDrive', url: 'https://tvglobocorp-my.sharepoint.com/', glyph: 'OD' },
-			{ id: 'tr', name: 'Trello promo', url: 'https://trello.com/promo126/home', glyph: 'TR' },
-			{ id: 'ap', name: 'Apontamento', url: 'https://gglobo-pea-hdg-prd.web.app/#card_view', glyph: 'AP' },
 			{ id: 'pl', name: 'Planner', url: 'https://tasks.office.com/tvglobocorp.onmicrosoft.com/en-US/Home/Planner/#/userboard', glyph: 'PL' }
 		],
 		dirs: [

@@ -71,7 +71,7 @@ const PAGE = `<!doctype html><meta charset="utf-8">
 	});
 	FOOTER.forEach(function (f, i) { tile('foot-' + i, '#ECFF8C', svg(f.d, f.a)); });
 	Object.keys(LINK_ICONS).forEach(function (k) { tile('link-' + k, '#FFB398', svg(LINK_ICONS[k][0], LINK_ICONS[k][1])); });
-	['OD', 'TR', 'AP', 'PL'].forEach(function (g) { tile('link-' + g.toLowerCase(), '#FFB398', '<span class="g">' + g + '</span>'); });
+	['OD', 'PL'].forEach(function (g) { tile('link-' + g.toLowerCase(), '#FFB398', '<span class="g">' + g + '</span>'); });
 	Object.keys(FX_ICONS).forEach(function (k) { tile('fxi-' + k, '#ACCDEC', svg(FX_ICONS[k][0], FX_ICONS[k][1])); });
 	PALETTE_DEFAULT.forEach(function (hex) { tile('cor-' + hex.slice(1), '#BBBBBD', '<i class="sw" style="background:' + hex + '"></i>'); });
 </script>`;

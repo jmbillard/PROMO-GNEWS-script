@@ -260,7 +260,7 @@
 	}
 
 	// release name shown to the team (the manifest keeps numbers only: CEP needs x.y.z)
-	var RELEASE = 'v3 beta 2';
+	var RELEASE = 'v3 beta 3';
 	var ver = version();
 	var win = new Window('window', 'PROMO GNEWS ' + RELEASE + ' · instalador', undefined, { closeButton: false });
 

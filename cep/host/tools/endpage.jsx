@@ -99,6 +99,7 @@ PGN.endp = {
 				foto: false,
 				footage: true,
 				pattern: true,
+				fundo: true,
 				foto_layer: '-------',
 				pattern_layer: '-------'
 			},
@@ -140,6 +141,12 @@ PGN.endp = {
 
 	presetPath: function () {
 		return templatesPath + '/ON-AIR/end page/end page presets';
+	},
+
+	// true when the presets are on this computer only (home office, or the network templates
+	// folder is unavailable): a preset saved now does not reach the team
+	presetsLocal: function () {
+		return templatesPath == templatesLocalPath;
 	},
 
 	presetFolder: function () {
@@ -460,9 +467,35 @@ PGN.endp = {
 		}
 	},
 
+	// the background of the end page is a 'Solid Composite' effect named 'bg' (on the layer
+	// 'adj_footage anim' in the templates): off → no background, the end page comes out in alpha
+	bgFx: function (comp) {
+		var find = function (layer) {
+			try {
+				var fx = layer.property('ADBE Effect Parade');
+
+				for (var i = 1; i <= fx.numProperties; i++) {
+					var e = fx.property(i);
+
+					if (e.matchName == 'ADBE Solid Composite' && String(e.name).toLowerCase() == 'bg') return e;
+				}
+			} catch (err) { }
+			return null;
+		};
+		var named = PGN.endp.layer(comp, 'adj_footage anim');
+		var bg = named != null ? find(named) : null;
+
+		// another layer name in a different template version: look for the effect itself
+		for (var l = 1; bg == null && l <= comp.numLayers; l++) bg = find(comp.layer(l));
+		return bg;
+	},
+
 	// refresh button: comp → preset object...
 	readComp: function (comp) {
 		var obj = PGN.endp.normalize(PGN.endp.buildFxObj(comp));
+		var bg = PGN.endp.bgFx(comp);
+
+		if (bg != null) obj.layout_end_page.fundo = bg.enabled !== false;
 		var pat = PGN.endp.enabledLayer(comp, 'comp_pattern', false);
 		var foto = PGN.endp.enabledLayer(comp, 'comp_img apresentador', true);
 
@@ -495,6 +528,13 @@ PGN.endp = {
 		PGN.endp.setFx(comp, 'layout end page', 'footage', lay.footage);
 		PGN.endp.setFx(comp, 'layout end page', 'pattern', lay.pattern);
 		PGN.endp.setFx(comp, 'servico end page', 'a partir das', obj.servico_end_page.a_partir_das);
+
+		// 'fundo' off: the background effect is disabled (alpha)
+		var bg = PGN.endp.bgFx(comp);
+
+		if (bg != null) {
+			try { bg.enabled = lay.fundo !== false; } catch (err) { }
+		}
 	},
 
 	// apply button: preset object → comp...
@@ -612,6 +652,7 @@ PGN.endp = {
 						{ key: 'layout_end_page.foto', label: 'foto', type: 'checkbox' },
 						{ key: 'layout_end_page.footage', label: 'footage', type: 'checkbox' },
 						{ key: 'layout_end_page.pattern', label: 'pattern', type: 'checkbox' },
+						{ key: 'layout_end_page.fundo', label: 'fundo', type: 'checkbox' },
 						{ key: 'layout_end_page.foto_layer', label: 'foto', type: 'select', options: 'fotos', by: 'name', enabledIf: 'layout_end_page.foto' },
 						{ key: 'layout_end_page.pattern_layer', label: 'pattern', type: 'select', options: 'patterns', by: 'name', enabledIf: 'layout_end_page.pattern' }
 					]
@@ -648,6 +689,7 @@ PGN.endp = {
 		return {
 			presets: PGN.endp.presetList(),
 			folder: PGN.endp.presetFolder().fsName,
+			local: PGN.endp.presetsLocal(),
 			current: comp ? PGN.endp.readComp(comp) : PGN.endp.normalize({}),
 			livre: comp ? PGN.endp.readLivre(comp) : PGN.endp.livreDefault,
 			options: PGN.endp.options(comp),
@@ -767,9 +809,12 @@ PGN.register('endp.save', function (args) {
 
 	if (!saved || !saved.exists) PGN.fail('n\u00E3o foi poss\u00EDvel salvar o preset');
 
+	// where it went: the team's folder on the network, or only this computer
+	var local = PGN.endp.presetsLocal();
+
 	return {
-		msg: 'preset ' + name + ' salvo',
-		data: { presets: PGN.endp.presetList(), name: name, path: saved.fsName, current: obj }
+		msg: 'preset ' + name + (local ? ' salvo s\u00F3 neste computador \u00B7 a pasta de templates da rede est\u00E1 fora' : ' salvo na pasta de templates da rede'),
+		data: { presets: PGN.endp.presetList(), name: name, path: saved.fsName, current: obj, local: local }
 	};
 });
 

@@ -24,11 +24,12 @@
 		if (on) prog.appendChild(h('i'));
 	}
 
-	function load(id) {
+	function load(id, fresh) {
 		loading(true);
 		var btn = id === 'tpl.download' ? $('dl') : null;
 		if (btn) btn.classList.add('busy');
-		return PGN.run(id || 'tpl.list', {}).then(function (r) {
+		// the host keeps the listing for a while: the reload button asks for a fresh one
+		return PGN.run(id || 'tpl.list', fresh ? { fresh: true } : {}).then(function (r) {
 			loading(false);
 			if (btn) btn.classList.remove('busy');
 			if (r.ok && r.data) {
@@ -37,7 +38,7 @@
 				render();
 			}
 			// nothing to show yet and the host did not answer: say it in the window, with a retry
-			if (!r.ok && !s.items.length) UI.failState(list, r.error, function () { load('tpl.list'); });
+			if (!r.ok && !s.items.length) UI.failState(list, r.error, function () { load('tpl.list', true); });
 			footer(r.ok && id === 'tpl.download' ? { msg: r.msg } : (!r.ok ? { err: r.error } : null));
 		});
 	}
@@ -46,7 +47,7 @@
 	$('rf').addEventListener('click', function () {
 		var svg = this.querySelector('svg');
 		svg.classList.remove('go'); void svg.getBoundingClientRect(); svg.classList.add('go');
-		load('tpl.list');
+		load('tpl.list', true);
 	});
 	$('fo').addEventListener('click', function () {
 		PGN.run('tpl.openFolder', {}).then(function (r) { footer(r.ok ? { msg: r.msg } : { err: r.error }); });

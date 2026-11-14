@@ -50,7 +50,7 @@
 .win-body { overflow-y: auto; }
 #live[hidden] { display: none; }
 .track, .presets, #stats { flex-shrink: 0; }
-.plot { flex: 1 1 0; height: auto; min-height: 56px; max-height: 170px; }
+.plot { flex: 1 1 0; height: auto; min-height: 56px; max-height: 420px; }
 /* live: the bolt blinks once per update sent */
 #live.sending svg { animation: pulse .3s ease; }
 /* the preview ball rests while the mouse is away (a looping animation keeps the window repainting) */

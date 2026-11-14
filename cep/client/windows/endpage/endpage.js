@@ -68,6 +68,7 @@
 		var modelo = +l.modelo;
 		var foto = l.foto && modelo !== 3;
 		preview.classList.toggle('nofoto', !foto && !(l.footage && modelo !== 2));
+		preview.classList.toggle('nobg', l.fundo === false);   // no background: alpha
 		preview.textContent = '';
 		UI.add(preview, [
 			l.pattern && modelo !== 3 ? h('div.pv-pat') : null,
@@ -174,7 +175,9 @@
 					toggle('subtítulo', function () { return l.subtitulo; }, function (x) { l.subtitulo = x; subRow.classList.toggle('off', !x); }),
 					toggle('foto', function () { return l.foto; }, function (x) { l.foto = x; fotoSel.classList.toggle('off', !x); }),
 					toggle('footage', function () { return l.footage; }, function (x) { l.footage = x; }),
-					toggle('pattern', function () { return l.pattern; }, function (x) { l.pattern = x; patSel.classList.toggle('off', !x); })
+					toggle('pattern', function () { return l.pattern; }, function (x) { l.pattern = x; patSel.classList.toggle('off', !x); }),
+					// off: the end page has no background (alpha)
+					toggle('fundo', function () { return l.fundo !== false; }, function (x) { l.fundo = x; })
 				]),
 				fotoSel, patSel
 			], 40));
@@ -303,6 +306,9 @@
 		PGN.run('endp.state', {}).then(function (r) {
 			if (!r.ok) { UI.failState($('form'), r.error, load); UI.note(note, r.error, false); return; }
 			adopt(r.data);
+			// the folder button tells where the presets live
+			$('folder').title = 'abrir pasta de presets' + (r.data && r.data.folder ? '\n' + r.data.folder : '') + (r.data && r.data.local ? '\n(só neste computador: rede fora ou home office)' : '');
+			$('folder').removeAttribute('data-tip');
 		});
 	}
 
@@ -327,6 +333,8 @@
 		var name = (V().titulo || 'preset').replace(/\s+/g, ' ').trim().toLowerCase();
 		PGN.run('endp.save', { name: name, preset: S.cur }).then(function (r) {
 			if (r.ok && r.data && r.data.presets) { S.presets = r.data.presets; presetsSelect(); $('preset').value = r.data.path || ''; }
+			// saved on this computer only (network templates folder away): shown as a warning
+			if (r.ok && r.data && r.data.local) { UI.note(note, r.msg, false); return; }
 			msg(r);
 		});
 	});
@@ -352,7 +360,7 @@
 			presets: [{ name: 'jornal das dez', path: '/p/jdd.json' }, { name: 'estúdio i', path: '/p/ei.json' }],
 			target: 'comp_end page JDD', livre: 'DIGITE O TEXTO',
 			current: {
-				layout_end_page: { modelo: 2, subtitulo: true, foto: true, footage: true, pattern: true, foto_layer: 'apresentador', pattern_layer: NO },
+				layout_end_page: { modelo: 2, subtitulo: true, foto: true, footage: true, pattern: true, fundo: true, foto_layer: 'apresentador', pattern_layer: NO },
 				servico_end_page: { titulo: 'Jornal\nDas Dez', subtitulo: 'COM RENATA LO PRETE', formato: 4, semana: 2, mes: 1, dia: 10, hora: 22, min: 0, a_partir_das: false },
 				aparencia_end_page: { tema: 4, logo: '#141414', titulo: '#F2F2F2', subtitulo: '#F2F2F2', apoio: '#F2F2F2', horario: '#141414', horario_base: '#ECFF8C', footage: '#141414', pattern: '#141414', fundo: '#E53131' }
 			},

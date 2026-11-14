@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="7.0" ExtensionBundleId="com.promognews.cep" ExtensionBundleVersion="3.0.2" ExtensionBundleName="PROMO GNEWS"
+<ExtensionManifest Version="7.0" ExtensionBundleId="com.promognews.cep" ExtensionBundleVersion="3.0.3" ExtensionBundleName="PROMO GNEWS"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<ExtensionList>
-		<Extension Id="com.promognews.cep.panel" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.curves" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.search" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.templates" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.fonts" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.settings" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.tags" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.endpage" Version="3.0.2" />
-		<Extension Id="com.promognews.cep.labels" Version="3.0.2" />
+		<Extension Id="com.promognews.cep.panel" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.curves" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.search" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.templates" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.fonts" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.settings" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.tags" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.endpage" Version="3.0.3" />
+		<Extension Id="com.promognews.cep.labels" Version="3.0.3" />
 	</ExtensionList>
 
 	<ExecutionEnvironment>
@@ -71,7 +71,11 @@
 				<Lifecycle><AutoVisible>true</AutoVisible></Lifecycle>
 				<UI>
 					<Type>Modeless</Type>
-					<Geometry><Size><Width>320</Width><Height>450</Height></Size></Geometry>
+					<Geometry>
+						<Size><Width>320</Width><Height>450</Height></Size>
+						<MinSize><Width>300</Width><Height>400</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
+					</Geometry>
 				</UI>
 			</DispatchInfo>
 		</Extension>
@@ -93,6 +97,7 @@
 					<Geometry>
 						<Size><Width>320</Width><Height>460</Height></Size>
 						<MinSize><Width>260</Width><Height>300</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>
@@ -115,6 +120,7 @@
 					<Geometry>
 						<Size><Width>380</Width><Height>500</Height></Size>
 						<MinSize><Width>300</Width><Height>320</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>
@@ -137,6 +143,7 @@
 					<Geometry>
 						<Size><Width>340</Width><Height>480</Height></Size>
 						<MinSize><Width>280</Width><Height>300</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>
@@ -159,6 +166,7 @@
 					<Geometry>
 						<Size><Width>420</Width><Height>860</Height></Size>
 						<MinSize><Width>380</Width><Height>520</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>
@@ -181,6 +189,7 @@
 					<Geometry>
 						<Size><Width>320</Width><Height>520</Height></Size>
 						<MinSize><Width>280</Width><Height>320</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>
@@ -203,6 +212,7 @@
 					<Geometry>
 						<Size><Width>380</Width><Height>640</Height></Size>
 						<MinSize><Width>340</Width><Height>420</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>
@@ -225,6 +235,7 @@
 					<Geometry>
 						<Size><Width>360</Width><Height>470</Height></Size>
 						<MinSize><Width>320</Width><Height>420</Height></MinSize>
+						<MaxSize><Width>4000</Width><Height>4000</Height></MaxSize>
 					</Geometry>
 				</UI>
 			</DispatchInfo>

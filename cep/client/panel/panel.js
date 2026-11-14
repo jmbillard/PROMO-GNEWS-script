@@ -618,7 +618,7 @@
 	}, 60);
 	PGN.mock('links.get', function () {
 		return { data: {
-			sites: [{ id: 'od', name: 'OneDrive', glyph: 'OD' }, { id: 'tr', name: 'Trello promo', glyph: 'TR' }, { id: 'ap', name: 'Apontamento', glyph: 'AP' }, { id: 'pl', name: 'Planner', glyph: 'PL' }],
+			sites: [{ id: 'od', name: 'OneDrive', glyph: 'OD' }, { id: 'pl', name: 'Planner', glyph: 'PL' }],
 			dirs: [{ id: 'arte', name: 'PAM para arte', icon: 'up' }, { id: 'mag', name: 'PAM magazine', icon: 'slide' }, { id: 'hn', name: 'PAM hard news', icon: 'bolt' }, { id: 'uti', name: 'T: utilidades', icon: 'star' }, { id: 'pec', name: 'peças gráficas', icon: 'bars' }, { id: 'hoje', name: 'diários · hoje', icon: 'dot' }]
 		} };
 	}, 60);

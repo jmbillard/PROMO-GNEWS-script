@@ -1,4 +1,4 @@
-# PROMO GNEWS · v3 beta 2
+# PROMO GNEWS · v3 beta 3
 
 **pt-BR** ⚡ extensão do After Effects com as ferramentas da equipe de motion em PROMO na ![logo](images/GNEWS_LOGO%20dark.png)
 
@@ -7,7 +7,7 @@ Funciona no After Effects 2022 ou mais novo, no **Windows e no macOS**. É uma b
 ![abertura da barra](images/doc/gifs/abertura.gif)
 
 - [instalar](#instalar)
-- [novidades da v3 beta 2](#novidades-da-v3-beta-2)
+- [novidades](#novidades)
 - [primeiros passos](#primeiros-passos)
 - [seções e ferramentas](#seções-e-ferramentas)
 - [janelas](#janelas)
@@ -25,12 +25,43 @@ Funciona no After Effects 2022 ou mais novo, no **Windows e no macOS**. É uma b
 
 O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. Enquanto ela estiver instalada, a bolinha do indicador fica vermelha.
 
-> O código fica na rede. Para atualizar, basta trocar os arquivos lá e reabrir o painel; o instalador só precisa rodar de novo quando a equipe avisar (**na v3 beta 2, rode de novo**: a janela de curvas ficou mais alta).\
+> O código fica na rede. Para atualizar, basta trocar os arquivos lá e reabrir o painel; o instalador só precisa rodar de novo quando a equipe avisar (**na v3 beta 3, rode de novo**: as janelas passaram a aceitar qualquer tamanho).\
 > Se algo parecer antigo, rode `tools/diagnostico.jsx` (*Run Script File…*): ele lista as cópias instaladas e aponta as desatualizadas.
 
 ---
 
-## novidades da v3 beta 2
+## novidades
+
+### v3 beta 3
+
+**Desempenho**
+- A extensão não consulta mais o After Effects o tempo todo: com o mouse fora da barra, quase nada roda sozinho.
+- As janelas abrem mais rápido: não conferem mais os arquivos na rede a cada abertura.
+- A lista de **templates** é lida com muito menos idas à rede e fica guardada por 10 minutos (o botão recarregar força uma leitura nova).
+- Com a rede fora do ar, as ferramentas não ficam tentando alcançar o servidor a cada clique.
+
+**Janelas**
+- Todas as janelas podem ser redimensionadas livremente, inclusive a de curvas.
+- Erros de carregamento aparecem no meio da janela, com **tentar de novo**.
+
+**End page**
+- Caixa **fundo** no layout: desligada, a end page sai sem fundo, em alpha.
+- Ao salvar um preset, a janela diz se ele foi para a pasta de templates da rede ou se ficou só neste computador.
+
+**Preferências**
+- A pasta de **templates** é editável.
+- **↑ salvar para todos** grava as siglas novas das pastas de organização como padrão da equipe.
+
+**Atalhos e pastas**
+- Trello e Apontamento saíram da lista padrão de atalhos.
+- PAM magazine aponta para `UPLOAD_PAM_MAGAZINE/01_ENTRADA`.
+- Um atalho para uma pasta que ainda não existe (a do dia, por exemplo) abre a pasta mais próxima.
+
+**Barra**
+- Ícone novo do **Randomizar layers**.
+- Barra baixa: rodapé numa linha só.
+
+### v3 beta 2
 
 **Curvas**
 - **Ao vivo (⚡):** com keyframes selecionados, eles acompanham a curva enquanto você mexe nas alças, nos sliders ou nos presets.
@@ -232,7 +263,7 @@ Atalhos padrão:
 
 | | grupo | abre |
 | :---: | --- | --- |
-| <img src="images/doc/icons/link-od.png" width="28"> <img src="images/doc/icons/link-tr.png" width="28"> <img src="images/doc/icons/link-ap.png" width="28"> <img src="images/doc/icons/link-pl.png" width="28"> | **sites** | OneDrive · Trello promo · Apontamento · Planner (no navegador) |
+| <img src="images/doc/icons/link-od.png" width="28"> <img src="images/doc/icons/link-pl.png" width="28"> | **sites** | OneDrive · Planner (no navegador) |
 | <img src="images/doc/icons/link-up.png" width="28"> <img src="images/doc/icons/link-slide.png" width="28"> | **PAM** | para arte · magazine (pastas definidas nas preferências) |
 | <img src="images/doc/icons/link-bolt.png" width="28"> <img src="images/doc/icons/link-star.png" width="28"> <img src="images/doc/icons/link-bars.png" width="28"> | **rede** | PAM hard news · T: utilidades · peças gráficas. Ficam apagados no modo home office. |
 | <img src="images/doc/icons/link-dot.png" width="28"> | **diários · hoje** | A pasta do dia, calculada automaticamente. |
@@ -373,10 +404,10 @@ Abra pelo botão **Presets de end page**, na seção Projeto.
 1. Escolha um **preset**. A prévia mostra a disposição:
    - **footage** — o retângulo escuro, no fundo;
    - **foto** — o quadrado claro, por cima.
-2. Escolha o modo (**simples** ou **completo**) e preencha os campos da assinatura (dia, hora…).
+2. Escolha o modo (**simples** ou **completo**) e preencha os campos da assinatura (dia, hora…). No modo completo, as caixas do layout ligam e desligam subtítulo, foto, footage, pattern e **fundo**. Com o fundo desligado, a end page sai sem fundo, em alpha, e a prévia mostra a grade de transparência.
 3. Para partir de uma end page pronta, selecione a comp dela e use o botão de **ler**: os campos se preenchem com os valores dela.
 4. Clique em **aplicar** com a end page selecionada.
-5. O botão de **salvar como preset** guarda a configuração atual para a equipe.
+5. O botão de **salvar como preset** guarda a configuração atual para a equipe, na pasta de templates da rede. Com a rede fora ou em home office, o preset fica só neste computador, e a janela avisa.
 
 <br clear="right">
 

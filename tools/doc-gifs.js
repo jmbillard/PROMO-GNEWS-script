@@ -236,7 +236,7 @@ const SCENES = {
 		for (const ch of 'MG') { await p.keyboard.type(ch); await p.waitForTimeout(180); }
 		await p.waitForTimeout(500);
 		// drag Planner to the top
-		const h = await center(p, '.lk[data-list="sites"][data-i="3"] .oh');
+		const h = await center(p, '.lk[data-list="sites"][data-i="1"] .oh');
 		const top = await center(p, '.lk[data-list="sites"][data-i="0"]');
 		m = await glide(p, m, h, 450);
 		await p.mouse.down();

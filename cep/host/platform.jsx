@@ -533,7 +533,14 @@ PGN.net.before = function (id, args) {
 			}
 		}
 		// mounted something | share was unavailable (Windows: may be back)...
-		if (changed || PGN.net.offline) PGN.net.refresh();
+		// offline: probing an unreachable server can block for seconds, and this runs before
+		// every tool that needs the network — try again at most every 30 s
+		var now = new Date().getTime();
+
+		if (changed || (PGN.net.offline && now - (PGN.net._probedAt || 0) > 30000)) {
+			PGN.net._probedAt = now;
+			PGN.net.refresh();
+		}
 	} catch (err) { }
 };
 
@@ -914,6 +921,16 @@ PGN_dropRemovedSubPaths();
 
 	templatesArchPath = JSONPrefsObj.folders.templatesArchPath;
 	PGN.cfg.loadOrg();
+
+	// PAM magazine: the upload folder is '01_ENTRADA' — whoever still has the old default
+	// saved follows the new one (a folder the user picked is left alone)
+	try {
+		if (JSONPrefsObj.folders.magazinePath == '//pamjb.servicos.corp.tvglobo.com.br/Arte_Ilha/UPLOAD_PAM_MAGAZINE') {
+			JSONPrefsObj.folders.magazinePath = defPrefsObj.folders.magazinePath;
+			magazinePath = PGN.net.local(defPrefsObj.folders.magazinePath);
+			savePrefs();
+		}
+	} catch (err) { }
 
 	var names = ['tAdd', 'hnPath', 'utiPath', 'promoInsPath', 'basesPath', 'promoArcPath', 'templatesArchPath', 'fontsArchPath'];
 

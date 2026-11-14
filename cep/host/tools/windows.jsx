@@ -305,15 +305,25 @@ PGN.tpl = {
 	},
 
 	// createHierarchy → flat list...
+	// one listing per folder: the template files and their companions (preview image, preview
+	// video, info text) all come from it. Asking the network 'does this file exist?' for each
+	// possible companion of each template made the window slow to open
 	walk: function (folder, rel, items) {
 		var files = folder.getFiles();
 
-		for (var n = 0; n < files.length; n++) {
+		if (files == null) return;
+		var byName = {};
+		var n;
+
+		for (n = 0; n < files.length; n++) {
+			if (files[n] instanceof File) byName[String(files[n].displayName).toLowerCase()] = files[n];
+		}
+		for (n = 0; n < files.length; n++) {
 			var f = files[n];
 			var name = f.displayName;
 
 			if (f instanceof Folder) {
-				if (f.getFiles().length > 0) PGN.tpl.walk(f, rel == '' ? name : rel + '/' + name, items);
+				PGN.tpl.walk(f, rel == '' ? name : rel + '/' + name, items);
 				continue;
 			}
 			var ext;
@@ -325,33 +335,30 @@ PGN.tpl = {
 			}
 			if (!PGN.win.inArray(PGN.tpl.fileFilter, ext)) continue;
 
-			var previewFile = new File(f.parent.fsName + '/' + name.replace(/\.[\w]+$/i, ' preview.png'));
+			var base = String(name).replace(/\.[\w]+$/i, '').toLowerCase();
+			var previewFile = byName[base + ' preview.png'] || null;
 			// a preview video next to the template: '<name> preview.mp4' (or .webm / .mov), or '<name>.mp4'
-			var videoFile = null;
-			var vNames = [' preview.mp4', ' preview.webm', ' preview.mov', '.mp4'];
-
-			for (var v = 0; v < vNames.length && videoFile == null; v++) {
-				var vf = new File(f.parent.fsName + '/' + name.replace(/\.[\w]+$/i, vNames[v]));
-
-				if (vf.exists) videoFile = vf;
-			}
-			var infoFile = new File(f.parent.fsName + '/' + name.replace(/\.[\w]+$/i, ' info.txt'));
+			var videoFile = byName[base + ' preview.mp4'] || byName[base + ' preview.webm'] || byName[base + ' preview.mov'] || byName[base + '.mp4'] || null;
+			var infoFile = byName[base + ' info.txt'] || null;
 			var info = null;
 
-			if (infoFile.exists) {
+			if (infoFile != null) {
 				try {
 					info = readFileContent(infoFile);
 				} catch (err) { }
 			}
+			var made = f.created;
+
 			items.push({
 				path: f.fsName,
 				name: deleteFileExt(name),
 				fileName: name,
 				folder: rel,
 				ext: ext,
-				preview: previewFile.exists ? previewFile.fsName : null,
+				preview: previewFile != null ? previewFile.fsName : null,
 				video: videoFile != null ? videoFile.fsName : null,
-				updated: PGN.win.dateStr(f.created),
+				updated: PGN.win.dateStr(made),
+				made: made != null ? made.getTime() : 0,
 				displayPath: decodeURI(f.fullName),
 				info: info
 			});
@@ -365,9 +372,7 @@ PGN.tpl = {
 		if (templatesFolder.exists) PGN.tpl.walk(templatesFolder, '', items);
 
 		for (var i = 0; i < items.length; i++) {
-			var d = new File(items[i].path).created;
-
-			if (d != null && (newest == null || d.getTime() > newest.getTime())) newest = d;
+			if (items[i].made && (newest == null || items[i].made > newest.getTime())) newest = new Date(items[i].made);
 		}
 		return {
 			root: templatesFolder.fsName,
@@ -381,10 +386,19 @@ PGN.tpl = {
 // opening the templates window (importAetBtn) + refreshBtn...
 PGN.register('tpl.list', function (args) {
 	PGN.win.netFail();
+
+	// the listing walks the whole templates folder on the network: kept for 10 minutes
+	// (the window's reload button asks for a fresh one; download and a new folder renew it)
+	var c = PGN.tpl._cache;
+
+	if (!args.fresh && c && c.root == templatesFolder.fsName && c.data.items.length && new Date().getTime() - c.at < 600000) {
+		return { msg: PGN.n(c.data.items.length, 'template'), data: c.data };
+	}
 	PGN.tpl.ensure();
 
 	var data = PGN.tpl.list();
 
+	PGN.tpl._cache = { at: new Date().getTime(), root: templatesFolder.fsName, data: data };
 	return { msg: PGN.n(data.items.length, 'template'), data: data };
 });
 
@@ -413,6 +427,8 @@ PGN.register('tpl.download', function (args) {
 	PGN.tpl.download();
 
 	var data = PGN.tpl.list();
+
+	PGN.tpl._cache = { at: new Date().getTime(), root: templatesFolder.fsName, data: data };
 
 	return { msg: 'Templates atualizados', data: data };
 });

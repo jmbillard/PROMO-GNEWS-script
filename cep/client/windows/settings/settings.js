@@ -525,7 +525,7 @@
 
 	// 'atalhos' (browser preview)
 	var LINKS = {
-		sites: [{ id: 'od', name: 'OneDrive', url: 'https://tvglobocorp-my.sharepoint.com/', glyph: 'OD' }, { id: 'tr', name: 'Trello promo', url: 'https://trello.com/promo126/home', glyph: 'TR' }, { id: 'ap', name: 'Apontamento', url: 'https://gglobo-pea-hdg-prd.web.app/#card_view', glyph: 'AP' }, { id: 'pl', name: 'Planner', url: 'https://tasks.office.com/…/Planner', glyph: 'PL' }],
+		sites: [{ id: 'od', name: 'OneDrive', url: 'https://tvglobocorp-my.sharepoint.com/', glyph: 'OD' }, { id: 'pl', name: 'Planner', url: 'https://tasks.office.com/…/Planner', glyph: 'PL' }],
 		dirs: [{ id: 'arte', name: 'PAM para arte', path: '@artePath', shown: '//pamjb/…/PARA_ARTE', icon: 'up' }, { id: 'mag', name: 'PAM magazine', path: '@magazinePath', shown: '//pamjb/…/MAGAZINE', icon: 'slide' }, { id: 'hn', name: 'PAM hard news', path: '@hnPath', shown: '//pamjb/…/01_ENTRADA', net: true, icon: 'bolt' }, { id: 'uti', name: 'T: utilidades', path: '@utiPath', shown: 'T:/UTILIDADES', net: true, icon: 'star' }, { id: 'pec', name: 'peças gráficas', path: '@basesPath', shown: 'T:/…/_PECAS_GRAFICAS', net: true, icon: 'bars' }, { id: 'hoje', name: 'diários · hoje', path: '@hoje', shown: 'pasta do dia (automático)', net: true, auto: true, icon: 'dot' }]
 	};
 	PGN.mock('links.get', function () { return { data: JSON.parse(JSON.stringify(LINKS)) }; }, 120);
@@ -534,7 +534,7 @@
 	PGN.mock('links.pick', function () { return { data: { path: '/Users/voce/Desktop/projetos' } }; }, 200);
 
 	PGN.mock('prefs.get', function () {
-		return { data: { version: 'v3 beta 2', userPrefix: 'JMB', selection: { nullType: 0, adjType: 1, projectMode: 0 }, orgFolders: true, ignoreMissing: false, saveAsV22: true, homeOffice: false, hardNews: false, showLabels: true, devMode: false, folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE', artePath: '//pamjb/PARA_ARTE', templatesArchPath: '//egcdesign01/cdesign/JORNALISMO/GLOBONEWS/PROMO/TEMPLATES', promoSubPath: Object.assign({}, MOCK_ORG, { JDE: 'JORNAIS/jornal das 10', XYZ: 'CANAL/especiais' }) }, defaults: { folders: { promoSubPath: MOCK_ORG } }, layerTypes: ['shape layer', 'solid layer'], projectModes: ['PROMO', 'custom'] } };
+		return { data: { version: 'v3 beta 3', userPrefix: 'JMB', selection: { nullType: 0, adjType: 1, projectMode: 0 }, orgFolders: true, ignoreMissing: false, saveAsV22: true, homeOffice: false, hardNews: false, showLabels: true, devMode: false, folders: { projPath: '~/Desktop', magazinePath: '//pamjb/UPLOAD_PAM_MAGAZINE/01_ENTRADA', artePath: '//pamjb/PARA_ARTE', templatesArchPath: '//egcdesign01/cdesign/JORNALISMO/GLOBONEWS/PROMO/TEMPLATES', promoSubPath: Object.assign({}, MOCK_ORG, { JDE: 'JORNAIS/jornal das 10', XYZ: 'CANAL/especiais' }) }, defaults: { folders: { promoSubPath: MOCK_ORG } }, layerTypes: ['shape layer', 'solid layer'], projectModes: ['PROMO', 'custom'] } };
 	}, 200);
 	PGN.mock('prefs.set', function () { return { msg: 'Preferências salvas' }; }, 150);
 
