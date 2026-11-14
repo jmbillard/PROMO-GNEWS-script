@@ -45,7 +45,7 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 - Erros de carregamento aparecem no meio da janela, com **tentar de novo**.
 
 **End page**
-- Caixa **fundo** no layout: desligada, a end page sai sem fundo, em alpha.
+- Caixa **fundo** no layout: desligada, a end page sai sem fundo, em alpha (o pattern e o recorte do footage saem junto).
 - Ao salvar um preset, a janela diz se ele foi para a pasta de templates da rede ou se ficou só neste computador.
 
 **Preferências**
@@ -404,7 +404,7 @@ Abra pelo botão **Presets de end page**, na seção Projeto.
 1. Escolha um **preset**. A prévia mostra a disposição:
    - **footage** — o retângulo escuro, no fundo;
    - **foto** — o quadrado claro, por cima.
-2. Escolha o modo (**simples** ou **completo**) e preencha os campos da assinatura (dia, hora…). No modo completo, as caixas do layout ligam e desligam subtítulo, foto, footage, pattern e **fundo**. Com o fundo desligado, a end page sai sem fundo, em alpha, e a prévia mostra a grade de transparência.
+2. Escolha o modo (**simples** ou **completo**) e preencha os campos da assinatura (dia, hora…). No modo completo, as caixas do layout ligam e desligam subtítulo, foto, footage, pattern e **fundo**. Com o fundo desligado, a end page sai sem fundo, em alpha: o pattern e o recorte do footage saem junto, a caixa **pattern** fica desabilitada e a prévia mostra a grade de transparência.
 3. Para partir de uma end page pronta, selecione a comp dela e use o botão de **ler**: os campos se preenchem com os valores dela.
 4. Clique em **aplicar** com a end page selecionada.
 5. O botão de **salvar como preset** guarda a configuração atual para a equipe, na pasta de templates da rede. Com a rede fora ou em home office, o preset fica só neste computador, e a janela avisa.

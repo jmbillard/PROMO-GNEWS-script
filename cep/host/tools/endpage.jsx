@@ -467,6 +467,9 @@ PGN.endp = {
 		}
 	},
 
+	// layers hidden when the end page has no background ('fundo' off)
+	bgLayers: ['comp_pattern', 'matte_footage animation', 'adj_footage anim', 'adj_footage cc'],
+
 	// the background of the end page is a 'Solid Composite' effect named 'bg' (on the layer
 	// 'adj_footage anim' in the templates): off → no background, the end page comes out in alpha
 	bgFx: function (comp) {
@@ -495,7 +498,10 @@ PGN.endp = {
 		var obj = PGN.endp.normalize(PGN.endp.buildFxObj(comp));
 		var bg = PGN.endp.bgFx(comp);
 
-		if (bg != null) obj.layout_end_page.fundo = bg.enabled !== false;
+		var bgLayer = PGN.endp.layer(comp, 'adj_footage anim');
+
+		if (bgLayer != null) obj.layout_end_page.fundo = bgLayer.enabled !== false && (bg == null || bg.enabled !== false);
+		else if (bg != null) obj.layout_end_page.fundo = bg.enabled !== false;
 		var pat = PGN.endp.enabledLayer(comp, 'comp_pattern', false);
 		var foto = PGN.endp.enabledLayer(comp, 'comp_img apresentador', true);
 
@@ -529,11 +535,25 @@ PGN.endp = {
 		PGN.endp.setFx(comp, 'layout end page', 'pattern', lay.pattern);
 		PGN.endp.setFx(comp, 'servico end page', 'a partir das', obj.servico_end_page.a_partir_das);
 
-		// 'fundo' off: the background effect is disabled (alpha)
+		// 'fundo' off: the layers that make the background are hidden (alpha).
+		// the 'bg' effect stays on: it sits on one of those layers
+		var on = lay.fundo !== false;
 		var bg = PGN.endp.bgFx(comp);
 
+		for (var i = 0; i < PGN.endp.bgLayers.length; i++) {
+			var bl = PGN.endp.layer(comp, PGN.endp.bgLayers[i]);
+
+			if (bl == null) continue;
+			try {
+				var wasLocked = bl.locked;
+
+				if (wasLocked) bl.locked = false;
+				bl.enabled = on;
+				if (wasLocked) bl.locked = true;
+			} catch (err) { }
+		}
 		if (bg != null) {
-			try { bg.enabled = lay.fundo !== false; } catch (err) { }
+			try { bg.enabled = true; } catch (err) { }
 		}
 	},
 
