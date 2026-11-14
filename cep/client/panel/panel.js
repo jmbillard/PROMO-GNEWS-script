@@ -26,7 +26,6 @@
 	var state = {
 		open: UI.store('open') || null,
 		toggles: UI.store('toggles') || { keys: false, exp: false },
-		status: null,          // { comp, layers } from host polling
 		busy: null,            // running tool id
 		labels: UI.store('labels') !== false,
 		dev: !!UI.store('dev'),
@@ -35,7 +34,7 @@
 	};
 
 	var tileById = {};
-	var selBtn, selTimer;
+	var selBtn;
 
 	/* ---------- layout ---------- */
 
@@ -93,7 +92,6 @@
 			nav.appendChild(block);
 		});
 		metrics();
-		refreshGates();
 	}
 
 	function buildGrid(sec) {
@@ -227,7 +225,7 @@
 			onclick: function (e) {
 				e.stopPropagation();
 				u.remove();
-				PGN.run('job.undo', {}).then(function (r) { feedback(r.ok ? r.msg : r.error, r.ok); pollStatus(); });
+				PGN.run('job.undo', {}).then(function (r) { feedback(r.ok ? r.msg : r.error, r.ok); });
 			}
 		}, UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3')]));
 		el.appendChild(u);
@@ -293,20 +291,6 @@
 
 	/* ---------- running tools ---------- */
 
-	function gated(tool) {
-		var st = state.status;
-		if (!st || !tool.sel) return false;
-		if (tool.sel === 'comp') return !st.comp;
-		return !st.comp || st.layers < (tool.min || 1);
-	}
-
-	function refreshGates() {
-		Object.keys(tileById).forEach(function (id) {
-			var t = tileById[id];
-			t.el.classList.toggle('is-off', gated(t.tool));
-		});
-	}
-
 	function activate(tool, sec, alt) {
 		if (tool.toggle) {
 			state.toggles[tool.toggle] = !state.toggles[tool.toggle];
@@ -324,11 +308,6 @@
 		if (state.busy) return;
 
 		var entry = tileById[tool.id];
-		if (gated(tool)) {
-			shake(entry.el);
-			nudgeSel();
-			return;
-		}
 		var args = tool.args ? tool.args(state) : {};
 		if (alt) args.alt = true;
 		if (tool.job) { runJob(tool, sec, entry, args); return; }
@@ -373,7 +352,6 @@
 			setTimeout(function () { entry.el.classList.remove('is-err'); }, 1400);
 			feedback(res.error, false);
 		}
-		pollStatus();
 	}
 
 	function shake(el) {
@@ -411,48 +389,23 @@
 		}, ok ? 1600 : 4000);
 	}
 
-	function nudgeSel() {
-		selBtn.classList.remove('nudge');
-		void selBtn.offsetWidth;
-		selBtn.classList.add('nudge');
-		setTimeout(function () { selBtn.classList.remove('nudge'); }, 450);
-	}
-
+	// the indicator is only a dot: green = all fine, red = a warning (network away, old bar installed).
+	// the selection is not followed: each tool reads it when it runs
 	function renderSel() {
-		var st = state.status;
+		var warn = state.warn || [];
 		selBtn.classList.remove('err');
 		selBtn.textContent = '';
-		var n = st ? st.layers : 0;
-		selBtn.appendChild(h('span.dot' + (state.netOff ? '.off' : (st && st.comp && n > 0 ? '.live' : ''))));
-		selBtn.appendChild(h('span', { text: st && st.comp ? String(n) : '–' }));
-		// the tooltip: the selection, then each warning — what happened on the first line,
+		selBtn.appendChild(h('span.dot' + (warn.length ? '.off' : '.ok')));
+		// the tooltip: each warning — what happened on the first line,
 		// the details and what to do below ('·' parts become lines)
-		var tip = st && st.comp ? st.comp + ' · ' + n + (n === 1 ? ' layer' : ' layers') : 'nenhuma comp ativa';
-		(state.warn || []).forEach(function (w) {
+		var tip = warn.length ? '' : 'tudo certo';
+		warn.forEach(function (w) {
 			var parts = String(w).split(/\s*·\s*|\n/).filter(Boolean);
-			tip += '\n\n⚠ ' + parts[0] + parts.slice(1).map(function (x) { return '\n› ' + x; }).join('');
+			tip += (tip ? '\n\n' : '') + '⚠ ' + parts[0] + parts.slice(1).map(function (x) { return '\n› ' + x; }).join('');
 		});
 		selBtn.title = tip;
-		selBtn.setAttribute('aria-label', 'Seleção atual' + (state.warn && state.warn.length ? ' · ' + state.warn.length + (state.warn.length === 1 ? ' aviso' : ' avisos') : ''));
-	}
-
-	// one status request at a time: while the host is busy (a download, a folder dialog,
-	// a long search in another window) the polls don't pile up behind it
-	var polling = false, lastPoll = 0;
-	function pollStatus() {
-		if (polling) return;
-		polling = true;
-		lastPoll = Date.now();
-		PGN.status().then(function (st) {
-			polling = false;
-			if (!st) return;
-			var changed = !state.status || st.comp !== state.status.comp || st.layers !== state.status.layers;
-			state.status = st;
-			if (changed) {
-				refreshGates();
-				if (!flashTimer || !selBtn.querySelector('svg, span:only-child')) renderSel();
-			}
-		}, function () { polling = false; });
+		selBtn.removeAttribute('data-tip');
+		selBtn.setAttribute('aria-label', warn.length ? warn.length + (warn.length === 1 ? ' aviso' : ' avisos') : 'Sem avisos');
 	}
 
 	/* ---------- footer ---------- */
@@ -468,7 +421,7 @@
 			}, icon(f.d, f.a, f.anim));
 			foot.appendChild(b);
 		});
-		selBtn = h('button.sel', { 'aria-label': 'Seleção atual', onclick: pollStatus });
+		selBtn = h('button.sel', { 'aria-label': 'Sem avisos' });
 		foot.appendChild(selBtn);
 		renderSel();
 	}
@@ -519,7 +472,6 @@
 		e.preventDefault();
 		this.scrollLeft += e.deltaY;
 	}, { passive: false });
-	document.addEventListener('visibilitychange', function () { if (!document.hidden) pollStatus(); });
 	document.getElementById('logo').addEventListener('click', function () { PGN.openURL('https://github.com/jmbillard/PROMO-GNEWS-script'); });
 
 	/* ---------- GNEWS logo + opening animation ---------- */
@@ -685,16 +637,4 @@
 			render();
 		}
 	});
-
-
-	// the selection is asked to After Effects (its UI thread answers): often while the mouse
-	// is over the bar, seldom while it is away working in the timeline, and right away when
-	// it comes back — so the tools are up to date before the click
-	var POLL_HERE = 1500, POLL_AWAY = 6000;
-	pollStatus();
-	selTimer = setInterval(function () {
-		if (document.hidden || state.busy) return;
-		if (Date.now() - lastPoll >= (UI.here() ? POLL_HERE : POLL_AWAY)) pollStatus();
-	}, 500);
-	UI.onHere(function (v) { if (v && !document.hidden && !state.busy && Date.now() - lastPoll > 300) pollStatus(); });
 })();

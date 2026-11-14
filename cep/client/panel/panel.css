@@ -74,12 +74,12 @@
 footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px 10px; border-top: 1px solid var(--line); }
 .sel { width: 36px; height: 36px; border-radius: var(--r); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 10px var(--mono); color: #B4B4BC; transition: background .2s, color .2s; }
 .sel:hover { background: #2A2A2F; }
-.sel.nudge { animation: nope .42s ease; background: rgba(229, 47, 46, .2); color: #FFB3B2; }
 .sel.err { background: rgba(255, 107, 107, .16); color: #FFB3B2; }
 .sel .dot { width: 8px; height: 8px; border-radius: 50%; position: relative; background: #55555E; transition: background .3s; }
 .sel .dot.live { background: var(--ok); }
 /* network share offline (message in the tooltip) */
 .sel .dot.off { background: #FF4D4D; }
+.sel .dot.ok { background: var(--ok); }
 .sel .dot.live::after { content: ''; position: absolute; left: -4px; top: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 1.5px solid var(--ok); animation: ping 1.8s ease-out 2; opacity: 0; }
 .sel svg { width: 16px; height: 16px; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
 .sel svg path { stroke-dasharray: 24; animation: draw .4s ease backwards; }

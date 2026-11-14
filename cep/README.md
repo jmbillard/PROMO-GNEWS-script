@@ -83,12 +83,12 @@ As páginas também abrem direto no navegador, sem o After Effects. Nesse caso, 
 - **Tarefas longas** (organizar, coletar arquivos/fontes, batch): rodam em passos curtos (`PGN.registerJob`). O painel chama um passo de cada vez e anima o progresso entre as chamadas:
   - barra fina sob o ícone do botão;
   - linha no rodapé;
-  - porcentagem no indicador de seleção;
+  - porcentagem no lugar da bolinha de avisos;
   - etapa em texto, quando o painel tem espaço.
 
   Clicar de novo no botão cancela a tarefa. Cada passo que muda o projeto é um grupo de desfazer: o host guarda a lista (`PGN.lastJobUndo`), e o **↶** que aparece no botão chama `job.undo` para desfazer todos. Cancelar e desfazer procuram o menu como "Undo …" e "Desfazer …".
 - **Botão direito:** chama a variante da ferramenta (`args.alt`). Em organizar projeto, abre a janela de tags. Em randomizar, sequenciar e quebrar linhas, abre um ajuste de valor dentro da sanfona.
-- **Seleção:** o painel consulta a seleção (`PGN.status`), uma consulta por vez, e apaga as ferramentas que precisam de comp ou de layers. A cada 1,5 s com o mouse sobre a barra, a cada 6 s com ele fora, e na hora em que o mouse volta.
+- **Seleção:** o painel não acompanha a seleção. Cada ferramenta lê a seleção no host quando roda e falha com a mensagem do que falta. O indicador do rodapé é só a bolinha de avisos (verde, ou vermelha com os avisos no tooltip).
 - **Desempenho:** cada chamada ao host roda na thread da interface do After Effects, e uma animação em laço mantém o navegador embutido redesenhando. Por isso nada roda sozinho sem necessidade: `UI.here()` / `UI.onHere()` (em `shared/ui.js`) dizem se o mouse está sobre o painel ou a janela, e `html.away` marca isso para o CSS. Consultas periódicas e animações em laço devem respeitar os dois.
 - **Janelas:** são extensões `Modeless`. Elas reusam o mesmo engine do host e avisam o painel por eventos CEP (`com.promognews.toast`, `com.promognews.prefs`).
 - **Dev:** a seção *Dev* aparece quando *ferramentas de dev* está ligado nas preferências.

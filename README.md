@@ -23,7 +23,7 @@ Funciona no After Effects 2022 ou mais novo, no **Windows e no macOS**. É uma b
 3. Se tudo estiver ok, o instalador abre direto em **instalar** / **atualizar**. Se faltar algo, ele mostra o quê e onde procurou. Se a pasta não for encontrada, use **› escolher a pasta do PROMO GNEWS…**.
 4. Reinicie o After Effects e abra *Window › Extensions › PROMO GNEWS*.
 
-O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. Enquanto ela estiver instalada, a bolinha do indicador fica vermelha.
+O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. Enquanto ela estiver instalada, a bolinha de avisos fica vermelha.
 
 > O código fica na rede. Para atualizar, basta trocar os arquivos lá e reabrir o painel; o instalador só precisa rodar de novo quando a equipe avisar (**na v3 beta 3, rode de novo**: as janelas passaram a aceitar qualquer tamanho).\
 > Se algo parecer antigo, rode `tools/diagnostico.jsx` (*Run Script File…*): ele lista as cópias instaladas e aponta as desatualizadas.
@@ -35,7 +35,7 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 ### v3 beta 3
 
 **Desempenho**
-- A extensão não consulta mais o After Effects o tempo todo: com o mouse fora da barra, quase nada roda sozinho.
+- A barra não acompanha mais a seleção do After Effects: nada é consultado sozinho. O indicador virou só a **bolinha de avisos**, e cada ferramenta lê a seleção na hora do clique.
 - As janelas abrem mais rápido: não conferem mais os arquivos na rede a cada abertura.
 - A lista de **templates** é lida com muito menos idas à rede e fica guardada por 10 minutos (o botão recarregar força uma leitura nova).
 - Com a rede fora do ar, as ferramentas não ficam tentando alcançar o servidor a cada clique.
@@ -72,7 +72,7 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 **Barra**
 - O progresso das tarefas longas virou uma **barra fina sob o ícone**.
 - Ao terminar uma tarefa longa, o **↶** no botão desfaz a tarefa inteira.
-- O tooltip do **indicador de seleção** explica cada aviso e o que fazer.
+- O tooltip da **bolinha de avisos** explica cada aviso e o que fazer.
 - Ícones novos para a **logo estática** e a **logo animada**.
 - Tooltips de nomes longos não somem mais na barra estreita.
 
@@ -114,16 +114,18 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 **5. Acompanhe as tarefas longas.** Organizar, salvar, coletar e o lote mostram o progresso:
 - numa barra fina sob o ícone do botão, na cor da seção;
 - numa linha no rodapé;
-- na porcentagem do indicador de seleção.
+- na porcentagem, no lugar da bolinha de avisos.
 
 Clique no botão de novo para **cancelar**. Ao terminar, um **↶** aparece no canto do botão por alguns segundos: ele desfaz a tarefa inteira de uma vez (o Ctrl/Cmd+Z desfaz só a última parte dela).
 
 <br clear="right">
 
-**Indicador de seleção** (canto da barra):
-- mostra quantos layers estão selecionados;
-- fica verde quando há uma comp ativa;
-- a **bolinha vermelha** avisa que a rede está fora ou que a barra antiga ainda está instalada. Pare o mouse sobre o indicador: o tooltip mostra cada aviso (⚠), o detalhe e o que fazer.
+**Bolinha de avisos** (canto da barra):
+- **verde:** tudo certo;
+- **vermelha:** a rede está fora ou a barra antiga ainda está instalada. Pare o mouse sobre ela: o tooltip mostra cada aviso (⚠), o detalhe e o que fazer;
+- depois de cada ferramenta, ela vira por um instante o ✓ ou o ! do resultado.
+
+A barra não acompanha a seleção do After Effects: cada ferramenta lê a seleção na hora do clique e avisa o que falta.
 
 **Formato da barra.** Redimensione o painel e o layout acompanha:
 
