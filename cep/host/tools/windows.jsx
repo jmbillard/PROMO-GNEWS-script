@@ -788,7 +788,7 @@ PGN.register('prefs.publishOrgFolders', function (args) {
 		fresh[k] = mine[k];
 		count++;
 	}
-	if (count == 0) return { msg: 'nenhuma pasta nova para enviar', data: { sent: 0, promoSubPath: PGN.win.clone(mine), defaults: PGN.win.clone(defs) } };
+	if (count == 0) return { msg: 'nenhuma pasta nova para salvar', data: { sent: 0, promoSubPath: PGN.win.clone(mine), defaults: PGN.win.clone(defs) } };
 
 	var f = PGN.cfg.orgFile();
 	var shared = PGN.cfg.readOrg(); // what others sent meanwhile is kept
@@ -805,7 +805,7 @@ PGN.register('prefs.publishOrgFolders', function (args) {
 		if (fresh.hasOwnProperty(s)) defs[s] = fresh[s];
 	}
 	return {
-		msg: PGN.n(count, 'pasta enviada', 'pastas enviadas') + ' para a config geral',
+		msg: PGN.n(count, 'pasta salva', 'pastas salvas') + ' para todos',
 		data: { sent: count, promoSubPath: PGN.win.clone(JSONPrefsObj.folders.promoSubPath), defaults: PGN.win.clone(defs) }
 	};
 });

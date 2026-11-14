@@ -327,17 +327,17 @@
 			tree.scrollTop = tree.scrollHeight;
 			mark();
 		});
-		// ↑ sends the siglas this user created to the shared settings ('config geral'): they
+		// ↑ 'salvar para todos': sends the siglas this user created to the shared settings ('config geral'): they
 		// become defaults for everybody. Two clicks, since it changes what the others see
-		var rst = h('button.rst', { title: 'enviar as pastas novas para a config geral\n(passam a ser padrão para todos)', 'aria-label': 'Enviar as pastas novas para a config geral' }, [UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 19V5M6 11l6-6 6 6')]), h('span', { text: 'enviar' })]);
+		var rst = h('button.rst', { title: 'salvar as pastas novas para todos\n(passam a ser padrão da equipe)', 'aria-label': 'Salvar as pastas novas para todos' }, [UI.svg('0 0 24 24', { 'aria-hidden': 'true' }, [UI.path('M12 19V5M6 11l6-6 6 6')]), h('span', { text: 'salvar para todos' })]);
 		var armT;
 		rst.addEventListener('click', function () {
 			if (!rst.classList.contains('arm')) {
-				rst.classList.add('arm'); rst.lastChild.textContent = 'enviar para todos?';
-				armT = setTimeout(function () { rst.classList.remove('arm'); rst.lastChild.textContent = 'enviar'; }, 3000);
+				rst.classList.add('arm'); rst.lastChild.textContent = 'confirmar?';
+				armT = setTimeout(function () { rst.classList.remove('arm'); rst.lastChild.textContent = 'salvar para todos'; }, 3000);
 				return;
 			}
-			clearTimeout(armT); rst.classList.remove('arm'); rst.lastChild.textContent = 'enviar';
+			clearTimeout(armT); rst.classList.remove('arm'); rst.lastChild.textContent = 'salvar para todos';
 			PGN.run('prefs.publishOrgFolders', {}).then(function (r) {
 				if (r.ok && r.data) {
 					if (r.data.defaults) { defs = r.data.defaults; if (P.defaults && P.defaults.folders) P.defaults.folders.promoSubPath = r.data.defaults; }
@@ -505,7 +505,7 @@
 	PGN.mock('prefs.publishOrgFolders', function () {
 		var mine = (P && P.folders && P.folders.promoSubPath) || {}, n = 0;
 		Object.keys(mine).forEach(function (k) { if (MOCK_ORG[k] == null) { MOCK_ORG[k] = mine[k]; n++; } });
-		return { msg: n ? n + (n === 1 ? ' pasta enviada' : ' pastas enviadas') + ' para a config geral' : 'nenhuma pasta nova para enviar', data: { sent: n, promoSubPath: Object.assign({}, mine), defaults: MOCK_ORG } };
+		return { msg: n ? n + (n === 1 ? ' pasta salva' : ' pastas salvas') + ' para todos' : 'nenhuma pasta nova para salvar', data: { sent: n, promoSubPath: Object.assign({}, mine), defaults: MOCK_ORG } };
 	}, 150);
 	// 'efeitos' (browser preview)
 	var FXL = [['Blur & Sharpen', ['Camera Lens Blur:ADBE Camera Lens Blur', 'Compound Blur:ADBE Compound Blur', 'Gaussian Blur:ADBE Gaussian Blur 2', 'Directional Blur:ADBE Motion Blur', 'Radial Blur:ADBE Radial Blur']], ['Color Correction', ['Curves:ADBE CurvesCustom', 'Hue/Saturation:ADBE HUE SATURATION', 'Levels:ADBE Pro Levels2', 'Lumetri Color:ADBE Lumetri', 'Tint:ADBE Tint']], ['Generate', ['Fill:ADBE Fill', 'Gradient Ramp:ADBE Ramp', 'Stroke:ADBE Paint']], ['Noise & Grain', ['Add Grain:VISINF Grain Implant', 'Fractal Noise:ADBE Fractal Noise']], ['Perspective', ['3D Glasses:ADBE 3D Glasses2', 'Drop Shadow:ADBE Drop Shadow']], ['Stylize', ['Glow:ADBE Glo2', 'Mosaic:ADBE Mosaic']]];
