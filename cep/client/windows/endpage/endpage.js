@@ -21,8 +21,8 @@
 	// approximate theme colors, only for the schematic preview (the template computes the real ones)
 	var THEMES = {
 		1: { name: 'claro', fundo: '#F2F2F2', titulo: '#141414', subtitulo: '#141414', horario_base: '#ECFF8C', horario: '#141414', logo: '#E53131', pattern: '#B2B2B2', footage: '#E53131' },
-		2: { name: 'cinza', fundo: '#4A4A4A', titulo: '#141414', subtitulo: '#141414', horario_base: '#ECFF8C', horario: '#141414', logo: '#F2F2F2', pattern: '#F2F2F2', footage: '#E53131' },
-		3: { name: 'escuro', fundo: '#141414', titulo: '#F2F2F2', subtitulo: '#F2F2F2', horario_base: '#ECFF8C', horario: '#141414', logo: '#E53131', pattern: '#ECFF8C', footage: '#F2F2F2' },
+		2: { name: 'cinza', fundo: '#B2B2B2', titulo: '#141414', subtitulo: '#141414', horario_base: '#ECFF8C', horario: '#141414', logo: '#F2F2F2', pattern: '#F2F2F2', footage: '#E53131' },
+		3: { name: 'escuro', fundo: '#1F1C1C', titulo: '#F2F2F2', subtitulo: '#F2F2F2', horario_base: '#ECFF8C', horario: '#141414', logo: '#E53131', pattern: '#ECFF8C', footage: '#F2F2F2' },
 		4: { name: 'vermelho', fundo: '#E53131', titulo: '#F2F2F2', subtitulo: '#F2F2F2', horario_base: '#ECFF8C', horario: '#141414', logo: '#141414', pattern: '#141414', footage: '#141414' },
 		5: { name: 'livre' }
 	};
@@ -71,18 +71,18 @@
 		preview.classList.toggle('nobg', l.fundo === false);   // no background: alpha
 		preview.textContent = '';
 		UI.add(preview, [
-			l.pattern && modelo !== 3 && l.fundo !== false ? h('div.pv-pat') : null,
-			// as in the real end page: the footage is the dark rectangle on the right,
-			// the photo a light square on top of it
-			// (it is a cutout in the background, so without 'fundo' there is nothing to draw)
-			l.footage && modelo !== 2 && l.fundo !== false ? h('div.pv-foot') : null,
-			foto ? h('div.pv-foto') : null,
+			l.pattern && modelo !== 3 && l.fundo !== false ? h('div.pv-pat', null, [h('i'), h('i'), h('i')]) : null,
 			h('div.pv-logo', null, [h('i'), 'news']),
 			h('div.pv-txt', null, [
 				h('div.pv-t', { text: v.titulo || '' }),
 				l.subtitulo ? h('div.pv-s', { text: v.subtitulo || '' }) : null,
 				h('div.pv-h', { text: dateLine() })
 			]),
+			// as in the real end page: the footage is the white placeholder on the right, over the
+			// texts, and the photo a light square on top of it
+			// (it is a cutout in the background, so without 'fundo' there is nothing to draw)
+			l.footage && modelo !== 2 && l.fundo !== false ? h('div.pv-foot') : null,
+			foto ? h('div.pv-foto') : null,
 			h('span.pv-tag', { text: (['', 'livre', 'programa', 'jornal'][modelo] || '') + ' · ' + (th.name || '') })
 		]);
 	}

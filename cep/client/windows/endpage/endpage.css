@@ -1,7 +1,12 @@
 /* live preview (schematic, not the real template) */
 .preview { height: 132px; border-radius: var(--r-l); position: relative; overflow: hidden; background: var(--p-fundo, #E53131); transition: background .4s; flex: none; }
-.preview .pv-pat { position: absolute; inset: 0; opacity: .14; background-image: repeating-linear-gradient(135deg, var(--p-pattern) 0 2px, transparent 2px 12px); transition: opacity .3s; }
-.preview .pv-foot { position: absolute; left: 40%; right: 0; top: 14%; bottom: 12%; background: var(--p-footage); transition: opacity .3s, left .45s var(--spring-soft); }
+.preview .pv-pat { position: absolute; inset: 0; }
+/* the pattern of the template: circles that show above and below the footage */
+.preview .pv-pat i { position: absolute; width: 19%; aspect-ratio: 1 / 1; border-radius: 50%; background: var(--p-pattern); transition: background .3s; }
+.preview .pv-pat i:nth-child(1) { left: 48%; top: 0; transform: translateY(-50%); }
+.preview .pv-pat i:nth-child(2) { left: 56.5%; bottom: 0; transform: translateY(44%); }
+.preview .pv-pat i:nth-child(3) { left: 79%; bottom: 0; transform: translateY(40%); }
+.preview .pv-foot { position: absolute; left: 40%; right: 0; top: 14%; bottom: 12%; background: #FFFFFF; transition: opacity .3s, left .45s var(--spring-soft); }
 .preview .pv-foto { position: absolute; right: 12%; top: 0; height: 46%; aspect-ratio: 1 / 1; background: #A3A3A3; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); transition: opacity .3s; }
 .preview .pv-txt { position: absolute; left: 14px; right: 40%; top: 30px; bottom: 12px; display: flex; flex-direction: column; justify-content: center; gap: 4px; transition: right .45s var(--spring-soft); }
 .preview.nofoto .pv-txt { right: 14px; }
