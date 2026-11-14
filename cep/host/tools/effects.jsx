@@ -218,6 +218,10 @@
 	}
 
 	PGN.register('fx.list', function (args) {
+		// the installed effects don't change while After Effects is open: read once
+		// (walking app.effects takes a while, and the preferences ask at every opening)
+		if (PGN._fxList && PGN._fxList.length && !args.fresh) return { msg: '', data: { effects: PGN._fxList } };
+
 		var list = [];
 
 		for (var i = 0; i < app.effects.length; i++) {
@@ -230,6 +234,7 @@
 			if (a.c != b.c) return a.c < b.c ? -1 : 1;
 			return a.n.toLowerCase() < b.n.toLowerCase() ? -1 : 1;
 		});
+		if (list.length) PGN._fxList = list;
 		return { msg: '', data: { effects: list } };
 	});
 

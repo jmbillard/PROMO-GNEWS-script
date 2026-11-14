@@ -41,16 +41,25 @@
 		// the searchable list of installed effects (one <select>, upgraded to the shared dropdown)
 		function effectSelect(it, onPick) {
 			var s = h('select.fld.fxsel', { 'aria-label': 'Efeito' });
+			var known = it.m && byMatch[it.m];
+			// closed, the list holds only its own effect; the hundreds of installed ones go in
+			// when it is first opened (10 rows × every effect made the window slow to build)
 			s.appendChild(h('option', { value: '', text: 'escolher efeito…' }));
-			var cat = null, grp = null, found = false;
-			ALL.forEach(function (e) {
-				if (e.c !== cat) { cat = e.c; grp = document.createElement('optgroup'); grp.label = cat || 'outros'; s.appendChild(grp); }
-				var o = h('option', { value: e.m, text: e.n });
-				if (e.m === it.m) { o.selected = true; found = true; }
-				grp.appendChild(o);
-			});
-			// an effect not installed here (plugin missing): keep it in the list
-			if (it.m && !found) { var o = h('option', { value: it.m, text: (it.name || it.m) + ' (não instalado)' }); o.selected = true; s.appendChild(o); }
+			if (it.m) { var cur = h('option', { value: it.m, text: known ? known.n : (it.name || it.m) + ' (não instalado)' }); cur.selected = true; s.appendChild(cur); }
+			s._fill = function () {
+				var v = s.value;
+				s.textContent = '';
+				s.appendChild(h('option', { value: '', text: 'escolher efeito…' }));
+				var cat = null, grp = null, found = false;
+				ALL.forEach(function (e) {
+					if (e.c !== cat) { cat = e.c; grp = document.createElement('optgroup'); grp.label = cat || 'outros'; s.appendChild(grp); }
+					var o = h('option', { value: e.m, text: e.n });
+					if (e.m === v) { o.selected = true; found = true; }
+					grp.appendChild(o);
+				});
+				// an effect not installed here (plugin missing): keep it in the list
+				if (v && !found) { var o = h('option', { value: v, text: (it.name || v) + ' (não instalado)' }); o.selected = true; s.appendChild(o); }
+			};
 			s.addEventListener('change', function () { onPick(s.value); });
 			var wrap = h('div.sel-wrap.grow', null, s);
 			if (UI.dropdown) UI.dropdown(s);   // now, so '+ efeito' can open its search right away

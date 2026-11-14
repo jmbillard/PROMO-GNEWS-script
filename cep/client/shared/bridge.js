@@ -55,7 +55,13 @@
 		// and every retry re-evaluates the classic sources (and whatever they pop up)
 		if (hostFail && Date.now() - hostFail.at < 20000) return Promise.reject(hostFail.err);
 		var host = jsStr(hostFolder());
-		hostReady = evalScript('try{$.evalFile(new File(' + host + '+"/loader.jsx"));PGN_hostState(' + host + ')}catch(e){"erro: "+e}')
+		var full = function () { return evalScript('try{$.evalFile(new File(' + host + '+"/loader.jsx"));PGN_hostState(' + host + ')}catch(e){"erro: "+e}'); };
+		// a window (not the bar): the host checked in the last 10 minutes is used as it is —
+		// the full check lists the host folders on the network and reads every file's date
+		var isWindow = /\/windows\//.test(location.pathname);
+		var first = !isWindow ? full() : evalScript('typeof PGN_hostQuick=="function"?PGN_hostQuick(' + host + ',600000):""')
+			.then(function (state) { return state === 'ok' ? state : full(); });
+		hostReady = first
 			.then(function (state) {
 				if (state === 'load') return evalScript('try{$.evalFile(new File(' + host + '+"/index.jsx"));PGN_hostLoaded()}catch(e){"erro: "+e+" (linha "+e.line+")"}');
 				return state;

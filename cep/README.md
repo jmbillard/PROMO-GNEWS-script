@@ -70,7 +70,7 @@ No macOS, o carregador procura a pasta da rede também nos volumes com sufixo (`
 
 Depois de editar:
 - **HTML/CSS/JS:** feche e abra o painel.
-- **`.jsx`:** reabra o painel. O carregador percebe a mudança e recarrega o host, sem reiniciar o After Effects.
+- **`.jsx`:** reabra o **painel**. O carregador percebe a mudança e recarrega o host, sem reiniciar o After Effects. As janelas não conferem os arquivos a cada abertura: usam o host conferido nos últimos 10 minutos (`PGN_hostQuick`, em `host/loader.jsx`), porque listar as pastas na rede e ler a data de cada arquivo deixava a abertura lenta.
 - **`manifest.xml`:** reinicie o After Effects.
 
 Para depurar, abra o DevTools no Chrome em `localhost:8091` (painel) ou nas portas 8092 a 8099 (janelas). As portas estão em `cep/.debug`.

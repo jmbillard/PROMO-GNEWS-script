@@ -337,6 +337,8 @@
 		}
 		function openIt() {
 			if (box.classList.contains('open')) return;
+			// a long list filled only when first opened (sel._fill: see the effects editor)
+			if (typeof sel._fill === 'function') { var fill = sel._fill; sel._fill = null; fill(); }
 			label();
 			q.value = '';
 			build('');

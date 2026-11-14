@@ -55,8 +55,25 @@ function PGN_hostState(hostPath) {
 
 	$.global.PGN_PENDING_SIG = PGN_hostSignature(folder) + '|' + PGN_hostSignature(src);
 
-	if (typeof PGN != 'undefined' && PGN.ready && $.global.PGN_HOST_SIG === $.global.PGN_PENDING_SIG) return 'ok';
+	if (typeof PGN != 'undefined' && PGN.ready && $.global.PGN_HOST_SIG === $.global.PGN_PENDING_SIG) {
+		$.global.PGN_SIG_AT = new Date().getTime();
+		return 'ok';
+	}
 	return 'load';
+}
+
+// as janelas abrem toda hora: conferir os arquivos na rede a cada abertura (listar as pastas
+// e ler a data de cada um) custa caro. Se o host está carregado e foi conferido há pouco,
+// a janela usa o que está aí. O painel confere sempre (PGN_hostState): é reabrindo o painel
+// que uma atualização entra.
+function PGN_hostQuick(hostPath, maxAgeMs) {
+	try {
+		if (typeof PGN == 'undefined' || !PGN.ready || !$.global.PGN_HOST_SIG || !$.global.PGN_SIG_AT) return '';
+		if (new Folder(hostPath).fsName != $.global.PGN_HOST_PATH) return '';
+		if (new Date().getTime() - $.global.PGN_SIG_AT > maxAgeMs) return '';
+		return 'ok';
+	} catch (e) { }
+	return '';
 }
 
 // chamado logo depois de avaliar index.jsx...
@@ -65,5 +82,6 @@ function PGN_hostLoaded() {
 	if (typeof PGN == 'undefined' || !PGN.ready) return 'erro: o host não carregou (' + ($.global.PGN_HOST_PATH || '?') + ')';
 
 	$.global.PGN_HOST_SIG = $.global.PGN_PENDING_SIG;
+	$.global.PGN_SIG_AT = new Date().getTime();
 	return 'loaded';
 }
