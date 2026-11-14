@@ -258,11 +258,43 @@
 	function wrapOff(el, on) { if (!on) el.style.opacity = '.35'; return el; }
 
 	var dirty = false;
-	function changed() {
+	function changed(typing) {
 		dirty = true;
 		drawPreview();
+		if (live.on && S.target) { note.textContent = 'ao vivo'; if (typing) liveSoon(); else liveApply(); return; }
 		note.textContent = 'alterado · aplique para gravar na comp';
 	}
+
+	/* ---------- live (⚡): every change goes to the comp, without the apply button ----------
+	   one request at a time, always the latest values; the answer is not adopted
+	   (rebuilding the form would take the focus away from the field being typed) */
+	var live = { on: UI.store('endp.live') !== false, inflight: false, sent: '' };
+	function liveApply() {
+		if (!live.on || !S.target || !S.cur || S.busy) return;
+		var want = JSON.stringify([S.cur, S.livre]);
+		if (live.inflight || want === live.sent) return;
+		live.inflight = true;
+		live.sent = want;
+		$('live').classList.remove('sending'); void $('live').offsetWidth; $('live').classList.add('sending');
+		PGN.run('endp.apply', { preset: S.cur, livre: S.livre, live: true }).then(function (r) {
+			live.inflight = false;
+			if (!r.ok) { UI.note(note, r.error, false); return; }
+			if (JSON.stringify([S.cur, S.livre]) !== live.sent) { liveApply(); return; }
+			dirty = false;
+			note.textContent = 'ao vivo · ' + (r.msg || 'gravado na comp');
+		});
+	}
+	var liveSoon = UI.debounce(liveApply, 350);
+	function setLive(on) {
+		live.on = on;
+		UI.store('endp.live', on);
+		$('live').classList.toggle('on', on);
+		$('live').setAttribute('aria-pressed', String(on));
+		live.sent = '';
+		if (on && dirty) liveApply();
+	}
+	$('live').addEventListener('click', function () { setLive(!live.on); });
+	setLive(live.on);
 
 	/* ---------- mode ---------- */
 
@@ -325,7 +357,7 @@
 	$('preset').addEventListener('change', function () {
 		if (!this.value) return;
 		PGN.run('endp.load', { path: this.value }).then(function (r) {
-			if (r.ok && r.data && r.data.current) { adopt({ current: r.data.current }); changed(); note.textContent = 'preset ' + r.data.name + ' carregado · aplique para gravar'; }
+			if (r.ok && r.data && r.data.current) { adopt({ current: r.data.current }); changed(); if (!(live.on && S.target)) note.textContent = 'preset ' + r.data.name + ' carregado · aplique para gravar'; }
 			else if (r.ok) UI.note(note, 'preset sem dados', false);
 			else msg(r);
 		});
@@ -360,6 +392,8 @@
 			btn.disabled = false;
 			var pf = btn.querySelector('.pf'); if (pf) pf.remove();
 			if (r.ok && r.data) adopt(r.data);
+			if (r.ok) dirty = false;
+			live.sent = '';
 			msg(r);
 		});
 	});

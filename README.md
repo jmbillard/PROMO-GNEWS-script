@@ -46,6 +46,7 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 
 **End page**
 - Caixa **fundo** no layout: desligada, a end page sai sem fundo, em alpha (o pattern e o recorte do footage saem junto).
+- **Ao vivo (⚡):** ligado, cada mudança na janela vai direto para a end page selecionada, sem o **aplicar**. Desligado, vale o botão.
 - Ao salvar um preset, a janela diz se ele foi para a pasta de templates da rede ou se ficou só neste computador.
 
 **Preferências**
