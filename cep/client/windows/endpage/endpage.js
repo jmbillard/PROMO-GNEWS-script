@@ -20,9 +20,9 @@
 	var COLOR_KEYS = [['logo', 'logo'], ['titulo', 'título'], ['subtitulo', 'subtítulo'], ['apoio', 'apoio'], ['horario', 'horário'], ['horario_base', 'horário base'], ['footage', 'footage'], ['pattern', 'pattern'], ['fundo', 'fundo']];
 	// approximate theme colors, only for the schematic preview (the template computes the real ones)
 	var THEMES = {
-		1: { name: 'claro', fundo: '#F2F2F2', titulo: '#141414', subtitulo: '#4A4A4A', horario_base: '#E53131', horario: '#F2F2F2', logo: '#E53131', pattern: '#141414', footage: '#141414' },
-		2: { name: 'cinza', fundo: '#4A4A4A', titulo: '#F2F2F2', subtitulo: '#B2B2B2', horario_base: '#ECFF8C', horario: '#141414', logo: '#F2F2F2', pattern: '#F2F2F2', footage: '#F2F2F2' },
-		3: { name: 'escuro', fundo: '#141414', titulo: '#F2F2F2', subtitulo: '#B2B2B2', horario_base: '#E53131', horario: '#F2F2F2', logo: '#E53131', pattern: '#F2F2F2', footage: '#F2F2F2' },
+		1: { name: 'claro', fundo: '#F2F2F2', titulo: '#141414', subtitulo: '#141414', horario_base: '#ECFF8C', horario: '#141414', logo: '#E53131', pattern: '#B2B2B2', footage: '#E53131' },
+		2: { name: 'cinza', fundo: '#4A4A4A', titulo: '#141414', subtitulo: '#141414', horario_base: '#ECFF8C', horario: '#141414', logo: '#F2F2F2', pattern: '#F2F2F2', footage: '#E53131' },
+		3: { name: 'escuro', fundo: '#141414', titulo: '#F2F2F2', subtitulo: '#F2F2F2', horario_base: '#ECFF8C', horario: '#141414', logo: '#E53131', pattern: '#ECFF8C', footage: '#F2F2F2' },
 		4: { name: 'vermelho', fundo: '#E53131', titulo: '#F2F2F2', subtitulo: '#F2F2F2', horario_base: '#ECFF8C', horario: '#141414', logo: '#141414', pattern: '#141414', footage: '#141414' },
 		5: { name: 'livre' }
 	};
@@ -77,7 +77,7 @@
 			// (it is a cutout in the background, so without 'fundo' there is nothing to draw)
 			l.footage && modelo !== 2 && l.fundo !== false ? h('div.pv-foot') : null,
 			foto ? h('div.pv-foto') : null,
-			h('div.pv-logo'),
+			h('div.pv-logo', null, [h('i'), 'news']),
 			h('div.pv-txt', null, [
 				h('div.pv-t', { text: v.titulo || '' }),
 				l.subtitulo ? h('div.pv-s', { text: v.subtitulo || '' }) : null,
