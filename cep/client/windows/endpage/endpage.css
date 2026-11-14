@@ -94,5 +94,5 @@ textarea.fld { height: 52px; padding: 7px 10px; resize: none; line-height: 1.3; 
 
 /* live (bolt): on = accent; blinks once per update sent */
 #live svg { fill: none; }
-#live.on { color: var(--acc); }
+#live.on, #live.on:hover { background: var(--acc); color: var(--bg); }
 #live.sending svg { animation: pulse .3s ease; }
