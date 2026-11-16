@@ -829,16 +829,26 @@ PGN.register('prefs.publishOrgFolders', function (args) {
 
 	PGN.prefs.detach();
 	defs = defPrefsObj.folders.promoSubPath;
+
+	var kept = JSONPrefsObj.folders.keptSubPath;
+
 	for (var s in fresh) {
-		if (fresh.hasOwnProperty(s)) defs[s] = fresh[s];
+		if (!fresh.hasOwnProperty(s)) continue;
+		defs[s] = fresh[s];
+		// back in the team's list: no longer a sigla this user kept for themself
+		for (var q = kept instanceof Array ? kept.length - 1 : -1; q >= 0; q--) {
+			if (kept[q] == s) kept.splice(q, 1);
+		}
 	}
+	savePrefs();
 	return {
 		msg: PGN.n(count, 'pasta salva', 'pastas salvas') + ' para todos',
 		data: { sent: count, promoSubPath: PGN.win.clone(JSONPrefsObj.folders.promoSubPath), defaults: PGN.win.clone(defs) }
 	};
 });
 
-// × twice (org. folders): one sigla removed for everybody
+// × on a sigla of the team (org. folders): removed for everybody; it stays in this user's
+// list as their own (folders.keptSubPath), to be saved again (↑) or deleted for good (× again)
 PGN.register('prefs.unpublishOrgFolder', function (args) {
 	var key = String(args.key || '').toUpperCase();
 	var defs = defPrefsObj.folders.promoSubPath;
@@ -859,7 +869,9 @@ PGN.register('prefs.unpublishOrgFolder', function (args) {
 
 	var f = JSONPrefsObj.folders;
 
-	if (f.promoSubPath.hasOwnProperty(key)) delete f.promoSubPath[key];
+	if (!f.promoSubPath.hasOwnProperty(key)) f.promoSubPath[key] = PGN.cfg.orgGone[key];
+	if (!(f.keptSubPath instanceof Array)) f.keptSubPath = [];
+	if (!PGN.win.inArray(f.keptSubPath, key)) f.keptSubPath.push(key);
 	if (f.removedSubPath instanceof Array) {
 		for (var i = f.removedSubPath.length - 1; i >= 0; i--) {
 			if (f.removedSubPath[i] == key) f.removedSubPath.splice(i, 1);
@@ -868,7 +880,7 @@ PGN.register('prefs.unpublishOrgFolder', function (args) {
 	promoSubPath = f.promoSubPath;
 	savePrefs();
 
-	return { msg: 'sigla ' + key + ' exclu\u00EDda para todos', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defs) } };
+	return { msg: 'sigla ' + key + ' exclu\u00EDda para todos \u00B7 ficou s\u00F3 na sua lista', data: { promoSubPath: PGN.win.clone(promoSubPath), defaults: PGN.win.clone(defs) } };
 });
 
 // ↑ next to a network folder: this user's path becomes the default of everybody

@@ -230,30 +230,25 @@
 				saveNow().then(function () { return PGN.run('prefs.publishOrgFolders', { keys: [k] }); }).then(teamChanged);
 			} });
 			row.appendChild(up);
-			var del = x('remover linha', function () { });
-			var out = function () {
-				row.classList.add('out');
-				setTimeout(function () { row.remove(); mark(); }, 200);
-			};
-			UI.twoStep(del, {
-				label: 'para todos?',
-				// first click: out of this user's list. A sigla of the team stays on screen,
-				// struck out, while the second click can still remove it for everybody
-				onFirst: function () {
-					var k = sig.value.trim();
-					if (!k || defs[k] == null) { row.classList.add('out'); setTimeout(function () { row.remove(); changed(); }, 200); return false; }
-					row.classList.add('gone');
-					changed();
-				},
-				onExpire: out,
-				onConfirm: function () {
-					quietUntil = Date.now() + 1500;
-					PGN.run('prefs.unpublishOrgFolder', { key: sig.value.trim() }).then(function (r) { teamChanged(r); out(); });
-				}
+			// × on a sigla of the team: removed for everybody, and it stays here as this user's own
+			// (yellow) — ↑ gives it back to the team, × again deletes it for good.
+			// × on one that is only this user's: deleted
+			var del = x('apagar', function () {
+				var k = sig.value.trim();
+				if (!k || defs[k] == null) { row.classList.add('out'); setTimeout(function () { row.remove(); changed(); }, 200); return; }
+				if (del.disabled) return;
+				del.disabled = true;
+				quietUntil = Date.now() + 1500;
+				saveNow().then(function () { return PGN.run('prefs.unpublishOrgFolder', { key: k }); }).then(function (r) { del.disabled = false; teamChanged(r); tip(); });
 			});
-			del.title = 'remover linha\nnuma sigla da equipe, clique de novo em 4 s: excluir para todos';
+			var tip = function () {
+				var team = defs[sig.value.trim()] != null;
+				del.title = team ? 'excluir para todos\nfica na sua lista, em amarelo:\n↑ devolve para a equipe · × de novo apaga de vez' : 'apagar';
+				del.setAttribute('aria-label', team ? 'Excluir para todos' : 'Apagar');
+			};
+			tip();
 			row.appendChild(del);
-			sig.addEventListener('input', function () { sig.value = sig.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); changed(); });
+			sig.addEventListener('input', function () { sig.value = sig.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); tip(); changed(); });
 			pth.addEventListener('change', function () { pth.value = clean(pth.value); changed(); });
 			[sig, pth].forEach(function (i) { i.addEventListener('keydown', function (e) { if (e.key === 'Enter') i.blur(); }); });
 			handle.addEventListener('mousedown', function (e) { startDrag(row, e); });
@@ -623,14 +618,14 @@
 	}, 150);
 	PGN.mock('links.unpublish', function (a) {
 		var drop = function (l) { return l.filter(function (x) { return x.id !== a.id; }); };
-		TEAM_LINKS[a.kind] = drop(TEAM_LINKS[a.kind]); MY_LINKS[a.kind] = drop(MY_LINKS[a.kind]);
-		return { msg: 'atalho excluído para todos', data: linkFlags(MY_LINKS) };
+		TEAM_LINKS[a.kind] = drop(TEAM_LINKS[a.kind]);
+		return { msg: 'atalho excluído para todos · ficou só na sua lista', data: linkFlags(MY_LINKS) };
 	}, 150);
 	PGN.mock('prefs.publishFolder', function (a) { return { msg: 'caminho salvo para todos', data: { key: a.key, path: P.folders[a.key], sent: 1 } }; }, 150);
 	PGN.mock('prefs.unpublishOrgFolder', function (a) {
 		delete MOCK_ORG[a.key];
-		var mine = Object.assign({}, (P && P.folders && P.folders.promoSubPath) || {}); delete mine[a.key];
-		return { msg: 'sigla ' + a.key + ' excluída para todos', data: { promoSubPath: mine, defaults: MOCK_ORG } };
+		var mine = Object.assign({}, (P && P.folders && P.folders.promoSubPath) || {});
+		return { msg: 'sigla ' + a.key + ' excluída para todos · ficou só na sua lista', data: { promoSubPath: mine, defaults: MOCK_ORG } };
 	}, 150);
 	PGN.mock('links.pick', function () { return { data: { path: '/Users/voce/Desktop/projetos' } }; }, 200);
 

@@ -188,7 +188,8 @@
 
 	// saves the user's list: marks what differs from the team ('own') and what was left out ('gone')
 	function save(o, shared) {
-		var tm = team(shared);
+		var sh = shared || sharedRead();
+		var tm = team(sh);
 		var f = file();
 		var out = { v: 2, sites: [], dirs: [], gone: { sites: [], dirs: [] } };
 
@@ -202,6 +203,8 @@
 				at = indexOfId(tm[kind], it.id);
 				delete it.own;
 				if (at >= 0 && differs(it, tm[kind][at], kind)) it.own = true;
+				// removed for everybody and still here: the user kept it as their own
+				if (at < 0 && inList(sh.removed[kind], it.id)) it.own = true;
 				out[kind].push(it);
 			}
 			for (i = 0; i < tm[kind].length; i++) {
@@ -325,7 +328,8 @@
 		return { msg: PGN.n(count, 'atalho salvo', 'atalhos salvos') + ' para todos', data: describe(load(sh), sh) };
 	});
 
-	// × twice: removes one shortcut for everybody (and from this user's list)
+	// × on a shortcut of the team: removed for everybody; it stays in this user's list as
+	// their own (yellow), to be saved for everybody again (↑) or deleted for good (× again)
 	PGN.register('links.unpublish', function (args) {
 		var kind = args.kind == 'sites' || args.kind == 'dirs' ? args.kind : null;
 
@@ -336,18 +340,15 @@
 
 		if (indexOfId(tm[kind], args.id) < 0) PGN.fail('este atalho n\u00E3o est\u00E1 na lista da equipe');
 
+		var cur = load(sh); // with the shortcut still in it
 		var at = indexOfId(sh[kind], args.id);
 
 		if (at >= 0) sh[kind].splice(at, 1);
 		if (!inList(sh.removed[kind], args.id)) sh.removed[kind].push(args.id);
 		PGN.cfg.writeJSON('atalhos.json', sh);
 
-		var cur = load(sh);
-		var mine = indexOfId(cur[kind], args.id);
-
-		if (mine >= 0) cur[kind].splice(mine, 1);
-		save(cur, sh);
-		return { msg: 'atalho exclu\u00EDdo para todos', data: describe(load(sh), sh) };
+		save(cur, sh); // the copy in this user's list becomes 'own'
+		return { msg: 'atalho exclu\u00EDdo para todos \u00B7 ficou s\u00F3 na sua lista', data: describe(load(sh), sh) };
 	});
 
 	PGN.register('links.pick', function (args) {

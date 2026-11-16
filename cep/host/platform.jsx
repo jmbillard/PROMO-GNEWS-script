@@ -939,9 +939,19 @@ PGN.cfg = {
 	dropOrgGone: function () {
 		try {
 			var mine = JSONPrefsObj.folders.promoSubPath;
+			var kept = JSONPrefsObj.folders.keptSubPath;
+			var isKept = function (key) {
+				if (!kept || typeof kept.length != 'number') return false;
+				for (var i = 0; i < kept.length; i++) {
+					if (kept[i] == key) return true;
+				}
+				return false;
+			};
 
 			for (var k in PGN.cfg.orgGone) {
 				if (!PGN.cfg.orgGone.hasOwnProperty(k) || !mine.hasOwnProperty(k)) continue;
+				// whoever removed it for everybody kept it in their own list
+				if (isKept(k)) continue;
 				var old = PGN.cfg.orgGone[k];
 
 				if (old == null || mine[k] == old) delete mine[k];

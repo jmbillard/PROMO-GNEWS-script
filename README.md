@@ -51,7 +51,7 @@ O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. En
 
 **Preferências**
 - A pasta de **templates** é editável.
-- **↑ salvar para todos**: atalhos, caminhos da rede e siglas das pastas de organização podem ser gravados como padrão da equipe, todos de uma vez ou item por item. Também dá para excluir um item para todos.
+- **↑ salvar para todos**: atalhos, caminhos da rede e siglas das pastas de organização podem ser gravados como padrão da equipe, todos de uma vez ou item por item. O **×** num item da equipe exclui para todos e deixa o item só na sua lista, para devolver ou apagar de vez.
 
 **Atalhos e pastas**
 - Trello e Apontamento saíram da lista padrão de atalhos.
@@ -471,10 +471,11 @@ Atalhos, caminhos da rede e siglas das pastas de organização têm uma configur
 - **O que é só seu aparece em amarelo**: um atalho ou uma sigla que você criou, ou um item da equipe que você alterou.
 - **↑ num item** grava aquele item para todos. Aparece ao passar o mouse sobre um item seu. Nos caminhos da rede (PAM magazine, PAM para arte, Templates), a seta aparece quando o seu caminho é diferente do padrão da equipe.
 - **↑ salvar para todos**, no topo da lista, grava de uma vez tudo o que é só seu.
-- **× num item da equipe** tira o item da sua lista. Ele fica riscado por 4 segundos: clicar de novo no botão, que vira **para todos?**, exclui o item para a equipe inteira.
-- Toda ação que muda a configuração geral pede esse segundo clique.
+- **× num item da equipe** exclui o item para a equipe inteira, na hora. Ele continua na sua lista, agora em amarelo, e você decide: **↑** devolve para a equipe, **×** de novo apaga de vez.
+- **× num item que é só seu** apaga o item.
+- Salvar para todos pede um segundo clique em até 4 segundos. Excluir não pede: se foi engano, o **↑** desfaz.
 
-Cada pessoa recebe as mudanças ao abrir o After Effects de novo. O que alguém alterou ou removeu só para si continua como a pessoa deixou.
+Cada pessoa recebe as mudanças ao abrir o After Effects de novo. O que alguém alterou só para si continua como a pessoa deixou.
 
 ---
 

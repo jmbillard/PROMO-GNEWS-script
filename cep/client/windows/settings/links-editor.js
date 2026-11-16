@@ -154,32 +154,30 @@
 			// ↑ this shortcut for everybody (shown on the ones that are only this user's)
 			var up = h('button.upx', { title: 'salvar este atalho para todos', 'aria-label': 'Salvar este atalho para todos' }, UP());
 			UI.twoStep(up, { label: 'para todos?', onConfirm: function () { publish({ kind: list, id: it.id }); } });
-			var del = h('button.ox', { title: it.team ? 'remover\nclique de novo em 4 s: excluir para todos' : 'remover', 'aria-label': 'Remover' }, X());
-			var drop = function () {
-				var at = S[list].indexOf(it);
-				if (at >= 0) S[list].splice(at, 1);
-				if (open && open.list === list) open = null;
-				renderList(list);
-			};
-			UI.twoStep(del, {
-				label: 'para todos?',
-				// first click: out of this user's list. A shortcut of the team stays on screen,
-				// struck out, while the second click can still remove it for everybody
-				onFirst: function () {
-					if (!it.team) { drop(); push(); return false; }
-					it._gone = true;
-					row.classList.add('gone');
-					preview(); push();
-				},
-				onExpire: drop,
-				onConfirm: function () {
+			// × on a shortcut of the team: removed for everybody, and it stays here as this user's
+			// own (yellow) — ↑ gives it back to the team, × again deletes it for good.
+			// × on one that is only this user's: deleted
+			var del = h('button.ox', {
+				title: it.team ? 'excluir para todos\nfica na sua lista, em amarelo:\n↑ devolve para a equipe · × de novo apaga de vez' : 'apagar',
+				'aria-label': it.team ? 'Excluir para todos' : 'Apagar',
+				onclick: function () {
+					if (!it.team) {
+						var at = S[list].indexOf(it);
+						if (at >= 0) S[list].splice(at, 1);
+						if (open && open.list === list) open = null;
+						renderList(list); preview(); push();
+						return;
+					}
+					if (del.disabled) return;
+					del.disabled = true;
 					quietUntil = Date.now() + 1500;
-					PGN.run('links.unpublish', { kind: list, id: it.id }).then(function (r) {
-						if (r.ok && r.data) adopt(r.data); else drop();
+					saveNow().then(function () { return PGN.run('links.unpublish', { kind: list, id: it.id }); }).then(function (r) {
+						del.disabled = false;
+						if (r.ok && r.data) adopt(r.data);
 						teamNote(r);
 					});
 				}
-			});
+			}, X());
 			var handle = h('span.oh', { title: 'arrastar' }, h('i'));
 			var row = h('div.lk' + (it.mine ? '.mine' : '') + (it._gone ? '.gone' : ''), { 'data-list': list, 'data-i': i, 'data-id': it.id }, [handle, ic, nm, tg, flag, up, del].filter(Boolean));
 			handle.addEventListener('mousedown', function (e) { drag(list, row, e); });
