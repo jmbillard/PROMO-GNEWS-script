@@ -422,8 +422,13 @@ PGN.register('open', function (args) {
 	var currentProjPath = currentProj != null ? decodeURI(currentProj.path) : projPath;
 	var fld = hardNews ? new Folder(todayPath) : new Folder(currentProjPath);
 
-	if (!fld.exists) PGN.fail('pasta inacess\u00edvel');
+	// a folder that doesn't exist yet (today's, early in the day): the nearest one that does
+	var near = fld;
 
-	openFolder(decodeURI(fld.fullName));
+	while (near != null && !near.exists) near = near.parent;
+	if (near == null || (near.fsName != fld.fsName && (near.parent == null || near.name == '' || near.fsName == '/'))) PGN.fail('pasta inacess\u00edvel: ' + fld.fsName);
+
+	openFolder(near.fsName);
+	if (near.fsName != fld.fsName) return { msg: 'a pasta ainda n\u00E3o existe \u00B7 aberta ' + decodeURI(near.name), data: { path: near.fsName } };
 	return { msg: 'Pasta aberta', data: { path: fld.fsName } };
 });

@@ -405,7 +405,7 @@
 
 		while (near != null && !near.exists) near = near.parent;
 		// nothing found, or only a drive / share root: not worth opening
-		if (near == null || (near.fsName != fld.fsName && near.parent == null)) PGN.fail('pasta inacess\u00EDvel: ' + fld.fsName);
+		if (near == null || (near.fsName != fld.fsName && (near.parent == null || near.name == '' || near.fsName == '/'))) PGN.fail('pasta inacess\u00EDvel: ' + fld.fsName);
 		openFolder(near.fsName);
 
 		if (near.fsName != fld.fsName) return it.name + ': a pasta ainda n\u00E3o existe \u00B7 aberta ' + decodeURI(near.name);

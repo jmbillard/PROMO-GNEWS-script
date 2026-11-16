@@ -581,9 +581,14 @@ PGN_override('setClipboard', function (str) {
 // open system folder (network paths resolved / mounted on macOS)...
 PGN_override('openFolder', function (folderPath) {
 	if (appOs == 'Win') {
-		var winFolder = Folder(PGN.net.local(folderPath));
+		var winFolder = new Folder(PGN.net.local(folderPath));
 
-		system.callSystem('explorer ' + Folder.decode(winFolder.fsName));
+		// Explorer opens its default window (Documents) when the path does not exist or is cut
+		// at a space or a comma: nearest existing folder, always between quotes
+		while (winFolder != null && !winFolder.exists) winFolder = winFolder.parent;
+		if (winFolder == null) return;
+
+		system.callSystem('explorer "' + Folder.decode(winFolder.fsName) + '"');
 		return;
 	}
 	var folder = new Folder(PGN.net.local(folderPath, true));
