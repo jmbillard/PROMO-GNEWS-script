@@ -1,640 +1,487 @@
-<!--  linter settings:
-//  jshint -W061 -->
+# PROMO GNEWS · v3 beta 3
 
-# PROMO GNEWS *script*
+**pt-BR** ⚡ extensão do After Effects com as ferramentas da equipe de motion em PROMO na ![logo](images/GNEWS_LOGO%20dark.png)
 
-**pt-BR** ⚡ algumas ferramentas para melhorar o workflow da equipe de motion em PROMO na ![logo](/images/GNEWS_LOGO%20dark.png)
+Funciona no After Effects 2022 ou mais novo, no **Windows e no macOS**. É uma barra em sanfona com as ferramentas do dia a dia, mais janelas próprias para as tarefas maiores.
 
-## 📟 layout e interface
+![abertura da barra](images/doc/gifs/abertura.gif)
 
-![menu](/images/menu.png)
-
-a barra pode alternar entre os layouts *`horizontal`* e *`vertical`* ao ser redimensionada.
-a tela inicial é dividida por temas e possui as seguintes [ **seções** ] e **ferramentas**...
-
-```markdown
-    - [controles]         →   hierarquias, nulls e afins...
-    - [animação]
-    - [efeitos]
-    - [texto]             →   manipulação de layers de texto...
-    - [marca]             →   logos, cores e elementos do on-air atual...
-    - [projeto]           →   organiza tudo em pastinhas...
-    - [atalhos]
-    - templates
-    - busca
-    - preview
-    - [programa]          →   configurações do after, media encoder, fonts, etc...
-    - [dev]               →   ferramentas de desenvolvimento...
-    - [preferencias]      →   preferencias do script...
-```
-
-> a *'cor'* da tela inicial e suas seções podem ser alteradas nas *'preferências do script'*...
----
-
-<br /><br />
-
-# ![ctrl icon](/images/icons/0%20-%20menu/ctrlIcon%20dark.png) [ seção *controles* ]
-
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
+- [instalar](#instalar)
+- [novidades](#novidades)
+- [primeiros passos](#primeiros-passos)
+- [seções e ferramentas](#seções-e-ferramentas)
+- [janelas](#janelas)
+- [preferências](#preferências)
+- [desenvolvimento](#desenvolvimento)
 
 ---
-<br />
 
-## ![null btn](/images/icons/1%20-%20controls/nullIcon%20dark.png) botão **`null`**
+## instalar
 
-cria um 'null' pai na mesma posição de cada layer selecionado.
+1. Abra o After Effects e vá em *File › Scripts › Run Script File…*.
+2. Escolha `INSTALAR PROMO GNEWS.jsx`, na pasta do PROMO GNEWS na rede (a pasta que tem `cep` e `source`).
+3. Se tudo estiver ok, o instalador abre direto em **instalar** / **atualizar**. Se faltar algo, ele mostra o quê e onde procurou. Se a pasta não for encontrada, use **› escolher a pasta do PROMO GNEWS…**.
+4. Reinicie o After Effects e abra *Window › Extensions › PROMO GNEWS*.
 
-> caso não tenha nenhum layer selecionado, o *'null'* é criado no centro da tela.\
-> o tipo de layer usado como *'null'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
+O instalador também encontra a barra antiga (ScriptUI) e oferece removê-la. Enquanto ela estiver instalada, a bolinha de avisos fica vermelha.
 
-1. ### ![copy animation tg](/images/icons/general/toggles/aniToggleIcon%20dark.png) modificador **`copiar animação`**
-
-    habilita a transferência dos 'key frames' de transformação dos layers selecionados para o 'null'.
-
-    ```markdown
-        'anchor point'
-        'posição'
-        'escala'
-        'rotação'
-    ```
-
-    > os *'key frames'* de *'opacidade'* não serão transferidos...
-
-    ![copy animation ex](/images/gifs/copy-animation.gif)
-
-2. ### ![expression](/images/icons/general/toggles/expToggleIcon%20dark.png) modificador **`copiar expressões`**
-
-    habilita a transferência das 'expressões' de transformação dos layers selecionados para o 'null'.
-
-    ```markdown
-        'anchor point'
-        'posição'
-        'escala'
-        'rotação'
-    ```
-
-    > as *'expressões'* de *'opacidade'* não serão transferidas...
-<!-- [ ] ex: copiar expressões -->
----
-<br />
-
-### ![central null btn](/images/icons/1%20-%20controls/nullCenter%20dark.png) botão **`null central`**
-
-cria um único 'null' pai no 'centro geométrico' de 2 ou mais layers selecionados.
-
----
-<br />
-
-### ![down btn](/images/icons/general/downIcon%20dark.png)![up btn](/images/icons/general/upIcon%20dark.png) botões de **`seleção de hierarquia`**
-
-avança pela `hierarquia` dos layers selecionados... seleciona o pai ou todos os filhos.
-
-<!-- [ ] ex: seleção de hierarquia -->
----
-
-<br /><br />
-
-# ![animation icon](/images/icons/0%20-%20menu/animationIcon%20dark.png) [ seção *animação* ]
-
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
-
----
-<br />
-
-## ![copy inf btn](/images/icons/2%20-%20animation/copyInfluenceIcon%20dark.png) botão **`copiar influência`**
-
-copia as seguintes propriedades do keyframe selecionado:
-
-```markdown
-    ↑ influência de entrada
-    ↑ influência de saída
-    ↑ velocidade de entrada
-    ↑ velocidade de saída
-```
-
-### ![key stat 1](/images/icons/2%20-%20animation/preview%20keyframe/keyStat1Icon%20dark.png) ![key stat 2](/images/icons/2%20-%20animation/preview%20keyframe/keyStat2Icon%20dark.png) ![key stat 3](/images/icons/2%20-%20animation/preview%20keyframe/keyStat3Icon%20dark.png) ![key stat 4](/images/icons/2%20-%20animation/preview%20keyframe/keyStat4Icon%20dark.png) ![key stat 5](/images/icons/2%20-%20animation/preview%20keyframe/keyStat5Icon%20dark.png) ![key stat 6](/images/icons/2%20-%20animation/preview%20keyframe/keyStat6Icon%20dark.png) ![key stat 7](/images/icons/2%20-%20animation/preview%20keyframe/keyStat7Icon%20dark.png) ![key stat 8](/images/icons/2%20-%20animation/preview%20keyframe/keyStat8Icon%20dark.png) ![key stat 9](/images/icons/2%20-%20animation/preview%20keyframe/keyStat9Icon%20dark.png) keyframe stats
-
-    info sobre as propriedades copiadas do keyframe selecionado
-
-## ![paste inf btn](/images/icons/2%20-%20animation/pasteInfluenceIcon%20dark.png) botão **`colar influência`**
-
-substitui as seguintes propriedades do keyframe selecionado:
-
-```markdown
-    ↓ influência de entrada
-    ↓ influência de saída
-    ↓ velocidade de entrada
-    ↓ velocidade de saída
-```
-
-<!-- [ ] ex: copiar e colar influencias -->
----
-<br />
-
-## ![lock btn](/images/icons/2%20-%20animation/lockPropIcon%20dark.png) botão **`trancar`**
-
-tranca todas as propriedades de transformação não animadas dos layers selecionados.
-<!---
-    ![lock ex](https://jmbillard.com.br/promo/gifs/lock.gif)
---->
-```markdown
-    'anchor point'
-    'posição'
-    'escala'
-    'rotação'
-    'opacidade'
-```
-<!-- [ ] ex: bloquear propriedades de transformação -->
----
-<br />
-
-## ![randomize layers btn](/images/icons/2%20-%20animation/randomLayerIcon%20dark.png) botão **`randomizar layers`**
-
-avança e atrasa os tempos de entrada e saída de cada layer selecionado entre o primeiro e último tempos de entrada.
-> caso os layers selecionados tenham o mesmo tempo de entrada todos serão deslocados entre 0 e 1 segundo.
-<!-- [ ] ex: randomizar layers -->
----
-<br /><br />
-
-# ![tools btn](/images/icons/2%20-%20animation/rigToolsIcon%20dark.png) [ subseção **`ferramentas`** ]
-
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
-
----
-<br />
-
-## ![arrow btn](/images/icons/2%20-%20animation/tools/arrowIcon%20dark.png) botão **`seta`**
-
-preset de seta com controles diversos.
-> configurações da janela de *'controle de efeito'*...\
-> [documentação completa](/docs/doc.md)
-<!-- [ ] ex: seleção de hierarquia -->
----
-<br />
-
-## ![counter btn](/images/icons/2%20-%20animation/tools/counterIcon%20dark.png) botão **`counter`**
-
-cria rig de contagem usando um layer de texto.
-
-```markdown
-    ex: colocando os seguintes parâmetros...
-
-        'modo' = número
-        'deslocamento' = 0% >>> 100% [animado]
-        'valor inicial' = -10
-        'valor final' = 10
-
-        o layer de texto será animado indo de '-10' a '10'.
-```
-
-> cada modo possui configurações na janela de *'controle de efeito'*...\
-> [documentação completa](/docs/doc.md)
-
-## ![typewriter btn](/images/icons/2%20-%20animation/tools/typewriterIcon_1%20dark.png) botão **`digitação`**
-
-lettering com animação padrão estilo digitação.
-> configurações da janela de *'controle de efeito'*...\
-> [documentação completa](/docs/doc.md)
-<!-- [ ] ex: typewriter -->
-
-## ![words btn](/images/icons/2%20-%20animation/tools/wordsIcon%20dark.png) botão **`palavras`**
-
-lettering com animação padrão palavra por palavra.
-> configurações da janela de *'controle de efeito'*...\
-> [documentação completa](/docs/doc.md)
-<!-- [ ] ex: words -->
-
-## ![box btn](/images/icons/2%20-%20animation/tools/boxIcon%20dark.png) botão **`tarja simples`**
-
-cria uma tarja simples no layer selecionado.
-
----
-<br />
-
-## ![wig btn](/images/icons/2%20-%20animation/tools/wigIcon%20dark.png) botão **`wig`**
-
-cria um rig simples de movimento usando a expressão 'wiggle' na 'posição' dos layers selecionados.
-> configurações na janela de *'controle de efeito'*...\
-> [documentação completa](/docs/doc.md)
-<!-- [ ] ex: wig -->
-
----
-<br />
-
-## ![ik btn](/images/icons/2%20-%20animation/tools/ikIcon%20dark.png) botão **`ik`**
-
-cria um rig simples de movimento usando cinemática inversa com 3 layers selecionados em ordem.
-
-![ik ex](/images/gifs/ik.gif)
-> a 'ordem' de seleção deverá seguir a 'ordem' da hierarquia pretendida...
-
-```markdown
-    ex: para o rig de uma perna a ordem de seleção seria...
-        1 - coxa
-        2 - canela
-        3 - pé
-```
+> O código fica na rede. Para atualizar, basta trocar os arquivos lá e reabrir o painel; o instalador só precisa rodar de novo quando a equipe avisar (**na v3 beta 3, rode de novo**: as janelas passaram a aceitar qualquer tamanho).\
+> Se algo parecer antigo, rode `tools/diagnostico.jsx` (*Run Script File…*): ele lista as cópias instaladas e aponta as desatualizadas.
 
 ---
 
-<br /><br />
+## novidades
 
-# ![fx icon](/images/icons/0%20-%20menu/effectsIcon%20dark.png) [ seção *efeitos* ]
+### v3 beta 3
 
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
+**Desempenho**
+- A barra não acompanha mais a seleção do After Effects: nada é consultado sozinho. O indicador virou só a **bolinha de avisos**, e cada ferramenta lê a seleção na hora do clique.
+- As janelas abrem mais rápido: não conferem mais os arquivos na rede a cada abertura.
+- A lista de **templates** é lida com muito menos idas à rede e fica guardada por 10 minutos (o botão recarregar força uma leitura nova).
+- Com a rede fora do ar, as ferramentas não ficam tentando alcançar o servidor a cada clique.
 
----
-<br />
+**Janelas**
+- Todas as janelas podem ser redimensionadas livremente, inclusive a de curvas.
+- Erros de carregamento aparecem no meio da janela, com **tentar de novo**.
 
-## ![adj btn](/images/icons/3%20-%20effects/adjIcon%20dark.png) botão **`adjustment layer`**
+**End page**
+- Caixa **fundo** no layout: desligada, a end page sai sem fundo, em alpha (o pattern e o recorte do footage saem junto).
+- **Ao vivo (⚡):** ligado, cada mudança na janela vai direto para a end page selecionada, sem o **aplicar**. Desligado, vale o botão.
+- Ao salvar um preset, a janela diz se ele foi para a pasta de templates da rede ou se ficou só neste computador.
 
-cria um 'adjustment layer' responsivo com as dimensões da composição.
+**Preferências**
+- A pasta de **templates** é editável.
+- **↑ salvar para todos**: atalhos, caminhos da rede e siglas das pastas de organização podem ser gravados como padrão da equipe, todos de uma vez ou item por item. O **×** num item da equipe exclui para todos e deixa o item só na sua lista, para devolver ou apagar de vez.
 
-> o tipo de layer usado como *'adjustment layer'* pode ser configurado nas *'preferências'* como *'solid'* ou *'shape layer'*...
+**Atalhos e pastas**
+- Trello e Apontamento saíram da lista padrão de atalhos.
+- PAM magazine aponta para `UPLOAD_PAM_MAGAZINE/01_ENTRADA`.
+- Um atalho para uma pasta que ainda não existe (a do dia, por exemplo) abre a pasta mais próxima.
 
-## ![curves btn](/images/icons/3%20-%20effects/fx_curIcon%20dark.png)![levels tab](/images/icons/3%20-%20effects/fx_levIcon%20dark.png)![lumetri tab](/images/icons/3%20-%20effects/fx_lumIcon%20dark.png)  botões **`correção de cor`**
+**Barra**
+- Ícone novo do **Randomizar layers**.
+- Barra baixa: rodapé numa linha só.
 
-```markdown
-    efeitos: 'curves'
-             'levels'
-             'lumetri color'
-```
+### v3 beta 2
 
----
+**Curvas**
+- **Ao vivo (⚡):** com keyframes selecionados, eles acompanham a curva enquanto você mexe nas alças, nos sliders ou nos presets.
+- Os presets de curva podem ser **salvos e excluídos**.
+- A influência funciona em keyframes de **qualquer propriedade**: lineares e hold viram bezier, e as que só aceitam hold (como o *Source Text*) ficam de fora, com aviso.
 
-<br /><br />
+**Barra**
+- O progresso das tarefas longas virou uma **barra fina sob o ícone**.
+- Ao terminar uma tarefa longa, o **↶** no botão desfaz a tarefa inteira.
+- O tooltip da **bolinha de avisos** explica cada aviso e o que fazer.
+- Ícones novos para a **logo estática** e a **logo animada**.
+- Tooltips de nomes longos não somem mais na barra estreita.
 
-# ![text icon](/images/icons/4%20-%20text/titleCaseIcon%20dark.png) [ seção *texto* ]
+**Marca e paleta**
+- As cores da paleta podem ser **renomeadas** nas preferências.
+- **Paleta em shape layer** usa a paleta das preferências, com os mesmos nomes da barra.
 
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
+**Projeto**
+- Salvar, renomear e inserir ID **pedem o ID e o nome** em vez de usar os textos de exemplo.
+- Salvar **não sobrescreve** outro projeto com o mesmo nome.
+- **Coletar** não sobrescreve arquivos de mesmo nome, copia **sequências de imagens inteiras** e avisa o que não conseguiu copiar.
 
----
-<br />
-
-## ![Title icon](/images/icons/4%20-%20text/upperCaseIcon%20dark.png) ![Title icon](/images/icons/4%20-%20text/lowerCaseIcon%20dark.png) ![Title icon](/images/icons/4%20-%20text/titleCaseIcon%20dark.png) botões de caixa **`ALTA`**, **`baixa`** e **`Título`**
-
-converte todo o conteúdo dos layers de texto selecionados.
-
-![lineBreaker ex](/images/gifs/text-case.gif)
-
-## ![txtCleaner btn](/images/icons/4%20-%20text/cleanerIcon%20dark.png) botão **`limpar texto`**
-
-remove múltiplos espaços consecutivos, quebras de linha e faz o trim do layer de texto.
-<!-- [ ] ex: limpador de texto -->
-
-## ![txtColumns btn](/images/icons/4%20-%20text/txtColumnsIcon%20dark.png) botão **`separar colunas`**
-
-separa um layer de texto em 2 ou mais colunas cada coluna gera um novo layer de texto .
-
-![columnBreaker ex](/images/gifs/column-breaker.gif)
-
----
-<br />
-
-## ![slider](/images/icons/general/ui/sliderIcon%20dark.png) **`quebra linhas`**
-
-estabelece um limite de caracteres por linha e quebra o texto assim que esse limite é ultrapassado.
-
-![lineBreaker ex](/images/gifs/line-breaker.gif)
-
----
-
-<br /><br />
-
-# ![guides icon](/images/icons/0%20-%20menu/brandIcon%20dark.png) [ seção *marca* ]
-
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
-
----
-<br />
-
-## botões **`paleta GNEWS`**
-
-aplica um efeito 'fill' com a cor selecionada.
-  
-| cor                                 | rgb           | #hex    |
-| ----------------------------------- | ------------- | ------- |
-| ![color](/images/colors/E52F2E.png) | 229, 49, 49   | #E52F2E |
-| ![color](/images/colors/ECFF8C.png) | 238, 255, 140 | #ECFF8C |
-| ![color](/images/colors/221E1D.png) | 35, 30, 30    | #221E1D |
-
-| cor                                 | rgb           | #hex    |
-| ----------------------------------- | ------------- | ------- |
-| ![color](/images/colors/141414.png) | 20, 20, 20    | #141414 |
-| ![color](/images/colors/333333.png) | 51, 51, 51    | #333333 |
-| ![color](/images/colors/4A4A4A.png) | 74, 74, 74    | #4A4A4A |
-| ![color](/images/colors/B2B2B2.png) | 178, 178, 178 | #B2B2B2 |
-| ![color](/images/colors/F2F2F2.png) | 242, 242, 242 | #F2F2F2 |
-
-| cor                                 | rgb           | #hex    |
-| ----------------------------------- | ------------- | ------- |
-| ![color](/images/colors/F13333.png) | 242, 51, 51   | #F13333 |
-| ![color](/images/colors/FF4D4D.png) | 255, 77, 77   | #FF4D4D |
-| ![color](/images/colors/FE674C.png) | 255, 103, 77  | #FE674C |
-| ![color](/images/colors/FF8F4D.png) | 255, 143, 77  | #FF8F4D |
-| ![color](/images/colors/FFC44E.png) | 255, 196, 78  | #FFC44E |
-| ![color](/images/colors/FF5A68.png) | 255, 90, 103  | #FF5A68 |
-| ![color](/images/colors/FF739A.png) | 255, 115, 154 | #FF739A |
-| ![color](/images/colors/FF8CCD.png) | 255, 140, 205 | #FF8CCD |
-| ![color](/images/colors/B5ADFF.png) | 181, 173, 255 | #B5ADFF |
-| ![color](/images/colors/80C0FE.png) | 128, 192, 255 | #80C0FE |
-| ![color](/images/colors/5DE6A2.png) | 92, 230, 161  | #5DE6A2 |
-
-## ![shapePallet btn](/images/icons/general/paleta%20dark.png) botão **`paleta`**
-
-cria um 'shape layer' com amostras da paleta.
-> guide layer e bloqueado.
-<!-- [ ] ex: paleta shape layer -->
-
----
-<br />
-
-## ![arrow on-air btn](/images/icons/5%20-%20brand/arrowOnAirIcon%20dark.png) botão **`seta on-air`**
-
-cria um 'shape layer' com a seta usada no on-air.
-
-## ![logo btn](/images/icons/5%20-%20brand/newsIcon%20dark.png) botão **`logo estático`**
-
-cria um 'shape layer' com a logo GNEWS estática.
-
-## ![logo btn](/images/icons/5%20-%20brand/newsAnimIcon%20dark.png) botão **`logo animado`**
-
-cria um 'shape layer' com a logo GNEWS animada.
-> animação padrão de 3 segundos.\
-> a animação iniciará no tempo atual da comp selecionada.
-<!-- [ ] ex: logo animado -->
+**Correções** de uma revisão geral das ferramentas. As principais:
+- Textos com linha em branco não são mais colados nas ferramentas de texto, e a caixa alta/baixa preserva o estilo e os keyframes do texto.
+- **Wiggle**, **Null pai**, **Null centralizado**, **Separar colunas**, **IK**, **Digitação** e **Palavras** em casos que davam erro ou resultado errado.
+- A cor da paleta funciona no After Effects em português e ignora câmeras e luzes.
+- Cancelar e desfazer as tarefas longas funcionam no After Effects em português.
+- A busca com regex respeita maiúsculas e minúsculas, e selecionar um resultado não esconde mais os outros layers.
+- Nas preferências, o que foi editado logo antes de fechar a janela não se perde mais, e erros de gravação são avisados.
 
 ---
 
-<br /><br />
-<!-- 
-## ![layers icon](/images/icons/layerIcon.png) *renomear / sequenciar layers*
-### botão **`renomear`**
-renomeia todos os layers dos tipos habilitados.
-- adiciona um 'prefixo' padrão.
-- converte o nome para 'caixa baixa'.
-- remove 'caracteres especiais'.
-> no caso dos layers de texto o próprio conteúdo será usado como nome.
-```markdown
-    ex: um layer de texto contendo
-        'Dia 8 às 20H' seria renomeado como 'txt_dia 8 as 20h'.
-```
-> USE COM CAUTELA RENOMEAR LAYERS PODE FERRAR COM SUAS *'EXPRESSÕES'*!!!
-1. ### ![footage mod](/images/icons/tg_ftgIcon.png) ![solid mod](/images/icons/tg_solIcon.png) ![shape mod](/images/icons/tg_shpIcon.png) ![text mod](/images/icons/tg_txtIcon.png) ![camera mod](/images/icons/tg_camIcon.png) ![light mod](/images/icons/tg_lgtIcon.png) modificadores **`tipos de layer`**
-    habilita os tipos de layers que podem ser renomeados.
-    | tipos de layer | prefixo padrão |
-    | -------------- | -------------- |
-    | footage        | ftg            |
-    | solids         | sol            |
-    | shapes         | shp            |
-    | textos         | txt            |
-    | cameras        | cam            |
-    | luzes          | lgt            |
-### ![isolate btn](/images/icons/isolateIcon.png) botão **`isolar`**
-habilita o 'shy' e esconde todos os layers selecionados.
----
-<br /> -->
+## primeiros passos
 
-# ![project icon](/images/icons/0%20-%20menu/projectIcon%20dark.png) [ seção *projeto* ]
+<img src="images/doc/gifs/sanfona.gif" width="230" align="right" alt="sanfona">
 
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
+**1. Abra uma seção.** Cada seção tem um ícone e uma cor. Clique no ícone ou no nome dela: a linha da seção aberta fica na cor da seção e as ferramentas aparecem logo abaixo. Clique de novo para fechar. Só uma seção fica aberta por vez.
 
----
-<br />
+**2. Pare o mouse sobre um botão.** Um quadradinho amarelo sobe e o nome da ferramenta aparece digitado. Quando existe, a linha **◗** mostra o que o botão direito faz.
 
-## ![add btn](/images/icons/general/addIcon%20dark.png) botão **`adicionar retranca`**
+**3. Selecione e clique.** As ferramentas trabalham no que está selecionado no After Effects: layers na timeline ou comps no painel de projeto. Quando falta o que é preciso, o botão fica apagado. Por exemplo, **Null centralizado** só acende com 2 layers ou mais. O resultado aparece numa linha curta no rodapé, e tudo pode ser desfeito com *Ctrl/Cmd + Z*.
 
-adiciona os seguintes itens do padrão de nomenclatura de promo no nome de cada comp selecionada:
+**4. Use o botão direito.** Algumas ferramentas têm uma variação no botão direito:
+- **Randomizar** e **Sequenciar** abrem um campo para ajustar os frames.
+- **Organizar projeto** abre as tags de organização.
+- **Setup da comp** cria a comp na vertical.
+- Nos atalhos, cores e efeitos, o botão direito abre as preferências já no item, para editar.
 
-- id do usuário > *3 primeiras letras do usuário logado na máquina.*
-- tag 'PROMO' > *PROMO*
-- id do projeto > *sigla de 3 letras do produto + 6 números da data*
-<!-- [ ] ex: adicionar retranca -->
+**5. Acompanhe as tarefas longas.** Organizar, salvar, coletar e o lote mostram o progresso:
+- numa barra fina sob o ícone do botão, na cor da seção;
+- numa linha no rodapé;
+- na porcentagem, no lugar da bolinha de avisos.
 
-```markdown
-    ex: usando as seguintes informações ficaria...
+Clique no botão de novo para **cancelar**. Ao terminar, um **↶** aparece no canto do botão por alguns segundos: ele desfaz a tarefa inteira de uma vez (o Ctrl/Cmd+Z desfaz só a última parte dela).
 
-        1 - usuário: jbillard → 'JBI'
-        2 - tag: 'PROMO'
-        3 - id do projeto: Edição das 16H - dia 20/07/22 → 'E16200722'
+<br clear="right">
 
-        'comp1' seria renomeada para 'JBI PROMO - E16200722 comp1'.
-```
+**Bolinha de avisos** (canto da barra):
+- **verde:** tudo certo;
+- **vermelha:** a rede está fora ou a barra antiga ainda está instalada. Pare o mouse sobre ela: o tooltip mostra cada aviso (⚠), o detalhe e o que fazer;
+- depois de cada ferramenta, ela vira por um instante o ✓ ou o ! do resultado.
 
-> consulte a tabela de retrancas de *'PROMO'* para ver a lista completa de siglas dos produtos...
+A barra não acompanha a seleção do After Effects: cada ferramenta lê a seleção na hora do clique e avisa o que falta.
 
-## ![rename btn](/images/icons/general/checkIcon%20dark.png) botão **`renomear templates`**
+**Formato da barra.** Redimensione o painel e o layout acompanha:
 
-renomeia as comps de templates e assinaturas de chamada seguindo o padrão de nomenclatura de promo.
+| estreita | larga |
+| :---: | :---: |
+| <img src="images/cep/panel.png" width="134"> | <img src="images/cep/panel-wide.png" width="200"> |
+| ícones em 3 colunas, nomes curtos | ícones com o nome inteiro |
 
-- id do usuário > *3 primeiras letras do usuário logado na máquina.*
-- tag 'PROMO' > *PROMO*
-- id do projeto > *sigla de 3 letras do produto + 6 números da data*
-- nome do projeto > *nome do projeto descrito no 'trello' de promo*
-- serviço > *data e horário das versões em forma reduzida*
-  
-```markdown
-    ex: usando as seguintes informações ficaria...
+**horizontal** — painel baixo e largo: 1 ou 2 linhas de ferramentas por seção.
 
-        1 - usuário: rdenoni → 'RDE'
-        2 - tag: 'PROMO'
-        3 - id do projeto: GNEWS Internacional - dia 15/03/22 > 'INT150322'
-        4 - nome do projeto: 'institucional'
-        5 - serviço: Quinta-feira - 22:00 → 'QUI 22H'
+![barra horizontal](images/cep/panel-horizontal.png)
 
-        o template seria renomeado para 'RDE PROMO - INT150322 institucional QUI 22H'.
-```
-<!-- [ ] ex: renomear template -->
+**Logo.** A logo da GNEWS abre a barra com a animação oficial. Passe o mouse sobre ela para controlar a animação com a posição do mouse, como o thumbnail do Premiere: para a esquerda, ela se desmonta.
 
----
-<br />
+![logo](images/doc/gifs/logo.gif)
 
-## ![organize btn](/images/icons/6%20-%20project/templateIcon%20dark.png) botão **`organizar projeto`**
+**Rodapé**
 
-cria e organiza a estrutura do projeto seguindo o modelo de projeto.
-> modelo de projeto pode ser alterado nas *'preferências do script'*...
-<!-- [ ] ex: organizar projeto -->
-
-> click direito -> aplica tags de organização nos itens selecionados da *'janela de projeto'*.
-
-- ![exportar btn](/images/icons/general/toggles/ftgToggleIcon%20dark.png) exportar
-- ![editar btn](/images/icons/general/toggles/compToggleIcon%20dark.png) editar
-- ![ignorar btn](/images/icons/general/toggles/solToggleIcon%20dark.png) ignorar
-- ![fundo btn](/images/icons/general/toggles/imgToggleIcon%20dark.png) fundo
-- ![foto btn](/images/icons/general/toggles/imgToggleIcon%20dark.png) foto
-- ![ref btn](/images/icons/general/toggles/imgToggleIcon%20dark.png) ref
-- ![logo btn](/images/icons/general/toggles/shpToggleIcon%20dark.png) logo
-- ![ícone btn](/images/icons/general/toggles/shpToggleIcon%20dark.png) ícone
-- ![textura btn](/images/icons/general/toggles/matteToggleIcon%20dark.png) textura
-- ![padrão btn](/images/icons/general/toggles/matteToggleIcon%20dark.png) padrão
-- ![módulo btn](/images/icons/general/toggles/matteToggleIcon%20dark.png) módulo
-- ![tarja btn](/images/icons/general/toggles/txtToggleIcon%20dark.png) tarja
-- ![música btn](/images/icons/general/toggles/sonoToggleIcon%20dark.png) música
-- ![locução btn](/images/icons/general/toggles/sonoToggleIcon%20dark.png) locução
-- ![assinatura btn](/images/icons/general/toggles/compToggleIcon%20dark.png) assinatura *'end page'*
-- ![abertura btn](/images/icons/general/toggles/compToggleIcon%20dark.png) abertura
-
----
-<br />
-
-## ![end page btn](/images/icons/6%20-%20project/endpagePresetIcon%20dark.png) botão **`modelos de assinatura`**
-
-seleciona, modifica, aplica e salva modelos do template de assinatura *'end page'*.
-> [documentação completa](/docs/doc.md)
-<!-- [ ] ex: modelos de assinatura -->
-
----
-<br />
-
-## ![save btn](/images/icons/6%20-%20project/quickSaveIcon%20dark.png) botão **`salvar projeto`**
-
-abre a janela de seleção de caminho do 'sistema' e salva o projeto usando o padrão de nomenclatura de promo.
-
-- id do projeto > *sigla de 3 letras do produto + 6 números da data*
-- nome do projeto > *nome do projeto descrito no 'trello' de promo*
-
- ```markdown
-    ex: usando as seguintes informações ficaria...
-
-        1 - id do projeto: Marketing - dia 08/11/22 → 'MKT081122'
-        2 - nome do projeto: 'video comercial'
-
-        o projeto seria renomeado para 'MKT081122 video comercial'.
-```
-
-1. ### ![collect mod](/images/icons/general/toggles/fldToggleIcon%20dark.png) modificador **`coletar arquivos`**
-
-    habilita a coleta de todos os arquivos usados no projeto quando salvo.
-    > 'collect files'...
-
-2. ### ![fonts mod](/images/icons/general/toggles/txtToggleIcon%20dark.png) modificador **`coletar fontes`**
-
-    habilita a coleta de todas as fontes usadas no projeto quando salvo.
-    > limitação da *Adobe*: apenas as fontes instaladas na pasta de fontes do 'sistema' podem ser copiadas...
+| | | |
+| :---: | --- | --- |
+| <img src="images/doc/icons/foot-0.png" width="32" alt="templates"> | **Templates** | Abre a janela de [templates](#templates). |
+| <img src="images/doc/icons/foot-1.png" width="32" alt="busca"> | **Buscar texto** | Abre a janela de [busca](#busca) nos layers de texto. |
+| <img src="images/doc/icons/foot-2.png" width="32" alt="preview"> | **Salvar preview .png** | Salva o frame atual da comp em .png. Botão direito: salva junto ao projeto. |
+| <img src="images/doc/icons/foot-3.png" width="32" alt="preferências"> | **Preferências** | Abre a janela de [preferências](#preferências). |
 
 ---
 
-<br /><br />
+## seções e ferramentas
 
-# ![links icon](/images/icons/0%20-%20menu/shortcutsIcon%20dark.png) [ seção *atalhos* ]
+Os ícones aparecem aqui ampliados, com o traço de destaque na cor de cada seção. Na barra eles são menores e ficam cinza até o mouse passar por cima.
 
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
+**Precisa de**:
+- **comp** — uma comp aberta na timeline;
+- **layers** — layers selecionados na timeline (o número indica o mínimo);
+- **comps no projeto** — comps selecionadas no painel de projeto.
+
+### <img src="images/doc/icons/ctrl.png" width="32" alt="Controles"> Controles
+
+Para montar hierarquias de parent sem caçar layers na timeline.
+
+| | ferramenta | como usar | precisa de |
+| :---: | --- | --- | :---: |
+| <img src="images/doc/icons/ctrl-null.png" width="32" alt="Null pai"> | **Null pai** | Selecione os layers e clique: cada um ganha um null pai na própria posição. Sem seleção, cria um null no centro da comp. O tipo de null (solid ou shape) vem das [preferências](#preferências). | comp |
+| <img src="images/doc/icons/ctrl-nullc.png" width="32" alt="Null centralizado"> | **Null centralizado** | Cria **um** null no centro de todos os layers selecionados e o define como pai deles. Bom para mover um grupo inteiro. | layers · 2 |
+| <img src="images/doc/icons/ctrl-parent.png" width="32" alt="Selecionar pai"> | **Selecionar pai** | Sobe na hierarquia: troca a seleção pelos pais dos layers selecionados. | comp |
+| <img src="images/doc/icons/ctrl-child.png" width="32" alt="Selecionar filhos"> | **Selecionar filhos** | Desce na hierarquia: seleciona todos os filhos dos layers selecionados. | comp |
+| <img src="images/doc/icons/ctrl-tg.keys.png" width="32" alt="Null: copiar animação"> | **Null: copiar animação** | Liga e desliga (um quadradinho marca quando está ativo). Ligado, o **Null pai** leva os keyframes de transformação do layer (anchor, posição, escala, rotação) para o null. | — |
+| <img src="images/doc/icons/ctrl-tg.exp.png" width="32" alt="Null: copiar expressões"> | **Null: copiar expressões** | Liga e desliga. Ligado, o **Null pai** leva também as expressões de transformação. | — |
+
+### <img src="images/doc/icons/anim.png" width="32" alt="Animação"> Animação
+
+| | ferramenta | como usar | precisa de |
+| :---: | --- | --- | :---: |
+| <img src="images/doc/icons/anim-inf.png" width="32" alt="Influência dos keyframes"> | **Influência dos keyframes** | Abre a janela de [curvas](#curvas). Desenhe a curva e aplique nos keyframes selecionados. | — |
+| <img src="images/doc/icons/anim-lock.png" width="32" alt="Travar transformações"> | **Travar transformações** | Trava as propriedades de transformação **sem animação** dos layers selecionados, para não mexer nelas sem querer. | layers |
+| <img src="images/doc/icons/anim-rand.png" width="32" alt="Randomizar layers"> | **Randomizar layers** | Desloca cada layer selecionado por um número aleatório de frames, dentro do limite. **Botão direito:** ajusta o limite de frames. | layers · 2 |
+| <img src="images/doc/icons/anim-seq.png" width="32" alt="Sequenciar layers"> | **Sequenciar layers** | Coloca os layers em escada, na ordem da seleção, com o intervalo de frames definido. **Botão direito:** ajusta o intervalo. | layers · 2 |
+| <img src="images/doc/icons/anim-cols.png" width="32" alt="Guia de colunas"> | **Guia de colunas** | Cria um layer guia com as colunas do grid da comp. | comp |
+| <img src="images/doc/icons/anim-arrow.png" width="32" alt="Seta"> | **Seta** | Cria uma seta animável. Os controles ficam no *Effect Controls*. | comp |
+| <img src="images/doc/icons/anim-count.png" width="32" alt="Contador"> | **Contador** | Cria um texto que conta de um valor a outro (número, porcentagem, tempo…). Anime o controle no *Effect Controls*. | comp |
+| <img src="images/doc/icons/anim-type.png" width="32" alt="Digitação"> | **Digitação** | Cria um texto com animação de máquina de escrever. | comp |
+| <img src="images/doc/icons/anim-words.png" width="32" alt="Palavras"> | **Palavras** | Cria um texto que entra palavra por palavra. | comp |
+| <img src="images/doc/icons/anim-box.png" width="32" alt="Tarja simples"> | **Tarja simples** | Cria uma tarja simples, pronta para receber texto. | comp |
+| <img src="images/doc/icons/anim-wig.png" width="32" alt="Wiggle"> | **Wiggle** | Põe um *wiggle* na posição dos layers selecionados, com os controles no *Effect Controls*. | layers |
+| <img src="images/doc/icons/anim-ik.png" width="32" alt="IK (3 layers)"> | **IK (3 layers)** | Selecione exatamente 3 layers **em ordem** (ex.: coxa → canela → pé) e clique. Eles viram uma cadeia de parent, e um null de controle na ponta move o conjunto. | layers · 3 |
+
+### <img src="images/doc/icons/fx.png" width="32" alt="Efeitos"> Efeitos
+
+A camada de ajuste é fixa. Os outros botões são **editáveis** nas [preferências](#preferências): escolha qualquer efeito instalado, numa lista pesquisável, e um ícone ou 2 letras. Clique para aplicar o efeito nos layers selecionados. Com o **botão direito** num efeito, as preferências abrem já nele.
+
+Botões padrão:
+
+| | ferramenta | como usar | precisa de |
+| :---: | --- | --- | :---: |
+| <img src="images/doc/icons/fx-adj.png" width="32" alt="Camada de ajuste"> | **Camada de ajuste** | Cria uma adjustment layer do tamanho da comp, acima dos layers selecionados. Solid ou shape, conforme as preferências. | comp |
+| <img src="images/doc/icons/fxi-curves.png" width="32" alt="Curves"> <img src="images/doc/icons/fxi-levels.png" width="32" alt="Levels"> <img src="images/doc/icons/fxi-lumetri.png" width="32" alt="Lumetri"> | **cor** · Curves, Levels, Lumetri Color | Aplica o efeito nos layers selecionados. | layers |
+| <img src="images/doc/icons/fxi-gauss.png" width="32" alt="Gaussian Blur"> <img src="images/doc/icons/fxi-compound.png" width="32" alt="Compound Blur"> <img src="images/doc/icons/fxi-lens.png" width="32" alt="Lens Blur"> | **blur** · Gaussian, Compound, Lens Blur | Aplica o efeito nos layers selecionados. | layers |
+| <img src="images/doc/icons/fxi-fill.png" width="32" alt="Fill"> <img src="images/doc/icons/fxi-3d.png" width="32" alt="3D Glasses"> <img src="images/doc/icons/fxi-fractal.png" width="32" alt="Fractal Noise"> <img src="images/doc/icons/fxi-grain.png" width="32" alt="Add Grain"> | **outros** · Fill, 3D Glasses, Fractal Noise, Add Grain | Aplica o efeito nos layers selecionados. *Fill* e *3D Glasses* já entram configurados. | layers |
+
+Outros ícones para escolher nas preferências:
+
+<img src="images/doc/icons/fxi-glow.png" width="28"> <img src="images/doc/icons/fxi-light.png" width="28"> <img src="images/doc/icons/fxi-key.png" width="28"> <img src="images/doc/icons/fxi-distort.png" width="28"> <img src="images/doc/icons/fxi-time.png" width="28"> <img src="images/doc/icons/fxi-text.png" width="28"> <img src="images/doc/icons/fxi-sliders.png" width="28"> <img src="images/doc/icons/fxi-fx.png" width="28">
+
+### <img src="images/doc/icons/txt.png" width="32" alt="Texto"> Texto
+
+Selecione layers de texto. Os outros layers da seleção são ignorados.
+
+| | ferramenta | como usar | precisa de |
+| :---: | --- | --- | :---: |
+| <img src="images/doc/icons/txt-up.png" width="32" alt="Caixa alta"> | **Caixa alta** | `texto` → `TEXTO` | layers |
+| <img src="images/doc/icons/txt-low.png" width="32" alt="Caixa baixa"> | **Caixa baixa** | `TEXTO` → `texto` | layers |
+| <img src="images/doc/icons/txt-tit.png" width="32" alt="Primeiras maiúsculas"> | **Primeiras maiúsculas** | `texto de exemplo` → `Texto De Exemplo` | layers |
+| <img src="images/doc/icons/txt-clean.png" width="32" alt="Limpar espaços e quebras"> | **Limpar espaços e quebras** | Tira espaços repetidos e quebras de linha, e apara as pontas. Bom para texto colado de e-mail ou PDF. | layers |
+| <img src="images/doc/icons/txt-split.png" width="32" alt="Separar colunas"> | **Separar colunas** | Um texto com colunas (separadas por 2+ espaços, tab ou `---`) vira um layer de texto por coluna, lado a lado. O original fica desligado. | layers |
+| <img src="images/doc/icons/txt-brk.png" width="32" alt="Quebrar linhas"> | **Quebrar linhas** | Quebra as linhas a cada N caracteres, sem cortar palavras. **Botão direito:** ajusta o limite de caracteres. | layers |
+
+### <img src="images/doc/icons/brand.png" width="32" alt="Marca"> Marca
+
+<img src="images/cep/panel-marca.png" width="170" align="right" alt="seção marca">
+
+| | ferramenta | como usar | precisa de |
+| :---: | --- | --- | :---: |
+| <img src="images/doc/icons/brand-pal.png" width="32" alt="Paleta em shape layer"> | **Paleta em shape layer** | Cria um shape layer com a paleta das [preferências](#preferências): uma coluna por grupo, na borda esquerda da comp, e cada amostra com o nome e o hex que aparecem na barra. Ele entra como guide e travado, só para referência. | comp |
+| <img src="images/doc/icons/brand-onair.png" width="32" alt="Seta on-air"> | **Seta on-air** | Cria um shape layer com a seta do on-air. | comp |
+| <img src="images/doc/icons/brand-logo.png" width="32" alt="Logo estática"> | **Logo estática** | Cria a logo GNEWS em shape layer, editável e sem perda de resolução. | comp |
+| <img src="images/doc/icons/brand-logoa.png" width="32" alt="Logo animada 3s"> | **Logo animada 3s** | Cria a logo GNEWS com a animação oficial de 3 s, a partir do tempo atual da comp. | comp |
+
+**Paleta GNEWS.** Clique numa cor para aplicar um *Fill* com ela nos layers selecionados. Na barra larga, cada cor aparece com o nome e o hex. Os grupos e as cores são **editáveis** nas [preferências](#preferências), e os nomes são gerados automaticamente, em português. Dá para renomear qualquer cor. Com o **botão direito** numa cor, a paleta abre nas preferências.
+
+<br clear="right">
+
+| grupo | cores padrão |
+| --- | --- |
+| **marca** | <img src="images/doc/icons/cor-E53131.png" width="28" alt="#E53131"> <img src="images/doc/icons/cor-EEFF8C.png" width="28" alt="#EEFF8C"> <img src="images/doc/icons/cor-231E1E.png" width="28" alt="#231E1E"><br><sub>`#E53131` `#EEFF8C` `#231E1E`</sub> |
+| **neutros** | <img src="images/doc/icons/cor-141414.png" width="28" alt="#141414"> <img src="images/doc/icons/cor-333333.png" width="28" alt="#333333"> <img src="images/doc/icons/cor-4A4A4A.png" width="28" alt="#4A4A4A"> <img src="images/doc/icons/cor-B2B2B2.png" width="28" alt="#B2B2B2"> <img src="images/doc/icons/cor-F2F2F2.png" width="28" alt="#F2F2F2"><br><sub>`#141414` `#333333` `#4A4A4A` `#B2B2B2` `#F2F2F2`</sub> |
+| **apoio** | <img src="images/doc/icons/cor-F23333.png" width="28" alt="#F23333"> <img src="images/doc/icons/cor-FF4D4D.png" width="28" alt="#FF4D4D"> <img src="images/doc/icons/cor-FF674D.png" width="28" alt="#FF674D"> <img src="images/doc/icons/cor-FF8F4D.png" width="28" alt="#FF8F4D"> <img src="images/doc/icons/cor-FFC44E.png" width="28" alt="#FFC44E"> <img src="images/doc/icons/cor-FF5A67.png" width="28" alt="#FF5A67"> <img src="images/doc/icons/cor-FF739A.png" width="28" alt="#FF739A"> <img src="images/doc/icons/cor-FF8CCD.png" width="28" alt="#FF8CCD"> <img src="images/doc/icons/cor-B5ADFF.png" width="28" alt="#B5ADFF"> <img src="images/doc/icons/cor-80C0FF.png" width="28" alt="#80C0FF"> <img src="images/doc/icons/cor-5CE6A1.png" width="28" alt="#5CE6A1"><br><sub>`#F23333` `#FF4D4D` `#FF674D` `#FF8F4D` `#FFC44E` `#FF5A67` `#FF739A` `#FF8CCD` `#B5ADFF` `#80C0FF` `#5CE6A1`</sub> |
+
+### <img src="images/doc/icons/proj.png" width="32" alt="Projeto"> Projeto
+
+No alto da seção ficam dois campos: o **ID** e o **nome do projeto** (a retranca). Eles ficam gravados no próprio .aep e são usados pelas ferramentas abaixo. Preencha os dois antes de renomear ou salvar: sem eles, essas ferramentas pedem os campos em vez de usar os textos de exemplo.
+
+| | ferramenta | como usar | precisa de |
+| :---: | --- | --- | :---: |
+| <img src="images/doc/icons/proj-id.png" width="32" alt="Inserir usuário e ID nas comps"> | **Inserir usuário e ID nas comps** | Selecione as comps no painel de projeto. O prefixo do usuário (das preferências), a tag PROMO e o ID entram no nome delas. | comps no projeto |
+| <img src="images/doc/icons/proj-rename.png" width="32" alt="Renomear comps"> | **Renomear comps** | Renomeia as comps selecionadas no padrão de promo (ID + retranca). Sem seleção, renomeia todas as comps de template e de assinatura. | — |
+| <img src="images/doc/icons/proj-org.png" width="32" alt="Organizar projeto"> | **Organizar projeto** | Cria as pastas do modelo das preferências e move cada item para a sua. Tarefa longa, com progresso. **Botão direito:** abre as [tags](#tags) para marcar itens à mão. | — |
+| <img src="images/doc/icons/proj-endp.png" width="32" alt="Presets de end page"> | **Presets de end page** | Abre a janela de [end page](#end-page). | — |
+| <img src="images/doc/icons/proj-save.png" width="32" alt="Salvar projeto"> | **Salvar projeto** | Salva o .aep com o nome no padrão (ID + retranca) na pasta de projetos. Se já existir outro projeto com esse nome, o novo ganha um número em vez de sobrescrever. **Botão direito:** salva na área de trabalho. | — |
+| <img src="images/doc/icons/proj-collect.png" width="32" alt="Coletar arquivos"> | **Coletar arquivos** | Copia para junto do projeto os arquivos usados nele (footage, imagens, áudio, sequências de imagens inteiras). Arquivos diferentes com o mesmo nome não se sobrescrevem; o que não puder ser copiado fica no lugar original, com aviso. Tarefa longa. | — |
+| <img src="images/doc/icons/proj-cfonts.png" width="32" alt="Coletar fontes"> | **Coletar fontes** | Copia para junto do projeto as fontes usadas nos textos. Tarefa longa. | — |
+| <img src="images/doc/icons/proj-open.png" width="32" alt="Abrir pasta do projeto"> | **Abrir pasta do projeto** | Abre no Explorer / Finder a pasta onde o projeto está salvo. | — |
+
+### <img src="images/doc/icons/links.png" width="32" alt="Atalhos"> Atalhos
+
+Sites e pastas de uso diário, com um clique. São **editáveis** nas [preferências](#preferências): ícone ou 2 letras, nome, endereço ou pasta, e ordem. Com o **botão direito** num atalho, as preferências abrem já nele.
+
+Atalhos padrão:
+
+| | grupo | abre |
+| :---: | --- | --- |
+| <img src="images/doc/icons/link-od.png" width="28"> <img src="images/doc/icons/link-pl.png" width="28"> | **sites** | OneDrive · Planner (no navegador) |
+| <img src="images/doc/icons/link-up.png" width="28"> <img src="images/doc/icons/link-slide.png" width="28"> | **PAM** | para arte · magazine (pastas definidas nas preferências) |
+| <img src="images/doc/icons/link-bolt.png" width="28"> <img src="images/doc/icons/link-star.png" width="28"> <img src="images/doc/icons/link-bars.png" width="28"> | **rede** | PAM hard news · T: utilidades · peças gráficas. Ficam apagados no modo home office. |
+| <img src="images/doc/icons/link-dot.png" width="28"> | **diários · hoje** | A pasta do dia, calculada automaticamente. |
+
+Outros ícones para escolher nas preferências:
+
+<img src="images/doc/icons/link-globe.png" width="28"> <img src="images/doc/icons/link-link.png" width="28"> <img src="images/doc/icons/link-drive.png" width="28"> <img src="images/doc/icons/link-cloud.png" width="28"> <img src="images/doc/icons/link-film.png" width="28"> <img src="images/doc/icons/link-img.png" width="28"> <img src="images/doc/icons/link-cal.png" width="28"> <img src="images/doc/icons/link-chat.png" width="28"> <img src="images/doc/icons/link-check.png" width="28"> <img src="images/doc/icons/link-board.png" width="28">
+
+### <img src="images/doc/icons/app.png" width="32" alt="Programa"> Programa
+
+| | ferramenta | como usar | precisa de |
+| :---: | --- | --- | :---: |
+| <img src="images/doc/icons/app-fonts.png" width="32" alt="Fontes"> | **Fontes** | Abre a janela de [fontes](#fontes). | — |
+| <img src="images/doc/icons/app-ame.png" width="32" alt="Presets do Media Encoder"> | **Presets do Media Encoder** | Instala os presets de exportação de promo no Media Encoder. **Botão direito:** abre a pasta dos presets. | — |
+| <img src="images/doc/icons/app-psetup.png" width="32" alt="Setup do projeto"> | **Setup do projeto** | Ajusta o projeto ao padrão de promo: 8 bits, Rec.709 Gamma 2.4, blending linear, timecode e expressões em JavaScript. | — |
+| <img src="images/doc/icons/app-labels.png" width="32" alt="Cores de label"> | **Cores de label** | Abre a janela de [labels](#labels). **Botão direito:** aplica o padrão PROMO direto, sem abrir a janela. | — |
+| <img src="images/doc/icons/app-csetup.png" width="32" alt="Setup da comp"> | **Setup da comp** | Ajusta a comp ativa ao padrão de promo: 1920×1080, 29,97 fps, fundo preto, work area inteira. **Botão direito:** vertical (606×1080). | comp |
+| <img src="images/doc/icons/app-batch.png" width="32" alt="Lote nunca desliga"> | **Lote nunca desliga** | Gera em lote as vinhetas *nunca desliga*. Tarefa longa; clique de novo para cancelar. | — |
+
+### <img src="images/doc/icons/dev.png" width="32" alt="Dev"> Dev
+
+Esta seção só aparece com **ferramentas de dev** ligado nas preferências.
+
+| | ferramenta | como usar |
+| :---: | --- | --- |
+| <img src="images/doc/icons/dev-dev.dark.png" width="32" alt="Ícones .png → tema escuro"> | **Ícones .png → tema escuro** | Converte uma pasta de ícones .png para o tema escuro. |
+| <img src="images/doc/icons/dev-dev.zipTpl.png" width="32" alt="Zipar templates"> | **Zipar templates** | Zipa a pasta de templates para distribuição. |
+| <img src="images/doc/icons/dev-dev.zipFonts.png" width="32" alt="Zipar fontes"> | **Zipar fontes** | Zipa a pasta de fontes para distribuição. |
 
 ---
-<br />
 
-## botões **`office globo`**
+## janelas
 
-[![oneDrive btn](/images/icons/7%20-%20shortcuts/oneDriveIcon%20dark.png)**`oneDrive`**](https://tvglobocorp-my.sharepoint.com/)
+<img src="images/doc/gifs/dropdown.gif" width="300" align="right" alt="lista pesquisável">
 
-acessa o oneDrive da conta 'globo'.
+As janelas abrem pela barra e podem ficar abertas ao lado do After Effects.
 
-```markdown
-    urls: 'https://tvglobocorp-my.sharepoint.com/'
-```
+**Listas pesquisáveis.** Todos os menus das janelas abrem uma lista para baixo:
+1. Clique no menu.
+2. Digite para filtrar (no exemplo, `hora` no formato da [end page](#end-page)).
+3. Use ↑ ↓ e **Enter** para escolher, ou clique na opção. **Esc** fecha sem mudar.
 
-## botões **`work flow`**
+A opção atual fica marcada com o losango amarelo.
 
-[![trello btn](/images/icons/7%20-%20shortcuts/trelloIcon%20dark.png)**`trello`**](https://trello.com/promo126/home)
-[![typeForm btn](/images/icons/7%20-%20shortcuts/typeFormIcon%20dark.png)**`typeForm`**](https://tvglobo.typeform.com/to/wiqX4z0X)
-[![planner btn](/images/icons/7%20-%20shortcuts/plannerIcon%20dark.png)**`planner`**](https://tvglobocorp.sharepoint.com/sites/IlhadeEdioPromo_GNews/Documentos%20Compartilhados/Forms/AllItems.aspx)
+<br clear="right">
 
-acessam as plataformas que a 'globo' e a equipe de 'promo' usam para gerenciar tarefas.
+### curvas
 
-```markdown
-    urls: 'https://trello.com/promo126/home'
-          'https://tvglobo.typeform.com/to/wiqX4z0X'
-          'https://tasks.office.com/tvglobocorp.onmicrosoft.com/en-US/Home/Planner/#/userboard'
-```
+<img src="images/cep/curves.png" width="260" align="right" alt="curvas">
+
+Abra pelo botão **Influência dos keyframes**, na seção Animação.
+
+1. Arraste as duas alças para desenhar a curva. Os números mostram a influência de entrada e de saída. O botão de espelhar deixa as duas iguais.
+2. Para copiar uma curva que já existe, selecione **1** keyframe e clique em **copiar**.
+3. Escolha como aplicar:
+   - **keyframes** — o After Effects interpola com essa influência;
+   - **expressão** — uma expressão reproduz exatamente a curva desenhada entre os keyframes.
+4. Selecione os keyframes na timeline e clique em **aplicar**.
+   - Com o **ao vivo** (⚡, ligado por padrão no modo keyframes), os keyframes selecionados acompanham a curva enquanto você arrasta as alças, mexe nos sliders ou escolhe um preset. Não precisa clicar em aplicar.
+   - Funciona em keyframes de qualquer propriedade (transformação, efeitos, cor, máscara, shape): lineares e hold viram bezier, como no *Easy Ease*. Propriedades que só aceitam hold, como o *Source Text*, ficam de fora e o rodapé diz quantos keyframes foram pulados.
+
+Para tirar a expressão de curva, use o botão de remover com as propriedades selecionadas.
+
+**Presets:** clique num preset para usar a curva dele.
+- **+** salva a curva atual como preset. Ele fica apagado quando a curva já é um preset.
+- Passe o mouse sobre um preset e clique no **×** para excluí-lo.
+- Botão direito no **+** volta aos presets padrão.
+
+Os presets ficam nas preferências do usuário (`curves.json`).
+
+<br clear="right">
+
+### busca
+
+<img src="images/cep/search.png" width="260" align="right" alt="busca">
+
+Abra pela lupa do rodapé.
+
+1. Digite o texto. A busca roda sozinha a partir de 2 letras, ou ao apertar Enter.
+   - Com uma comp selecionada, procura só nela.
+   - Sem seleção, procura em todas as comps.
+2. Os resultados vêm agrupados por comp, com o trecho encontrado em destaque.
+3. Clique num resultado para abrir a comp e selecionar o layer (os outros layers continuam visíveis).
+4. Use **selecionar todos** para pegar tudo de uma vez, por exemplo para trocar a fonte.
+
+Esc limpa a busca.
+
+<br clear="right">
+
+### templates
+
+<img src="images/cep/templates.png" width="260" align="right" alt="templates">
+
+Abra pelo primeiro botão do rodapé.
+
+1. **Baixar** traz a versão mais recente dos templates de PROMO. **Recarregar** relê a pasta.
+2. Filtre pelo nome no campo do topo.
+3. Os templates com vídeo de preview mostram uma barra fina. Passe o mouse sobre a miniatura e a posição dele escolhe o frame mostrado; nada toca sozinho.
+4. Dê **duplo clique**, ou selecione e clique em **importar**, para trazer o template para o projeto.
+
+<br clear="right">
+
+### fontes
+
+<img src="images/cep/fonts.png" width="260" align="right" alt="fontes">
+
+Abra pelo botão **Fontes**, na seção Programa.
+
+1. Cada família (pasta) é um grupo. Clique no nome para ver os estilos, cada um desenhado com o próprio arquivo.
+2. Para mudar o texto de exemplo, escreva no campo do topo: todas as amostras acompanham. O **×** limpa o campo e volta a mostrar o nome de cada estilo.
+3. Escolha o tamanho do exemplo: **P**, **M** ou **G**.
+4. **Instalar** copia a família para as fontes do sistema.
+
+O texto, o tamanho e os grupos abertos ficam guardados para a próxima vez.
+
+<br clear="right">
+
+![fontes](images/doc/gifs/fontes.gif)
+
+### tags
+
+<img src="images/cep/tags.png" width="230" align="right" alt="tags">
+
+Abra com o botão direito em **Organizar projeto**.
+
+1. Selecione itens no painel de projeto.
+2. Clique numa tag para marcá-los. Ao organizar, cada item vai para a pasta da sua tag.
+3. Para marcar com um nome livre, use **tag personalizada**. Aplicar com o campo vazio remove a tag.
+
+<br clear="right">
+
+### end page
+
+<img src="images/cep/endpage.png" width="260" align="right" alt="end page">
+
+Abra pelo botão **Presets de end page**, na seção Projeto.
+
+1. Escolha um **preset**. A prévia mostra a disposição:
+   - **footage** — o retângulo escuro, no fundo;
+   - **foto** — o quadrado claro, por cima.
+2. Escolha o modo (**simples** ou **completo**) e preencha os campos da assinatura (dia, hora…). No modo completo, as caixas do layout ligam e desligam subtítulo, foto, footage, pattern e **fundo**. Com o fundo desligado, a end page sai sem fundo, em alpha: o pattern e o recorte do footage saem junto, a caixa **pattern** fica desabilitada e a prévia mostra a grade de transparência.
+3. Para partir de uma end page pronta, selecione a comp dela e use o botão de **ler**: os campos se preenchem com os valores dela.
+4. Clique em **aplicar** com a end page selecionada.
+5. O botão de **salvar como preset** guarda a configuração atual para a equipe, na pasta de templates da rede. Com a rede fora ou em home office, o preset fica só neste computador, e a janela avisa.
+
+<br clear="right">
+
+### labels
+
+| paleta | editor |
+| :---: | :---: |
+| <img src="images/cep/labels.png" width="260" alt="labels"> | <img src="images/cep/labels-editor.png" width="260" alt="editor de labels"> |
+
+Abra pelo botão **Cores de label**, na seção Programa.
+
+1. As 16 cores de label aparecem como amostras, cada uma com número, nome e hex.
+2. Clique numa amostra e o editor toma a janela:
+   - à esquerda fica a cor gravada (clique nela para voltar);
+   - ao lado fica a nova cor, com o nome gerado automaticamente — dá para editar o nome, e a varinha gera de novo;
+   - escolha a cor no quadrado de saturação × brilho e na barra de matiz, ou digite o hex.
+3. Confirme com **ok** (Enter) ou cancele (Esc). As cores alteradas ganham um keyframe amarelo até você clicar em **aplicar**.
+4. Em **carregar preset…** troque tudo de uma vez: PROMO, padrão da Adobe ou os seus.
+5. Para salvar a combinação atual, dê um nome e use **salvar como preset**. Os seus presets podem ser removidos.
+
+![labels](images/doc/gifs/labels.gif)
 
 ---
-<br />
 
-## botões **`rede`**
+## preferências
 
-![arte btn](/images/icons/7%20-%20shortcuts/arteFolderIcon%20dark.png)**`para ARTE`**\
-![mag btn](/images/icons/7%20-%20shortcuts/magazineFolderIcon%20dark.png)**`upload MAGAZINE`**\
-![hn btn](/images/icons/7%20-%20shortcuts/hardNewsFolderIcon%20dark.png)**`upload HARD NEWS`**\
-![utils btn](/images/icons/7%20-%20shortcuts/utilsFolderIcon%20dark.png)**`N:\UTILIDADES`**\
-![base btn](/images/icons/7%20-%20shortcuts/baseFolderIcon%20dark.png)**`_Bases Jornais`**\
-![day btn](/images/icons/7%20-%20shortcuts/dayFolderIcon%20dark.png)**`PRODUCAO DIA-A-DIA\...\[Hoje]`**
+<img src="images/cep/settings.png" width="300" align="right" alt="preferências">
 
-acessam as pastas na rede da 'globo'.
+Abra pelo último botão do rodapé. As mudanças valem na hora, sem botão de salvar.
 
-> um caminho personalizado para as pastas *'para ARTE'* e *'upload MAGAZINE'* pode ser configurado nas *'preferências do script'*...
+- **usuário** — o prefixo usado nos IDs e nos nomes.
+- **modos** — **home office** usa templates e fontes locais e apaga os atalhos de rede; **hard news** troca IDs, pastas e previews para o padrão do HN.
+- **layers** — null e camada de ajuste em solid ou shape.
+- **projeto** — pastas de organização (siglas e pastas, editáveis), ignorar arquivos faltando ao coletar, pasta dos projetos. No editor das pastas, a seta **↑ salvar para todos** grava as siglas que você criou na configuração geral: elas passam a ser padrão para toda a equipe (cada um recebe ao abrir o After Effects de novo).
+- **rede** — pastas do PAM (para arte, magazine) e a pasta de **templates**. Clique no caminho para escolher outra pasta; a seta ao lado volta ao padrão. Uma pasta de templates própria é usada sempre que existir; se não existir, vale a cópia local.
+- **efeitos**, **atalhos** e **paleta** — o que a barra mostra nessas seções.
+- **painel** — rótulos no painel largo, animações reduzidas, ferramentas de dev.
 
----
+No rodapé da janela ficam **abrir pasta de preferências** e **restaurar padrões**.
 
-<br /><br />
+<br clear="right">
 
-# ![template btn](/images/icons/0%20-%20menu/templatesIcon%20dark.png) janela **`templates`**
+### o que a barra mostra é editável
 
-baixa e exibe os principais templates dos projetos de 'PROMO'.
+Clique com o **botão direito** num atalho, numa cor ou num efeito da barra: as preferências abrem já rolando até ele.
 
-> download: *'~\AppData\Roaming\PROMO GNEWS script\templates'*\
-> [documentação completa](/docs/doc.md)
+| atalhos | paleta | efeitos |
+| :---: | :---: | :---: |
+| <img src="images/doc/gifs/atalhos.gif" width="260" alt="atalhos"> | <img src="images/doc/gifs/paleta.gif" width="260" alt="paleta"> | <img src="images/doc/gifs/efeitos.gif" width="260" alt="efeitos"> |
+| Ícone ou 2 letras, nome e destino (site ou pasta). Arraste para reordenar. | Grupos de cores em hex, com prévia ao lado. Use **+ cor** e **+ grupo**. O nome é automático (em cinza): clique nele para renomear; apague, ou use Esc, para voltar ao automático. | Grupos de efeitos. Escolha qualquer efeito instalado numa lista pesquisável e dê um ícone a ele. |
 
----
+Cada lista tem **restaurar** para voltar ao padrão.
 
-<br /><br />
+### salvar para todos
 
-# ![find btn](/images/icons/0%20-%20menu/findIcon%20dark.png) janela **`busca`**
+Atalhos, caminhos da rede e siglas das pastas de organização têm uma configuração geral, compartilhada pela equipe. Ela fica na pasta `config`, dentro da pasta do PROMO GNEWS na rede.
 
-executa uma busca pelo termo pesquisado no conteúdo dos *'text layers'*.
+- **O que é só seu aparece em amarelo**: um atalho ou uma sigla que você criou, ou um item da equipe que você alterou.
+- **↑ num item** grava aquele item para todos. Aparece ao passar o mouse sobre um item seu. Nos caminhos da rede (PAM magazine, PAM para arte, Templates), a seta aparece quando o seu caminho é diferente do padrão da equipe.
+- **↑ salvar para todos**, no topo da lista, grava de uma vez tudo o que é só seu.
+- **× num item da equipe** exclui o item para a equipe inteira, na hora. Ele continua na sua lista, agora em amarelo, e você decide: **↑** devolve para a equipe, **×** de novo apaga de vez.
+- **× num item que é só seu** apaga o item.
+- Salvar para todos pede um segundo clique em até 4 segundos. Excluir não pede: se foi engano, o **↑** desfaz.
 
-> caso nenhuma composição esteja selecionada na *'janela de projeto'*, a busca englobará todas as composições.\
-> [documentação completa](/docs/doc.md)
-
----
-
-<br /><br />
-
-# ![snap btn](/images/icons/0%20-%20menu/previewIcon%20dark.png) botão **`preview`**
-
-exporta o frame atual da comp selecionada em *'.png'*.
-
-> por padrão o arquivo será nomeado como *'**nome da comp** preview.png'*.
+Cada pessoa recebe as mudanças ao abrir o After Effects de novo. O que alguém alterou só para si continua como a pessoa deixou.
 
 ---
 
-<br /><br />
+## desenvolvimento
 
-# ![app icon](/images/icons/0%20-%20menu/appIcon%20dark.png) [ seção *programa* ]
+Estrutura do código, instalação de desenvolvimento (macOS / Windows), build e cuidados com o ExtendScript: [cep/README.md](cep/README.md).
 
-![info](/images/icons/general/infoIcon%20dark.png) → abre a documentação | ajuda da seção.
-
----
-<br />
-
-## ![fonts btn](/images/icons/general/file%20types/fontsIcon%20dark.png) botão **`fontes`**
-
-baixa e instala as fontes do *'ON-AIR'* entre outras.
-
-- Degular
-- Suisse
-
-> download: *'~\AppData\Roaming\PROMO GNEWS script\fonts'*\
-> [documentação completa](/docs/doc.md)
-
----
-<br />
-
-## ![ameTemplate btn](/images/icons/general/file%20types/eprIcon%20dark.png) botão **`AME presets`**
-
-baixa e instala os principais presets de 'PROMO' no 'Media Encoder'.
-
-- H264 - mp4 alta.epr
-- H264 - mp4 baixa.epr
-- WAV - audio GSAT.epr
-- XDCAM HD 50 NTSC 60i - avid.epr
-
-> download: *'~\AppData\Roaming\PROMO GNEWS script\AME presets'*\
-> instalação: *'~\Documents\Adobe\Adobe Media Encoder\versão instalada\Presets'*
-
----
-
-<br /><br />
-
-# ![preferences icon](/images/icons/0%20-%20menu/preferencesIcon%20dark.png) janela *preferencias*
-
-> [documentação completa](/docs/preferences.md)
+<sub>As imagens desta página são geradas a partir da própria interface:
+`node tools/doc-icons.js` (ícones) · `node tools/doc-shots.js` (capturas) · `node tools/doc-gifs.js` (gifs).</sub>

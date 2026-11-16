@@ -27,16 +27,6 @@ function rgb(r, g, b) {
 	return [r, g, b];
 }
 
-// converts rgba color to a simple array...
-function rgba(r, g, b, a) {
-	r = r / 255;
-	g = g / 255;
-	b = b / 255;
-	a = a / 255;
-
-	return [r, g, b, a];
-}
-
 function componentToHex(c) {
 	var hexStr = c.toString(16);
 	hexStr = hexStr.length == 1 ? '0' + hexStr : hexStr;
@@ -61,19 +51,6 @@ function rgbToHex(rgbArray) {
 	return (
 		'0x' + componentToHex(r) + componentToHex(g) + componentToHex(b)
 	);
-}
-
-function rgbStr(val) {
-	if (val.length > 0) {
-		val = rgbToHex(val);
-	} else if (eval(val).length > 0) {
-		val = rgbToHex(eval(val));
-	}
-	var r = (val >> 16) & 0xff;
-	var g = (val >> 8) & 0xff;
-	var b = val & 0xff;
-
-	return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 }
 
 function hexToRGB(hex) {

@@ -1,0 +1,12 @@
+/* shared by templates + fonts windows: toolbar, category chips, action footer */
+
+.bar { display: flex; gap: 4px; align-items: center; }
+.bar .fld { height: 32px; font-size: 12px; }
+.chips { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+
+.foot { flex: none; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-top: 1px solid var(--line); animation: footUp .4s cubic-bezier(.2, .95, .25, 1) backwards; }
+.foot .meta { flex: 1; min-width: 0; }
+.foot .nm { font-size: 13px; font-weight: 600; color: #D8D8DE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.foot .sub { font: 10px var(--mono); color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@keyframes footUp { from { opacity: 0; transform: translateY(100%); } }

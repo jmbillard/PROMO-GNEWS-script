@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<!--
+	PROMO GNEWS · carregador instalado na máquina.
+	O instalador (INSTALAR PROMO GNEWS.jsx) grava uma cópia desta página para cada painel/janela,
+	com ROOT (pasta 'cep' na rede) e PAGE (página dentro de client/) preenchidos.
+	A página de verdade abre direto da rede: para atualizar, basta trocar os arquivos lá e reabrir o painel.
+	(adaptado do carregador do O PADEIRO)
+-->
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PROMO GNEWS</title>
+	<style>
+		html, body { height: 100%; margin: 0; }
+		body {
+			display: grid; place-items: center; padding: 12px; box-sizing: border-box;
+			background: #1B1B1E; color: #ECECEF; text-align: center;
+			font: 500 12px/1.45 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+		}
+		#box { display: grid; justify-items: center; gap: 8px; max-width: 360px; }
+		svg { width: 28px; height: 28px; animation: spin 1.4s cubic-bezier(.5, 0, .3, 1) infinite; }
+		.off svg { animation: none; opacity: .4; }
+		strong { font-size: 12px; font-weight: 600; }
+		span { color: #8B8B95; font-size: 11px; overflow-wrap: anywhere; }
+		button { margin-top: 4px; padding: 6px 14px; border: 0; border-radius: 9px; background: #2A2A2F; color: #ECECEF; font: inherit; cursor: pointer; }
+		button:hover { background: #33333A; }
+		[hidden] { display: none; }
+		@keyframes spin { to { transform: rotate(360deg); } }
+		@media (max-width: 120px) { strong, span { display: none; } }
+	</style>
+</head>
+
+<body>
+	<div id="box">
+		<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#E52F2E" stroke-width="4" stroke-dasharray="44 9.4" stroke-linecap="round"></circle></svg>
+		<strong id="title">abrindo…</strong>
+		<span id="detail"></span>
+		<button type="button" id="retry" hidden>tentar de novo</button>
+	</div>
+
+	<script>
+		(function () {
+			var ROOT = __PGN_ROOT__;
+			var PAGE = __PGN_PAGE__;
+
+			// macOS: o volume de rede pode ser montado com sufixo (/Volumes/cdesign-1 ... -5)
+			function candidates(root) {
+				var list = [root];
+				var m = /^\/Volumes\/([^/]+)(\/.*)?$/.exec(root);
+
+				if (m) {
+					var base = m[1].replace(/-[1-5]$/, '');
+
+					for (var i = 0; i <= 5; i++) {
+						var name = i === 0 ? base : base + '-' + i;
+
+						if (name !== m[1]) list.push('/Volumes/' + name + (m[2] || ''));
+					}
+				}
+
+				return list;
+			}
+
+			function exists(path) {
+				if (!window.cep || !window.cep.fs) return true; // fora do After Effects: só tenta abrir
+
+				return window.cep.fs.stat(path).err === 0;
+			}
+
+			function fileUrl(path) {
+				var s = path.replace(/\\/g, '/');
+				var drive = /^[A-Za-z]:\//.test(s) ? s.slice(0, 2) : '';
+				var rest = drive ? s.slice(2) : s;
+				var encoded = rest.split('/').map(encodeURIComponent).join('/');
+
+				if (s.indexOf('//') === 0) return 'file:' + encoded; // \\servidor\share → file://servidor/share
+				if (drive) return 'file:///' + drive + encoded;
+
+				return 'file://' + encoded;
+			}
+
+			function open() {
+				var list = candidates(ROOT);
+
+				for (var i = 0; i < list.length; i++) {
+					var page = list[i].replace(/[\\/]+$/, '') + '/client/' + PAGE;
+
+					if (exists(page)) {
+						location.replace(fileUrl(page) + location.search);
+						return;
+					}
+				}
+
+				document.body.className = 'off';
+				document.getElementById('title').textContent = 'pasta do PROMO GNEWS na rede inacessível';
+				document.getElementById('detail').textContent = ROOT;
+				document.getElementById('retry').hidden = false;
+				setTimeout(open, 4000); // a rede pode voltar
+			}
+
+			document.getElementById('retry').addEventListener('click', open);
+			open();
+		})();
+	</script>
+</body>
+
+</html>

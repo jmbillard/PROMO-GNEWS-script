@@ -31,7 +31,3 @@ function gaussRnd(samples) {
 	return r / samples; // → 0 - 1
 }
 
-// simple timer...
-function timer() {
-	return ($.hiresTimer / 1000000).toFixed(2); // → 1.27 (in seconds)
-}

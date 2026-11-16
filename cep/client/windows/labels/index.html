@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<title>Labels</title>
+	<link rel="stylesheet" href="../../shared/base.css">
+	<link rel="stylesheet" href="../../shared/window.css">
+	<link rel="stylesheet" href="labels.css">
+</head>
+<body>
+	<div class="win">
+		<div class="lw" id="lw">
+			<!-- the 16 labels: click one to edit it -->
+			<div id="grid" class="grid4" role="list" aria-label="Labels"></div>
+			<!-- editor (takes the window): saved | new + name · S×B square · hue · hex · × ✓ -->
+			<div id="ed" class="ed" aria-label="Editar label">
+				<div class="ed-head">
+					<button id="was" class="ed-was" title="voltar para a cor gravada" aria-label="Voltar para a cor gravada"></button>
+					<div id="now" class="ed-now">
+						<span id="edIx" class="ix mono"></span>
+						<input id="edName" type="text" aria-label="Nome do label" spellcheck="false">
+						<button id="wand" class="wand" title="nome automático pela cor" aria-label="Nome automático pela cor"></button>
+					</div>
+				</div>
+				<div id="sv" class="sv" title="saturação × brilho"><i id="ring" class="ring"></i></div>
+				<div id="hue" class="hue" title="matiz"><i id="knob" class="knob"></i></div>
+				<div class="ed-foot">
+					<span class="lbh mono">HEX</span>
+					<input id="edHex" class="fld hexf mono" type="text" maxlength="7" aria-label="Cor em hex" spellcheck="false">
+					<span class="grow"></span>
+					<button id="cancel" class="ed-btn" title="cancelar (Esc)" aria-label="Cancelar"></button>
+					<button id="ok" class="ed-btn ed-ok" title="ok (Enter)" aria-label="Confirmar"></button>
+				</div>
+			</div>
+		</div>
+		<div class="foot">
+			<div id="selWrap" class="sel-wrap grow">
+				<select id="preset" class="fld" aria-label="Carregar preset de labels"></select>
+			</div>
+			<!-- naming a preset: takes the select's place; × removes a saved one with that name -->
+			<div id="namer" class="namer grow" hidden>
+				<input id="pName" class="fld" type="text" maxlength="40" placeholder="nome do preset" aria-label="Nome do preset" spellcheck="false">
+				<button id="pDel" class="pdel" title="remover este preset" aria-label="Remover este preset" hidden></button>
+			</div>
+			<button id="save" class="ib" title="salvar como preset" aria-label="Salvar como preset"></button>
+			<button id="apply" class="btn btn-1" disabled><span>aplicar</span></button>
+		</div>
+		<div class="status"><span id="note"></span></div>
+	</div>
+	<script src="../../shared/bridge.js"></script>
+	<script src="../../shared/ui.js"></script>
+	<script src="../../shared/pal-color.js"></script>
+	<script src="../../shared/pal-names.js"></script>
+	<script src="labels.js"></script>
+</body>
+</html>

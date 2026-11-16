@@ -1,0 +1,198 @@
+/* accordion panel */
+
+.panel { height: 100%; display: flex; flex-direction: column; }
+
+#scroll { flex: 1; padding: 10px 10px 6px; }
+
+/* GNEWS logo (from the script's own shape layer): the globe alone in the narrow bar,
+   the full logo when there is room */
+.logo { position: relative; height: 36px; display: flex; align-items: center; padding: 0 5px; color: var(--tx); border-radius: var(--r); overflow: visible; }
+.logo .gl { display: block; flex: none; fill: currentColor; overflow: visible; }  /* size: width/height set on the svg (logo.js) */
+.logo .gl-full { display: none; }
+.wide .logo .gl-full, .horiz .logo .gl-full { display: block; }
+.wide .logo .gl-globo, .horiz .logo .gl-globo { display: none; }
+/* hover: the official animation, its frame following the mouse across the logo (scrub) */
+.logo .scrub { position: absolute; left: 0; top: 0; pointer-events: none; display: none; }
+.logo.scrubbing .scrub { display: block; }
+.logo.scrubbing .gl { visibility: hidden; }
+
+/* opening: the GNEWS logo animation over the whole panel, then the bar shows up */
+.intro { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity .35s ease; }
+.intro canvas { display: block; }
+.intro.out { opacity: 0; }
+.logo .ver { font: 10px var(--mono); color: var(--faint); padding: 2px 6px; border-radius: var(--r); background: #26262B; display: none; }
+.wide .logo .ver { display: inline; }
+
+.hsep { display: block; width: 24px; height: 1px; background: var(--line); margin: 6px 6px; }
+/* with names shown: the separator spans the bar, like the ones between groups */
+.wide .hsep { width: auto; margin: 6px 4px 8px; }
+
+#sections { display: flex; flex-direction: column; gap: 4px; }
+
+/* closed section = icon button; open section = tinted block */
+.sec { border-radius: var(--r-l); transition: background .35s; }
+.sec > .k { color: #8A8A94; }
+.sec.open { padding-bottom: 6px; overflow: hidden; animation: accIn .55s var(--out) backwards; }
+.sec.open > .k { color: inherit; }
+.sec.open > .k:hover { background: transparent; }
+.sec.open > .k .a { animation: pop .5s cubic-bezier(.3, 1.6, .5, 1); }
+.sec .head { display: flex; align-items: center; }
+.sec .name { display: none; font-size: 12px; font-weight: 700; color: var(--tx-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wide .sec .name { display: block; }
+.sec.open .name { color: inherit; }
+
+.grid { display: grid; gap: 2px; justify-content: center; padding-top: 2px; }
+.list .grid:not(.swatches) { justify-content: stretch; padding: 2px 4px 0; }
+.sep { display: block; height: 1px; background: var(--line-2); margin: 4px 6px; animation: tIn .4s backwards; }
+
+/* swatches (brand) */
+.sw { width: 36px; height: 36px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); animation: tIn .4s var(--out) backwards; }
+.sw i { width: 20px; height: 20px; border-radius: var(--r-s); display: block; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+.sw:hover i { transform: scale(1.18); }
+.sw:active i { transform: scale(.85); }
+.sw svg { position: absolute; width: 14px; height: 14px; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.sw svg path { stroke-dasharray: 24; animation: draw .35s ease backwards; }
+.sw { position: relative; }
+.sw .snm, .sw .shx { display: none; }
+/* wide vertical bar (labels on): a full-width row of the color, name + hex inside */
+.list .grid.swatches { grid-template-columns: 1fr !important; justify-content: stretch; gap: 3px; padding: 2px 4px 0; }
+.list .sw { width: auto; height: 26px; background: var(--c); color: var(--ink); justify-content: flex-start; padding: 0 8px; gap: 8px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); transition: transform .25s var(--spring); }
+.list .sw i { display: none; }
+.list .sw .snm { display: block; flex: 1; min-width: 0; text-align: left; font: 700 11px var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list .sw .shx { display: block; font: 9px var(--mono); opacity: .75; }
+.list .sw:hover { transform: translateX(2px); }
+.list .sw:hover i { transform: none; }
+/* horizontal bar: a strip of tiles with name + hex */
+.horiz .grid.swatches { grid-auto-columns: 74px; }
+.horiz .sw { width: 74px; background: var(--c); color: var(--ink); flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 0 6px 4px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.horiz .sw i { display: none; }
+.horiz .sw .snm { display: block; max-width: 100%; font: 700 10px/1.15 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.horiz .sw .shx { display: block; font: 8px/1.2 var(--mono); opacity: .75; }
+.horiz .sw:hover { transform: translateY(-2px); }
+
+/* footer */
+footer { flex: none; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px 10px; border-top: 1px solid var(--line); }
+.sel { width: 36px; height: 36px; border-radius: var(--r); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 10px var(--mono); color: #B4B4BC; transition: background .2s, color .2s; }
+.sel:hover { background: #2A2A2F; }
+.sel.err { background: rgba(255, 107, 107, .16); color: #FFB3B2; }
+.sel .dot { width: 8px; height: 8px; border-radius: 50%; position: relative; background: #55555E; transition: background .3s; }
+.sel .dot.live { background: var(--ok); }
+/* network share offline (message in the tooltip) */
+.sel .dot.off { background: #FF4D4D; }
+.sel .dot.ok { background: var(--ok); }
+.sel .dot.live::after { content: ''; position: absolute; left: -4px; top: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 1.5px solid var(--ok); animation: ping 1.8s ease-out 2; opacity: 0; }
+.sel svg { width: 16px; height: 16px; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
+.sel svg path { stroke-dasharray: 24; animation: draw .4s ease backwards; }
+
+/* message line (only when there is room for text) */
+.msg { flex: none; display: none; padding: 0 12px; font-size: 11px; line-height: 1.3; color: var(--tx-2); min-height: 0; }
+.roomy .msg { display: block; }
+.msg .note { display: flex; white-space: normal; padding: 6px 0 2px; }
+
+@keyframes accIn { from { max-height: 36px; } to { max-height: 900px; } }
+
+/* inline parameter stepper */
+.param { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 2px; margin: 2px 2px 4px; padding: 2px; border-radius: var(--r); background: rgba(0, 0, 0, .22); animation: tIn .35s var(--out) backwards; }
+.param .pb { width: 26px; height: 26px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: var(--tx-2); transition: background .2s, transform .2s var(--spring); }
+.param .pb:hover { background: rgba(255, 255, 255, .08); }
+.param .pb:active { transform: scale(.85); }
+.param .pb svg.i { width: 14px; height: 14px; }
+.param .pv { flex: 1; text-align: center; font-size: 11px; color: var(--tx); min-width: 0; overflow: hidden; }
+.grid:not(.list-grid) .param { flex-direction: column; }
+.roomy .grid .param { flex-direction: row; }
+
+/* project fields (hidden in the narrow bar) */
+.fields { display: none; flex-direction: column; gap: 6px; padding: 4px 4px 8px; }
+.roomy .fields { display: flex; }
+.fields .fld { height: 30px; font-size: 12px; }
+/* horizontal bar: ID + project name, small, right after the section chip (stacked on two rows, side by side on one) */
+.horiz .fields { display: flex; flex: none; flex-direction: column; justify-content: center; gap: 4px; padding: 0 6px 0 2px; align-self: stretch; }
+.horiz .fields .fld { height: 24px; padding: 0 6px; border-radius: var(--r); font-size: 10px; }
+.horiz .fields .pid { width: 104px; text-transform: uppercase; }
+.horiz .fields .pnm { width: 104px; }
+.horiz.one .fields { flex-direction: row; align-items: center; }
+
+/* long task progress: thin bar under the icon, line on the footer, % on the selection chip */
+.t.is-job .ico { opacity: .8; }
+.t .pbar { position: absolute; left: 50%; bottom: 4px; width: 20px; height: 2px; margin-left: -10px; border-radius: 1px; background: rgba(255, 255, 255, .12); overflow: hidden; pointer-events: none; animation: rowIn .25s ease; }
+.list .t .pbar { left: 8px; margin-left: 0; }
+.t .pbar b { display: block; height: 100%; background: currentColor; border-radius: 1px; transform: scaleX(0); transform-origin: left center; transition: transform .35s cubic-bezier(.3, 1.1, .5, 1); }
+/* no total known: a short piece runs back and forth */
+.indet .t.is-job .pbar b { width: 40%; animation: scan .8s ease-in-out infinite; }
+
+footer { position: relative; }
+.jobbar { position: absolute; left: 0; right: 0; top: -1px; height: 2px; overflow: hidden; background: rgba(255, 255, 255, .06); }
+.jobbar i { display: block; height: 100%; background: var(--acc); transform: scaleX(0); transform-origin: left center; transition: transform .35s cubic-bezier(.3, 1.1, .5, 1); }
+.indet .jobbar i { width: 40%; transform: none !important; animation: scan .9s ease-in-out infinite; }
+.sel .pct { font-size: 10px; color: var(--tx); animation: pop .4s cubic-bezier(.3, 1.6, .5, 1); }
+.jobbing .sel { background: #26262B; }
+.joblbl { display: block; padding: 6px 0 2px; font: 11px var(--mono); color: var(--tx-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: hintIn .3s ease backwards; }
+
+/* ---------- horizontal bar (short and wide panel) ---------- */
+.horiz { flex-direction: row; }
+.horiz #scroll { display: flex; align-items: center; gap: 2px; overflow-x: auto; overflow-y: hidden; padding: 10px 6px 10px 10px; min-width: 0; }
+.horiz .hsep { display: none; }
+.horiz .logo { flex: none; }
+.horiz #sections { flex-direction: row; align-items: center; flex: none; }
+.horiz .sec { flex: none; }
+.horiz .sec.open { display: flex; align-items: center; padding: 2px 2px 2px 0; border-radius: var(--r); animation-name: accInX; }
+/* the open section's own icon: a solid chip in the section color, full height of the block — the tools follow */
+.horiz .sec.open > .head { flex: none; align-self: stretch; display: flex; align-items: center; margin: -2px 4px -2px 0; }
+.horiz .sec.open > .head .k { align-self: stretch; height: auto; background: var(--sa); color: var(--sa-ink); border-radius: var(--r) 0 0 var(--r); }
+/* inside the horizontal section: square-ish hovers, groups split by a thin line */
+.horiz .sec.open .t, .horiz .sec.open .sw { border-radius: var(--r); }
+.horiz .sec.open .groups { align-self: center; }
+.horiz .sec.open > .head .k:hover { background: var(--sa); filter: brightness(1.08); }
+.horiz .groups { display: flex; align-items: center; }
+.horiz .grid { grid-auto-flow: column; grid-auto-columns: 36px; padding: 0 0 0 2px; }
+.horiz .sep { width: 1px; height: 24px; margin: 0 4px; flex: none; }
+/* two rows: the divider spans both */
+.horiz:not(.one) .sep { height: 60px; }
+.horiz .param { grid-column: auto; grid-row: 1 / -1; flex-direction: column; margin: 0 2px; }
+.horiz footer { flex-wrap: nowrap; align-items: center; padding: 10px 10px 10px 8px; border-top: 0; border-left: 1px solid var(--line); }
+.horiz .jobbar { top: auto; bottom: 0; }
+@keyframes accInX { from { max-width: 36px; } to { max-width: 1600px; } }
+
+/* ---- vertical bar ---- */
+/* the head (icon + name) is one target */
+.sec .head { cursor: pointer; border-radius: var(--r); gap: 10px; }
+.wide .sec:not(.open) .head:hover { background: #26262B; }
+.wide .sec:not(.open) .head:hover .k { background: transparent; color: #F2F2F4; }
+.wide .sec:not(.open) .head:hover .name { color: var(--tx); }
+/* the open section's icon: a solid chip in the section color (as in the horizontal bar) */
+/* vertical: the whole head row of the open section in the section color (icon + name, dark ink),
+   square at the bottom where the tools begin */
+.sec.open > .head { background: var(--sa); color: var(--sa-ink); border-radius: var(--r-l) var(--r-l) 0 0; }
+.sec.open > .head .k, .sec.open > .head .k:hover { background: transparent; color: var(--sa-ink); }
+.sec.open > .head .name { color: var(--sa-ink); }
+.sec.open > .head:hover { filter: brightness(1.06); }
+.sec.open { border-radius: var(--r-l); }
+/* long names end with … instead of being cut */
+.list .t { min-width: 0; }
+.list .t .lbl { flex: 1; min-width: 0; text-align: left; }
+.sec .head .name { flex: 1; min-width: 0; padding-right: 8px; }
+/* logo: a little air around it */
+.logo { height: 44px; }
+/* horizontal keeps its chip (icon only) */
+.horiz .sec.open > .head { background: transparent; border-radius: 0; filter: none; }
+
+/* compact vertical bar (134–170px): icons 3 per row, section names on the heads, tool names in the tooltips */
+.compact .sec .name { font-size: 11px; }
+.compact .fields .fld { font-size: 11px; padding: 0 8px; }
+
+/* horizontal: the logo stays put while the sections scroll under it; with little room, the globe alone */
+.horiz .logo { position: sticky; left: 0; z-index: 2; background: var(--bg); box-shadow: 6px 0 6px -2px var(--bg); }
+.horiz.tight .logo .gl-full { display: none; }
+.horiz.tight .logo .gl-globo { display: block; }
+
+/* ↶ undo the whole long task (a few seconds after it finished) */
+.t .undo1 { position: absolute; top: 1px; right: 1px; width: 15px; height: 15px; border-radius: var(--r-s); display: flex; align-items: center; justify-content: center; background: var(--acc, #ECFF8C); color: #141416; cursor: pointer; z-index: 2; animation: pop .3s var(--spring); transition: opacity .25s; }
+.list .t .undo1 { top: 50%; right: 6px; margin-top: -8px; }
+.t .undo1.out { opacity: 0; }
+.t .undo1 svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* short vertical bar: footer in a single row (buttons share the width) */
+.short footer { flex-wrap: nowrap; gap: 0; padding: 4px 6px 6px; }
+.short footer .k, .short footer .sel { flex: 1 1 0; min-width: 0; width: auto; }
+/* the inline stepper (right click) doesn't stretch across a wide bar */
+.list .param { max-width: 220px; }

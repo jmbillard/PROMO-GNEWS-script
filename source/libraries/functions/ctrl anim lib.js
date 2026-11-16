@@ -56,7 +56,7 @@ function cloneExpressions(sLayer, cLayer) {
 
 		cTrm.property(p).expression = expStr;
 
-		if (prop.matchName == 'ADBE Position') {
+		if (prop.matchName == 'ADBE Position' && prop.numKeys == 0) {
 			prop.setValue(cProp.value);
 		}
 	}
@@ -176,14 +176,14 @@ function setHierarchy(sLayer, cLayer) {
 
 // find center point...
 function findCenter(lArray) {
-	var maxY = 0;
-	var minY = 99999999999999999999;
-	var maxX = 0;
-	var minX = 99999999999999999999;
-	var maxZ = 0;
-	var minZ = 99999999999999999999;
+	var maxY = -Infinity;
+	var minY = Infinity;
+	var maxX = -Infinity;
+	var minX = Infinity;
+	var maxZ = -Infinity;
+	var minZ = Infinity;
 
-	for (i = 0; i < lArray.length; i++) {
+	for (var i = 0; i < lArray.length; i++) {
 		var lPos = lArray[i]
 			.property('ADBE Transform Group')
 			.property('ADBE Position');
@@ -211,29 +211,24 @@ function applyEase(sLayer) {
 		var aProp = selProps[p];
 		var selKeys = aProp.selectedKeys;
 
+		// groups (an effect, 'Transform'...) come in the selection too: no keys there
+		if (selKeys == undefined || selKeys.length == 0) continue;
+
 		for (var k = 0; k < selKeys.length; k++) {
 			var aKey = selKeys[k];
-
 			var easeOut = new KeyframeEase(0, easeOutInfluence);
 			var easeIn = new KeyframeEase(0, easeInInfluence);
-			var easeInArray = [easeIn];
-			var easeOutArray = [easeOut];
+			// one ease per dimension, as many as the key already has
+			// (1 for spatial or 1D properties, 2-3 for scale and other arrays)
+			var dims = aProp.keyInTemporalEase(aKey).length;
+			var easeInArray = [];
+			var easeOutArray = [];
 
-			try {
-				aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
-
-			} catch (err) {
-
-				if (Array.isArray(aProp.value)) {
-
-					for (var e = 1; e < aProp.value.length; e++) {
-						easeOutArray.push(easeOut);
-						easeInArray.push(easeIn);
-					}
-				}
-
-				aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
+			for (var e = 0; e < dims; e++) {
+				easeInArray.push(easeIn);
+				easeOutArray.push(easeOut);
 			}
+			aProp.setTemporalEaseAtKey(aKey, easeInArray, easeOutArray);
 		}
 	}
 }

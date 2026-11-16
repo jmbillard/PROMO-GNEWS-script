@@ -272,7 +272,7 @@ function columnText(sLayer) {
 		cols.push([]);
 	}
 	for (var i = 0; i < cellArray.length; i++) {
-		var cI = (columnsNum - ((i + 1) % columnsNum)) - 1;
+		var cI = i % columnsNum; // left to right
 		cols[cI].push(cellArray[i]);
 	}
 	for (i = 0; i < columnsNum; i++) {
